@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/MainPage.qml</file>
+        <file>qml/components/TitleBar.qml</file>
+        <file>qml/components/SubTitleButton.qml</file>
+        <file>qml/components/StationSelect.qml</file>
+    </qresource>
+</RCC>
