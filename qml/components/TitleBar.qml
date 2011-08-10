@@ -7,7 +7,7 @@ Item {
     height: 60
 
     BorderImage {
-        source: "image://theme/meegotouch-container-header-background"
+        source: "image://theme/meegotouch-dialog-header-background"
         width: parent.width
         height: parent.height + 14
         y: -7
@@ -18,8 +18,8 @@ Item {
         font.bold: true
         font.pixelSize: 32
         style: Text.Raised
-        color: "White"
-        styleColor: "Black"
+        color: "Black"
+        styleColor: "Grey"
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10

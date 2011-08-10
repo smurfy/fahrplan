@@ -88,6 +88,8 @@ Page {
             width: parent.width
             model: stationsResultModel
             delegate: stationsResultDelegate
+            clip: true
+            boundsBehavior: "StopAtBounds"
         }
     }
 
