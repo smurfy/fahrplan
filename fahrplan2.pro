@@ -31,6 +31,7 @@ SOURCES += src/main.cpp \
 
 OTHER_FILES += \
     src/gui/harmattan/MainPage.qml \
+    src/gui/harmattan/JourneyResultsPage.qml \
     src/gui/harmattan/main.qml \
     src/gui/harmattan/components/TitleBar.qml \
     src/gui/harmattan/components/SubTitleButton.qml \

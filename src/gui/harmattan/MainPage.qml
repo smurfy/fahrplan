@@ -84,22 +84,13 @@ Page {
 
         onClicked: {
             console.log("Searching")
-            searchIndicator.visible = true
-            startSearch.enabled = false
+            resultsPage.searchLoading.visible = true;
+            resultsPage.searchResults.visible = false;
+            pageStack.push(resultsPage)
+            var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
+            var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
+            resultsPage.fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, "", selDate, selTime, 0, 0);
         }
-    }
-
-    BusyIndicator {
-        id: searchIndicator
-        anchors {
-            top: startSearch.bottom
-            topMargin: 40
-            horizontalCenter: parent.horizontalCenter
-        }
-        running: true
-        visible: false
-
-        platformStyle: BusyIndicatorStyle { size: "large" }
     }
 
     MyComponents.StationSelect {
@@ -118,6 +109,10 @@ Page {
             arrivalButton.subTitleText = name;
             pageStack.pop();
         }
+    }
+
+    JourneyResultsPage {
+        id: resultsPage
     }
 
     DatePickerDialog {
