@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    This file is a part of Fahrplan for maemo 2009-2010
+    This file is a part of Fahrplan for maemo 2009-2011
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,6 +26,15 @@
 #include <QXmlResultItems>
 #include "parser_abstract.h"
 
+struct ParserHafasXmlSearchJourneyRequestData
+{
+    int progress;
+    QDate date;
+    QTime time;
+    int mode;
+    int trainrestrictions;
+};
+
 class ParserHafasXml : public ParserAbstract
 {
     Q_OBJECT
@@ -35,14 +44,22 @@ public:
 public slots:
     void findStationsByName(QString stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
+    void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
     bool supportsGps();
 
 protected:
     void parseStationsByName(QNetworkReply *networkReply);
     void parseStationsByCoordinates(QNetworkReply *networkReply);
+    void parseSearchJourney(QNetworkReply *networkReply);
 
 private:
     QString baseUrl;
+    ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
+    QString getTrainRestrictionsCodes(int trainrestrictions);
+    QString cleanHafasDate(QString time);
+    QDateTime cleanHafasDateTime(QString time, QDate date);
+    void parseSearchJourneyPart1(QNetworkReply *networkReply);
+    void parseSearchJourneyPart2(QNetworkReply *networkReply);
 };
 
 #endif // PARSER_HAFASXML_H

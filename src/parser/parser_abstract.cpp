@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    This file is a part of Fahrplan for maemo 2009-2010
+    This file is a part of Fahrplan for maemo 2009-2011
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,16 +20,51 @@
 
 #include "parser_abstract.h"
 
+ParserAbstract::ParserAbstract(QObject *parent)
+{
+    Q_UNUSED(parent);
+
+    NetworkManager = new QNetworkAccessManager(this);
+    connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));
+
+    currentRequestState = Fahrplan::noneRequest;
+}
+
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 {
-    if (currentRequestState == Fahrplan::stationsByNameRequest) {
+    Fahrplan::curReqStates internalRequestState = currentRequestState;
+
+    //We overwrite the currentRequestState to noneRequest here, because this allows us to set a new one
+    //if needed inside the parser
+    currentRequestState = Fahrplan::noneRequest;
+
+    if (internalRequestState == Fahrplan::stationsByNameRequest) {
         parseStationsByName(networkReply);
-    } else if (currentRequestState == Fahrplan::stationsByCoordinatesRequest) {
+    } else if (internalRequestState == Fahrplan::stationsByCoordinatesRequest) {
         parseStationsByCoordinates(networkReply);
+    } else if (internalRequestState == Fahrplan::searchJourneyRequest) {
+        parseSearchJourney(networkReply);
     } else {
         qDebug()<<"Current request unhandled!";
     }
-    currentRequestState = Fahrplan::noneRequest;
+}
+
+void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
+{
+    QNetworkRequest request;
+    request.setUrl(url);
+    request.setRawHeader("User-Agent", "-");
+
+    if (data.isNull()) {
+        NetworkManager->get(request);
+    } else {
+        NetworkManager->post(request, data);
+    }
+}
+
+void ParserAbstract::sendHttpRequest(QUrl url)
+{
+    sendHttpRequest(url, NULL);
 }
 
 bool ParserAbstract::supportsGps()
@@ -58,4 +93,22 @@ void ParserAbstract::findStationsByCoordinates(qreal longitude, qreal latitude)
  {
      Q_UNUSED(networkReply);
      qDebug() << "ParserAbstract::parseStationsByCoordinates";
+ }
+
+ void ParserAbstract::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+ {
+     Q_UNUSED(departureStation);
+     Q_UNUSED(arrivalStation);
+     Q_UNUSED(viaStation);
+     Q_UNUSED(date);
+     Q_UNUSED(time);
+     Q_UNUSED(mode);
+     Q_UNUSED(trainrestrictions);
+     qDebug() << "ParserAbstract::searchJourney";
+ }
+
+ void ParserAbstract::parseSearchJourney(QNetworkReply *networkReply)
+ {
+     Q_UNUSED(networkReply);
+     qDebug() << "ParserAbstract::parseSearchJourney";
  }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>445</width>
-    <height>194</height>
+    <width>442</width>
+    <height>372</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,6 +48,55 @@
     </property>
     <property name="text">
      <string>findStationsByCoordinates</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="searchJourney">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>200</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>searchJourney</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="departureStaion">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>München Hbf</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="arrivalStation">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>200</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>BERLIN</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="searchJourneyResults">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>230</y>
+      <width>421</width>
+      <height>131</height>
+     </rect>
     </property>
    </widget>
   </widget>
