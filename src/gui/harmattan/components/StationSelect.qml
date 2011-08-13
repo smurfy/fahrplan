@@ -49,7 +49,7 @@ Page {
                         "internal": true,
                         "miscinfo": ""
                     })
-                    fahrplanParser.findStationsByName(searchBox.text);
+                    fahrplanBackend.parser.findStationsByName(searchBox.text);
                 }
             }
 
@@ -172,9 +172,9 @@ Page {
         }
     }
 
-    Fahrplan.Parser {
-        id: fahrplanParser
-        onStationsResult: {
+    Fahrplan.Backend {
+        id: fahrplanBackend
+        onParserStationsResult: {
             stationsResultModel.clear();
             for (var i = 0; i < result.count; i++) {
                 var item = result.getItem(i);
@@ -185,17 +185,12 @@ Page {
                     "miscinfo": item.miscInfo
                 });
             }
-
-
         }
     }
 
     PositionSource {
         id: positionSource
         onPositionChanged: {
-            console.log(positionSource.position.coordinate.longitude);
-            console.log(positionSource.position.coordinate.latitude);
-
             stationsResultModel.clear();
             stationsResultModel.append({
                 "name": "Searching for stations...",
@@ -206,7 +201,7 @@ Page {
             positionSource.active = false;
             positionSource.stop();
 
-            fahrplanParser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
+            fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
         }
     }
 

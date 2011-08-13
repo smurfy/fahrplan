@@ -47,7 +47,7 @@ protected slots:
 
 protected:
     QNetworkAccessManager *NetworkManager;
-    Fahrplan::curReqStates currentRequestState;
+    FahrplanNS::curReqStates currentRequestState;
 
     virtual void parseStationsByName(QNetworkReply *networkReply);
     virtual void parseStationsByCoordinates(QNetworkReply *networkReply);

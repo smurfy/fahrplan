@@ -27,7 +27,7 @@
 #include <qdeclarative.h>
 #include <QDeclarativeListProperty>
 
-namespace Fahrplan
+namespace FahrplanNS
 {
     enum curReqStates {
         noneRequest,

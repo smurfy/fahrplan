@@ -25,7 +25,8 @@ SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
     src/parser/parser_abstract.cpp \
     src/parser/parser_definitions.cpp \
-    src/gui/desktop-test/mainwindow.cpp
+    src/gui/desktop-test/mainwindow.cpp \
+    src/fahrplan.cpp
 
 
 OTHER_FILES += \
@@ -61,7 +62,8 @@ HEADERS += \
     src/parser/parser_hafasxml.h \
     src/parser/parser_abstract.h \
     src/parser/parser_definitions.h \
-    src/gui/desktop-test/mainwindow.h
+    src/gui/desktop-test/mainwindow.h \
+    src/fahrplan.h
 
 FORMS += \
     src/gui/desktop-test/mainwindow.ui

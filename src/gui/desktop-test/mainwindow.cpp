@@ -26,14 +26,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    backendParser = new ParserHafasXml();
+    fahrplan = new Fahrplan();
 
     connect(ui->findStationsByName, SIGNAL(clicked()), this, SLOT(findStationsByNameClicked()));
     connect(ui->findStationsByCoordinates, SIGNAL(clicked()), this, SLOT(findStationsByCoordinatesClicked()));
-    connect(backendParser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
+    connect(fahrplan->parser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
 
     connect(ui->searchJourney, SIGNAL(clicked()), this, SLOT(searchJourneyClicked()));
-    connect(backendParser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
+    connect(fahrplan->parser(), SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
 }
 
 MainWindow::~MainWindow()
@@ -45,14 +45,14 @@ void MainWindow::findStationsByNameClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    backendParser->findStationsByName("München");
+    fahrplan->parser()->findStationsByName("München");
 }
 
 void MainWindow::findStationsByCoordinatesClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    backendParser->findStationsByCoordinates(11.558338, 48.140228);
+    fahrplan->parser()->findStationsByCoordinates(11.558338, 48.140228);
 }
 
 void MainWindow::stationsResult(StationsResultList *result)
@@ -72,7 +72,7 @@ void MainWindow::searchJourneyClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
-    backendParser->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), "", QDate::currentDate(), QTime::currentTime(), 0, 0);
+    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), "", QDate::currentDate(), QTime::currentTime(), 0, 0);
 }
 
 void MainWindow::journeyResult(JourneyResultList *result)

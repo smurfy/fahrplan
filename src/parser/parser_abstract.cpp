@@ -27,22 +27,22 @@ ParserAbstract::ParserAbstract(QObject *parent)
     NetworkManager = new QNetworkAccessManager(this);
     connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));
 
-    currentRequestState = Fahrplan::noneRequest;
+    currentRequestState = FahrplanNS::noneRequest;
 }
 
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 {
-    Fahrplan::curReqStates internalRequestState = currentRequestState;
+    FahrplanNS::curReqStates internalRequestState = currentRequestState;
 
     //We overwrite the currentRequestState to noneRequest here, because this allows us to set a new one
     //if needed inside the parser
-    currentRequestState = Fahrplan::noneRequest;
+    currentRequestState = FahrplanNS::noneRequest;
 
-    if (internalRequestState == Fahrplan::stationsByNameRequest) {
+    if (internalRequestState == FahrplanNS::stationsByNameRequest) {
         parseStationsByName(networkReply);
-    } else if (internalRequestState == Fahrplan::stationsByCoordinatesRequest) {
+    } else if (internalRequestState == FahrplanNS::stationsByCoordinatesRequest) {
         parseStationsByCoordinates(networkReply);
-    } else if (internalRequestState == Fahrplan::searchJourneyRequest) {
+    } else if (internalRequestState == FahrplanNS::searchJourneyRequest) {
         parseSearchJourney(networkReply);
     } else {
         qDebug()<<"Current request unhandled!";

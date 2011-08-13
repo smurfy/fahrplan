@@ -18,34 +18,27 @@
 
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "fahrplan.h"
 
-#include <QMainWindow>
-#include "../../fahrplan.h"
-
-namespace Ui {
-    class MainWindow;
+Fahrplan::Fahrplan(QObject *parent) :
+    QObject(parent)
+{
+    m_parser = new ParserHafasXml();
+    connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
+    connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
 }
 
-class MainWindow : public QMainWindow
+ParserAbstract* Fahrplan::parser()
 {
-    Q_OBJECT
+    return m_parser;
+}
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+void Fahrplan::stationsResult(StationsResultList *result)
+{
+    emit parserStationsResult(result);
+}
 
-private slots:
-    void findStationsByNameClicked();
-    void findStationsByCoordinatesClicked();
-    void stationsResult(StationsResultList *result);
-    void journeyResult(JourneyResultList *result);
-    void searchJourneyClicked();
-
-private:
-    Ui::MainWindow *ui;
-    Fahrplan *fahrplan;
-};
-
-#endif // MAINWINDOW_H
+void Fahrplan::journeyResult(JourneyResultList *result)
+{
+    emit parserJourneyResult(result);
+}

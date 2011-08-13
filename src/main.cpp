@@ -8,7 +8,7 @@
     #include "gui/desktop-test/mainwindow.h"
 #endif
 
-#include "parser/parser_hafasxml.h"
+#include "fahrplan.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,8 @@ int main(int argc, char *argv[])
         //It seems, that there is currently no way of telling if its
         //On harmattan or linux itself so i use the x11 switch here, because i use win for my development
 
-        qmlRegisterType<ParserHafasXml>("Fahrplan", 1, 0, "Parser");
+        qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "Backend");
+        qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
         qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
 

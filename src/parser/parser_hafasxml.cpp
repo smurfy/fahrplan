@@ -41,11 +41,11 @@ bool ParserHafasXml::supportsGps()
 
 void ParserHafasXml::findStationsByName(QString stationName)
 {
-    if (currentRequestState != Fahrplan::noneRequest) {
+    if (currentRequestState != FahrplanNS::noneRequest) {
         return;
     }
 
-    currentRequestState = Fahrplan::stationsByNameRequest;
+    currentRequestState = FahrplanNS::stationsByNameRequest;
     stationName.replace("\"", "");
 
     QByteArray postData = "";
@@ -58,11 +58,11 @@ void ParserHafasXml::findStationsByName(QString stationName)
 
 void ParserHafasXml::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
-    if (currentRequestState != Fahrplan::noneRequest) {
+    if (currentRequestState != FahrplanNS::noneRequest) {
         return;
     }
 
-    currentRequestState = Fahrplan::stationsByCoordinatesRequest;
+    currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
 
     //We must format the lat and longitude to have the ??.?????? format.
     QString zeros      = "0";
@@ -145,11 +145,11 @@ QString ParserHafasXml::getTrainRestrictionsCodes(int trainrestrictions)
 void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
 {
     Q_UNUSED(viaStation);
-    if (currentRequestState != Fahrplan::noneRequest) {
+    if (currentRequestState != FahrplanNS::noneRequest) {
         return;
     }
 
-    currentRequestState = Fahrplan::searchJourneyRequest;
+    currentRequestState = FahrplanNS::searchJourneyRequest;
     searchJourneyRequestData.progress = 1;
     searchJourneyRequestData.date = date;
     searchJourneyRequestData.time = time;
@@ -220,7 +220,7 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
 
     if (!departureStationId.isEmpty() && !arrivalStationId.isEmpty()) {
 
-        currentRequestState = Fahrplan::searchJourneyRequest;
+        currentRequestState = FahrplanNS::searchJourneyRequest;
         searchJourneyRequestData.progress = 2;
 
         QString trainrestr = getTrainRestrictionsCodes(searchJourneyRequestData.trainrestrictions);
