@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/main.qml</file>
-        <file>qml/MainPage.qml</file>
-        <file>qml/components/TitleBar.qml</file>
-        <file>qml/components/SubTitleButton.qml</file>
-        <file>qml/components/StationSelect.qml</file>
+        <file>src/gui/harmattan/main.qml</file>
+        <file>src/gui/harmattan/MainPage.qml</file>
+        <file>src/gui/harmattan/components/StationSelect.qml</file>
+        <file>src/gui/harmattan/components/SubTitleButton.qml</file>
+        <file>src/gui/harmattan/components/TitleBar.qml</file>
     </qresource>
 </RCC>

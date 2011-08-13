@@ -22,21 +22,21 @@ CONFIG += mobility qdbus
 MOBILITY += Location
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp \
-    Parser/parser_hafasxml.cpp \
-    Parser/parser_abstract.cpp \
-    Parser/parser_definitions.cpp
+SOURCES += src/main.cpp \
+    src/parser/parser_hafasxml.cpp \
+    src/parser/parser_abstract.cpp \
+    src/parser/parser_definitions.cpp
 
 
 OTHER_FILES += \
-    qml/MainPage.qml \
-    qml/main.qml \
-    qml/components/TitleBar.qml \
-    qml/components/SubTitleButton.qml \
-    qml/components/StationSelect.qml \
-    fahrplan2.desktop \
-    fahrplan2.svg \
-    fahrplan2.png \
+    src/gui/harmattan/MainPage.qml \
+    src/gui/harmattan/main.qml \
+    src/gui/harmattan/components/TitleBar.qml \
+    src/gui/harmattan/components/SubTitleButton.qml \
+    src/gui/harmattan/components/StationSelect.qml \
+    data/fahrplan2.desktop \
+    data/fahrplan2.svg \
+    data/fahrplan2.png \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
     qtc_packaging/debian_harmattan/copyright \
@@ -58,6 +58,6 @@ QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
 QMAKE_LFLAGS += -pie -rdynamic
 
 HEADERS += \
-    Parser/parser_hafasxml.h \
-    Parser/parser_abstract.h \
-    Parser/parser_definitions.h
+    src/parser/parser_hafasxml.h \
+    src/parser/parser_abstract.h \
+    src/parser/parser_definitions.h
