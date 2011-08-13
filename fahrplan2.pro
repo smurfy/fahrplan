@@ -18,14 +18,14 @@ symbian:TARGET.CAPABILITY += NetworkServices
 
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
-CONFIG += mobility qdbus
 MOBILITY += Location
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
     src/parser/parser_abstract.cpp \
-    src/parser/parser_definitions.cpp
+    src/parser/parser_definitions.cpp \
+    src/gui/desktop-test/mainwindow.cpp
 
 
 OTHER_FILES += \
@@ -60,4 +60,8 @@ QMAKE_LFLAGS += -pie -rdynamic
 HEADERS += \
     src/parser/parser_hafasxml.h \
     src/parser/parser_abstract.h \
-    src/parser/parser_definitions.h
+    src/parser/parser_definitions.h \
+    src/gui/desktop-test/mainwindow.h
+
+FORMS += \
+    src/gui/desktop-test/mainwindow.ui
