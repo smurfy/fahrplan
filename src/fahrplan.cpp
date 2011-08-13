@@ -20,10 +20,15 @@
 
 #include "fahrplan.h"
 
+ParserAbstract *Fahrplan::m_parser;
+
 Fahrplan::Fahrplan(QObject *parent) :
     QObject(parent)
 {
-    m_parser = new ParserHafasXml();
+    if (!m_parser) {
+        m_parser = new ParserHafasXml();
+    }
+
     connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
     connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
 }

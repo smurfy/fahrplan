@@ -40,8 +40,9 @@ class Fahrplan : public QObject
     private slots:
         void stationsResult(StationsResultList *result);
         void journeyResult(JourneyResultList *result);
+
     private:
-        ParserAbstract *m_parser;
+        static ParserAbstract *m_parser;
 };
 
 #endif // FAHRPLAN_H
