@@ -238,3 +238,162 @@ void JourneyResultItem::setInternalData2(const QString &internalData2)
     m_internalData2 = internalData2;
 }
 
+//------------- JourneyDetailResultList
+
+qreal JourneyDetailResultList::itemcount()
+{
+    return m_items.count();
+}
+
+JourneyDetailResultItem *JourneyDetailResultList::getItem(int index)
+{
+    return  m_items.at(index);
+}
+
+void JourneyDetailResultList::appendItem(JourneyDetailResultItem *item)
+{
+    m_items.append(item);
+}
+
+QString JourneyDetailResultList::departureStation() const
+{
+    return m_departureStation;
+}
+
+void JourneyDetailResultList::setDepartureStation(const QString &departureStation)
+{
+    m_departureStation = departureStation;
+}
+
+QString JourneyDetailResultList::arrivalStation() const
+{
+    return m_arrivalStation;
+}
+
+void JourneyDetailResultList::setArrivalStation(const QString &arrivalStation)
+{
+    m_arrivalStation = arrivalStation;
+}
+
+QString JourneyDetailResultList::info() const
+{
+    return m_info;
+}
+
+void JourneyDetailResultList::setInfo(const QString &info)
+{
+    m_info = info;
+}
+
+QString JourneyDetailResultList::duration() const
+{
+    return m_duration;
+}
+
+void JourneyDetailResultList::setDuration(const QString &duration)
+{
+    m_duration = duration;
+}
+
+//------------- JourneyDetailResultItem
+
+
+QString JourneyDetailResultItem::departureStation() const
+{
+    return m_departureStation;
+}
+
+void JourneyDetailResultItem::setDepartureStation(const QString &departureStation)
+{
+    m_departureStation = departureStation;
+}
+
+QString JourneyDetailResultItem::departureInfo() const
+{
+    return m_departureInfo;
+}
+
+void JourneyDetailResultItem::setDepartureInfo(const QString &departureInfo)
+{
+    m_departureInfo = departureInfo;
+}
+
+QDateTime JourneyDetailResultItem::departureDateTime() const
+{
+    return m_departureDateTime;
+}
+
+void JourneyDetailResultItem::setDepartureDateTime(const QDateTime &departureDateTime)
+{
+    m_departureDateTime = departureDateTime;
+}
+
+QString JourneyDetailResultItem::arrivalStation() const
+{
+    return m_arrivalStation;
+}
+
+void JourneyDetailResultItem::setArrivalStation(const QString &arrivalStation)
+{
+    m_arrivalStation = arrivalStation;
+}
+
+QString JourneyDetailResultItem::arrivalInfo() const
+{
+    return m_arrivalInfo;
+}
+
+void JourneyDetailResultItem::setArrivalInfo(const QString &arrivalInfo)
+{
+    m_arrivalInfo = arrivalInfo;
+}
+
+QDateTime JourneyDetailResultItem::arrivalDateTime() const
+{
+    return m_arrivalDateTime;
+}
+
+void JourneyDetailResultItem::setArrivalDateTime(const QDateTime &arrivalDateTime)
+{
+    m_arrivalDateTime = arrivalDateTime;
+}
+
+QString JourneyDetailResultItem::info() const
+{
+    return m_info;
+}
+
+void JourneyDetailResultItem::setInfo(const QString &info)
+{
+    m_info = info;
+}
+
+QString JourneyDetailResultItem::train() const
+{
+    return m_train;
+}
+
+void JourneyDetailResultItem::setTrain(const QString &train)
+{
+    m_train = train;
+}
+
+QString JourneyDetailResultItem::internalData1() const
+{
+    return m_internalData1;
+}
+
+void JourneyDetailResultItem::setInternalData1(const QString &internalData1)
+{
+    m_internalData1 = internalData1;
+}
+
+QString JourneyDetailResultItem::internalData2() const
+{
+    return m_internalData2;
+}
+
+void JourneyDetailResultItem::setInternalData2(const QString &internalData2)
+{
+    m_internalData2 = internalData2;
+}

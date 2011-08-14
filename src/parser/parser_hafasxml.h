@@ -35,6 +35,13 @@ struct ParserHafasXmlSearchJourneyRequestData
     int trainrestrictions;
 };
 
+struct ParserHafasXmlJourneyDetailRequestData
+{
+    QString id;
+    QDate date;
+    QString duration;
+};
+
 class ParserHafasXml : public ParserAbstract
 {
     Q_OBJECT
@@ -47,6 +54,7 @@ public slots:
     void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
+    void getJourneyDetails(QString id);
     bool supportsGps();
 
 protected:
@@ -55,11 +63,14 @@ protected:
     void parseSearchJourney(QNetworkReply *networkReply);
     void parseSearchLaterJourney(QNetworkReply *networkReply);
     void parseSearchEalierJourney(QNetworkReply *networkReply);
+    void parseJourneyDetails(QNetworkReply *networkReply);
 
 private:
     QString baseUrl;
     QString conResCtxt;
+    JourneyResultList *lastJourneyResultList;
     ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
+    ParserHafasXmlJourneyDetailRequestData journeyDetailRequestData;
     QString getTrainRestrictionsCodes(int trainrestrictions);
     QString cleanHafasDate(QString time);
     QDateTime cleanHafasDateTime(QString time, QDate date);

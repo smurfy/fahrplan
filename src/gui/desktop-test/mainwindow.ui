@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>406</height>
+    <width>514</width>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,7 +104,7 @@
      <rect>
       <x>10</x>
       <y>370</y>
-      <width>161</width>
+      <width>121</width>
       <height>23</height>
      </rect>
     </property>
@@ -115,9 +115,9 @@
    <widget class="QPushButton" name="searchJourneyLater">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>140</x>
       <y>370</y>
-      <width>161</width>
+      <width>121</width>
       <height>23</height>
      </rect>
     </property>
@@ -136,6 +136,42 @@
     </property>
     <property name="text">
      <string>cancelRequest</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="getJourneyDetails">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>410</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>getJourneyDetails</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="journeyResultItemId">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>410</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>C1-1</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="getJourneyDetailsResults">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>440</y>
+      <width>491</width>
+      <height>171</height>
+     </rect>
     </property>
    </widget>
   </widget>

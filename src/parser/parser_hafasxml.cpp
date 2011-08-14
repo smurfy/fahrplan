@@ -152,6 +152,7 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     conResCtxt = "";
+    lastJourneyResultList = NULL;
 
     searchJourneyRequestData.progress = 1;
     searchJourneyRequestData.date = date;
@@ -280,7 +281,7 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
 
 void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
 {
-    JourneyResultList results;
+    lastJourneyResultList = new JourneyResultList();
 
     QBuffer readBuffer;
     readBuffer.setData(networkReply->readAll());
@@ -312,7 +313,7 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
     }
 
     if (resultIds.count() <= 0) {
-        emit journeyResult(&results);
+        emit journeyResult(lastJourneyResultList);
         return;
     }
 
@@ -422,11 +423,11 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
             //item.detailsInfo = parseJourneyDataDetails(data, resultIds[i], date);
         }
 
-        results.setDepartureStation(depResult.join("").trimmed());
-        results.setArrivalStation(arrResult.join("").trimmed());
-        results.setTimeInfo(date.toString());
+        lastJourneyResultList->setDepartureStation(depResult.join("").trimmed());
+        lastJourneyResultList->setArrivalStation(arrResult.join("").trimmed());
+        lastJourneyResultList->setTimeInfo(date.toString());
 
-        results.appendItem(item);
+        lastJourneyResultList->appendItem(item);
     }
 
     //Query for next and prev stuff
@@ -438,8 +439,7 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
     }
 
     conResCtxt = ConResCtxtResult.join("");
-
-    emit journeyResult(&results);
+    emit journeyResult(lastJourneyResultList);
 }
 
 void ParserHafasXml::searchJourneyLater()
@@ -499,6 +499,227 @@ void ParserHafasXml::parseSearchEalierJourney(QNetworkReply *networkReply)
 {
     parseSearchJourneyPart2(networkReply);
 }
+
+void ParserHafasXml::getJourneyDetails(QString id)
+{
+    if (currentRequestState != FahrplanNS::noneRequest) {
+        return;
+    }
+
+    //TODO: add check if detailsdata already present
+    journeyDetailRequestData.id = "";
+
+    if (lastJourneyResultList) {
+
+        for (int i = 0; i < lastJourneyResultList->itemcount(); i++) {
+            JourneyResultItem *item = lastJourneyResultList->getItem(i);
+            if (item->id() == id) {
+                currentRequestState = FahrplanNS::journeyDetailsRequest;
+                journeyDetailRequestData.id = item->id();
+                journeyDetailRequestData.date = item->date();
+                journeyDetailRequestData.duration = item->duration();
+                sendHttpRequest(item->internalData1());
+                return;
+            }
+        }
+
+    } else {
+        emit errorOccured("Internal error occured: JourneyResultdata not present!");
+    }
+}
+
+void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)
+{
+    JourneyDetailResultList results;
+
+    QBuffer readBuffer;
+    readBuffer.setData(networkReply->readAll());
+    readBuffer.open(QIODevice::ReadOnly);
+
+    QXmlQuery query;
+    query.bindVariable("path", &readBuffer);
+    query.setQuery("doc($path)/ResC/Err//@text/string()");
+
+    QStringList errorResult;
+    if (!query.evaluateTo(&errorResult))
+    {
+        qDebug() << "parserHafasXml::ErrorTest - Query Failed";
+        return;
+    }
+
+    if (errorResult.count() > 0 ) {
+        emit errorOccured(errorResult.join("").trimmed());
+        qWarning()<<"ParserHafasXml::parseSearchJourneyPart2:"<<errorResult.join("");
+        return;
+    }
+
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Station/@name/string()");
+    QStringList departureResults;
+    if (!query.evaluateTo(&departureResults))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 1 Failed";
+    }
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Station/@name/string()");
+    QStringList arrivalResults;
+    if (!query.evaluateTo(&arrivalResults))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 2 Failed";
+    }
+
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Location/Station/HafasName/Text/string()");
+    QStringList departure2Results;
+    if (!query.evaluateTo(&departure2Results))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 1b Failed";
+    }
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Location/Station/HafasName/Text/string()");
+    QStringList arrival2Results;
+    if (!query.evaluateTo(&arrival2Results))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 2b Failed";
+    }
+
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Dep/Time/string()");
+    QStringList depTimeResult;
+    if (!query.evaluateTo(&depTimeResult))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 3 Failed";
+    }
+
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Dep/Platform/Text/string()");
+    QStringList depPlatResult;
+    if (!query.evaluateTo(&depPlatResult))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 4 Failed";
+    }
+
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Arr/Time/string()");
+    QStringList arrTimeResult;
+    if (!query.evaluateTo(&arrTimeResult))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 5 Failed";
+    }
+
+    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Arr/Platform/Text/string()");
+    QStringList arrPlatResult;
+    if (!query.evaluateTo(&arrPlatResult))
+    {
+        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 6 Failed";
+    }
+
+    //It is possible, that the stationname is in two seperate fields
+    if (departureResults.count() == 0 && departure2Results.count() > 0)
+    {
+        departureResults = departure2Results;
+        arrivalResults = arrival2Results;
+    }
+
+    if (departureResults.count() == arrivalResults.count())
+    {
+        for(int i = 0; i < departureResults.count(); i++)
+        {
+            JourneyDetailResultItem *item = new JourneyDetailResultItem();
+
+            /*
+            qDebug()<<"   "<<"Journey "<<i;
+            qDebug()<<"     DepartureSt:"<<departureResults[i].trimmed();
+            qDebug()<<"     DepartureTime:"<<depTimeResult[i].trimmed();
+            qDebug()<<"     DeparturePlatform:"<<depPlatResult[i].trimmed();
+            qDebug()<<"     ArrivalSt:"<<arrivalResults[i].trimmed();
+            qDebug()<<"     ArrivalTime:"<<arrTimeResult[i].trimmed();
+            qDebug()<<"     ArrivalPlatform:"<<arrPlatResult[i].trimmed();
+            */
+
+            item->setDepartureDateTime(cleanHafasDateTime(depTimeResult[i].trimmed(), journeyDetailRequestData.date));
+            item->setArrivalDateTime(cleanHafasDateTime(arrTimeResult[i].trimmed(), journeyDetailRequestData.date));
+            item->setDepartureStation(departureResults[i].trimmed());
+            item->setArrivalStation(arrivalResults[i].trimmed());
+            if (depPlatResult[i].trimmed() != "")
+            {
+                item->setDepartureInfo(tr("Platform ") + depPlatResult[i].trimmed());
+            }
+            if (arrPlatResult[i].trimmed() != "")
+            {
+                item->setArrivalInfo(tr("Platform ") + arrPlatResult[i].trimmed());
+            }
+
+            //Check for train or if walking
+            query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Journey/JourneyAttributeList/JourneyAttribute/Attribute[@type='NAME']/AttributeVariant/Text/string()");
+            QStringList trainResult;
+            if (!query.evaluateTo(&trainResult))
+            {
+                qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 7 Failed";
+            }
+
+            if (trainResult.count() > 0)
+            {
+                //qDebug()<<"     Train:"<<trainResult.join("").trimmed();
+                item->setTrain(trainResult.join("").trimmed());
+            } else
+            {
+                query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Walk/Duration/Time/string()");
+                QStringList walkResult;
+                if (!query.evaluateTo(&walkResult))
+                {
+                   qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 8 Failed";
+                }
+
+                //Maybe its gisroute?
+                if (walkResult.count() == 0)
+                {
+                   query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/GisRoute/Duration/Time/string()");
+                   QStringList gisrouteResult;
+                   if (!query.evaluateTo(&gisrouteResult))
+                   {
+                       qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 9 Failed";
+                   }
+
+                   //Ok its a gisroute
+                   if (gisrouteResult.count() > 0)
+                   {
+                       query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/GisRoute/@type/string()");
+                       QStringList gisroutetypeResult;
+                       if (!query.evaluateTo(&gisroutetypeResult))
+                       {
+                           qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 10 Failed";
+                       }
+
+                       QString gisrouteType = gisroutetypeResult.join("").trimmed();
+                       if (gisrouteType == "FOOT")
+                       {
+                         item->setInfo(tr("Walk for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                       } else if (gisrouteType == "BIKE")
+                       {
+                         item->setInfo(tr("Use a Bike for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                       } else if (gisrouteType == "CAR")
+                       {
+                         item->setInfo(tr("Use a car for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                       } else if (gisrouteType == "TAXI")
+                       {
+                          item->setInfo(tr("Take a taxi for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                       }
+                   }
+                } else {
+                   item->setInfo(tr("Walk for ") + cleanHafasDate(walkResult.join("").trimmed() + tr(" min.")));
+                }
+            }
+
+            results.appendItem(item);
+        }
+
+        if (results.itemcount() > 0) {
+            results.setDepartureStation(results.getItem(0)->departureStation());
+            results.setArrivalStation(results.getItem(results.itemcount() - 1)->arrivalStation());
+            results.setDuration(journeyDetailRequestData.duration);
+        }
+
+        emit journeyDetailsResult(&results);
+    } else
+    {
+        emit errorOccured("Internal error occured, Error parsing details data");
+    }
+}
+
 
 QDateTime ParserHafasXml::cleanHafasDateTime(QString time, QDate date)
 {

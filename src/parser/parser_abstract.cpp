@@ -49,6 +49,8 @@ void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
         parseSearchLaterJourney(networkReply);
     } else if (internalRequestState == FahrplanNS::searchJourneyEarlierRequest) {
         parseSearchEalierJourney(networkReply);
+    } else if (internalRequestState == FahrplanNS::journeyDetailsRequest) {
+        parseJourneyDetails(networkReply);
     } else {
         qDebug()<<"Current request unhandled!";
     }
@@ -146,3 +148,16 @@ void ParserAbstract::findStationsByCoordinates(qreal longitude, qreal latitude)
      Q_UNUSED(networkReply);
      qDebug() << "ParserAbstract::parseSearchEalierJourney";
  }
+
+ void ParserAbstract::getJourneyDetails(QString id)
+ {
+     Q_UNUSED(id);
+     qDebug() << "ParserAbstract::getJourneyDetails";
+ }
+
+ void ParserAbstract::parseJourneyDetails(QNetworkReply *networkReply)
+ {
+     Q_UNUSED(networkReply);
+     qDebug() << "ParserAbstract::parseJourneyDetails";
+ }
+

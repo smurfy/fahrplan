@@ -35,7 +35,8 @@ namespace FahrplanNS
         stationsByCoordinatesRequest,
         searchJourneyRequest,
         searchJourneyLaterRequest,
-        searchJourneyEarlierRequest
+        searchJourneyEarlierRequest,
+        journeyDetailsRequest
     };
 }
 
@@ -152,10 +153,89 @@ class JourneyResultList : public QObject
         void setTimeInfo(const QString &);
     private:
         QList<JourneyResultItem*> m_items;
-        QString m_errorMsg;
         QString m_departureStation;
         QString m_arrivalStation;
         QString m_timeInfo;
+};
+
+
+class JourneyDetailResultItem : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString departureStation READ departureStation WRITE setDepartureStation)
+    Q_PROPERTY(QString departureInfo READ departureInfo WRITE setDepartureInfo)
+    Q_PROPERTY(QDateTime departureDateTime READ departureDateTime WRITE setDepartureDateTime)
+    Q_PROPERTY(QString arrivalStation READ arrivalStation WRITE setArrivalStation)
+    Q_PROPERTY(QString arrivalInfo READ arrivalInfo WRITE setArrivalInfo)
+    Q_PROPERTY(QDateTime arrivalDateTime READ arrivalDateTime WRITE setArrivalDateTime)
+    Q_PROPERTY(QString info READ info WRITE setInfo)
+    Q_PROPERTY(QString train READ train WRITE setTrain)
+
+    //Some Internal Data fields, primarly to store additional data per backend, like the details url
+    Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
+    Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
+    public:
+        QString departureStation() const;
+        void setDepartureStation(const QString &);
+        QString departureInfo() const;
+        void setDepartureInfo(const QString &);
+        QDateTime departureDateTime() const;
+        void setDepartureDateTime(const QDateTime &);
+        QString arrivalStation() const;
+        void setArrivalStation(const QString &);
+        QString arrivalInfo() const;
+        void setArrivalInfo(const QString &);
+        QDateTime arrivalDateTime() const;
+        void setArrivalDateTime(const QDateTime &);
+        QString info() const;
+        void setInfo(const QString &);
+        QString train() const;
+        void setTrain(const QString &);
+        QString internalData1() const;
+        void setInternalData1(const QString &);
+        QString internalData2() const;
+        void setInternalData2(const QString &);
+    private:
+        QString m_departureStation;
+        QString m_departureInfo;
+        QDateTime m_departureDateTime;
+        QString m_arrivalStation;
+        QString m_arrivalInfo;
+        QDateTime m_arrivalDateTime;
+        QString m_info;
+        QString m_train;
+        QString m_internalData1;
+        QString m_internalData2;
+};
+
+class JourneyDetailResultList : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal count READ itemcount)
+    Q_PROPERTY(QString duration READ duration WRITE setDuration)
+    Q_PROPERTY(QString info READ info WRITE setInfo)
+    Q_PROPERTY(QString departureStation READ departureStation WRITE setDepartureStation)
+    Q_PROPERTY(QString arrivalStation READ arrivalStation WRITE setArrivalStation)
+
+    public slots:
+        JourneyDetailResultItem *getItem(int);
+    public:
+        void appendItem(JourneyDetailResultItem *item);
+        qreal itemcount();
+        QString departureStation() const;
+        void setDepartureStation(const QString &);
+        QString arrivalStation() const;
+        void setArrivalStation(const QString &);
+        QString info() const;
+        void setInfo(const QString &);
+        QString duration() const;
+        void setDuration(const QString &);
+    private:
+        QList<JourneyDetailResultItem*> m_items;
+        QString m_departureStation;
+        QString m_arrivalStation;
+        QString m_info;
+        QString m_duration;
 };
 
 #endif // PARSER_DEFINITIONS_H

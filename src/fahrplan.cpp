@@ -32,6 +32,7 @@ Fahrplan::Fahrplan(QObject *parent) :
     connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
     connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
     connect(m_parser, SIGNAL(errorOccured(QString)), this, SLOT(errorOccured(QString)));
+    connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailsResult(JourneyDetailResultList*)));
 }
 
 ParserAbstract* Fahrplan::parser()
@@ -47,6 +48,11 @@ void Fahrplan::stationsResult(StationsResultList *result)
 void Fahrplan::journeyResult(JourneyResultList *result)
 {
     emit parserJourneyResult(result);
+}
+
+void Fahrplan::journeyDetailsResult(JourneyDetailResultList *result)
+{
+    emit parserJourneyDetailsResult(result);
 }
 
 void Fahrplan::errorOccured(QString msg)

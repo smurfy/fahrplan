@@ -36,11 +36,14 @@ class Fahrplan : public QObject
     signals:
         void parserStationsResult(StationsResultList *result);
         void parserJourneyResult(JourneyResultList *result);
+        void parserJourneyDetailsResult(JourneyDetailResultList *result);
         void parserErrorOccured(QString msg);
+
 
     private slots:
         void stationsResult(StationsResultList *result);
         void journeyResult(JourneyResultList *result);
+        void journeyDetailsResult(JourneyDetailResultList *result);
         void errorOccured(QString msg);
 
     private:

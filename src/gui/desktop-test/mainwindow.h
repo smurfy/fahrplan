@@ -42,10 +42,12 @@ private slots:
     void findStationsByCoordinatesClicked();
     void stationsResult(StationsResultList *result);
     void journeyResult(JourneyResultList *result);
+    void journeyDetailResult(JourneyDetailResultList *result);
     void searchJourneyClicked();
     void searchJourneyEarlierClicked();
     void searchJourneyLaterClicked();
     void cancelRequestClicked();
+    void getJourneyDetailsClicked();
     void errorOccured(QString msg);
 
 private:

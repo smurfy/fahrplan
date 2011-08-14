@@ -38,12 +38,14 @@ public slots:
     virtual void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
     virtual void searchJourneyLater();
     virtual void searchJourneyEarlier();
+    virtual void getJourneyDetails(QString id);
     virtual bool supportsGps();
     void cancelRequest();
 
 signals:
     void stationsResult(StationsResultList *result);
     void journeyResult(JourneyResultList *result);
+    void journeyDetailsResult(JourneyDetailResultList *result);
     void errorOccured(QString msg);
 
 protected slots:
@@ -59,6 +61,7 @@ protected:
     virtual void parseSearchJourney(QNetworkReply *networkReply);
     virtual void parseSearchLaterJourney(QNetworkReply *networkReply);
     virtual void parseSearchEalierJourney(QNetworkReply *networkReply);
+    virtual void parseJourneyDetails(QNetworkReply *networkReply);
     void sendHttpRequest(QUrl url, QByteArray data);
     void sendHttpRequest(QUrl url);
 };

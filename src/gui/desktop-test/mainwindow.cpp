@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->searchJourneyEarlier, SIGNAL(clicked()), this, SLOT(searchJourneyEarlierClicked()));
     connect(ui->searchJourneyLater, SIGNAL(clicked()), this, SLOT(searchJourneyLaterClicked()));
     connect(fahrplan, SIGNAL(parserJourneyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
+
+    connect(ui->getJourneyDetails, SIGNAL(clicked()), this, SLOT(getJourneyDetailsClicked()));
+    connect(fahrplan, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailResult(JourneyDetailResultList*)));
 }
 
 MainWindow::~MainWindow()
@@ -132,5 +135,40 @@ void MainWindow::journeyResult(JourneyResultList *result)
 
     if (result->itemcount() == 0) {
         ui->searchJourneyResults->append("No Results");
+    }
+}
+
+void MainWindow::getJourneyDetailsClicked()
+{
+    ui->getJourneyDetailsResults->clear();
+    ui->getJourneyDetailsResults->append("Loading...");
+    fahrplan->parser()->getJourneyDetails(ui->journeyResultItemId->text());
+}
+
+void MainWindow::journeyDetailResult(JourneyDetailResultList *result)
+{
+    ui->getJourneyDetailsResults->clear();
+    ui->getJourneyDetailsResults->append(result->departureStation());
+    ui->getJourneyDetailsResults->append(result->arrivalStation());
+    ui->getJourneyDetailsResults->append(result->duration());
+    ui->getJourneyDetailsResults->append(result->info());
+
+    for (int i=0; i < result->itemcount(); i++) {
+        JourneyDetailResultItem *item = result->getItem(i);
+        ui->getJourneyDetailsResults->append(">>-------------------------");
+        ui->getJourneyDetailsResults->append(item->departureStation());
+        ui->getJourneyDetailsResults->append(item->departureDateTime().toString());
+        ui->getJourneyDetailsResults->append(item->departureInfo());
+        ui->getJourneyDetailsResults->append(item->arrivalStation());
+        ui->getJourneyDetailsResults->append(item->arrivalDateTime().toString());
+        ui->getJourneyDetailsResults->append(item->arrivalInfo());
+        ui->getJourneyDetailsResults->append(item->train());
+        ui->getJourneyDetailsResults->append(item->info());
+        ui->getJourneyDetailsResults->append(item->internalData1());
+        ui->getJourneyDetailsResults->append(item->internalData2());
+    }
+
+    if (result->itemcount() == 0) {
+        ui->getJourneyDetailsResults->append("No Results");
     }
 }
