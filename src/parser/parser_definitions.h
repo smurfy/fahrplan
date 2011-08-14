@@ -34,7 +34,9 @@ namespace FahrplanNS
         canceledRequest,
         stationsByNameRequest,
         stationsByCoordinatesRequest,
-        searchJourneyRequest
+        searchJourneyRequest,
+        searchJourneyLaterRequest,
+        searchJourneyEalierRequest
     };
 }
 

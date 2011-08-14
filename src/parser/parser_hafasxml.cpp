@@ -150,6 +150,8 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
     }
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
+    conResCtxt = "";
+    lastJourneyResult = NULL;
     searchJourneyRequestData.progress = 1;
     searchJourneyRequestData.date = date;
     searchJourneyRequestData.time = time;
@@ -435,15 +437,68 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
         qDebug() << "parserHafasXml::getJourneyData 14 - Query Failed";
     }
 
-    qDebug()<<"EARLIER/LATER"<<ConResCtxtResult.join("");
-
-    /*
-    results.laterUrl = "F" + ConResCtxtResult.join("");
-    results.earlierUrl = "B" + ConResCtxtResult.join("");
-    results.items = lastItems;
-    */
+    conResCtxt = ConResCtxtResult.join("");
+    lastJourneyResult = &results;
 
     emit journeyResult(&results);
+}
+
+void ParserHafasXml::searchJourneyLater()
+{
+    if (conResCtxt.isEmpty()) {
+        //TODO: emit some sort of error signal
+        return;
+    }
+
+    if (currentRequestState != FahrplanNS::noneRequest) {
+        return;
+    }
+
+    currentRequestState = FahrplanNS::searchJourneyLaterRequest;
+
+    QByteArray postData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\">";
+    postData.append("<ConScrReq scrDir=\"F\" nrCons=\"5\">");
+    postData.append("<ConResCtxt>");
+    postData.append(conResCtxt);
+    postData.append("</ConResCtxt>");
+    postData.append("</ConScrReq>");
+    postData.append("</ReqC>");
+
+    sendHttpRequest(QUrl(baseUrl), postData);
+}
+
+void ParserHafasXml::searchJourneyEalier()
+{
+    if (conResCtxt.isEmpty()) {
+        //TODO: emit some sort of error signal
+        return;
+    }
+
+    if (currentRequestState != FahrplanNS::noneRequest) {
+        return;
+    }
+
+    currentRequestState = FahrplanNS::searchJourneyEalierRequest;
+
+    QByteArray postData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\">";
+    postData.append("<ConScrReq scrDir=\"B\" nrCons=\"5\">");
+    postData.append("<ConResCtxt>");
+    postData.append(conResCtxt);
+    postData.append("</ConResCtxt>");
+    postData.append("</ConScrReq>");
+    postData.append("</ReqC>");
+
+    sendHttpRequest(QUrl(baseUrl), postData);
+}
+
+void ParserHafasXml::parseSearchLaterJourney(QNetworkReply *networkReply)
+{
+    parseSearchJourneyPart2(networkReply);
+}
+
+void ParserHafasXml::parseSearchEalierJourney(QNetworkReply *networkReply)
+{
+    parseSearchJourneyPart2(networkReply);
 }
 
 QDateTime ParserHafasXml::cleanHafasDateTime(QString time, QDate date)

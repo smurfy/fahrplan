@@ -45,15 +45,21 @@ public slots:
     void findStationsByName(QString stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
     void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
+    void searchJourneyLater();
+    void searchJourneyEalier();
     bool supportsGps();
 
 protected:
     void parseStationsByName(QNetworkReply *networkReply);
     void parseStationsByCoordinates(QNetworkReply *networkReply);
     void parseSearchJourney(QNetworkReply *networkReply);
+    void parseSearchLaterJourney(QNetworkReply *networkReply);
+    void parseSearchEalierJourney(QNetworkReply *networkReply);
 
 private:
     QString baseUrl;
+    QString conResCtxt;
+    JourneyResultList *lastJourneyResult;
     ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
     QString getTrainRestrictionsCodes(int trainrestrictions);
     QString cleanHafasDate(QString time);

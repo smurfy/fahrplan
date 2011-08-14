@@ -33,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(fahrplan->parser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
 
     connect(ui->searchJourney, SIGNAL(clicked()), this, SLOT(searchJourneyClicked()));
+    connect(ui->searchJourneyEalier, SIGNAL(clicked()), this, SLOT(searchJourneyEalierClicked()));
+    connect(ui->searchJourneyLater, SIGNAL(clicked()), this, SLOT(searchJourneyLaterClicked()));
     connect(fahrplan->parser(), SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
 }
 
@@ -74,6 +76,21 @@ void MainWindow::searchJourneyClicked()
     ui->searchJourneyResults->append("Searching...");
     fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), "", QDate::currentDate(), QTime::currentTime(), 0, 0);
 }
+
+void MainWindow::searchJourneyEalierClicked()
+{
+    ui->searchJourneyResults->clear();
+    ui->searchJourneyResults->append("Searching...");
+    fahrplan->parser()->searchJourneyEalier();
+}
+
+void MainWindow::searchJourneyLaterClicked()
+{
+    ui->searchJourneyResults->clear();
+    ui->searchJourneyResults->append("Searching...");
+    fahrplan->parser()->searchJourneyLater();
+}
+
 
 void MainWindow::journeyResult(JourneyResultList *result)
 {

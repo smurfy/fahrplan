@@ -42,6 +42,8 @@ private slots:
     void stationsResult(StationsResultList *result);
     void journeyResult(JourneyResultList *result);
     void searchJourneyClicked();
+    void searchJourneyEalierClicked();
+    void searchJourneyLaterClicked();
 
 private:
     Ui::MainWindow *ui;

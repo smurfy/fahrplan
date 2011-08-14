@@ -36,6 +36,8 @@ public slots:
     virtual void findStationsByName(QString stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
     virtual void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
+    virtual void searchJourneyLater();
+    virtual void searchJourneyEalier();
     virtual bool supportsGps();
 
 signals:
@@ -52,6 +54,8 @@ protected:
     virtual void parseStationsByName(QNetworkReply *networkReply);
     virtual void parseStationsByCoordinates(QNetworkReply *networkReply);
     virtual void parseSearchJourney(QNetworkReply *networkReply);
+    virtual void parseSearchLaterJourney(QNetworkReply *networkReply);
+    virtual void parseSearchEalierJourney(QNetworkReply *networkReply);
     void sendHttpRequest(QUrl url, QByteArray data);
     void sendHttpRequest(QUrl url);
 };
