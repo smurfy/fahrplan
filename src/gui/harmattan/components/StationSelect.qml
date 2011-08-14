@@ -98,7 +98,7 @@ Page {
 
         Item {
             id: delegateItem
-            width: listView.width - 20
+            width: listView.width
             height: 30 + lbl_stationname.height
 
             BorderImage {

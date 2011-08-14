@@ -26,6 +26,8 @@ int main(int argc, char *argv[])
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
         qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
+        qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
+        qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
 
         QDeclarativeView view;
         view.setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));
