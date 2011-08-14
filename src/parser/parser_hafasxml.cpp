@@ -396,13 +396,17 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
 
         QDate date = QDate::fromString(dateResult.join("").trimmed(), "yyyyMMdd");
 
+        for (int j = 0; j < trainsResult.count(); j++) {
+            trainsResult[j] = trainsResult[j].trimmed();
+        }
+
         JourneyResultItem *item = new JourneyResultItem();
         item->setDate(date);
         item->setId(resultIds[i]);
         item->setTransfers(transfersResult.join("").trimmed());
         item->setDuration(cleanHafasDate(durationResult.join("").trimmed()));
         item->setMiscInfo("");
-        item->setTrainType(trainsResult.join(",").trimmed());
+        item->setTrainType(trainsResult.join(", ").trimmed());
         item->setDepartureTime(cleanHafasDate(depTimeResult.join("").trimmed()));
         item->setArrivalTime(cleanHafasDate(arrTimeResult.join("").trimmed()));
 
