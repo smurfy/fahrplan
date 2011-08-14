@@ -81,7 +81,7 @@ void MainWindow::searchJourneyEalierClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
-    fahrplan->parser()->searchJourneyEalier();
+    fahrplan->parser()->searchJourneyEarlier();
 }
 
 void MainWindow::searchJourneyLaterClicked()

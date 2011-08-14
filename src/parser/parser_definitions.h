@@ -36,7 +36,7 @@ namespace FahrplanNS
         stationsByCoordinatesRequest,
         searchJourneyRequest,
         searchJourneyLaterRequest,
-        searchJourneyEalierRequest
+        searchJourneyEarlierRequest
     };
 }
 

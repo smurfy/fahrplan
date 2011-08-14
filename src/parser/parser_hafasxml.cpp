@@ -467,7 +467,7 @@ void ParserHafasXml::searchJourneyLater()
     sendHttpRequest(QUrl(baseUrl), postData);
 }
 
-void ParserHafasXml::searchJourneyEalier()
+void ParserHafasXml::searchJourneyEarlier()
 {
     if (conResCtxt.isEmpty()) {
         //TODO: emit some sort of error signal
@@ -478,7 +478,7 @@ void ParserHafasXml::searchJourneyEalier()
         return;
     }
 
-    currentRequestState = FahrplanNS::searchJourneyEalierRequest;
+    currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
 
     QByteArray postData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\">";
     postData.append("<ConScrReq scrDir=\"B\" nrCons=\"5\">");

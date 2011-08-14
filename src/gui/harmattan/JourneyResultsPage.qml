@@ -16,11 +16,37 @@ Page {
         width:  parent.width
         height: parent.height
 
-        MyComponents.TitleBar {
+        Item {
             id: titleBar
-            titleText: "Search Results"
-            width: parent.width * 2
-            opacity: 0.9
+
+            height: journeyStations.height + journeyDate.height + 30
+            width: parent.width
+
+            Label {
+                id: journeyStations
+                text: ""
+                font.bold: true
+                font.pixelSize: 32
+                anchors {
+                    left: parent.left
+                    leftMargin: 10
+                    top: parent.top
+                    topMargin: 20
+                }
+                width: parent.width
+            }
+
+            Label {
+                id: journeyDate
+                color: "Grey"
+                anchors {
+                    left: parent.left
+                    leftMargin: 10
+                    top: journeyStations.bottom
+                    topMargin: 10
+                }
+                width: parent.width
+            }
         }
 
         Item {
@@ -38,10 +64,10 @@ Page {
                 id: lbl_departuretime
                 anchors {
                     left: parent.left
-                    leftMargin: 20
+                    leftMargin: 10
                 }
                 text: "Dep."
-                width: (parent.width / 4)
+                width: (parent.width  - 40) / 4
             }
 
             Label {
@@ -51,7 +77,7 @@ Page {
                     leftMargin: 10
                 }
                 text: "Arr."
-                width: (parent.width / 4)
+                width: (parent.width  - 40) / 4
             }
 
             Label {
@@ -60,8 +86,9 @@ Page {
                     left: lbl_arrivaltime.right
                     leftMargin: 10
                 }
+                horizontalAlignment: Text.AlignHCenter
                 text: "Dur."
-                width: (parent.width / 4)
+                width: (parent.width  - 40) / 4
             }
 
             Label {
@@ -70,8 +97,9 @@ Page {
                     left: lbl_duration.right
                     leftMargin: 10
                 }
+                horizontalAlignment: Text.AlignHCenter
                 text: "Trans."
-                width: (parent.width / 4)
+                width: (parent.width  - 40) / 4
             }
         }
 
@@ -127,10 +155,10 @@ Page {
                     id: lbl_departuretime
                     anchors {
                         left: parent.left
-                        leftMargin: 20
+                        leftMargin: 10
                     }
                     text: departureTime
-                    width: (parent.width / 4)
+                    width: (parent.width  - 40) / 4
                 }
 
                 Label {
@@ -140,7 +168,7 @@ Page {
                         leftMargin: 10
                     }
                     text: arrivalTime
-                    width: (parent.width / 4)
+                    width: (parent.width  - 40) / 4
                 }
 
                 Label {
@@ -149,8 +177,9 @@ Page {
                         left: lbl_arrivaltime.right
                         leftMargin: 10
                     }
+                    horizontalAlignment: Text.AlignHCenter
                     text: duration
-                    width: (parent.width / 4)
+                    width: (parent.width  - 40) / 4
                 }
 
                 Label {
@@ -159,8 +188,9 @@ Page {
                         left: lbl_duration.right
                         leftMargin: 10
                     }
+                    horizontalAlignment: Text.AlignHCenter
                     text: transfers
-                    width: (parent.width / 4)
+                    width: (parent.width  - 40) / 4
                 }
 
                 Label {
@@ -189,6 +219,12 @@ Page {
             console.log("Got results");
             console.log(result.count);
 
+            journeyStations.text = result.departureStation +
+                    " to " +
+                    result.arrivalStation;
+
+            journeyDate.text = result.timeInfo;
+
             journeyResultModel.clear();
             for (var i = 0; i < result.count; i++) {
                 var item = result.getItem(i);
@@ -213,6 +249,23 @@ Page {
             iconId: "toolbar-back"
             onClicked: {
                 pageStack.pop(2);
+            }
+        }
+
+        ToolButtonRow {
+            ToolButton {
+                text:"Earlier"
+                onClicked: {
+                    pageStack.pop();
+                    fahrplanBackend.parser.searchJourneyEarlier();
+                }
+            }
+            ToolButton {
+                text:"Later"
+                onClicked: {
+                    pageStack.pop();
+                    fahrplanBackend.parser.searchJourneyLater();
+                }
             }
         }
     }

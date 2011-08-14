@@ -37,7 +37,7 @@ public slots:
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
     virtual void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
     virtual void searchJourneyLater();
-    virtual void searchJourneyEalier();
+    virtual void searchJourneyEarlier();
     virtual bool supportsGps();
 
 signals:
