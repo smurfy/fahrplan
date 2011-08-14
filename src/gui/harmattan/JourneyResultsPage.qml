@@ -197,7 +197,7 @@ Page {
                     id: lbl_traintyp
                     anchors {
                         left: parent.left
-                        leftMargin: 20
+                        leftMargin: 10
                         top: lbl_departuretime.bottom
                         topMargin: 5
                     }
