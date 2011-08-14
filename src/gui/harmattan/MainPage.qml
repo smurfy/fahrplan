@@ -54,10 +54,6 @@ Page {
             subTitleText: "please select"
             width: parent.width
             onClicked: {
-                var d = new Date();
-                datePicker.year = d.getFullYear();
-                datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
-                datePicker.day = d.getDate();
                 datePicker.open();
             }
         }
@@ -67,10 +63,6 @@ Page {
             subTitleText: "please select"
             width: parent.width
             onClicked: {
-                var d = new Date();
-                timePicker.hour = d.getHours();
-                timePicker.minute = d.getMinutes();
-                timePicker.second = d.getSeconds();
                 timePicker.open();
             }
         }
@@ -86,7 +78,6 @@ Page {
         }
 
         onClicked: {
-            console.log("Searching")
             pageStack.push(loadingPage)
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
@@ -129,6 +120,13 @@ Page {
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             datePickerButton.subTitleText = Qt.formatDate(selDate);
         }
+        Component.onCompleted: {
+            var d = new Date();
+            datePicker.year = d.getFullYear();
+            datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
+            datePicker.day = d.getDate();
+            datePickerButton.subTitleText = Qt.formatDate(d);
+        }
     }
 
     TimePickerDialog {
@@ -139,6 +137,13 @@ Page {
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
             timePickerButton.subTitleText = Qt.formatTime(selTime);
+        }
+        Component.onCompleted: {
+            var d = new Date();
+            timePicker.hour = d.getHours();
+            timePicker.minute = d.getMinutes();
+            timePicker.second = d.getSeconds();
+            timePickerButton.subTitleText = Qt.formatTime(d);
         }
     }
 
@@ -164,7 +169,11 @@ Page {
                 banner.text = "No results found";
                 banner.show();
             }
-
+        }
+        onParserErrorOccured: {
+            pageStack.pop();
+            banner.text = msg;
+            banner.show();
         }
     }
 }

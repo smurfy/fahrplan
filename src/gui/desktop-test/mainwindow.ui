@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>444</width>
+    <width>518</width>
     <height>406</height>
    </rect>
   </property>
@@ -32,7 +32,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>421</width>
+      <width>491</width>
       <height>141</height>
      </rect>
     </property>
@@ -94,12 +94,12 @@
      <rect>
       <x>10</x>
       <y>230</y>
-      <width>421</width>
+      <width>491</width>
       <height>131</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="searchJourneyEalier">
+   <widget class="QPushButton" name="searchJourneyEarlier">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -109,7 +109,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>searchJourneyEalier</string>
+     <string>searchJourneyEarlier</string>
     </property>
    </widget>
    <widget class="QPushButton" name="searchJourneyLater">
@@ -123,6 +123,19 @@
     </property>
     <property name="text">
      <string>searchJourneyLater</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cancelRequest">
+    <property name="geometry">
+     <rect>
+      <x>414</x>
+      <y>10</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>cancelRequest</string>
     </property>
    </widget>
   </widget>

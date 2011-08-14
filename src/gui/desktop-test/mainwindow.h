@@ -22,6 +22,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include "../../fahrplan.h"
 
 namespace Ui {
@@ -42,8 +43,10 @@ private slots:
     void stationsResult(StationsResultList *result);
     void journeyResult(JourneyResultList *result);
     void searchJourneyClicked();
-    void searchJourneyEalierClicked();
+    void searchJourneyEarlierClicked();
     void searchJourneyLaterClicked();
+    void cancelRequestClicked();
+    void errorOccured(QString msg);
 
 private:
     Ui::MainWindow *ui;

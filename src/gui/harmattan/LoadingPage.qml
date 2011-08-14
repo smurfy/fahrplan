@@ -48,8 +48,13 @@ Page {
                 iconId: "toolbar-back"
                 onClicked: {
                     pageStack.pop();
+                    fahrplanBackend.parser.cancelRequest();
                 }
             }
+        }
+
+        Fahrplan.Backend {
+            id: fahrplanBackend
         }
 
     }

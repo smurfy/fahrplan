@@ -28,19 +28,34 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     fahrplan = new Fahrplan();
 
+    connect(ui->cancelRequest, SIGNAL(clicked()), this, SLOT(cancelRequestClicked()));
+    connect(fahrplan, SIGNAL(parserErrorOccured(QString)), this, SLOT(errorOccured(QString)));
+
     connect(ui->findStationsByName, SIGNAL(clicked()), this, SLOT(findStationsByNameClicked()));
     connect(ui->findStationsByCoordinates, SIGNAL(clicked()), this, SLOT(findStationsByCoordinatesClicked()));
-    connect(fahrplan->parser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
+    connect(fahrplan, SIGNAL(parserStationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
 
     connect(ui->searchJourney, SIGNAL(clicked()), this, SLOT(searchJourneyClicked()));
-    connect(ui->searchJourneyEalier, SIGNAL(clicked()), this, SLOT(searchJourneyEalierClicked()));
+    connect(ui->searchJourneyEarlier, SIGNAL(clicked()), this, SLOT(searchJourneyEarlierClicked()));
     connect(ui->searchJourneyLater, SIGNAL(clicked()), this, SLOT(searchJourneyLaterClicked()));
-    connect(fahrplan->parser(), SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
+    connect(fahrplan, SIGNAL(parserJourneyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::errorOccured(QString msg)
+{
+    QMessageBox msgBox;
+    msgBox.setText(msg);
+    msgBox.exec();
+}
+
+void MainWindow::cancelRequestClicked()
+{
+    fahrplan->parser()->cancelRequest();
 }
 
 void MainWindow::findStationsByNameClicked()
@@ -77,7 +92,7 @@ void MainWindow::searchJourneyClicked()
     fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), "", QDate::currentDate(), QTime::currentTime(), 0, 0);
 }
 
-void MainWindow::searchJourneyEalierClicked()
+void MainWindow::searchJourneyEarlierClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");

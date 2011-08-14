@@ -31,7 +31,6 @@ namespace FahrplanNS
 {
     enum curReqStates {
         noneRequest,
-        canceledRequest,
         stationsByNameRequest,
         stationsByCoordinatesRequest,
         searchJourneyRequest,

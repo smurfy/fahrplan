@@ -39,10 +39,12 @@ public slots:
     virtual void searchJourneyLater();
     virtual void searchJourneyEarlier();
     virtual bool supportsGps();
+    void cancelRequest();
 
 signals:
     void stationsResult(StationsResultList *result);
     void journeyResult(JourneyResultList *result);
+    void errorOccured(QString msg);
 
 protected slots:
     void networkReplyFinished(QNetworkReply*);
@@ -50,6 +52,7 @@ protected slots:
 protected:
     QNetworkAccessManager *NetworkManager;
     FahrplanNS::curReqStates currentRequestState;
+    QNetworkReply *lastRequest;
 
     virtual void parseStationsByName(QNetworkReply *networkReply);
     virtual void parseStationsByCoordinates(QNetworkReply *networkReply);

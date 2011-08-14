@@ -33,6 +33,7 @@ ParserAbstract::ParserAbstract(QObject *parent)
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 {
     FahrplanNS::curReqStates internalRequestState = currentRequestState;
+    lastRequest = NULL;
 
     //We overwrite the currentRequestState to noneRequest here, because this allows us to set a new one
     //if needed inside the parser
@@ -53,6 +54,13 @@ void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
     }
 }
 
+void ParserAbstract::cancelRequest()
+{
+    if (lastRequest) {
+        lastRequest->abort();
+    }
+}
+
 void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
 {
     QNetworkRequest request;
@@ -60,9 +68,9 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
     request.setRawHeader("User-Agent", "-");
 
     if (data.isNull()) {
-        NetworkManager->get(request);
+        lastRequest = NetworkManager->get(request);
     } else {
-        NetworkManager->post(request, data);
+        lastRequest = NetworkManager->post(request, data);
     }
 }
 

@@ -31,6 +31,7 @@ ParserHafasXml::ParserHafasXml(QObject *parent)
      //baseUrl = "http://www.fahrplaner.de/hafas/query.exe"; //?? No Gps, returns only one result
      //baseUrl = "http://www.rejseplanen.dk/bin/query.exe";//?? No Gps, returns only one result //no xmlhandle, detaildate already present!
      //baseUrl = "http://airs1.septa.org/bin/query.exe";// not working at all
+     //baseUrl = "http://mobiliteitszentral.hafas.de/hafas/query.exe";// Luxenburg, //no xmlhandle, detaildate already present!
 
 }
 
@@ -151,7 +152,7 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     conResCtxt = "";
-    lastJourneyResult = NULL;
+
     searchJourneyRequestData.progress = 1;
     searchJourneyRequestData.date = date;
     searchJourneyRequestData.time = time;
@@ -272,7 +273,7 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
 
         sendHttpRequest(QUrl(baseUrl), postData);
     } else {
-        //TODO: emit some kind of error signal the gui can hook
+        emit errorOccured("Internal Error occured, missing station ids");
         qWarning()<<"ParserHafasXml::parseSearchJourneyPart1: MISSING External Ids!";
     }
 }
@@ -292,12 +293,11 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
     QStringList errorResult;
     if (!query.evaluateTo(&errorResult))
     {
-        //TODO: emit some kind of error signal the gui can hook
         qDebug() << "parserHafasXml::ErrorTest - Query Failed";
     }
 
     if (errorResult.count() > 0 ) {
-        //TODO: emit some kind of error signal the gui can hook
+        emit errorOccured(errorResult.join("").trimmed());
         qWarning()<<"ParserHafasXml::parseSearchJourneyPart2:"<<errorResult.join("");
         return;
     }
@@ -438,7 +438,6 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
     }
 
     conResCtxt = ConResCtxtResult.join("");
-    lastJourneyResult = &results;
 
     emit journeyResult(&results);
 }
@@ -446,7 +445,7 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
 void ParserHafasXml::searchJourneyLater()
 {
     if (conResCtxt.isEmpty()) {
-        //TODO: emit some sort of error signal
+        emit errorOccured("Internal error occured, going later is not possible");
         return;
     }
 
@@ -470,7 +469,7 @@ void ParserHafasXml::searchJourneyLater()
 void ParserHafasXml::searchJourneyEarlier()
 {
     if (conResCtxt.isEmpty()) {
-        //TODO: emit some sort of error signal
+        emit errorOccured("Internal error occured, going earlier is not possible");
         return;
     }
 

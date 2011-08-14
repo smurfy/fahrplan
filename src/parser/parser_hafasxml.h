@@ -59,7 +59,6 @@ protected:
 private:
     QString baseUrl;
     QString conResCtxt;
-    JourneyResultList *lastJourneyResult;
     ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
     QString getTrainRestrictionsCodes(int trainrestrictions);
     QString cleanHafasDate(QString time);
