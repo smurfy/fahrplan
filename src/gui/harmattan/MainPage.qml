@@ -159,11 +159,32 @@ Page {
             anchors.topMargin: 10
     }
 
+    Timer {
+        id: showResultsTimer
+        interval: 800
+        running: false
+        repeat: false
+        onTriggered: {
+            pageStack.push(resultsPage);
+        }
+
+    }
+
     Fahrplan.Backend {
         id: fahrplanBackend
         onParserJourneyResult: {
+
+            /*
+               An error can occour here, if the result is returned quicker than
+               the pagestack is popped so we use a timer here if the pagestack is busy.
+             */
             if (result.count > 0) {
-                pageStack.push(resultsPage);
+                if (pageStack.busy) {
+                    showResultsTimer.interval = 800
+                } else {
+                    showResultsTimer.interval = 1
+                }
+                 showResultsTimer.start();
             } else {
                 pageStack.pop();
                 banner.text = "No results found";
