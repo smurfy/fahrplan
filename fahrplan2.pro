@@ -32,6 +32,7 @@ SOURCES += src/main.cpp \
 OTHER_FILES += \
     src/gui/harmattan/MainPage.qml \
     src/gui/harmattan/JourneyResultsPage.qml \
+    src/gui/harmattan/JourneyDetailsResultsPage.qml \
     src/gui/harmattan/LoadingPage.qml \
     src/gui/harmattan/main.qml \
     src/gui/harmattan/components/TitleBar.qml \

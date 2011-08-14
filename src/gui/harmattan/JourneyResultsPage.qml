@@ -137,7 +137,8 @@ Page {
                 id: mouseArea
                 anchors.fill: background
                 onClicked: {
-
+                    pageStack.push(loadingPage);
+                    fahrplanBackend.parser.getJourneyDetails(id);
                 }
             }
 
@@ -268,5 +269,9 @@ Page {
                 }
             }
         }
+    }
+
+    LoadingPage {
+        id: loadingPage
     }
 }

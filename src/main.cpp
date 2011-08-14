@@ -28,6 +28,8 @@ int main(int argc, char *argv[])
         qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
         qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
+        qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
+        qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
 
         QDeclarativeView view;
         view.setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));

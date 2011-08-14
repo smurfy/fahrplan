@@ -103,6 +103,10 @@ Page {
         }
     }
 
+    JourneyDetailsResultsPage {
+        id: detailsResultsPage
+    }
+
     JourneyResultsPage {
         id: resultsPage
     }
@@ -167,32 +171,73 @@ Page {
         onTriggered: {
             pageStack.push(resultsPage);
         }
+    }
 
+    Timer {
+        id: showDetailsResultsTimer
+        interval: 800
+        running: false
+        repeat: false
+        onTriggered: {
+            pageStack.push(detailsResultsPage);
+        }
+    }
+
+    Timer {
+        id: hideLoadingTimer
+        interval: 800
+        running: false
+        repeat: false
+        onTriggered: {
+            pageStack.pop();
+        }
     }
 
     Fahrplan.Backend {
         id: fahrplanBackend
+        /*
+           An error can occour here, if the result is returned quicker than
+           the pagestack is popped so we use a timer here if the pagestack is busy.
+         */
         onParserJourneyResult: {
-
-            /*
-               An error can occour here, if the result is returned quicker than
-               the pagestack is popped so we use a timer here if the pagestack is busy.
-             */
-            if (result.count > 0) {
-                if (pageStack.busy) {
-                    showResultsTimer.interval = 800
-                } else {
-                    showResultsTimer.interval = 1
-                }
-                 showResultsTimer.start();
+            if (pageStack.busy) {
+                showResultsTimer.interval = 800
+                hideLoadingTimer.interval = 800
             } else {
-                pageStack.pop();
+                showResultsTimer.interval = 1
+                hideLoadingTimer.interval = 1
+            }
+            if (result.count > 0) {
+                showResultsTimer.start();
+            } else {
+                hideLoadingTimer.start();
+                banner.text = "No results found";
+                banner.show();
+            }
+        }
+        onParserJourneyDetailsResult: {
+            if (pageStack.busy) {
+                showDetailsResultsTimer.interval = 800
+                hideLoadingTimer.interval = 800
+            } else {
+                showDetailsResultsTimer.interval = 1
+                hideLoadingTimer.interval = 1
+            }
+            if (result.count > 0) {
+                showDetailsResultsTimer.start();
+            } else {
+                hideLoadingTimer.start();
                 banner.text = "No results found";
                 banner.show();
             }
         }
         onParserErrorOccured: {
-            pageStack.pop();
+            if (pageStack.busy) {
+                hideLoadingTimer.interval = 800
+            } else {
+                hideLoadingTimer.interval = 1
+            }
+            hideLoadingTimer.start();
             banner.text = msg;
             banner.show();
         }
