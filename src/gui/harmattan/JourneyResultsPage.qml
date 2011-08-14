@@ -5,52 +5,16 @@ import "components" as MyComponents
 
 Page {
     property alias fahrplanBackend: fahrplanBackend
-    property alias searchLoading: searchLoading
     property alias searchResults: searchResults
 
+    id: searchResultsPage
+
     tools: journeyResultsToolbar
-
-    Item {
-        id: searchLoading
-
-        width:  parent.width
-        height: parent.height
-
-        Text {
-            id: searchLoadingText
-            text: "Searching..."
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                top: parent.top
-                topMargin: (parent.height / 2) - searchLoadingText.height - searchIndicator.height
-            }
-            font {
-                pointSize: 24
-            }
-        }
-
-        BusyIndicator {
-            id: searchIndicator
-            anchors {
-                top: searchLoadingText.bottom;
-                topMargin: 20;
-                horizontalCenter: parent.horizontalCenter
-            }
-            running: true
-            visible: true
-
-            platformStyle: BusyIndicatorStyle { size: "large" }
-        }
-
-    }
-
     Item {
         id: searchResults
 
         width:  parent.width
         height: parent.height
-
-        visible: false;
 
         MyComponents.TitleBar {
             id: titleBar
@@ -60,7 +24,6 @@ Page {
         }
 
         Item {
-
             id: listHead
 
             width: parent.width;
@@ -124,22 +87,8 @@ Page {
             model: journeyResultModel
             delegate:  journeyResultDelegate
             clip: true
-            boundsBehavior: "StopAtBounds"
-        }
-
-        ToolBarLayout {
-            id: journeyResultsToolbar
-
-            ToolIcon {
-                id : backIcon;
-                iconId: "toolbar-back"
-                onClicked: {
-                    pageStack.pop();
-                }
-            }
         }
     }
-
 
     Component {
         id: journeyResultDelegate
@@ -237,8 +186,6 @@ Page {
     Fahrplan.Backend {
         id: fahrplanBackend
         onParserJourneyResult: {
-            searchResults.visible = true;
-            searchLoading.visible = false;
             console.log("Got results");
             console.log(result.count);
 
@@ -254,6 +201,18 @@ Page {
                     "transfers": item.transfers,
                     "miscInfo": item.miscInfo,
                 });
+            }
+        }
+    }
+
+    ToolBarLayout {
+        id: journeyResultsToolbar
+
+        ToolIcon {
+            id : backIcon;
+            iconId: "toolbar-back"
+            onClicked: {
+                pageStack.pop(2);
             }
         }
     }

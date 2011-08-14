@@ -2,9 +2,12 @@ import QtQuick 1.1
 import com.meego 1.0
 import com.nokia.extras 1.0
 import "components" as MyComponents
+import Fahrplan 1.0 as Fahrplan
 
 Page {
     id: mainPage
+
+    tools: mainToolbar
 
     MyComponents.TitleBar {
         id: titleBar
@@ -84,12 +87,10 @@ Page {
 
         onClicked: {
             console.log("Searching")
-            resultsPage.searchLoading.visible = true;
-            resultsPage.searchResults.visible = false;
-            pageStack.push(resultsPage)
+            pageStack.push(loadingPage)
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            resultsPage.fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, "", selDate, selTime, 0, 0);
+            fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, "", selDate, selTime, 0, 0);
         }
     }
 
@@ -115,6 +116,10 @@ Page {
         id: resultsPage
     }
 
+    LoadingPage {
+        id: loadingPage
+    }
+
     DatePickerDialog {
         id: datePicker
         titleText: "Date"
@@ -134,6 +139,32 @@ Page {
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
             timePickerButton.subTitleText = Qt.formatTime(selTime);
+        }
+    }
+
+    ToolBarLayout {
+        id: mainToolbar
+    }
+
+    InfoBanner{
+            id: banner
+            objectName: "fahrplanInfoBanner"
+            text: ""
+            anchors.top: button.bottom
+            anchors.topMargin: 10
+    }
+
+    Fahrplan.Backend {
+        id: fahrplanBackend
+        onParserJourneyResult: {
+            if (result.count > 0) {
+                pageStack.push(resultsPage);
+            } else {
+                pageStack.pop();
+                banner.text = "No results found";
+                banner.show();
+            }
+
         }
     }
 }

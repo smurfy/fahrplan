@@ -4,10 +4,10 @@ Item {
     id: titleBar
 
     property alias titleText: title.text
-    height: 60
+    height: 70
 
     BorderImage {
-        source: "image://theme/meegotouch-dialog-header-background"
+        source: "image://theme/meegotouch-list-header-background"
         width: parent.width
         height: parent.height + 14
         y: -7
@@ -20,8 +20,11 @@ Item {
         style: Text.Raised
         color: "Black"
         styleColor: "Grey"
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        anchors {
+            left: parent.left
+            leftMargin: 10
+            top: parent.top
+            topMargin: 20
+        }
     }
 }

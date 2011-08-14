@@ -15,23 +15,23 @@ Page {
         width:  stationSelect.width
         height: stationSelect.height
 
-        MyComponents.TitleBar {
-            id: titleBar
-            titleText: "Find station"
-            width: parent.width * 2
-            opacity: 0.9
-        }
-
         Item {
             id: search
+
+            height: 70
+
             anchors {
                 left: parent.left
                 right: parent.right
                 leftMargin: 10
-                top: titleBar.bottom
-                topMargin: 30
             }
-            height: searchBox.height
+
+            BorderImage {
+                source: "image://theme/meegotouch-list-header-background"
+                width: parent.width
+                height: parent.height + 14
+                y: -7
+            }
 
             TextField {
                 id: searchBox
@@ -39,18 +39,42 @@ Page {
                     left: parent.left
                     right: searchButtons.left
                     rightMargin: 10
+                    top: parent.top
+                    topMargin: 10
                 }
 
                 onTextChanged: {
-                    stationsResultModel.clear();
-                    stationsResultModel.append({
-                        "name": "Searching ...",
-                        "process": true,
-                        "internal": true,
-                        "miscinfo": ""
-                    })
-                    fahrplanBackend.parser.findStationsByName(searchBox.text);
+                    search.findStationsByName();
                 }
+
+
+                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
+
+                placeholderText: "Search for Station..."
+                platformStyle: TextFieldStyle { paddingRight: searchButton.width }
+                Image {
+                    id: searchButton
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "image://theme/icon-m-common-search"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            search.findStationsByName();
+                        }
+                    }
+                }
+            }
+
+            function findStationsByName(){
+                stationsResultModel.clear();
+                stationsResultModel.append({
+                    "name": "Searching ...",
+                    "process": true,
+                    "internal": true,
+                    "miscinfo": ""
+                })
+                fahrplanBackend.parser.findStationsByName(searchBox.text);
             }
 
             Button {
@@ -58,6 +82,8 @@ Page {
                 anchors {
                     right: parent.right
                     rightMargin: 10
+                    top: parent.top
+                    topMargin: 10
                 }
                 platformStyle: ButtonStyle { inverted: true }
                 iconSource: "image://theme/icon-s-status-gps"
@@ -81,15 +107,16 @@ Page {
         ListView {
             id: listView
             anchors {
-                topMargin: 20
+                topMargin: 10
                 top: search.bottom
+                bottom: stationSelectToolbar.top
+                bottomMargin: 10
             }
-            height: parent.height - stationSelectToolbar.height - titleBar.height - search.height
+            height: parent.height - stationSelectToolbar.height
             width: parent.width
             model: stationsResultModel
             delegate: stationsResultDelegate
             clip: true
-            boundsBehavior: "StopAtBounds"
         }
     }
 
