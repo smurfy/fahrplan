@@ -24,10 +24,10 @@ ParserHafasXml::ParserHafasXml(QObject *parent)
 {
      Q_UNUSED(parent);
 
-     //baseUrl = "http://fahrplan.oebb.at/bin/query.exe"; //OEB (fully operational/no RT) //no xmlhandle, detaildate already present!
+     baseUrl = "http://fahrplan.oebb.at/bin/query.exe"; //OEB (fully operational/no RT) //no xmlhandle, detaildate already present!
      //baseUrl = "http://hafas.bene-system.com/bin/query.exe"; //hafas dev?? system? / no gps
      //baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe"; //bahn.de (journey stuff fails)
-     baseUrl = "http://fahrplan.sbb.ch/bin/query.exe"; //SBB (only returns one journey) / Xmlhandle present
+     //baseUrl = "http://fahrplan.sbb.ch/bin/query.exe"; //SBB (only returns one journey) / Xmlhandle present
      //baseUrl = "http://www.fahrplaner.de/hafas/query.exe"; //?? No Gps, returns only one result
      //baseUrl = "http://www.rejseplanen.dk/bin/query.exe";//?? No Gps, returns only one result //no xmlhandle, detaildate already present!
      //baseUrl = "http://airs1.septa.org/bin/query.exe";// not working at all
@@ -282,6 +282,7 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
 void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
 {
     lastJourneyResultList = new JourneyResultList();
+    journeyDetailInlineData.clear();;
 
     QBuffer readBuffer;
     readBuffer.setData(networkReply->readAll());
@@ -419,8 +420,12 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
             internalData1.prepend(baseUrl);
             item->setInternalData1(internalData1);
         } else {
-            qWarning()<<"Todo for inline Details Data!";
-            //item.detailsInfo = parseJourneyDataDetails(data, resultIds[i], date);
+            journeyDetailRequestData.id = item->id();
+            journeyDetailRequestData.date = item->date();
+            journeyDetailRequestData.duration = item->duration();
+            QByteArray data = readBuffer.buffer();
+            JourneyDetailResultList *results = internalParseJourneyDetails(data);
+            journeyDetailInlineData.append(results);
         }
 
         lastJourneyResultList->setDepartureStation(depResult.join("").trimmed());
@@ -506,9 +511,26 @@ void ParserHafasXml::getJourneyDetails(QString id)
         return;
     }
 
-    //TODO: add check if detailsdata already present
     journeyDetailRequestData.id = "";
 
+
+    //Some hafasxml backend provide the detailsdata inline
+    //if so our parser already stored them
+    if (journeyDetailInlineData.count() > 0 ) {
+
+        for (int i = 0; i < journeyDetailInlineData.count(); i++) {
+            JourneyDetailResultList *item = journeyDetailInlineData.at(i);
+            if (item->id() == id) {
+                emit journeyDetailsResult(item);
+                return;
+            }
+        }
+        emit errorOccured("Internal error occured: JourneyResultdata not present!");
+        return;
+    }
+
+    //It seams we don't have the detailsdata internaly stored,
+    //So we fetch them remotly.
     if (lastJourneyResultList) {
 
         for (int i = 0; i < lastJourneyResultList->itemcount(); i++) {
@@ -528,12 +550,12 @@ void ParserHafasXml::getJourneyDetails(QString id)
     }
 }
 
-void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)
+JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray data)
 {
-    JourneyDetailResultList results;
+    JourneyDetailResultList *results = new JourneyDetailResultList();
 
     QBuffer readBuffer;
-    readBuffer.setData(networkReply->readAll());
+    readBuffer.setData(data);
     readBuffer.open(QIODevice::ReadOnly);
 
     QXmlQuery query;
@@ -544,13 +566,13 @@ void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)
     if (!query.evaluateTo(&errorResult))
     {
         qDebug() << "parserHafasXml::ErrorTest - Query Failed";
-        return;
+        return results;
     }
 
     if (errorResult.count() > 0 ) {
         emit errorOccured(errorResult.join("").trimmed());
         qWarning()<<"ParserHafasXml::parseSearchJourneyPart2:"<<errorResult.join("");
-        return;
+        return results;
     }
 
     query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Station/@name/string()");
@@ -704,22 +726,28 @@ void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)
                 }
             }
 
-            results.appendItem(item);
+            results->appendItem(item);
         }
 
-        if (results.itemcount() > 0) {
-            results.setDepartureStation(results.getItem(0)->departureStation());
-            results.setArrivalStation(results.getItem(results.itemcount() - 1)->arrivalStation());
-            results.setDuration(journeyDetailRequestData.duration);
+        if (results->itemcount() > 0) {
+            results->setDepartureStation(results->getItem(0)->departureStation());
+            results->setArrivalStation(results->getItem(results->itemcount() - 1)->arrivalStation());
+            results->setDuration(journeyDetailRequestData.duration);
+            results->setId(journeyDetailRequestData.id);
         }
 
-        emit journeyDetailsResult(&results);
+       return results;
     } else
     {
         emit errorOccured("Internal error occured, Error parsing details data");
     }
 }
 
+void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)
+{
+    JourneyDetailResultList *results = internalParseJourneyDetails(networkReply->readAll());
+    emit journeyDetailsResult(results);
+}
 
 QDateTime ParserHafasXml::cleanHafasDateTime(QString time, QDate date)
 {

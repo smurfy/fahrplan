@@ -240,6 +240,16 @@ void JourneyResultItem::setInternalData2(const QString &internalData2)
 
 //------------- JourneyDetailResultList
 
+QString JourneyDetailResultList::id() const
+{
+    return m_id;
+}
+
+void JourneyDetailResultList::setId(const QString &id)
+{
+    m_id = id;
+}
+
 qreal JourneyDetailResultList::itemcount()
 {
     return m_items.count();
@@ -296,7 +306,6 @@ void JourneyDetailResultList::setDuration(const QString &duration)
 }
 
 //------------- JourneyDetailResultItem
-
 
 QString JourneyDetailResultItem::departureStation() const
 {

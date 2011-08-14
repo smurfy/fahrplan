@@ -71,11 +71,13 @@ private:
     JourneyResultList *lastJourneyResultList;
     ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
     ParserHafasXmlJourneyDetailRequestData journeyDetailRequestData;
+    QList<JourneyDetailResultList*> journeyDetailInlineData;
     QString getTrainRestrictionsCodes(int trainrestrictions);
     QString cleanHafasDate(QString time);
     QDateTime cleanHafasDateTime(QString time, QDate date);
     void parseSearchJourneyPart1(QNetworkReply *networkReply);
     void parseSearchJourneyPart2(QNetworkReply *networkReply);
+    JourneyDetailResultList* internalParseJourneyDetails(QByteArray data);
 };
 
 #endif // PARSER_HAFASXML_H

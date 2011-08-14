@@ -211,6 +211,7 @@ class JourneyDetailResultItem : public QObject
 class JourneyDetailResultList : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString id READ id WRITE setId)
     Q_PROPERTY(qreal count READ itemcount)
     Q_PROPERTY(QString duration READ duration WRITE setDuration)
     Q_PROPERTY(QString info READ info WRITE setInfo)
@@ -222,6 +223,8 @@ class JourneyDetailResultList : public QObject
     public:
         void appendItem(JourneyDetailResultItem *item);
         qreal itemcount();
+        QString id() const;
+        void setId(const QString &);
         QString departureStation() const;
         void setDepartureStation(const QString &);
         QString arrivalStation() const;
@@ -232,6 +235,7 @@ class JourneyDetailResultList : public QObject
         void setDuration(const QString &);
     private:
         QList<JourneyDetailResultItem*> m_items;
+        QString m_id;
         QString m_departureStation;
         QString m_arrivalStation;
         QString m_info;
