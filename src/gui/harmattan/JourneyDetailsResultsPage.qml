@@ -216,20 +216,37 @@ Page {
         onParserJourneyDetailsResult: {
             console.log("Got detail results");
             console.log(result.count);
-            journeyStations.text = result.departureStation + " to " + result.arrivalStation;
-            journeyDate.text = "Duration: " + result.duration;
-            journeyDetailResultModel.clear();
-            for (var i = 0; i < result.count; i++) {
-                var item = result.getItem(i);
-                journeyDetailResultModel.append({
-                    "departureTime": "Dep. " + Qt.formatTime(item.departureDateTime,"hh:mm"),
-                    "arrivalTime": "Arr. " + Qt.formatTime(item.arrivalDateTime,"hh:mm"),
-                    "departureStation": item.departureStation,
-                    "arrivalStation": item.arrivalStation,
-                    "departureInfo": item.departureInfo,
-                    "arrivalInfo": item.arrivalInfo,
-                    "train": item.train + " " + item.info
-                });
+
+            if (result.count > 0) {
+                journeyStations.text = result.departureStation + " to " + result.arrivalStation;
+                var departureItem = result.getItem(0);
+                var arrivalItem = result.getItem(result.count-1);
+
+                var departureDate = Qt.formatDate(departureItem.departureDateTime);
+                var arrivalDate = Qt.formatDate(arrivalItem.arrivalDateTime);
+
+                if (departureDate == arrivalDate) {
+                    arrivalDate = "";
+                }
+
+                journeyDate.text = departureDate + " " + Qt.formatTime(departureItem.departureDateTime,"hh:mm") + " - " +
+                        arrivalDate + " " + Qt.formatTime(arrivalItem.arrivalDateTime,"hh:mm");
+
+                journeyDate.text += "<br/>Duration: " + result.duration;
+
+                journeyDetailResultModel.clear();
+                for (var i = 0; i < result.count; i++) {
+                    var item = result.getItem(i);
+                    journeyDetailResultModel.append({
+                        "departureTime": "Dep. " + Qt.formatTime(item.departureDateTime,"hh:mm"),
+                        "arrivalTime": "Arr. " + Qt.formatTime(item.arrivalDateTime,"hh:mm"),
+                        "departureStation": item.departureStation,
+                        "arrivalStation": item.arrivalStation,
+                        "departureInfo": item.departureInfo,
+                        "arrivalInfo": item.arrivalInfo,
+                        "train": item.train + " " + item.info
+                    });
+                }
             }
         }
     }
