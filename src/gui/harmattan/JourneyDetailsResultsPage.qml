@@ -52,8 +52,9 @@ Page {
                 top: titleBar.bottom
                 topMargin: 10
                 bottom: journeyResultsToolbar.top
+                bottomMargin: 10
             }
-            height: (parent.height - titleBar.height) - 10
+            height: (parent.height - titleBar.height) - 20
             width: parent.width
             model: journeyDetailResultModel
             delegate:  journeyDetailResultDelegate
@@ -67,7 +68,7 @@ Page {
         Item {
             id: delegateItem
             width: listView.width
-            height: 30 + item_stations.height + lbl_train.height
+            height: 30 + item_departurestations.height + lbl_train.height + item_arrivalstations.height
 
             Item {
                 anchors {
@@ -81,14 +82,85 @@ Page {
 
                 Item {
 
-                    id: item_stations
+                    id: item_departurestations
 
-                    height: lbl_departurestation.height + lbl_arrivalstation.height + 30
+                    height: lbl_departurestation.height + 30
                     width: parent.width
 
 
                     BorderImage {
-                        id: background
+                        id: item_departurestations_background
+                        anchors.fill: parent
+                        source: "image://theme/meegotouch-list-background-pressed-center"
+                    }
+
+                    Label {
+                        id: lbl_departuretime
+                        anchors {
+                            left: parent.left
+                            leftMargin: 10
+                            top: parent.top
+                            topMargin: 10
+                        }
+                        text: departureTime
+                        width: (parent.width - 40) / 3
+                    }
+
+
+                    Label {
+                        id: lbl_departureinfo
+                        anchors {
+                            left: lbl_departuretime.right
+                            leftMargin: 10
+                            top: parent.top
+                            topMargin: 10
+                        }
+                        text: departureInfo
+                        width: (parent.width - 40) / 3
+                    }
+
+
+                    Label {
+                        id: lbl_departurestation
+                        anchors {
+                            right: parent.right
+                            rightMargin: 10
+                            top: parent.top
+                            topMargin: 10
+                        }
+                        font.bold: true
+                        text: departureStation
+                        horizontalAlignment: Text.AlignRight
+                        width: (parent.width  - 40) / 3
+                    }
+                }
+
+                Label {
+                    id: lbl_train
+                    anchors {
+                        left: parent.left
+                        leftMargin: 10
+                        top: item_departurestations.bottom
+                        topMargin: 15
+                    }
+                    text: train
+                    width: (parent.width  - 40)
+                }
+
+                Item {
+
+                    id: item_arrivalstations
+
+                    height: lbl_arrivalstation.height + 30
+                    width: parent.width
+
+                    anchors {
+                        top: lbl_train.bottom
+                        topMargin: 15
+                    }
+
+                    BorderImage {
+                        id: item_arrivalstations_background
                         anchors.fill: parent
                         source: "image://theme/meegotouch-list-background-pressed-center"
                     }
@@ -106,39 +178,15 @@ Page {
                     }
 
                     Label {
-                        id: lbl_departuretime
-                        anchors {
-                            left: parent.left
-                            leftMargin: 10
-                            top: lbl_arrivalstation.bottom
-                            topMargin: 10
-                        }
-                        text: departureTime
-                        width: (parent.width - 40) / 3
-                    }
-
-                    Label {
-                        id: lbl_arrivalinfo
-                        anchors {
-                            left: lbl_arrivaltime.right
-                            leftMargin: 10
-                            top: parent.top
-                            topMargin: 10
-                        }
-                        text: arrivalInfo
-                        width: (parent.width  - 40) / 3
-                    }
-
-                    Label {
-                        id: lbl_departureinfo
-                        anchors {
-                            left: lbl_departuretime.right
-                            leftMargin: 10
-                            top: lbl_arrivalinfo.bottom
-                            topMargin: 10
-                        }
-                        text: departureInfo
-                        width: (parent.width - 40) / 3
+                       id: lbl_arrivalinfo
+                       anchors {
+                           left: lbl_arrivaltime.right
+                           leftMargin: 10
+                           top: parent.top
+                           topMargin: 10
+                       }
+                       text: arrivalInfo
+                       width: (parent.width  - 40) / 3
                     }
 
                     Label {
@@ -154,32 +202,6 @@ Page {
                         text: arrivalStation
                         width: (parent.width  - 40) / 3
                     }
-
-                    Label {
-                        id: lbl_departurestation
-                        anchors {
-                            right: parent.right
-                            rightMargin: 10
-                            top: lbl_arrivalstation.bottom
-                            topMargin: 10
-                        }
-                        font.bold: true
-                        text: departureStation
-                        horizontalAlignment: Text.AlignRight
-                        width: (parent.width  - 40) / 3
-                    }
-                }
-
-                Label {
-                    id: lbl_train
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        top: item_stations.bottom
-                        topMargin: 15
-                    }
-                    text: train
-                    width: (parent.width  - 40)
                 }
             }
         }
@@ -197,42 +219,17 @@ Page {
             journeyStations.text = result.departureStation + " to " + result.arrivalStation;
             journeyDate.text = "Duration: " + result.duration;
             journeyDetailResultModel.clear();
-            for (var i = 0; i <= result.count; i++) {
-                if (i == 0) {
-                    var item = result.getItem(i);
-                    journeyDetailResultModel.append({
-                        "departureTime": "Dep. " + Qt.formatTime(item.departureDateTime,"hh:mm"),
-                        "arrivalTime": "",
-                        "departureStation": item.departureStation,
-                        "arrivalStation": "",
-                        "departureInfo": item.departureInfo,
-                        "arrivalInfo": "",
-                        "train": item.train + " " + item.info
-                    });
-                } else if (i == result.count) {
-                    var lastItem = result.getItem(i-1);
-                    journeyDetailResultModel.append({
-                        "departureTime": "",
-                        "arrivalTime": "Arr. " + Qt.formatTime(lastItem.arrivalDateTime,"hh:mm"),
-                        "departureStation": "",
-                        "arrivalStation": lastItem.arrivalStation,
-                        "departureInfo": "",
-                        "arrivalInfo": lastItem.arrivalInfo,
-                        "train": ""
-                    });
-                } else {
-                    var item = result.getItem(i);
-                    var lastItem = result.getItem(i-1);
-                    journeyDetailResultModel.append({
-                        "departureTime": "Dep. " + Qt.formatTime(item.departureDateTime,"hh:mm"),
-                        "arrivalTime": "Arr. " + Qt.formatTime(lastItem.arrivalDateTime,"hh:mm"),
-                        "departureStation": item.departureStation,
-                        "arrivalStation": lastItem.arrivalStation,
-                        "departureInfo": item.departureInfo,
-                        "arrivalInfo": lastItem.arrivalInfo,
-                        "train": item.train + " " + item.info
-                    });
-                }
+            for (var i = 0; i < result.count; i++) {
+                var item = result.getItem(i);
+                journeyDetailResultModel.append({
+                    "departureTime": "Dep. " + Qt.formatTime(item.departureDateTime,"hh:mm"),
+                    "arrivalTime": "Arr. " + Qt.formatTime(item.arrivalDateTime,"hh:mm"),
+                    "departureStation": item.departureStation,
+                    "arrivalStation": item.arrivalStation,
+                    "departureInfo": item.departureInfo,
+                    "arrivalInfo": item.arrivalInfo,
+                    "train": item.train + " " + item.info
+                });
             }
         }
     }
@@ -244,7 +241,7 @@ Page {
             id : backIcon;
             iconId: "toolbar-back"
             onClicked: {
-                pageStack.pop(2);
+                pageStack.pop();
             }
         }
     }
