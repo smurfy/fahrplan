@@ -686,8 +686,19 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
                    qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 8 Failed";
                 }
 
+                //Maybe its a transfer?
+                QStringList transferResult;
+                if (walkResult.count() == 0) {
+                    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Transfer/Duration/Time/string()");
+
+                    if (!query.evaluateTo(&transferResult))
+                    {
+                       qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 8b Failed";
+                    }
+                }
+
                 //Maybe its gisroute?
-                if (walkResult.count() == 0)
+                if (walkResult.count() == 0 && transferResult.count() == 0)
                 {
                    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/GisRoute/Duration/Time/string()");
                    QStringList gisrouteResult;
@@ -722,7 +733,14 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
                        }
                    }
                 } else {
-                   item->setInfo(tr("Walk for ") + cleanHafasDate(walkResult.join("").trimmed() + tr(" min.")));
+
+                    if (transferResult.count() > 0) {
+                        item->setInfo(tr("Transfer for ") + cleanHafasDate(transferResult.join("").trimmed() + tr(" min.")));
+                    }
+
+                    if (walkResult.count() > 0) {
+                        item->setInfo(tr("Walk for ") + cleanHafasDate(walkResult.join("").trimmed() + tr(" min.")));
+                    }
                 }
             }
 
