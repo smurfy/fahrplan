@@ -4,7 +4,6 @@
         <file>src/gui/harmattan/MainPage.qml</file>
         <file>src/gui/harmattan/components/StationSelect.qml</file>
         <file>src/gui/harmattan/components/SubTitleButton.qml</file>
-        <file>src/gui/harmattan/components/TitleBar.qml</file>
         <file>src/gui/harmattan/JourneyResultsPage.qml</file>
         <file>src/gui/harmattan/LoadingPage.qml</file>
         <file>src/gui/harmattan/JourneyDetailsResultsPage.qml</file>

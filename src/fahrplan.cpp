@@ -40,6 +40,11 @@ ParserAbstract* Fahrplan::parser()
     return m_parser;
 }
 
+QString Fahrplan::parserName() const
+{
+    return "HafasXML";
+}
+
 void Fahrplan::stationsResult(StationsResultList *result)
 {
     emit parserStationsResult(result);

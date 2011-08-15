@@ -51,7 +51,7 @@ Page {
             anchors {
                 top: titleBar.bottom
                 topMargin: 10
-                bottom: journeyResultsToolbar.top
+                bottom: journeyDetailResultsToolbar.top
                 bottomMargin: 10
             }
             height: (parent.height - titleBar.height) - 20

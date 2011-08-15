@@ -23,20 +23,18 @@ Page {
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: 10
             }
 
-            BorderImage {
-                source: "image://theme/meegotouch-list-header-background"
-                width: parent.width
-                height: parent.height + 14
-                y: -7
+            Rectangle {
+                anchors.fill: parent
+                color: "LightGrey"
             }
 
             TextField {
                 id: searchBox
                 anchors {
                     left: parent.left
+                    leftMargin: 10
                     right: searchButtons.left
                     rightMargin: 10
                     top: parent.top

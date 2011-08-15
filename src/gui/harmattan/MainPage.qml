@@ -9,11 +9,58 @@ Page {
 
     tools: mainToolbar
 
-    MyComponents.TitleBar {
+    Item {
         id: titleBar
-        titleText: "Fahrplan"
-        width: parent.width * 2
-        opacity: 0.9
+
+        width: parent.width
+        height: 70
+
+        Rectangle {
+            anchors.fill: parent
+            color: "LightGrey"
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: "Grey"
+            visible: mouseArea.pressed
+        }
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            enabled: parent.enabled
+            onClicked: {
+                console.log("TODO Backend parser switch");
+            }
+        }
+
+        Label {
+            anchors {
+                left: parent.left
+                leftMargin: 10
+                verticalCenter: parent.verticalCenter
+                top: parent.top
+                topMargin: 20
+            }
+            font.bold: true;
+            font.pixelSize: 32
+
+            text: fahrplanBackend.parserName
+        }
+
+        Image {
+            id: icon
+
+            anchors {
+                right: parent.right
+                rightMargin: 10
+                verticalCenter: parent.verticalCenter
+            }
+            height: sourceSize.height
+            width: sourceSize.width
+            source: "image://theme/meegotouch-combobox-indicator"
+        }
     }
 
     ButtonColumn {

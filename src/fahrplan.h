@@ -28,10 +28,12 @@ class Fahrplan : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(ParserAbstract *parser READ parser)
+    Q_PROPERTY(QString parserName READ parserName)
 
     public:
         explicit Fahrplan(QObject *parent = 0);
         ParserAbstract* parser();
+        QString parserName() const;
 
     signals:
         void parserStationsResult(StationsResultList *result);

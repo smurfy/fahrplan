@@ -35,7 +35,6 @@ OTHER_FILES += \
     src/gui/harmattan/JourneyDetailsResultsPage.qml \
     src/gui/harmattan/LoadingPage.qml \
     src/gui/harmattan/main.qml \
-    src/gui/harmattan/components/TitleBar.qml \
     src/gui/harmattan/components/SubTitleButton.qml \
     src/gui/harmattan/components/StationSelect.qml \
     data/fahrplan2.desktop \
