@@ -87,6 +87,16 @@ Page {
             }
         }
         MyComponents.SubTitleButton {
+            id: viaButton
+            titleText: "Via Station"
+            subTitleText: "please select"
+            width: parent.width
+            visible: fahrplanBackend.parser.supportsVia();
+            onClicked: {
+                pageStack.push(viaStationSelect)
+            }
+        }
+        MyComponents.SubTitleButton {
             id: arrivalButton
             titleText: "Arrival Station"
             subTitleText: "please select"
@@ -128,7 +138,7 @@ Page {
             pageStack.push(loadingPage)
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, "", selDate, selTime, 0, 0);
+            fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaButton.subTitleText, selDate, selTime, 0, 0);
         }
     }
 
@@ -146,6 +156,15 @@ Page {
 
         onStationSelected: {
             arrivalButton.subTitleText = name;
+            pageStack.pop();
+        }
+    }
+
+    MyComponents.StationSelect {
+        id: viaStationSelect
+
+        onStationSelected: {
+            viaButton.subTitleText = name;
             pageStack.pop();
         }
     }
