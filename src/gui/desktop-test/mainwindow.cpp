@@ -92,7 +92,7 @@ void MainWindow::searchJourneyClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
-    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), "", QDate::currentDate(), QTime::currentTime(), 0, 0);
+    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), ui->viaStation->text(), QDate::currentDate(), QTime::currentTime(), 0, 0);
 }
 
 void MainWindow::searchJourneyEarlierClicked()

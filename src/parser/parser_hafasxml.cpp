@@ -145,7 +145,6 @@ QString ParserHafasXml::getTrainRestrictionsCodes(int trainrestrictions)
 
 void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
 {
-    Q_UNUSED(viaStation);
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
     }
@@ -168,6 +167,11 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
     postData.append("<LocValReq id=\"to\" maxNr=\"1\"><ReqLoc match= \"");
     postData.append(arrivalStation);
     postData.append("\" type=\"ST\"/></LocValReq>");
+    if (!viaStation.isEmpty()) {
+        postData.append("<LocValReq id=\"via\" maxNr=\"1\"><ReqLoc match= \"");
+        postData.append(viaStation);
+        postData.append("\" type=\"ST\"/></LocValReq>");
+    }
     postData.append("</ReqC>");
 
     sendHttpRequest(QUrl(baseUrl), postData);
@@ -240,6 +244,16 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
         postData.append(trainrestr);
         postData.append("\"></Prod>");
         postData.append("</Start>");
+        if (!viaStationId.isEmpty()) {
+            postData.append("<Via min=\"0\">");
+            postData.append("<Station externalId=\"");
+            postData.append(viaStationId);
+            postData.append("\" distance=\"0\"></Station>");
+            postData.append("<Prod prod=\"");
+            postData.append(trainrestr);
+            postData.append("\"></Prod>");
+            postData.append("</Via>");
+        }
         postData.append("<Dest min=\"0\">");
         postData.append("<Station externalId=\"");
         postData.append(arrivalStationId);

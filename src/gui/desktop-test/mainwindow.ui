@@ -53,7 +53,7 @@
    <widget class="QPushButton" name="searchJourney">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>370</x>
       <y>200</y>
       <width>131</width>
       <height>23</height>
@@ -73,20 +73,20 @@
      </rect>
     </property>
     <property name="text">
-     <string>München Hbf</string>
+     <string>Zurich</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="arrivalStation">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>250</x>
       <y>200</y>
       <width>113</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>BERLIN</string>
+     <string>Reckingen</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="searchJourneyResults">
@@ -172,6 +172,19 @@
       <width>491</width>
       <height>171</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="viaStation">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>200</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Göschenen</string>
     </property>
    </widget>
   </widget>
