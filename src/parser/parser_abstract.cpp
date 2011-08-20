@@ -86,6 +86,11 @@ bool ParserAbstract::supportsGps()
     return false;
 }
 
+bool ParserAbstract::supportsVia()
+{
+    return false;
+}
+
 void ParserAbstract::findStationsByName(QString stationName)
 {
     Q_UNUSED(stationName);

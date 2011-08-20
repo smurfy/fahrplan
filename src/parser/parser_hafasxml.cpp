@@ -40,6 +40,11 @@ bool ParserHafasXml::supportsGps()
     return true;
 }
 
+bool ParserHafasXml::supportsVia()
+{
+    return true;
+}
+
 void ParserHafasXml::findStationsByName(QString stationName)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {

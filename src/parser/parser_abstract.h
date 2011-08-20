@@ -40,6 +40,7 @@ public slots:
     virtual void searchJourneyEarlier();
     virtual void getJourneyDetails(QString id);
     virtual bool supportsGps();
+    virtual bool supportsVia();
     void cancelRequest();
 
 signals:

@@ -56,6 +56,7 @@ public slots:
     void searchJourneyEarlier();
     void getJourneyDetails(QString id);
     bool supportsGps();
+    bool supportsVia();
 
 protected:
     void parseStationsByName(QNetworkReply *networkReply);
