@@ -42,7 +42,25 @@ ParserAbstract* Fahrplan::parser()
 
 QString Fahrplan::parserName() const
 {
-    return "HafasXML";
+    return m_parser->getName();
+}
+
+QStringList Fahrplan::getParserList()
+{
+    QStringList result;
+    result.append(ParserHafasXml::getName());
+    return result;
+}
+
+void Fahrplan::setParser(int index)
+{
+    switch (index) {
+        case 0:
+            m_parser = new ParserHafasXml();
+            break;
+    }
+
+    emit parserChanged(parserName());
 }
 
 void Fahrplan::stationsResult(StationsResultList *result)

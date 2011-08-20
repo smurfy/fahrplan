@@ -23,6 +23,7 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QStringListModel>
 #include "../../fahrplan.h"
 
 namespace Ui {
@@ -46,9 +47,11 @@ private slots:
     void searchJourneyClicked();
     void searchJourneyEarlierClicked();
     void searchJourneyLaterClicked();
+    void parserCurrentIndexChanged(int index);
     void cancelRequestClicked();
     void getJourneyDetailsClicked();
     void errorOccured(QString msg);
+    void parserChanged(QString name);
 
 private:
     Ui::MainWindow *ui;

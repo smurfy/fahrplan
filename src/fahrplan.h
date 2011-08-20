@@ -35,12 +35,16 @@ class Fahrplan : public QObject
         ParserAbstract* parser();
         QString parserName() const;
 
+    public slots:
+        QStringList getParserList();
+        void setParser(int index);
+
     signals:
         void parserStationsResult(StationsResultList *result);
         void parserJourneyResult(JourneyResultList *result);
         void parserJourneyDetailsResult(JourneyDetailResultList *result);
         void parserErrorOccured(QString msg);
-
+        void parserChanged(QString name);
 
     private slots:
         void stationsResult(StationsResultList *result);

@@ -42,11 +42,42 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->getJourneyDetails, SIGNAL(clicked()), this, SLOT(getJourneyDetailsClicked()));
     connect(fahrplan, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailResult(JourneyDetailResultList*)));
+
+    connect(fahrplan, SIGNAL(parserChanged(QString)), this, SLOT(parserChanged(QString)));
+
+    connect( ui->parser, SIGNAL( currentIndexChanged(int) ), this, SLOT( parserCurrentIndexChanged(int) ) );
+
+    QStringListModel *parserModel = new QStringListModel();
+    parserModel->setStringList(fahrplan->getParserList());
+    ui->parser->setModel(parserModel);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::parserCurrentIndexChanged(int index)
+{
+    fahrplan->setParser(index);
+}
+
+void MainWindow::parserChanged(QString name)
+{
+    Q_UNUSED(name);
+
+    QStringList trainRestrictions = fahrplan->parser()->getTrainRestrictions();
+    ui->trainRestrictions->setEnabled(false);
+    if (trainRestrictions.count() > 0)
+    {
+        QStringListModel *trainrestrModel = new QStringListModel();
+        trainrestrModel->setStringList(trainRestrictions);
+        ui->trainRestrictions->setModel(trainrestrModel);
+        ui->trainRestrictions->setEnabled(true);
+        ui->trainRestrictions->setCurrentIndex(0);
+    }
+
+    ui->viaStation->setEnabled(fahrplan->parser()->supportsVia());
 }
 
 void MainWindow::errorOccured(QString msg)
@@ -92,7 +123,7 @@ void MainWindow::searchJourneyClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
-    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), ui->viaStation->text(), QDate::currentDate(), QTime::currentTime(), 0, 0);
+    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), ui->viaStation->text(), QDate::currentDate(), QTime::currentTime(), 0, ui->trainRestrictions->currentIndex());
 }
 
 void MainWindow::searchJourneyEarlierClicked()

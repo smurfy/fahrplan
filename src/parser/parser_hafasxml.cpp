@@ -35,6 +35,11 @@ ParserHafasXml::ParserHafasXml(QObject *parent)
 
 }
 
+QString ParserHafasXml::getName()
+{
+    return "HafasXML";
+}
+
 bool ParserHafasXml::supportsGps()
 {
     return true;
@@ -146,6 +151,16 @@ QString ParserHafasXml::getTrainRestrictionsCodes(int trainrestrictions)
     }
 
     return trainrestr;
+}
+
+QStringList ParserHafasXml::getTrainRestrictions()
+{
+    QStringList result;
+    result.append(tr("All"));
+    result.append(tr("All without ICE"));
+    result.append(tr("Only local transport"));
+    result.append(tr("Local transport without S-Bahn"));
+    return result;
 }
 
 void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)

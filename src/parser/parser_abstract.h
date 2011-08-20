@@ -31,6 +31,7 @@ class ParserAbstract : public QObject
     Q_OBJECT
 public:
     explicit ParserAbstract(QObject *parent = 0);
+    static QString getName();
 
 public slots:
     virtual void findStationsByName(QString stationName);
@@ -41,6 +42,7 @@ public slots:
     virtual void getJourneyDetails(QString id);
     virtual bool supportsGps();
     virtual bool supportsVia();
+    virtual QStringList getTrainRestrictions();
     void cancelRequest();
 
 signals:

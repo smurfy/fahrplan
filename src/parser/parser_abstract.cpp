@@ -30,6 +30,11 @@ ParserAbstract::ParserAbstract(QObject *parent)
     currentRequestState = FahrplanNS::noneRequest;
 }
 
+QString ParserAbstract::getName()
+{
+    return "Abstract";
+}
+
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 {
     FahrplanNS::curReqStates internalRequestState = currentRequestState;
@@ -89,6 +94,12 @@ bool ParserAbstract::supportsGps()
 bool ParserAbstract::supportsVia()
 {
     return false;
+}
+
+QStringList ParserAbstract::getTrainRestrictions()
+{
+    QStringList result;
+    return result;
 }
 
 void ParserAbstract::findStationsByName(QString stationName)

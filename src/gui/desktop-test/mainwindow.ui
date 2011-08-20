@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>514</width>
+    <width>661</width>
     <height>625</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="findStationsByName">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>240</x>
       <y>10</y>
       <width>131</width>
       <height>23</height>
@@ -32,7 +32,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>491</width>
+      <width>641</width>
       <height>141</height>
      </rect>
     </property>
@@ -40,7 +40,7 @@
    <widget class="QPushButton" name="findStationsByCoordinates">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>380</x>
       <y>10</y>
       <width>151</width>
       <height>23</height>
@@ -53,7 +53,7 @@
    <widget class="QPushButton" name="searchJourney">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>520</x>
       <y>200</y>
       <width>131</width>
       <height>23</height>
@@ -94,7 +94,7 @@
      <rect>
       <x>10</x>
       <y>230</y>
-      <width>491</width>
+      <width>651</width>
       <height>131</height>
      </rect>
     </property>
@@ -128,7 +128,7 @@
    <widget class="QPushButton" name="cancelRequest">
     <property name="geometry">
      <rect>
-      <x>414</x>
+      <x>540</x>
       <y>10</y>
       <width>101</width>
       <height>23</height>
@@ -169,7 +169,7 @@
      <rect>
       <x>10</x>
       <y>440</y>
-      <width>491</width>
+      <width>641</width>
       <height>171</height>
      </rect>
     </property>
@@ -185,6 +185,26 @@
     </property>
     <property name="text">
      <string>Göschenen</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="trainRestrictions">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>200</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="parser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
     </property>
    </widget>
   </widget>
