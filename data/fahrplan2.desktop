@@ -3,7 +3,7 @@ Encoding=UTF-8
 Version=1.0
 Type=Application
 Terminal=false
-Name=fahrplan2
+Name=Fahrplan
 Exec=invoker --single-instance --type=d /opt/fahrplan2/bin/fahrplan2
 Icon=/usr/share/icons/hicolor/scalable/apps/fahrplan2.svg
 X-Window-Icon=
