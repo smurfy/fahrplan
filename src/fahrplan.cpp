@@ -25,29 +25,27 @@ ParserAbstract *Fahrplan::m_parser;
 Fahrplan::Fahrplan(QObject *parent) :
     QObject(parent)
 {
-    if (!m_parser) {
-        m_parser = new ParserHafasXml();
-    }
-
-    connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
-    connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
-    connect(m_parser, SIGNAL(errorOccured(QString)), this, SLOT(errorOccured(QString)));
-    connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailsResult(JourneyDetailResultList*)));
 }
 
 ParserAbstract* Fahrplan::parser()
 {
+    if (!m_parser) {
+        setParser(0);
+    }
     return m_parser;
 }
 
 QString Fahrplan::parserName() const
 {
-    return m_parser->getName();
+    return m_parser->name();
 }
 
 QStringList Fahrplan::getParserList()
 {
     QStringList result;
+    result.append(ParserXmlOebbAt::getName());
+    result.append(ParserXmlRejseplanenDk::getName());
+    result.append(ParserXmlSbbCh::getName());
     result.append(ParserHafasXml::getName());
     return result;
 }
@@ -56,9 +54,24 @@ void Fahrplan::setParser(int index)
 {
     switch (index) {
         case 0:
+            m_parser = new ParserXmlOebbAt();
+            break;
+        case 1:
+            m_parser = new ParserXmlRejseplanenDk();
+            break;
+        case 2:
+            m_parser = new ParserXmlSbbCh();
+            break;
+        case 3:
             m_parser = new ParserHafasXml();
             break;
     }
+
+    //We need to reconnect all Signals to the new Parser
+    connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
+    connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
+    connect(m_parser, SIGNAL(errorOccured(QString)), this, SLOT(errorOccured(QString)));
+    connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailsResult(JourneyDetailResultList*)));
 
     emit parserChanged(parserName());
 }

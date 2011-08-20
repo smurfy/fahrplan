@@ -25,6 +25,9 @@ SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
     src/parser/parser_abstract.cpp \
     src/parser/parser_definitions.cpp \
+    src/parser/parser_xmlsbbch.cpp \
+    src/parser/parser_xmlrejseplanendk.cpp \
+    src/parser/parser_xmloebbat.cpp \
     src/gui/desktop-test/mainwindow.cpp \
     src/fahrplan.cpp
 
@@ -70,6 +73,9 @@ HEADERS += \
     src/parser/parser_hafasxml.h \
     src/parser/parser_abstract.h \
     src/parser/parser_definitions.h \
+    src/parser/parser_xmlsbbch.h \
+    src/parser/parser_xmlrejseplanendk.h \
+    src/parser/parser_xmloebbat.h \
     src/gui/desktop-test/mainwindow.h \
     src/fahrplan.h
 

@@ -35,11 +35,6 @@ ParserHafasXml::ParserHafasXml(QObject *parent)
 
 }
 
-QString ParserHafasXml::getName()
-{
-    return "HafasXML";
-}
-
 bool ParserHafasXml::supportsGps()
 {
     return true;

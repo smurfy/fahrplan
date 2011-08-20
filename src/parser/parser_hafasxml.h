@@ -47,7 +47,8 @@ class ParserHafasXml : public ParserAbstract
     Q_OBJECT
 public:
     explicit ParserHafasXml(QObject *parent = 0);
-    static QString getName();
+    static QString getName() { return "HafasXML"; }
+    QString name() { return "HafasXML"; }
 
 public slots:
     void findStationsByName(QString stationName);
@@ -61,6 +62,7 @@ public slots:
     QStringList getTrainRestrictions();
 
 protected:
+    QString baseUrl;
     void parseStationsByName(QNetworkReply *networkReply);
     void parseStationsByCoordinates(QNetworkReply *networkReply);
     void parseSearchJourney(QNetworkReply *networkReply);
@@ -69,7 +71,6 @@ protected:
     void parseJourneyDetails(QNetworkReply *networkReply);
 
 private:
-    QString baseUrl;
     QString conResCtxt;
     JourneyResultList *lastJourneyResultList;
     ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;

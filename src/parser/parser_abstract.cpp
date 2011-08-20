@@ -30,11 +30,6 @@ ParserAbstract::ParserAbstract(QObject *parent)
     currentRequestState = FahrplanNS::noneRequest;
 }
 
-QString ParserAbstract::getName()
-{
-    return "Abstract";
-}
-
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 {
     FahrplanNS::curReqStates internalRequestState = currentRequestState;

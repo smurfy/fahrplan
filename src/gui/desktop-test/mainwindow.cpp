@@ -64,7 +64,7 @@ void MainWindow::parserCurrentIndexChanged(int index)
 
 void MainWindow::parserChanged(QString name)
 {
-    Q_UNUSED(name);
+    setWindowTitle("Fahrplan - TestApp - " + name);
 
     QStringList trainRestrictions = fahrplan->parser()->getTrainRestrictions();
     ui->trainRestrictions->setEnabled(false);

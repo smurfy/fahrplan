@@ -29,9 +29,11 @@
 class ParserAbstract : public QObject
 {
     Q_OBJECT
+
 public:
     explicit ParserAbstract(QObject *parent = 0);
-    static QString getName();
+    static QString getName() { return "Abstract"; }
+    virtual QString name() { return "Abstract"; }
 
 public slots:
     virtual void findStationsByName(QString stationName);

@@ -23,6 +23,9 @@
 
 #include <QObject>
 #include "parser/parser_hafasxml.h"
+#include "parser/parser_xmloebbat.h"
+#include "parser/parser_xmlrejseplanendk.h"
+#include "parser/parser_xmlsbbch.h"
 
 class Fahrplan : public QObject
 {
