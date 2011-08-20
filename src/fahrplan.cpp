@@ -37,6 +37,9 @@ ParserAbstract* Fahrplan::parser()
 
 QString Fahrplan::parserName() const
 {
+    if (!m_parser) {
+        return "-";
+    }
     return m_parser->name();
 }
 
