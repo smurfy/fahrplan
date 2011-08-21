@@ -207,10 +207,6 @@ Page {
         id: trainrestrictionsModel
     }
 
-    JourneyDetailsResultsPage {
-        id: detailsResultsPage
-    }
-
     JourneyResultsPage {
         id: resultsPage
     }
@@ -278,16 +274,6 @@ Page {
     }
 
     Timer {
-        id: showDetailsResultsTimer
-        interval: 800
-        running: false
-        repeat: false
-        onTriggered: {
-            pageStack.push(detailsResultsPage);
-        }
-    }
-
-    Timer {
         id: hideLoadingTimer
         interval: 800
         running: false
@@ -319,22 +305,14 @@ Page {
                 banner.show();
             }
         }
+
         onParserJourneyDetailsResult: {
-            if (pageStack.busy) {
-                showDetailsResultsTimer.interval = 800
-                hideLoadingTimer.interval = 800
-            } else {
-                showDetailsResultsTimer.interval = 1
-                hideLoadingTimer.interval = 1
-            }
-            if (result.count > 0) {
-                showDetailsResultsTimer.start();
-            } else {
-                hideLoadingTimer.start();
-                banner.text = "No results found";
+            if (result.count <= 0) {
+                banner.text = "Error loading details";
                 banner.show();
             }
         }
+
         onParserErrorOccured: {
             if (pageStack.busy) {
                 hideLoadingTimer.interval = 800

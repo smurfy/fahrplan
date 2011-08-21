@@ -137,7 +137,11 @@ Page {
                 id: mouseArea
                 anchors.fill: background
                 onClicked: {
-                    pageStack.push(loadingPage);
+
+                    detailsResultsPage.titleText = "Loading details";
+                    detailsResultsPage.subTitleText = "please wait...";
+                    detailsResultsPage.searchIndicatorVisible = true;
+                    pageStack.push(detailsResultsPage);
                     fahrplanBackend.parser.getJourneyDetails(id);
                 }
             }
@@ -242,6 +246,11 @@ Page {
         }
     }
 
+
+    JourneyDetailsResultsPage {
+        id: detailsResultsPage
+    }
+
     ToolBarLayout {
         id: journeyResultsToolbar
 
@@ -269,9 +278,5 @@ Page {
                 }
             }
         }
-    }
-
-    LoadingPage {
-        id: loadingPage
     }
 }

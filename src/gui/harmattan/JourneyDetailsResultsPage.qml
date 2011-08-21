@@ -6,6 +6,10 @@ import "components" as MyComponents
 Page {
     id: searchDetailResultsPage
 
+    property alias titleText: journeyStations.text
+    property alias subTitleText: journeyDate.text
+    property alias searchIndicatorVisible: searchIndicator.visible
+
     tools: journeyDetailResultsToolbar
     Item {
         id: searchResults
@@ -46,6 +50,19 @@ Page {
             }
         }
 
+        BusyIndicator {
+            id: searchIndicator
+            anchors {
+                top: titleBar.bottom
+                topMargin: 50;
+                horizontalCenter: parent.horizontalCenter
+            }
+            running: true
+            visible: false
+
+            platformStyle: BusyIndicatorStyle { size: "large" }
+        }
+
         ListView {
             id: listView
             anchors {
@@ -54,6 +71,7 @@ Page {
                 bottom: journeyDetailResultsToolbar.top
                 bottomMargin: 10
             }
+            visible: !searchIndicator.visible
             height: (parent.height - titleBar.height) - 20
             width: parent.width
             model: journeyDetailResultModel
@@ -247,6 +265,9 @@ Page {
                         "train": item.train + " " + item.info
                     });
                 }
+                searchIndicator.visible = false;
+            } else {
+                pageStack.pop();
             }
         }
     }
