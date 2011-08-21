@@ -36,7 +36,7 @@ class Fahrplan : public QObject
     public:
         explicit Fahrplan(QObject *parent = 0);
         ParserAbstract* parser();
-        QString parserName() const;
+        QString parserName();
 
     public slots:
         QStringList getParserList();

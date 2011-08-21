@@ -31,11 +31,12 @@ Page {
             anchors.fill: parent
             enabled: parent.enabled
             onClicked: {
-                console.log("TODO Backend parser switch");
+                selectBackendDialog.open();
             }
         }
 
         Label {
+            id: currentParserName
             anchors {
                 left: parent.left
                 leftMargin: 10
@@ -91,7 +92,6 @@ Page {
             titleText: "Via Station"
             subTitleText: "please select"
             width: parent.width
-            visible: fahrplanBackend.parser.supportsVia();
             onClicked: {
                 pageStack.push(viaStationSelect)
             }
@@ -123,6 +123,8 @@ Page {
                 timePicker.open();
             }
         }
+
+
     }
 
     Button {
@@ -167,6 +169,19 @@ Page {
             viaButton.subTitleText = name;
             pageStack.pop();
         }
+    }
+
+    SelectionDialog {
+        id: selectBackendDialog
+        titleText: "Select Backend"
+        model: parserBackendModel
+        onAccepted: {
+            fahrplanBackend.setParser(selectBackendDialog.selectedIndex);
+        }
+    }
+
+    ListModel {
+        id: parserBackendModel
     }
 
     JourneyDetailsResultsPage {
@@ -225,7 +240,7 @@ Page {
             id: banner
             objectName: "fahrplanInfoBanner"
             text: ""
-            anchors.top: button.bottom
+            anchors.top: parent.top
             anchors.topMargin: 10
     }
 
@@ -306,6 +321,21 @@ Page {
             hideLoadingTimer.start();
             banner.text = msg;
             banner.show();
+        }
+
+        onParserChanged: {
+            console.log("Switching to " + name);
+            currentParserName.text = fahrplanBackend.parserName;
+            viaButton.visible = fahrplanBackend.parser.supportsVia();
+
+            if (parserBackendModel.count == 0) {
+                var items = fahrplanBackend.getParserList();
+                for (var i = 0; i < items.length; i++) {
+                    parserBackendModel.append({
+                        "name" : items[i]
+                    });
+                }
+            }
         }
     }
 }

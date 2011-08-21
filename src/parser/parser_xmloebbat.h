@@ -29,8 +29,8 @@ class ParserXmlOebbAt : public ParserHafasXml
 
 public:
     explicit ParserXmlOebbAt(QObject *parent = 0);
-    static QString getName() { return "ÖBB.at"; }
-    QString name() { return "ÖBB.at"; }
+    static QString getName() { return "öbb.at"; }
+    QString name() { return "öbb.at"; }
 
 public slots:
     QStringList getTrainRestrictions();

@@ -29,8 +29,8 @@ class ParserXmlRejseplanenDk : public ParserHafasXml
 
 public:
     explicit ParserXmlRejseplanenDk(QObject *parent = 0);
-    static QString getName() { return "Rejseplanen.dk"; }
-    QString name() { return "Rejseplanen.dk"; }
+    static QString getName() { return "rejseplanen.dk"; }
+    QString name() { return "rejseplanen.dk"; }
 
 public slots:
     QStringList getTrainRestrictions();

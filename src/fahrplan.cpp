@@ -35,12 +35,9 @@ ParserAbstract* Fahrplan::parser()
     return m_parser;
 }
 
-QString Fahrplan::parserName() const
+QString Fahrplan::parserName()
 {
-    if (!m_parser) {
-        return "-";
-    }
-    return m_parser->name();
+    return parser()->name();
 }
 
 QStringList Fahrplan::getParserList()
