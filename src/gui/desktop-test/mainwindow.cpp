@@ -43,13 +43,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->getJourneyDetails, SIGNAL(clicked()), this, SLOT(getJourneyDetailsClicked()));
     connect(fahrplan, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailResult(JourneyDetailResultList*)));
 
-    connect(fahrplan, SIGNAL(parserChanged(QString)), this, SLOT(parserChanged(QString)));
-
-    connect( ui->parser, SIGNAL( currentIndexChanged(int) ), this, SLOT( parserCurrentIndexChanged(int) ) );
+    connect(fahrplan, SIGNAL(parserChanged(QString, int)), this, SLOT(parserChanged(QString, int)));
 
     QStringListModel *parserModel = new QStringListModel();
     parserModel->setStringList(fahrplan->getParserList());
     ui->parser->setModel(parserModel);
+
+    connect( ui->parser, SIGNAL( currentIndexChanged(int) ), this, SLOT( parserCurrentIndexChanged(int) ) );
+
+    fahrplan->parser();
 }
 
 MainWindow::~MainWindow()
@@ -62,9 +64,11 @@ void MainWindow::parserCurrentIndexChanged(int index)
     fahrplan->setParser(index);
 }
 
-void MainWindow::parserChanged(QString name)
+void MainWindow::parserChanged(QString name, int index)
 {
-    setWindowTitle("Fahrplan - TestApp - " + name);
+    setWindowTitle("Fahrplan - TestApp - " + name + " - " + QString::number(index));
+
+    ui->parser->setCurrentIndex(index);
 
     QStringList trainRestrictions = fahrplan->parser()->getTrainRestrictions();
     ui->trainRestrictions->setEnabled(false);

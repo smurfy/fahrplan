@@ -29,7 +29,8 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmlrejseplanendk.cpp \
     src/parser/parser_xmloebbat.cpp \
     src/gui/desktop-test/mainwindow.cpp \
-    src/fahrplan.cpp
+    src/fahrplan.cpp \
+    src/fahrplan_backend_manager.cpp
 
 
 OTHER_FILES += \
@@ -77,7 +78,8 @@ HEADERS += \
     src/parser/parser_xmlrejseplanendk.h \
     src/parser/parser_xmloebbat.h \
     src/gui/desktop-test/mainwindow.h \
-    src/fahrplan.h
+    src/fahrplan.h \
+    src/fahrplan_backend_manager.h
 
 FORMS += \
     src/gui/desktop-test/mainwindow.ui

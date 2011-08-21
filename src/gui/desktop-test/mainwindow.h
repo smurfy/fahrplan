@@ -51,7 +51,7 @@ private slots:
     void cancelRequestClicked();
     void getJourneyDetailsClicked();
     void errorOccured(QString msg);
-    void parserChanged(QString name);
+    void parserChanged(QString name, int index);
 
 private:
     Ui::MainWindow *ui;

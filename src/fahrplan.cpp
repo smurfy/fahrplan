@@ -22,69 +22,17 @@
 
 FahrplanBackendManager *Fahrplan::m_parser_manager;
 
-FahrplanBackendManager::FahrplanBackendManager(QObject *parent) :
-    QObject(parent)
-{
-}
-
-QStringList FahrplanBackendManager::getParserList()
-{
-    QStringList result;
-    result.append(ParserXmlOebbAt::getName());
-    result.append(ParserXmlRejseplanenDk::getName());
-    result.append(ParserXmlSbbCh::getName());
-    result.append(ParserHafasXml::getName());
-    return result;
-}
-
-ParserAbstract *FahrplanBackendManager::getParser()
-{
-    if (!m_parser) {
-        setParser(0);
-    }
-    return m_parser;
-}
-
-void FahrplanBackendManager::setParser(int index)
-{
-    if (currentParserIndex == index && m_parser) {
-        return;
-    }
-
-    currentParserIndex = index;
-
-    /*
-    if (m_parser) {
-        delete m_parser;
-    }
-    */
-
-    switch (index) {
-        case 0:
-            m_parser = new ParserXmlOebbAt();
-            break;
-        case 1:
-            m_parser = new ParserXmlRejseplanenDk();
-            break;
-        case 2:
-            m_parser = new ParserXmlSbbCh();
-            break;
-        case 3:
-            m_parser = new ParserHafasXml();
-            break;
-    }
-
-    emit parserChanged(m_parser->name());
-}
-
 Fahrplan::Fahrplan(QObject *parent) :
     QObject(parent)
 {
+    settings = new QSettings("smurfy", "fahrplan2");
+
     if (!m_parser_manager) {
-        m_parser_manager = new FahrplanBackendManager();
+        int currentBackend = settings->value("currentBackend", 0).toInt();
+        m_parser_manager = new FahrplanBackendManager(currentBackend);
     }
 
-    connect(m_parser_manager, SIGNAL(parserChanged(QString)), this, SLOT(onParserChanged(QString)));
+    connect(m_parser_manager, SIGNAL(parserChanged(QString,int)), this, SLOT(onParserChanged(QString, int)));
 }
 
 ParserAbstract* Fahrplan::parser()
@@ -92,7 +40,7 @@ ParserAbstract* Fahrplan::parser()
     return m_parser_manager->getParser();
 }
 
-void Fahrplan::onParserChanged(QString name)
+void Fahrplan::onParserChanged(QString name, int index)
 {
     //We need to reconnect all Signals to the new Parser
     connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(onStationsResult(StationsResultList*)));
@@ -100,7 +48,7 @@ void Fahrplan::onParserChanged(QString name)
     connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SLOT(onErrorOccured(QString)));
     connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(onJourneyDetailsResult(JourneyDetailResultList*)));
 
-    emit parserChanged(name);
+    emit parserChanged(name, index);
 }
 
 QString Fahrplan::parserName()
@@ -115,6 +63,7 @@ QStringList Fahrplan::getParserList()
 
 void Fahrplan::setParser(int index)
 {
+    settings->setValue("currentBackend", index);
     m_parser_manager->setParser(index);
 }
 

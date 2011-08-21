@@ -18,45 +18,30 @@
 
 */
 
-#ifndef FAHRPLAN_H
-#define FAHRPLAN_H
+#ifndef FAHRPLAN_BACKEND_MANAGER_H
+#define FAHRPLAN_BACKEND_MANAGER_H
 
-#include <QObject>
-#include <QSettings>
-#include "fahrplan_backend_manager.h"
+#include "parser/parser_hafasxml.h"
+#include "parser/parser_xmloebbat.h"
+#include "parser/parser_xmlrejseplanendk.h"
+#include "parser/parser_xmlsbbch.h"
 
-class Fahrplan : public QObject
+class FahrplanBackendManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(ParserAbstract *parser READ parser)
-    Q_PROPERTY(QString parserName READ parserName)
 
     public:
-        explicit Fahrplan(QObject *parent = 0);
-        ParserAbstract* parser();
-        QString parserName();
-
-    public slots:
+        explicit FahrplanBackendManager(int defaultParser, QObject *parent = 0);
         QStringList getParserList();
         void setParser(int index);
+        ParserAbstract *getParser();
 
     signals:
-        void parserStationsResult(StationsResultList *result);
-        void parserJourneyResult(JourneyResultList *result);
-        void parserJourneyDetailsResult(JourneyDetailResultList *result);
-        void parserErrorOccured(QString msg);
         void parserChanged(QString name, int index);
 
-    private slots:
-        void onStationsResult(StationsResultList *result);
-        void onJourneyResult(JourneyResultList *result);
-        void onJourneyDetailsResult(JourneyDetailResultList *result);
-        void onErrorOccured(QString msg);
-        void onParserChanged(QString name, int index);
-
     private:
-        static FahrplanBackendManager *m_parser_manager;
-        QSettings *settings;
+        ParserAbstract *m_parser;
+        int currentParserIndex;
 };
 
-#endif // FAHRPLAN_H
+#endif // FAHRPLAN_BACKEND_MANAGER_H
