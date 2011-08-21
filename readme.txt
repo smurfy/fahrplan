@@ -13,7 +13,8 @@ What is done:
 
 What brings the future:
 ------------------------
-- Add some way of unified config interface 
+- Add some way of unified config interface
+- Add latest stations to the interface
 - Port other parsers to new event based system
 - Finish the gui part
 - Add Gui for fremantle and use the new interfaces
