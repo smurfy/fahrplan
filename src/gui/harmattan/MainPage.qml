@@ -114,6 +114,7 @@ Page {
                 datePicker.open();
             }
         }
+
         MyComponents.SubTitleButton {
             id: timePickerButton
             titleText: "Time"
@@ -121,6 +122,16 @@ Page {
             width: parent.width
             onClicked: {
                 timePicker.open();
+            }
+        }
+
+        MyComponents.SubTitleButton {
+            id: trainrestrictionsButton
+            titleText: "Trains"
+            subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
+            width: parent.width
+            onClicked: {
+                selectTrainrestrictionsDialog.open();
             }
         }
 
@@ -140,7 +151,7 @@ Page {
             pageStack.push(loadingPage)
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaButton.subTitleText, selDate, selTime, 0, 0);
+            fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaButton.subTitleText, selDate, selTime, 0, selectTrainrestrictionsDialog.selectedIndex);
         }
     }
 
@@ -182,6 +193,18 @@ Page {
 
     ListModel {
         id: parserBackendModel
+    }
+
+    SelectionDialog {
+        id: selectTrainrestrictionsDialog
+        titleText: "Select Train"
+        model: trainrestrictionsModel
+        onAccepted: {
+        }
+    }
+
+    ListModel {
+        id: trainrestrictionsModel
     }
 
     JourneyDetailsResultsPage {
@@ -328,14 +351,27 @@ Page {
             currentParserName.text = fahrplanBackend.parserName;
             viaButton.visible = fahrplanBackend.parser.supportsVia();
 
+            var items;
+            var i;
+
             if (parserBackendModel.count == 0) {
-                var items = fahrplanBackend.getParserList();
-                for (var i = 0; i < items.length; i++) {
+                items = fahrplanBackend.getParserList();
+                for (i = 0; i < items.length; i++) {
                     parserBackendModel.append({
                         "name" : items[i]
                     });
                 }
             }
+
+            trainrestrictionsModel.clear();
+            items = fahrplanBackend.parser.getTrainRestrictions();
+            trainrestrictionsButton.visible = items.length > 0;
+            for (i = 0; i < items.length; i++) {
+                trainrestrictionsModel.append({
+                    "name" : items[i]
+                });
+            }
+            selectTrainrestrictionsDialog.selectedIndex = (items.length > 0) ? 0 : -1;
         }
     }
 }
