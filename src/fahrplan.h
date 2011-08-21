@@ -54,9 +54,12 @@ class Fahrplan : public QObject
         void journeyResult(JourneyResultList *result);
         void journeyDetailsResult(JourneyDetailResultList *result);
         void errorOccured(QString msg);
+        void parserDestroyed(QObject *obj);
 
     private:
         static ParserAbstract *m_parser;
+        static int currentParserIndex;
+        bool reconnectSignals;
 };
 
 #endif // FAHRPLAN_H

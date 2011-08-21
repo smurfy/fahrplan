@@ -21,10 +21,12 @@
 #include "fahrplan.h"
 
 ParserAbstract *Fahrplan::m_parser;
+int Fahrplan::currentParserIndex;
 
 Fahrplan::Fahrplan(QObject *parent) :
     QObject(parent)
 {
+    reconnectSignals = true;
 }
 
 ParserAbstract* Fahrplan::parser()
@@ -32,6 +34,16 @@ ParserAbstract* Fahrplan::parser()
     if (!m_parser) {
         setParser(0);
     }
+
+    if (reconnectSignals) {
+        //We need to reconnect all Signals to the new Parser
+        connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
+        connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
+        connect(m_parser, SIGNAL(errorOccured(QString)), this, SLOT(errorOccured(QString)));
+        connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailsResult(JourneyDetailResultList*)));
+        connect(m_parser, SIGNAL(destroyed(QObject*)), this, SLOT(parserDestroyed(QObject*)));
+    }
+
     return m_parser;
 }
 
@@ -52,6 +64,16 @@ QStringList Fahrplan::getParserList()
 
 void Fahrplan::setParser(int index)
 {
+    if (currentParserIndex == index && m_parser) {
+        return;
+    }
+
+    currentParserIndex = index;
+
+    if (m_parser) {
+        delete m_parser;
+    }
+
     switch (index) {
         case 0:
             m_parser = new ParserXmlOebbAt();
@@ -67,13 +89,12 @@ void Fahrplan::setParser(int index)
             break;
     }
 
-    //We need to reconnect all Signals to the new Parser
-    connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
-    connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
-    connect(m_parser, SIGNAL(errorOccured(QString)), this, SLOT(errorOccured(QString)));
-    connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailsResult(JourneyDetailResultList*)));
-
     emit parserChanged(parserName());
+}
+
+void Fahrplan::parserDestroyed(QObject *obj)
+{
+    reconnectSignals = true;
 }
 
 void Fahrplan::stationsResult(StationsResultList *result)
