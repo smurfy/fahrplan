@@ -20,39 +20,14 @@
 
 #include "fahrplan.h"
 
-ParserAbstract *Fahrplan::m_parser;
-int Fahrplan::currentParserIndex;
+FahrplanBackendManager *Fahrplan::m_parser_manager;
 
-Fahrplan::Fahrplan(QObject *parent) :
+FahrplanBackendManager::FahrplanBackendManager(QObject *parent) :
     QObject(parent)
 {
-    reconnectSignals = true;
 }
 
-ParserAbstract* Fahrplan::parser()
-{
-    if (!m_parser) {
-        setParser(0);
-    }
-
-    if (reconnectSignals) {
-        //We need to reconnect all Signals to the new Parser
-        connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
-        connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
-        connect(m_parser, SIGNAL(errorOccured(QString)), this, SLOT(errorOccured(QString)));
-        connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailsResult(JourneyDetailResultList*)));
-        connect(m_parser, SIGNAL(destroyed(QObject*)), this, SLOT(parserDestroyed(QObject*)));
-    }
-
-    return m_parser;
-}
-
-QString Fahrplan::parserName()
-{
-    return parser()->name();
-}
-
-QStringList Fahrplan::getParserList()
+QStringList FahrplanBackendManager::getParserList()
 {
     QStringList result;
     result.append(ParserXmlOebbAt::getName());
@@ -62,7 +37,15 @@ QStringList Fahrplan::getParserList()
     return result;
 }
 
-void Fahrplan::setParser(int index)
+ParserAbstract *FahrplanBackendManager::getParser()
+{
+    if (!m_parser) {
+        setParser(0);
+    }
+    return m_parser;
+}
+
+void FahrplanBackendManager::setParser(int index)
 {
     if (currentParserIndex == index && m_parser) {
         return;
@@ -70,9 +53,11 @@ void Fahrplan::setParser(int index)
 
     currentParserIndex = index;
 
+    /*
     if (m_parser) {
         delete m_parser;
     }
+    */
 
     switch (index) {
         case 0:
@@ -89,30 +74,66 @@ void Fahrplan::setParser(int index)
             break;
     }
 
-    emit parserChanged(parserName());
+    emit parserChanged(m_parser->name());
 }
 
-void Fahrplan::parserDestroyed(QObject *obj)
+Fahrplan::Fahrplan(QObject *parent) :
+    QObject(parent)
 {
-    reconnectSignals = true;
+    if (!m_parser_manager) {
+        m_parser_manager = new FahrplanBackendManager();
+    }
+
+    connect(m_parser_manager, SIGNAL(parserChanged(QString)), this, SLOT(onParserChanged(QString)));
 }
 
-void Fahrplan::stationsResult(StationsResultList *result)
+ParserAbstract* Fahrplan::parser()
+{
+    return m_parser_manager->getParser();
+}
+
+void Fahrplan::onParserChanged(QString name)
+{
+    //We need to reconnect all Signals to the new Parser
+    connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(onStationsResult(StationsResultList*)));
+    connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(onJourneyResult(JourneyResultList*)));
+    connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SLOT(onErrorOccured(QString)));
+    connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(onJourneyDetailsResult(JourneyDetailResultList*)));
+
+    emit parserChanged(name);
+}
+
+QString Fahrplan::parserName()
+{
+    return m_parser_manager->getParser()->name();
+}
+
+QStringList Fahrplan::getParserList()
+{
+    return m_parser_manager->getParserList();
+}
+
+void Fahrplan::setParser(int index)
+{
+    m_parser_manager->setParser(index);
+}
+
+void Fahrplan::onStationsResult(StationsResultList *result)
 {
     emit parserStationsResult(result);
 }
 
-void Fahrplan::journeyResult(JourneyResultList *result)
+void Fahrplan::onJourneyResult(JourneyResultList *result)
 {
     emit parserJourneyResult(result);
 }
 
-void Fahrplan::journeyDetailsResult(JourneyDetailResultList *result)
+void Fahrplan::onJourneyDetailsResult(JourneyDetailResultList *result)
 {
     emit parserJourneyDetailsResult(result);
 }
 
-void Fahrplan::errorOccured(QString msg)
+void Fahrplan::onErrorOccured(QString msg)
 {
     emit parserErrorOccured(msg);
 }

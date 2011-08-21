@@ -27,6 +27,24 @@
 #include "parser/parser_xmlrejseplanendk.h"
 #include "parser/parser_xmlsbbch.h"
 
+class FahrplanBackendManager : public QObject
+{
+    Q_OBJECT
+
+    public:
+        explicit FahrplanBackendManager(QObject *parent = 0);
+        QStringList getParserList();
+        void setParser(int index);
+        ParserAbstract *getParser();
+
+    signals:
+        void parserChanged(QString name);
+
+    private:
+        ParserAbstract *m_parser;
+        int currentParserIndex;
+};
+
 class Fahrplan : public QObject
 {
     Q_OBJECT
@@ -50,16 +68,14 @@ class Fahrplan : public QObject
         void parserChanged(QString name);
 
     private slots:
-        void stationsResult(StationsResultList *result);
-        void journeyResult(JourneyResultList *result);
-        void journeyDetailsResult(JourneyDetailResultList *result);
-        void errorOccured(QString msg);
-        void parserDestroyed(QObject *obj);
+        void onStationsResult(StationsResultList *result);
+        void onJourneyResult(JourneyResultList *result);
+        void onJourneyDetailsResult(JourneyDetailResultList *result);
+        void onErrorOccured(QString msg);
+        void onParserChanged(QString name);
 
     private:
-        static ParserAbstract *m_parser;
-        static int currentParserIndex;
-        bool reconnectSignals;
+        static FahrplanBackendManager *m_parser_manager;
 };
 
 #endif // FAHRPLAN_H
