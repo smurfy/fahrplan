@@ -31,6 +31,8 @@ Page {
                 anchors {
                     left: parent.left
                     leftMargin: 10
+                    right: parent.right
+                    rightMargin: 10
                     top: parent.top
                     topMargin: 20
                 }
