@@ -33,7 +33,7 @@ bool ParserMobileBahnDe::supportsGps()
 
 bool ParserMobileBahnDe::supportsVia()
 {
-    return true;
+    return false;
 }
 
 QStringList ParserMobileBahnDe::getTrainRestrictions()
