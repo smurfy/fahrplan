@@ -30,10 +30,10 @@ FahrplanBackendManager::FahrplanBackendManager(int defaultParser, QObject *paren
 QStringList FahrplanBackendManager::getParserList()
 {
     QStringList result;
+    result.append(ParserMobileBahnDe::getName());
     result.append(ParserXmlOebbAt::getName());
     result.append(ParserXmlRejseplanenDk::getName());
     result.append(ParserXmlSbbCh::getName());
-    result.append(ParserHafasXml::getName());
     return result;
 }
 
@@ -59,16 +59,16 @@ void FahrplanBackendManager::setParser(int index)
 
     switch (index) {
         case 0:
-            m_parser = new ParserXmlOebbAt();
+            m_parser = new ParserMobileBahnDe();
             break;
         case 1:
-            m_parser = new ParserXmlRejseplanenDk();
+            m_parser = new ParserXmlOebbAt();
             break;
         case 2:
-            m_parser = new ParserXmlSbbCh();
+            m_parser = new ParserXmlRejseplanenDk();
             break;
         case 3:
-            m_parser = new ParserHafasXml();
+            m_parser = new ParserXmlSbbCh();
             break;
     }
 

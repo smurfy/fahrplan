@@ -30,7 +30,8 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmloebbat.cpp \
     src/gui/desktop-test/mainwindow.cpp \
     src/fahrplan.cpp \
-    src/fahrplan_backend_manager.cpp
+    src/fahrplan_backend_manager.cpp \
+    src/parser/parser_mobilebahnde.cpp
 
 
 OTHER_FILES += \
@@ -79,7 +80,8 @@ HEADERS += \
     src/parser/parser_xmloebbat.h \
     src/gui/desktop-test/mainwindow.h \
     src/fahrplan.h \
-    src/fahrplan_backend_manager.h
+    src/fahrplan_backend_manager.h \
+    src/parser/parser_mobilebahnde.h
 
 FORMS += \
     src/gui/desktop-test/mainwindow.ui
