@@ -107,7 +107,6 @@ Page {
             anchors {
                 topMargin: 10
                 top: search.bottom
-                bottom: stationSelectToolbar.top
                 bottomMargin: 10
             }
             height: parent.height - stationSelectToolbar.height

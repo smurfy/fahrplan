@@ -64,95 +64,137 @@ Page {
         }
     }
 
-    ButtonColumn {
-        id: buttons
-
+    Flickable {
+        id: flickable
         anchors {
-            topMargin: 20
+            topMargin: 10
             top: titleBar.bottom
-            leftMargin: 10
-            rightMargin: 10
-            left: parent.left
+            bottom: mainToolbar.top
+            bottomMargin: 10
+        }
+        width: mainPage.width
+        height: mainPage.height - titleBar.height - 20
+        contentWidth: buttons.width
+        contentHeight: buttons.height
+        flickableDirection: Flickable.VerticalFlick
+
+        onMovementStarted: {
+            flickable.clip = true;
         }
 
-        width: parent.width - 20
-        exclusive: false
+        Column {
+            id: buttons
 
-        MyComponents.SubTitleButton {
-            id: departureButton
-            titleText: "Departure Station"
-            subTitleText: "please select"
-            width: parent.width
-            onClicked: {
-                pageStack.push(departureStationSelect)
+            anchors {
+                left: parent.left
             }
-        }
-        MyComponents.SubTitleButton {
-            id: viaButton
-            titleText: "Via Station"
-            subTitleText: "please select"
-            width: parent.width
-            onClicked: {
-                pageStack.push(viaStationSelect)
-            }
-        }
-        MyComponents.SubTitleButton {
-            id: arrivalButton
-            titleText: "Arrival Station"
-            subTitleText: "please select"
-            width: parent.width
-            onClicked: {
-                pageStack.push(arrivalStationSelect)
-            }
-        }
-        MyComponents.SubTitleButton {
-            id: datePickerButton
-            titleText: "Date"
-            subTitleText: "please select"
-            width: parent.width
-            onClicked: {
-                datePicker.open();
-            }
-        }
 
-        MyComponents.SubTitleButton {
-            id: timePickerButton
-            titleText: "Time"
-            subTitleText: "please select"
-            width: parent.width
-            onClicked: {
-                timePicker.open();
+            width: mainPage.width
+
+            MyComponents.SubTitleButton {
+                id: departureButton
+                titleText: "Departure Station"
+                subTitleText: "please select"
+                width: parent.width
+                onClicked: {
+                    pageStack.push(departureStationSelect)
+                }
+                icon: "image://theme/icon-m-common-drilldown-arrow"
+            }
+            MyComponents.SubTitleButton {
+                id: viaButton
+                titleText: "Via Station"
+                subTitleText: "please select"
+                width: parent.width
+                onClicked: {
+                    pageStack.push(viaStationSelect)
+                }
+                icon: "image://theme/icon-m-common-drilldown-arrow"
+            }
+            MyComponents.SubTitleButton {
+                id: arrivalButton
+                titleText: "Arrival Station"
+                subTitleText: "please select"
+                width: parent.width
+                onClicked: {
+                    pageStack.push(arrivalStationSelect)
+                }
+                icon: "image://theme/icon-m-common-drilldown-arrow"
+            }
+            MyComponents.SubTitleButton {
+                id: datePickerButton
+                titleText: "Date"
+                subTitleText: "please select"
+                width: parent.width
+                onClicked: {
+                    datePicker.open();
+                }
+            }
+
+            MyComponents.SubTitleButton {
+                id: timePickerButton
+                titleText: "Time"
+                subTitleText: "please select"
+                width: parent.width
+                onClicked: {
+                    timePicker.open();
+                }
+
+                ButtonRow {
+                    anchors {
+                        right: parent.right
+                        rightMargin: 50
+                        verticalCenter: parent.verticalCenter
+                    }
+                    width: parent.width / 2
+                    Button {
+                        id: modeDep
+                        text: "Departure"
+                    }
+                    Button {
+                        id: modeArr
+                        text: "Arrival"
+                    }
+                }
+            }
+
+            MyComponents.SubTitleButton {
+                id: trainrestrictionsButton
+                titleText: "Trains"
+                subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
+                width: parent.width
+                onClicked: {
+                    selectTrainrestrictionsDialog.open();
+                }
+            }
+
+            Button {
+                id: startSearch
+                text: "Start search"
+                anchors {
+                    topMargin: 10
+                    horizontalCenter: parent.horizontalCenter
+                }
+
+                onClicked: {
+                    pageStack.push(loadingPage)
+                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
+                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
+                    var selMode = 0;
+                    if (modeDep.checked) {
+                        selMode = 1;
+                    }
+                    if (modeArr.checked) {
+                        selMode = 0;
+                    }
+                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaButton.subTitleText, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+                }
             }
         }
-
-        MyComponents.SubTitleButton {
-            id: trainrestrictionsButton
-            titleText: "Trains"
-            subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
-            width: parent.width
-            onClicked: {
-                selectTrainrestrictionsDialog.open();
-            }
-        }
-
-
     }
 
-    Button {
-        id: startSearch
-        text: "Start search"
-        anchors {
-            top: buttons.bottom
-            topMargin: 10
-            horizontalCenter: parent.horizontalCenter
-        }
-
-        onClicked: {
-            pageStack.push(loadingPage)
-            var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
-            var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaButton.subTitleText, selDate, selTime, 0, selectTrainrestrictionsDialog.selectedIndex);
-        }
+    ScrollDecorator {
+        flickableItem: flickable
     }
 
     MyComponents.StationSelect {

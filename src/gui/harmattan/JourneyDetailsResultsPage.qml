@@ -70,8 +70,6 @@ Page {
             anchors {
                 top: titleBar.bottom
                 topMargin: 10
-                bottom: journeyDetailResultsToolbar.top
-                bottomMargin: 10
             }
             visible: !searchIndicator.visible
             height: (parent.height - titleBar.height) - 20
