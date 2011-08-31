@@ -2,6 +2,7 @@ import Fahrplan 1.0 as Fahrplan
 import QtQuick 1.1
 import QtMobility.location 1.1
 import com.meego 1.0
+import com.nokia.extras 1.0
 import "." as MyComponents
 
 Page {
@@ -70,8 +71,11 @@ Page {
                     "name": "Searching ...",
                     "process": true,
                     "internal": true,
+                    "isfavorite": false,
+                    "showfavorite": false,
                     "miscinfo": ""
                 })
+                listView.model = stationsResultModel
                 fahrplanBackend.parser.findStationsByName(searchBox.text);
             }
 
@@ -88,11 +92,14 @@ Page {
                 width: 80
 
                 onClicked: {
+                    listView.model = stationsResultModel
                     stationsResultModel.clear();
                     stationsResultModel.append({
                         "name": "Requesting GPS...",
                         "process": true,
                         "internal": true,
+                        "isfavorite": false,
+                        "showfavorite": false,
                         "miscinfo": ""
                     })
 
@@ -134,7 +141,12 @@ Page {
 
             MouseArea {
                 id: mouseArea
-                anchors.fill: background
+                anchors {
+                    left: lbl_stationname.left
+                    top: background.top
+                    right: background.right
+                    bottom: background.bottom
+                }
                 onClicked: {
                     if (!internal) {
                         stationSelect.stationSelected(name)
@@ -142,10 +154,32 @@ Page {
                 }
             }
 
+            Image {
+                id: img_fav
+                source: isfavorite ? "image://theme/icon-s-common-favorite-mark" : "image://theme/icon-s-common-favorite-unmark"
+                visible: showfavorite
+                anchors {
+                    left: parent.left
+                    leftMargin: 10
+                    verticalCenter: parent.verticalCenter
+                }
+            }
+
+            MouseArea {
+                id: mouseArea_fav
+                anchors.fill: img_fav
+                onClicked: {
+                    if (showfavorite) {
+                        banner.text = "TODO: Adding " + lbl_stationname.text + " to favorites"
+                        banner.show();
+                    }
+                }
+            }
+
             Label {
                 id: lbl_stationname
                 anchors {
-                    left: parent.left
+                    left: showfavorite ? img_fav.right : parent.left
                     leftMargin: 10
                     rightMargin: 10
                     verticalCenter: parent.verticalCenter
@@ -184,14 +218,32 @@ Page {
         id: stationsResultModel
     }
 
+    ListModel {
+        id: stationsFavoritesModel
+    }
+
     ToolBarLayout {
         id:stationSelectToolbar
 
         ToolIcon {
-            id : backIcon;
+            id : backIcon
             iconId: "toolbar-back"
             onClicked: {
                 pageStack.pop();
+            }
+        }
+        ToolIcon {
+            id : favIcon
+            iconId: "toolbar-favorite-mark"
+            onClicked: {
+                listView.model = stationsFavoritesModel
+            }
+        }
+        ToolIcon {
+            id : searchIcon
+            iconId: "toolbar-search"
+            onClicked: {
+                listView.model = stationsResultModel
             }
         }
     }
@@ -206,6 +258,8 @@ Page {
                     "name": item.stationName,
                     "process": false,
                     "internal": false,
+                    "isfavorite": false,
+                    "showfavorite": true,
                     "miscinfo": item.miscInfo
                 });
             }
@@ -220,6 +274,8 @@ Page {
                 "name": "Searching for stations...",
                 "process": true,
                 "internal": true,
+                "isfavorite": false,
+                "showfavorite": false,
                 "miscinfo": ""
             })
             positionSource.active = false;
@@ -227,6 +283,14 @@ Page {
 
             fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
         }
+    }
+
+    InfoBanner{
+            id: banner
+            objectName: "fahrplanInfoBannerStationSelect"
+            text: ""
+            anchors.top: parent.top
+            anchors.topMargin: 10
     }
 
     function printableMethod(method) {
