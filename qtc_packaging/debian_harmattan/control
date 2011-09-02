@@ -1,7 +1,7 @@
 Source: fahrplan2
-Section: user/other
+Section: user/navigation
 Priority: optional
-Maintainer: unknown <>
+Maintainer: smurfy <maemo@smurfy.de>
 Build-Depends: debhelper (>= 5), libqt4-dev
 Standards-Version: 3.7.3
 Homepage: <insert the upstream URL, if relevant>
@@ -9,7 +9,8 @@ Homepage: <insert the upstream URL, if relevant>
 Package: fahrplan2
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: A Journey planner/Railway Time table for many train lines in europe and australia.
+ Current supported backends are bahn.de (germany and europe), sbb.ch (swiss),
+ www.131500.com.au (nsw, australia), mvv-muenchen.de (munich, germany), rejseplanen.dk (denmark), oebb.at (austria)
 XSBC-Maemo-Display-Name: fahrplan2
 XB-Maemo-Icon-26: 
