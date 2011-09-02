@@ -93,9 +93,17 @@ symbian {
         export($$itempath)
         INSTALLS += $$item
     }
-    icon.files = data/$${TARGET}.svg
-    icon.path = /usr/share/icons/hicolor/scalable/apps
-    desktopfile.files = data/$${TARGET}.desktop
+    maemo5 {
+        desktopfile.files = data/$${TARGET}_fremantle.desktop
+        desktopfile.path = /usr/share/applications/hildon
+        icon.files = data/$${TARGET}_64.png
+        icon.path = /usr/share/icons
+    } else:!isEmpty(MEEGO_VERSION_MAJOR) {
+        desktopfile.files = data/$${TARGET}_harmattan.desktop
+        desktopfile.path = /usr/share/applications
+        icon.files = data/$${TARGET}.svg
+        icon.path = /usr/share/icons/hicolor/scalable/apps
+    }
     target.path = $${installPrefix}/bin
     export(icon.files)
     export(icon.path)

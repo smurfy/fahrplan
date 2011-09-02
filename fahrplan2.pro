@@ -43,9 +43,11 @@ OTHER_FILES += \
     src/gui/harmattan/main.qml \
     src/gui/harmattan/components/SubTitleButton.qml \
     src/gui/harmattan/components/StationSelect.qml \
-    data/fahrplan2.desktop \
+    data/fahrplan2_fremantle.desktop \
+    data/fahrplan2_harmattan.desktop \
     data/fahrplan2.svg \
-    data/fahrplan2.png \
+    data/fahrplan2_64.png \
+    data/fahrplan2_80.png \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
     qtc_packaging/debian_harmattan/copyright \
@@ -58,7 +60,8 @@ OTHER_FILES += \
     qtc_packaging/debian_fremantle/copyright \
     qtc_packaging/debian_fremantle/control \
     qtc_packaging/debian_fremantle/compat \
-    qtc_packaging/debian_fremantle/changelog
+    qtc_packaging/debian_fremantle/changelog \
+    src/gui/fremantle/main.qml
 
 RESOURCES += \
     res.qrc
@@ -68,7 +71,7 @@ include(deployment.pri)
 qtcAddDeployment()
 
 # enable booster
-CONFIG += qdeclarative-boostable
+CONFIG += qdeclarative-boostable qdbus
 QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
 QMAKE_LFLAGS += -pie -rdynamic
 
@@ -87,3 +90,4 @@ HEADERS += \
 
 FORMS += \
     src/gui/desktop-test/mainwindow.ui
+

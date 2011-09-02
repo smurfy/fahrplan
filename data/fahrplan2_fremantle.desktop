@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Fahrplan
+Exec=/opt/fahrplan2/bin/fahrplan2
+Icon=fahrplan2_64
+X-Window-Icon=
+X-Osso-Type=application/x-executable
+X-HildonDesk-ShowInToolbar=true

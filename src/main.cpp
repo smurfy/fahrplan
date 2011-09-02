@@ -1,10 +1,13 @@
 #include <QtGui/QApplication>
+#include <qplatformdefs.h> // MEEGO_EDITION_HARMATTAN
 
-#ifdef Q_WS_X11
-    #include <QtDeclarative>
+#if defined(Q_WS_MAEMO_5)
+    #include <QtDBus>
 #endif
 
-#ifdef Q_WS_WIN
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+    #include <QtDeclarative>
+#elif defined(Q_WS_WIN) || defined(Q_WS_X11)
     #include "gui/desktop-test/mainwindow.h"
 #endif
 
@@ -14,14 +17,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    #ifdef Q_WS_MAEMO_5
-        //Not Yet!
-    #endif
-
-    #ifdef Q_WS_X11
-        //It seems, that there is currently no way of telling if its
-        //On harmattan or linux itself so i use the x11 switch here, because i use win for my development
-
+    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "Backend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
@@ -33,11 +29,16 @@ int main(int argc, char *argv[])
         qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
 
         QDeclarativeView view;
-        view.setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));
-        view.showFullScreen();
-    #endif
+        #if defined(MEEGO_EDITION_HARMATTAN)
+            view.setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));
+            view.showFullScreen();
+        #endif
+        #if defined(Q_WS_MAEMO_5)
+            view.setSource(QUrl("qrc:/src/gui/fremantle/main.qml"));
+            view.show();
+        #endif
 
-    #ifdef Q_WS_WIN
+    #elif defined(Q_WS_WIN) || defined(Q_WS_X11)
         MainWindow w;
         w.show();
     #endif
