@@ -93,8 +93,8 @@ symbian {
         export($$itempath)
         INSTALLS += $$item
     }
-    icon.files = data/$${TARGET}.png
-    icon.path = /usr/share/icons/hicolor/64x64/apps
+    icon.files = data/$${TARGET}.svg
+    icon.path = /usr/share/icons/hicolor/scalable/apps
     desktopfile.files = data/$${TARGET}.desktop
     target.path = $${installPrefix}/bin
     export(icon.files)
