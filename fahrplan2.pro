@@ -31,7 +31,8 @@ SOURCES += src/main.cpp \
     src/gui/desktop-test/mainwindow.cpp \
     src/fahrplan.cpp \
     src/fahrplan_backend_manager.cpp \
-    src/parser/parser_mobilebahnde.cpp
+    src/parser/parser_mobilebahnde.cpp \
+    src/fahrplan_favorites_manager.cpp
 
 
 OTHER_FILES += \
@@ -81,7 +82,8 @@ HEADERS += \
     src/gui/desktop-test/mainwindow.h \
     src/fahrplan.h \
     src/fahrplan_backend_manager.h \
-    src/parser/parser_mobilebahnde.h
+    src/parser/parser_mobilebahnde.h \
+    src/fahrplan_favorites_manager.h
 
 FORMS += \
     src/gui/desktop-test/mainwindow.ui

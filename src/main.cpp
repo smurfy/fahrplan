@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "Backend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
+        qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
         qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
         qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");

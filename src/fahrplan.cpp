@@ -21,6 +21,7 @@
 #include "fahrplan.h"
 
 FahrplanBackendManager *Fahrplan::m_parser_manager;
+FahrplanFavoritesManager *Fahrplan::m_favorites_manager;
 
 Fahrplan::Fahrplan(QObject *parent) :
     QObject(parent)
@@ -32,12 +33,27 @@ Fahrplan::Fahrplan(QObject *parent) :
         m_parser_manager = new FahrplanBackendManager(currentBackend);
     }
 
+    if (!m_favorites_manager) {
+        m_favorites_manager = new FahrplanFavoritesManager();
+    }
+
     connect(m_parser_manager, SIGNAL(parserChanged(QString,int)), this, SLOT(onParserChanged(QString, int)));
+    connect(m_favorites_manager, SIGNAL(favoritesChanged(QStringList)), this, SLOT(onFavoritesChanged(QStringList)));
 }
 
 ParserAbstract* Fahrplan::parser()
 {
     return m_parser_manager->getParser();
+}
+
+FahrplanFavoritesManager* Fahrplan::favorites()
+{
+    return m_favorites_manager;
+}
+
+void Fahrplan::onFavoritesChanged(QStringList favorites)
+{
+    favoritesChanged(favorites);
 }
 
 void Fahrplan::onParserChanged(QString name, int index)

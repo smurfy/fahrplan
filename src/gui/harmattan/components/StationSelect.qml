@@ -170,8 +170,15 @@ Page {
                 anchors.fill: img_fav
                 onClicked: {
                     if (showfavorite) {
-                        banner.text = "TODO: Adding " + lbl_stationname.text + " to favorites"
-                        banner.show();
+                        if (fahrplanBackend.favorites.isFavorite(lbl_stationname.text)) {
+                            banner.text = "Removing '" + lbl_stationname.text + "' from favorites"
+                            banner.show();
+                            fahrplanBackend.favorites.removeFavorite(lbl_stationname.text);
+                        } else {
+                            banner.text = "Adding '" + lbl_stationname.text + "' to favorites"
+                            banner.show();
+                            fahrplanBackend.favorites.addFavorite(lbl_stationname.text);
+                        }
                     }
                 }
             }
@@ -236,6 +243,18 @@ Page {
             id : favIcon
             iconId: "toolbar-favorite-mark"
             onClicked: {
+                stationsFavoritesModel.clear();
+                var favorites = fahrplanBackend.favorites.getFavorites();
+                for (var i = 0; i < favorites.length; i++) {
+                    stationsFavoritesModel.append({
+                        "name": favorites[i],
+                        "process": false,
+                        "internal": false,
+                        "isfavorite": true,
+                        "showfavorite": true,
+                        "miscinfo": ""
+                    })
+                }
                 listView.model = stationsFavoritesModel
             }
         }
@@ -258,10 +277,23 @@ Page {
                     "name": item.stationName,
                     "process": false,
                     "internal": false,
-                    "isfavorite": false,
+                    "isfavorite": fahrplanBackend.favorites.isFavorite(item.stationName),
                     "showfavorite": true,
                     "miscinfo": item.miscInfo
                 });
+            }
+        }
+        onFavoritesChanged: {
+            stationsFavoritesModel.clear();
+            for (var i = 0; i < favorites.length; i++) {
+                stationsFavoritesModel.append({
+                    "name": favorites[i],
+                    "process": false,
+                    "internal": false,
+                    "isfavorite": true,
+                    "showfavorite": true,
+                    "miscinfo": ""
+                })
             }
         }
     }

@@ -24,16 +24,19 @@
 #include <QObject>
 #include <QSettings>
 #include "fahrplan_backend_manager.h"
+#include "fahrplan_favorites_manager.h"
 
 class Fahrplan : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(ParserAbstract *parser READ parser)
+    Q_PROPERTY(FahrplanFavoritesManager *favorites READ favorites)
     Q_PROPERTY(QString parserName READ parserName)
 
     public:
         explicit Fahrplan(QObject *parent = 0);
         ParserAbstract* parser();
+        FahrplanFavoritesManager* favorites();
         QString parserName();
 
     public slots:
@@ -46,6 +49,7 @@ class Fahrplan : public QObject
         void parserJourneyDetailsResult(JourneyDetailResultList *result);
         void parserErrorOccured(QString msg);
         void parserChanged(QString name, int index);
+        void favoritesChanged(QStringList favorites);
 
     private slots:
         void onStationsResult(StationsResultList *result);
@@ -53,9 +57,11 @@ class Fahrplan : public QObject
         void onJourneyDetailsResult(JourneyDetailResultList *result);
         void onErrorOccured(QString msg);
         void onParserChanged(QString name, int index);
+        void onFavoritesChanged(QStringList favorites);
 
     private:
         static FahrplanBackendManager *m_parser_manager;
+        static FahrplanFavoritesManager *m_favorites_manager;
         QSettings *settings;
 };
 
