@@ -158,7 +158,7 @@ void MainWindow::errorOccured(QString msg)
 
 void MainWindow::parserChanged(QString name, int index)
 {
-    setWindowTitle("Fahrplan2 (" + name + ")");
+    setWindowTitle("Fahrplan (" + name + ")");
 
     QStringList trainRestrictions = fahrplan->parser()->getTrainRestrictions();
     butTrainRestrictions->setEnabled(false);
