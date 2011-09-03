@@ -1,0 +1,26 @@
+Todo for Fahrplan 2.0.0:
+-------------------------
+
+Core:
+- Port the NSW Parser Interface
+- Add Calendar support (using libmobility)
+- Translation of Core Messages
+- Add timeout for http requests
+
+Gui:
+- Add Calendar support
+- Translation of the GUI
+- Add About Dialog
+
+Harmattan Gui:
+- Add config for last Departure, Arrival and Via station
+- Add a way to "clear" the Via station if available
+
+Fremantle Gui:
+- Almost everything is missing
+
+
+Todo for Fahrplan 2.x.x:
+-------------------------
+- Port the MVV Parser Interface
+- Find a way to cleanly implement the openstreetmap fallback for gps
