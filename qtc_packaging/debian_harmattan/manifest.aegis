@@ -1,6 +1,0 @@
-<aegis>
-        <request>
-                <credential name="Location" />
-                <for path="/opt/fahrplan2/bin/fahrplan2" />
-        </request>
-</aegis>
