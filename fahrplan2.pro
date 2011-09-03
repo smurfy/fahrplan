@@ -6,6 +6,8 @@ QML_IMPORT_PATH =
 QT+= declarative xmlpatterns network
 symbian:TARGET.UID3 = 0xE4182966
 
+maemo5:QT+= maemo5 gui
+
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will
 # fail to install if self-signed. By default qmake uses the unprotected
@@ -28,12 +30,15 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmlsbbch.cpp \
     src/parser/parser_xmlrejseplanendk.cpp \
     src/parser/parser_xmloebbat.cpp \
-    src/gui/desktop-test/mainwindow.cpp \
     src/fahrplan.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
     src/fahrplan_favorites_manager.cpp
 
+maemo5:SOURCES += src/gui/fremantle/mainwindow.cpp \
+     src/gui/fremantle/qvaluebutton.cpp
+
+win32:SOURCES += src/gui/desktop-test/mainwindow.cpp
 
 OTHER_FILES += \
     src/gui/harmattan/MainPage.qml \
@@ -60,8 +65,7 @@ OTHER_FILES += \
     qtc_packaging/debian_fremantle/copyright \
     qtc_packaging/debian_fremantle/control \
     qtc_packaging/debian_fremantle/compat \
-    qtc_packaging/debian_fremantle/changelog \
-    src/gui/fremantle/main.qml
+    qtc_packaging/debian_fremantle/changelog
 
 RESOURCES += \
     res.qrc
@@ -71,7 +75,7 @@ include(deployment.pri)
 qtcAddDeployment()
 
 # enable booster
-CONFIG += qdeclarative-boostable qdbus
+CONFIG += qdeclarative-boostable
 QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
 QMAKE_LFLAGS += -pie -rdynamic
 
@@ -82,11 +86,14 @@ HEADERS += \
     src/parser/parser_xmlsbbch.h \
     src/parser/parser_xmlrejseplanendk.h \
     src/parser/parser_xmloebbat.h \
-    src/gui/desktop-test/mainwindow.h \
     src/fahrplan.h \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
     src/fahrplan_favorites_manager.h
+
+win32:HEADERS += src/gui/desktop-test/mainwindow.h
+maemo5:HEADERS += src/gui/fremantle/mainwindow.h \
+    src/gui/fremantle/qvaluebutton.h
 
 FORMS += \
     src/gui/desktop-test/mainwindow.ui
