@@ -112,8 +112,8 @@ void QValueButton::paintEvent(QPaintEvent *)
     option.text = QString();
     option.icon = QIcon(); //we draw this ourselves
 
-    int vOffset = isDown() ? style()->pixelMetric(QStyle::PM_ButtonShiftVertical) : 0;
-    int hOffset = isDown() ? style()->pixelMetric(QStyle::PM_ButtonShiftHorizontal) : 0;
+    int vOffset = isDown() ? QStyle::PM_ButtonShiftVertical : 0;
+    int hOffset = isDown() ? QStyle::PM_ButtonShiftHorizontal : 0;
 
     QFontMetrics textFm = QFontMetrics(titleFont());
     QFontMetrics descriptionFm = QFontMetrics(descriptionFont());
