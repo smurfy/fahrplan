@@ -10,7 +10,7 @@ Item {
 
     signal clicked
 
-    height: 80
+    height: title.height + subTitle.height + 30
     width: parent.width
 
     BorderImage {

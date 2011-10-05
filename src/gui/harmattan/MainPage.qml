@@ -280,16 +280,17 @@ Page {
         titleText: "Time"
         acceptButtonText: "Ok"
         rejectButtonText: "Cancel"
+        fields: DateTime.Hours | DateTime.Minutes
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            timePickerButton.subTitleText = Qt.formatTime(selTime);
+            timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
         }
         Component.onCompleted: {
             var d = new Date();
             timePicker.hour = d.getHours();
             timePicker.minute = d.getMinutes();
             timePicker.second = d.getSeconds();
-            timePickerButton.subTitleText = Qt.formatTime(d);
+            timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
         }
     }
 
