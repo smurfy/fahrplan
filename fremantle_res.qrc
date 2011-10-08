@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/gui/fremantle/main.qml</file>
+        <file>src/gui/fremantle/hildon/hildon.js</file>
+        <file>src/gui/fremantle/hildon/HildonButton.qml</file>
+        <file>src/gui/fremantle/hildon/HildonDialog.qml</file>
+        <file>src/gui/fremantle/hildon/HildonDialogButton.qml</file>
+        <file>src/gui/fremantle/hildon/HildonLabel.qml</file>
+        <file>src/gui/fremantle/hildon/HildonTouchListRow.qml</file>
+        <file>src/gui/fremantle/hildon/HildonWindow.qml</file>
+        <file>src/gui/fremantle/hildon/style.js</file>
+        <file>src/gui/fremantle/components/SubTitleButton.qml</file>
+    </qresource>
+</RCC>

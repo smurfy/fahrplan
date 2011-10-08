@@ -784,10 +784,10 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
         }
 
        return results;
-    } else
-    {
-        emit errorOccured("Internal error occured, Error parsing details data");
     }
+
+    emit errorOccured("Internal error occured, Error parsing details data");
+    return results;
 }
 
 void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)

@@ -3,10 +3,10 @@
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-QT+= declarative xmlpatterns network
-symbian:TARGET.UID3 = 0xE4182966
+QT += declarative xmlpatterns network
+maemo5:QT += maemo5
 
-maemo5:QT+= maemo5 gui
+symbian:TARGET.UID3 = 0xE4182966
 
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will
@@ -35,8 +35,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_mobilebahnde.cpp \
     src/fahrplan_favorites_manager.cpp
 
-maemo5:SOURCES += src/gui/fremantle/mainwindow.cpp \
-     src/gui/fremantle/qvaluebutton.cpp
+maemo5:SOURCES += src/gui/fremantle/hildon_helper.cpp
 
 win32:SOURCES += src/gui/desktop-test/mainwindow.cpp
 
@@ -65,10 +64,23 @@ OTHER_FILES += \
     qtc_packaging/debian_fremantle/copyright \
     qtc_packaging/debian_fremantle/control \
     qtc_packaging/debian_fremantle/compat \
-    qtc_packaging/debian_fremantle/changelog
+    qtc_packaging/debian_fremantle/changelog \
+    src/gui/fremantle/main.qml \
+    src/gui/fremantle/components/SubTitleButton.qml \
+    src/gui/fremantle/hildon/style.js \
+    src/gui/fremantle/hildon/hildon.js \
+    src/gui/fremantle/hildon/HildonWindow.qml \
+    src/gui/fremantle/hildon/HildonTouchListRow.qml \
+    src/gui/fremantle/hildon/HildonLabel.qml \
+    src/gui/fremantle/hildon/HildonDialogButton.qml \
+    src/gui/fremantle/hildon/HildonDialog.qml \
+    src/gui/fremantle/hildon/HildonButton.qml
 
-RESOURCES += \
-    res.qrc
+!isEmpty(MEEGO_EDITION_HARMATTAN):RESOURCES += \
+    harmattan_res.qrc
+
+maemo5: RESOURCES += \
+    fremantle_res.qrc
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
@@ -92,9 +104,19 @@ HEADERS += \
     src/fahrplan_favorites_manager.h
 
 win32:HEADERS += src/gui/desktop-test/mainwindow.h
-maemo5:HEADERS += src/gui/fremantle/mainwindow.h \
-    src/gui/fremantle/qvaluebutton.h
+maemo5:HEADERS += src/gui/fremantle/hildon_helper.h
 
-FORMS += \
+win32:FORMS += \
     src/gui/desktop-test/mainwindow.ui
+
+
+
+
+
+
+
+
+
+
+
 
