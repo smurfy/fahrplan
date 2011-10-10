@@ -76,7 +76,7 @@ OTHER_FILES += \
     src/gui/fremantle/hildon/HildonDialog.qml \
     src/gui/fremantle/hildon/HildonButton.qml
 
-!isEmpty(MEEGO_EDITION_HARMATTAN):RESOURCES += \
+!isEmpty(MEEGO_VERSION_MAJOR):RESOURCES += \
     harmattan_res.qrc
 
 maemo5: RESOURCES += \

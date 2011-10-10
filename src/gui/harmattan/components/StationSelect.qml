@@ -88,7 +88,7 @@ Page {
                     topMargin: 10
                 }
                 platformStyle: ButtonStyle { inverted: true }
-                iconSource: "image://theme/icon-s-status-gps"
+                iconSource: "image://theme/icon-s-calendar-location-picker-inverse"
                 width: 80
 
                 onClicked: {
@@ -135,12 +135,13 @@ Page {
             BorderImage {
                 id: background
                 anchors.fill: parent
-                visible: mouseArea.pressed
+                visible: mouseArea.pressed && mouseArea.enabled
                 source: "image://theme/meegotouch-list-background-pressed-center"
             }
 
             MouseArea {
                 id: mouseArea
+                enabled: !internal
                 anchors {
                     left: lbl_stationname.left
                     top: background.top
@@ -167,7 +168,13 @@ Page {
 
             MouseArea {
                 id: mouseArea_fav
-                anchors.fill: img_fav
+                anchors {
+                    top: background.top
+                    bottom: background.bottom
+                    left: background.left
+                    right: lbl_stationname.left
+                }
+
                 onClicked: {
                     if (showfavorite) {
                         if (fahrplanBackend.favorites.isFavorite(lbl_stationname.text)) {
