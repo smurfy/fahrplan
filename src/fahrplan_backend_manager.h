@@ -26,6 +26,7 @@
 #include "parser/parser_xmlrejseplanendk.h"
 #include "parser/parser_xmlsbbch.h"
 #include "parser/parser_mobilebahnde.h"
+#include "parser/parser_131500comau.h"
 
 class FahrplanBackendManager : public QObject
 {

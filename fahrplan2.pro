@@ -30,6 +30,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmlsbbch.cpp \
     src/parser/parser_xmlrejseplanendk.cpp \
     src/parser/parser_xmloebbat.cpp \
+    src/parser/parser_131500comau.cpp \
     src/fahrplan.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
@@ -98,6 +99,7 @@ HEADERS += \
     src/parser/parser_xmlsbbch.h \
     src/parser/parser_xmlrejseplanendk.h \
     src/parser/parser_xmloebbat.h \
+    src/parser/parser_131500comau.h \
     src/fahrplan.h \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
@@ -108,6 +110,8 @@ maemo5:HEADERS += src/gui/fremantle/hildon_helper.h
 
 win32:FORMS += \
     src/gui/desktop-test/mainwindow.ui
+
+
 
 
 
