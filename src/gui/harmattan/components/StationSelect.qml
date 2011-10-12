@@ -36,7 +36,7 @@ Page {
                 anchors {
                     left: parent.left
                     leftMargin: 10
-                    right: searchButtons.left
+                    right: gpsButton.left
                     rightMargin: 10
                     top: parent.top
                     topMargin: 10
@@ -80,16 +80,16 @@ Page {
             }
 
             Button {
-                id: searchButtons
+                id: gpsButton
                 anchors {
                     right: parent.right
-                    rightMargin: 10
+                    rightMargin: visible ? 10 : 0
                     top: parent.top
                     topMargin: 10
                 }
                 platformStyle: ButtonStyle { inverted: true }
                 iconSource: "image://theme/icon-s-calendar-location-picker-inverse"
-                width: 80
+                width: visible ? 80 : 0
 
                 onClicked: {
                     listView.model = stationsResultModel
@@ -276,6 +276,11 @@ Page {
 
     Fahrplan.Backend {
         id: fahrplanBackend
+
+        onParserChanged: {
+            gpsButton.visible = fahrplanBackend.parser.supportsGps();
+        }
+
         onParserStationsResult: {
             stationsResultModel.clear();
             for (var i = 0; i < result.count; i++) {
