@@ -51,6 +51,11 @@ FahrplanFavoritesManager* Fahrplan::favorites()
     return m_favorites_manager;
 }
 
+QString Fahrplan::getVersion()
+{
+    return "Alpha 1";
+}
+
 void Fahrplan::onFavoritesChanged(QStringList favorites)
 {
     favoritesChanged(favorites);

@@ -75,7 +75,8 @@ OTHER_FILES += \
     src/gui/fremantle/hildon/HildonLabel.qml \
     src/gui/fremantle/hildon/HildonDialogButton.qml \
     src/gui/fremantle/hildon/HildonDialog.qml \
-    src/gui/fremantle/hildon/HildonButton.qml
+    src/gui/fremantle/hildon/HildonButton.qml \
+    src/gui/harmattan/AboutPage.qml
 
 !isEmpty(MEEGO_VERSION_MAJOR):RESOURCES += \
     harmattan_res.qrc
@@ -110,6 +111,9 @@ maemo5:HEADERS += src/gui/fremantle/hildon_helper.h
 
 win32:FORMS += \
     src/gui/desktop-test/mainwindow.ui
+
+
+
 
 
 

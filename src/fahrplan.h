@@ -32,12 +32,14 @@ class Fahrplan : public QObject
     Q_PROPERTY(ParserAbstract *parser READ parser)
     Q_PROPERTY(FahrplanFavoritesManager *favorites READ favorites)
     Q_PROPERTY(QString parserName READ parserName)
+    Q_PROPERTY(QString version READ getVersion)
 
     public:
         explicit Fahrplan(QObject *parent = 0);
         ParserAbstract* parser();
         FahrplanFavoritesManager* favorites();
         QString parserName();
+        QString getVersion();
 
     public slots:
         QStringList getParserList();

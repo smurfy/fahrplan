@@ -257,6 +257,11 @@ Page {
         id: loadingPage
     }
 
+
+    AboutPage {
+        id: aboutPage
+    }
+
     DatePickerDialog {
         id: datePicker
         titleText: "Date"
@@ -296,6 +301,14 @@ Page {
 
     ToolBarLayout {
         id: mainToolbar
+
+        ToolIcon {
+            id : aboutIcon;
+            iconId: "toolbar-settings"
+            onClicked: {
+                pageStack.push(aboutPage);
+            }
+        }
     }
 
     InfoBanner{
