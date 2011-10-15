@@ -7,7 +7,15 @@ Page {
 
     tools: aboutToolbar
 
-    Item {
+    Flickable {
+        id: flickable
+
+        width: aboutPage.width
+        height: aboutPage.height - 40
+        flickableDirection: Flickable.VerticalFlick
+        clip: true
+        contentWidth: aboutPage.width - 60
+        contentHeight: aboutContainer.height + moreText.height + 60
 
         anchors {
             left: parent.left
@@ -15,7 +23,7 @@ Page {
             rightMargin: 20
             right: parent.right
             top: parent.top
-            topMargin: 50
+            topMargin: 20
         }
 
         Item {
@@ -70,7 +78,21 @@ Page {
                   "<br>" +
                   "Logo by <i>NightShift79</i>" +
                   "<br><br>" +
-                  "If you like fahrplan, i would appreciate a donation.<br><br><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a>"
+                  "If you like fahrplan, i would appreciate a donation.<br><br><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a>" +
+                  "<br><br><br><b>License</b><br>" +
+                  "This program is free software; you can redistribute it and/or modify
+            it under the terms of the GNU General Public License as published by
+            the Free Software Foundation; either version 2 of the License, or
+            (at your option) any later version.<br>
+            <br>
+            This program is distributed in the hope that it will be useful,
+            but WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+            GNU General Public License for more details.<br>
+            <br>
+            You should have received a copy of the GNU General Public License
+            along with this program; if not, write to the Free Software
+            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"
 
             anchors {
                 top: aboutContainer.bottom
@@ -103,5 +125,9 @@ Page {
                 pageStack.pop();
             }
         }
+    }
+
+    ScrollDecorator {
+        flickableItem: flickable
     }
 }
