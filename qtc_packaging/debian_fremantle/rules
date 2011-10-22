@@ -16,7 +16,9 @@
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# qmake PREFIX=/usr# Uncomment this line for use without Qt Creator
+	
+	#Uncomment this line for use without Qt Creator
+	qmake PREFIX=/usr
 
 	touch configure-stamp
 
@@ -26,8 +28,9 @@ build: build-stamp
 build-stamp: configure-stamp  
 	dh_testdir
 
-	# Add here commands to compile the package.
-	# $(MAKE) # Uncomment this line for use without Qt Creator
+	#Add here commands to compile the package.
+	#Uncomment this line for use without Qt Creator
+	$(MAKE)
 	#docbook-to-man debian/fahrplan2.sgml > fahrplan2.1
 
 	touch $@
@@ -37,7 +40,7 @@ clean:
 	dh_testroot
 	rm -f build-stamp configure-stamp
 
-	# Add here commands to clean up after the build process.
+	#Add here commands to clean up after the build process.
 	$(MAKE) clean
 
 	dh_clean 
@@ -82,7 +85,8 @@ binary-arch: build install
 #	dh_perl
 #	dh_makeshlibs
 	dh_installdeb
-	# dh_shlibdeps # Uncomment this line for use without Qt Creator
+	#Uncomment this line for use without Qt Creator
+	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
