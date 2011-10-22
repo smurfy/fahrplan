@@ -1,0 +1,15 @@
+Fahrplan for N900, N950 and the N9
+
+A Journey planner/Railway Time table for many train lines in europe and australia.
+
+Current supported backends are bahn.de (germany and europe), sbb.ch (swiss), www.131500.com.au (nsw, australia), rejseplanen.dk (denmark), oebb.at (austria) 
+
+Disclaimer:
+This code is not finished yet. I'm still working on this version of fahrplan. And only the N950 and N9 interface is in an usable state.
+for a N900 please use the "old" Version from maemo extras-devel.
+
+Project:
+https://garage.maemo.org/projects/fahrplan/
+
+You find here all new Code for the new Fahrplan. Old N900 only code is still available at
+https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan
