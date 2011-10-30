@@ -98,7 +98,7 @@ symbian {
         desktopfile.path = /usr/share/applications/hildon
         icon.files = data/$${TARGET}_64.png
         icon.path = /usr/share/icons
-    } else:!isEmpty(MEEGO_VERSION_MAJOR) {
+    } else:contains(MEEGO_EDITION,harmattan) {
         desktopfile.files = data/$${TARGET}_harmattan.desktop
         desktopfile.path = /usr/share/applications
         icon.files = data/$${TARGET}.svg

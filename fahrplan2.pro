@@ -1,5 +1,13 @@
 # Add more folders to ship with the application, here
 
+#Fix for Harmattan
+exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmattan): {
+  MEEGO_VERSION_MAJOR     = 1
+  MEEGO_VERSION_MINOR     = 2
+  MEEGO_VERSION_PATCH     = 0
+  MEEGO_EDITION           = harmattan
+}
+
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
@@ -35,10 +43,6 @@ SOURCES += src/main.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
     src/fahrplan_favorites_manager.cpp
-
-maemo5:SOURCES += src/gui/fremantle/hildon_helper.cpp
-
-win32:SOURCES += src/gui/desktop-test/mainwindow.cpp
 
 OTHER_FILES += \
     src/gui/harmattan/MainPage.qml \
@@ -78,11 +82,26 @@ OTHER_FILES += \
     src/gui/fremantle/hildon/HildonButton.qml \
     src/gui/harmattan/AboutPage.qml
 
-!isEmpty(MEEGO_VERSION_MAJOR):RESOURCES += \
-    harmattan_res.qrc
+contains(MEEGO_EDITION,harmattan) {
+    RESOURCES += harmattan_res.qrc
 
-maemo5: RESOURCES += \
-    fremantle_res.qrc
+    DEFINES += Q_WS_MAEMO_6
+    DEFINES += MEEGO_EDITION_HARMATTAN
+}
+
+maemo5 {
+    RESOURCES += fremantle_res.qrc
+    HEADERS += src/gui/fremantle/hildon_helper.h
+    SOURCES += src/gui/fremantle/hildon_helper.cpp
+
+    DEFINES += Q_WS_MAEMO_5
+}
+
+win32 {
+    SOURCES += src/gui/desktop-test/mainwindow.cpp
+    HEADERS += src/gui/desktop-test/mainwindow.h
+    FORMS += src/gui/desktop-test/mainwindow.ui
+}
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
@@ -105,14 +124,6 @@ HEADERS += \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
     src/fahrplan_favorites_manager.h
-
-win32:HEADERS += src/gui/desktop-test/mainwindow.h
-maemo5:HEADERS += src/gui/fremantle/hildon_helper.h
-
-win32:FORMS += \
-    src/gui/desktop-test/mainwindow.ui
-
-
 
 
 
