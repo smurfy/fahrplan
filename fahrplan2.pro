@@ -1,5 +1,13 @@
 # Add more folders to ship with the application, here
 
+#Fix for Harmattan
+exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmattan): {
+  MEEGO_VERSION_MAJOR     = 1
+  MEEGO_VERSION_MINOR     = 2
+  MEEGO_VERSION_PATCH     = 0
+  MEEGO_EDITION           = harmattan
+}
+
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
@@ -78,6 +86,7 @@ contains(MEEGO_EDITION,harmattan) {
     RESOURCES += harmattan_res.qrc
 
     DEFINES += Q_WS_MAEMO_6
+    DEFINES += MEEGO_EDITION_HARMATTAN
 }
 
 maemo5 {
