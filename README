@@ -14,8 +14,6 @@ add:
 
 deb http://repo.pub.meego.com/home:/smurfy/MeeGo_1.2_Harmattan_Maemo.org_MeeGo_1.2_Harmattan_standard/ ./
 
-http://repo.pub.meego.com/home:/smurfy/MeeGo_1.2_Harmattan_Maemo.org_MeeGo_1.2_Harmattan_standard/
-
 then run:
 
 apt-get update
