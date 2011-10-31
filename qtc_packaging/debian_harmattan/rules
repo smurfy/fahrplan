@@ -90,6 +90,8 @@ binary-arch: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+	
+	aegis-deb-add -control debian/fahrplan2/DEBIAN/control .. debian/fahrplan2.aegis=_aegis
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
