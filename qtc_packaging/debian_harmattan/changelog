@@ -1,3 +1,8 @@
+fahrplan2 (2.0.2) unstable; urgency=low
+  * Added context menu to support switching and clearing of stations
+
+ -- smurfy <maemo@smurfy.de>  Mon, 7 Nov 2011 19:30:00 +0200
+
 fahrplan2 (2.0.1-2) unstable; urgency=low
   * Fix for packaging process and aegis file
 
