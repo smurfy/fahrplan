@@ -1,0 +1,1 @@
+C:/QTSDK/Madde/wbin/mad.cmd -t harmattan-platform-api dpkg-buildpackage -sa -S -uc -us -Imoc -Iobj -Ircc -Iui -I.svn -I.git -I*.deb -I*.changes -Iqtc_packaging -IMakefile -I*.pro.user -Idebug -Irelease -I*release -I*debug -Ifahrplan2
