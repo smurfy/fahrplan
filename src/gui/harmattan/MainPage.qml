@@ -361,7 +361,7 @@ Page {
     }
 
     ContextMenu {
-        property SubTitleButton opener: nil
+        property SubTitleButton opener
         id: stationSelectContextMenu
         MenuLayout {
             MenuItem {
