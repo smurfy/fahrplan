@@ -1,7 +1,7 @@
 import Fahrplan 1.0 as Fahrplan
 import QtQuick 1.1
 import com.meego 1.0
-import "components" as MyComponents
+import "components"
 
 Page {
     id: searchDetailResultsPage

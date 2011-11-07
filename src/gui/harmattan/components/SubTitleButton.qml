@@ -9,6 +9,7 @@ Item {
     property alias icon: icon.source
 
     signal clicked
+    signal pressAndHold
 
     height: title.height + subTitle.height + 30
     width: parent.width
@@ -25,6 +26,9 @@ Item {
         anchors.fill: background
         onClicked: {
             subTitleButton.clicked();
+        }
+        onPressAndHold: {
+            subTitleButton.pressAndHold();
         }
     }
 

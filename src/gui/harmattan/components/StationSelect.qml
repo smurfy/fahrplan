@@ -3,7 +3,7 @@ import QtQuick 1.1
 import QtMobility.location 1.1
 import com.meego 1.0
 import com.nokia.extras 1.0
-import "." as MyComponents
+import "."
 
 Page {
     id: stationSelect

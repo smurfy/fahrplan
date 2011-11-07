@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import com.meego 1.0
 import com.nokia.extras 1.0
-import "components" as MyComponents
+import "components"
 import Fahrplan 1.0 as Fahrplan
 
 Page {
@@ -91,7 +91,7 @@ Page {
 
             width: mainPage.width
 
-            MyComponents.SubTitleButton {
+            SubTitleButton {
                 id: departureButton
                 titleText: "Departure Station"
                 subTitleText: "please select"
@@ -99,9 +99,12 @@ Page {
                 onClicked: {
                     pageStack.push(departureStationSelect)
                 }
+                onPressAndHold: {
+                    stationSelectContextMenu.openMenu(departureButton);
+                }
                 icon: "image://theme/icon-m-common-drilldown-arrow"
             }
-            MyComponents.SubTitleButton {
+            SubTitleButton {
                 id: viaButton
                 titleText: "Via Station"
                 subTitleText: "please select"
@@ -109,9 +112,12 @@ Page {
                 onClicked: {
                     pageStack.push(viaStationSelect)
                 }
+                onPressAndHold: {
+                    stationSelectContextMenu.openMenu(viaButton);
+                }
                 icon: "image://theme/icon-m-common-drilldown-arrow"
             }
-            MyComponents.SubTitleButton {
+            SubTitleButton {
                 id: arrivalButton
                 titleText: "Arrival Station"
                 subTitleText: "please select"
@@ -119,9 +125,12 @@ Page {
                 onClicked: {
                     pageStack.push(arrivalStationSelect)
                 }
+                onPressAndHold: {
+                    stationSelectContextMenu.openMenu(arrivalButton);
+                }
                 icon: "image://theme/icon-m-common-drilldown-arrow"
             }
-            MyComponents.SubTitleButton {
+            SubTitleButton {
                 id: datePickerButton
                 titleText: "Date"
                 subTitleText: "please select"
@@ -131,7 +140,7 @@ Page {
                 }
             }
 
-            MyComponents.SubTitleButton {
+            SubTitleButton {
                 id: timePickerButton
                 titleText: "Time"
                 subTitleText: "please select"
@@ -158,7 +167,7 @@ Page {
                 }
             }
 
-            MyComponents.SubTitleButton {
+            SubTitleButton {
                 id: trainrestrictionsButton
                 titleText: "Trains"
                 subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
@@ -177,6 +186,18 @@ Page {
                 }
 
                 onClicked: {
+                    //Validation
+                    if (departureButton.subTitleText == "please select" || arrivalButton.subTitleText == "please select") {
+                        banner.text = "Please select a departure and arrival station.";
+                        banner.show();
+                        return;
+                    }
+
+                    var viaStation = viaButton.subTitleText;
+                    if (viaStation == "please select" || !fahrplanBackend.parser.supportsVia()) {
+                        viaStation = "";
+                    }
+
                     pageStack.push(loadingPage)
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
@@ -187,7 +208,7 @@ Page {
                     if (modeArr.checked) {
                         selMode = 0;
                     }
-                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaButton.subTitleText, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }
@@ -197,7 +218,7 @@ Page {
         flickableItem: flickable
     }
 
-    MyComponents.StationSelect {
+    StationSelect {
         id: departureStationSelect
 
         onStationSelected: {
@@ -206,7 +227,7 @@ Page {
         }
     }
 
-    MyComponents.StationSelect {
+    StationSelect {
         id: arrivalStationSelect
 
         onStationSelected: {
@@ -215,7 +236,7 @@ Page {
         }
     }
 
-    MyComponents.StationSelect {
+    StationSelect {
         id: viaStationSelect
 
         onStationSelected: {
@@ -336,6 +357,75 @@ Page {
         repeat: false
         onTriggered: {
             pageStack.pop();
+        }
+    }
+
+    ContextMenu {
+        property SubTitleButton opener: nil
+        id: stationSelectContextMenu
+        MenuLayout {
+            MenuItem {
+                id: selectStationMenu
+                text: "Select station"
+                onClicked: {
+                    stationSelectContextMenu.opener.clicked();
+
+                }
+            }
+            MenuItem {
+                id: switchWithDepartureStation
+                text: "Switch with Departure station"
+                onClicked: {
+                    var oldVal = stationSelectContextMenu.opener.subTitleText
+                    stationSelectContextMenu.opener.subTitleText = departureButton.subTitleText
+                    departureButton.subTitleText = oldVal;
+                }
+            }
+            MenuItem {
+                id: switchWithArrivalStation
+                text: "Switch with Arrival station"
+                onClicked: {
+                    var oldVal = stationSelectContextMenu.opener.subTitleText
+                    stationSelectContextMenu.opener.subTitleText = arrivalButton.subTitleText
+                    arrivalButton.subTitleText = oldVal;
+                }
+            }
+            MenuItem {
+                id: switchWithViaStation
+                text: "Switch with Via station"
+                onClicked: {
+                    var oldVal = stationSelectContextMenu.opener.subTitleText
+                    stationSelectContextMenu.opener.subTitleText = viaButton.subTitleText
+                    viaButton.subTitleText = oldVal;
+                }
+            }
+            MenuItem {
+                id: clearStation
+                text: "Clear station"
+                onClicked: {
+                    stationSelectContextMenu.opener.subTitleText = "please select"
+                }
+            }
+        }
+
+        function openMenu(opener)
+        {
+            stationSelectContextMenu.opener = opener;
+            switchWithViaStation.visible = false;
+            switchWithDepartureStation.visible = false;
+            switchWithArrivalStation.visible = false;
+
+            if (opener != viaButton && fahrplanBackend.parser.supportsVia()) {
+                switchWithViaStation.visible = true;
+            }
+            if (opener != arrivalButton) {
+                switchWithArrivalStation.visible = true;
+            }
+            if (opener != departureButton) {
+                switchWithDepartureStation.visible = true;
+            }
+
+            stationSelectContextMenu.open();
         }
     }
 
