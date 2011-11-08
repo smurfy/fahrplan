@@ -313,19 +313,31 @@ Page {
     PositionSource {
         id: positionSource
         onPositionChanged: {
-            stationsResultModel.clear();
-            stationsResultModel.append({
-                "name": "Searching for stations...",
-                "process": true,
-                "internal": true,
-                "isfavorite": false,
-                "showfavorite": false,
-                "miscinfo": ""
-            })
-            positionSource.active = false;
-            positionSource.stop();
+            if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
+                stationsResultModel.clear();
+                stationsResultModel.append({
+                    "name": "Searching for stations...",
+                    "process": true,
+                    "internal": true,
+                    "isfavorite": false,
+                    "showfavorite": false,
+                    "miscinfo": ""
+                })
+                positionSource.active = false;
+                positionSource.stop();
 
-            fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
+                fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
+            } else {
+                stationsResultModel.clear();
+                stationsResultModel.append({
+                    "name": "Waiting for GPS lock...",
+                    "process": true,
+                    "internal": true,
+                    "isfavorite": false,
+                    "showfavorite": false,
+                    "miscinfo": ""
+                })
+            }
         }
     }
 
