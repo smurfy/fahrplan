@@ -33,6 +33,9 @@ ParserHafasXml::ParserHafasXml(QObject *parent)
      //baseUrl = "http://airs1.septa.org/bin/query.exe";// not working at all
      //baseUrl = "http://mobiliteitszentral.hafas.de/hafas/query.exe";// Luxenburg, //no xmlhandle, detaildate already present!
 
+     hafasHeader.accessid = "";
+     hafasHeader.prod = "String";
+     hafasHeader.ver = "1.1";
 }
 
 bool ParserHafasXml::supportsGps()
@@ -55,7 +58,7 @@ void ParserHafasXml::findStationsByName(QString stationName)
     stationName.replace("\"", "");
 
     QByteArray postData = "";
-    postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\"><MLcReq><MLc n=\"");
+    postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\"><MLcReq><MLc n=\"");
     postData.append(stationName);
     postData.append("\" t=\"ST\" /></MLcReq></ReqC>");
 
@@ -175,7 +178,8 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
     searchJourneyRequestData.trainrestrictions = trainrestrictions;
 
     //First Request, to get external ids
-    QByteArray postData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\">";
+    QByteArray postData = "";
+    postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
     postData.append("<LocValReq id=\"from\" maxNr=\"1\"><ReqLoc match= \"");
     postData.append(departureStation);
     postData.append("\" type=\"ST\"/></LocValReq>");
@@ -249,7 +253,8 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
         QString trainrestr = getTrainRestrictionsCodes(searchJourneyRequestData.trainrestrictions);
 
         //Send the search request Itself
-        QByteArray postData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\">";
+        QByteArray postData = "";
+        postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
         postData.append("<ConReq>");
         postData.append("<Start min=\"0\">");
         postData.append("<Station externalId=\"");
@@ -311,7 +316,7 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
 void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
 {
     lastJourneyResultList = new JourneyResultList();
-    journeyDetailInlineData.clear();;
+    journeyDetailInlineData.clear();
 
     QBuffer readBuffer;
     readBuffer.setData(networkReply->readAll());
@@ -443,12 +448,22 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
         item->setDepartureTime(cleanHafasDate(depTimeResult.join("").trimmed()));
         item->setArrivalTime(cleanHafasDate(arrTimeResult.join("").trimmed()));
 
+        bool hasInline = false;
         QString internalData1 = xmlHandleResult.join("").trimmed();
+
+        if (internalData1.count() > 0 && internalData1.indexOf("extxml.exe")) {
+            hasInline = true;
+        }
+
         if (internalData1.count() > 0) {
             internalData1.remove(0, internalData1.indexOf("query.exe") + 9);
             internalData1.prepend(baseUrl);
             item->setInternalData1(internalData1);
         } else {
+            hasInline = true;
+        }
+
+        if (hasInline){
             journeyDetailRequestData.id = item->id();
             journeyDetailRequestData.date = item->date();
             journeyDetailRequestData.duration = item->duration();
@@ -489,7 +504,8 @@ void ParserHafasXml::searchJourneyLater()
 
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
 
-    QByteArray postData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\">";
+    QByteArray postData = "";
+    postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
     postData.append("<ConScrReq scrDir=\"F\" nrCons=\"5\">");
     postData.append("<ConResCtxt>");
     postData.append(conResCtxt);
@@ -513,7 +529,8 @@ void ParserHafasXml::searchJourneyEarlier()
 
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
 
-    QByteArray postData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC ver=\"1.1\" prod=\"String\" lang=\"EN\">";
+    QByteArray postData = "";
+    postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
     postData.append("<ConScrReq scrDir=\"B\" nrCons=\"5\">");
     postData.append("<ConResCtxt>");
     postData.append(conResCtxt);
@@ -569,7 +586,7 @@ void ParserHafasXml::getJourneyDetails(QString id)
                 journeyDetailRequestData.id = item->id();
                 journeyDetailRequestData.date = item->date();
                 journeyDetailRequestData.duration = item->duration();
-                sendHttpRequest(item->internalData1());
+                sendHttpRequest(item->internalData1(), "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>");
                 return;
             }
         }
@@ -600,7 +617,7 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
 
     if (errorResult.count() > 0 ) {
         emit errorOccured(errorResult.join("").trimmed());
-        qWarning()<<"ParserHafasXml::parseSearchJourneyPart2:"<<errorResult.join("");
+        qWarning()<<"ParserHafasXml::internalParseJourneyDetails:"<<errorResult.join("");
         return results;
     }
 

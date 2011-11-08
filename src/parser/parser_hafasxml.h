@@ -42,6 +42,13 @@ struct ParserHafasXmlJourneyDetailRequestData
     QString duration;
 };
 
+struct ParserHafasXmlHeader
+{
+    QString prod;
+    QString ver;
+    QString accessid;
+};
+
 class ParserHafasXml : public ParserAbstract
 {
     Q_OBJECT
@@ -63,6 +70,7 @@ public slots:
 
 protected:
     QString baseUrl;
+    ParserHafasXmlHeader hafasHeader;
     void parseStationsByName(QNetworkReply *networkReply);
     void parseStationsByCoordinates(QNetworkReply *networkReply);
     void parseSearchJourney(QNetworkReply *networkReply);
