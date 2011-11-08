@@ -1,3 +1,9 @@
+fahrplan2 (2.0.3) unstable; urgency=low
+  * Fix for SBB.ch
+  * Only use coordinates if GPS has a lock
+
+ -- smurfy <maemo@smurfy.de>  Tue, 8 Nov 2011 22:00:00 +0200
+
 fahrplan2 (2.0.2) unstable; urgency=low
   * Added context menu to support switching and clearing of stations
 
