@@ -22,7 +22,11 @@
 
 ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent)
 {
-     baseUrl = "http://fahrplan.sbb.ch/bin/query.exe";
+     baseUrl = "http://fahrplan.sbb.ch/bin/extxml.exe";
+
+     hafasHeader.accessid = "MJXZ841ZfsmqqmSymWhBPy5dMNoqoGsHInHbWJQ5PTUZOJ1rLTkn8vVZOZDFfSe";
+     hafasHeader.prod = "iPhone3.1";
+     hafasHeader.ver = "2.3";
 }
 
 QString ParserXmlSbbCh::getTrainRestrictionsCodes(int trainrestrictions)
