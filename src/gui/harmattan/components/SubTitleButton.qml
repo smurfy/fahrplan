@@ -14,11 +14,11 @@ Item {
     height: title.height + subTitle.height + 30
     width: parent.width
 
-    BorderImage {
+    Rectangle {
         id: background
         anchors.fill: parent
+        color: "DarkGrey"
         visible: mouseArea.pressed
-        source: "image://theme/meegotouch-list-background-pressed-center"
     }
 
     MouseArea {

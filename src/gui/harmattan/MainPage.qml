@@ -17,12 +17,21 @@ Page {
 
         Rectangle {
             anchors.fill: parent
-            color: "LightGrey"
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.00;
+                    color: "#0d70c5";
+                }
+                GradientStop {
+                    position: 1.0;
+                    color: "#0a50a5";
+                }
+            }
         }
 
         Rectangle {
             anchors.fill: parent
-            color: "Grey"
+            color: "#0b5795"
             visible: mouseArea.pressed
         }
 
@@ -46,6 +55,7 @@ Page {
             }
             font.bold: true;
             font.pixelSize: 32
+            color: "White"
 
             text: fahrplanBackend.parserName
         }
@@ -60,7 +70,7 @@ Page {
             }
             height: sourceSize.height
             width: sourceSize.width
-            source: "image://theme/meegotouch-combobox-indicator"
+            source: "image://theme/meegotouch-combobox-indicator-inverted"
         }
     }
 

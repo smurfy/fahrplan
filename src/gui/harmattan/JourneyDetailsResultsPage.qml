@@ -86,139 +86,164 @@ Page {
         Item {
             id: delegateItem
             width: listView.width
-            height: 30 + item_departurestations.height + lbl_train.height + item_arrivalstations.height
+            height: isStation ? isTrain ? item_train.height + item_station.height : item_station.height : isTrain ? item_train.height : 0
 
             Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
-                    top: parent.top
-                    topMargin: 10
                 }
 
                 width: parent.width
                 height: parent.height
 
                 Item {
+                     id: item_station
 
-                    id: item_departurestations
+                     visible: isStation
+                     height: visible ? lbl_station.height + 20 : 0
 
-                    height: lbl_departurestation.height + 30
-                    width: parent.width
+                     width: parent.width
 
+                     Rectangle {
+                         anchors {
+                             left: parent.left
+                             leftMargin: 81
+                             top: parent.top
+                             topMargin: (isStart) ? parent.height / 2 : 0
+                         }
+                         color: "#0d70c5"
+                         height: (isStart || isStop) ? parent.height / 2  : parent.height
+                         width: 8
+                     }
 
-                    BorderImage {
-                        id: item_departurestations_background
-                        anchors.fill: parent
-                        source: "image://theme/meegotouch-list-background-pressed-center"
-                    }
+                     Rectangle {
+                         anchors {
+                             left: parent.left
+                             leftMargin: 70
+                             verticalCenter: parent.verticalCenter
+                         }
 
-                    Label {
-                        id: lbl_departuretime
+                         gradient: Gradient {
+                             GradientStop {
+                                 position: 0.00;
+                                 color: "#0d70c5";
+                             }
+                             GradientStop {
+                                 position: 0.38;
+                                 color: "#0d70c5";
+                             }
+                             GradientStop {
+                                 position: 0.39;
+                                 color: "#ffffff";
+                             }
+                             GradientStop {
+                                 position: 0.50;
+                                 color: "#ffffff";
+                             }
+                             GradientStop {
+                                 position: 0.61;
+                                 color: "#ffffff";
+                             }
+                             GradientStop {
+                                 position: 0.62;
+                                 color: "#0d70c5";
+                             }
+                             GradientStop {
+                                 position: 1.0;
+                                 color: "#0d70c5";
+                             }
+                         }
+                         radius: 15
+                         height: 30
+                         width: 30
+                     }
+
+                     Label {
+                         anchors {
+                             left: parent.left
+                             leftMargin: 8
+                             top: parent.top
+                         }
+
+                         text: arrivalTime
+                         width: parent.width - 10
+                     }
+
+                     Label {
+
+                         anchors {
+                             left: parent.left
+                             leftMargin: 8
+                             bottom: parent.bottom
+                         }
+
+                         text: departureTime
+                         width: parent.width - 10
+                     }
+
+                     Item {
+                        id: lbl_station
+
+                        height: lbl_station_name.height + lbl_station_info.height
+                        width: (parent.width - 110)
+
                         anchors {
                             left: parent.left
-                            leftMargin: 10
-                            top: parent.top
-                            topMargin: 10
+                            leftMargin: 110
+                            verticalCenter: parent.verticalCenter
                         }
-                        text: departureTime
-                        width: (parent.width - 40) / 3
-                    }
 
-
-                    Label {
-                        id: lbl_departureinfo
-                        anchors {
-                            left: lbl_departuretime.right
-                            leftMargin: 10
-                            top: parent.top
-                            topMargin: 10
+                        Label {
+                            id: lbl_station_name
+                            text: stationName
+                            width: parent.width
                         }
-                        text: departureInfo
-                        width: (parent.width - 40) / 3
-                    }
 
+                        Label {
 
-                    Label {
-                        id: lbl_departurestation
-                        anchors {
-                            right: parent.right
-                            rightMargin: 10
-                            top: parent.top
-                            topMargin: 10
+                            anchors {
+                                top: lbl_station_name.bottom
+                            }
+                            color: "DarkGrey"
+                            id: lbl_station_info
+                            text: stationInfo
+                            width: parent.width
                         }
-                        font.bold: true
-                        text: departureStation
-                        horizontalAlignment: Text.AlignRight
-                        width: (parent.width  - 40) / 3
-                    }
-                }
-
-                Label {
-                    id: lbl_train
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        top: item_departurestations.bottom
-                        topMargin: 15
-                    }
-                    text: train
-                    width: (parent.width  - 40)
+                     }
                 }
 
                 Item {
-
-                    id: item_arrivalstations
-
-                    height: lbl_arrivalstation.height + 30
-                    width: parent.width
+                    id: item_train
 
                     anchors {
-                        top: lbl_train.bottom
-                        topMargin: 15
+                        top: item_station.bottom
                     }
 
-                    BorderImage {
-                        id: item_arrivalstations_background
-                        anchors.fill: parent
-                        source: "image://theme/meegotouch-list-background-pressed-center"
-                    }
+                    visible: isTrain
+                    height: visible ? lbl_train.height + 30 : 0
 
-                    Label {
-                        id: lbl_arrivaltime
+                    width: parent.width
+
+                    Rectangle {
                         anchors {
                             left: parent.left
-                            leftMargin: 10
-                            top: parent.top
-                            topMargin: 10
+                            leftMargin: 81
                         }
-                        text: arrivalTime
-                        width: (parent.width  - 40) / 3
+                        color: "#0d70c5"
+                        height: parent.height
+                        width: 8
                     }
 
                     Label {
-                       id: lbl_arrivalinfo
-                       anchors {
-                           left: lbl_arrivaltime.right
-                           leftMargin: 10
-                           top: parent.top
-                           topMargin: 10
-                       }
-                       text: arrivalInfo
-                       width: (parent.width  - 40) / 3
-                    }
-
-                    Label {
-                        id: lbl_arrivalstation
+                        id: lbl_train
                         anchors {
-                            right: parent.right
-                            rightMargin: 10
-                            top: parent.top
-                            topMargin: 10
+                            left: parent.left
+                            leftMargin: 110
+                            verticalCenter: parent.verticalCenter
                         }
+                        text: trainName
                         font.bold: true
-                        horizontalAlignment: Text.AlignRight
-                        text: arrivalStation
-                        width: (parent.width  - 40) / 3
+                        width: (parent.width  - 110)
                     }
                 }
             }
@@ -255,15 +280,74 @@ Page {
                 journeyDetailResultModel.clear();
                 for (var i = 0; i < result.count; i++) {
                     var item = result.getItem(i);
-                    journeyDetailResultModel.append({
-                        "departureTime": "Dep. " + Qt.formatTime(item.departureDateTime,"hh:mm"),
-                        "arrivalTime": "Arr. " + Qt.formatTime(item.arrivalDateTime,"hh:mm"),
-                        "departureStation": item.departureStation,
-                        "arrivalStation": item.arrivalStation,
-                        "departureInfo": item.departureInfo,
-                        "arrivalInfo": item.arrivalInfo,
-                        "train": item.train + " " + item.info
-                    });
+
+                    var nextItem = null;
+                    if (i < result.count -1) {
+                        nextItem = result.getItem(i+1);
+                    }
+
+
+                    var isStart = (i == 0);
+                    var isStop = (i == result.count -1);
+
+                    //Add first departure Station and the train
+                    if (isStart) {
+                        journeyDetailResultModel.append({
+                                                            "isStart" : true,
+                                                            "isStop" : false,
+                                                            "trainName" : item.train + " " + item.info,
+                                                            "stationName" : item.departureStation,
+                                                            "stationInfo" : item.departureInfo,
+                                                            "arrivalTime" : "",
+                                                            "departureTime" : Qt.formatTime(item.departureDateTime,"hh:mm"),
+                                                            "isStation" : true,
+                                                            "isTrain" : true
+
+                        });
+                    }
+
+                    //Add arrival station, but only if its the last item or if the next departureStation differs
+                    //from arrival station
+                    if (isStop || (nextItem && nextItem.departureStation != item.arrivalStation)) {
+                        journeyDetailResultModel.append({
+                                                            "isStart" : false,
+                                                            "isStop" : isStop,
+                                                            "trainName" : "",
+                                                            "stationName" : item.arrivalStation,
+                                                            "stationInfo" :  item.arrivalInfo,
+                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime,"hh:mm"),
+                                                            "departureTime" : "",
+                                                            "isStation" : true,
+                                                            "isTrain" : false
+
+                        });
+                    }
+
+                    //Add one Station
+                    if ((nextItem && nextItem.departureStation == item.arrivalStation)) {
+
+                        var stationInfo = item.arrivalInfo;
+
+                        if (stationInfo.length > 0 && nextItem.departureInfo) {
+                            stationInfo = stationInfo + " / ";
+                        }
+
+                        stationInfo = stationInfo + nextItem.departureInfo;
+
+                        journeyDetailResultModel.append({
+                                                            "isStart" : false,
+                                                            "isStop" : false,
+                                                            "trainName" :  nextItem.train + " " + nextItem.info,
+                                                            "stationName" : item.arrivalStation,
+                                                            "stationInfo" : stationInfo,
+                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime,"hh:mm"),
+                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime,"hh:mm"),
+                                                            "isStation" : true,
+                                                            "isTrain" : true
+
+                        });
+                    }
+
                 }
                 searchIndicator.visible = false;
             } else {

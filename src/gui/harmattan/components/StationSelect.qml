@@ -132,11 +132,11 @@ Page {
             width: listView.width
             height: 30 + lbl_stationname.height
 
-            BorderImage {
+            Rectangle {
                 id: background
                 anchors.fill: parent
-                visible: mouseArea.pressed && mouseArea.enabled
-                source: "image://theme/meegotouch-list-background-pressed-center"
+                color: "DarkGrey"
+                visible: mouseArea.pressed
             }
 
             MouseArea {

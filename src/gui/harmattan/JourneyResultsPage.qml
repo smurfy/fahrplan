@@ -127,11 +127,11 @@ Page {
             width: listView.width
             height: 30 + lbl_departuretime.height + lbl_traintyp.height
 
-            BorderImage {
+            Rectangle {
                 id: background
                 anchors.fill: parent
+                color: "DarkGrey"
                 visible: mouseArea.pressed
-                source: "image://theme/meegotouch-list-background-pressed-center"
             }
 
             MouseArea {
