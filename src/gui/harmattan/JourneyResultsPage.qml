@@ -117,6 +117,10 @@ Page {
             delegate:  journeyResultDelegate
             clip: true
         }
+
+        ScrollDecorator {
+            flickableItem: listView
+        }
     }
 
     Component {
@@ -126,6 +130,11 @@ Page {
             id: delegateItem
             width: listView.width
             height: 30 + lbl_departuretime.height + lbl_traintyp.height
+
+            Rectangle {
+                anchors.fill: parent
+                color: itemNum % 2 ? "White" : "LightGrey"
+            }
 
             Rectangle {
                 id: background
@@ -242,6 +251,7 @@ Page {
                     "duration": item.duration,
                     "transfers": item.transfers,
                     "miscInfo": item.miscInfo,
+                    "itemNum" : i
                 });
             }
         }

@@ -7,7 +7,7 @@ Page {
     id: searchDetailResultsPage
 
     property alias titleText: journeyStations.text
-    property alias subTitleText: journeyDate.text
+    property alias subTitleText: lbljourneyDate.text
     property alias searchIndicatorVisible: searchIndicator.visible
 
     tools: journeyDetailResultsToolbar
@@ -39,16 +39,40 @@ Page {
                 width: parent.width
             }
 
-            Label {
+            Item {
                 id: journeyDate
-                color: "Grey"
                 anchors {
                     left: parent.left
                     leftMargin: 10
+                    right: parent.right
+                    rightMargin: 10
                     top: journeyStations.bottom
                     topMargin: 10
                 }
                 width: parent.width
+                height: lbljourneyDate.height
+
+                Label {
+                    id: lbljourneyDate
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+                    width: ((parent.width / 3) * 2) - 20
+                    color: "Grey"
+                }
+
+                Label {
+                    id: lbljourneyDuration
+                    anchors {
+                        right: parent.right
+                        left: lbljourneyDate.right
+                        top: parent.top
+                    }
+                    width: (parent.width / 3) - 20
+                    color: "Grey"
+                    horizontalAlignment: Text.AlignRight
+                }
             }
         }
 
@@ -78,6 +102,10 @@ Page {
             delegate:  journeyDetailResultDelegate
             clip: true
         }
+
+        ScrollDecorator {
+            flickableItem: listView
+        }
     }
 
     Component {
@@ -103,6 +131,13 @@ Page {
                      height: visible ? lbl_station.height + 20 : 0
 
                      width: parent.width
+
+                     Rectangle {
+                         anchors {
+                             fill: parent
+                         }
+                         color: "White"
+                     }
 
                      Rectangle {
                          anchors {
@@ -134,15 +169,15 @@ Page {
                              }
                              GradientStop {
                                  position: 0.39;
-                                 color: "#ffffff";
+                                 color: "White";
                              }
                              GradientStop {
                                  position: 0.50;
-                                 color: "#ffffff";
+                                 color: "White";
                              }
                              GradientStop {
                                  position: 0.61;
-                                 color: "#ffffff";
+                                 color: "White";
                              }
                              GradientStop {
                                  position: 0.62;
@@ -226,6 +261,13 @@ Page {
 
                     Rectangle {
                         anchors {
+                            fill: parent
+                        }
+                        color: "LightGrey"
+                    }
+
+                    Rectangle {
+                        anchors {
                             left: parent.left
                             leftMargin: 81
                         }
@@ -272,10 +314,10 @@ Page {
                     arrivalDate = "";
                 }
 
-                journeyDate.text = departureDate + " " + Qt.formatTime(departureItem.departureDateTime,"hh:mm") + " - " +
+                lbljourneyDate.text = departureDate + " " + Qt.formatTime(departureItem.departureDateTime,"hh:mm") + " - " +
                         arrivalDate + " " + Qt.formatTime(arrivalItem.arrivalDateTime,"hh:mm");
 
-                journeyDate.text += "<br/>Duration: " + result.duration;
+                lbljourneyDuration.text = "Dur.: " + result.duration;
 
                 journeyDetailResultModel.clear();
                 for (var i = 0; i < result.count; i++) {
