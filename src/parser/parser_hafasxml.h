@@ -78,6 +78,8 @@ protected:
     void parseSearchEalierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
 
+    StationsResultList* internalParseStationsByName(QString data);
+
 private:
     QString conResCtxt;
     JourneyResultList *lastJourneyResultList;
@@ -90,6 +92,7 @@ private:
     void parseSearchJourneyPart1(QNetworkReply *networkReply);
     void parseSearchJourneyPart2(QNetworkReply *networkReply);
     JourneyDetailResultList* internalParseJourneyDetails(QByteArray data);
+
 };
 
 #endif // PARSER_HAFASXML_H

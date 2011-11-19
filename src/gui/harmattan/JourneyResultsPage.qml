@@ -150,6 +150,7 @@ Page {
 
                     detailsResultsPage.titleText = "Loading details";
                     detailsResultsPage.subTitleText = "please wait...";
+                    detailsResultsPage.subTitleText2 = "";
                     detailsResultsPage.searchIndicatorVisible = true;
                     pageStack.push(detailsResultsPage);
                     fahrplanBackend.parser.getJourneyDetails(id);

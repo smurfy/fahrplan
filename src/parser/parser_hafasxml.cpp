@@ -98,10 +98,17 @@ void ParserHafasXml::findStationsByCoordinates(qreal longitude, qreal latitude)
 
 void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)
 {
-    StationsResultList result;
+    QString data = networkReply->readAll();
+    StationsResultList *result = internalParseStationsByName(data);
+    emit stationsResult(result);
+}
+
+StationsResultList* ParserHafasXml::internalParseStationsByName(QString data)
+{
+    StationsResultList *result = new StationsResultList();
 
     QXmlStreamReader xml;
-    xml.addData(networkReply->readAll());
+    xml.addData(data);
 
     while (!xml.atEnd()) {
         xml.readNext();
@@ -117,7 +124,7 @@ void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)
                 if (!miscInfo.isEmpty()) {
                     item->setMiscInfo(miscInfo + "m");
                 }
-                result.appendItem(item);
+                result->appendItem(item);
             }
         }
     }
@@ -125,7 +132,7 @@ void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)
         qWarning() << "XML ERROR:" << xml.lineNumber() << ": " << xml.errorString();
     }
 
-    emit stationsResult(&result);
+    return result;
 }
 
 

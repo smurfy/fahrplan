@@ -8,6 +8,7 @@ Page {
 
     property alias titleText: journeyStations.text
     property alias subTitleText: lbljourneyDate.text
+    property alias subTitleText2: lbljourneyDuration.text
     property alias searchIndicatorVisible: searchIndicator.visible
 
     tools: journeyDetailResultsToolbar
