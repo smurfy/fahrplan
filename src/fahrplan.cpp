@@ -53,7 +53,7 @@ FahrplanFavoritesManager* Fahrplan::favorites()
 
 QString Fahrplan::getVersion()
 {
-    return "2.0.3 Alpha";
+    return "2.0.4 Alpha";
 }
 
 void Fahrplan::onFavoritesChanged(QStringList favorites)
