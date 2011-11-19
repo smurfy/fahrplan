@@ -32,6 +32,9 @@ public:
     static QString getName() { return "sbb.ch"; }
     QString name() { return "sbb.ch"; }
 
+protected:
+    void parseStationsByName(QNetworkReply *networkReply);
+
 public slots:
     QStringList getTrainRestrictions();
     QString getTrainRestrictionsCodes(int trainrestrictions);
