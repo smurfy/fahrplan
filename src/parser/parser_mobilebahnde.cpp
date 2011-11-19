@@ -493,7 +493,6 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                  qDebug() << "parserMobileBahnDe::getJourneyDetailsData - Query 3 Failed";
              }
 
-
              /*
              qDebug() <<num;
              qDebug() <<element;
@@ -510,15 +509,15 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                  item->setArrivalStation(stationResults[1].trimmed());
                  if (trainnrResults.count() > 0)
                  {
-                     item->setTrain(trainnrResults[0].trimmed());
+                     item->setTrain(trainnrResults[0].simplified().trimmed());
                  }
 
                  QString tmp = txtResults.join(" ");
-                 tmp.replace("  ", " ");
                  tmp.replace("\n", " ");
+                 tmp = tmp.simplified();
 
                  //Check and Parse departure and arrival Times
-                 QRegExp tmpRegexp = QRegExp("(dep) (.+) on (.*) (arr) (.+) on (.*) ");
+                 QRegExp tmpRegexp = QRegExp("(dep) (.+) on (.*) (arr) (.+) on (.*)$");
                  tmpRegexp.setMinimal(true);
                  tmpRegexp.indexIn(tmp);
 
@@ -526,8 +525,6 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                  {
                      if (tmpRegexp.cap(1) == "dep")
                      {
-                         item->setDepartureInfo(tmpRegexp.cap(2).trimmed());
-
                          QRegExp tmpRegexp2 = QRegExp("(\\d\\d:\\d\\d)");
                          tmpRegexp2.setMinimal(true);
                          tmpRegexp2.indexIn(tmpRegexp.cap(2).trimmed());
@@ -541,11 +538,11 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                          fromDateTime.setDate(fromDate);
                          fromDateTime.setTime(fromTime);
                          item->setDepartureDateTime(fromDateTime);
+
+                         item->setDepartureInfo(tmpRegexp.cap(2).mid(5).trimmed());
                      }
                      if (tmpRegexp.cap(4) == "arr")
                      {
-                         item->setArrivalInfo(tmpRegexp.cap(5).trimmed());
-
                          QRegExp tmpRegexp2 = QRegExp("(\\d\\d:\\d\\d)");
                          tmpRegexp2.setMinimal(true);
                          tmpRegexp2.indexIn(tmpRegexp.cap(5).trimmed());
@@ -559,6 +556,8 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                          toDateTime.setDate(toDate);
                          toDateTime.setTime(toTime);
                          item->setArrivalDateTime(toDateTime);
+
+                         item->setArrivalInfo(tmpRegexp.cap(5).mid(5).trimmed());
                      }
                  } else
                  {
@@ -573,8 +572,8 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                  for (int i = 0; i < txtResults.count(); i++)
                  {
                      QString tmp = txtResults[i];
-                     tmp.replace("  ", " ");
                      tmp.replace("\n", " ");
+                     tmp = tmp.simplified();
 
                      //Check and Parse departure and arrival Times
                      QRegExp tmpRegexp = QRegExp("(Duration|Hint)(.*)$");
