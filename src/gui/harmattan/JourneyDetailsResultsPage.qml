@@ -305,18 +305,15 @@ Page {
 
             if (result.count > 0) {
                 journeyStations.text = result.departureStation + " to " + result.arrivalStation;
-                var departureItem = result.getItem(0);
-                var arrivalItem = result.getItem(result.count-1);
-
-                var departureDate = Qt.formatDate(departureItem.departureDateTime);
-                var arrivalDate = Qt.formatDate(arrivalItem.arrivalDateTime);
+                var departureDate = Qt.formatDate(result.departureDateTime);
+                var arrivalDate = Qt.formatDate(result.arrivalDateTime);
 
                 if (departureDate == arrivalDate) {
                     arrivalDate = "";
                 }
 
-                lbljourneyDate.text = departureDate + " " + Qt.formatTime(departureItem.departureDateTime,"hh:mm") + " - " +
-                        arrivalDate + " " + Qt.formatTime(arrivalItem.arrivalDateTime,"hh:mm");
+                lbljourneyDate.text = departureDate + " " + Qt.formatTime(result.departureDateTime,"hh:mm") + " - " +
+                        arrivalDate + " " + Qt.formatTime(result.arrivalDateTime,"hh:mm");
 
                 lbljourneyDuration.text = "Dur.: " + result.duration;
 

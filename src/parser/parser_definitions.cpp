@@ -275,6 +275,16 @@ void JourneyDetailResultList::setDepartureStation(const QString &departureStatio
     m_departureStation = departureStation;
 }
 
+QDateTime JourneyDetailResultList::departureDateTime() const
+{
+    return m_departureDateTime;
+}
+
+void JourneyDetailResultList::setDepartureDateTime(const QDateTime &departureDateTime)
+{
+    m_departureDateTime = departureDateTime;
+}
+
 QString JourneyDetailResultList::arrivalStation() const
 {
     return m_arrivalStation;
@@ -283,6 +293,16 @@ QString JourneyDetailResultList::arrivalStation() const
 void JourneyDetailResultList::setArrivalStation(const QString &arrivalStation)
 {
     m_arrivalStation = arrivalStation;
+}
+
+QDateTime JourneyDetailResultList::arrivalDateTime() const
+{
+    return m_arrivalDateTime;
+}
+
+void JourneyDetailResultList::setArrivalDateTime(const QDateTime &arrivalDateTime)
+{
+    m_arrivalDateTime = arrivalDateTime;
 }
 
 QString JourneyDetailResultList::info() const

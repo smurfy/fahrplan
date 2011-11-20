@@ -450,6 +450,20 @@ JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *jou
         JourneyDetailResultItem *firstitem = results->getItem(0);
         results->setDepartureStation(firstitem->departureStation());
         results->setArrivalStation(lastitem->arrivalStation());
+
+        for (int i=0; i < results->itemcount(); i++) {
+            if (!results->getItem(i)->departureDateTime().isNull()) {
+                results->setDepartureDateTime(results->getItem(i)->departureDateTime());
+                break;
+            }
+        }
+
+        for (int i=results->itemcount() -1; i >= 0; i--) {
+            if (!results->getItem(i)->arrivalDateTime().isNull()) {
+                results->setArrivalDateTime(results->getItem(i)->arrivalDateTime());
+                break;
+            }
+        }
     }
 
     return results;

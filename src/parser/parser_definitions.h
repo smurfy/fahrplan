@@ -216,7 +216,9 @@ class JourneyDetailResultList : public QObject
     Q_PROPERTY(QString duration READ duration WRITE setDuration)
     Q_PROPERTY(QString info READ info WRITE setInfo)
     Q_PROPERTY(QString departureStation READ departureStation WRITE setDepartureStation)
+    Q_PROPERTY(QDateTime departureDateTime READ departureDateTime WRITE setDepartureDateTime)
     Q_PROPERTY(QString arrivalStation READ arrivalStation WRITE setArrivalStation)
+    Q_PROPERTY(QDateTime arrivalDateTime READ arrivalDateTime WRITE setArrivalDateTime)
 
     public slots:
         JourneyDetailResultItem *getItem(int);
@@ -227,8 +229,12 @@ class JourneyDetailResultList : public QObject
         void setId(const QString &);
         QString departureStation() const;
         void setDepartureStation(const QString &);
+        QDateTime departureDateTime() const;
+        void setDepartureDateTime(const QDateTime &);
         QString arrivalStation() const;
         void setArrivalStation(const QString &);
+        QDateTime arrivalDateTime() const;
+        void setArrivalDateTime(const QDateTime &);
         QString info() const;
         void setInfo(const QString &);
         QString duration() const;
@@ -237,7 +243,9 @@ class JourneyDetailResultList : public QObject
         QList<JourneyDetailResultItem*> m_items;
         QString m_id;
         QString m_departureStation;
+        QDateTime m_departureDateTime;
         QString m_arrivalStation;
+        QDateTime m_arrivalDateTime;
         QString m_info;
         QString m_duration;
 };

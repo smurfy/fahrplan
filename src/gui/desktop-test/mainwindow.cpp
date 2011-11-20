@@ -184,7 +184,9 @@ void MainWindow::journeyDetailResult(JourneyDetailResultList *result)
 {
     ui->getJourneyDetailsResults->clear();
     ui->getJourneyDetailsResults->append(result->departureStation());
+    ui->getJourneyDetailsResults->append(result->departureDateTime().toString());
     ui->getJourneyDetailsResults->append(result->arrivalStation());
+    ui->getJourneyDetailsResults->append(result->arrivalDateTime().toString());
     ui->getJourneyDetailsResults->append(result->duration());
     ui->getJourneyDetailsResults->append(result->info());
 
