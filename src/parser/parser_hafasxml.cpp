@@ -138,8 +138,9 @@ StationsResultList* ParserHafasXml::internalParseStationsByName(QString data)
 
 void ParserHafasXml::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
-    //Both responses are similar so we use the same parser
-    parseStationsByName(networkReply);
+    QString data = QString::fromUtf8(networkReply->readAll());
+    StationsResultList *result = internalParseStationsByName(data);
+    emit stationsResult(result);
 }
 
 QString ParserHafasXml::getTrainRestrictionsCodes(int trainrestrictions)
