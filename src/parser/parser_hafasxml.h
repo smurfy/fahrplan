@@ -69,6 +69,7 @@ public slots:
     QStringList getTrainRestrictions();
 
 protected:
+    QString baseXmlUrl;
     QString baseUrl;
     ParserHafasXmlHeader hafasHeader;
     void parseStationsByName(QNetworkReply *networkReply);

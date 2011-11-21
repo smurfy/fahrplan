@@ -22,6 +22,7 @@
 
 ParserXmlOebbAt::ParserXmlOebbAt(QObject *parent)
 {
+     baseXmlUrl = "http://fahrplan.oebb.at/bin/query.exe";
      baseUrl = "http://fahrplan.oebb.at/bin/query.exe";
 }
 

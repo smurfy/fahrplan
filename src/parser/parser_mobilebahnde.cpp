@@ -23,6 +23,7 @@
 ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent)
 {
      Q_UNUSED(parent);
+     baseXmlUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
      baseUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
 }
 

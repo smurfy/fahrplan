@@ -22,7 +22,9 @@
 
 ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent)
 {
-     baseUrl = "http://fahrplan.sbb.ch/bin/extxml.exe";
+     Q_UNUSED(parent);
+     baseXmlUrl = "http://fahrplan.sbb.ch/bin/extxml.exe";
+     baseUrl = "http://fahrplan.sbb.ch/bin/query.exe";
 
      hafasHeader.accessid = "MJXZ841ZfsmqqmSymWhBPy5dMNoqoGsHInHbWJQ5PTUZOJ1rLTkn8vVZOZDFfSe";
      hafasHeader.prod = "iPhone3.1";
