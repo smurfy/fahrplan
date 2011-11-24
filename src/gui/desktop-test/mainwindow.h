@@ -39,6 +39,7 @@ public:
     ~MainWindow();
 
 private slots:
+    void getTimeTableForStationClicked();
     void findStationsByNameClicked();
     void findStationsByCoordinatesClicked();
     void stationsResult(StationsResultList *result);

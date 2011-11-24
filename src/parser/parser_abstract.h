@@ -36,6 +36,7 @@ public:
     virtual QString name() { return "Abstract"; }
 
 public slots:
+    virtual void getTimeTableForStation(QString stationName, QDate date, QTime time, int mode);
     virtual void findStationsByName(QString stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
     virtual void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
@@ -44,6 +45,7 @@ public slots:
     virtual void getJourneyDetails(QString id);
     virtual bool supportsGps();
     virtual bool supportsVia();
+    virtual bool supportsTimeTable();
     virtual QStringList getTrainRestrictions();
     void cancelRequest();
 
@@ -61,6 +63,7 @@ protected:
     FahrplanNS::curReqStates currentRequestState;
     QNetworkReply *lastRequest;
 
+    virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseStationsByName(QNetworkReply *networkReply);
     virtual void parseStationsByCoordinates(QNetworkReply *networkReply);
     virtual void parseSearchJourney(QNetworkReply *networkReply);

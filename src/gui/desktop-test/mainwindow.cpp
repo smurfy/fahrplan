@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->cancelRequest, SIGNAL(clicked()), this, SLOT(cancelRequestClicked()));
     connect(fahrplan, SIGNAL(parserErrorOccured(QString)), this, SLOT(errorOccured(QString)));
 
+    connect(ui->getTimeTableForStation, SIGNAL(clicked()), this, SLOT(getTimeTableForStationClicked()));
     connect(ui->findStationsByName, SIGNAL(clicked()), this, SLOT(findStationsByNameClicked()));
     connect(ui->findStationsByCoordinates, SIGNAL(clicked()), this, SLOT(findStationsByCoordinatesClicked()));
     connect(fahrplan, SIGNAL(parserStationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
@@ -82,6 +83,7 @@ void MainWindow::parserChanged(QString name, int index)
     }
 
     ui->viaStation->setEnabled(fahrplan->parser()->supportsVia());
+    ui->getTimeTableForStation->setEnabled(fahrplan->parser()->supportsTimeTable());
 }
 
 void MainWindow::errorOccured(QString msg)
@@ -100,7 +102,14 @@ void MainWindow::findStationsByNameClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    fahrplan->parser()->findStationsByName("München");
+    fahrplan->parser()->findStationsByName(ui->stationName->text());
+}
+
+void MainWindow::getTimeTableForStationClicked()
+{
+    ui->findStationResults->clear();
+    ui->findStationResults->append("Searching...");
+    fahrplan->parser()->getTimeTableForStation(ui->stationName->text(), QDate::currentDate(), QTime::currentTime(), 0);
 }
 
 void MainWindow::findStationsByCoordinatesClicked()

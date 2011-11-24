@@ -91,10 +91,29 @@ bool ParserAbstract::supportsVia()
     return false;
 }
 
+bool ParserAbstract::supportsTimeTable()
+{
+    return false;
+}
+
 QStringList ParserAbstract::getTrainRestrictions()
 {
     QStringList result;
     return result;
+}
+
+void ParserAbstract::getTimeTableForStation(QString stationName, QDate date, QTime time, int mode)
+{
+    Q_UNUSED(stationName);
+    Q_UNUSED(date);
+    Q_UNUSED(time);
+    Q_UNUSED(mode);
+}
+
+void ParserAbstract::parseTimeTable(QNetworkReply *networkReply)
+{
+   Q_UNUSED(networkReply);
+   qDebug() << "ParserAbstract::parseTimeTable";
 }
 
 void ParserAbstract::findStationsByName(QString stationName)
