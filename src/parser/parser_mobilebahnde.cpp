@@ -23,8 +23,16 @@
 ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent)
 {
      Q_UNUSED(parent);
+    //http://reiseauskunft.bahn.de/bin/extxml.exe
      baseXmlUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
+     baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
      baseUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
+     STTableMode = 1;
+}
+
+bool ParserMobileBahnDe::supportsTimeTable()
+{
+    return true;
 }
 
 bool ParserMobileBahnDe::supportsGps()

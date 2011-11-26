@@ -24,8 +24,17 @@ ParserXmlRejseplanenDk::ParserXmlRejseplanenDk(QObject *parent)
 {
      Q_UNUSED(parent);
      baseXmlUrl = "http://www.rejseplanen.dk/bin/query.exe";
+     baseSTTableUrl = "http://www.rejseplanen.dk/mobil-bin/stboard.exe/en";
      baseUrl = "http://www.rejseplanen.dk/bin/query.exe";
+
+     STTableMode = 1;
 }
+
+bool ParserXmlRejseplanenDk::supportsTimeTable()
+{
+    return true;
+}
+
 
 QString ParserXmlRejseplanenDk::getTrainRestrictionsCodes(int trainrestrictions)
 {

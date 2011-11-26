@@ -23,7 +23,14 @@
 ParserXmlOebbAt::ParserXmlOebbAt(QObject *parent)
 {
      baseXmlUrl = "http://fahrplan.oebb.at/bin/query.exe";
+     baseSTTableUrl = "http://fahrplan.oebb.at/bin/stboard.exe/en";
      baseUrl = "http://fahrplan.oebb.at/bin/query.exe";
+     STTableMode = 1;
+}
+
+bool ParserXmlOebbAt::supportsTimeTable()
+{
+    return true;
 }
 
 QStringList ParserXmlOebbAt::getTrainRestrictions()

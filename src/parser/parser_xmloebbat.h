@@ -35,6 +35,7 @@ public:
 public slots:
     QStringList getTrainRestrictions();
     QString getTrainRestrictionsCodes(int trainrestrictions);
+    bool supportsTimeTable();
 };
 
 #endif // PARSER_XMLOEBBAT_H

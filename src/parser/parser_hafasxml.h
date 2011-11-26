@@ -42,6 +42,7 @@ struct ParserHafasXmlGetTimeTableForStationRequestData
     QTime time;
     int mode;
     int trainrestrictions;
+    QString stationName;
 };
 
 struct ParserHafasXmlJourneyDetailRequestData
@@ -89,7 +90,9 @@ public slots:
 protected:
     QString baseXmlUrl;
     QString baseUrl;
+    QString baseSTTableUrl;
     ParserHafasXmlHeader hafasHeader;
+    int STTableMode;
     void parseTimeTable(QNetworkReply *networkReply);
     void parseStationsByName(QNetworkReply *networkReply);
     void parseStationsByCoordinates(QNetworkReply *networkReply);
@@ -114,8 +117,9 @@ private:
     ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
     void parseSearchJourneyPart1(QNetworkReply *networkReply);
     void parseSearchJourneyPart2(QNetworkReply *networkReply);
-    void parseTimeTablePart1(QNetworkReply *networkReply);
-    void parseTimeTablePart2(QNetworkReply *networkReply);
+    void parseTimeTableMode1(QNetworkReply *networkReply);
+    void parseTimeTableMode0Part1(QNetworkReply *networkReply);
+    void parseTimeTableMode0Part2(QNetworkReply *networkReply);
     JourneyDetailResultList* internalParseJourneyDetails(QByteArray data);
 
 };

@@ -36,6 +36,8 @@ ParserHafasXml::ParserHafasXml(QObject *parent)
      hafasHeader.accessid = "";
      hafasHeader.prod = "String";
      hafasHeader.ver = "1.1";
+
+     STTableMode = 0;
 }
 
 bool ParserHafasXml::supportsGps()
@@ -66,29 +68,113 @@ void ParserHafasXml::getTimeTableForStation(QString stationName, QString directi
     getTimeTableForStationRequestData.time = time;
     getTimeTableForStationRequestData.mode = mode;
     getTimeTableForStationRequestData.trainrestrictions = trainrestrictions;
+    getTimeTableForStationRequestData.stationName = stationName;
 
-    //First Request, to get external ids
-    QByteArray postData = getStationsExternalIds(stationName, directionStationName, "");
+    if (STTableMode == 0) {
+        //First Request, to get external ids
+        QByteArray postData = getStationsExternalIds(stationName, directionStationName, "");
+        sendHttpRequest(QUrl(baseXmlUrl), postData);
+    }
 
-    sendHttpRequest(QUrl(baseXmlUrl), postData);
+    if (STTableMode == 1) {
+        QString trainrestr = getTrainRestrictionsCodes(getTimeTableForStationRequestData.trainrestrictions);
+        QByteArray postData;
+        postData.append("productsFilter=");
+        postData.append(trainrestr);
+        postData.append("&boardType=");
+        if (searchJourneyRequestData.mode == 0) {
+            postData.append("dep");
+        } else {
+            postData.append("arr");
+        }
+        postData.append("&date=");
+        postData.append(getTimeTableForStationRequestData.date.toString("dd.MM.yyyy"));
+        postData.append("&time=");
+        postData.append(getTimeTableForStationRequestData.time.toString("hh:mm"));
+        postData.append("&input=");
+        postData.append(stationName);
+        postData.append("&maxJourneys=50");
+        postData.append("&start=yes");
+        postData.append("&L=vs_java3");
+        sendHttpRequest(QUrl(baseSTTableUrl), postData);
+    }
 }
 
 void ParserHafasXml::parseTimeTable(QNetworkReply *networkReply)
 {
-    switch (getTimeTableForStationRequestData.progress) {
-    case 1:
-        parseTimeTablePart1(networkReply);
-        break;
-    case 2:
-        parseTimeTablePart2(networkReply);
-        break;
+    if (STTableMode == 0) {
+        switch (getTimeTableForStationRequestData.progress) {
+        case 1:
+            parseTimeTableMode0Part1(networkReply);
+            break;
+        case 2:
+            parseTimeTableMode0Part2(networkReply);
+            break;
+        }
+    }
+
+    if (STTableMode == 1) {
+        parseTimeTableMode1(networkReply);
     }
 }
 
-void ParserHafasXml::parseTimeTablePart1(QNetworkReply *networkReply)
+void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 {
-    ParserHafasXmlExternalIds extIds = parseExternalIds(networkReply->readAll());
 
+
+    TimeTableResultList *result = new TimeTableResultList();
+
+    QString data = networkReply->readAll();
+
+    //Add a root element, because its sometimes missing
+    if (data.indexOf("StationTable") == -1) {
+        data.prepend("<StationTable>");
+        data.append("</StationTable>");
+    }
+
+    QXmlStreamReader xml;
+    xml.addData(data);
+
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement() && (xml.name() == "Journey")) {
+            TimeTableResultItem *item = new TimeTableResultItem();
+
+            QString dest = xml.attributes().value("dir").toString().simplified();
+            QString station = xml.attributes().value("depStation").toString().simplified();
+            QString train = xml.attributes().value("hafasname").toString().simplified();
+
+            if (dest.isEmpty()) {
+                dest = xml.attributes().value("targetLoc").toString().simplified();
+            }
+            if (station.isEmpty()) {
+                station = getTimeTableForStationRequestData.stationName;
+            }
+            if (train.isEmpty()) {
+                train = xml.attributes().value("prod").toString().simplified();
+
+                if (train.indexOf("#")) {
+                    train = train.left(train.indexOf("#"));
+                }
+            }
+
+            item->setDestinationName(dest);
+            item->setStationName(station);
+            item->setPlatform(xml.attributes().value("platform").toString().simplified());
+            item->setTrainType(train);
+            item->setTime(QTime::fromString(xml.attributes().value("fpTime").toString(), "hh:mm"));
+            result->appendItem(item);
+        }
+
+    }
+    emit timeTableResult(result);
+}
+
+void ParserHafasXml::parseTimeTableMode0Part1(QNetworkReply *networkReply)
+{
+    QString data = networkReply->readAll();
+
+    ParserHafasXmlExternalIds extIds = parseExternalIds(data.toAscii());
     if (!extIds.departureId.isEmpty()) {
 
         currentRequestState = FahrplanNS::getTimeTableForStationRequest;
@@ -133,7 +219,7 @@ void ParserHafasXml::parseTimeTablePart1(QNetworkReply *networkReply)
     }
 }
 
-void ParserHafasXml::parseTimeTablePart2(QNetworkReply *networkReply)
+void ParserHafasXml::parseTimeTableMode0Part2(QNetworkReply *networkReply)
 {
     TimeTableResultList *result = new TimeTableResultList();
 
@@ -150,12 +236,12 @@ void ParserHafasXml::parseTimeTablePart2(QNetworkReply *networkReply)
             while (!xml.atEnd()) {
                 xml.readNext();
                 if (xml.isStartElement() && xml.name() == "Station") {
-                    item->setStationName(xml.attributes().value("name").toString());
+                    item->setStationName(xml.attributes().value("name").toString().simplified());
                     item->setLongitude(xml.attributes().value("x").toString().toInt());
                     item->setLatitude(xml.attributes().value("y").toString().toInt());
                 }
 
-                if (xml.isStartElement() && xml.name() == "Dep") {
+                if (xml.isStartElement() && (xml.name() == "Dep" || xml.name() == "Arr" )) {
                     while (!xml.atEnd()) {
                         xml.readNext();
                         if (xml.isStartElement() && xml.name() == "Time") {
@@ -168,7 +254,7 @@ void ParserHafasXml::parseTimeTablePart2(QNetworkReply *networkReply)
                                 xml.readNext();
                                 if (xml.isStartElement() && xml.name() == "Text") {
                                     xml.readNext();
-                                    item->setPlatform(xml.text().toString());
+                                    item->setPlatform(xml.text().toString().simplified());
                                 }
 
                                 if (xml.isEndElement() && xml.name() == "Platform") {
@@ -177,7 +263,7 @@ void ParserHafasXml::parseTimeTablePart2(QNetworkReply *networkReply)
                             }
                         }
 
-                        if (xml.isEndElement() && xml.name() == "Dep") {
+                        if (xml.isEndElement() && (xml.name() == "Dep" || xml.name() == "Arr" )) {
                            break;
                         }
                     }
@@ -191,10 +277,10 @@ void ParserHafasXml::parseTimeTablePart2(QNetworkReply *networkReply)
                             xml.readNext();
 
                             if (currentAttributeType == "DIRECTION") {
-                                item->setDestinationName(xml.text().toString());
+                                item->setDestinationName(xml.text().toString().simplified());
                             }
                             if (currentAttributeType == "NAME") {
-                                item->setTrainType(xml.text().toString());
+                                item->setTrainType(xml.text().toString().simplified());
                             }
                         }
 

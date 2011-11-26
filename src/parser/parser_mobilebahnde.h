@@ -58,6 +58,7 @@ public slots:
     void getJourneyDetails(QString id);
     bool supportsGps();
     bool supportsVia();
+    bool supportsTimeTable();
     QStringList getTrainRestrictions();
 
 protected:
