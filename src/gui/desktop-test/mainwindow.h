@@ -45,6 +45,7 @@ private slots:
     void stationsResult(StationsResultList *result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailResult(JourneyDetailResultList *result);
+    void timeTableResult(TimeTableResultList *result);
     void searchJourneyClicked();
     void searchJourneyEarlierClicked();
     void searchJourneyLaterClicked();

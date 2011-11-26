@@ -36,9 +36,59 @@ namespace FahrplanNS
         searchJourneyRequest,
         searchJourneyLaterRequest,
         searchJourneyEarlierRequest,
-        journeyDetailsRequest
+        journeyDetailsRequest,
+        getTimeTableForStationRequest
     };
 }
+
+class TimeTableResultItem : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString stationName READ stationName WRITE setStationName)
+    Q_PROPERTY(QString trainType READ trainType WRITE setTrainType)
+    Q_PROPERTY(QString destinationName READ destinationName WRITE setDestinationName)
+    Q_PROPERTY(QTime time READ time WRITE setTime)
+    Q_PROPERTY(QString platform READ platform WRITE setPlatform)
+    Q_PROPERTY(qreal longitude READ longitude WRITE setLongitude)
+    Q_PROPERTY(qreal latitude READ latitude WRITE setLatitude)
+
+    public:
+        QString stationName() const;
+        void setStationName(const QString &);
+        QString trainType() const;
+        void setTrainType(const QString &);
+        QString destinationName() const;
+        void setDestinationName(const QString &);
+        QTime time() const;
+        void setTime(const QTime &);
+        QString platform() const;
+        void setPlatform(const QString &);
+        qreal longitude();
+        void setLongitude(qreal);
+        qreal latitude();
+        void setLatitude(qreal);
+    private:
+        QString m_stationName;
+        QString m_trainType;
+        QString m_destinationName;
+        QTime m_time;
+        QString m_platform;
+        qreal m_longitude;
+        qreal m_latitude;
+};
+
+class TimeTableResultList : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal count READ itemcount)
+    public slots:
+        TimeTableResultItem *getItem(int);
+    public:
+        void appendItem(TimeTableResultItem *item);
+        qreal itemcount();
+    private:
+        QList<TimeTableResultItem*> m_items;
+};
 
 class StationsResultItem : public QObject
 {

@@ -49,6 +49,7 @@ class Fahrplan : public QObject
         void parserStationsResult(StationsResultList *result);
         void parserJourneyResult(JourneyResultList *result);
         void parserJourneyDetailsResult(JourneyDetailResultList *result);
+        void parserTimeTableResult(TimeTableResultList *result);
         void parserErrorOccured(QString msg);
         void parserChanged(QString name, int index);
         void favoritesChanged(QStringList favorites);
@@ -57,6 +58,7 @@ class Fahrplan : public QObject
         void onStationsResult(StationsResultList *result);
         void onJourneyResult(JourneyResultList *result);
         void onJourneyDetailsResult(JourneyDetailResultList *result);
+        void onTimeTableResult(TimeTableResultList *result);
         void onErrorOccured(QString msg);
         void onParserChanged(QString name, int index);
         void onFavoritesChanged(QStringList favorites);

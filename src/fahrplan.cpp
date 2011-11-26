@@ -68,6 +68,7 @@ void Fahrplan::onParserChanged(QString name, int index)
     connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(onJourneyResult(JourneyResultList*)));
     connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SLOT(onErrorOccured(QString)));
     connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(onJourneyDetailsResult(JourneyDetailResultList*)));
+    connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimeTableResultList*)), this, SLOT(onTimeTableResult(TimeTableResultList*)));
 
     emit parserChanged(name, index);
 }
@@ -96,6 +97,11 @@ void Fahrplan::onStationsResult(StationsResultList *result)
 void Fahrplan::onJourneyResult(JourneyResultList *result)
 {
     emit parserJourneyResult(result);
+}
+
+void Fahrplan::onTimeTableResult(TimeTableResultList *result)
+{
+    emit parserTimeTableResult(result);
 }
 
 void Fahrplan::onJourneyDetailsResult(JourneyDetailResultList *result)

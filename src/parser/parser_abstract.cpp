@@ -51,6 +51,8 @@ void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
         parseSearchEalierJourney(networkReply);
     } else if (internalRequestState == FahrplanNS::journeyDetailsRequest) {
         parseJourneyDetails(networkReply);
+    } else if (internalRequestState == FahrplanNS::getTimeTableForStationRequest) {
+        parseTimeTable(networkReply);
     } else {
         qDebug()<<"Current request unhandled!";
     }
@@ -102,7 +104,7 @@ QStringList ParserAbstract::getTrainRestrictions()
     return result;
 }
 
-void ParserAbstract::getTimeTableForStation(QString stationName, QDate date, QTime time, int mode)
+void ParserAbstract::getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
 {
     Q_UNUSED(stationName);
     Q_UNUSED(date);

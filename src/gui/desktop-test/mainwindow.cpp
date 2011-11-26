@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->findStationsByName, SIGNAL(clicked()), this, SLOT(findStationsByNameClicked()));
     connect(ui->findStationsByCoordinates, SIGNAL(clicked()), this, SLOT(findStationsByCoordinatesClicked()));
     connect(fahrplan, SIGNAL(parserStationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
+    connect(fahrplan, SIGNAL(parserTimeTableResult(TimeTableResultList*)), this, SLOT(timeTableResult(TimeTableResultList*)));
 
     connect(ui->searchJourney, SIGNAL(clicked()), this, SLOT(searchJourneyClicked()));
     connect(ui->searchJourneyEarlier, SIGNAL(clicked()), this, SLOT(searchJourneyEarlierClicked()));
@@ -109,7 +110,7 @@ void MainWindow::getTimeTableForStationClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    fahrplan->parser()->getTimeTableForStation(ui->stationName->text(), QDate::currentDate(), QTime::currentTime(), 0);
+    fahrplan->parser()->getTimeTableForStation(ui->stationName->text(), "", QDate::currentDate(), QTime::currentTime(), 0, 0);
 }
 
 void MainWindow::findStationsByCoordinatesClicked()
@@ -117,6 +118,21 @@ void MainWindow::findStationsByCoordinatesClicked()
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
     fahrplan->parser()->findStationsByCoordinates(11.558338, 48.140228);
+}
+
+void MainWindow::timeTableResult(TimeTableResultList *result)
+{
+    ui->findStationResults->clear();
+    for (int i=0; i < result->itemcount(); i++) {
+        TimeTableResultItem *item = result->getItem(i);
+        ui->findStationResults->append(item->stationName());
+        ui->findStationResults->append(item->time().toString("hh:mm"));
+        ui->findStationResults->append(item->destinationName());
+        ui->findStationResults->append(item->trainType());
+        ui->findStationResults->append(item->platform());
+        ui->findStationResults->append("------------------------------");
+    }
+
 }
 
 void MainWindow::stationsResult(StationsResultList *result)

@@ -36,7 +36,7 @@ public:
     virtual QString name() { return "Abstract"; }
 
 public slots:
-    virtual void getTimeTableForStation(QString stationName, QDate date, QTime time, int mode);
+    virtual void getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions);
     virtual void findStationsByName(QString stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
     virtual void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
@@ -53,6 +53,7 @@ signals:
     void stationsResult(StationsResultList *result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
+    void timeTableResult(TimeTableResultList *result);
     void errorOccured(QString msg);
 
 protected slots:

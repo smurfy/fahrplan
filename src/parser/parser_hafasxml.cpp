@@ -48,6 +48,172 @@ bool ParserHafasXml::supportsVia()
     return true;
 }
 
+bool ParserHafasXml::supportsTimeTable()
+{
+    return false;
+}
+
+void ParserHafasXml::getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
+{
+    if (currentRequestState != FahrplanNS::noneRequest) {
+        return;
+    }
+
+    currentRequestState = FahrplanNS::getTimeTableForStationRequest;
+
+    getTimeTableForStationRequestData.progress = 1;
+    getTimeTableForStationRequestData.date = date;
+    getTimeTableForStationRequestData.time = time;
+    getTimeTableForStationRequestData.mode = mode;
+    getTimeTableForStationRequestData.trainrestrictions = trainrestrictions;
+
+    //First Request, to get external ids
+    QByteArray postData = getStationsExternalIds(stationName, directionStationName, "");
+
+    sendHttpRequest(QUrl(baseXmlUrl), postData);
+}
+
+void ParserHafasXml::parseTimeTable(QNetworkReply *networkReply)
+{
+    switch (getTimeTableForStationRequestData.progress) {
+    case 1:
+        parseTimeTablePart1(networkReply);
+        break;
+    case 2:
+        parseTimeTablePart2(networkReply);
+        break;
+    }
+}
+
+void ParserHafasXml::parseTimeTablePart1(QNetworkReply *networkReply)
+{
+    ParserHafasXmlExternalIds extIds = parseExternalIds(networkReply->readAll());
+
+    if (!extIds.departureId.isEmpty()) {
+
+        currentRequestState = FahrplanNS::getTimeTableForStationRequest;
+        getTimeTableForStationRequestData.progress = 2;
+
+        QString trainrestr = getTrainRestrictionsCodes(getTimeTableForStationRequestData.trainrestrictions);
+
+        QByteArray postData = "";
+        postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
+        postData.append("<STBReq boardType=\"");
+        if (searchJourneyRequestData.mode == 0) {
+            postData.append("DEP");
+        } else {
+            postData.append("ARR");
+        }
+        postData.append("\" maxJourneys=\"40\">");
+        postData.append("<Time>");
+        postData.append(getTimeTableForStationRequestData.time.toString("hh:mm"));
+        postData.append("</Time>");
+        postData.append("<Period><DateBegin><Date>");
+        postData.append(getTimeTableForStationRequestData.date.toString("yyyyMMdd"));
+        postData.append("</Date></DateBegin><DateEnd><Date>");
+        postData.append(getTimeTableForStationRequestData.date.toString("yyyyMMdd"));
+        postData.append("</Date></DateEnd></Period>");
+        postData.append("<TableStation externalId=\"");
+        postData.append(extIds.departureId);
+        postData.append("\"></TableStation>");
+        postData.append("<ProductFilter>");
+        postData.append(trainrestr);
+        postData.append("</ProductFilter>");
+        postData.append("<DirectionFilter externalId=\"");
+        postData.append(extIds.arrivalId);
+        postData.append("\"></DirectionFilter>");
+        postData.append("</STBReq>");
+        postData.append("</ReqC>");
+
+        sendHttpRequest(QUrl(baseXmlUrl), postData);
+
+     } else {
+        emit errorOccured("Internal Error occured, missing station ids");
+        qWarning()<<"ParserHafasXml::parseTimeTablePart1: MISSING External Ids!";
+    }
+}
+
+void ParserHafasXml::parseTimeTablePart2(QNetworkReply *networkReply)
+{
+    TimeTableResultList *result = new TimeTableResultList();
+
+    QString data = QString::fromUtf8(networkReply->readAll());
+
+    QXmlStreamReader xml;
+    xml.addData(data);
+
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement() && (xml.name() == "STBJourney")) {
+            TimeTableResultItem *item = new TimeTableResultItem();
+
+            while (!xml.atEnd()) {
+                xml.readNext();
+                if (xml.isStartElement() && xml.name() == "Station") {
+                    item->setStationName(xml.attributes().value("name").toString());
+                    item->setLongitude(xml.attributes().value("x").toString().toInt());
+                    item->setLatitude(xml.attributes().value("y").toString().toInt());
+                }
+
+                if (xml.isStartElement() && xml.name() == "Dep") {
+                    while (!xml.atEnd()) {
+                        xml.readNext();
+                        if (xml.isStartElement() && xml.name() == "Time") {
+                            xml.readNext();
+                            item->setTime(QTime::fromString(xml.text().toString(), "hh:mm"));
+                        }
+
+                        if (xml.isStartElement() && xml.name() == "Platform") {
+                            while (!xml.atEnd()) {
+                                xml.readNext();
+                                if (xml.isStartElement() && xml.name() == "Text") {
+                                    xml.readNext();
+                                    item->setPlatform(xml.text().toString());
+                                }
+
+                                if (xml.isEndElement() && xml.name() == "Platform") {
+                                   break;
+                                }
+                            }
+                        }
+
+                        if (xml.isEndElement() && xml.name() == "Dep") {
+                           break;
+                        }
+                    }
+                }
+
+                if (xml.isStartElement() && xml.name() == "Attribute") {
+                    QString currentAttributeType = xml.attributes().value("type").toString();
+                    while (!xml.atEnd()) {
+                        xml.readNext();
+                        if (xml.isStartElement() && xml.name() == "Text") {
+                            xml.readNext();
+
+                            if (currentAttributeType == "DIRECTION") {
+                                item->setDestinationName(xml.text().toString());
+                            }
+                            if (currentAttributeType == "NAME") {
+                                item->setTrainType(xml.text().toString());
+                            }
+                        }
+
+                        if (xml.isEndElement() && xml.name() == "Attribute") {
+                           break;
+                        }
+                    }
+                }
+                if (xml.isEndElement() && xml.name() == "STBJourney") {
+                    result->appendItem(item);
+                    break;
+                }
+            }
+        }
+    }
+
+    emit timeTableResult(result);
+}
+
 void ParserHafasXml::findStationsByName(QString stationName)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
@@ -186,14 +352,26 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
     searchJourneyRequestData.trainrestrictions = trainrestrictions;
 
     //First Request, to get external ids
+    QByteArray postData = getStationsExternalIds(departureStation, arrivalStation, viaStation);
+
+    sendHttpRequest(QUrl(baseXmlUrl), postData);
+}
+
+QByteArray ParserHafasXml::getStationsExternalIds(QString departureStation, QString arrivalStation, QString viaStation)
+{
     QByteArray postData = "";
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
-    postData.append("<LocValReq id=\"from\" maxNr=\"1\"><ReqLoc match= \"");
-    postData.append(departureStation);
-    postData.append("\" type=\"ST\"/></LocValReq>");
-    postData.append("<LocValReq id=\"to\" maxNr=\"1\"><ReqLoc match= \"");
-    postData.append(arrivalStation);
-    postData.append("\" type=\"ST\"/></LocValReq>");
+
+    if (!departureStation.isEmpty()) {
+        postData.append("<LocValReq id=\"from\" maxNr=\"1\"><ReqLoc match= \"");
+        postData.append(departureStation);
+        postData.append("\" type=\"ST\"/></LocValReq>");
+    }
+    if (!arrivalStation.isEmpty()) {
+        postData.append("<LocValReq id=\"to\" maxNr=\"1\"><ReqLoc match= \"");
+        postData.append(arrivalStation);
+        postData.append("\" type=\"ST\"/></LocValReq>");
+    }
     if (!viaStation.isEmpty()) {
         postData.append("<LocValReq id=\"via\" maxNr=\"1\"><ReqLoc match= \"");
         postData.append(viaStation);
@@ -201,7 +379,44 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
     }
     postData.append("</ReqC>");
 
-    sendHttpRequest(QUrl(baseXmlUrl), postData);
+    return postData;
+}
+
+ParserHafasXmlExternalIds ParserHafasXml::parseExternalIds(QByteArray data)
+{
+    ParserHafasXmlExternalIds result;
+    QXmlStreamReader xml;
+    xml.addData(data);
+
+    //Parsing the Response for External Id
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement() && xml.name() == "LocValRes") {
+            QString type = xml.attributes().value("id").toString();
+            while (!xml.atEnd()) {
+                xml.readNext();
+                if (xml.isStartElement() && xml.name() == "Station") {
+                    if (type == "from") {
+                        result.departureId = xml.attributes().value("externalId").toString();
+                    }
+                    if (type == "via") {
+                        result.viaId = xml.attributes().value("externalId").toString();
+                    }
+                    if (type == "to") {
+                        result.arrivalId = xml.attributes().value("externalId").toString();
+                    }
+                }
+                if (xml.isEndElement() && xml.name() == "LocValRes") {
+                   break;
+               }
+            }
+        }
+    }
+    if (xml.error() && xml.error() != QXmlStreamReader::PrematureEndOfDocumentError) {
+        qWarning() << "XML ERROR:" << xml.lineNumber() << ": " << xml.errorString();
+    }
+
+    return result;
 }
 
 void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
@@ -218,42 +433,9 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 
 void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
 {
-    QString departureStationId = "";
-    QString viaStationId = "";
-    QString arrivalStationId = "";
+    ParserHafasXmlExternalIds extIds = parseExternalIds(networkReply->readAll());
 
-    QXmlStreamReader xml;
-    xml.addData(networkReply->readAll());
-
-    //Parsing the Response for External Id
-    while (!xml.atEnd()) {
-        xml.readNext();
-        if (xml.isStartElement() && xml.name() == "LocValRes") {
-            QString type = xml.attributes().value("id").toString();
-            while (!xml.atEnd()) {
-                xml.readNext();
-                if (xml.isStartElement() && xml.name() == "Station") {
-                    if (type == "from") {
-                        departureStationId = xml.attributes().value("externalId").toString();
-                    }
-                    if (type == "via") {
-                        viaStationId = xml.attributes().value("externalId").toString();
-                    }
-                    if (type == "to") {
-                        arrivalStationId = xml.attributes().value("externalId").toString();
-                    }
-                }
-                if (xml.isEndElement() && xml.name() == "LocValRes") {
-                   break;
-               }
-            }
-        }
-    }
-    if (xml.error() && xml.error() != QXmlStreamReader::PrematureEndOfDocumentError) {
-        qWarning() << "XML ERROR:" << xml.lineNumber() << ": " << xml.errorString();
-    }
-
-    if (!departureStationId.isEmpty() && !arrivalStationId.isEmpty()) {
+    if (!extIds.departureId.isEmpty() && !extIds.arrivalId.isEmpty()) {
 
         currentRequestState = FahrplanNS::searchJourneyRequest;
         searchJourneyRequestData.progress = 2;
@@ -266,16 +448,16 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
         postData.append("<ConReq>");
         postData.append("<Start min=\"0\">");
         postData.append("<Station externalId=\"");
-        postData.append(departureStationId);
+        postData.append(extIds.departureId);
         postData.append("\" distance=\"0\"></Station>");
         postData.append("<Prod prod=\"");
         postData.append(trainrestr);
         postData.append("\"></Prod>");
         postData.append("</Start>");
-        if (!viaStationId.isEmpty()) {
+        if (!extIds.viaId.isEmpty()) {
             postData.append("<Via min=\"0\">");
             postData.append("<Station externalId=\"");
-            postData.append(viaStationId);
+            postData.append(extIds.viaId);
             postData.append("\" distance=\"0\"></Station>");
             postData.append("<Prod prod=\"");
             postData.append(trainrestr);
@@ -284,7 +466,7 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
         }
         postData.append("<Dest min=\"0\">");
         postData.append("<Station externalId=\"");
-        postData.append(arrivalStationId);
+        postData.append(extIds.arrivalId);
         postData.append("\" distance=\"0\"></Station>");
         postData.append("</Dest>");
         postData.append("<Via></Via>");

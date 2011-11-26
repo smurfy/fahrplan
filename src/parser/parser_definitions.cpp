@@ -20,6 +20,97 @@
 
 #include "parser_definitions.h"
 
+
+//-------------- TimeTableResultItem
+
+QString TimeTableResultItem::stationName() const
+{
+    return m_stationName;
+}
+
+void TimeTableResultItem::setStationName(const QString &stationName)
+{
+    m_stationName = stationName;
+}
+
+QString TimeTableResultItem::trainType() const
+{
+    return m_trainType;
+}
+
+void TimeTableResultItem::setTrainType(const QString &trainType)
+{
+    m_trainType = trainType;
+}
+
+QString TimeTableResultItem::destinationName() const
+{
+    return m_destinationName;
+}
+
+void TimeTableResultItem::setDestinationName(const QString &destinationName)
+{
+    m_destinationName = destinationName;
+}
+
+QTime TimeTableResultItem::time() const
+{
+    return m_time;
+}
+
+void TimeTableResultItem::setTime(const QTime &time)
+{
+    m_time = time;
+}
+
+QString TimeTableResultItem::platform() const
+{
+    return m_platform;
+}
+
+void TimeTableResultItem::setPlatform(const QString &platform)
+{
+    m_platform = platform;
+}
+
+qreal TimeTableResultItem::longitude()
+{
+    return m_longitude;
+}
+
+void TimeTableResultItem::setLongitude(qreal longitude)
+{
+    m_longitude = longitude;
+}
+
+qreal TimeTableResultItem::latitude()
+{
+    return m_latitude;
+}
+
+void TimeTableResultItem::setLatitude(qreal latitude)
+{
+    m_latitude = latitude;
+}
+
+//------------- TimeTableResultList
+
+qreal TimeTableResultList::itemcount()
+{
+    return m_items.count();
+}
+
+TimeTableResultItem *TimeTableResultList::getItem(int index)
+{
+    return  m_items.at(index);
+}
+
+void TimeTableResultList::appendItem(TimeTableResultItem *item)
+{
+    m_items.append(item);
+}
+
+
 //-------------- StationsResultItem
 
 QString StationsResultItem::stationName() const
