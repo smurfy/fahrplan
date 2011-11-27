@@ -9,6 +9,34 @@ Page {
 
     tools: mainToolbar
 
+    property int searchmode : 0
+
+    function updateButtonVisibility()
+    {
+        if (!fahrplanBackend.parser.supportsTimeTable()) {
+            searchmode = 0;
+        }
+
+        if (searchmode == 0) {
+            viaButton.visible = fahrplanBackend.parser.supportsVia();
+            departureButton.visible = true;
+            arrivalButton.visible = true;
+            stationButton.visible = false;
+            directionButton.visible = false;
+            timetableSearch.visible = false;
+            startSearch.visible = true;
+        }
+        if (searchmode == 1) {
+            viaButton.visible = false;
+            departureButton.visible = false;
+            arrivalButton.visible = false;
+            stationButton.visible = true;
+            directionButton.visible = fahrplanBackend.parser.supportsTimeTableDirection();
+            timetableSearch.visible = true;
+            startSearch.visible = false;
+        }
+    }
+
     Item {
         id: titleBar
 
@@ -141,6 +169,26 @@ Page {
                 icon: "image://theme/icon-m-common-drilldown-arrow"
             }
             SubTitleButton {
+                id: stationButton
+                titleText: "Station"
+                subTitleText: "please select"
+                width: parent.width
+                onClicked: {
+                    pageStack.push(stationStationSelect)
+                }
+                icon: "image://theme/icon-m-common-drilldown-arrow"
+            }
+            SubTitleButton {
+                id: directionButton
+                titleText: "Direction"
+                subTitleText: "please select"
+                width: parent.width
+                onClicked: {
+                    pageStack.push(directionStationSelect)
+                }
+                icon: "image://theme/icon-m-common-drilldown-arrow"
+            }
+            SubTitleButton {
                 id: datePickerButton
                 titleText: "Date"
                 subTitleText: "please select"
@@ -184,6 +232,49 @@ Page {
                 width: parent.width
                 onClicked: {
                     selectTrainrestrictionsDialog.open();
+                }
+            }
+
+            Button {
+                id: timetableSearch
+                text: modeDep.checked ? "Show departures" : "Show arrivals"
+                anchors {
+                    topMargin: 10
+                    horizontalCenter: parent.horizontalCenter
+                }
+
+                onClicked: {
+                    //Validation
+                    if (stationButton.subTitleText == "please select") {
+                        banner.text = "Please select a Station";
+                        banner.show();
+                        return;
+                    }
+
+                    var directionStation = directionButton.subTitleText;
+                    if (directionStation == "please select" || !fahrplanBackend.parser.supportsTimeTableDirection()) {
+                        directionStation = "";
+                    }
+
+                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
+                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
+                    var selMode = 0;
+                    if (modeDep.checked) {
+                        selMode = 1;
+                        timetablePage.timetableTitleText = "Departures";
+                        timetablePage.destinationTitleText = "To";
+                    }
+                    if (modeArr.checked) {
+                        selMode = 0;
+                        timetablePage.timetableTitleText = "Arrivals"
+                        timetablePage.destinationTitleText = "From";
+                    }
+
+                    timetablePage.searchIndicatorVisible = true;
+
+                    pageStack.push(timetablePage);
+
+                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selDate, selTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
@@ -255,6 +346,26 @@ Page {
         }
     }
 
+    StationSelect {
+        id: stationStationSelect
+
+        onStationSelected: {
+            stationButton.subTitleText = name;
+            pageStack.pop();
+        }
+    }
+
+
+    StationSelect {
+        id: directionStationSelect
+
+        onStationSelected: {
+            directionButton.subTitleText = name;
+            pageStack.pop();
+        }
+    }
+
+
     SelectionDialog {
         id: selectBackendDialog
         titleText: "Select Backend"
@@ -288,6 +399,9 @@ Page {
         id: loadingPage
     }
 
+    TimeTableResultsPage {
+        id: timetablePage
+    }
 
     AboutPage {
         id: aboutPage
@@ -338,6 +452,22 @@ Page {
             iconId: "toolbar-settings"
             onClicked: {
                 pageStack.push(aboutPage);
+            }
+        }
+        ToolButtonRow {
+            ToolButton {
+                text:"Journey"
+                onClicked: {
+                    searchmode = 0;
+                    updateButtonVisibility();
+                }
+            }
+            ToolButton {
+                text:"Dep. / Arr."
+                onClicked: {
+                    searchmode = 1;
+                    updateButtonVisibility();
+                }
             }
         }
     }
@@ -483,7 +613,8 @@ Page {
         onParserChanged: {
             console.log("Switching to " + name);
             currentParserName.text = fahrplanBackend.parserName;
-            viaButton.visible = fahrplanBackend.parser.supportsVia();
+
+            updateButtonVisibility();
 
             var items;
             var i;
