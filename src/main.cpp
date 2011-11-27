@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
             qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
             qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
             qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
+            qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
+            qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
             QDeclarativeView view;
         #endif
 

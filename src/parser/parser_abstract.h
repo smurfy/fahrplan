@@ -46,6 +46,7 @@ public slots:
     virtual bool supportsGps();
     virtual bool supportsVia();
     virtual bool supportsTimeTable();
+    virtual bool supportsTimeTableDirection();
     virtual QStringList getTrainRestrictions();
     void cancelRequest();
 

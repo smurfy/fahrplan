@@ -98,6 +98,11 @@ bool ParserAbstract::supportsTimeTable()
     return false;
 }
 
+bool ParserAbstract::supportsTimeTableDirection()
+{
+    return false;
+}
+
 QStringList ParserAbstract::getTrainRestrictions()
 {
     QStringList result;
@@ -107,9 +112,11 @@ QStringList ParserAbstract::getTrainRestrictions()
 void ParserAbstract::getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
 {
     Q_UNUSED(stationName);
+    Q_UNUSED(directionStationName);
     Q_UNUSED(date);
     Q_UNUSED(time);
     Q_UNUSED(mode);
+    Q_UNUSED(trainrestrictions);
 }
 
 void ParserAbstract::parseTimeTable(QNetworkReply *networkReply)

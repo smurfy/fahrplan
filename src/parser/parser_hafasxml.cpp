@@ -55,6 +55,14 @@ bool ParserHafasXml::supportsTimeTable()
     return false;
 }
 
+bool ParserHafasXml::supportsTimeTableDirection()
+{
+    if (supportsTimeTable() && STTableMode == 0) {
+        return true;
+    }
+    return false;
+}
+
 void ParserHafasXml::getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
@@ -82,7 +90,7 @@ void ParserHafasXml::getTimeTableForStation(QString stationName, QString directi
         postData.append("productsFilter=");
         postData.append(trainrestr);
         postData.append("&boardType=");
-        if (searchJourneyRequestData.mode == 0) {
+        if (getTimeTableForStationRequestData.mode == 1) {
             postData.append("dep");
         } else {
             postData.append("arr");
@@ -185,7 +193,7 @@ void ParserHafasXml::parseTimeTableMode0Part1(QNetworkReply *networkReply)
         QByteArray postData = "";
         postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
         postData.append("<STBReq boardType=\"");
-        if (searchJourneyRequestData.mode == 0) {
+        if (getTimeTableForStationRequestData.mode == 1) {
             postData.append("DEP");
         } else {
             postData.append("ARR");
