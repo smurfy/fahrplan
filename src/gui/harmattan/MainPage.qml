@@ -10,6 +10,7 @@ Page {
     tools: mainToolbar
 
     property int searchmode : 0
+    property bool startup : true
 
     function updateButtonVisibility()
     {
@@ -244,6 +245,9 @@ Page {
                 }
 
                 onClicked: {
+                    fahrplanBackend.storeSettingsValue("stationStation", stationButton.subTitleText);
+                    fahrplanBackend.storeSettingsValue("directionStation", directionButton.subTitleText);
+
                     //Validation
                     if (stationButton.subTitleText == "please select") {
                         banner.text = "Please select a Station";
@@ -287,6 +291,11 @@ Page {
                 }
 
                 onClicked: {
+
+                    fahrplanBackend.storeSettingsValue("viaStation", viaButton.subTitleText);
+                    fahrplanBackend.storeSettingsValue("departureStation", departureButton.subTitleText);
+                    fahrplanBackend.storeSettingsValue("arrivalStation", arrivalButton.subTitleText);
+
                     //Validation
                     if (departureButton.subTitleText == "please select" || arrivalButton.subTitleText == "please select") {
                         banner.text = "Please select a departure and arrival station.";
@@ -613,6 +622,15 @@ Page {
         onParserChanged: {
             console.log("Switching to " + name);
             currentParserName.text = fahrplanBackend.parserName;
+
+            if (startup) {
+                viaButton.subTitleText = fahrplanBackend.getSettingsValue("viaStation", "please select");
+                departureButton.subTitleText = fahrplanBackend.getSettingsValue("departureStation", "please select");
+                arrivalButton.subTitleText = fahrplanBackend.getSettingsValue("arrivalStation", "please select");
+                stationButton.subTitleText = fahrplanBackend.getSettingsValue("stationStation", "please select");
+                directionButton.subTitleText = fahrplanBackend.getSettingsValue("directionStation", "please select");
+                startup = false;
+            }
 
             updateButtonVisibility();
 
