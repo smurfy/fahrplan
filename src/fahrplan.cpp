@@ -41,6 +41,16 @@ Fahrplan::Fahrplan(QObject *parent) :
     connect(m_favorites_manager, SIGNAL(favoritesChanged(QStringList)), this, SLOT(onFavoritesChanged(QStringList)));
 }
 
+void Fahrplan::storeSettingsValue(QString key, QString value)
+{
+    settings->setValue(key, value);
+}
+
+QString Fahrplan::getSettingsValue(QString key, QString defaultValue)
+{
+    return settings->value(key, defaultValue).toString();
+}
+
 ParserAbstract* Fahrplan::parser()
 {
     return m_parser_manager->getParser();

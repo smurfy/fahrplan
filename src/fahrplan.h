@@ -44,6 +44,8 @@ class Fahrplan : public QObject
     public slots:
         QStringList getParserList();
         void setParser(int index);
+        void storeSettingsValue(QString key, QString value);
+        QString getSettingsValue(QString key, QString defaultValue);
 
     signals:
         void parserStationsResult(StationsResultList *result);
