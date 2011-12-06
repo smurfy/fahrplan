@@ -9,5 +9,8 @@
         <file>src/gui/harmattan/JourneyDetailsResultsPage.qml</file>
         <file>src/gui/harmattan/AboutPage.qml</file>
         <file>src/gui/harmattan/TimeTableResultsPage.qml</file>
+        <file>src/gui/harmattan/icon/icon-m-toolbar-help.png</file>
+        <file>src/gui/harmattan/icon/icon-m-toolbar-clock.png</file>
+        <file>src/gui/harmattan/icon/icon-m-toolbar-train.png</file>
     </qresource>
 </RCC>

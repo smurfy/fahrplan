@@ -457,26 +457,26 @@ Page {
         id: mainToolbar
 
         ToolIcon {
-            id : aboutIcon;
-            iconId: "toolbar-settings"
+            iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train.png";
             onClicked: {
-                pageStack.push(aboutPage);
+                searchmode = 0;
+                updateButtonVisibility();
             }
         }
-        ToolButtonRow {
-            ToolButton {
-                text:"Journey"
-                onClicked: {
-                    searchmode = 0;
-                    updateButtonVisibility();
-                }
+
+        ToolIcon {
+            iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock.png";
+            onClicked: {
+                searchmode = 1;
+                updateButtonVisibility();
             }
-            ToolButton {
-                text:"Dep. / Arr."
-                onClicked: {
-                    searchmode = 1;
-                    updateButtonVisibility();
-                }
+        }
+
+        ToolIcon {
+            id : aboutIcon;
+            iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-help.png";
+            onClicked: {
+                pageStack.push(aboutPage);
             }
         }
     }
