@@ -1,3 +1,10 @@
+fahrplan2 (2.0.5) unstable; urgency=low
+  * Fixed SBB.ch gps
+  * Added Departure Monitor for all interfaces
+  * Saving last used stations
+
+ -- smurfy <maemo@smurfy.de>  Tue, 6 Dec 2011 21:00:00 +0200
+
 fahrplan2 (2.0.4) unstable; urgency=low
   * Encoding Fix for SBB.ch
   * Parserfixes for bahn.de
