@@ -76,6 +76,8 @@ Page {
                     "miscinfo": ""
                 })
                 listView.model = stationsResultModel
+                favIcon.checked = false;
+                searchIcon.checked = true;
                 fahrplanBackend.parser.findStationsByName(searchBox.text);
             }
 
@@ -93,6 +95,9 @@ Page {
 
                 onClicked: {
                     listView.model = stationsResultModel
+                    favIcon.checked = false;
+                    searchIcon.checked = true;
+
                     stationsResultModel.clear();
                     stationsResultModel.append({
                         "name": "Requesting GPS...",
@@ -246,31 +251,47 @@ Page {
                 pageStack.pop();
             }
         }
-        ToolIcon {
-            id : favIcon
-            iconId: "toolbar-favorite-mark"
-            onClicked: {
-                stationsFavoritesModel.clear();
-                var favorites = fahrplanBackend.favorites.getFavorites();
-                for (var i = 0; i < favorites.length; i++) {
-                    stationsFavoritesModel.append({
-                        "name": favorites[i],
-                        "process": false,
-                        "internal": false,
-                        "isfavorite": true,
-                        "showfavorite": true,
-                        "miscinfo": ""
-                    })
+
+        ButtonRow{
+            ToolButton {
+                id: favIcon
+                platformStyle: TabButtonStyle{}
+                iconSource: "image://theme/icon-m-toolbar-favorite-mark"
+                onClicked: {
+                    stationsFavoritesModel.clear();
+                    var favorites = fahrplanBackend.favorites.getFavorites();
+                    for (var i = 0; i < favorites.length; i++) {
+                        stationsFavoritesModel.append({
+                            "name": favorites[i],
+                            "process": false,
+                            "internal": false,
+                            "isfavorite": true,
+                            "showfavorite": true,
+                            "miscinfo": ""
+                        })
+                    }
+                    listView.model = stationsFavoritesModel
+
+                    favIcon.checked = true;
+                    searchIcon.checked = false;
                 }
-                listView.model = stationsFavoritesModel
+                flat: true
+                checkable: true
+                checked: false
             }
-        }
-        ToolIcon {
-            id : searchIcon
-            iconId: "toolbar-search"
-            onClicked: {
-                listView.model = stationsResultModel
-            }
+            ToolButton {
+                    id: searchIcon
+                    platformStyle: TabButtonStyle{}
+                    iconSource: "image://theme/icon-m-toolbar-search"
+                    onClicked: {
+                        listView.model = stationsResultModel
+                        favIcon.checked = false;
+                        searchIcon.checked = true;
+                    }
+                    flat: true
+                    checkable: true
+                    checked: true
+                }
         }
     }
 

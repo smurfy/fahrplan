@@ -26,6 +26,8 @@ Page {
             directionButton.visible = false;
             timetableSearch.visible = false;
             startSearch.visible = true;
+            searchMode0Toggle.checked = true;
+            searchMode1Toggle.checked = false;
         }
         if (searchmode == 1) {
             viaButton.visible = false;
@@ -35,6 +37,9 @@ Page {
             directionButton.visible = fahrplanBackend.parser.supportsTimeTableDirection();
             timetableSearch.visible = true;
             startSearch.visible = false;
+            searchMode0Toggle.checked = false;
+            searchMode1Toggle.checked = true;
+
         }
     }
 
@@ -456,22 +461,32 @@ Page {
     ToolBarLayout {
         id: mainToolbar
 
-        ToolIcon {
-            iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train.png";
-            onClicked: {
-                searchmode = 0;
-                updateButtonVisibility();
+        ButtonRow{
+            ToolButton {
+                id: searchMode0Toggle
+                platformStyle: TabButtonStyle{}
+                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train.png";
+                onClicked: {
+                    searchmode = 0;
+                    updateButtonVisibility();
+                }
+                flat: true
+                checkable: true
+                checked: true
             }
+            ToolButton {
+                    id: searchMode1Toggle
+                    platformStyle: TabButtonStyle{}
+                    iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock.png";
+                    onClicked: {
+                        searchmode = 1;
+                        updateButtonVisibility();
+                    }
+                    flat: true
+                    checkable: true
+                    checked: false
+                }
         }
-
-        ToolIcon {
-            iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock.png";
-            onClicked: {
-                searchmode = 1;
-                updateButtonVisibility();
-            }
-        }
-
         ToolIcon {
             id : aboutIcon;
             iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-help.png";
