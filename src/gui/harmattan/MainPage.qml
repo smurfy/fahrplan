@@ -271,17 +271,17 @@ Page {
                     if (modeDep.checked) {
                         selMode = 1;
                         timetablePage.timetableTitleText = "Departures";
-                        timetablePage.destinationTitleText = "To";
                     }
                     if (modeArr.checked) {
                         selMode = 0;
                         timetablePage.timetableTitleText = "Arrivals"
-                        timetablePage.destinationTitleText = "From";
                     }
 
                     timetablePage.searchIndicatorVisible = true;
+                    timetablePage.selMode = selMode
 
                     pageStack.push(timetablePage);
+
 
                     fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selDate, selTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
                 }

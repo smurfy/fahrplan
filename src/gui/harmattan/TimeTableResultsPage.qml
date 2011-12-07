@@ -5,8 +5,9 @@ import "components"
 
 Page {
     property alias timetableTitleText: timetableTitle.text
-    property alias destinationTitleText: lbl_destinationTitle.text
     property alias searchIndicatorVisible: searchIndicator.visible
+
+    property int selMode : 0
 
     id: searchResultsPage
 
@@ -20,7 +21,7 @@ Page {
         Item {
             id: titleBar
 
-            height: timetableTitle.height
+            height: timetableTitle.height + 30
             width: parent.width
 
             Label {
@@ -53,59 +54,13 @@ Page {
             platformStyle: BusyIndicatorStyle { size: "large" }
         }
 
-        Item {
-            id: listHead
-
-            width: parent.width;
-            height: lbl_time.height
-
-            anchors {
-                top: titleBar.bottom
-                topMargin: 50
-            }
-
-            visible: !searchIndicator.visible
-
-            Label {
-                id: lbl_time
-                anchors {
-                    left: parent.left
-                    leftMargin: 10
-                }
-                text: "Time"
-                width: (parent.width  - 40) / 3
-            }
-
-            Label {
-                id: lbl_train
-                anchors {
-                    left: lbl_time.right
-                    leftMargin: 10
-                }
-                text: "Type"
-                width: (parent.width  - 40) / 3
-            }
-
-            Label {
-                id: lbl_destinationTitle
-                anchors {
-                    left: lbl_train.right
-                    leftMargin: 10
-                    rightMargin: 10
-                }
-                horizontalAlignment: Text.AlignHCenter
-                text: "To"
-                width: (parent.width  - 40) / 3
-            }
-        }
-
         ListView {
             id: listView
             anchors {
-                top: listHead.bottom
+                top: titleBar.bottom
                 topMargin: 10
             }
-            height: (parent.height - titleBar.height - listHead.height) - 50
+            height: parent.height - titleBar.height - 20
             width: parent.width
             model: timetableResultModel
             delegate:  timetableResultDelegate
@@ -149,49 +104,46 @@ Page {
                 width: parent.width
                 height: parent.height
 
-                Label {
-                    id: lbl_time
+                Grid {
+                    columns: 2
+                    spacing: 10
+
                     anchors {
+                        leftMargin: 10
                         left: parent.left
-                        leftMargin: 10
                     }
-                    text: time
-                    width: (parent.width  - 40) / 4
+
+                    width: parent.width
+                    height: parent.height
+
+                    Label {
+                        id: lbl_time
+                        text: time
+                        font.bold: true
+                        width: (parent.width  - 40) / 3
+                    }
+
+                    Label {
+                        id: lbl_destination
+                        text: destination
+                        width: ((parent.width  - 40) / 3) * 2
+                    }
+
+                    Label {
+                        id: lbl_type
+                        text: trainType
+                        font.bold: true
+                        width: (parent.width  - 40) / 3
+                    }
+
+                    Label {
+                        id: lbl_station
+                        text: stationplatform
+                        width: ((parent.width  - 40) / 3) * 2
+                    }
                 }
 
-                Label {
-                    id: lbl_type
-                    anchors {
-                        left: lbl_time.right
-                        leftMargin: 10
-                    }
-                    text: trainType
-                    width: (parent.width  - 40) / 4
-                }
 
-                Label {
-                    id: lbl_destination
-                    anchors {
-                        left: lbl_type.right
-                        leftMargin: 10
-                        rightMargin: 10
-                    }
-                    horizontalAlignment: Text.AlignHCenter
-                    text: destination
-                    width: ((parent.width  - 40) / 4) * 2
-                }
-
-                Label {
-                    id: lbl_station
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        top: lbl_destination.bottom
-                        topMargin: 5
-                    }
-                    text: stationplatform
-                    width: parent.width - 40
-                }
             }
         }
     }
@@ -215,13 +167,22 @@ Page {
                 var stationplatform = item.stationName;
 
                 if (item.platform) {
-                    stationplatform = "Platform: " + item.platform + " / " + item.stationName;
+                    stationplatform = "Pl. " + item.platform + " / " + item.stationName;
+                }
+
+                var dirlabel = "";
+                if (selMode == 1) {
+                    dirlabel = "to "
+                }
+
+                if (selMode == 0) {
+                    dirlabel = "from "
                 }
 
                 timetableResultModel.append({
-                    "time": item.time,
+                    "time": Qt.formatTime( item.time,"hh:mm"),
                     "trainType": item.trainType,
-                    "destination": item.destinationName,
+                    "destination": dirlabel + item.destinationName,
                     "stationplatform": stationplatform,
                     "itemNum" : i
                 });
