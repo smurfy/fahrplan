@@ -99,8 +99,8 @@ void ParserAbstract::networkReplyDownloadProgress(qint64 bytesReceived, qint64 b
 
 void ParserAbstract::networkReplyTimedOut()
 {
-    emit errorOccured(tr("Request timed out."));
     cancelRequest();
+    emit errorOccured(tr("Request timed out."));
 }
 
 void ParserAbstract::sendHttpRequest(QUrl url)
