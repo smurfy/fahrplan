@@ -1,4 +1,4 @@
-import Fahrplan 1.0 as Fahrplan
+import Fahrplan 1.0
 import QtQuick 1.1
 import com.meego 1.0
 import "components"
@@ -152,7 +152,7 @@ Page {
         id: timetableResultModel
     }
 
-    Fahrplan.Backend {
+    FahrplanBackend {
         id: fahrplanBackend
         onParserTimeTableResult: {
             console.log("Got results");

@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         w.show();
     #elif defined(Q_WS_X11)
         #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
-            qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "Backend");
+            qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
             qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
             qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
             qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");

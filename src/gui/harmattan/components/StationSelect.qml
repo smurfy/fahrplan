@@ -1,4 +1,4 @@
-import Fahrplan 1.0 as Fahrplan
+import Fahrplan 1.0
 import QtQuick 1.1
 import QtMobility.location 1.1
 import com.meego 1.0
@@ -295,7 +295,7 @@ Page {
         }
     }
 
-    Fahrplan.Backend {
+    FahrplanBackend {
         id: fahrplanBackend
 
         onParserChanged: {

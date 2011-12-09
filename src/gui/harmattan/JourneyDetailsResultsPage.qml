@@ -1,4 +1,4 @@
-import Fahrplan 1.0 as Fahrplan
+import Fahrplan 1.0
 import QtQuick 1.1
 import com.meego 1.0
 import "components"
@@ -10,6 +10,8 @@ Page {
     property alias subTitleText: lbljourneyDate.text
     property alias subTitleText2: lbljourneyDuration.text
     property alias searchIndicatorVisible: searchIndicator.visible
+
+    property JourneyDetailResultList currentResult;
 
     tools: journeyDetailResultsToolbar
     Item {
@@ -297,9 +299,11 @@ Page {
         id: journeyDetailResultModel
     }
 
-    Fahrplan.Backend {
+    FahrplanBackend {
         id: fahrplanBackend
         onParserJourneyDetailsResult: {
+            console.log(result);
+            currentResult = result;
             console.log("Got detail results");
             console.log(result.count);
 

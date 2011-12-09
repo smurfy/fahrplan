@@ -2,7 +2,7 @@ import QtQuick 1.1
 import com.meego 1.0
 import com.nokia.extras 1.0
 import "components"
-import Fahrplan 1.0 as Fahrplan
+import Fahrplan 1.0
 
 Page {
     id: mainPage
@@ -593,7 +593,7 @@ Page {
         }
     }
 
-    Fahrplan.Backend {
+    FahrplanBackend {
         id: fahrplanBackend
         /*
            An error can occour here, if the result is returned quicker than
