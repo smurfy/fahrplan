@@ -28,11 +28,19 @@ ParserAbstract::ParserAbstract(QObject *parent)
     connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));
 
     currentRequestState = FahrplanNS::noneRequest;
+
+    requestTimeout = new QTimer();
+
+    connect(requestTimeout, SIGNAL(timeout()), this, SLOT(networkReplyTimedOut()));
 }
 
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 {
     FahrplanNS::curReqStates internalRequestState = currentRequestState;
+
+    disconnect(lastRequest, SIGNAL(downloadProgress(qint64,qint64)), 0, 0);
+    requestTimeout->stop();
+
     lastRequest = NULL;
 
     //We overwrite the currentRequestState to noneRequest here, because this allows us to set a new one
@@ -60,6 +68,7 @@ void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 
 void ParserAbstract::cancelRequest()
 {
+    requestTimeout->stop();
     if (lastRequest) {
         lastRequest->abort();
     }
@@ -76,6 +85,22 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
     } else {
         lastRequest = NetworkManager->post(request, data);
     }
+
+    requestTimeout->start(10000);
+
+    connect(lastRequest, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(networkReplyDownloadProgress(qint64,qint64)));
+}
+
+void ParserAbstract::networkReplyDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    requestTimeout->stop();
+    requestTimeout->start(10000);
+}
+
+void ParserAbstract::networkReplyTimedOut()
+{
+    emit errorOccured(tr("Request timed out."));
+    cancelRequest();
 }
 
 void ParserAbstract::sendHttpRequest(QUrl url)

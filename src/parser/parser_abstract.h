@@ -59,11 +59,14 @@ signals:
 
 protected slots:
     void networkReplyFinished(QNetworkReply*);
+    void networkReplyDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void networkReplyTimedOut();
 
 protected:
     QNetworkAccessManager *NetworkManager;
     FahrplanNS::curReqStates currentRequestState;
     QNetworkReply *lastRequest;
+    QTimer *requestTimeout;
 
     virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseStationsByName(QNetworkReply *networkReply);
