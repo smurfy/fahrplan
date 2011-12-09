@@ -103,6 +103,11 @@ symbian {
         desktopfile.path = /usr/share/applications
         icon.files = data/$${TARGET}.svg
         icon.path = /usr/share/icons/hicolor/scalable/apps
+        splash.files = data/splash.jpg
+        splash.path = $${installPrefix}/data
+        export(splash.files)
+        export(splash.path)
+        INSTALLS += splash
     }
     target.path = $${installPrefix}/bin
     export(icon.files)
