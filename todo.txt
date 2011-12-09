@@ -1,13 +1,6 @@
 Todo for Fahrplan 2.x.x:
 -------------------------
 
-Core:
-- Add Calendar support (using libmobility)
-
-Gui:
-- Add Calendar support
-
-
 Fremantle Gui:
 - Almost everything is missing
 
