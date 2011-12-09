@@ -99,6 +99,54 @@ void Fahrplan::setParser(int index)
     m_parser_manager->setParser(index);
 }
 
+bool Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
+{
+    QString desc;
+    desc.append(result->departureStation() + " to " + result->arrivalStation() + "\n");
+
+    if (!result->info().isEmpty()) {
+        desc.append(result->info() + "\n");
+    }
+
+    desc.append("Duration: " + result->duration() + "\n\n");
+
+    for (int i=0; i < result->itemcount(); i++) {
+        JourneyDetailResultItem *item = result->getItem(i);
+
+        if (!item->train().isEmpty()) {
+            desc.append(item->train() + "\n");
+        }
+        desc.append(item->departureDateTime().date().toString() + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
+        if (!item->departureInfo().isEmpty()) {
+            desc.append(" - " + item->departureInfo());
+        }
+        desc.append("\n");
+        desc.append(item->arrivalDateTime().date().toString() + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
+        if (!item->arrivalInfo().isEmpty()) {
+            desc.append(" - " + item->arrivalInfo());
+        }
+        desc.append("\n");
+        if (!item->info().isEmpty()) {
+            desc.append(item->info() + "\n");
+        }
+        desc.append("--\n");
+    }
+
+    desc.append("\n(added by fahrplan app, please recheck informations before travel.)");
+
+    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+        QOrganizerManager defaultManager;
+        QOrganizerEvent event;
+
+        event.setDisplayLabel("Journey: " + result->departureStation() + " to " + result->arrivalStation());
+        event.setDescription(desc);
+        event.setStartDateTime(result->departureDateTime());
+        event.setEndDateTime(result->arrivalDateTime());
+
+        return defaultManager.saveItem(&event);
+    #endif
+}
+
 void Fahrplan::onStationsResult(StationsResultList *result)
 {
     emit parserStationsResult(result);

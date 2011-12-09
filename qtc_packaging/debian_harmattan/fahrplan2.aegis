@@ -1,6 +1,9 @@
 <aegis>
         <request>
                 <credential name="Location" />
+                <credential name="GRP::calendar" />
+                <credential name="TrackerReadAccess" />
+                <credential name="TrackerWriteAccess" />
                 <for path="/opt/fahrplan2/bin/fahrplan2" />
         </request>
 </aegis>

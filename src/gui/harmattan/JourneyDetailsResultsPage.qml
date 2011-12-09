@@ -1,5 +1,6 @@
 import Fahrplan 1.0
 import QtQuick 1.1
+import com.nokia.extras 1.0
 import com.meego 1.0
 import "components"
 
@@ -302,7 +303,6 @@ Page {
     FahrplanBackend {
         id: fahrplanBackend
         onParserJourneyDetailsResult: {
-            console.log(result);
             currentResult = result;
             console.log("Got detail results");
             console.log(result.count);
@@ -400,6 +400,14 @@ Page {
         }
     }
 
+    InfoBanner {
+            id: banner
+            objectName: "FahrplanCalendarInfoBanner"
+            text: ""
+            anchors.top: parent.top
+            anchors.topMargin: 10
+    }
+
     ToolBarLayout {
         id: journeyDetailResultsToolbar
 
@@ -408,6 +416,20 @@ Page {
             iconId: "toolbar-back"
             onClicked: {
                 pageStack.pop();
+            }
+        }
+
+        ToolIcon {
+            id : calendarIcon;
+            iconId: "toolbar-list"
+            visible: !searchIndicator.visible
+            onClicked: {
+                if (fahrplanBackend.addJourneyDetailResultToCalendar(currentResult)) {
+                    banner.text = "Journey has been added to your calendar.";
+                } else {
+                    banner.text = "Failed to add Journey to your calendar!";
+                }
+                banner.show();
             }
         }
     }

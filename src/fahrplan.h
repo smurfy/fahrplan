@@ -26,6 +26,18 @@
 #include "fahrplan_backend_manager.h"
 #include "fahrplan_favorites_manager.h"
 
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+
+#include <qmobilityglobal.h>
+#include <QOrganizerManager>
+#include <QOrganizerEvent>
+
+QTM_BEGIN_NAMESPACE
+QTM_END_NAMESPACE
+QTM_USE_NAMESPACE
+
+#endif
+
 class Fahrplan : public QObject
 {
     Q_OBJECT
@@ -46,6 +58,7 @@ class Fahrplan : public QObject
         void setParser(int index);
         void storeSettingsValue(QString key, QString value);
         QString getSettingsValue(QString key, QString defaultValue);
+        bool addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
 
     signals:
         void parserStationsResult(StationsResultList *result);

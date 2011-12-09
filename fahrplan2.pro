@@ -12,6 +12,7 @@ exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmat
 QML_IMPORT_PATH =
 
 QT += declarative xmlpatterns network
+
 maemo5:QT += maemo5
 
 symbian:TARGET.UID3 = 0xE4182966
@@ -26,9 +27,8 @@ symbian:TARGET.UID3 = 0xE4182966
 # Allow network access on Symbian
 symbian:TARGET.CAPABILITY += NetworkServices
 
-# If your application uses the Qt Mobility libraries, uncomment the following
-# lines and add the respective components to the MOBILITY variable.
-MOBILITY += Location
+CONFIG += mobility
+MOBILITY += location organizer
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += src/main.cpp \
