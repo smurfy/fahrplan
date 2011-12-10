@@ -192,6 +192,9 @@ Page {
                 onClicked: {
                     pageStack.push(directionStationSelect)
                 }
+                onPressAndHold: {
+                    timeTableSelectContextMenu.open();
+                }
                 icon: "image://theme/icon-m-common-drilldown-arrow"
             }
             SubTitleButton {
@@ -525,6 +528,18 @@ Page {
     }
 
     ContextMenu {
+        id: timeTableSelectContextMenu
+        MenuLayout {
+            MenuItem {
+                text: "Clear station"
+                onClicked: {
+                    directionButton.subTitleText = "please select"
+                }
+            }
+        }
+    }
+
+    ContextMenu {
         property SubTitleButton opener
         id: stationSelectContextMenu
         MenuLayout {
@@ -564,13 +579,13 @@ Page {
                 }
             }
             MenuItem {
-                id: clearStation
                 text: "Clear station"
                 onClicked: {
                     stationSelectContextMenu.opener.subTitleText = "please select"
                 }
             }
         }
+
 
         function openMenu(opener)
         {
