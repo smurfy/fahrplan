@@ -1,3 +1,8 @@
+fahrplan2 (2.0.6) unstable; urgency=low
+  * Optimized various parts of the UI
+  
+ -- smurfy <maemo@smurfy.de>  Sat, 17 Dec 2011 22:00:00 +0200
+
 fahrplan2 (2.0.5) unstable; urgency=low
   * Fixed SBB.ch gps
   * Added Departure Monitor for all interfaces
