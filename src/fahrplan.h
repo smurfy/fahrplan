@@ -25,18 +25,7 @@
 #include <QSettings>
 #include "fahrplan_backend_manager.h"
 #include "fahrplan_favorites_manager.h"
-
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
-
-#include <qmobilityglobal.h>
-#include <QOrganizerManager>
-#include <QOrganizerEvent>
-
-QTM_BEGIN_NAMESPACE
-QTM_END_NAMESPACE
-QTM_USE_NAMESPACE
-
-#endif
+#include "calendarthreadwrapper.h"
 
 class Fahrplan : public QObject
 {
@@ -68,7 +57,7 @@ class Fahrplan : public QObject
         void parserErrorOccured(QString msg);
         void parserChanged(QString name, int index);
         void favoritesChanged(QStringList favorites);
-        void calendarEntryAdded(JourneyDetailResultList *result, bool success);
+        void addCalendarEntryComplete(bool success);
 
     private slots:
         void onStationsResult(StationsResultList *result);
@@ -84,18 +73,4 @@ class Fahrplan : public QObject
         static FahrplanFavoritesManager *m_favorites_manager;
         QSettings *settings;
 };
-
-class CalendarAdditionTask : public QObject {
-    Q_OBJECT
-public:
-    explicit CalendarAdditionTask(JourneyDetailResultList *result, QObject *parent = 0);
-    virtual ~CalendarAdditionTask();
-public slots:
-    void addToCalendar();
-signals:
-    void additionComplete(JourneyDetailResultList *result, bool success);
-private:
-    JourneyDetailResultList * const m_result;
-};
-
 #endif // FAHRPLAN_H
