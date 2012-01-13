@@ -68,7 +68,7 @@ Page {
                     left: parent.left
                     leftMargin: 10
                 }
-                text: "Dep."
+                text: qsTr("Dep.")
                 width: (parent.width  - 40) / 4
             }
 
@@ -78,7 +78,7 @@ Page {
                     left: lbl_departuretime.right
                     leftMargin: 10
                 }
-                text: "Arr."
+                text: qsTr("Arr.")
                 width: (parent.width  - 40) / 4
             }
 
@@ -89,7 +89,7 @@ Page {
                     leftMargin: 10
                 }
                 horizontalAlignment: Text.AlignHCenter
-                text: "Dur."
+                text: qsTr("Dur.")
                 width: (parent.width  - 40) / 4
             }
 
@@ -100,7 +100,7 @@ Page {
                     leftMargin: 10
                 }
                 horizontalAlignment: Text.AlignHCenter
-                text: "Trans."
+                text: qsTr("Trans.")
                 width: (parent.width  - 40) / 4
             }
         }
@@ -148,8 +148,8 @@ Page {
                 anchors.fill: background
                 onClicked: {
 
-                    detailsResultsPage.titleText = "Loading details";
-                    detailsResultsPage.subTitleText = "please wait...";
+                    detailsResultsPage.titleText = qsTr("Loading details");
+                    detailsResultsPage.subTitleText = qsTr("please wait...");
                     detailsResultsPage.subTitleText2 = "";
                     detailsResultsPage.searchIndicatorVisible = true;
                     pageStack.push(detailsResultsPage);
@@ -276,14 +276,14 @@ Page {
 
         ToolButtonRow {
             ToolButton {
-                text:"Earlier"
+                text:qsTr("Earlier")
                 onClicked: {
                     pageStack.pop();
                     fahrplanBackend.parser.searchJourneyEarlier();
                 }
             }
             ToolButton {
-                text:"Later"
+                text:qsTr("Later")
                 onClicked: {
                     pageStack.pop();
                     fahrplanBackend.parser.searchJourneyLater();

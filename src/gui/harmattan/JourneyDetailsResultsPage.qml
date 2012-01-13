@@ -305,9 +305,9 @@ Page {
 
         onAddCalendarEntryComplete: {
             if (success)
-                banner.text = "Journey has been added to your calendar.";
+                banner.text = qsTr("Journey has been added to your calendar.");
             else
-                banner.text = "Failed to add Journey to your calendar!";
+                banner.text = qsTr("Failed to add Journey to your calendar!");
             banner.show();
             calendarIcon.enabled = true
         }
@@ -318,7 +318,7 @@ Page {
             console.log(result.count);
 
             if (result.count > 0) {
-                journeyStations.text = result.departureStation + " to " + result.arrivalStation;
+                journeyStations.text = result.departureStation + qsTr(" to ") + result.arrivalStation;
                 var departureDate = Qt.formatDate(result.departureDateTime);
                 var arrivalDate = Qt.formatDate(result.arrivalDateTime);
 
@@ -329,7 +329,7 @@ Page {
                 lbljourneyDate.text = departureDate + " " + Qt.formatTime(result.departureDateTime,"hh:mm") + " - " +
                         arrivalDate + " " + Qt.formatTime(result.arrivalDateTime,"hh:mm");
 
-                lbljourneyDuration.text = "Dur.: " + result.duration;
+                lbljourneyDuration.text = qsTr("Dur.: ") + result.duration;
 
                 journeyDetailResultModel.clear();
                 for (var i = 0; i < result.count; i++) {

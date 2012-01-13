@@ -37,7 +37,7 @@ Page {
             }
 
             Text {
-                text: "About Fahrplan"
+                text: qsTr("About Fahrplan")
                 id: aboutText
                 anchors {
                     left: logoImg.right

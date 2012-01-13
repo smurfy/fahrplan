@@ -15,7 +15,7 @@ Page {
 
         Text {
             id: searchLoadingText
-            text: "Searching..."
+            text: qsTr("Searching...")
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top

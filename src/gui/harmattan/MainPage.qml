@@ -137,8 +137,8 @@ Page {
 
             SubTitleButton {
                 id: departureButton
-                titleText: "Departure Station"
-                subTitleText: "please select"
+                titleText: qsTr("Departure Station")
+                subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
                     pageStack.push(departureStationSelect)
@@ -150,8 +150,8 @@ Page {
             }
             SubTitleButton {
                 id: viaButton
-                titleText: "Via Station"
-                subTitleText: "please select"
+                titleText: qsTr("Via Station")
+                subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
                     pageStack.push(viaStationSelect)
@@ -163,8 +163,8 @@ Page {
             }
             SubTitleButton {
                 id: arrivalButton
-                titleText: "Arrival Station"
-                subTitleText: "please select"
+                titleText: qsTr("Arrival Station")
+                subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
                     pageStack.push(arrivalStationSelect)
@@ -176,8 +176,8 @@ Page {
             }
             SubTitleButton {
                 id: stationButton
-                titleText: "Station"
-                subTitleText: "please select"
+                titleText: qsTr("Station")
+                subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
                     pageStack.push(stationStationSelect)
@@ -186,8 +186,8 @@ Page {
             }
             SubTitleButton {
                 id: directionButton
-                titleText: "Direction"
-                subTitleText: "please select"
+                titleText: qsTr("Direction")
+                subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
                     pageStack.push(directionStationSelect)
@@ -199,8 +199,8 @@ Page {
             }
             SubTitleButton {
                 id: datePickerButton
-                titleText: "Date"
-                subTitleText: "please select"
+                titleText: qsTr("Date")
+                subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
                     datePicker.open();
@@ -209,8 +209,8 @@ Page {
 
             SubTitleButton {
                 id: timePickerButton
-                titleText: "Time"
-                subTitleText: "please select"
+                titleText: qsTr("Time")
+                subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
                     timePicker.open();
@@ -225,18 +225,18 @@ Page {
                     width: parent.width / 2
                     Button {
                         id: modeDep
-                        text: "Departure"
+                        text: qsTr("Departure")
                     }
                     Button {
                         id: modeArr
-                        text: "Arrival"
+                        text: qsTr("Arrival")
                     }
                 }
             }
 
             SubTitleButton {
                 id: trainrestrictionsButton
-                titleText: "Trains"
+                titleText: qsTr("Trains")
                 subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
                 width: parent.width
                 onClicked: {
@@ -246,7 +246,7 @@ Page {
 
             Button {
                 id: timetableSearch
-                text: modeDep.checked ? "Show departures" : "Show arrivals"
+                text: modeDep.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
                     topMargin: 10
                     horizontalCenter: parent.horizontalCenter
@@ -257,14 +257,14 @@ Page {
                     fahrplanBackend.storeSettingsValue("directionStation", directionButton.subTitleText);
 
                     //Validation
-                    if (stationButton.subTitleText == "please select") {
-                        banner.text = "Please select a Station";
+                    if (stationButton.subTitleText == qsTr("please select")) {
+                        banner.text = qsTr("Please select a Station");
                         banner.show();
                         return;
                     }
 
                     var directionStation = directionButton.subTitleText;
-                    if (directionStation == "please select" || !fahrplanBackend.parser.supportsTimeTableDirection()) {
+                    if (directionStation == qsTr("please select") || !fahrplanBackend.parser.supportsTimeTableDirection()) {
                         directionStation = "";
                     }
 
@@ -273,11 +273,11 @@ Page {
                     var selMode = 0;
                     if (modeDep.checked) {
                         selMode = 1;
-                        timetablePage.timetableTitleText = "Departures";
+                        timetablePage.timetableTitleText = qsTr("Departures");
                     }
                     if (modeArr.checked) {
                         selMode = 0;
-                        timetablePage.timetableTitleText = "Arrivals"
+                        timetablePage.timetableTitleText = qsTr("Arrivals")
                     }
 
                     timetablePage.searchIndicatorVisible = true;
@@ -305,14 +305,14 @@ Page {
                     fahrplanBackend.storeSettingsValue("arrivalStation", arrivalButton.subTitleText);
 
                     //Validation
-                    if (departureButton.subTitleText == "please select" || arrivalButton.subTitleText == "please select") {
-                        banner.text = "Please select a departure and arrival station.";
+                    if (departureButton.subTitleText == qsTr("please select") || arrivalButton.subTitleText == qsTr("please select")) {
+                        banner.text = qsTr("Please select a departure and arrival station.");
                         banner.show();
                         return;
                     }
 
                     var viaStation = viaButton.subTitleText;
-                    if (viaStation == "please select" || !fahrplanBackend.parser.supportsVia()) {
+                    if (viaStation == qsTr("please select") || !fahrplanBackend.parser.supportsVia()) {
                         viaStation = "";
                     }
 
@@ -385,7 +385,7 @@ Page {
 
     SelectionDialog {
         id: selectBackendDialog
-        titleText: "Select Backend"
+        titleText: qsTr("Select backend")
         model: parserBackendModel
         onAccepted: {
             fahrplanBackend.setParser(selectBackendDialog.selectedIndex);
@@ -398,7 +398,7 @@ Page {
 
     SelectionDialog {
         id: selectTrainrestrictionsDialog
-        titleText: "Select Train"
+        titleText: qsTr("Select train")
         model: trainrestrictionsModel
         onAccepted: {
         }
@@ -426,9 +426,9 @@ Page {
 
     DatePickerDialog {
         id: datePicker
-        titleText: "Date"
-        acceptButtonText: "Ok"
-        rejectButtonText: "Cancel"
+        titleText: qsTr("Date")
+        acceptButtonText: qsTr("Ok")
+        rejectButtonText: qsTr("Cancel")
         onAccepted: {
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             datePickerButton.subTitleText = Qt.formatDate(selDate);
@@ -444,9 +444,9 @@ Page {
 
     TimePickerDialog {
         id: timePicker
-        titleText: "Time"
-        acceptButtonText: "Ok"
-        rejectButtonText: "Cancel"
+        titleText: qsTr("Time")
+        acceptButtonText: qsTr("Ok")
+        rejectButtonText: qsTr("Cancel")
         fields: DateTime.Hours | DateTime.Minutes
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
@@ -531,9 +531,9 @@ Page {
         id: timeTableSelectContextMenu
         MenuLayout {
             MenuItem {
-                text: "Clear station"
+                text: qsTr("Clear station")
                 onClicked: {
-                    directionButton.subTitleText = "please select"
+                    directionButton.subTitleText = qsTr("please select")
                 }
             }
         }
@@ -545,15 +545,14 @@ Page {
         MenuLayout {
             MenuItem {
                 id: selectStationMenu
-                text: "Select station"
+                text: qsTr("Select station")
                 onClicked: {
                     stationSelectContextMenu.opener.clicked();
-
                 }
             }
             MenuItem {
                 id: switchWithDepartureStation
-                text: "Switch with Departure station"
+                text: qsTr("Switch with Departure station")
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = departureButton.subTitleText
@@ -562,7 +561,7 @@ Page {
             }
             MenuItem {
                 id: switchWithArrivalStation
-                text: "Switch with Arrival station"
+                text: qsTr("Switch with Arrival station")
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = arrivalButton.subTitleText
@@ -571,7 +570,7 @@ Page {
             }
             MenuItem {
                 id: switchWithViaStation
-                text: "Switch with Via station"
+                text: qsTr("Switch with Via station")
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = viaButton.subTitleText
@@ -579,9 +578,9 @@ Page {
                 }
             }
             MenuItem {
-                text: "Clear station"
+                text: qsTr("Clear station")
                 onClicked: {
-                    stationSelectContextMenu.opener.subTitleText = "please select"
+                    stationSelectContextMenu.opener.subTitleText = qsTr("please select")
                 }
             }
         }
@@ -626,14 +625,14 @@ Page {
                 showResultsTimer.start();
             } else {
                 hideLoadingTimer.start();
-                banner.text = "No results found";
+                banner.text = qsTr("No results found");
                 banner.show();
             }
         }
 
         onParserJourneyDetailsResult: {
             if (result.count <= 0) {
-                banner.text = "Error loading details";
+                banner.text = qsTr("Error loading details");
                 banner.show();
             }
         }
@@ -654,11 +653,11 @@ Page {
             currentParserName.text = fahrplanBackend.parserName;
 
             if (startup) {
-                viaButton.subTitleText = fahrplanBackend.getSettingsValue("viaStation", "please select");
-                departureButton.subTitleText = fahrplanBackend.getSettingsValue("departureStation", "please select");
-                arrivalButton.subTitleText = fahrplanBackend.getSettingsValue("arrivalStation", "please select");
-                stationButton.subTitleText = fahrplanBackend.getSettingsValue("stationStation", "please select");
-                directionButton.subTitleText = fahrplanBackend.getSettingsValue("directionStation", "please select");
+                viaButton.subTitleText = fahrplanBackend.getSettingsValue("viaStation", qsTr("please select"));
+                departureButton.subTitleText = fahrplanBackend.getSettingsValue("departureStation", qsTr("please select"));
+                arrivalButton.subTitleText = fahrplanBackend.getSettingsValue("arrivalStation", qsTr("please select"));
+                stationButton.subTitleText = fahrplanBackend.getSettingsValue("stationStation", qsTr("please select"));
+                directionButton.subTitleText = fahrplanBackend.getSettingsValue("directionStation", qsTr("please select"));
                 startup = false;
             }
 
