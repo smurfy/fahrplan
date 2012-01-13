@@ -35,7 +35,7 @@ void CalendarThreadWrapper::addToCalendar()
     #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
 
     QString desc;
-    desc.append(m_result->departureStation() + " to " + m_result->arrivalStation() + "\n");
+    desc.append(m_result->departureStation() + tr(" to ") + m_result->arrivalStation() + "\n");
 
     if (!m_result->info().isEmpty()) {
         desc.append(m_result->info() + "\n");
@@ -63,13 +63,13 @@ void CalendarThreadWrapper::addToCalendar()
         desc.append("--\n");
     }
 
-    desc.append("\n(added by fahrplan app, please recheck informations before travel.)");
+    desc.append(tr("\n(added by fahrplan app, please recheck informations before travel.)"));
 
 
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
 
-    event.setDisplayLabel("Journey: " + m_result->departureStation() + " to " + m_result->arrivalStation());
+    event.setDisplayLabel(tr("Journey: ") + m_result->departureStation() + tr(" to ") + m_result->arrivalStation());
     event.setDescription(desc);
     event.setStartDateTime(m_result->departureDateTime());
     event.setEndDateTime(m_result->arrivalDateTime());

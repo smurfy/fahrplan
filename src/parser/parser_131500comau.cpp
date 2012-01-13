@@ -67,7 +67,7 @@ void Parser131500ComAu::findStationsByCoordinates(qreal longitude, qreal latitud
     Q_UNUSED(longitude);
     Q_UNUSED(latitude);
 
-    emit errorOccured("Coordinates search not supported.");
+    emit errorOccured(tr("Coordinates search not supported."));
 }
 
 void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
@@ -351,7 +351,7 @@ void Parser131500ComAu::getJourneyDetails(QString id)
         }
     }
 
-    emit errorOccured("Internal error occured: JourneyResultdata not present!");
+    emit errorOccured(tr("Internal error occured: JourneyResultdata not present!"));
     return;
 }
 

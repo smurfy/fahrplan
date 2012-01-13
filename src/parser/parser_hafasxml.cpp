@@ -592,7 +592,7 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
 
         sendHttpRequest(QUrl(baseXmlUrl), postData);
     } else {
-        emit errorOccured("Internal Error occured, missing station ids");
+        emit errorOccured(tr("Internal Error occured, missing station ids"));
         qWarning()<<"ParserHafasXml::parseSearchJourneyPart1: MISSING External Ids!";
     }
 }
@@ -778,7 +778,7 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
 void ParserHafasXml::searchJourneyLater()
 {
     if (conResCtxt.isEmpty()) {
-        emit errorOccured("Internal error occured, going later is not possible");
+        emit errorOccured(tr("Internal error occured, going later is not possible"));
         return;
     }
 
@@ -803,7 +803,7 @@ void ParserHafasXml::searchJourneyLater()
 void ParserHafasXml::searchJourneyEarlier()
 {
     if (conResCtxt.isEmpty()) {
-        emit errorOccured("Internal error occured, going earlier is not possible");
+        emit errorOccured(tr("Internal error occured, going earlier is not possible"));
         return;
     }
 
@@ -855,7 +855,7 @@ void ParserHafasXml::getJourneyDetails(QString id)
                 return;
             }
         }
-        emit errorOccured("Internal error occured: JourneyResultdata not present!");
+        emit errorOccured(tr("Internal error occured: JourneyResultdata not present!"));
         return;
     }
 
@@ -876,7 +876,7 @@ void ParserHafasXml::getJourneyDetails(QString id)
         }
 
     } else {
-        emit errorOccured("Internal error occured: JourneyResultdata not present!");
+        emit errorOccured(tr("Internal error occured: JourneyResultdata not present!"));
     }
 }
 
@@ -1102,7 +1102,7 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
        return results;
     }
 
-    emit errorOccured("Internal error occured, Error parsing details data");
+    emit errorOccured(tr("Internal error occured, Error parsing details data"));
     return results;
 }
 

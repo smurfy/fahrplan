@@ -17,6 +17,10 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    QTranslator translator;
+    translator.load(QLocale::system().name(), ":/translation");
+    app.installTranslator(&translator);
+
     #if defined(Q_WS_WIN)
         MainWindow w;
         w.show();

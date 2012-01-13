@@ -386,7 +386,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
  void ParserMobileBahnDe::searchJourneyLater()
  {
      if (lastLaterUrl.isEmpty()) {
-         emit errorOccured("Internal error occured, going later is not possible");
+         emit errorOccured(tr("Internal error occured, going later is not possible"));
          return;
      }
 
