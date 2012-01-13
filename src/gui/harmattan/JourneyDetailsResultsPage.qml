@@ -302,6 +302,7 @@ Page {
 
     FahrplanBackend {
         id: fahrplanBackend
+
         onParserJourneyDetailsResult: {
             currentResult = result;
             console.log("Got detail results");
@@ -421,15 +422,32 @@ Page {
 
         ToolIcon {
             id : calendarIcon;
-            iconId: "toolbar-list"
+            iconId: enabled ? "toolbar-list" : ""
             visible: !searchIndicator.visible
+
             onClicked: {
-                if (fahrplanBackend.addJourneyDetailResultToCalendar(currentResult)) {
-                    banner.text = "Journey has been added to your calendar.";
-                } else {
-                    banner.text = "Failed to add Journey to your calendar!";
-                }
-                banner.show();
+                calendarIcon.enabled = false
+                fahrplanBackend.addJourneyDetailResultToCalendar(currentResult);
+            }
+
+            Connections {
+                target: fahrplanBackend
+                onCalendarEntryAdded: {
+                                          if (success)
+                                              banner.text = "Journey has been added to your calendar.";
+                                          else
+                                              banner.text = "Failed to add Journey to your calendar!";
+
+                                          banner.show();
+                                          calendarIcon.enabled = true
+                                      }
+            }
+
+            BusyIndicator {
+                visible: !calendarIcon.enabled
+                running: true
+                style: BusyIndicatorStyle { size: "small" }
+                anchors.centerIn: parent
             }
         }
     }
