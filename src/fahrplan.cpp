@@ -99,52 +99,21 @@ void Fahrplan::setParser(int index)
     m_parser_manager->setParser(index);
 }
 
-bool Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
+void Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
 {
-    QString desc;
-    desc.append(result->departureStation() + " to " + result->arrivalStation() + "\n");
+    QThread *workerThread = new QThread(this);
+    CalendarAdditionTask *wrapper = new CalendarAdditionTask(result);
 
-    if (!result->info().isEmpty()) {
-        desc.append(result->info() + "\n");
-    }
+    connect(workerThread, SIGNAL(started()), wrapper, SLOT(addToCalendar()));
+    connect(workerThread, SIGNAL(finished()), wrapper, SLOT(deleteLater()));
+    connect(workerThread, SIGNAL(finished()), workerThread, SLOT(deleteLater()));
 
-    desc.append("Duration: " + result->duration() + "\n\n");
+    connect(wrapper,
+            SIGNAL(additionComplete(JourneyDetailResultList*,bool)),
+            SIGNAL(calendarEntryAdded(JourneyDetailResultList*,bool)));
 
-    for (int i=0; i < result->itemcount(); i++) {
-        JourneyDetailResultItem *item = result->getItem(i);
-
-        if (!item->train().isEmpty()) {
-            desc.append(item->train() + "\n");
-        }
-        desc.append(item->departureDateTime().date().toString() + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
-        if (!item->departureInfo().isEmpty()) {
-            desc.append(" - " + item->departureInfo());
-        }
-        desc.append("\n");
-        desc.append(item->arrivalDateTime().date().toString() + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
-        if (!item->arrivalInfo().isEmpty()) {
-            desc.append(" - " + item->arrivalInfo());
-        }
-        desc.append("\n");
-        if (!item->info().isEmpty()) {
-            desc.append(item->info() + "\n");
-        }
-        desc.append("--\n");
-    }
-
-    desc.append("\n(added by fahrplan app, please recheck informations before travel.)");
-
-    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
-        QOrganizerManager defaultManager;
-        QOrganizerEvent event;
-
-        event.setDisplayLabel("Journey: " + result->departureStation() + " to " + result->arrivalStation());
-        event.setDescription(desc);
-        event.setStartDateTime(result->departureDateTime());
-        event.setEndDateTime(result->arrivalDateTime());
-
-        return defaultManager.saveItem(&event);
-    #endif
+    wrapper->moveToThread(workerThread);
+    workerThread->start();
 }
 
 void Fahrplan::onStationsResult(StationsResultList *result)
@@ -170,4 +139,68 @@ void Fahrplan::onJourneyDetailsResult(JourneyDetailResultList *result)
 void Fahrplan::onErrorOccured(QString msg)
 {
     emit parserErrorOccured(msg);
+}
+
+CalendarAdditionTask::CalendarAdditionTask(JourneyDetailResultList *result, QObject *parent) :
+    QObject(parent), m_result(result)
+{
+}
+
+CalendarAdditionTask::~CalendarAdditionTask()
+{
+    qDebug() << "Destroyed";
+}
+
+void CalendarAdditionTask::addToCalendar()
+{
+    QString desc;
+    desc.append(m_result->departureStation() + " to " + m_result->arrivalStation() + "\n");
+
+    if (!m_result->info().isEmpty()) {
+        desc.append(m_result->info() + "\n");
+    }
+
+    for (int i=0; i < m_result->itemcount(); i++) {
+        JourneyDetailResultItem *item = m_result->getItem(i);
+
+        if (!item->train().isEmpty()) {
+            desc.append(item->train() + "\n");
+        }
+        desc.append(item->departureDateTime().date().toString() + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
+        if (!item->departureInfo().isEmpty()) {
+            desc.append(" - " + item->departureInfo());
+        }
+        desc.append("\n");
+        desc.append(item->arrivalDateTime().date().toString() + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
+        if (!item->arrivalInfo().isEmpty()) {
+            desc.append(" - " + item->arrivalInfo());
+        }
+        desc.append("\n");
+        if (!item->info().isEmpty()) {
+            desc.append(item->info() + "\n");
+        }
+        desc.append("--\n");
+    }
+
+    desc.append("\n(added by fahrplan app, please recheck informations before travel.)");
+
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+    QOrganizerManager defaultManager;
+    QOrganizerEvent event;
+
+    event.setDisplayLabel("Journey: " + m_result->departureStation() + " to " + m_result->arrivalStation());
+    event.setDescription(desc);
+    event.setStartDateTime(m_result->departureDateTime());
+    event.setEndDateTime(m_result->arrivalDateTime());
+
+    emit additionComplete((JourneyDetailResultList *) m_result, defaultManager.saveItem(&event));
+#else
+    emit additionComplete(m_result, false);
+#endif
+
+    QThread::currentThread()->exit(0);
+
+    // Move back to GUI thread so the deleteLater() callback works (it requires
+    // an event loop which is still alive)
+    moveToThread(QCoreApplication::instance()->thread());
 }

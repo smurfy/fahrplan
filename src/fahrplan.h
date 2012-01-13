@@ -58,7 +58,7 @@ class Fahrplan : public QObject
         void setParser(int index);
         void storeSettingsValue(QString key, QString value);
         QString getSettingsValue(QString key, QString defaultValue);
-        bool addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
+        void addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
 
     signals:
         void parserStationsResult(StationsResultList *result);
@@ -68,6 +68,7 @@ class Fahrplan : public QObject
         void parserErrorOccured(QString msg);
         void parserChanged(QString name, int index);
         void favoritesChanged(QStringList favorites);
+        void calendarEntryAdded(JourneyDetailResultList *result, bool success);
 
     private slots:
         void onStationsResult(StationsResultList *result);
@@ -82,6 +83,19 @@ class Fahrplan : public QObject
         static FahrplanBackendManager *m_parser_manager;
         static FahrplanFavoritesManager *m_favorites_manager;
         QSettings *settings;
+};
+
+class CalendarAdditionTask : public QObject {
+    Q_OBJECT
+public:
+    explicit CalendarAdditionTask(JourneyDetailResultList *result, QObject *parent = 0);
+    virtual ~CalendarAdditionTask();
+public slots:
+    void addToCalendar();
+signals:
+    void additionComplete(JourneyDetailResultList *result, bool success);
+private:
+    JourneyDetailResultList * const m_result;
 };
 
 #endif // FAHRPLAN_H
