@@ -86,7 +86,7 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
         lastRequest = NetworkManager->post(request, data);
     }
 
-    requestTimeout->start(10000);
+    requestTimeout->start(30000);
 
     connect(lastRequest, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(networkReplyDownloadProgress(qint64,qint64)));
 }
@@ -94,7 +94,7 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
 void ParserAbstract::networkReplyDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
     requestTimeout->stop();
-    requestTimeout->start(10000);
+    requestTimeout->start(30000);
 }
 
 void ParserAbstract::networkReplyTimedOut()
