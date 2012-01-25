@@ -35,7 +35,7 @@ void CalendarThreadWrapper::addToCalendar()
     #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
 
     QString desc;
-    desc.append(m_result->departureStation() + tr(" to ") + m_result->arrivalStation() + "\n");
+    desc.append(tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()) + "\n");
 
     if (!m_result->info().isEmpty()) {
         desc.append(m_result->info() + "\n");

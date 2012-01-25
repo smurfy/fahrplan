@@ -318,7 +318,7 @@ Page {
             console.log(result.count);
 
             if (result.count > 0) {
-                journeyStations.text = result.departureStation + qsTr(" to ") + result.arrivalStation;
+                journeyStations.text = qsTr("%1 to %2").arg(result.departureStation).arg(result.arrivalStation);
                 var departureDate = Qt.formatDate(result.departureDateTime);
                 var arrivalDate = Qt.formatDate(result.arrivalDateTime);
 
