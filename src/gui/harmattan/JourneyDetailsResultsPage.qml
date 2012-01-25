@@ -329,7 +329,7 @@ Page {
                 lbljourneyDate.text = departureDate + " " + Qt.formatTime(result.departureDateTime,"hh:mm") + " - " +
                         arrivalDate + " " + Qt.formatTime(result.arrivalDateTime,"hh:mm");
 
-                lbljourneyDuration.text = qsTr("Dur.: ") + result.duration;
+                lbljourneyDuration.text = qsTr("Dur.: %1").arg(result.duration);
 
                 journeyDetailResultModel.clear();
                 for (var i = 0; i < result.count; i++) {

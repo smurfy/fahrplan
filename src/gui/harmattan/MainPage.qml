@@ -292,7 +292,7 @@ Page {
 
             Button {
                 id: startSearch
-                text: "Start search"
+                text: qsTr("Start search")
                 anchors {
                     topMargin: 10
                     horizontalCenter: parent.horizontalCenter
