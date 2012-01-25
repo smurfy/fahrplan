@@ -1,7 +1,7 @@
 import Fahrplan 1.0
 import QtQuick 1.1
 import QtMobility.location 1.1
-import com.meego 1.0
+import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import "."
 
@@ -49,7 +49,7 @@ Page {
 
                 platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
 
-                placeholderText: "Search for Station..."
+                placeholderText: qsTr("Search for Station...")
                 platformStyle: TextFieldStyle { paddingRight: searchButton.width }
                 Image {
                     id: searchButton
@@ -68,7 +68,7 @@ Page {
             function findStationsByName(){
                 stationsResultModel.clear();
                 stationsResultModel.append({
-                    "name": "Searching ...",
+                    "name": qsTr("Searching ..."),
                     "process": true,
                     "internal": true,
                     "isfavorite": false,
@@ -100,7 +100,7 @@ Page {
 
                     stationsResultModel.clear();
                     stationsResultModel.append({
-                        "name": "Requesting GPS...",
+                        "name": qsTr("Requesting GPS..."),
                         "process": true,
                         "internal": true,
                         "isfavorite": false,
@@ -183,11 +183,11 @@ Page {
                 onClicked: {
                     if (showfavorite) {
                         if (fahrplanBackend.favorites.isFavorite(lbl_stationname.text)) {
-                            banner.text = "Removing '" + lbl_stationname.text + "' from favorites"
+                            banner.text = qsTr("Removing '%1' from favorites").arg(lbl_stationname.text)
                             banner.show();
                             fahrplanBackend.favorites.removeFavorite(lbl_stationname.text);
                         } else {
-                            banner.text = "Adding '" + lbl_stationname.text + "' to favorites"
+                            banner.text = qsTr("Adding '%1' to favorites").arg(lbl_stationname.text)
                             banner.show();
                             fahrplanBackend.favorites.addFavorite(lbl_stationname.text);
                         }
@@ -337,7 +337,7 @@ Page {
             if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
                 stationsResultModel.clear();
                 stationsResultModel.append({
-                    "name": "Searching for stations...",
+                    "name": qsTr("Searching for stations..."),
                     "process": true,
                     "internal": true,
                     "isfavorite": false,
@@ -351,7 +351,7 @@ Page {
             } else {
                 stationsResultModel.clear();
                 stationsResultModel.append({
-                    "name": "Waiting for GPS lock...",
+                    "name": qsTr("Waiting for GPS lock..."),
                     "process": true,
                     "internal": true,
                     "isfavorite": false,

@@ -402,7 +402,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
  void ParserMobileBahnDe::searchJourneyEarlier()
  {
      if (lastEarlierUrl.isEmpty()) {
-         emit errorOccured("Internal error occured, going earlier is not possible");
+         emit errorOccured(tr("Internal error occured, going earlier is not possible"));
          return;
      }
 
@@ -433,7 +433,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
 
      int num = id.toInt();
      if (num > lastJourneyResultList->itemcount()) {
-        emit errorOccured("Internal error occured, requesting invalid details data.");
+        emit errorOccured(tr("Internal error occured, requesting invalid details data."));
         return;
      }
 

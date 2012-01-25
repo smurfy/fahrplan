@@ -69,7 +69,7 @@ void CalendarThreadWrapper::addToCalendar()
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
 
-    event.setDisplayLabel(tr("Journey: ") + m_result->departureStation() + tr(" to ") + m_result->arrivalStation());
+    event.setDisplayLabel(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
     event.setDescription(desc);
     event.setStartDateTime(m_result->departureDateTime());
     event.setEndDateTime(m_result->arrivalDateTime());
