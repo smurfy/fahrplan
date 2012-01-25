@@ -17,8 +17,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // Install translations
     QTranslator translator;
-    translator.load(QLocale::system().name(), ":/translation");
+    translator.load(QString("fahrplan_%1").arg(QLocale::system().name()), ":/translations");
     app.installTranslator(&translator);
 
     #if defined(Q_WS_WIN)
