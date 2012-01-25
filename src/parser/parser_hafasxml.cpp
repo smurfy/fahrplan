@@ -222,7 +222,7 @@ void ParserHafasXml::parseTimeTableMode0Part1(QNetworkReply *networkReply)
         sendHttpRequest(QUrl(baseXmlUrl), postData);
 
      } else {
-        emit errorOccured("Internal Error occured, missing station ids");
+        emit errorOccured(tr("Internal Error occured, missing station ids"));
         qWarning()<<"ParserHafasXml::parseTimeTablePart1: MISSING External Ids!";
     }
 }
@@ -1048,28 +1048,29 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
                        }
 
                        QString gisrouteType = gisroutetypeResult.join("").trimmed();
+                       int minutes = cleanHafasDate(gisrouteResult.join("").trimmed()).toInt();
                        if (gisrouteType == "FOOT")
                        {
-                         item->setInfo(tr("Walk for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                           item->setInfo(tr("Walk for %n min", "", minutes));
                        } else if (gisrouteType == "BIKE")
                        {
-                         item->setInfo(tr("Use a Bike for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                           item->setInfo(tr("Use a Bike for %n min", "", minutes));
                        } else if (gisrouteType == "CAR")
                        {
-                         item->setInfo(tr("Use a car for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                           item->setInfo(tr("Use a car for %n min", "", minutes));
                        } else if (gisrouteType == "TAXI")
                        {
-                          item->setInfo(tr("Take a taxi for ") + cleanHafasDate(gisrouteResult.join("").trimmed()+ tr(" min.")));
+                           item->setInfo(tr("Take a taxi for %n min", "", minutes));
                        }
                    }
                 } else {
 
                     if (transferResult.count() > 0) {
-                        item->setInfo(tr("Transfer for ") + cleanHafasDate(transferResult.join("").trimmed() + tr(" min.")));
+                        item->setInfo(tr("Transfer for %n min", "", cleanHafasDate(transferResult.join("").trimmed()).toInt()));
                     }
 
                     if (walkResult.count() > 0) {
-                        item->setInfo(tr("Walk for ") + cleanHafasDate(walkResult.join("").trimmed() + tr(" min.")));
+                        item->setInfo(tr("Walk for %n min", "", cleanHafasDate(walkResult.join("").trimmed()).toInt()));
                     }
                 }
             }

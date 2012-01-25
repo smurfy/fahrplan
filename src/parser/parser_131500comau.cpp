@@ -435,6 +435,7 @@ JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *jou
                 item->setArrivalDateTime(lastitem->arrivalDateTime());
             }
             item->setArrivalStation(regexp2.cap(1).trimmed());
+            // TODO: Might need translation
             item->setInfo("Walking " + regexp2.cap(2).trimmed() + " " + regexp2.cap(3).trimmed());
             //Don't add WalkTo infos as first item
             if (results->itemcount() > 0) {

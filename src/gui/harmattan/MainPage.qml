@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.meego 1.0
+import com.nokia.meego 1.0
 import com.nokia.extras 1.0
 import "components"
 import Fahrplan 1.0
@@ -292,7 +292,7 @@ Page {
 
             Button {
                 id: startSearch
-                text: "Start search"
+                text: qsTr("Start search")
                 anchors {
                     topMargin: 10
                     horizontalCenter: parent.horizontalCenter
