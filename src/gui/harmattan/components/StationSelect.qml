@@ -10,6 +10,22 @@ Page {
 
     signal stationSelected ( string name )
 
+    function updateFavorites()
+    {
+        stationsFavoritesModel.clear();
+        var favorites = fahrplanBackend.favorites.getFavorites();
+        for (var i = 0; i < favorites.length; i++) {
+            stationsFavoritesModel.append({
+                "name": favorites[i],
+                "process": false,
+                "internal": false,
+                "isfavorite": true,
+                "showfavorite": true,
+                "miscinfo": ""
+            })
+        }
+    }
+
     tools: stationSelectToolbar
 
     Item {
@@ -123,7 +139,7 @@ Page {
             }
             height: parent.height - stationSelectToolbar.height
             width: parent.width
-            model: stationsResultModel
+            model: stationsFavoritesModel
             delegate: stationsResultDelegate
             clip: true
         }
@@ -258,18 +274,7 @@ Page {
                 platformStyle: TabButtonStyle{}
                 iconSource: "image://theme/icon-m-toolbar-favorite-mark"
                 onClicked: {
-                    stationsFavoritesModel.clear();
-                    var favorites = fahrplanBackend.favorites.getFavorites();
-                    for (var i = 0; i < favorites.length; i++) {
-                        stationsFavoritesModel.append({
-                            "name": favorites[i],
-                            "process": false,
-                            "internal": false,
-                            "isfavorite": true,
-                            "showfavorite": true,
-                            "miscinfo": ""
-                        })
-                    }
+                    updateFavorites();
                     listView.model = stationsFavoritesModel
 
                     favIcon.checked = true;
@@ -277,7 +282,7 @@ Page {
                 }
                 flat: true
                 checkable: true
-                checked: false
+                checked: true
             }
             ToolButton {
                     id: searchIcon
@@ -290,7 +295,7 @@ Page {
                     }
                     flat: true
                     checkable: true
-                    checked: true
+                    checked: false
                 }
         }
     }
@@ -300,6 +305,7 @@ Page {
 
         onParserChanged: {
             gpsButton.visible = fahrplanBackend.parser.supportsGps();
+            updateFavorites();
         }
 
         onParserStationsResult: {
@@ -317,17 +323,7 @@ Page {
             }
         }
         onFavoritesChanged: {
-            stationsFavoritesModel.clear();
-            for (var i = 0; i < favorites.length; i++) {
-                stationsFavoritesModel.append({
-                    "name": favorites[i],
-                    "process": false,
-                    "internal": false,
-                    "isfavorite": true,
-                    "showfavorite": true,
-                    "miscinfo": ""
-                })
-            }
+            updateFavorites();
         }
     }
 
