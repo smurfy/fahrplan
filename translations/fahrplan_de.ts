@@ -129,12 +129,12 @@
         <location filename="../src/gui/harmattan/MainPage.qml" line="659"/>
         <location filename="../src/gui/harmattan/MainPage.qml" line="660"/>
         <source>please select</source>
-        <translation>bitte Auswählen</translation>
+        <translation>bitte auswählen</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/MainPage.qml" line="153"/>
         <source>Via Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Zwischenstopstation</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/MainPage.qml" line="166"/>
@@ -259,7 +259,7 @@
     <message>
         <location filename="../src/gui/harmattan/MainPage.qml" line="573"/>
         <source>Switch with Via station</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit Zwischenstopstation tauschen</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/MainPage.qml" line="628"/>
@@ -277,68 +277,68 @@
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="27"/>
         <source>findStationsByName</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="50"/>
         <source>findStationsByCoordinates</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="63"/>
         <source>searchJourney</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="76"/>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="233"/>
         <source>Zurich</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="89"/>
         <source>Reckingen</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="112"/>
         <source>searchJourneyEarlier</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="125"/>
         <source>searchJourneyLater</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="138"/>
         <source>cancelRequest</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="151"/>
         <source>getJourneyDetails</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="164"/>
         <source>C1-1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="187"/>
         <source>Göschenen</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="220"/>
         <source>getTimeTableForStation</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../src/parser/parser_131500comau.cpp" line="354"/>
         <source>Internal error occured: JourneyResultdata not present!</source>
-        <translation type="unfinished"></translation>
+        <translation>Interner Fehler: Detail Daten nicht verfügbar!</translation>
     </message>
 </context>
 <context>
@@ -384,7 +384,7 @@
     <message>
         <location filename="../src/parser/parser_abstract.cpp" line="103"/>
         <source>Request timed out.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitüberschreitung der Anforderung.</translation>
     </message>
 </context>
 <context>
@@ -393,7 +393,7 @@
         <location filename="../src/parser/parser_hafasxml.cpp" line="225"/>
         <location filename="../src/parser/parser_hafasxml.cpp" line="595"/>
         <source>Internal Error occured, missing station ids</source>
-        <translation type="unfinished"></translation>
+        <translation>Interner Fehler: Fehlende Station Ids</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="425"/>
@@ -429,7 +429,7 @@
         <location filename="../src/parser/parser_hafasxml.cpp" line="858"/>
         <location filename="../src/parser/parser_hafasxml.cpp" line="879"/>
         <source>Internal error occured: JourneyResultdata not present!</source>
-        <translation type="unfinished"></translation>
+        <translation>Interner Fehler: Detail Daten nicht verfügbar!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="991"/>
@@ -481,12 +481,13 @@
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="1106"/>
         <source>Internal error occured, Error parsing details data</source>
-        <translation type="unfinished"></translation>
+        <translation>Interner Fehler: Fehler mit Detaildaten</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="1141"/>
         <source>d</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>d means days</translatorcomment>
+        <translation>t</translation>
     </message>
 </context>
 <context>
@@ -529,7 +530,7 @@
     <message>
         <location filename="../src/parser/parser_mobilebahnde.cpp" line="436"/>
         <source>Internal error occured, requesting invalid details data.</source>
-        <translation>Internet Fehler: Fehlerhafte Details abgefragt</translation>
+        <translation>Internet Fehler: Fehlerhafte Details abgefragt.</translation>
     </message>
 </context>
 <context>
@@ -612,6 +613,24 @@
         <location filename="../src/gui/harmattan/components/StationSelect.qml" line="354"/>
         <source>Waiting for GPS lock...</source>
         <translation>Warte auf GPS Daten ...</translation>
+    </message>
+</context>
+<context>
+    <name>TimeTableResultsPage</name>
+    <message>
+        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="170"/>
+        <source>Pl. </source>
+        <translation>Gl.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="175"/>
+        <source>to </source>
+        <translation>nach </translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="179"/>
+        <source>from </source>
+        <translation>von </translation>
     </message>
 </context>
 </TS>

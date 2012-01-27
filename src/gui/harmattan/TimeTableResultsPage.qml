@@ -167,16 +167,16 @@ Page {
                 var stationplatform = item.stationName;
 
                 if (item.platform) {
-                    stationplatform = "Pl. " + item.platform + " / " + item.stationName;
+                    stationplatform = qsTr("Pl. ") + item.platform + " / " + item.stationName;
                 }
 
                 var dirlabel = "";
                 if (selMode == 1) {
-                    dirlabel = "to "
+                    dirlabel = qsTr("to ")
                 }
 
                 if (selMode == 0) {
-                    dirlabel = "from "
+                    dirlabel = qsTr("from ")
                 }
 
                 timetableResultModel.append({

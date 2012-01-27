@@ -74,7 +74,7 @@ Page {
                   "<br>" +
                   "Current supported backends are <b>bahn.de</b> (germany and europe), <b>sbb.ch</b> (swiss), <b>www.131500.com.au</b> (nsw, australia), <b>rejseplanen.dk</b> (denmark), <b>oebb.at</b> (austria)" +
                   "<br><br>" +
-                  "This or prior versions uses code contribution by:<br><i>lorenzph</i>, <i>CaCO3</i>, <i>hcm</i>, <i>thp</i>, <i>qwerty12</i>, <i>qbast</i>" +
+                  "This or prior versions uses code contribution by:<br><i>gri</i>, <i>lorenzph</i>, <i>CaCO3</i>, <i>hcm</i>, <i>thp</i>, <i>qwerty12</i>, <i>qbast</i>" +
                   "<br>" +
                   "Logo by <i>NightShift79</i>" +
                   "<br><br>" +
