@@ -1,3 +1,11 @@
+fahrplan2 (2.0.7) unstable; urgency=low
+  * Added NRI backend for norway
+  * Added german translation
+  * Optimized add to calendar feature (no freezing gui)
+  * Increased request timeout from 10 to 30 seconds
+  
+ -- smurfy <maemo@smurfy.de>  Sat, 28 Jan 2012 15:00:00 +0200
+
 fahrplan2 (2.0.6) unstable; urgency=low
   * Optimized various parts of the UI
   
