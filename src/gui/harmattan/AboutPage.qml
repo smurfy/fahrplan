@@ -72,7 +72,7 @@ Page {
             id: moreText
             text: "Fahrplan is a journey planner/railway time table for many train lines in europe and australia." +
                   "<br>" +
-                  "Current supported backends are <b>bahn.de</b> (germany and europe), <b>sbb.ch</b> (swiss), <b>www.131500.com.au</b> (nsw, australia), <b>rejseplanen.dk</b> (denmark), <b>oebb.at</b> (austria)" +
+                  "Current supported backends are <b>bahn.de</b> (germany and europe), <b>sbb.ch</b> (swiss), <b>www.131500.com.au</b> (nsw, australia), <b>rejseplanen.dk</b> (denmark), <b>oebb.at</b> (austria), reiseinfo.no (norway)" +
                   "<br><br>" +
                   "This or prior versions uses code contribution by:<br><i>gri</i>, <i>lorenzph</i>, <i>CaCO3</i>, <i>hcm</i>, <i>thp</i>, <i>qwerty12</i>, <i>qbast</i>" +
                   "<br>" +
