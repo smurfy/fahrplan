@@ -43,7 +43,8 @@ SOURCES += src/main.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
     src/fahrplan_favorites_manager.cpp \
-    src/calendarthreadwrapper.cpp
+    src/calendarthreadwrapper.cpp \
+    src/parser/parser_xmlnri.cpp
 
 OTHER_FILES += \
     src/gui/harmattan/MainPage.qml \
@@ -126,7 +127,10 @@ HEADERS += \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
     src/fahrplan_favorites_manager.h \
-    src/calendarthreadwrapper.h
+    src/calendarthreadwrapper.h \
+    src/parser/parser_xmlnri.h
+
+
 
 
 
