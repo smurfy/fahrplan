@@ -1,6 +1,6 @@
 /*******************************************************************************
 
-    This file is a part of Fahrplan for maemo 2009-2010
+    This file is a part of Fahrplan for maemo 2009-2012
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
