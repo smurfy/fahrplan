@@ -128,8 +128,6 @@ void ParserHafasXml::parseTimeTable(QNetworkReply *networkReply)
 
 void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 {
-
-
     TimeTableResultList *result = new TimeTableResultList();
 
     QString data = networkReply->readAll();
@@ -145,6 +143,13 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 
     while (!xml.atEnd()) {
         xml.readNext();
+
+        if (xml.isStartElement() && (xml.name() == "Err")) {
+            QString errorMsg = xml.attributes().value("text").toString().simplified();
+            emit errorOccured(tr("Backend returns an error: ") + errorMsg);
+            qWarning()<<"ParserHafasXml::parseTimeTableMode1: "<<errorMsg;
+        }
+
         if (xml.isStartElement() && (xml.name() == "Journey")) {
             TimeTableResultItem *item = new TimeTableResultItem();
 
