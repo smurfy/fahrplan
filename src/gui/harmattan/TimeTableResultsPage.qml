@@ -21,7 +21,7 @@ Page {
         Item {
             id: titleBar
 
-            height: timetableTitle.height + 30
+            height: timetableTitle.height + 20
             width: parent.width
 
             Label {
@@ -34,8 +34,7 @@ Page {
                     leftMargin: 10
                     right: parent.right
                     rightMargin: 10
-                    top: parent.top
-                    topMargin: 20
+                    verticalCenter: parent.verticalCenter
                 }
                 width: parent.width
             }

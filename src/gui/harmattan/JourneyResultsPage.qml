@@ -19,21 +19,21 @@ Page {
         Item {
             id: titleBar
 
-            height: journeyStations.height + journeyDate.height + 30
+            height: journeyStations.height + journeyDate.height + 20
             width: parent.width
 
             Label {
                 id: journeyStations
                 text: ""
                 font.bold: true
-                font.pixelSize: 32
+                font.pixelSize: 30
                 anchors {
                     left: parent.left
                     leftMargin: 10
                     right: parent.right
                     rightMargin: 10
                     top: parent.top
-                    topMargin: 20
+                    topMargin: 10
                 }
                 width: parent.width
             }

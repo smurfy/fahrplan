@@ -44,6 +44,7 @@ Item {
         }
 
         font.bold: true
+        font.pixelSize: 26
         text: "-"
     }
 
@@ -58,6 +59,7 @@ Item {
             right: icon.left
         }
         text: ""
+        font.pixelSize: 28
     }
 
     Image {

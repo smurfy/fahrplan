@@ -84,8 +84,6 @@ Page {
                 left: parent.left
                 leftMargin: 10
                 verticalCenter: parent.verticalCenter
-                top: parent.top
-                topMargin: 20
             }
             font.bold: true;
             font.pixelSize: 32
