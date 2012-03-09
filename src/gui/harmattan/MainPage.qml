@@ -247,6 +247,7 @@ Page {
                 text: modeDep.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
                     topMargin: 10
+                    top: trainrestrictionsButton.bottom
                     horizontalCenter: parent.horizontalCenter
                 }
 
@@ -293,6 +294,7 @@ Page {
                 text: qsTr("Start search")
                 anchors {
                     topMargin: 10
+                    top: trainrestrictionsButton.bottom
                     horizontalCenter: parent.horizontalCenter
                 }
 
@@ -314,7 +316,9 @@ Page {
                         viaStation = "";
                     }
 
-                    pageStack.push(loadingPage)
+                    resultsPage.journeyStationsTitleText = departureButton.subTitleText + qsTr(" to ") +  arrivalButton.subTitleText;
+                    resultsPage.searchIndicatorVisible = true;
+                    pageStack.push(resultsPage)
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = 0;
@@ -410,10 +414,6 @@ Page {
         id: resultsPage
     }
 
-    LoadingPage {
-        id: loadingPage
-    }
-
     TimeTableResultsPage {
         id: timetablePage
     }
@@ -505,26 +505,6 @@ Page {
             anchors.topMargin: 10
     }
 
-    Timer {
-        id: showResultsTimer
-        interval: 800
-        running: false
-        repeat: false
-        onTriggered: {
-            pageStack.push(resultsPage);
-        }
-    }
-
-    Timer {
-        id: hideLoadingTimer
-        interval: 800
-        running: false
-        repeat: false
-        onTriggered: {
-            pageStack.pop();
-        }
-    }
-
     ContextMenu {
         id: timeTableSelectContextMenu
         MenuLayout {
@@ -612,17 +592,7 @@ Page {
            the pagestack is popped so we use a timer here if the pagestack is busy.
          */
         onParserJourneyResult: {
-            if (pageStack.busy) {
-                showResultsTimer.interval = 800
-                hideLoadingTimer.interval = 800
-            } else {
-                showResultsTimer.interval = 1
-                hideLoadingTimer.interval = 1
-            }
-            if (result.count > 0) {
-                showResultsTimer.start();
-            } else {
-                hideLoadingTimer.start();
+            if (result.count <= 0) {
                 banner.text = qsTr("No results found");
                 banner.show();
             }
@@ -636,12 +606,6 @@ Page {
         }
 
         onParserErrorOccured: {
-            if (pageStack.busy) {
-                hideLoadingTimer.interval = 800
-            } else {
-                hideLoadingTimer.interval = 1
-            }
-            hideLoadingTimer.start();
             banner.text = msg;
             banner.show();
         }
@@ -671,6 +635,8 @@ Page {
                         "name" : items[i]
                     });
                 }
+
+                selectBackendDialog.selectedIndex = index;
             }
 
             trainrestrictionsModel.clear();

@@ -51,7 +51,6 @@ OTHER_FILES += \
     src/gui/harmattan/JourneyResultsPage.qml \
     src/gui/harmattan/JourneyDetailsResultsPage.qml \
     src/gui/harmattan/TimeTableResultsPage.qml \
-    src/gui/harmattan/LoadingPage.qml \
     src/gui/harmattan/main.qml \
     src/gui/harmattan/components/SubTitleButton.qml \
     src/gui/harmattan/components/StationSelect.qml \
@@ -129,6 +128,7 @@ HEADERS += \
     src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
     src/parser/parser_xmlnri.h
+
 
 
 

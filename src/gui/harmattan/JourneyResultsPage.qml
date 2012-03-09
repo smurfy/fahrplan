@@ -6,6 +6,8 @@ import "components"
 Page {
     property alias fahrplanBackend: fahrplanBackend
     property alias searchResults: searchResults
+    property alias journeyStationsTitleText: journeyStations.text
+    property alias searchIndicatorVisible: searchIndicator.visible
 
     id: searchResultsPage
 
@@ -48,7 +50,21 @@ Page {
                     topMargin: 10
                 }
                 width: parent.width
+                visible: !searchIndicatorVisible
             }
+        }
+
+        BusyIndicator {
+            id: searchIndicator
+            anchors {
+                top: titleBar.bottom
+                topMargin: 50;
+                horizontalCenter: parent.horizontalCenter
+            }
+            running: true
+            visible: false
+
+            platformStyle: BusyIndicatorStyle { size: "large" }
         }
 
         Item {
@@ -56,6 +72,7 @@ Page {
 
             width: parent.width;
             height: lbl_departuretime.height
+            visible: !searchIndicator.visible
 
             anchors {
                 top: titleBar.bottom
@@ -116,6 +133,7 @@ Page {
             model: journeyResultModel
             delegate:  journeyResultDelegate
             clip: true
+            visible: !searchIndicator.visible
         }
 
         ScrollDecorator {
@@ -248,8 +266,10 @@ Page {
             console.log("Got results");
             console.log(result.count);
 
+            searchIndicatorVisible = false;
+
             journeyStations.text = result.departureStation +
-                    " to " +
+                    qsTr(" to ") +
                     result.arrivalStation;
 
             journeyDate.text = result.timeInfo;
@@ -283,22 +303,25 @@ Page {
             id : backIcon;
             iconId: "toolbar-back"
             onClicked: {
-                pageStack.pop(2);
+                pageStack.pop();
+                fahrplanBackend.parser.cancelRequest();
             }
         }
 
         ToolButtonRow {
             ToolButton {
                 text:qsTr("Earlier")
+                visible: !searchIndicatorVisible;
                 onClicked: {
-                    pageStack.pop();
+                    searchIndicatorVisible = true
                     fahrplanBackend.parser.searchJourneyEarlier();
                 }
             }
             ToolButton {
                 text:qsTr("Later")
+                visible: !searchIndicatorVisible;
                 onClicked: {
-                    pageStack.pop();
+                    searchIndicatorVisible = true
                     fahrplanBackend.parser.searchJourneyLater();
                 }
             }
