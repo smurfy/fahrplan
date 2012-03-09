@@ -79,7 +79,9 @@ Page {
                   "Logo by <i>NightShift79</i>" +
                   "<br><br>" +
                   "If you like fahrplan, i would appreciate a donation.<br><br><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a>" +
-                  "<br><br><br><b>License</b><br>" +
+                  "<br><br>" +
+                  "If you encounter bugs or have feature requests visit: <br><br><a href=\"https://github.com/smurfy/fahrplan/issues\">https://github.com/smurfy/fahrplan/issues</a>" +
+                  "<br><br><b>License</b><br>" +
                   "This program is free software; you can redistribute it and/or modify
             it under the terms of the GNU General Public License as published by
             the Free Software Foundation; either version 2 of the License, or
