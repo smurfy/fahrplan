@@ -54,42 +54,47 @@
 <context>
     <name>JourneyResultsPage</name>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="71"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="88"/>
         <source>Dep.</source>
         <translation>Abf.</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="81"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="98"/>
         <source>Arr.</source>
         <translation>Ank.</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="92"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="109"/>
         <source>Dur.</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="103"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="120"/>
         <source>Trans.</source>
         <translation>Umst.</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="151"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="169"/>
         <source>Loading details</source>
         <translation>Lade Details</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="152"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="170"/>
         <source>please wait...</source>
         <translation>bitte warten ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="279"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="272"/>
+        <source> to </source>
+        <translation> nach </translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="313"/>
         <source>Earlier</source>
         <translation>Früher</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="286"/>
+        <location filename="../src/gui/harmattan/JourneyResultsPage.qml" line="321"/>
         <source>Later</source>
         <translation>Später</translation>
     </message>
@@ -97,114 +102,113 @@
 <context>
     <name>LoadingPage</name>
     <message>
-        <location filename="../src/gui/harmattan/LoadingPage.qml" line="18"/>
         <source>Searching...</source>
-        <translation>Suche ...</translation>
+        <translation type="obsolete">Suche ...</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="140"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="138"/>
         <source>Departure Station</source>
         <translation>Abfahrtsstation</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="141"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="154"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="167"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="180"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="190"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="203"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="213"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="260"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="267"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="139"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="152"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="165"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="178"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="188"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="201"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="211"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="259"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="266"/>
         <location filename="../src/gui/harmattan/MainPage.qml" line="308"/>
         <location filename="../src/gui/harmattan/MainPage.qml" line="315"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="536"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="583"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="656"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="657"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="658"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="659"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="660"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="514"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="561"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="618"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="619"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="620"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="621"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="622"/>
         <source>please select</source>
         <translation>bitte auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="153"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="151"/>
         <source>Via Station</source>
         <translation>Zwischenstopstation</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="166"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="164"/>
         <source>Arrival Station</source>
         <translation>Ankunftsstation</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="179"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="177"/>
         <source>Station</source>
         <translation>Station</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="189"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="187"/>
         <source>Direction</source>
         <translation>Richtung</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="202"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="429"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="200"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="427"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="212"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="447"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="210"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="445"/>
         <source>Time</source>
         <translation>Uhrzeit</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="228"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="226"/>
         <source>Departure</source>
         <translation>Abfahrt</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="232"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="230"/>
         <source>Arrival</source>
         <translation>Ankunft</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="239"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="237"/>
         <source>Trains</source>
         <translation>Züge</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="249"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="247"/>
         <source>Show departures</source>
         <translation>Abfahrten anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="249"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="247"/>
         <source>Show arrivals</source>
         <translation>Ankünfte anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="261"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="260"/>
         <source>Please select a Station</source>
         <translation>Bitte eine Station wählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="276"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="275"/>
         <source>Departures</source>
         <translation>Abfahrten</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="280"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="279"/>
         <source>Arrivals</source>
         <translation>Ankünfte</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="295"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="294"/>
         <source>Start search</source>
         <translation>Suche starten</translation>
     </message>
@@ -214,60 +218,65 @@
         <translation>Bitte wählen Sie eine Abfahrts- und Ankunftsstation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="388"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="319"/>
+        <source> to </source>
+        <translation> nach </translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="390"/>
         <source>Select backend</source>
         <translation>Backend auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="401"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="403"/>
         <source>Select train</source>
         <translation>Zug auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="430"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="448"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="428"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="446"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="431"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="449"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="429"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="447"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="534"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="581"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="512"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="559"/>
         <source>Clear station</source>
         <translation>Station entfernen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="548"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="526"/>
         <source>Select station</source>
         <translation>Station wählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="555"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="533"/>
         <source>Switch with Departure station</source>
         <translation>Mit Abfahrtsstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="564"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="542"/>
         <source>Switch with Arrival station</source>
         <translation>Mit Ankunftsstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="573"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="551"/>
         <source>Switch with Via station</source>
         <translation>Mit Zwischenstopstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="628"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="596"/>
         <source>No results found</source>
         <translation>Keine Ergebnisse gefunden</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="635"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="603"/>
         <source>Error loading details</source>
         <translation>Fehler beim Laden der Details</translation>
     </message>
@@ -294,15 +303,24 @@
         <source>searchJourney</source>
         <translation></translation>
     </message>
-    <message>
+    <message utf8="true">
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="76"/>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="233"/>
-        <source>Zurich</source>
-        <translation></translation>
+        <source>München Hbf</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="89"/>
-        <source>Reckingen</source>
+        <source>Berlin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="164"/>
+        <source>5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="233"/>
+        <source>Zurich</source>
         <translation></translation>
     </message>
     <message>
@@ -323,11 +341,6 @@
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="151"/>
         <source>getJourneyDetails</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="164"/>
-        <source>C1-1</source>
         <translation></translation>
     </message>
     <message utf8="true">
@@ -390,56 +403,61 @@
 <context>
     <name>ParserHafasXml</name>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="225"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="595"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="149"/>
+        <source>Backend returns an error: </source>
+        <translation>Backend hat einen Fehler geworfen: </translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="230"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="600"/>
         <source>Internal Error occured, missing station ids</source>
         <translation>Interner Fehler: Fehlende Station Ids</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="425"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="430"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="426"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="431"/>
         <source>All without ICE</source>
         <translation>Alle ohne ICE</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="427"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="432"/>
         <source>Only local transport</source>
         <translation>Nur Nahverkehr</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="428"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="433"/>
         <source>Local transport without S-Bahn</source>
         <translation>Nahverkehr ohne S-Bahn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="781"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="786"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Interner Fehler: Später anzeigen nicht möglich</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="806"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="811"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Interner Fehler: Früher anzeigen nicht möglich</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="858"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="879"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="863"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="884"/>
         <source>Internal error occured: JourneyResultdata not present!</source>
         <translation>Interner Fehler: Detail Daten nicht verfügbar!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="991"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="995"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="996"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1000"/>
         <source>Platform </source>
         <translation>Plattform</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1054"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1073"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1059"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1078"/>
         <source>Walk for %n min</source>
         <translation>
             <numerusform>Laufen für eine Minute</numerusform>
@@ -447,7 +465,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1057"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1062"/>
         <source>Use a Bike for %n min</source>
         <translation>
             <numerusform>Fahrrad für eine Minute verwenden</numerusform>
@@ -455,7 +473,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1060"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1065"/>
         <source>Use a car for %n min</source>
         <translation>
             <numerusform>Auto für eine Minute verwenden</numerusform>
@@ -463,7 +481,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1063"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1068"/>
         <source>Take a taxi for %n min</source>
         <translation>
             <numerusform>Taxi für eine Minute verwenden</numerusform>
@@ -471,7 +489,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1069"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1074"/>
         <source>Transfer for %n min</source>
         <translation>
             <numerusform>Umsteigen für eine Minute</numerusform>
@@ -479,12 +497,12 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1106"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1111"/>
         <source>Internal error occured, Error parsing details data</source>
         <translation>Interner Fehler: Fehler mit Detaildaten</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1141"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1146"/>
         <source>d</source>
         <translatorcomment>d means days</translatorcomment>
         <translation>t</translation>
@@ -518,19 +536,27 @@
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="389"/>
+        <location filename="../src/parser/parser_mobilebahnde.cpp" line="393"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Interner Fehler: Später anzeigen nicht möglich</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="405"/>
+        <location filename="../src/parser/parser_mobilebahnde.cpp" line="409"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Interner Fehler: Früher anzeigen nicht möglich</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="436"/>
+        <location filename="../src/parser/parser_mobilebahnde.cpp" line="440"/>
         <source>Internal error occured, requesting invalid details data.</source>
         <translation>Internet Fehler: Fehlerhafte Details abgefragt.</translation>
+    </message>
+</context>
+<context>
+    <name>ParserXmlNri</name>
+    <message>
+        <location filename="../src/parser/parser_xmlnri.cpp" line="39"/>
+        <source>All</source>
+        <translation>Alle</translation>
     </message>
 </context>
 <context>
@@ -580,37 +606,37 @@
 <context>
     <name>StationSelect</name>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="52"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="68"/>
         <source>Search for Station...</source>
         <translation>Suche nach Station ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="71"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="87"/>
         <source>Searching ...</source>
         <translation>Suche ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="103"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="119"/>
         <source>Requesting GPS...</source>
         <translation>Fordere GPS an ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="186"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="202"/>
         <source>Removing &apos;%1&apos; from favorites</source>
         <translation>%1 von Favoriten entfernt</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="190"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="206"/>
         <source>Adding &apos;%1&apos; to favorites</source>
         <translation>%1 zu Favoriten hinzugefügt</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="340"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="336"/>
         <source>Searching for stations...</source>
         <translation>Suche nach Stationen ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="354"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="350"/>
         <source>Waiting for GPS lock...</source>
         <translation>Warte auf GPS Daten ...</translation>
     </message>
@@ -618,17 +644,17 @@
 <context>
     <name>TimeTableResultsPage</name>
     <message>
-        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="170"/>
+        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="169"/>
         <source>Pl. </source>
         <translation>Gl.</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="175"/>
+        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="174"/>
         <source>to </source>
         <translation>nach </translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="179"/>
+        <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="178"/>
         <source>from </source>
         <translation>von </translation>
     </message>
