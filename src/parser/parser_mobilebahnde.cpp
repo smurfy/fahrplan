@@ -363,11 +363,15 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
 
      for(int i=0; i < stateResults.count(); i++)
      {
+         QString miscInfo = stateResults[i].trimmed();
+         if (miscInfo == "+0") {
+             miscInfo = "";
+         }
          JourneyResultItem *item = new JourneyResultItem();
          item->setDate(date);
          item->setTransfers(changesResults[i * 2].trimmed());
          item->setDuration(changesResults[(i * 2) + 1].trimmed());
-         item->setMiscInfo(stateResults[i].trimmed());
+         item->setMiscInfo(miscInfo);
          item->setTrainType(trainResults[i].trimmed());
          item->setId(QString::number(i));
          item->setDepartureTime(timelinkResults[i * 2].trimmed());
