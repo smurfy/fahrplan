@@ -538,7 +538,11 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                          tmpRegexp2.setMinimal(true);
                          tmpRegexp2.indexIn(tmpRegexp.cap(2).trimmed());
 
-                         QDate fromDate = QDate::fromString(tmpRegexp.cap(3).trimmed(), "dd.MM.yy");
+                         QRegExp tmpRegexp3 = QRegExp("(\\d\\d\.\\d\\d\.\\d\\d)");
+                         tmpRegexp3.setMinimal(true);
+                         tmpRegexp3.indexIn(tmpRegexp.cap(3).trimmed());
+
+                         QDate fromDate = QDate::fromString(tmpRegexp3.cap(1).trimmed(), "dd.MM.yy");
                          QTime fromTime = QTime::fromString(tmpRegexp2.cap(1).trimmed(), "hh:mm");
 
                          fromDate = fromDate.addYears(100); //default is 1900 so we add 100years
@@ -556,7 +560,11 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                          tmpRegexp2.setMinimal(true);
                          tmpRegexp2.indexIn(tmpRegexp.cap(5).trimmed());
 
-                         QDate toDate = QDate::fromString(tmpRegexp.cap(6).trimmed(), "dd.MM.yy");
+                         QRegExp tmpRegexp3 = QRegExp("(\\d\\d\.\\d\\d\.\\d\\d)");
+                         tmpRegexp3.setMinimal(true);
+                         tmpRegexp3.indexIn(tmpRegexp.cap(6).trimmed());
+
+                         QDate toDate = QDate::fromString(tmpRegexp3.cap(1).trimmed(), "dd.MM.yy");
                          QTime toTime = QTime::fromString(tmpRegexp2.cap(1).trimmed(), "hh:mm");
 
                          toDate = toDate.addYears(100); //default is 1900 so we add 100years
