@@ -129,7 +129,7 @@ Page {
         Item {
             id: delegateItem
             width: listView.width
-            height: 30 + lbl_departuretime.height + lbl_traintyp.height
+            height: 30 + lbl_departuretime.height + lbl_traintyp.height + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
 
             Rectangle {
                 anchors.fill: parent
@@ -218,6 +218,19 @@ Page {
                         topMargin: 5
                     }
                     text: trainType
+                    width: parent.width - 40
+                }
+
+                Label {
+                    id: lbl_miscinfo
+                    anchors {
+                        left: parent.left
+                        leftMargin: 10
+                        top: lbl_traintyp.bottom
+                        topMargin: 5
+                    }
+                    visible: (miscInfo == "") ? false : true
+                    text: miscInfo
                     width: parent.width - 40
                 }
 
