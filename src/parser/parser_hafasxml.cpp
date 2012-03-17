@@ -171,11 +171,36 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
                 }
             }
 
+            //get delay infos,
+            QString txtDelay = xml.attributes().value("delay").toString().simplified();
+            //QString intDelay = xml.attributes().value("e_delay").toString().simplified();
+            QString reasonDelay = xml.attributes().value("delayReason").toString().simplified();
+            QString miscInfo = "";
+
+            if (!txtDelay.isEmpty()) {
+                if (txtDelay == "-") {
+                    miscInfo = "";
+                } else if (txtDelay == "0") {
+                    miscInfo = tr("On-Time");
+                } else {
+                    miscInfo = txtDelay;
+                }
+            }
+
+            if (!reasonDelay.isEmpty()) {
+                if (!miscInfo.isEmpty()) {
+                    miscInfo.append(": ");
+                }
+                miscInfo.append(reasonDelay);
+            }
+
             item->setDestinationName(dest);
             item->setStationName(station);
             item->setPlatform(xml.attributes().value("platform").toString().simplified());
             item->setTrainType(train);
             item->setTime(QTime::fromString(xml.attributes().value("fpTime").toString(), "hh:mm"));
+            item->setMiscInfo(miscInfo);
+
             result->appendItem(item);
         }
 

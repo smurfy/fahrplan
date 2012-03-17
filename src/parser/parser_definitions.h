@@ -51,6 +51,7 @@ class TimeTableResultItem : public QObject
     Q_PROPERTY(QString platform READ platform WRITE setPlatform)
     Q_PROPERTY(qreal longitude READ longitude WRITE setLongitude)
     Q_PROPERTY(qreal latitude READ latitude WRITE setLatitude)
+    Q_PROPERTY(QString miscInfo READ miscInfo WRITE setMiscInfo)
 
     public:
         QString stationName() const;
@@ -67,6 +68,8 @@ class TimeTableResultItem : public QObject
         void setLongitude(qreal);
         qreal latitude();
         void setLatitude(qreal);
+        QString miscInfo() const;
+        void setMiscInfo(const QString &);
     private:
         QString m_stationName;
         QString m_trainType;
@@ -75,6 +78,7 @@ class TimeTableResultItem : public QObject
         QString m_platform;
         qreal m_longitude;
         qreal m_latitude;
+        QString m_miscInfo;
 };
 
 class TimeTableResultList : public QObject

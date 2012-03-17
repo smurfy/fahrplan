@@ -93,6 +93,16 @@ void TimeTableResultItem::setLatitude(qreal latitude)
     m_latitude = latitude;
 }
 
+QString TimeTableResultItem::miscInfo() const
+{
+    return m_miscInfo;
+}
+
+void TimeTableResultItem::setMiscInfo(const QString &miscInfo)
+{
+    m_miscInfo = miscInfo;
+}
+
 //------------- TimeTableResultList
 
 qreal TimeTableResultList::itemcount()
