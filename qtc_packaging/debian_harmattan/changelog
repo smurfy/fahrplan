@@ -1,3 +1,9 @@
+fahrplan2 (2.0.8) unstable; urgency=low
+  * Optimized UI for PR1.2
+  * Added display of realtime tracking infos in result and departure montitor
+  
+ -- smurfy <maemo@smurfy.de> Sun, 18 Mar 2012 15:00:00 +0200
+
 fahrplan2 (2.0.7) unstable; urgency=low
   * Added NRI backend for norway
   * Added german translation
