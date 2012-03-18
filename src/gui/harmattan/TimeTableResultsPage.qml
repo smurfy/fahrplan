@@ -79,7 +79,7 @@ Page {
         Item {
             id: delegateItem
             width: listView.width
-            height: 40 + lbl_destination.height + lbl_station.height
+            height: 40 + lbl_destination.height + lbl_station.height + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
 
             Rectangle {
                 anchors.fill: parent
@@ -140,6 +140,22 @@ Page {
                         text: stationplatform
                         width: ((parent.width  - 40) / 3) * 2
                     }
+
+
+                    Label {
+                        id: lbl_miscinfo_title
+                        visible: (miscInfo == "") ? false : true
+                        text: ""
+                        width: (parent.width  - 40) / 3
+                    }
+
+                    Label {
+                        id: lbl_miscinfo
+                        visible: (miscInfo == "") ? false : true
+                        text: miscInfo
+                        width: ((parent.width  - 40) / 3)  * 2
+                        font.bold: true
+                    }
                 }
 
 
@@ -183,6 +199,7 @@ Page {
                     "trainType": item.trainType,
                     "destination": dirlabel + item.destinationName,
                     "stationplatform": stationplatform,
+                    "miscInfo": item.miscInfo,
                     "itemNum" : i
                 });
             }

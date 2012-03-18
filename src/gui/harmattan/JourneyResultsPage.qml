@@ -250,6 +250,7 @@ Page {
                     visible: (miscInfo == "") ? false : true
                     text: miscInfo
                     width: parent.width - 40
+                    font.bold: true
                 }
 
             }

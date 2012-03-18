@@ -23,7 +23,9 @@
 ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent)
 {
      Q_UNUSED(parent);
-    //http://reiseauskunft.bahn.de/bin/extxml.exe
+
+     //http://reiseauskunft.bahn.de/bin/mgate.exe -- Some stuff is posible via this url but earlier and later func does not work, eg need more testing
+
      baseXmlUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
      baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
      baseUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
@@ -365,7 +367,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
      {
          QString miscInfo = stateResults[i].trimmed();
          if (miscInfo == "+0") {
-             miscInfo = "";
+             miscInfo = tr("On-Time");
          }
          JourneyResultItem *item = new JourneyResultItem();
          item->setDate(date);
