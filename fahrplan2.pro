@@ -11,7 +11,7 @@ exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmat
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-QT += declarative xmlpatterns network
+QT += declarative xmlpatterns network xml
 
 maemo5:QT += maemo5
 
