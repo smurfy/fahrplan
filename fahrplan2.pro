@@ -38,6 +38,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmlsbbch.cpp \
     src/parser/parser_xmlrejseplanendk.cpp \
     src/parser/parser_xmloebbat.cpp \
+    src/parser/parser_xmlvasttrafikse.cpp \
     src/parser/parser_131500comau.cpp \
     src/fahrplan.cpp \
     src/fahrplan_backend_manager.cpp \
@@ -121,6 +122,7 @@ HEADERS += \
     src/parser/parser_xmlsbbch.h \
     src/parser/parser_xmlrejseplanendk.h \
     src/parser/parser_xmloebbat.h \
+    src/parser/parser_xmlvasttrafikse.h \
     src/parser/parser_131500comau.h \
     src/fahrplan.h \
     src/fahrplan_backend_manager.h \
