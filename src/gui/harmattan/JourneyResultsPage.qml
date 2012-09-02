@@ -27,7 +27,6 @@ Page {
             Label {
                 id: journeyStations
                 text: ""
-                font.bold: true
                 font.pixelSize: 30
                 anchors {
                     left: parent.left
@@ -269,9 +268,7 @@ Page {
 
             searchIndicatorVisible = false;
 
-            journeyStations.text = result.departureStation +
-                    qsTr(" to ") +
-                    result.arrivalStation;
+            journeyStations.text = qsTr("<b>%1</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation)
 
             journeyDate.text = result.timeInfo;
 

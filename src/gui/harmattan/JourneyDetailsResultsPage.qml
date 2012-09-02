@@ -30,7 +30,6 @@ Page {
             Label {
                 id: journeyStations
                 text: ""
-                font.bold: true
                 font.pixelSize: 30
                 anchors {
                     left: parent.left
@@ -318,7 +317,7 @@ Page {
             console.log(result.count);
 
             if (result.count > 0) {
-                journeyStations.text = qsTr("%1 to %2").arg(result.departureStation).arg(result.arrivalStation);
+                journeyStations.text = qsTr("<b>%1</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation);
                 var departureDate = Qt.formatDate(result.departureDateTime);
                 var arrivalDate = Qt.formatDate(result.arrivalDateTime);
 

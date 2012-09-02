@@ -220,7 +220,7 @@ Page {
                         rightMargin: 50
                         verticalCenter: parent.verticalCenter
                     }
-                    width: parent.width / 2
+                    width: parent.width * 2 / 3
                     Button {
                         id: modeDep
                         text: qsTr("Departure")
@@ -246,7 +246,7 @@ Page {
                 id: timetableSearch
                 text: modeDep.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
-                    topMargin: 10
+                    topMargin: 20
                     horizontalCenter: parent.horizontalCenter
                 }
 
@@ -292,7 +292,7 @@ Page {
                 id: startSearch
                 text: qsTr("Start search")
                 anchors {
-                    topMargin: 10
+                    topMargin: 20
                     horizontalCenter: parent.horizontalCenter
                 }
 
@@ -314,7 +314,7 @@ Page {
                         viaStation = "";
                     }
 
-                    resultsPage.journeyStationsTitleText = departureButton.subTitleText + qsTr(" to ") +  arrivalButton.subTitleText;
+                    resultsPage.journeyStationsTitleText = qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText);
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
@@ -444,6 +444,7 @@ Page {
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
         fields: DateTime.Hours | DateTime.Minutes
+        hourMode: DateTime.TwentyFourHours // FIXME should set through i18n
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
             timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
@@ -464,7 +465,7 @@ Page {
             ToolButton {
                 id: searchMode0Toggle
                 platformStyle: TabButtonStyle{}
-                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train.png";
+                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train.svg";
                 onClicked: {
                     searchmode = 0;
                     updateButtonVisibility();
@@ -474,21 +475,21 @@ Page {
                 checked: true
             }
             ToolButton {
-                    id: searchMode1Toggle
-                    platformStyle: TabButtonStyle{}
-                    iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock.png";
-                    onClicked: {
-                        searchmode = 1;
-                        updateButtonVisibility();
-                    }
-                    flat: true
-                    checkable: true
-                    checked: false
+                id: searchMode1Toggle
+                platformStyle: TabButtonStyle{}
+                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock.svg";
+                onClicked: {
+                    searchmode = 1;
+                    updateButtonVisibility();
                 }
+                flat: false
+                checkable: true
+                checked: false
+            }
         }
         ToolIcon {
             id : aboutIcon;
-            iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-help.png";
+            iconId: "toolbar-settings";
             onClicked: {
                 pageStack.push(aboutPage);
             }
