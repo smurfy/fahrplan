@@ -36,6 +36,7 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(ParserXmlSbbCh::getName());
     result.append(Parser131500ComAu::getName());
     result.append(ParserXmlNri::getName());
+    result.append(ParserXmlVasttrafikSe::getName());
     return result;
 }
 
@@ -77,6 +78,9 @@ void FahrplanBackendManager::setParser(int index)
             break;
         case 5:
             m_parser = new ParserXmlNri();
+            break;
+        case 6:
+            m_parser = new ParserXmlVasttrafikSe();
             break;
     }
 
