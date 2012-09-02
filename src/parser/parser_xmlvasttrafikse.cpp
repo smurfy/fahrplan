@@ -1,6 +1,7 @@
 /*******************************************************************************
 
     This file is a part of Fahrplan for maemo 2009-2012
+    Contributed by Thomas Fischer <fischer@unix-ag.uni-kl.de>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
