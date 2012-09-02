@@ -247,7 +247,6 @@ Page {
                 text: modeDep.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
                     topMargin: 10
-                    top: trainrestrictionsButton.bottom
                     horizontalCenter: parent.horizontalCenter
                 }
 
@@ -294,7 +293,6 @@ Page {
                 text: qsTr("Start search")
                 anchors {
                     topMargin: 10
-                    top: trainrestrictionsButton.bottom
                     horizontalCenter: parent.horizontalCenter
                 }
 
