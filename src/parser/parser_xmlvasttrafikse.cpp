@@ -26,6 +26,7 @@
 QMap<QString, qulonglong> cachedStationNameToId;
 QMap<qulonglong, qreal> cachedStationIdToLongitude;
 QMap<qulonglong, qreal> cachedStationIdToLatitude;
+QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
 
 QString timeTableForStationStationName;
 QString timeTableForStationDirectionStationName;
@@ -42,6 +43,9 @@ QTime searchJourneyTime;
 int searchJourneyMode;
 int searchJourneyTrainrestrictions;
 
+
+#define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
+
 ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
     : ParserAbstract(parent), apiKey(QLatin1String("47c5abaf-49d6-4c23-a1bd-b2e2766c4de7")), baseRestUrl(QLatin1String("http://api.vasttrafik.se/bin/rest.exe/v1/"))
 {
@@ -55,19 +59,14 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(QString stationName, QString 
     Q_UNUSED(mode);
     Q_UNUSED(trainrestrictions);
 
-    if (currentRequestState != FahrplanNS::noneRequest) {
+    if (currentRequestState != FahrplanNS::noneRequest)
         return;
-    }
-
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
-
-    qWarning() << "getTimeTableForStation stationName=" << stationName;
 
     timeTableForStationStationName = QString::null;
     qulonglong stationId = cachedStationNameToId.value(stationName, 0);
 
     if (stationId == 0) {
-		   qWarning() << "station" << stationName << "is not cached yet";
         timeTableForStationStationName = stationName;
         timeTableForStationDirectionStationName = directionStationName;
         timeTableForStationDate = date;
@@ -76,56 +75,45 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(QString stationName, QString 
         timeTableForStationTrainrestrictions = trainrestrictions;
         currentRequestState = FahrplanNS::noneRequest;
         findStationsByName(stationName);
-		return;
-	}
+        return;
+    }
 
-        QUrl url(baseRestUrl + QLatin1String("departureBoard"));
-        url.addQueryItem("authKey", apiKey);
-        url.addQueryItem("format", "xml");
-        url.addQueryItem("date", date.toString("yyyy-MM-dd"));
-        url.addQueryItem("time", time.toString("hh:mm"));
-        url.addQueryItem("id", QString::number(stationId));
-        url.addQueryItem("useVas", "1");
-        url.addQueryItem("useLDTrain", "0");
-        url.addQueryItem("useRegTrain", "1");
-        url.addQueryItem("useBus", "1");
-        url.addQueryItem("useBoat", "1");
-        url.addQueryItem("useTram", "1");
-        url.addQueryItem("excludeDR", "1");
+    QUrl url(baseRestUrl + QLatin1String("departureBoard"));
+    url.addQueryItem("authKey", apiKey);
+    url.addQueryItem("format", "xml");
+    url.addQueryItem("date", date.toString("yyyy-MM-dd"));
+    url.addQueryItem("time", time.toString("hh:mm"));
+    url.addQueryItem("id", QString::number(stationId));
+    url.addQueryItem("useVas", "1");
+    url.addQueryItem("useLDTrain", "0");
+    url.addQueryItem("useRegTrain", "1");
+    url.addQueryItem("useBus", "1");
+    url.addQueryItem("useBoat", "1");
+    url.addQueryItem("useTram", "1");
+    url.addQueryItem("excludeDR", "1");
 
-qWarning()<<"Requesting"<<url.toString();
-      sendHttpRequest(url);
-
+    sendHttpRequest(url);
 }
 
 void ParserXmlVasttrafikSe::findStationsByName(QString stationName)
 {
-    if (currentRequestState != FahrplanNS::noneRequest) {
+    if (currentRequestState != FahrplanNS::noneRequest)
         return;
-    }
-
     currentRequestState = FahrplanNS::stationsByNameRequest;
-
-    qWarning() << "findStationsByName stationName=" << stationName;
 
     QUrl url(baseRestUrl + QLatin1String("location.name"));
     url.addQueryItem("authKey", apiKey);
     url.addQueryItem("format", "xml");
     url.addQueryItem("input", stationName);
 
-	qWarning()<<"Requesting"<<url.toString();
     sendHttpRequest(url);
 }
 
 void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
-    if (currentRequestState != FahrplanNS::noneRequest) {
+    if (currentRequestState != FahrplanNS::noneRequest)
         return;
-    }
-
     currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
-
-    qWarning() << "findStationsByCoordinates longitude=" << longitude << "  latitude=" << latitude;
 
     QUrl url(baseRestUrl + QLatin1String("location.nearbystops"));
     url.addQueryItem("authKey", apiKey);
@@ -139,10 +127,8 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
 
 void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
 {
-    if (currentRequestState != FahrplanNS::noneRequest) {
+    if (currentRequestState != FahrplanNS::noneRequest)
         return;
-    }
-
     currentRequestState = FahrplanNS::searchJourneyRequest;
 
     searchJourneyDepartureStation = QString::null;
@@ -156,7 +142,6 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
         searchJourneyTime = time;
         searchJourneyMode = mode;
         searchJourneyTrainrestrictions = trainrestrictions;
-        qWarning() << "Requesting id for departure" << departureStation;
         currentRequestState = FahrplanNS::noneRequest;
         findStationsByName(departureStation);
         return;
@@ -173,7 +158,6 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
             searchJourneyTime = time;
             searchJourneyMode = mode;
             searchJourneyTrainrestrictions = trainrestrictions;
-            qWarning() << "Requesting id for via" << viaStation;
             currentRequestState = FahrplanNS::noneRequest;
             findStationsByName(viaStation);
             return;
@@ -189,13 +173,10 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
         searchJourneyTime = time;
         searchJourneyMode = mode;
         searchJourneyTrainrestrictions = trainrestrictions;
-        qWarning() << "Requesting id for arrival" << arrivalStation;
         currentRequestState = FahrplanNS::noneRequest;
         findStationsByName(arrivalStation);
         return;
     }
-
-    qWarning() << "searchJourney from=" << departureStation<<departureStationId << " via=" << viaStation<<viaStationId << " to=" << arrivalStation<<arrivalStationId;
 
     QUrl url(baseRestUrl + QLatin1String("trip"));
     url.addQueryItem("authKey", apiKey);
@@ -215,8 +196,16 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
     url.addQueryItem("excludeDR", "1");
     url.addQueryItem("numTrips", "5");
 
-	qWarning()<<"Requesting"<<url.toString();
     sendHttpRequest(url);
+}
+
+void ParserXmlVasttrafikSe::getJourneyDetails(QString id)
+{
+    if (currentRequestState != FahrplanNS::noneRequest)
+        return;
+    currentRequestState = FahrplanNS::journeyDetailsRequest;
+
+    emit journeyDetailsResult(cachedJourneyDetails.value(id, NULL));
 }
 
 bool ParserXmlVasttrafikSe::supportsGps()
@@ -250,25 +239,23 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList locationList = doc.elementsByTagName("StopLocation");
         for (unsigned int i = 0; i < locationList.length(); ++i) {
-            QDomNamedNodeMap attributes = locationList.item(i).attributes();
+            QDomNode locationNode = locationList.item(i);
             StationsResultItem *item = new StationsResultItem();
-            const QString stationName = attributes.namedItem("name").toAttr().value();
+            const QString stationName = getAttribute(locationNode, "name");
             item->setStationName(stationName);
-            qreal longitude = attributes.namedItem("lon").toAttr().value().toFloat();
+            qreal longitude = getAttribute(locationNode, "lon").toFloat();
             item->setLongitude(longitude);
-            qreal latitude = attributes.namedItem("lat").toAttr().value().toFloat();
+            qreal latitude = getAttribute(locationNode, "lat").toFloat();
             item->setLatitude(latitude);
 
             result.appendItem(item);
 
-            qulonglong id = attributes.namedItem("id").toAttr().value().toULongLong();
+            qulonglong id = getAttribute(locationNode, "id").toULongLong();
             cachedStationNameToId[stationName] = id;
             cachedStationIdToLongitude[id] = longitude;
             cachedStationIdToLatitude[id] = latitude;
         }
     }
-
-    qWarning() << "got" << result.itemcount() << "stations";
 
     if (!timeTableForStationStationName.isEmpty()) {
         getTimeTableForStation(timeTableForStationStationName, timeTableForStationDirectionStationName, timeTableForStationDate, timeTableForStationTime, timeTableForStationMode, timeTableForStationTrainrestrictions);
@@ -295,15 +282,15 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList departureNodeList = doc.elementsByTagName("Departure");
         for (unsigned int i = 0; i < departureNodeList.length(); ++i) {
-            QDomNamedNodeMap attributes = departureNodeList.item(i).attributes();
+            QDomNode departureNode = departureNodeList.item(i);
             TimeTableResultItem *item = new TimeTableResultItem();
 
-            const QString stationName = attributes.namedItem("stop").toAttr().value();
+            const QString stationName = getAttribute(departureNode, "stop");
             qulonglong stationId = cachedStationNameToId.value(stationName, 0);
-            item->setDestinationName(attributes.namedItem("direction").toAttr().value());
-            item->setPlatform(attributes.namedItem("track").toAttr().value());
-            item->setTrainType(attributes.namedItem("name").toAttr().value());
-            item->setTime(QTime::fromString(attributes.namedItem("time").toAttr().value(), QLatin1String("hh:mm")));
+            item->setDestinationName(getAttribute(departureNode, "direction"));
+            item->setPlatform(getAttribute(departureNode, "track"));
+            item->setTrainType(getAttribute(departureNode, "name"));
+            item->setTime(QTime::fromString(getAttribute(departureNode, "time"), QLatin1String("hh:mm")));
             if (stationId > 0) {
                 item->setLongitude(cachedStationIdToLongitude[stationId]);
                 item->setLatitude(cachedStationIdToLatitude[stationId]);
@@ -313,58 +300,97 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
         }
     }
 
-    qWarning() << "got" << result->itemcount() << "departures";
     emit timeTableResult(result);
 }
 
 void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 {
     JourneyResultList *journeyResultList = new JourneyResultList();
+
+    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetails.begin(); it != cachedJourneyDetails.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedJourneyDetails.erase(it);
+        delete jdrl;
+    }
+
     QTextStream ts(networkReply->readAll());
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
-
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList tripNodeList = doc.elementsByTagName("Trip");
         for (unsigned int i = 0; i < tripNodeList.length(); ++i) {
             JourneyResultItem *jritem = new JourneyResultItem();
+            JourneyDetailResultList *detailsList = new JourneyDetailResultList();
             QDateTime journeyStart = QDateTime::currentDateTime();
             QDateTime journeyEnd = QDateTime::currentDateTime();
 
             QDomNodeList legNodeList = tripNodeList.item(i).childNodes();
+            int numStops = 0;
             for (unsigned int j = 0; j < legNodeList.length(); ++j) {
-                QDomNode originNode = legNodeList.item(j).namedItem("Origin");
-                QDomNode destinationNode = legNodeList.item(j).namedItem("Destination");
-                QDomNamedNodeMap attributes = legNodeList.item(j).attributes();
+                QDomNode legNode = legNodeList.item(j);
+                QDomNode originNode = legNode.namedItem("Origin");
+                QDomNode destinationNode = legNode.namedItem("Destination");
                 if (j == 0) {
-                    journeyStart.setDate(QDate::fromString(originNode.attributes().namedItem("date").toAttr().value(), QLatin1String("yyyy-mm-dd")));
+                    journeyStart.setDate(QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-mm-dd")));
                     journeyEnd.setDate(journeyStart.date());
-                    journeyStart.setTime(QTime::fromString(originNode.attributes().namedItem("time").toAttr().value(), "hh:mm"));
+                    journeyStart.setTime(QTime::fromString(getAttribute(originNode, "time"), "hh:mm"));
                     if (i == 0)
-                        journeyResultList->setDepartureStation(originNode.attributes().namedItem("name").toAttr().value());
+                        journeyResultList->setDepartureStation(getAttribute(originNode, "name"));
                 }
                 if (j == legNodeList.length() - 1) {
-                    journeyEnd.setTime(QTime::fromString(destinationNode.attributes().namedItem("time").toAttr().value(), "hh:mm"));
+                    journeyEnd.setTime(QTime::fromString(getAttribute(destinationNode, "time"), "hh:mm"));
                     if (i == 0)
-                        journeyResultList->setArrivalStation(destinationNode.attributes().namedItem("name").toAttr().value());
+                        journeyResultList->setArrivalStation(getAttribute(destinationNode, "name"));
                 }
 
+                if (getAttribute(legNode, "type") != QLatin1String("WALK") || getAttribute(originNode, "name") != getAttribute(destinationNode, "name"))
+                    ++numStops;
+
+                JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem();
+                jdrItem->setDepartureStation(getAttribute(originNode, "name"));
+                const QString depTrack = getAttribute(originNode, "track");
+                jdrItem->setDepartureInfo(depTrack.isEmpty() ? QChar(0x2014) : tr("Track %1").arg(depTrack));
+                jdrItem->setDepartureDateTime(QDateTime::fromString(getAttribute(originNode, "date") + getAttribute(originNode, "time"), "yyyy-MM-ddhh:mm"));
+                jdrItem->setArrivalStation(getAttribute(destinationNode, "name"));
+                const QString arrTrack = getAttribute(destinationNode, "track");
+                jdrItem->setArrivalInfo(arrTrack.isEmpty() ? QChar(0x2014) : tr("Track %1").arg(arrTrack));
+                jdrItem->setArrivalDateTime(QDateTime::fromString(getAttribute(destinationNode, "date") + getAttribute(destinationNode, "time"), "yyyy-MM-ddhh:mm"));
+                const QString direction = getAttribute(legNode, "direction");
+                if (!direction.isEmpty())
+                    jdrItem->setInfo(tr("to %1").arg(direction));
+                if (getAttribute(legNode, "type") == QLatin1String("WALK"))
+                    jdrItem->setTrain(tr("Walk"));
+                else
+                    jdrItem->setTrain(getAttribute(legNode, "name"));
+                jdrItem->setInternalData1("NO setInternalData1");
+                jdrItem->setInternalData2("NO setInternalData2");
+                detailsList->appendItem(jdrItem);
             }
+            --numStops;
 
             if (journeyStart.time() > journeyEnd.time())
                 journeyEnd.addDays(1);
             jritem->setDate(journeyStart.date());
-            jritem->setDepartureTime(journeyStart.time().toString());
-            jritem->setArrivalTime(journeyEnd.time().toString());
-            uint diffTime = journeyEnd.toTime_t() - journeyStart.toTime_t();
-// FIXME            jritem->setDuration(journeyStart.toString()+" "+journeyEnd.toString());
-			jritem->setDuration(QLatin1String("FIXME"));
+            jritem->setDepartureTime(journeyStart.time().toString("hh:mm"));
+            jritem->setArrivalTime(journeyEnd.time().toString("hh:mm"));
+            int diffTime = journeyStart.secsTo(journeyEnd);
+            if (diffTime < 0) diffTime += 86400;
+            jritem->setDuration(tr("%1:%2").arg(diffTime / 3600).arg(QString::number(diffTime / 60 % 60), 2, '0'));
             jritem->setTransfers(QString::number(legNodeList.length() - 1));
             journeyResultList->appendItem(jritem);
+
+            const QString id = QString::number(i);
+            jritem->setId(id);
+            detailsList->setId(id);
+            detailsList->setDepartureStation(journeyResultList->departureStation());
+            detailsList->setArrivalStation(journeyResultList->arrivalStation());
+            detailsList->setDuration(jritem->duration());
+            detailsList->setArrivalDateTime(journeyStart);
+            detailsList->setDepartureDateTime(journeyEnd);
+            cachedJourneyDetails[id] = detailsList;
         }
     }
 
-    qWarning() << "got" << journeyResultList->itemcount() << "journeys";
     emit journeyResult(journeyResultList);
 }

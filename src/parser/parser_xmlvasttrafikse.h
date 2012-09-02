@@ -44,7 +44,7 @@ public slots:
     virtual void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
 //     virtual void searchJourneyLater();
 //     virtual void searchJourneyEarlier();
-//     virtual void getJourneyDetails(QString id);
+    virtual void getJourneyDetails(QString id);
     virtual bool supportsGps();
     virtual bool supportsVia();
     virtual bool supportsTimeTable();
