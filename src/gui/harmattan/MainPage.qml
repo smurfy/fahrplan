@@ -640,7 +640,7 @@ Page {
 
             trainrestrictionsModel.clear();
             items = fahrplanBackend.parser.getTrainRestrictions();
-            trainrestrictionsButton.visible = items.length > 0;
+            trainrestrictionsButton.visible = items.length > 1;
             for (i = 0; i < items.length; i++) {
                 trainrestrictionsModel.append({
                     "name" : items[i]

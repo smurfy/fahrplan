@@ -11,7 +11,7 @@ Item {
     signal clicked
     signal pressAndHold
 
-    height: title.height + subTitle.height + 30
+    height: title.height + subTitle.height + 20
     width: parent.width
 
     Rectangle {
@@ -39,7 +39,7 @@ Item {
             left: parent.left
             leftMargin: 10
             rightMargin: 10
-            topMargin: 10
+            topMargin: 7
             top: parent.top
         }
 
@@ -52,7 +52,7 @@ Item {
         id: subTitle
         anchors {
             top:  title.bottom
-            topMargin: 10
+            topMargin: 5
             left: parent.left
             leftMargin: 10
             rightMargin: 10
