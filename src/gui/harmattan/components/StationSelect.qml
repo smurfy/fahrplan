@@ -130,6 +130,25 @@ Page {
             }
         }
 
+        Text {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            height: parent.height - search.top - stationSelectToolbar.height
+            text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
+            color: "DarkGrey"
+            font.pixelSize: 50
+            visible: (stationsFavoritesModel.count == 0 && listView.model == stationsFavoritesModel)
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            anchors {
+                top: search.bottom
+                left: parent.left
+                leftMargin: 20
+                right: parent.right
+                rightMargin: 20
+            }
+        }
+
         ListView {
             id: listView
             anchors {
@@ -142,6 +161,7 @@ Page {
             model: stationsFavoritesModel
             delegate: stationsResultDelegate
             clip: true
+            visible: (stationsFavoritesModel.count > 0 && listView.model == stationsFavoritesModel) || listView.model == stationsResultModel
         }
     }
 
