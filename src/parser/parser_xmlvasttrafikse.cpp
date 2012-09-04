@@ -387,7 +387,6 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                 jdrItem->setInternalData2("NO setInternalData2");
                 detailsList->appendItem(jdrItem);
             }
-            --numStops;
 
             if (journeyStart.time() > journeyEnd.time())
                 journeyEnd.addDays(1);
