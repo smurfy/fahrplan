@@ -377,8 +377,12 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                     jdrItem->setInfo(tr("to %1").arg(direction));
                 if (getAttribute(legNode, "type") == QLatin1String("WALK"))
                     jdrItem->setTrain(tr("Walk"));
-                else
-                    jdrItem->setTrain(getAttribute(legNode, "name"));
+                else {
+                    QString connectionLineName = getAttribute(legNode, "name");
+                    // Internationalization
+                    connectionLineName = connectionLineName.replace(QLatin1String("Buss"), tr("Bus")).replace(QLatin1String("Expbuss"), tr("Exp Bus")).replace(QLatin1String("EXPRESS"), QLatin1String("EXPR")).replace(QString::fromUtf8("Spårvagn"), tr("Tram")).replace(QString::fromUtf8("Färja"), tr("Ferry"));
+                    jdrItem->setTrain(connectionLineName);
+                }
                 jdrItem->setInternalData1("NO setInternalData1");
                 jdrItem->setInternalData2("NO setInternalData2");
                 detailsList->appendItem(jdrItem);
