@@ -27,6 +27,8 @@ symbian:TARGET.UID3 = 0xE4182966
 # Allow network access on Symbian
 symbian:TARGET.CAPABILITY += NetworkServices
 
+CONFIG += debug
+
 CONFIG += mobility
 MOBILITY += location organizer
 

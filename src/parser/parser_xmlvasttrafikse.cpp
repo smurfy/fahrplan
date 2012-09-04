@@ -19,6 +19,8 @@
 
 */
 
+#include <QDebug>
+
 #include <QtXml/QDomDocument>
 
 #include "parser_xmlvasttrafikse.h"
@@ -97,6 +99,8 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(QString stationName, QString 
 
 void ParserXmlVasttrafikSe::findStationsByName(QString stationName)
 {
+    qDebug() << "ParserXmlVasttrafikSe::findStationsByName(stationName" << stationName << ")";
+
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::stationsByNameRequest;
@@ -111,6 +115,8 @@ void ParserXmlVasttrafikSe::findStationsByName(QString stationName)
 
 void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
+    qDebug() << "ParserXmlVasttrafikSe::findStationsByCoordinates(longitude=" << longitude << ", latitude=" << latitude << ")";
+
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
@@ -127,6 +133,8 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
 
 void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
 {
+    qDebug() << "ParserXmlVasttrafikSe::searchJourney(departureStation=" << departureStation << ", arrivalStation=" << arrivalStation << ", viaStation=" << viaStation << ", date=" << date.toString() << ", time=" << time.toString() << ", mode=" << mode << ", trainrestrictions=" << trainrestrictions << ")";
+
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::searchJourneyRequest;
@@ -201,6 +209,8 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
 
 void ParserXmlVasttrafikSe::getJourneyDetails(QString id)
 {
+    qDebug() << "ParserXmlVasttrafikSe::getJourneyDetails(id=" << id << ")";
+
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::journeyDetailsRequest;
@@ -230,6 +240,8 @@ bool ParserXmlVasttrafikSe::supportsTimeTableDirection()
 
 void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
 {
+    qDebug() << "ParserXmlVasttrafikSe::parseStationsByName(networkReply.url()=" << networkReply->url().toString() << ")";
+
     StationsResultList result;
     QTextStream ts(networkReply->readAll());
     ts.setCodec("UTF-8");
@@ -268,11 +280,14 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
 
 void ParserXmlVasttrafikSe::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
+    qDebug() << "ParserXmlVasttrafikSe::parseStationsByCoordinates(networkReply.url()=" << networkReply->url().toString() << ")";
     parseStationsByName(networkReply);
 }
 
 void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
 {
+    qDebug() << "ParserXmlVasttrafikSe::parseTimeTable(networkReply.url()=" << networkReply->url().toString() << ")";
+
     TimeTableResultList *result = new TimeTableResultList();
     QTextStream ts(networkReply->readAll());
     ts.setCodec("UTF-8");
@@ -305,6 +320,8 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
 
 void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 {
+    qDebug() << "ParserXmlVasttrafikSe::parseSearchJourney(networkReply.url()=" << networkReply->url().toString() << ")";
+
     JourneyResultList *journeyResultList = new JourneyResultList();
 
     for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetails.begin(); it != cachedJourneyDetails.end();) {
