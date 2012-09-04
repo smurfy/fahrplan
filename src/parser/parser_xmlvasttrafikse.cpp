@@ -213,7 +213,6 @@ void ParserXmlVasttrafikSe::getJourneyDetails(QString id)
 
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
-    currentRequestState = FahrplanNS::journeyDetailsRequest;
 
     emit journeyDetailsResult(cachedJourneyDetails.value(id, NULL));
 }
