@@ -63,7 +63,7 @@ bool ParserHafasXml::supportsTimeTableDirection()
     return false;
 }
 
-void ParserHafasXml::getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -338,18 +338,19 @@ void ParserHafasXml::parseTimeTableMode0Part2(QNetworkReply *networkReply)
     emit timeTableResult(result);
 }
 
-void ParserHafasXml::findStationsByName(QString stationName)
+void ParserHafasXml::findStationsByName(const QString &stationName)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
     }
 
     currentRequestState = FahrplanNS::stationsByNameRequest;
-    stationName.replace("\"", "");
+    QString internalStationName = stationName;
+    internalStationName.replace("\"", "");
 
     QByteArray postData = "";
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\"><MLcReq><MLc n=\"");
-    postData.append(stationName);
+    postData.append(internalStationName);
     postData.append("\" t=\"ST\" /></MLcReq></ReqC>");
 
     sendHttpRequest(QUrl(baseXmlUrl), postData);
@@ -393,7 +394,7 @@ void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)
     emit stationsResult(result);
 }
 
-StationsResultList* ParserHafasXml::internalParseStationsByName(QString data)
+StationsResultList* ParserHafasXml::internalParseStationsByName(const QString &data)
 {
     StationsResultList *result = new StationsResultList();
 
@@ -459,7 +460,7 @@ QStringList ParserHafasXml::getTrainRestrictions()
     return result;
 }
 
-void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserHafasXml::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -481,7 +482,7 @@ void ParserHafasXml::searchJourney(QString departureStation, QString arrivalStat
     sendHttpRequest(QUrl(baseXmlUrl), postData);
 }
 
-QByteArray ParserHafasXml::getStationsExternalIds(QString departureStation, QString arrivalStation, QString viaStation)
+QByteArray ParserHafasXml::getStationsExternalIds(const QString &departureStation, const QString &arrivalStation, const QString &viaStation)
 {
     QByteArray postData = "";
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
@@ -865,7 +866,7 @@ void ParserHafasXml::parseSearchEalierJourney(QNetworkReply *networkReply)
     parseSearchJourneyPart2(networkReply);
 }
 
-void ParserHafasXml::getJourneyDetails(QString id)
+void ParserHafasXml::getJourneyDetails(const QString &id)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -1143,7 +1144,7 @@ void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)
     emit journeyDetailsResult(results);
 }
 
-QDateTime ParserHafasXml::cleanHafasDateTime(QString time, QDate date)
+QDateTime ParserHafasXml::cleanHafasDateTime(const QString &time, QDate date)
 {
     QDateTime result;
     result.setDate(date);
@@ -1160,7 +1161,7 @@ QDateTime ParserHafasXml::cleanHafasDateTime(QString time, QDate date)
     return result;
 }
 
-QString ParserHafasXml::cleanHafasDate(QString time)
+QString ParserHafasXml::cleanHafasDate(const QString &time)
 {
     QRegExp tmpRegexp = QRegExp("(\\d\\d)d(\\d\\d):(\\d\\d):(\\d\\d)");
     tmpRegexp.setMinimal(true);

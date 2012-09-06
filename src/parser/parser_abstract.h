@@ -36,13 +36,13 @@ public:
     virtual QString name() { return "Abstract"; }
 
 public slots:
-    virtual void getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions);
-    virtual void findStationsByName(QString stationName);
+    virtual void getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions);
+    virtual void findStationsByName(const QString &stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
-    virtual void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
+    virtual void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions);
     virtual void searchJourneyLater();
     virtual void searchJourneyEarlier();
-    virtual void getJourneyDetails(QString id);
+    virtual void getJourneyDetails(const QString &id);
     virtual bool supportsGps();
     virtual bool supportsVia();
     virtual bool supportsTimeTable();

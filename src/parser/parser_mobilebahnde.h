@@ -52,10 +52,10 @@ public:
     QString name() { return "bahn.de"; }
 
 public slots:
-    void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
+    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
-    void getJourneyDetails(QString id);
+    void getJourneyDetails(const QString &id);
     bool supportsGps();
     bool supportsVia();
     bool supportsTimeTable();
@@ -75,8 +75,8 @@ private:
     ParserHafasXmlJourneyDetailRequestData journeyDetailRequestData;
     void parseSearchJourneyCheckForId(QNetworkReply *networkReply);
     QString getTrainRestrictionsCodes(int trainrestrictions);
-    void parseSearchJourneyPart1(QString data);
-    void parseSearchJourneyPart2(QString data);
+    void parseSearchJourneyPart1(const QString &data);
+    void parseSearchJourneyPart2(const QString &data);
 };
 
 #endif // PARSER_MOBILEBAHNDE_H

@@ -73,7 +73,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
     return trainrestr;
 }
 
- void ParserMobileBahnDe::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+ void ParserMobileBahnDe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
  {
      if (currentRequestState != FahrplanNS::noneRequest) {
          return;
@@ -121,19 +121,20 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
      }
  }
 
- void ParserMobileBahnDe::parseSearchJourneyPart1(QString data)
+ void ParserMobileBahnDe::parseSearchJourneyPart1(const QString &data)
  {
      //Remove misformed html
      QRegExp ahrefReg = QRegExp("class=\"arrowlink\" href=\"(.*)\"");
      ahrefReg.setMinimal(true);
-     data.replace(ahrefReg, "");
+     QString internalData = data;
+     internalData.replace(ahrefReg, "");
 
      //Check if we need do a search by id, sometimes the search for the exact name
      //returns a selectbox again, so we check for it and if there are selectboxes
      //we search by the ids we get as response
 
      QBuffer readBuffer;
-     readBuffer.setData(data.toAscii());
+     readBuffer.setData(internalData.toAscii());
      readBuffer.open(QIODevice::ReadOnly);
 
      QXmlQuery query;
@@ -249,21 +250,22 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
 
          sendHttpRequest(QUrl(formUrl[0].trimmed()), postData.toAscii());
      } else {
-         parseSearchJourneyPart2(data);
+         parseSearchJourneyPart2(internalData);
      }
  }
 
- void ParserMobileBahnDe::parseSearchJourneyPart2(QString data)
+ void ParserMobileBahnDe::parseSearchJourneyPart2(const QString &data)
 {
      //Remove misformed html
      QRegExp ahrefReg = QRegExp("class=\"arrowlink\" href=\"(.*)\"");
      ahrefReg.setMinimal(true);
-     data.replace(ahrefReg, "");
+     QString internalData = data;
+     internalData.replace(ahrefReg, "");
 
-     data.replace("<img src=\"/v/760/img/achtung_rot_16x16.gif\" />", "<img src=\"/v/760/img/achtung_rot_16x16.gif\" />" + tr("Warning"));
+     internalData.replace("<img src=\"/v/760/img/achtung_rot_16x16.gif\" />", "<img src=\"/v/760/img/achtung_rot_16x16.gif\" />" + tr("Warning"));
 
      QBuffer readBuffer;
-     readBuffer.setData(data.toAscii());
+     readBuffer.setData(internalData.toAscii());
      readBuffer.open(QIODevice::ReadOnly);
 
      QXmlQuery query;
@@ -431,7 +433,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
     parseSearchJourneyPart2(networkReply->readAll());
  }
 
- void ParserMobileBahnDe::getJourneyDetails(QString id)
+ void ParserMobileBahnDe::getJourneyDetails(const QString &id)
  {
      if (currentRequestState != FahrplanNS::noneRequest) {
          return;

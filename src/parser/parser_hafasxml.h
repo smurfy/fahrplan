@@ -75,13 +75,13 @@ public:
     QString name() { return "HafasXML"; }
 
 public slots:
-    void getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions);
-    void findStationsByName(QString stationName);
+    void getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions);
+    void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
+    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
-    void getJourneyDetails(QString id);
+    void getJourneyDetails(const QString &id);
     bool supportsGps();
     bool supportsVia();
     bool supportsTimeTable();
@@ -102,7 +102,7 @@ protected:
     void parseSearchEalierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
 
-    StationsResultList* internalParseStationsByName(QString data);
+    StationsResultList* internalParseStationsByName(const QString &data);
 
 private:
     QString conResCtxt;
@@ -112,9 +112,9 @@ private:
     ParserHafasXmlGetTimeTableForStationRequestData getTimeTableForStationRequestData;
     QList<JourneyDetailResultList*> journeyDetailInlineData;
     QString getTrainRestrictionsCodes(int trainrestrictions);
-    QString cleanHafasDate(QString time);
-    QDateTime cleanHafasDateTime(QString time, QDate date);
-    QByteArray getStationsExternalIds(QString departureStation, QString arrivalStation, QString viaStation);
+    QString cleanHafasDate(const QString &time);
+    QDateTime cleanHafasDateTime(const QString &time, QDate date);
+    QByteArray getStationsExternalIds(const QString &departureStation, const QString &arrivalStation, const QString &viaStation);
     ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
     void parseSearchJourneyPart1(QNetworkReply *networkReply);
     void parseSearchJourneyPart2(QNetworkReply *networkReply);

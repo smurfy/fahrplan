@@ -34,12 +34,12 @@ public:
     static QString getName() { return "131500.com.au"; }
     QString name() { return "131500.com.au"; }
 public slots:
-    void findStationsByName(QString stationName);
+    void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions);
+    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions);
 //    void searchJourneyLater();
 //    void searchJourneyEarlier();
-    void getJourneyDetails(QString id);
+    void getJourneyDetails(const QString &id);
     bool supportsGps();
     bool supportsVia();
     QStringList getTrainRestrictions();

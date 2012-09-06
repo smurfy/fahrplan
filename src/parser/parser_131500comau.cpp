@@ -47,7 +47,7 @@ QStringList Parser131500ComAu::getTrainRestrictions()
     return result;
 }
 
-void Parser131500ComAu::findStationsByName(QString stationName)
+void Parser131500ComAu::findStationsByName(const QString &stationName)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -107,7 +107,7 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     emit stationsResult(&result);
 }
 
-void Parser131500ComAu::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+void Parser131500ComAu::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -332,7 +332,7 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
     emit journeyResult(lastJourneyResultList);
 }
 
-void Parser131500ComAu::getJourneyDetails(QString id)
+void Parser131500ComAu::getJourneyDetails(const QString &id)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
