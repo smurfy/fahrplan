@@ -33,7 +33,7 @@ QStringList FahrplanFavoritesManager::getFavorites()
     return favorites;
 }
 
-void FahrplanFavoritesManager::addFavorite(QString name)
+void FahrplanFavoritesManager::addFavorite(const QString &name)
 {
     if (!isFavorite(name)) {
         favorites.append(name);
@@ -44,7 +44,7 @@ void FahrplanFavoritesManager::addFavorite(QString name)
     }
 }
 
-void FahrplanFavoritesManager::removeFavorite(QString name)
+void FahrplanFavoritesManager::removeFavorite(const QString &name)
 {
     if (isFavorite(name)) {
         int index = favorites.indexOf(name);
@@ -55,7 +55,7 @@ void FahrplanFavoritesManager::removeFavorite(QString name)
     }
 }
 
-bool FahrplanFavoritesManager::isFavorite(QString name)
+bool FahrplanFavoritesManager::isFavorite(const QString &name)
 {
     return favorites.contains(name);
 }

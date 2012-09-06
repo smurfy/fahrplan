@@ -45,8 +45,8 @@ class Fahrplan : public QObject
     public slots:
         QStringList getParserList();
         void setParser(int index);
-        void storeSettingsValue(QString key, QString value);
-        QString getSettingsValue(QString key, QString defaultValue);
+        void storeSettingsValue(const QString &key, const QString &value);
+        QString getSettingsValue(const QString &key, const QString &defaultValue);
         void addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
 
     signals:
@@ -54,9 +54,9 @@ class Fahrplan : public QObject
         void parserJourneyResult(JourneyResultList *result);
         void parserJourneyDetailsResult(JourneyDetailResultList *result);
         void parserTimeTableResult(TimeTableResultList *result);
-        void parserErrorOccured(QString msg);
-        void parserChanged(QString name, int index);
-        void favoritesChanged(QStringList favorites);
+        void parserErrorOccured(const QString &msg);
+        void parserChanged(const QString &name, int index);
+        void favoritesChanged(const QStringList &favorites);
         void addCalendarEntryComplete(bool success);
 
     private slots:
@@ -64,9 +64,9 @@ class Fahrplan : public QObject
         void onJourneyResult(JourneyResultList *result);
         void onJourneyDetailsResult(JourneyDetailResultList *result);
         void onTimeTableResult(TimeTableResultList *result);
-        void onErrorOccured(QString msg);
-        void onParserChanged(QString name, int index);
-        void onFavoritesChanged(QStringList favorites);
+        void onErrorOccured(const QString &msg);
+        void onParserChanged(const QString &name, int index);
+        void onFavoritesChanged(const QStringList &favorites);
 
     private:
         static FahrplanBackendManager *m_parser_manager;

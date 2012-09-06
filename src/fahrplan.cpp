@@ -37,16 +37,16 @@ Fahrplan::Fahrplan(QObject *parent) :
         m_favorites_manager = new FahrplanFavoritesManager();
     }
 
-    connect(m_parser_manager, SIGNAL(parserChanged(QString,int)), this, SLOT(onParserChanged(QString, int)));
-    connect(m_favorites_manager, SIGNAL(favoritesChanged(QStringList)), this, SLOT(onFavoritesChanged(QStringList)));
+    connect(m_parser_manager, SIGNAL(parserChanged(const QString &, int)), this, SLOT(onParserChanged(const QString &, int)));
+    connect(m_favorites_manager, SIGNAL(favoritesChanged(const QStringList &)), this, SLOT(onFavoritesChanged(const QStringList &)));
 }
 
-void Fahrplan::storeSettingsValue(QString key, QString value)
+void Fahrplan::storeSettingsValue(const QString &key, const QString &value)
 {
     settings->setValue(key, value);
 }
 
-QString Fahrplan::getSettingsValue(QString key, QString defaultValue)
+QString Fahrplan::getSettingsValue(const QString &key, const QString &defaultValue)
 {
     return settings->value(key, defaultValue).toString();
 }
@@ -66,12 +66,12 @@ QString Fahrplan::getVersion()
     return "2.0.8";
 }
 
-void Fahrplan::onFavoritesChanged(QStringList favorites)
+void Fahrplan::onFavoritesChanged(const QStringList &favorites)
 {
     favoritesChanged(favorites);
 }
 
-void Fahrplan::onParserChanged(QString name, int index)
+void Fahrplan::onParserChanged(const QString &name, int index)
 {
     //We need to reconnect all Signals to the new Parser
     connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(onStationsResult(StationsResultList*)));
@@ -138,7 +138,7 @@ void Fahrplan::onJourneyDetailsResult(JourneyDetailResultList *result)
     emit parserJourneyDetailsResult(result);
 }
 
-void Fahrplan::onErrorOccured(QString msg)
+void Fahrplan::onErrorOccured(const QString &msg)
 {
     emit parserErrorOccured(msg);
 }

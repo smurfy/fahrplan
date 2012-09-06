@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     fahrplan = new Fahrplan();
 
     connect(ui->cancelRequest, SIGNAL(clicked()), this, SLOT(cancelRequestClicked()));
-    connect(fahrplan, SIGNAL(parserErrorOccured(QString)), this, SLOT(errorOccured(QString)));
+    connect(fahrplan, SIGNAL(parserErrorOccured(const QString &)), this, SLOT(errorOccured(const QString &)));
 
     connect(ui->getTimeTableForStation, SIGNAL(clicked()), this, SLOT(getTimeTableForStationClicked()));
     connect(ui->findStationsByName, SIGNAL(clicked()), this, SLOT(findStationsByNameClicked()));
@@ -45,13 +45,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->getJourneyDetails, SIGNAL(clicked()), this, SLOT(getJourneyDetailsClicked()));
     connect(fahrplan, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailResult(JourneyDetailResultList*)));
 
-    connect(fahrplan, SIGNAL(parserChanged(QString, int)), this, SLOT(parserChanged(QString, int)));
+    connect(fahrplan, SIGNAL(parserChanged(const QString &, int)), this, SLOT(parserChanged(const QString &, int)));
 
     QStringListModel *parserModel = new QStringListModel();
     parserModel->setStringList(fahrplan->getParserList());
     ui->parser->setModel(parserModel);
 
-    connect( ui->parser, SIGNAL( currentIndexChanged(int) ), this, SLOT( parserCurrentIndexChanged(int) ) );
+    connect(ui->parser, SIGNAL( currentIndexChanged(int)), this, SLOT( parserCurrentIndexChanged(int)));
 
     fahrplan->parser();
 }
@@ -66,7 +66,7 @@ void MainWindow::parserCurrentIndexChanged(int index)
     fahrplan->setParser(index);
 }
 
-void MainWindow::parserChanged(QString name, int index)
+void MainWindow::parserChanged(const QString &name, int index)
 {
     setWindowTitle("Fahrplan - TestApp - " + name + " - " + QString::number(index));
 
@@ -87,7 +87,7 @@ void MainWindow::parserChanged(QString name, int index)
     ui->getTimeTableForStation->setEnabled(fahrplan->parser()->supportsTimeTable());
 }
 
-void MainWindow::errorOccured(QString msg)
+void MainWindow::errorOccured(const QString &msg)
 {
     QMessageBox msgBox;
     msgBox.setText(msg);

@@ -32,9 +32,9 @@ class FahrplanFavoritesManager : public QObject
         explicit FahrplanFavoritesManager(QObject *parent = 0);
 
     public slots:
-        void addFavorite(QString name);
-        void removeFavorite(QString name);
-        bool isFavorite(QString name);
+        void addFavorite(const QString &name);
+        void removeFavorite(const QString &name);
+        bool isFavorite(const QString &name);
         QStringList getFavorites();
 
     signals:

@@ -55,7 +55,7 @@ ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
 }
 
 
-void ParserXmlVasttrafikSe::getTimeTableForStation(QString stationName, QString directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
 {
     Q_UNUSED(directionStationName);
     Q_UNUSED(mode);
@@ -76,6 +76,7 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(QString stationName, QString 
         timeTableForStationMode = mode;
         timeTableForStationTrainrestrictions = trainrestrictions;
         currentRequestState = FahrplanNS::noneRequest;
+        qDebug() << "Resolving id for station name" << stationName;
         findStationsByName(stationName);
         return;
     }
@@ -97,7 +98,7 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(QString stationName, QString 
     sendHttpRequest(url);
 }
 
-void ParserXmlVasttrafikSe::findStationsByName(QString stationName)
+void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
 {
     qDebug() << "ParserXmlVasttrafikSe::findStationsByName(stationName" << stationName << ")";
 
@@ -131,7 +132,7 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
     sendHttpRequest(url);
 }
 
-void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arrivalStation, QString viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
 {
     qDebug() << "ParserXmlVasttrafikSe::searchJourney(departureStation=" << departureStation << ", arrivalStation=" << arrivalStation << ", viaStation=" << viaStation << ", date=" << date.toString() << ", time=" << time.toString() << ", mode=" << mode << ", trainrestrictions=" << trainrestrictions << ")";
 
@@ -151,6 +152,7 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
         searchJourneyMode = mode;
         searchJourneyTrainrestrictions = trainrestrictions;
         currentRequestState = FahrplanNS::noneRequest;
+        qDebug() << "Resolving id for departure station" << departureStation;
         findStationsByName(departureStation);
         return;
     }
@@ -167,6 +169,7 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
             searchJourneyMode = mode;
             searchJourneyTrainrestrictions = trainrestrictions;
             currentRequestState = FahrplanNS::noneRequest;
+            qDebug() << "Resolving id for via station" << viaStation;
             findStationsByName(viaStation);
             return;
         }
@@ -182,6 +185,7 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
         searchJourneyMode = mode;
         searchJourneyTrainrestrictions = trainrestrictions;
         currentRequestState = FahrplanNS::noneRequest;
+        qDebug() << "Resolving id for arrival station" << arrivalStation;
         findStationsByName(arrivalStation);
         return;
     }
@@ -207,7 +211,7 @@ void ParserXmlVasttrafikSe::searchJourney(QString departureStation, QString arri
     sendHttpRequest(url);
 }
 
-void ParserXmlVasttrafikSe::getJourneyDetails(QString id)
+void ParserXmlVasttrafikSe::getJourneyDetails(const QString &id)
 {
     qDebug() << "ParserXmlVasttrafikSe::getJourneyDetails(id=" << id << ")";
 

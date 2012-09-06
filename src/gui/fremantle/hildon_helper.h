@@ -35,8 +35,8 @@ class HildonHelper : public QObject
         explicit HildonHelper(QObject *parent = 0);
 
     public slots:
-        QColor standardColor(QString name);
-        QFont standardFont(QString name);
+        QColor standardColor(const QString &name);
+        QFont standardFont(const QString &name);
 
 };
 
