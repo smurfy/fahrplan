@@ -303,7 +303,7 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
             qulonglong stationId = cachedStationNameToId.value(stationName, 0);
             item->setDestinationName(getAttribute(departureNode, "direction"));
             item->setPlatform(getAttribute(departureNode, "track"));
-            item->setTrainType(getAttribute(departureNode, "name"));
+            item->setTrainType(i18nConnectionType(getAttribute(departureNode, "name")));
             item->setTime(QTime::fromString(getAttribute(departureNode, "time"), QLatin1String("hh:mm")));
             if (stationId > 0) {
                 item->setLongitude(cachedStationIdToLongitude[stationId]);
@@ -377,12 +377,8 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                     jdrItem->setInfo(tr("to %1").arg(direction));
                 if (getAttribute(legNode, "type") == QLatin1String("WALK"))
                     jdrItem->setTrain(tr("Walk"));
-                else {
-                    QString connectionLineName = getAttribute(legNode, "name");
-                    // Internationalization
-                    connectionLineName = connectionLineName.replace(QLatin1String("Buss"), tr("Bus")).replace(QLatin1String("Expbuss"), tr("Exp Bus")).replace(QLatin1String("EXPRESS"), QLatin1String("EXPR")).replace(QString::fromUtf8("Spårvagn"), tr("Tram")).replace(QString::fromUtf8("Färja"), tr("Ferry"));
-                    jdrItem->setTrain(connectionLineName);
-                }
+                else
+                    jdrItem->setTrain(i18nConnectionType(getAttribute(legNode, "name")));
                 jdrItem->setInternalData1("NO setInternalData1");
                 jdrItem->setInternalData2("NO setInternalData2");
                 detailsList->appendItem(jdrItem);
@@ -412,4 +408,10 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
     }
 
     emit journeyResult(journeyResultList);
+}
+
+QString ParserXmlVasttrafikSe::i18nConnectionType(const QString &swedishText) const
+{
+    QString internalCopy = swedishText;
+    return internalCopy.replace(QLatin1String("Buss"), tr("Bus")).replace(QLatin1String("Expbuss"), tr("Exp Bus")).replace(QLatin1String("EXPRESS"), QLatin1String("EXPR")).replace(QString::fromUtf8("Spårvagn"), tr("Tram")).replace(QString::fromUtf8("Färja"), tr("Ferry"));
 }

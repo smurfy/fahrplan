@@ -61,6 +61,8 @@ protected:
 private:
     const QString apiKey;
     const QString baseRestUrl;
+
+    inline QString i18nConnectionType(const QString &swedishText) const;
 };
 
 #endif // PARSER_XMLVASTTRAFIKSE_H
