@@ -546,7 +546,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                          tmpRegexp2.setMinimal(true);
                          tmpRegexp2.indexIn(tmpRegexp.cap(2).trimmed());
 
-                         QRegExp tmpRegexp3 = QRegExp("(\\d\\d\.\\d\\d\.\\d\\d)");
+                         QRegExp tmpRegexp3 = QRegExp("(\\d\\d\\.\\d\\d\\.\\d\\d)");
                          tmpRegexp3.setMinimal(true);
                          tmpRegexp3.indexIn(tmpRegexp.cap(3).trimmed());
 
@@ -568,7 +568,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                          tmpRegexp2.setMinimal(true);
                          tmpRegexp2.indexIn(tmpRegexp.cap(5).trimmed());
 
-                         QRegExp tmpRegexp3 = QRegExp("(\\d\\d\.\\d\\d\.\\d\\d)");
+                         QRegExp tmpRegexp3 = QRegExp("(\\d\\d\\.\\d\\d\\.\\d\\d)");
                          tmpRegexp3.setMinimal(true);
                          tmpRegexp3.indexIn(tmpRegexp.cap(6).trimmed());
 
