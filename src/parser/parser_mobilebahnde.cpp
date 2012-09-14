@@ -73,7 +73,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
     return trainrestr;
 }
 
- void ParserMobileBahnDe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+ void ParserMobileBahnDe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
  {
      if (currentRequestState != FahrplanNS::noneRequest) {
          return;

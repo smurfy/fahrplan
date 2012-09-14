@@ -55,7 +55,7 @@ ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
 }
 
 
-void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, int mode, int trainrestrictions)
 {
     Q_UNUSED(directionStationName);
     Q_UNUSED(mode);
@@ -132,7 +132,7 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
     sendHttpRequest(url);
 }
 
-void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
 {
     qDebug() << "ParserXmlVasttrafikSe::searchJourney(departureStation=" << departureStation << ", arrivalStation=" << arrivalStation << ", viaStation=" << viaStation << ", date=" << date.toString() << ", time=" << time.toString() << ", mode=" << mode << ", trainrestrictions=" << trainrestrictions << ")";
 

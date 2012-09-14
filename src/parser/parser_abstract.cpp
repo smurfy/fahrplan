@@ -34,6 +34,12 @@ ParserAbstract::ParserAbstract(QObject *parent)
     connect(requestTimeout, SIGNAL(timeout()), this, SLOT(networkReplyTimedOut()));
 }
 
+ParserAbstract::~ParserAbstract()
+{
+    delete requestTimeout;
+    delete NetworkManager;
+}
+
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
 {
     FahrplanNS::curReqStates internalRequestState = currentRequestState;
@@ -134,7 +140,7 @@ QStringList ParserAbstract::getTrainRestrictions()
     return result;
 }
 
-void ParserAbstract::getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserAbstract::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, QTime time, int mode, int trainrestrictions)
 {
     Q_UNUSED(stationName);
     Q_UNUSED(directionStationName);
@@ -173,7 +179,7 @@ void ParserAbstract::findStationsByCoordinates(qreal longitude, qreal latitude)
      qDebug() << "ParserAbstract::parseStationsByCoordinates";
  }
 
- void ParserAbstract::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+ void ParserAbstract::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
  {
      Q_UNUSED(departureStation);
      Q_UNUSED(arrivalStation);

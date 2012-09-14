@@ -63,7 +63,7 @@ bool ParserHafasXml::supportsTimeTableDirection()
     return false;
 }
 
-void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, int mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -460,7 +460,7 @@ QStringList ParserHafasXml::getTrainRestrictions()
     return result;
 }
 
-void ParserHafasXml::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions)
+void ParserHafasXml::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;

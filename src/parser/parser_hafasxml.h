@@ -75,10 +75,10 @@ public:
     QString name() { return "HafasXML"; }
 
 public slots:
-    void getTimeTableForStation(const QString &stationName, const QString &directionStationName, QDate date, QTime time, int mode, int trainrestrictions);
+    void getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, int mode, int trainrestrictions);
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, QDate date, QTime time, int mode, int trainrestrictions);
+    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
