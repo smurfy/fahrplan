@@ -25,25 +25,14 @@
 
 #include "parser_xmlvasttrafikse.h"
 
-QMap<QString, qulonglong> cachedStationNameToId;
-QMap<qulonglong, qreal> cachedStationIdToLongitude;
-QMap<qulonglong, qreal> cachedStationIdToLatitude;
+const qlonglong ParserXmlVasttrafikSe::ERR_UNKNOWN_STATION = 0;
+const qlonglong ParserXmlVasttrafikSe::ERR_INVALID_STATION = -1;
+
+
+QMap<QString, qlonglong> cachedStationNameToId;
+QMap<qlonglong, qreal> cachedStationIdToLongitude;
+QMap<qlonglong, qreal> cachedStationIdToLatitude;
 QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
-
-QString timeTableForStationStationName;
-QString timeTableForStationDirectionStationName;
-QDate timeTableForStationDate;
-QTime timeTableForStationTime;
-int timeTableForStationMode;
-int timeTableForStationTrainrestrictions;
-
-QString searchJourneyDepartureStation;
-QString searchJourneyArrivalStation;
-QString searchJourneyViaStation;
-QDate searchJourneyDate;
-QTime searchJourneyTime;
-int searchJourneyMode;
-int searchJourneyTrainrestrictions;
 
 
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
@@ -51,7 +40,8 @@ int searchJourneyTrainrestrictions;
 ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
     : ParserAbstract(parent), apiKey(QLatin1String("47c5abaf-49d6-4c23-a1bd-b2e2766c4de7")), baseRestUrl(QLatin1String("http://api.vasttrafik.se/bin/rest.exe/v1/"))
 {
-    // nothing
+    m_searchJourneyParameters.isValid = false;
+    m_timeTableForStationParameters.isValid = false;
 }
 
 
@@ -65,19 +55,26 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, c
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
 
-    timeTableForStationStationName = QString::null;
-    qulonglong stationId = cachedStationNameToId.value(stationName, 0);
+    m_timeTableForStationParameters.isValid = false;
 
-    if (stationId == 0) {
-        timeTableForStationStationName = stationName;
-        timeTableForStationDirectionStationName = directionStationName;
-        timeTableForStationDate = date;
-        timeTableForStationTime = time;
-        timeTableForStationMode = mode;
-        timeTableForStationTrainrestrictions = trainrestrictions;
+    qlonglong stationId = cachedStationNameToId.value(stationName, ERR_UNKNOWN_STATION);
+
+    if (stationId == ERR_UNKNOWN_STATION) {
+        m_timeTableForStationParameters.isValid = true;
+        m_timeTableForStationParameters.stationName = stationName;
+        m_timeTableForStationParameters.directionStationName = directionStationName;
+        m_timeTableForStationParameters.date = date;
+        m_timeTableForStationParameters.time = time;
+        m_timeTableForStationParameters.mode = mode;
+        m_timeTableForStationParameters.trainrestrictions = trainrestrictions;
+
         currentRequestState = FahrplanNS::noneRequest;
         qDebug() << "Resolving id for station name" << stationName;
         findStationsByName(stationName);
+        return;
+    } else if (stationId == ERR_INVALID_STATION) {
+        currentRequestState = FahrplanNS::noneRequest;
+        emit timeTableResult(new TimeTableResultList());
         return;
     }
 
@@ -140,53 +137,66 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
         return;
     currentRequestState = FahrplanNS::searchJourneyRequest;
 
-    searchJourneyDepartureStation = QString::null;
+    m_searchJourneyParameters.isValid = false;
+    m_searchJourneyParameters.departureStation = departureStation;
+    m_searchJourneyParameters.arrivalStation = arrivalStation;
+    m_searchJourneyParameters.viaStation = viaStation;
+    m_searchJourneyParameters.date = date;
+    m_searchJourneyParameters.time = time;
+    m_searchJourneyParameters.mode = mode;
+    m_searchJourneyParameters.trainrestrictions = trainrestrictions;
 
-    qulonglong departureStationId = cachedStationNameToId.value(departureStation, 0);
-    if (departureStationId == 0) {
-        searchJourneyDepartureStation = departureStation;
-        searchJourneyArrivalStation = arrivalStation;
-        searchJourneyViaStation = viaStation;
-        searchJourneyDate = date;
-        searchJourneyTime = time;
-        searchJourneyMode = mode;
-        searchJourneyTrainrestrictions = trainrestrictions;
+    qlonglong departureStationId = cachedStationNameToId.value(departureStation, ERR_UNKNOWN_STATION);
+    if (departureStationId == ERR_UNKNOWN_STATION) {
+        m_searchJourneyParameters.isValid = true;
         currentRequestState = FahrplanNS::noneRequest;
         qDebug() << "Resolving id for departure station" << departureStation;
         findStationsByName(departureStation);
         return;
+    } else if (departureStationId == ERR_INVALID_STATION) {
+        currentRequestState = FahrplanNS::noneRequest;
+        JourneyResultList *jrl = new JourneyResultList();
+        jrl->setTimeInfo(tr("Invalid departure station"));
+        jrl->setDepartureStation(departureStation);
+        jrl->setArrivalStation(arrivalStation);
+        emit journeyResult(jrl);
+        return;
     }
 
-    qulonglong viaStationId = 0;
+    qlonglong viaStationId = ERR_INVALID_STATION;
     if (!viaStation.isEmpty()) {
-        viaStationId = cachedStationNameToId.value(viaStation, 0);
-        if (viaStationId == 0) {
-            searchJourneyDepartureStation = departureStation;
-            searchJourneyArrivalStation = arrivalStation;
-            searchJourneyViaStation = viaStation;
-            searchJourneyDate = date;
-            searchJourneyTime = time;
-            searchJourneyMode = mode;
-            searchJourneyTrainrestrictions = trainrestrictions;
+        viaStationId = cachedStationNameToId.value(viaStation, ERR_UNKNOWN_STATION);
+        if (viaStationId == ERR_UNKNOWN_STATION) {
+            m_searchJourneyParameters.isValid = true;
             currentRequestState = FahrplanNS::noneRequest;
             qDebug() << "Resolving id for via station" << viaStation;
             findStationsByName(viaStation);
             return;
+        } else if (viaStationId == ERR_INVALID_STATION) {
+            currentRequestState = FahrplanNS::noneRequest;
+            JourneyResultList *jrl = new JourneyResultList();
+            jrl->setTimeInfo(tr("Invalid via station"));
+            jrl->setDepartureStation(departureStation);
+            jrl->setArrivalStation(arrivalStation);
+            emit journeyResult(jrl);
+            return;
         }
     }
 
-    qulonglong arrivalStationId = cachedStationNameToId.value(arrivalStation, 0);
-    if (arrivalStationId == 0) {
-        searchJourneyDepartureStation = departureStation;
-        searchJourneyArrivalStation = arrivalStation;
-        searchJourneyViaStation = viaStation;
-        searchJourneyDate = date;
-        searchJourneyTime = time;
-        searchJourneyMode = mode;
-        searchJourneyTrainrestrictions = trainrestrictions;
+    qlonglong arrivalStationId = cachedStationNameToId.value(arrivalStation, ERR_UNKNOWN_STATION);
+    if (arrivalStationId == ERR_UNKNOWN_STATION) {
+        m_searchJourneyParameters.isValid = true;
         currentRequestState = FahrplanNS::noneRequest;
         qDebug() << "Resolving id for arrival station" << arrivalStation;
         findStationsByName(arrivalStation);
+        return;
+    } else if (arrivalStationId == ERR_INVALID_STATION) {
+        currentRequestState = FahrplanNS::noneRequest;
+        JourneyResultList *jrl = new JourneyResultList();
+        jrl->setTimeInfo(tr("Invalid arrival station"));
+        jrl->setDepartureStation(departureStation);
+        jrl->setArrivalStation(arrivalStation);
+        emit journeyResult(jrl);
         return;
     }
 
@@ -250,6 +260,12 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
 
+    const QString stationNameUrl = networkReply->url().queryItemValue(QLatin1String("input"));
+    if (!stationNameUrl.isEmpty()) {
+        /// just in case the station does not exist for this provider
+        cachedStationNameToId[stationNameUrl] = ERR_INVALID_STATION;
+    }
+
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList locationList = doc.elementsByTagName("StopLocation");
@@ -265,17 +281,17 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
 
             result.appendItem(item);
 
-            qulonglong id = getAttribute(locationNode, "id").toULongLong();
+            qlonglong id = getAttribute(locationNode, "id").toLongLong();
             cachedStationNameToId[stationName] = id;
             cachedStationIdToLongitude[id] = longitude;
             cachedStationIdToLatitude[id] = latitude;
         }
     }
 
-    if (!timeTableForStationStationName.isEmpty()) {
-        getTimeTableForStation(timeTableForStationStationName, timeTableForStationDirectionStationName, timeTableForStationDate, timeTableForStationTime, timeTableForStationMode, timeTableForStationTrainrestrictions);
-    } else if (!searchJourneyDepartureStation.isEmpty()) {
-        searchJourney(searchJourneyDepartureStation, searchJourneyArrivalStation, searchJourneyViaStation, searchJourneyDate, searchJourneyTime, searchJourneyMode, searchJourneyTrainrestrictions);
+    if (m_timeTableForStationParameters.isValid) {
+        getTimeTableForStation(m_timeTableForStationParameters.stationName, m_timeTableForStationParameters.directionStationName, m_timeTableForStationParameters.date, m_timeTableForStationParameters.time, m_timeTableForStationParameters.mode, m_timeTableForStationParameters.trainrestrictions);
+    } else if (m_searchJourneyParameters.isValid) {
+        searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.date, m_searchJourneyParameters.time, m_searchJourneyParameters.mode, m_searchJourneyParameters.trainrestrictions);
     } else {
         emit stationsResult(&result);
     }
@@ -304,7 +320,7 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
             TimeTableResultItem *item = new TimeTableResultItem();
 
             const QString stationName = getAttribute(departureNode, "stop");
-            qulonglong stationId = cachedStationNameToId.value(stationName, 0);
+            qlonglong stationId = cachedStationNameToId.value(stationName, ERR_UNKNOWN_STATION);
             item->setDestinationName(getAttribute(departureNode, "direction"));
             item->setPlatform(getAttribute(departureNode, "track"));
             item->setTrainType(i18nConnectionType(getAttribute(departureNode, "name")));
@@ -355,8 +371,10 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                     journeyStart.setDate(QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-mm-dd")));
                     journeyEnd.setDate(journeyStart.date());
                     journeyStart.setTime(QTime::fromString(getAttribute(originNode, "time"), "hh:mm"));
-                    if (i == 0)
+                    if (i == 0) {
                         journeyResultList->setDepartureStation(getAttribute(originNode, "name"));
+                        journeyResultList->setTimeInfo(QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-mm-dd")).toString(Qt::DefaultLocaleShortDate));
+                    }
                 }
                 if (j == legNodeList.length() - 1) {
                     journeyEnd.setTime(QTime::fromString(getAttribute(destinationNode, "time"), "hh:mm"));

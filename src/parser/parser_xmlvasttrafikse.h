@@ -59,6 +59,30 @@ protected:
     virtual void parseSearchJourney(QNetworkReply *networkReply);
 
 private:
+    static const qlonglong ERR_UNKNOWN_STATION;
+    static const qlonglong ERR_INVALID_STATION;
+
+    struct {
+        bool isValid;
+        QString departureStation;
+        QString arrivalStation;
+        QString viaStation;
+        QDate date;
+        QTime time;
+        int mode;
+        int trainrestrictions;
+    } m_searchJourneyParameters;
+
+    struct {
+        bool isValid;
+        QString stationName;
+        QString directionStationName;
+        QDate date;
+        QTime time;
+        int mode;
+        int trainrestrictions;
+    } m_timeTableForStationParameters;
+
     const QString apiKey;
     const QString baseRestUrl;
 
