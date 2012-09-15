@@ -78,7 +78,7 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, c
         return;
     }
 
-    QUrl url(baseRestUrl + QLatin1String("departureBoard"));
+    QUrl url(baseRestUrl + (mode == 1 ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
     url.addQueryItem("authKey", apiKey);
     url.addQueryItem("format", "xml");
     url.addQueryItem("date", date.toString("yyyy-MM-dd"));
@@ -211,6 +211,7 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
     url.addQueryItem("originId", QString::number(departureStationId));
     if (viaStationId > 0)
         url.addQueryItem("viaId", QString::number(viaStationId));
+    url.addQueryItem("searchForArrival", mode == 1 ? "no" : "yes");
     url.addQueryItem("destId", QString::number(arrivalStationId));
     url.addQueryItem("useVas", "1");
     url.addQueryItem("useLDTrain", "0");
@@ -317,32 +318,37 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
 
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
-        QDomNodeList departureNodeList = doc.elementsByTagName("Departure");
-        for (unsigned int i = 0; i < departureNodeList.length(); ++i) {
-            QDomNode departureNode = departureNodeList.item(i);
+        bool isArrival = false;
+        QDomNodeList nodeList = doc.elementsByTagName("Departure");
+        if (nodeList.isEmpty()) {
+            nodeList = doc.elementsByTagName("Arrival");
+            isArrival = true;
+        }
+        for (unsigned int i = 0; i < nodeList.length(); ++i) {
+            QDomNode node = nodeList.item(i);
             TimeTableResultItem *item = new TimeTableResultItem();
 
-            const QString stationName = getAttribute(departureNode, "stop");
+            const QString stationName = getAttribute(node, "stop");
             qlonglong stationId = cachedStationNameToId.value(stationName, ERR_UNKNOWN_STATION);
-            item->setDestinationName(getAttribute(departureNode, "direction"));
-            item->setPlatform(getAttribute(departureNode, "track"));
-            const QString connectionName = i18nConnectionType(getAttribute(departureNode, "name"));
-            const QString fgColor = getAttribute(departureNode, "fgColor");
-            const QString bgColor = getAttribute(departureNode, "bgColor");
+            item->setDestinationName(getAttribute(node, isArrival ? "origin" : "direction"));
+            item->setPlatform(getAttribute(node, "track"));
+            const QString connectionName = i18nConnectionType(getAttribute(node, "name"));
+            const QString fgColor = getAttribute(node, "fgColor");
+            const QString bgColor = getAttribute(node, "bgColor");
             if (!fgColor.isEmpty() && !bgColor.isEmpty())
                 item->setTrainType(QString(QLatin1String("<span style=\"color:%2; background-color: %3;\">%1</span>")).arg(connectionName).arg(fgColor).arg(bgColor));
             else
                 item->setTrainType(connectionName);
-            const QTime scheduledTime = QTime::fromString(getAttribute(departureNode, "time"), QLatin1String("hh:mm"));
+            const QTime scheduledTime = QTime::fromString(getAttribute(node, "time"), QLatin1String("hh:mm"));
             item->setTime(scheduledTime);
-            const QString realTimeStr = getAttribute(departureNode, "rtTime");
+            const QString realTimeStr = getAttribute(node, "rtTime");
             if (!realTimeStr.isEmpty()) {
                 const QTime realTimeTime = QTime::fromString(realTimeStr, QLatin1String("hh:mm"));
                 const int minutesTo = scheduledTime.msecsTo(realTimeTime) / 60000;
                 if (minutesTo > 3)
-                    item->setMiscInfo(tr("<span style=\"color:#930;\">%1 min late</span>").arg(minutesTo));
+                    item->setMiscInfo(tr("<span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
                 else
-                    item->setMiscInfo(tr("<span style=\"color:#093; font-weight: normal;\">on time</span>").arg(minutesTo));
+                    item->setMiscInfo(tr("<span style=\"color:#093; font-weight: normal;\">on time</span>"));
             }
             if (stationId > 0) {
                 item->setLongitude(cachedStationIdToLongitude[stationId]);
@@ -447,9 +453,9 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                     const QTime realTimeTime = QTime::fromString(realTimeDeparture, QLatin1String("hh:mm"));
                     const int minutesTo = scheduledDepartureTime.time().msecsTo(realTimeTime) / 60000;
                     if (minutesTo > 3)
-                        jdrItem->setDepartureInfo(jdrItem->departureInfo() + tr("<br/><span style=\"color:#930;\">%1 min late</span>").arg(minutesTo));
+                        jdrItem->setDepartureInfo(jdrItem->departureInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
                     else
-                        jdrItem->setDepartureInfo(jdrItem->departureInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>").arg(minutesTo));
+                        jdrItem->setDepartureInfo(jdrItem->departureInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
                 }
 
                 const QString realTimeArrival = getAttribute(destinationNode, "rtTime");
@@ -457,9 +463,9 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                     const QTime realTimeTime = QTime::fromString(realTimeArrival, QLatin1String("hh:mm"));
                     const int minutesTo = scheduledArrivalTime.time().msecsTo(realTimeTime) / 60000;
                     if (minutesTo > 3)
-                        jdrItem->setArrivalInfo(jdrItem->arrivalInfo() + tr("<br/><span style=\"color:#930;\">%1 min late</span>").arg(minutesTo));
+                        jdrItem->setArrivalInfo(jdrItem->arrivalInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
                     else
-                        jdrItem->setArrivalInfo(jdrItem->arrivalInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>").arg(minutesTo));
+                        jdrItem->setArrivalInfo(jdrItem->arrivalInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
                 }
 
                 detailsList->appendItem(jdrItem);
