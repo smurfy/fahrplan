@@ -35,7 +35,11 @@ void CalendarThreadWrapper::addToCalendar()
     #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
 
     QString desc;
-    desc.append(tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()) + "\n");
+    const QString viaStation = m_result->viaStation();
+    if (viaStation.isEmpty())
+        desc.append(tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()) + "\n");
+    else
+        desc.append(tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation) + "\n");
 
     if (!m_result->info().isEmpty()) {
         desc.append(m_result->info() + "\n");
@@ -69,7 +73,10 @@ void CalendarThreadWrapper::addToCalendar()
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
 
-    event.setDisplayLabel(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+    if (viaStation.isEmpty())
+        event.setDisplayLabel(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+    else
+        event.setDisplayLabel(tr("Journey: %1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
     event.setDescription(desc);
     event.setStartDateTime(m_result->departureDateTime());
     event.setEndDateTime(m_result->arrivalDateTime());

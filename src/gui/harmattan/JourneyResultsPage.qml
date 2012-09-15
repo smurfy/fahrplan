@@ -268,7 +268,7 @@ Page {
 
             searchIndicatorVisible = false;
 
-            journeyStations.text = qsTr("<b>%1</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation)
+            journeyStations.text = result.viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation)
 
             journeyDate.text = result.timeInfo;
 
