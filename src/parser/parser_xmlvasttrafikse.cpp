@@ -211,7 +211,8 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
     url.addQueryItem("originId", QString::number(departureStationId));
     if (viaStationId > 0)
         url.addQueryItem("viaId", QString::number(viaStationId));
-    url.addQueryItem("searchForArrival", mode == 1 ? "no" : "yes");
+    if (mode != 1)
+        url.addQueryItem("searchForArrival", "yes");
     url.addQueryItem("destId", QString::number(arrivalStationId));
     url.addQueryItem("useVas", "1");
     url.addQueryItem("useLDTrain", "0");
