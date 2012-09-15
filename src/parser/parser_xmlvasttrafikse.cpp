@@ -158,6 +158,7 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
         JourneyResultList *jrl = new JourneyResultList();
         jrl->setTimeInfo(tr("Invalid departure station"));
         jrl->setDepartureStation(departureStation);
+        jrl->setViaStation(viaStation);
         jrl->setArrivalStation(arrivalStation);
         emit journeyResult(jrl);
         return;
@@ -177,6 +178,7 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
             JourneyResultList *jrl = new JourneyResultList();
             jrl->setTimeInfo(tr("Invalid via station"));
             jrl->setDepartureStation(departureStation);
+            jrl->setViaStation(viaStation);
             jrl->setArrivalStation(arrivalStation);
             emit journeyResult(jrl);
             return;
@@ -195,6 +197,7 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
         JourneyResultList *jrl = new JourneyResultList();
         jrl->setTimeInfo(tr("Invalid arrival station"));
         jrl->setDepartureStation(departureStation);
+        jrl->setViaStation(viaStation);
         jrl->setArrivalStation(arrivalStation);
         emit journeyResult(jrl);
         return;
@@ -351,6 +354,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 
     /// Use fallback values for empty results (i.e. no connections found)
     journeyResultList->setDepartureStation(m_searchJourneyParameters.departureStation);
+    journeyResultList->setViaStation(m_searchJourneyParameters.viaStation);
     journeyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation);
     journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.date.toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.time.toString(Qt::DefaultLocaleShortDate)));
 
@@ -375,12 +379,12 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                 QDomNode originNode = legNode.namedItem("Origin");
                 QDomNode destinationNode = legNode.namedItem("Destination");
                 if (j == 0) {
-                    journeyStart.setDate(QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-mm-dd")));
+                    journeyStart.setDate(QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-MM-dd")));
                     journeyEnd.setDate(journeyStart.date());
                     const QTime time = QTime::fromString(getAttribute(originNode, "time"), "hh:mm");
                     journeyStart.setTime(time);
                     if (i == 0) {
-                        const QDate date = QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-mm-dd"));
+                        const QDate date = QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-MM-dd"));
                         journeyResultList->setDepartureStation(getAttribute(originNode, "name"));
                         journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(date.toString(Qt::DefaultLocaleShortDate)).arg(time.toString(Qt::DefaultLocaleShortDate)));
                     }
@@ -399,7 +403,6 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                 const QString depTrack = getAttribute(originNode, "track");
                 jdrItem->setDepartureInfo(depTrack.isEmpty() ? QChar(0x2014) : tr("Track %1").arg(depTrack));
                 jdrItem->setDepartureDateTime(QDateTime::fromString(getAttribute(originNode, "date") + getAttribute(originNode, "time"), "yyyy-MM-ddhh:mm"));
-                qDebug()<<"jdrItem->setDepartureDateTime="<<jdrItem->departureDateTime().toString();
                 jdrItem->setArrivalStation(getAttribute(destinationNode, "name"));
                 const QString arrTrack = getAttribute(destinationNode, "track");
                 jdrItem->setArrivalInfo(arrTrack.isEmpty() ? QChar(0x2014) : tr("Track %1").arg(arrTrack));
@@ -431,6 +434,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
             jritem->setId(id);
             detailsList->setId(id);
             detailsList->setDepartureStation(journeyResultList->departureStation());
+            detailsList->setViaStation(journeyResultList->viaStation());
             detailsList->setArrivalStation(journeyResultList->arrivalStation());
             detailsList->setDuration(jritem->duration());
             detailsList->setArrivalDateTime(journeyStart);
