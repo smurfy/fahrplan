@@ -187,17 +187,17 @@ Page {
 
                 var dirlabel = "";
                 if (selMode == 1) {
-                    dirlabel = qsTr("to ")
-                }
-
-                if (selMode == 0) {
-                    dirlabel = qsTr("from ")
+                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName)
+                } else if (selMode == 0) {
+                    dirlabel = qsTr("from <b>%1</b>").arg(item.destinationName)
+                } else {
+                    dirlabel = "\u2013"
                 }
 
                 timetableResultModel.append({
                     "time": Qt.formatTime( item.time,"hh:mm"),
                     "trainType": item.trainType,
-                    "destination": dirlabel + item.destinationName,
+                    "destination": dirlabel,
                     "stationplatform": stationplatform,
                     "miscInfo": item.miscInfo,
                     "itemNum" : i
