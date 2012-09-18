@@ -647,6 +647,9 @@ Page {
                 });
             }
             selectTrainrestrictionsDialog.selectedIndex = (items.length > 0) ? 0 : -1;
+            if (selectTrainrestrictionsDialog.selectedIndex >= 0) {
+                trainrestrictionsButton.subTitleText = selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name
+            }
         }
     }
 }
