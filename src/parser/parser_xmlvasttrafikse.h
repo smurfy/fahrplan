@@ -42,8 +42,8 @@ public slots:
     virtual void findStationsByName(const QString &stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
     virtual void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions);
-//     virtual void searchJourneyLater();
-//     virtual void searchJourneyEarlier();
+    virtual void searchJourneyLater();
+    virtual void searchJourneyEarlier();
     virtual void getJourneyDetails(const QString &id);
     virtual bool supportsGps();
     virtual bool supportsVia();
@@ -85,6 +85,8 @@ private:
 
     const QString apiKey;
     const QString baseRestUrl;
+
+    QTime m_earliestResultTime, m_latestResultTime;
 
     inline QString i18nConnectionType(const QString &swedishText) const;
 };
