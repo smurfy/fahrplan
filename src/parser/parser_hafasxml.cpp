@@ -63,7 +63,7 @@ bool ParserHafasXml::supportsTimeTableDirection()
     return false;
 }
 
-void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, int mode, int trainrestrictions)
+void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -90,9 +90,9 @@ void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QS
         postData.append("productsFilter=");
         postData.append(trainrestr);
         postData.append("&boardType=");
-        if (getTimeTableForStationRequestData.mode == 1) {
+        if (getTimeTableForStationRequestData.mode == Departure) {
             postData.append("dep");
-        } else {
+        } else /* (getTimeTableForStationRequestData.mode == Arrival) */ {
             postData.append("arr");
         }
         postData.append("&date=");
@@ -223,9 +223,9 @@ void ParserHafasXml::parseTimeTableMode0Part1(QNetworkReply *networkReply)
         QByteArray postData = "";
         postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
         postData.append("<STBReq boardType=\"");
-        if (getTimeTableForStationRequestData.mode == 1) {
+        if (getTimeTableForStationRequestData.mode == Departure) {
             postData.append("DEP");
-        } else {
+        } else /* (getTimeTableForStationRequestData.mode == Arrival) */ {
             postData.append("ARR");
         }
         postData.append("\" maxJourneys=\"40\">");
@@ -460,7 +460,7 @@ QStringList ParserHafasXml::getTrainRestrictions()
     return result;
 }
 
-void ParserHafasXml::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
+void ParserHafasXml::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -600,10 +600,10 @@ void ParserHafasXml::parseSearchJourneyPart1(QNetworkReply *networkReply)
         postData.append("\" date=\"");
         postData.append(searchJourneyRequestData.date.toString("yyyyMMdd"));
         postData.append("\" a=\"");
-        postData.append((searchJourneyRequestData.mode == 0) ? "1" : "0");
+        postData.append((searchJourneyRequestData.mode == Arrival) ? "1" : "0");
         postData.append("\"></ReqT>");
 
-        if (searchJourneyRequestData.mode == 0) {
+        if (searchJourneyRequestData.mode == Arrival) {
             postData.append("<RFlags b=\"");
             postData.append("4"); //From count
             postData.append("\" f=\"");

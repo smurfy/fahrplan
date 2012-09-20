@@ -45,12 +45,8 @@ ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
 }
 
 
-void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, int mode, int trainrestrictions)
+void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
-    Q_UNUSED(directionStationName);
-    Q_UNUSED(mode);
-    Q_UNUSED(trainrestrictions);
-
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
@@ -78,7 +74,7 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, c
         return;
     }
 
-    QUrl url(baseRestUrl + (mode == 1 ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
+    QUrl url(baseRestUrl + (mode == Departure ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
     url.addQueryItem("authKey", apiKey);
     url.addQueryItem("format", "xml");
     url.addQueryItem("date", date.toString("yyyy-MM-dd"));
@@ -129,7 +125,7 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
     sendHttpRequest(url);
 }
 
-void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
+void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
     qDebug() << "ParserXmlVasttrafikSe::searchJourney(departureStation=" << departureStation << ", arrivalStation=" << arrivalStation << ", viaStation=" << viaStation << ", date=" << date.toString() << ", time=" << time.toString() << ", mode=" << mode << ", trainrestrictions=" << trainrestrictions << ")";
 
@@ -211,7 +207,7 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
     url.addQueryItem("originId", QString::number(departureStationId));
     if (viaStationId > 0)
         url.addQueryItem("viaId", QString::number(viaStationId));
-    if (mode != 1)
+    if (mode == Arrival)
         url.addQueryItem("searchForArrival", "yes");
     url.addQueryItem("destId", QString::number(arrivalStationId));
     url.addQueryItem("useVas", "1");
@@ -509,13 +505,13 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 void ParserXmlVasttrafikSe::searchJourneyLater()
 {
     if (m_latestResultTime.isValid())
-        searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.date, m_latestResultTime, 1, 0);
+        searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.date, m_latestResultTime, Departure, 0);
 }
 
 void ParserXmlVasttrafikSe::searchJourneyEarlier()
 {
     if (m_earliestResultTime.isValid())
-        searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.date, m_earliestResultTime, 0, 0);
+        searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.date, m_earliestResultTime, Arrival, 0);
 }
 
 QString ParserXmlVasttrafikSe::i18nConnectionType(const QString &swedishText) const

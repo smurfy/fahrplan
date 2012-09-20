@@ -140,7 +140,7 @@ QStringList ParserAbstract::getTrainRestrictions()
     return result;
 }
 
-void ParserAbstract::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, QTime time, int mode, int trainrestrictions)
+void ParserAbstract::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, QTime time, Mode mode, int trainrestrictions)
 {
     Q_UNUSED(stationName);
     Q_UNUSED(directionStationName);
@@ -179,7 +179,7 @@ void ParserAbstract::findStationsByCoordinates(qreal longitude, qreal latitude)
      qDebug() << "ParserAbstract::parseStationsByCoordinates";
  }
 
- void ParserAbstract::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
+ void ParserAbstract::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
  {
      Q_UNUSED(departureStation);
      Q_UNUSED(arrivalStation);

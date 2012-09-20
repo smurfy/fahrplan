@@ -268,13 +268,13 @@ Page {
 
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-                    var selMode = 0;
+                    var selMode = ParserAbstract.Arrival;
                     if (modeDep.checked) {
-                        selMode = 1;
+                        selMode = ParserAbstract.Departure;
                         timetablePage.timetableTitleText = qsTr("Departures");
                     }
                     if (modeArr.checked) {
-                        selMode = 0;
+                        selMode = ParserAbstract.Arrival;
                         timetablePage.timetableTitleText = qsTr("Arrivals")
                     }
 
@@ -319,12 +319,12 @@ Page {
                     pageStack.push(resultsPage)
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-                    var selMode = 0;
+                    var selMode = ParserAbstract.Arrival;
                     if (modeDep.checked) {
-                        selMode = 1;
+                        selMode = ParserAbstract.Departure;
                     }
                     if (modeArr.checked) {
-                        selMode = 0;
+                        selMode = ParserAbstract.Arrival;
                     }
                     fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
