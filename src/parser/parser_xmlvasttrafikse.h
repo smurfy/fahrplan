@@ -89,7 +89,7 @@ private:
     const QString apiKey;
     const QString baseRestUrl;
 
-    QTime m_earliestResultTime, m_latestResultTime;
+    QDateTime m_earliestArrival, m_latestResultDeparture;
 
     inline QString i18nConnectionType(const QString &swedishText) const;
 };
