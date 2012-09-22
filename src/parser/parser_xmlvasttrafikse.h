@@ -61,6 +61,9 @@ protected:
 private:
     static const qlonglong ERR_UNKNOWN_STATION;
     static const qlonglong ERR_INVALID_STATION;
+    static const qlonglong TRIP_RTDATA_NONE;
+    static const qlonglong TRIP_RTDATA_ONTIME;
+    static const qlonglong TRIP_RTDATA_WARNING;
 
     struct {
         bool isValid;

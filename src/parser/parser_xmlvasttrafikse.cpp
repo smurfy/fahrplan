@@ -28,6 +28,10 @@
 const qlonglong ParserXmlVasttrafikSe::ERR_UNKNOWN_STATION = 0;
 const qlonglong ParserXmlVasttrafikSe::ERR_INVALID_STATION = -1;
 
+const qlonglong ParserXmlVasttrafikSe::TRIP_RTDATA_NONE = -1;
+const qlonglong ParserXmlVasttrafikSe::TRIP_RTDATA_ONTIME = 1;
+const qlonglong ParserXmlVasttrafikSe::TRIP_RTDATA_WARNING = 2;
+
 
 QMap<QString, qlonglong> cachedStationNameToId;
 QMap<qlonglong, qreal> cachedStationIdToLongitude;
@@ -395,6 +399,8 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 
             QDomNodeList legNodeList = tripNodeList.item(i).childNodes();
             int numStops = 0;
+            QStringList trainTypes;
+            int tripRtStatus = TRIP_RTDATA_NONE;
             for (unsigned int j = 0; j < legNodeList.length(); ++j) {
                 QDomNode legNode = legNodeList.item(j);
                 QDomNode originNode = legNode.namedItem("Origin");
@@ -416,8 +422,10 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                         journeyResultList->setArrivalStation(getAttribute(destinationNode, "name"));
                 }
 
-                if (getAttribute(legNode, "type") != QLatin1String("WALK") || getAttribute(originNode, "name") != getAttribute(destinationNode, "name"))
+                if (getAttribute(legNode, "type") != QLatin1String("WALK") || getAttribute(originNode, "name") != getAttribute(destinationNode, "name")) {
                     ++numStops;
+                    trainTypes.append(i18nConnectionType(getAttribute(legNode, "name")));
+                }
 
                 JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem();
                 jdrItem->setDepartureStation(getAttribute(originNode, "name"));
@@ -451,10 +459,15 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                 if (!realTimeDeparture.isEmpty()) {
                     const QTime realTimeTime = QTime::fromString(realTimeDeparture, QLatin1String("hh:mm"));
                     const int minutesTo = scheduledDepartureTime.time().msecsTo(realTimeTime) / 60000;
-                    if (minutesTo > 3)
+                    if (minutesTo > 3) {
                         jdrItem->setDepartureInfo(jdrItem->departureInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
-                    else
+                        tripRtStatus = TRIP_RTDATA_WARNING;
+                    } else {
+                        if (tripRtStatus == TRIP_RTDATA_NONE) {
+                            tripRtStatus = TRIP_RTDATA_ONTIME;
+                        }
                         jdrItem->setDepartureInfo(jdrItem->departureInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                    }
                 }
 
                 const QString realTimeArrival = getAttribute(destinationNode, "rtTime");
@@ -479,6 +492,13 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
             if (diffTime < 0) diffTime += 86400;
             jritem->setDuration(tr("%1:%2").arg(diffTime / 3600).arg(QString::number(diffTime / 60 % 60), 2, '0'));
             jritem->setTransfers(QString::number(legNodeList.length() - 1));
+            trainTypes.removeDuplicates();
+            jritem->setTrainType(trainTypes.join(", "));
+            if (tripRtStatus == TRIP_RTDATA_WARNING)
+                jritem->setMiscInfo(tr("<span style=\"color:#b30;\">traffic warning</span>"));
+            else if (tripRtStatus == TRIP_RTDATA_ONTIME)
+                jritem->setMiscInfo(tr("<span style=\"color:#093; font-weight: normal;\">on time</span>"));
+
             journeyResultList->appendItem(jritem);
 
             const QString id = QString::number(i);
