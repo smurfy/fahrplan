@@ -38,12 +38,12 @@ public:
     }
 
 public slots:
-    virtual void getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, int mode, int trainrestrictions);
+    virtual void getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
     virtual void findStationsByName(const QString &stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
-    virtual void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions);
-//     virtual void searchJourneyLater();
-//     virtual void searchJourneyEarlier();
+    virtual void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+    virtual void searchJourneyLater();
+    virtual void searchJourneyEarlier();
     virtual void getJourneyDetails(const QString &id);
     virtual bool supportsGps();
     virtual bool supportsVia();
@@ -69,7 +69,7 @@ private:
         QString viaStation;
         QDate date;
         QTime time;
-        int mode;
+        Mode mode;
         int trainrestrictions;
     } m_searchJourneyParameters;
 
@@ -79,12 +79,14 @@ private:
         QString directionStationName;
         QDate date;
         QTime time;
-        int mode;
+        Mode mode;
         int trainrestrictions;
     } m_timeTableForStationParameters;
 
     const QString apiKey;
     const QString baseRestUrl;
+
+    QTime m_earliestResultTime, m_latestResultTime;
 
     inline QString i18nConnectionType(const QString &swedishText) const;
 };

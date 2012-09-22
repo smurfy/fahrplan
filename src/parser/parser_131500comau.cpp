@@ -107,7 +107,7 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     emit stationsResult(&result);
 }
 
-void Parser131500ComAu::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, int mode, int trainrestrictions)
+void Parser131500ComAu::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -116,7 +116,7 @@ void Parser131500ComAu::searchJourney(const QString &departureStation, const QSt
     currentRequestState = FahrplanNS::searchJourneyRequest;
     Q_UNUSED(viaStation);
     QString modeString = "dep";
-    if (mode == 0) {
+    if (mode == Arrival) {
         modeString = "arr";
     }
 
