@@ -236,11 +236,11 @@ Page {
                 anchors {
                     left: showfavorite ? img_fav.right : parent.left
                     leftMargin: 10
-                    rightMargin: 10
+                    rightMargin: 20
+                    right: process ? process.left : parent.right
                     verticalCenter: parent.verticalCenter
                 }
                 text: name
-                width: (parent.width - 40) - lbl_miscinfo.width;
             }
 
             Label {

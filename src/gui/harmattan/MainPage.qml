@@ -648,7 +648,10 @@ Page {
             }
             selectTrainrestrictionsDialog.selectedIndex = (items.length > 0) ? 0 : -1;
             if (selectTrainrestrictionsDialog.selectedIndex >= 0) {
-                trainrestrictionsButton.subTitleText = selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name
+                var selObj = selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex)
+                if (selObj) {
+                    trainrestrictionsButton.subTitleText = selObj.name
+                }
             }
         }
     }
