@@ -1,6 +1,7 @@
 import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.nokia.extras 1.0
 import "components"
 
 Page {
@@ -21,13 +22,13 @@ Page {
         Item {
             id: titleBar
 
-            height: timetableTitle.height + 20
             width: parent.width
+            height: 70
 
             Label {
                 id: timetableTitle
                 text: ""
-                font.bold: true
+                font.bold: true;
                 font.pixelSize: 32
                 anchors {
                     left: parent.left
@@ -167,8 +168,22 @@ Page {
         id: timetableResultModel
     }
 
+    InfoBanner{
+            id: banner
+            objectName: "fahrplanInfoBanner"
+            text: ""
+            anchors.top: parent.top
+            anchors.topMargin: 10
+    }
+
     FahrplanBackend {
         id: fahrplanBackend
+
+        onParserErrorOccured: {
+            banner.text = msg;
+            banner.show();
+        }
+
         onParserTimeTableResult: {
             console.log("Got results");
             console.log(result.count);
@@ -182,7 +197,10 @@ Page {
                 var stationplatform = item.stationName;
 
                 if (item.platform) {
-                    stationplatform = qsTr("Pl. ") + item.platform + " / " + item.stationName;
+                    stationplatform = qsTr("Pl. ") + item.platform;
+                    if (item.stationName) {
+                        stationplatform += " / " + item.stationName;
+                    }
                 }
 
                 var dirlabel = "";
