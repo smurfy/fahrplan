@@ -31,10 +31,10 @@ class ParserXmlVasttrafikSe : public ParserAbstract
 public:
     explicit ParserXmlVasttrafikSe(QObject *parent = 0);
     static QString getName() {
-        return "Västtrafik";
+        return "vasttrafik.se";
     }
     QString name() {
-        return "Västtrafik";
+        return "vasttrafik.se";
     }
 
 public slots:
