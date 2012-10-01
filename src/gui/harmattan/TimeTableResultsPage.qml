@@ -80,7 +80,7 @@ Page {
         Item {
             id: delegateItem
             width: listView.width
-            height: 40 + lbl_destination.height + lbl_station.height + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
+            height: 40 + lbl_destination.height + (lbl_station.height > lbl_type.height ? lbl_station.height : lbl_type.height) + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
 
             Rectangle {
                 anchors.fill: parent
