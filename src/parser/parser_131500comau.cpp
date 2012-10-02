@@ -178,6 +178,8 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
     QRegExp imgReg = QRegExp("icon_(.*)_s.gif\" />");
     imgReg.setMinimal(true);
     element.replace(imgReg, "icon_" + QString("\\1") + "_s.gif\" />" + QString("\\1"));
+    element.replace("am+", "am");
+    element.replace("pm+", "pm");
 
     //qDebug()<<element;
 
@@ -288,6 +290,8 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
         pos += regexp.matchedLength();
     }
 
+    //qDebug()<<departResult;
+
     //Create search result
     for (int i = 0; i < departResult.count(); i++) {
 
@@ -357,7 +361,11 @@ void Parser131500ComAu::getJourneyDetails(const QString &id)
 
 JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *journeyitem)
 {
-    QStringList detailResults = journeyitem->internalData1().split("<linesep>");
+    QString element = journeyitem->internalData1();
+    element.replace("am+", "am");
+    element.replace("pm+", "pm");
+
+    QStringList detailResults = element.split("<linesep>");
     JourneyDetailResultList *results = new JourneyDetailResultList();
 
     QDate journeydate = journeyitem->date();
@@ -370,13 +378,13 @@ JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *jou
         regexp.indexIn(detailResults[i].trimmed());
 
         if (regexp.cap(1) == "Take the ") {
-            qDebug()<<"Regular: "<<regexp.cap(2).trimmed();
-            QRegExp regexp2 = QRegExp("(.*)Dep: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm) (.*)Arr: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm) (.*)(\\t+.*)$");
+            //qDebug()<<"Regular: "<<regexp.cap(2).trimmed();
+            QRegExp regexp2 = QRegExp("(.*)Dep: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm)(.*)Arr: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm)(.*)(\\t+.*)$");
             regexp2.setMinimal(true);
             regexp2.indexIn(regexp.cap(2).trimmed());
-            qDebug()<<"***";
+            //qDebug()<<"***";
             if (regexp2.matchedLength() == -1) {
-                regexp2 = QRegExp("(.*)Dep: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm) (.*)Arr: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm) (.*)$");
+                regexp2 = QRegExp("(.*)Dep: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm)(.*)Arr: (\\d:\\d\\d|\\d\\d:\\d\\d)(am|pm)(.*)$");
                 regexp2.setMinimal(true);
                 regexp2.indexIn(regexp.cap(2).trimmed());
             }
