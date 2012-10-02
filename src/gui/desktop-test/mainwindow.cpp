@@ -110,7 +110,7 @@ void MainWindow::getTimeTableForStationClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    fahrplan->parser()->getTimeTableForStation(ui->stationName->text(), "", QDate::currentDate(), QTime::currentTime(), 0, 0);
+    fahrplan->parser()->getTimeTableForStation(ui->stationName->text(), "", QDate::currentDate(), QTime::currentTime(), ParserAbstract::Departure, 0);
 }
 
 void MainWindow::findStationsByCoordinatesClicked()
@@ -152,7 +152,7 @@ void MainWindow::searchJourneyClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
-    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), ui->viaStation->text(), QDate::currentDate(), QTime::currentTime(), 0, ui->trainRestrictions->currentIndex());
+    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), ui->viaStation->text(), QDate::currentDate(), QTime::currentTime(), ParserAbstract::Departure, ui->trainRestrictions->currentIndex());
 }
 
 void MainWindow::searchJourneyEarlierClicked()

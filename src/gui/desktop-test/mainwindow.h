@@ -52,8 +52,8 @@ private slots:
     void parserCurrentIndexChanged(int index);
     void cancelRequestClicked();
     void getJourneyDetailsClicked();
-    void errorOccured(QString msg);
-    void parserChanged(QString name, int index);
+    void errorOccured(const QString &msg);
+    void parserChanged(const QString &name, int index);
 
 private:
     Ui::MainWindow *ui;
