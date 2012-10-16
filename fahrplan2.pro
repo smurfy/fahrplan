@@ -25,11 +25,12 @@ symbian:TARGET.UID3 = 0xE4182966
 #symbian:DEPLOYMENT.installer_header = 0x2002CCCF
 
 # Allow network access on Symbian
-symbian:TARGET.CAPABILITY += NetworkServices
+symbian:TARGET.CAPABILITY += NetworkServices Location WriteUserData
 
 CONFIG += debug
 
 CONFIG += mobility
+symbian:CONFIG += qt-components
 MOBILITY += location organizer
 
 # The .cpp file which was generated for your project. Feel free to hack it.
@@ -87,6 +88,21 @@ OTHER_FILES += \
     src/gui/fremantle/hildon/HildonButton.qml \
     src/gui/harmattan/AboutPage.qml
 
+symbian {
+    OTHER_FILES += \
+        src/gui/symbian/TimeTableResultsPage.qml \
+        src/gui/symbian/MainPage.qml \
+        src/gui/symbian/main.qml \
+        src/gui/symbian/JourneyResultsPage.qml \
+        src/gui/symbian/JourneyDetailsResultsPage.qml \
+        src/gui/symbian/AboutPage.qml \
+        src/gui/symbian/components/SubTitleButton.qml \
+        src/gui/symbian/components/StationSelect.qml \
+        src/gui/symbian/icon/icon-m-toolbar-train.svg \
+        src/gui/symbian/icon/icon-m-toolbar-help.svg \
+        src/gui/symbian/icon/icon-m-toolbar-clock.svg
+}
+
 contains(MEEGO_EDITION,harmattan) {
     RESOURCES += harmattan_res.qrc
 
@@ -101,6 +117,8 @@ maemo5 {
 
     DEFINES += Q_WS_MAEMO_5
 }
+
+symbian:RESOURCES += symbian_res.qrc
 
 win32 {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
@@ -136,23 +154,3 @@ HEADERS += \
     src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
     src/parser/parser_xmlnri.h
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

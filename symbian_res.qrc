@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/gui/symbian/main.qml</file>
+        <file>src/gui/symbian/MainPage.qml</file>
+        <file>src/gui/symbian/components/StationSelect.qml</file>
+        <file>src/gui/symbian/components/SubTitleButton.qml</file>
+        <file>src/gui/symbian/JourneyResultsPage.qml</file>
+        <file>src/gui/symbian/JourneyDetailsResultsPage.qml</file>
+        <file>src/gui/symbian/AboutPage.qml</file>
+        <file>src/gui/symbian/TimeTableResultsPage.qml</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-help.svg</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-clock.svg</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-train.svg</file>
+        <file>translations/fahrplan_de.qm</file>
+    </qresource>
+</RCC>

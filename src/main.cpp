@@ -21,7 +21,7 @@
 #include <QtGui/QApplication>
 #include <qplatformdefs.h>
 
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
     #include <QtDeclarative>
 #elif defined(Q_WS_WIN) || defined(Q_WS_X11)
     #include "gui/desktop-test/mainwindow.h"
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
     #if defined(Q_WS_WIN)
         MainWindow w;
         w.show();
-    #elif defined(Q_WS_X11)
-        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+    #elif defined(Q_WS_X11) || defined(Q_OS_SYMBIAN)
+        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
             qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
             qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
             qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
@@ -68,6 +68,9 @@ int main(int argc, char *argv[])
             qmlRegisterType<HildonHelper>("HildonHelper", 1, 0, "HildonHelper");
             view.setSource(QUrl("qrc:/src/gui/fremantle/main.qml"));
             view.show();
+        #elif defined(Q_OS_SYMBIAN)
+            view.setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
+            view.showFullScreen();
         #else
             MainWindow w;
             w.show();
