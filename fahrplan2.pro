@@ -113,9 +113,13 @@ include(deployment.pri)
 qtcAddDeployment()
 
 # enable booster
-CONFIG += qdeclarative-boostable
-QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
-QMAKE_LFLAGS += -pie -rdynamic
+symbian {
+    CONFIG += symbian_appbooster
+} else {
+    CONFIG += qdeclarative-boostable
+    QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
+    QMAKE_LFLAGS += -pie -rdynamic
+}
 
 HEADERS += \
     src/parser/parser_hafasxml.h \
