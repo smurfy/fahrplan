@@ -1,7 +1,7 @@
 import Fahrplan 1.0
 import QtQuick 1.1
-import com.nokia.extras 1.0
-import com.nokia.meego 1.0
+import com.nokia.extras 1.1
+import com.nokia.symbian 1.1
 import "components"
 
 Page {
@@ -89,7 +89,8 @@ Page {
             running: true
             visible: false
 
-            platformStyle: BusyIndicatorStyle { size: "large" }
+            width: 96; height: width
+//            platformStyle: BusyIndicatorStyle { size: "large" }
         }
 
         ListView {
@@ -420,18 +421,17 @@ Page {
     ToolBarLayout {
         id: journeyDetailResultsToolbar
 
-        ToolIcon {
+        ToolButton {
             id : backIcon;
-            iconId: "toolbar-back"
+            iconSource: "toolbar-back"
             onClicked: {
                 pageStack.pop();
             }
         }
 
-        ToolIcon {
+        ToolButton {
             id : calendarIcon;
-            iconId: "toolbar-list"
-            iconSource: enabled ? "" : "image://theme/progress_78_01"
+            iconSource: enabled ? "toolbar-list" : "image://theme/progress_78_01"
 
             visible: !searchIndicator.visible
 
@@ -443,7 +443,8 @@ Page {
             BusyIndicator {
                 visible: !calendarIcon.enabled
                 running: true
-                style: BusyIndicatorStyle { size: "small" }
+                width: 24; height: width
+//                style: BusyIndicatorStyle { size: "small" }
                 anchors.centerIn: parent
             }
         }

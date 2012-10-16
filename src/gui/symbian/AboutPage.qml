@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import com.nokia.symbian 1.1
 import Fahrplan 1.0
 
 Page {
@@ -115,9 +115,9 @@ Page {
     ToolBarLayout {
         id: aboutToolbar
 
-        ToolIcon {
+        ToolButton {
             id : backIcon;
-            iconId: "toolbar-back"
+            iconSource: "toolbar-back"
             onClicked: {
                 pageStack.pop();
             }

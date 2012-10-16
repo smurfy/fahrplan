@@ -1,7 +1,7 @@
 import Fahrplan 1.0
 import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import com.nokia.symbian 1.1
+import com.nokia.extras 1.1
 import "components"
 
 Page {
@@ -51,7 +51,8 @@ Page {
             running: true
             visible: false
 
-            platformStyle: BusyIndicatorStyle { size: "large" }
+            width: 96; height: width
+//            platformStyle: BusyIndicatorStyle { size: "large" }
         }
 
         ListView {
@@ -227,9 +228,9 @@ Page {
     ToolBarLayout {
         id: timetableResultsToolbar
 
-        ToolIcon {
+        ToolButton {
             id : backIcon;
-            iconId: "toolbar-back"
+            iconSource: "toolbar-back"
             onClicked: {
                 pageStack.pop();
                 fahrplanBackend.parser.cancelRequest();

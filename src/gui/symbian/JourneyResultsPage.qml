@@ -1,6 +1,6 @@
 import Fahrplan 1.0
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import com.nokia.symbian 1.1
 import "components"
 
 Page {
@@ -63,7 +63,8 @@ Page {
             running: true
             visible: false
 
-            platformStyle: BusyIndicatorStyle { size: "large" }
+            width: 96; height: width
+//            platformStyle: BusyIndicatorStyle { size: "large" }
         }
 
         Item {
@@ -297,16 +298,16 @@ Page {
     ToolBarLayout {
         id: journeyResultsToolbar
 
-        ToolIcon {
+        ToolButton {
             id : backIcon;
-            iconId: "toolbar-back"
+            iconSource: "toolbar-back"
             onClicked: {
                 pageStack.pop();
                 fahrplanBackend.parser.cancelRequest();
             }
         }
 
-        ToolButtonRow {
+        ButtonRow {
             ToolButton {
                 text:qsTr("Earlier")
                 visible: !searchIndicatorVisible;

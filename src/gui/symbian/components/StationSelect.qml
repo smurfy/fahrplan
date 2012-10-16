@@ -1,8 +1,8 @@
 import Fahrplan 1.0
 import QtQuick 1.1
 import QtMobility.location 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import com.nokia.symbian 1.1
+import com.nokia.extras 1.1
 import "."
 
 Page {
@@ -63,10 +63,10 @@ Page {
                 }
 
 
-                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
+//                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
 
                 placeholderText: qsTr("Search for Station...")
-                platformStyle: TextFieldStyle { paddingRight: searchButton.width }
+//                platformStyle: TextFieldStyle { paddingRight: searchButton.width }
                 Image {
                     id: searchButton
                     anchors.right: parent.right
@@ -105,7 +105,7 @@ Page {
                     top: parent.top
                     topMargin: 10
                 }
-                platformStyle: ButtonStyle { inverted: true }
+//                platformStyle: ButtonStyle { inverted: true }
                 iconSource: "image://theme/icon-s-calendar-location-picker-inverse"
                 width: visible ? 80 : 0
 
@@ -264,7 +264,8 @@ Page {
                 running: process
                 visible: process
 
-                platformStyle: BusyIndicatorStyle { size: "small" }
+                width: 24; height: width
+//                platformStyle: BusyIndicatorStyle { size: "small" }
             }
         }
     }
@@ -280,9 +281,9 @@ Page {
     ToolBarLayout {
         id:stationSelectToolbar
 
-        ToolIcon {
+        ToolButton {
             id : backIcon
-            iconId: "toolbar-back"
+            iconSource: "toolbar-back"
             onClicked: {
                 pageStack.pop();
             }
@@ -291,7 +292,7 @@ Page {
         ButtonRow{
             ToolButton {
                 id: favIcon
-                platformStyle: TabButtonStyle{}
+//                platformStyle: TabButtonStyle{}
                 iconSource: "image://theme/icon-m-toolbar-favorite-mark"
                 onClicked: {
                     updateFavorites();
@@ -306,7 +307,7 @@ Page {
             }
             ToolButton {
                     id: searchIcon
-                    platformStyle: TabButtonStyle{}
+//                    platformStyle: TabButtonStyle{}
                     iconSource: "image://theme/icon-m-toolbar-search"
                     onClicked: {
                         listView.model = stationsResultModel

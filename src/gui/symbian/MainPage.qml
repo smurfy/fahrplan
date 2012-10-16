@@ -1,6 +1,6 @@
 import QtQuick 1.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import com.nokia.symbian 1.1
+import com.nokia.extras 1.1
 import "components"
 import Fahrplan 1.0
 
@@ -461,35 +461,40 @@ Page {
     ToolBarLayout {
         id: mainToolbar
 
+        ToolButton {
+            id: exitIcon
+            iconSource: "toolbar-back"
+            onClicked: {
+                Qt.quit();
+            }
+        }
         ButtonRow{
             ToolButton {
                 id: searchMode0Toggle
-                platformStyle: TabButtonStyle{}
-                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train.svg";
+//                platformStyle: TabButtonStyle{}
+                iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-train.svg";
                 onClicked: {
                     searchmode = 0;
                     updateButtonVisibility();
                 }
-                flat: true
                 checkable: true
                 checked: true
             }
             ToolButton {
                 id: searchMode1Toggle
-                platformStyle: TabButtonStyle{}
-                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock.svg";
+//                platformStyle: TabButtonStyle{}
+                iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-clock.svg";
                 onClicked: {
                     searchmode = 1;
                     updateButtonVisibility();
                 }
-                flat: false
                 checkable: true
                 checked: false
             }
         }
-        ToolIcon {
+        ToolButton {
             id : aboutIcon;
-            iconId: "toolbar-settings";
+            iconSource: "toolbar-settings";
             onClicked: {
                 pageStack.push(aboutPage);
             }
