@@ -102,20 +102,20 @@ Page {
             }
             height: sourceSize.height
             width: sourceSize.width
-            source: "image://theme/meegotouch-combobox-indicator-inverted"
+            source: "image://theme/qtg_graf_choice_list_indicator"
         }
     }
 
     Flickable {
         id: flickable
         anchors {
-            topMargin: 10
+            topMargin: platformStyle.paddingMedium
             top: titleBar.bottom
             bottom: mainToolbar.top
-            bottomMargin: 10
+            bottomMargin: platformStyle.paddingMedium
         }
         width: mainPage.width
-        height: mainPage.height - titleBar.height - 20
+        height: mainPage.height - titleBar.height - 2 * platformStyle.paddingMedium
         contentWidth: buttons.width
         contentHeight: buttons.height
         flickableDirection: Flickable.VerticalFlick
@@ -144,7 +144,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/qtg_graf_drill_down_indicator"
             }
             SubTitleButton {
                 id: viaButton
@@ -157,7 +157,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/qtg_graf_drill_down_indicator"
             }
             SubTitleButton {
                 id: arrivalButton
@@ -170,7 +170,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/qtg_graf_drill_down_indicator"
             }
             SubTitleButton {
                 id: stationButton
@@ -180,7 +180,7 @@ Page {
                 onClicked: {
                     pageStack.push(stationStationSelect)
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/qtg_graf_drill_down_indicator"
             }
             SubTitleButton {
                 id: directionButton
@@ -193,7 +193,7 @@ Page {
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/qtg_graf_drill_down_indicator"
             }
             SubTitleButton {
                 id: datePickerButton
@@ -220,7 +220,7 @@ Page {
                         rightMargin: 50
                         verticalCenter: parent.verticalCenter
                     }
-                    width: parent.width * 2 / 3
+                    width: parent.width * 3 / 5
                     Button {
                         id: modeDep
                         text: qsTr("Departure")
@@ -257,7 +257,7 @@ Page {
                     //Validation
                     if (stationButton.subTitleText == qsTr("please select")) {
                         banner.text = qsTr("Please select a Station");
-                        banner.show();
+                        banner.open();
                         return;
                     }
 
@@ -290,6 +290,7 @@ Page {
 
             Button {
                 id: startSearch
+                width: parent.width / 2
                 text: qsTr("Start search")
                 anchors {
                     topMargin: 20
@@ -305,7 +306,7 @@ Page {
                     //Validation
                     if (departureButton.subTitleText == qsTr("please select") || arrivalButton.subTitleText == qsTr("please select")) {
                         banner.text = qsTr("Please select a departure and arrival station.");
-                        banner.show();
+                        banner.open();
                         return;
                     }
 
@@ -463,7 +464,7 @@ Page {
 
         ToolButton {
             id: exitIcon
-            iconSource: "toolbar-back"
+            iconSource: "image://theme/qtg_graf_popup_close_normal"
             onClicked: {
                 Qt.quit();
             }
@@ -471,7 +472,6 @@ Page {
         ButtonRow{
             ToolButton {
                 id: searchMode0Toggle
-//                platformStyle: TabButtonStyle{}
                 iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-train.svg";
                 onClicked: {
                     searchmode = 0;
@@ -482,7 +482,6 @@ Page {
             }
             ToolButton {
                 id: searchMode1Toggle
-//                platformStyle: TabButtonStyle{}
                 iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-clock.svg";
                 onClicked: {
                     searchmode = 1;
@@ -494,19 +493,11 @@ Page {
         }
         ToolButton {
             id : aboutIcon;
-            iconSource: "toolbar-settings";
+            iconSource: "toolbar-settings"
             onClicked: {
                 pageStack.push(aboutPage);
             }
         }
-    }
-
-    InfoBanner{
-            id: banner
-            objectName: "fahrplanInfoBanner"
-            text: ""
-            anchors.top: parent.top
-            anchors.topMargin: 10
     }
 
     ContextMenu {
@@ -598,20 +589,20 @@ Page {
         onParserJourneyResult: {
             if (result.count <= 0) {
                 banner.text = qsTr("No results found");
-                banner.show();
+                banner.open();
             }
         }
 
         onParserJourneyDetailsResult: {
             if (result.count <= 0) {
                 banner.text = qsTr("Error loading details");
-                banner.show();
+                banner.open();
             }
         }
 
         onParserErrorOccured: {
             banner.text = msg;
-            banner.show();
+            banner.open();
         }
 
         onParserChanged: {
@@ -660,4 +651,28 @@ Page {
             }
         }
     }
+
+    // Timer which enables exit icon after 1 second
+    Timer {
+        id: exitIconDelay
+        interval: 500
+        onTriggered: {
+            exitIcon.enabled = true
+        }
+    }
+
+    // Disable exit icon when page deactivates and start
+    // the timer to enable it back when it activates.
+    onStatusChanged: {
+        switch (status) {
+        case PageStatus.Active:
+            exitIconDelay.start();
+            break;
+        case PageStatus.Deactivating:
+            exitIcon.enabled = false;
+            break;
+        default:
+        }
+    }
+
 }
