@@ -11,7 +11,7 @@ Item {
     signal clicked
     signal pressAndHold
 
-    height: title.height + subTitle.height + 20
+    height: title.height + subTitle.height + platformStyle.paddingMedium + platformStyle.paddingLarge
     width: parent.width
 
     Rectangle {
@@ -37,14 +37,14 @@ Item {
 
         anchors {
             left: parent.left
-            leftMargin: 10
-            rightMargin: 10
-            topMargin: 7
+            leftMargin: platformStyle.paddingMedium
+            rightMargin: platformStyle.paddingMedium
+            topMargin: platformStyle.paddingMedium
             top: parent.top
         }
 
         font.bold: true
-        font.pixelSize: 26
+        font.pixelSize: platformStyle.fontSizeLarge
         text: "-"
     }
 
@@ -52,14 +52,14 @@ Item {
         id: subTitle
         anchors {
             top:  title.bottom
-            topMargin: 5
+            topMargin: platformStyle.paddingSmall
             left: parent.left
-            leftMargin: 10
-            rightMargin: 10
+            leftMargin: platformStyle.paddingMedium
+            rightMargin: platformStyle.paddingMedium
             right: icon.left
         }
         text: ""
-        font.pixelSize: 28
+        font.pixelSize: platformStyle.fontSizeLarge + 2
     }
 
     Image {
@@ -67,11 +67,11 @@ Item {
 
         anchors {
             right: parent.right
-            rightMargin: 10
+            rightMargin: platformStyle.paddingMedium
             verticalCenter: parent.verticalCenter
         }
         height: sourceSize.height
         width: sourceSize.width
-        source: "image://theme/meegotouch-combobox-indicator"
+        source: "image://theme/qtg_graf_choice_list_indicator"
     }
 }
