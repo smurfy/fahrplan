@@ -10,20 +10,17 @@ Page {
     Flickable {
         id: flickable
 
-        width: aboutPage.width
-        height: aboutPage.height - 40
         flickableDirection: Flickable.VerticalFlick
         clip: true
-        contentWidth: aboutPage.width - 60
-        contentHeight: aboutContainer.height + moreText.height + 60
+        contentWidth: aboutPage.width - 2 * platformStyle.paddingLarge
+        contentHeight: aboutContainer.height + moreText.height + 2 * platformStyle.paddingLarge
 
         anchors {
-            left: parent.left
-            leftMargin: 20
-            rightMargin: 20
-            right: parent.right
-            top: parent.top
-            topMargin: 20
+            fill: parent
+            topMargin: platformStyle.paddingLarge
+            leftMargin: platformStyle.paddingLarge
+            bottomMargin: 0
+            rightMargin: platformStyle.paddingLarge / 3
         }
 
         Item {
@@ -33,42 +30,38 @@ Page {
 
             Image {
                 id: logoImg
-                source: "file://usr/share/icons/hicolor/scalable/apps/fahrplan2.svg"
+                source: "qrc:/data/fahrplan2.svg"
             }
 
-            Text {
+            Label {
                 text: qsTr("About Fahrplan")
                 id: aboutText
                 anchors {
                     left: logoImg.right
-                    leftMargin: 30
+                    leftMargin: platformStyle.paddingLarge
                     top: parent.top
                 }
 
-                font {
-                    pointSize: 24
-                }
+                font.pixelSize: platformStyle.fontSizeLarge
             }
 
-            Text {
+            Label {
                 textFormat: Text.RichText
                 text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
                 color: "darkgrey"
                 anchors {
                     left: logoImg.right
-                    leftMargin: 30
+                    leftMargin: platformStyle.paddingLarge
                     top: aboutText.bottom
                 }
 
-                font {
-                    pointSize: 14
-                }
+                font.pixelSize: platformStyle.fontSizeSmall
             }
 
             height: logoImg.height
         }
 
-        Text {
+        Label {
             id: moreText
             text: "This or prior versions uses code contribution by:<br><i>gri</i>, <i>lorenzph</i>, <i>CaCO3</i>, <i>hcm</i>, <i>thp</i>, <i>qwerty12</i>, <i>qbast</i>, <i>Thomas Fischer</i>" +
                   "<br>" +
@@ -93,16 +86,12 @@ Page {
 
             anchors {
                 top: aboutContainer.bottom
-                topMargin: 20
+                topMargin: platformStyle.paddingLarge
                 horizontalCenter: parent.horizontalCenter
             }
             wrapMode: Text.WordWrap
             width: parent.width
             textFormat: Text.RichText
-
-            font {
-                pointSize: 14
-            }
 
             onLinkActivated : Qt.openUrlExternally(link);
         }
