@@ -12,6 +12,7 @@
         <file>src/gui/symbian/icon/icon-m-toolbar-help.svg</file>
         <file>src/gui/symbian/icon/icon-m-toolbar-clock.svg</file>
         <file>src/gui/symbian/icon/icon-m-toolbar-train.svg</file>
+        <file>src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png</file>
         <file>translations/fahrplan_de.qm</file>
     </qresource>
 </RCC>

@@ -47,7 +47,7 @@ Page {
         id: titleBar
 
         width: parent.width
-        height: 70
+        height: 60
 
         Rectangle {
             anchors.fill: parent
@@ -86,7 +86,7 @@ Page {
                 verticalCenter: parent.verticalCenter
             }
             font.bold: true;
-            font.pixelSize: 32
+            font.pixelSize: 28
             color: "White"
 
             text: fahrplanBackend.parserName
@@ -144,7 +144,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
                 }
-                icon: "image://theme/qtg_graf_drill_down_indicator"
+                icon: "image://theme/toolbar-next"
             }
             SubTitleButton {
                 id: viaButton
@@ -157,7 +157,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
                 }
-                icon: "image://theme/qtg_graf_drill_down_indicator"
+                icon: "image://theme/toolbar-next"
             }
             SubTitleButton {
                 id: arrivalButton
@@ -170,7 +170,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
                 }
-                icon: "image://theme/qtg_graf_drill_down_indicator"
+                icon: "image://theme/toolbar-next"
             }
             SubTitleButton {
                 id: stationButton
@@ -180,7 +180,7 @@ Page {
                 onClicked: {
                     pageStack.push(stationStationSelect)
                 }
-                icon: "image://theme/qtg_graf_drill_down_indicator"
+                icon: "image://theme/toolbar-next"
             }
             SubTitleButton {
                 id: directionButton
@@ -193,7 +193,7 @@ Page {
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
                 }
-                icon: "image://theme/qtg_graf_drill_down_indicator"
+                icon: "image://theme/toolbar-next"
             }
             SubTitleButton {
                 id: datePickerButton
@@ -244,6 +244,7 @@ Page {
 
             Button {
                 id: timetableSearch
+                width: parent.width * 2 / 3
                 text: modeDep.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
                     topMargin: 20
@@ -290,7 +291,7 @@ Page {
 
             Button {
                 id: startSearch
-                width: parent.width / 2
+                width: parent.width * 2 / 3
                 text: qsTr("Start search")
                 anchors {
                     topMargin: 20

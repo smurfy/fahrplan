@@ -3,7 +3,6 @@ import QtQuick 1.1
 import QtMobility.location 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
-import "."
 
 Page {
     id: stationSelect
@@ -35,50 +34,27 @@ Page {
         Item {
             id: search
 
-            height: 70
+            height: 60
 
             anchors {
                 left: parent.left
                 right: parent.right
             }
 
-            Rectangle {
-                anchors.fill: parent
-                color: "LightGrey"
-            }
-
-            TextField {
+            SearchBox {
                 id: searchBox
+
                 anchors {
                     left: parent.left
-                    leftMargin: 10
                     right: gpsButton.left
-                    rightMargin: 10
-                    top: parent.top
-                    topMargin: 10
+                    verticalCenter: parent.verticalCenter
                 }
 
-                onTextChanged: {
+                onSearchTextChanged: {
                     search.findStationsByName();
                 }
 
-
-//                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
-
-                placeholderText: qsTr("Search for Station...")
-//                platformStyle: TextFieldStyle { paddingRight: searchButton.width }
-                Image {
-                    id: searchButton
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "image://theme/icon-m-common-search"
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            search.findStationsByName();
-                        }
-                    }
-                }
+                placeHolderText: qsTr("Search for Station...")
             }
 
             function findStationsByName(){
@@ -94,20 +70,35 @@ Page {
                 listView.model = stationsResultModel
                 favIcon.checked = false;
                 searchIcon.checked = true;
-                fahrplanBackend.parser.findStationsByName(searchBox.text);
+                fahrplanBackend.parser.findStationsByName(searchBox.searchText);
+            }
+
+            BorderImage {
+                anchors {
+                    top: parent.top
+                    left: gpsButton.left
+                    bottom: parent.bottom
+                    right: parent.right
+                }
+                source: "image://theme/qtg_fr_tab_bar"
+                border {
+                    left: platformStyle.borderSizeMedium
+                    top: platformStyle.borderSizeMedium
+                    right: platformStyle.borderSizeMedium
+                    bottom: platformStyle.borderSizeMedium
+                }
             }
 
             Button {
                 id: gpsButton
                 anchors {
                     right: parent.right
-                    rightMargin: visible ? 10 : 0
-                    top: parent.top
-                    topMargin: 10
+                    rightMargin: visible ? platformStyle.paddingMedium : 0
+                    verticalCenter: parent.verticalCenter
                 }
-//                platformStyle: ButtonStyle { inverted: true }
-                iconSource: "image://theme/icon-s-calendar-location-picker-inverse"
-                width: visible ? 80 : 0
+                platformInverted: true
+                iconSource: "qrc:/src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png"
+                width: visible ? 60 : 0
 
                 onClicked: {
                     listView.model = stationsResultModel
@@ -136,8 +127,8 @@ Page {
             height: parent.height - search.top - stationSelectToolbar.height
             text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
             color: "DarkGrey"
-            font.pixelSize: 50
-            visible: (stationsFavoritesModel.count == 0 && listView.model == stationsFavoritesModel)
+            font.pixelSize: 2 * platformStyle.fontSizeMedium
+            visible: (stationsFavoritesModel.count == 0 && listView.model === stationsFavoritesModel)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors {
@@ -152,16 +143,16 @@ Page {
         ListView {
             id: listView
             anchors {
-                topMargin: 10
+                topMargin: platformStyle.paddingMedium
                 top: search.bottom
-                bottomMargin: 10
+                bottomMargin: platformStyle.paddingMedium
             }
             height: parent.height - stationSelectToolbar.height
             width: parent.width
             model: stationsFavoritesModel
             delegate: stationsResultDelegate
             clip: true
-            visible: (stationsFavoritesModel.count > 0 && listView.model == stationsFavoritesModel) || listView.model == stationsResultModel
+            visible: (stationsFavoritesModel.count > 0 && listView.model === stationsFavoritesModel) || listView.model === stationsResultModel
         }
     }
 
@@ -198,11 +189,15 @@ Page {
 
             Image {
                 id: img_fav
-                source: isfavorite ? "image://theme/icon-s-common-favorite-mark" : "image://theme/icon-s-common-favorite-unmark"
+                source: isfavorite ? "image://theme/qtg_graf_rating_rated" : "image://theme/qtg_graf_rating_unrated"
                 visible: showfavorite
+                sourceSize {
+                    width: platformStyle.graphicSizeSmall
+                    height: platformStyle.graphicSizeSmall
+                }
                 anchors {
                     left: parent.left
-                    leftMargin: 10
+                    leftMargin: platformStyle.paddingMedium
                     verticalCenter: parent.verticalCenter
                 }
             }
@@ -220,11 +215,11 @@ Page {
                     if (showfavorite) {
                         if (fahrplanBackend.favorites.isFavorite(lbl_stationname.text)) {
                             banner.text = qsTr("Removing '%1' from favorites").arg(lbl_stationname.text)
-                            banner.show();
+                            banner.open();
                             fahrplanBackend.favorites.removeFavorite(lbl_stationname.text);
                         } else {
                             banner.text = qsTr("Adding '%1' to favorites").arg(lbl_stationname.text)
-                            banner.show();
+                            banner.open();
                             fahrplanBackend.favorites.addFavorite(lbl_stationname.text);
                         }
                     }
@@ -235,7 +230,7 @@ Page {
                 id: lbl_stationname
                 anchors {
                     left: showfavorite ? img_fav.right : parent.left
-                    leftMargin: 10
+                    leftMargin: platformStyle.paddingMedium
                     rightMargin: 20
                     right: process ? process.left : parent.right
                     verticalCenter: parent.verticalCenter
@@ -247,7 +242,7 @@ Page {
                 id: lbl_miscinfo
                 anchors {
                     right: parent.right
-                    rightMargin: 10
+                    rightMargin: platformStyle.paddingMedium
                     verticalCenter: parent.verticalCenter
                 }
                 text: miscinfo
@@ -264,8 +259,7 @@ Page {
                 running: process
                 visible: process
 
-                width: 24; height: width
-//                platformStyle: BusyIndicatorStyle { size: "small" }
+                width: platformStyle.graphicSizeSmall; height: width
             }
         }
     }
@@ -289,11 +283,10 @@ Page {
             }
         }
 
-        ButtonRow{
+        ButtonRow {
             ToolButton {
                 id: favIcon
-//                platformStyle: TabButtonStyle{}
-                iconSource: "image://theme/icon-m-toolbar-favorite-mark"
+                iconSource: "image://theme/qtg_graf_rating_rated"
                 onClicked: {
                     updateFavorites();
                     listView.model = stationsFavoritesModel
@@ -301,23 +294,20 @@ Page {
                     favIcon.checked = true;
                     searchIcon.checked = false;
                 }
-                flat: true
                 checkable: true
                 checked: true
             }
             ToolButton {
-                    id: searchIcon
-//                    platformStyle: TabButtonStyle{}
-                    iconSource: "image://theme/icon-m-toolbar-search"
-                    onClicked: {
-                        listView.model = stationsResultModel
-                        favIcon.checked = false;
-                        searchIcon.checked = true;
-                    }
-                    flat: true
-                    checkable: true
-                    checked: false
+                id: searchIcon
+                iconSource: "toolbar-search"
+                onClicked: {
+                    listView.model = stationsResultModel
+                    favIcon.checked = false;
+                    searchIcon.checked = true;
                 }
+                checkable: true
+                checked: false
+            }
         }
     }
 
@@ -377,14 +367,6 @@ Page {
                 })
             }
         }
-    }
-
-    InfoBanner{
-            id: banner
-            objectName: "fahrplanInfoBannerStationSelect"
-            text: ""
-            anchors.top: parent.top
-            anchors.topMargin: 10
     }
 
     function printableMethod(method) {
