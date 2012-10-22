@@ -21,22 +21,23 @@ Page {
         Item {
             id: titleBar
 
-            height: journeyStations.height + journeyDate.height + 20
+            height: journeyStations.height + journeyDate.height + 2 * platformStyle.paddingMedium
             width: parent.width
 
             Label {
                 id: journeyStations
                 text: ""
-                font.pixelSize: 30
+                font.pixelSize: 26
                 anchors {
                     left: parent.left
-                    leftMargin: 10
+                    leftMargin: platformStyle.paddingMedium
                     right: parent.right
-                    rightMargin: 10
+                    rightMargin: platformStyle.paddingMedium
                     top: parent.top
-                    topMargin: 10
+                    topMargin: platformStyle.paddingMedium
                 }
                 width: parent.width
+                wrapMode: Text.WordWrap
             }
 
             Label {
@@ -44,9 +45,9 @@ Page {
                 color: "Grey"
                 anchors {
                     left: parent.left
-                    leftMargin: 10
+                    leftMargin: platformStyle.paddingMedium
                     top: journeyStations.bottom
-                    topMargin: 10
+                    topMargin: platformStyle.paddingMedium
                 }
                 width: parent.width
                 visible: !searchIndicatorVisible
@@ -56,69 +57,51 @@ Page {
         BusyIndicator {
             id: searchIndicator
             anchors {
-                top: titleBar.bottom
-                topMargin: 50;
                 horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
             }
             running: true
             visible: false
 
-            width: 96; height: width
-//            platformStyle: BusyIndicatorStyle { size: "large" }
+            width: platformStyle.graphicSizeLarge; height: width
         }
 
-        Item {
+        Row {
             id: listHead
 
-            width: parent.width;
-            height: lbl_departuretime.height
+            height: childrenRect.height
             visible: !searchIndicator.visible
+            spacing: platformStyle.paddingMedium
 
             anchors {
                 top: titleBar.bottom
-                topMargin: 10
+                topMargin: platformStyle.paddingMedium
+                left: parent.left
+                leftMargin: platformStyle.paddingMedium
+                right: parent.right
+                rightMargin: platformStyle.paddingMedium
             }
 
             Label {
-                id: lbl_departuretime
-                anchors {
-                    left: parent.left
-                    leftMargin: 10
-                }
                 text: qsTr("Dep.")
-                width: (parent.width  - 40) / 4
+                width: (parent.width - 3 * listHead.spacing) / 4
             }
 
             Label {
-                id: lbl_arrivaltime
-                anchors {
-                    left: lbl_departuretime.right
-                    leftMargin: 10
-                }
                 text: qsTr("Arr.")
-                width: (parent.width  - 40) / 4
+                width: (parent.width - 3 * listHead.spacing) / 4
             }
 
             Label {
-                id: lbl_duration
-                anchors {
-                    left: lbl_arrivaltime.right
-                    leftMargin: 10
-                }
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("Dur.")
-                width: (parent.width  - 40) / 4
+                width: (parent.width - 3 * listHead.spacing) / 4
             }
 
             Label {
-                id: lbl_transfers
-                anchors {
-                    left: lbl_duration.right
-                    leftMargin: 10
-                }
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("Trans.")
-                width: (parent.width  - 40) / 4
+                width: (parent.width - 3 * listHead.spacing) / 4
             }
         }
 
@@ -126,10 +109,11 @@ Page {
             id: listView
             anchors {
                 top: listHead.bottom
-                topMargin: 10
+                topMargin: platformStyle.paddingMedium
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
             }
-            height: (parent.height - titleBar.height - listHead.height) - 10
-            width: parent.width
             model: journeyResultModel
             delegate:  journeyResultDelegate
             clip: true
@@ -146,12 +130,14 @@ Page {
 
         Item {
             id: delegateItem
+
             width: listView.width
-            height: 30 + lbl_departuretime.height + lbl_traintyp.height + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
+            height: labels.height + 2 * platformStyle.paddingLarge
+            visible: !searchIndicator.visible
 
             Rectangle {
                 anchors.fill: parent
-                color: itemNum % 2 ? "White" : "LightGrey"
+                color: itemNum % 2 ? "#222" : "#333"
             }
 
             Rectangle {
@@ -165,7 +151,6 @@ Page {
                 id: mouseArea
                 anchors.fill: background
                 onClicked: {
-
                     detailsResultsPage.titleText = qsTr("Loading details");
                     detailsResultsPage.subTitleText = qsTr("please wait...");
                     detailsResultsPage.subTitleText2 = "";
@@ -175,84 +160,59 @@ Page {
                 }
             }
 
-            Item {
+            Column {
+                id: labels
+
+                height: childrenRect.height
+                spacing: platformStyle.paddingMedium
                 anchors {
-                    verticalCenter: parent.verticalCenter
                     top: parent.top
-                    topMargin: 10
+                    topMargin: platformStyle.paddingLarge
+                    left: parent.left
+                    leftMargin: platformStyle.paddingMedium
+                    right: parent.right
+                    rightMargin: platformStyle.paddingMedium
                 }
 
-                width: parent.width
-                height: parent.height
+                Row {
+                    width: parent.width
+                    height: childrenRect.height
+                    spacing: platformStyle.paddingMedium
 
-                Label {
-                    id: lbl_departuretime
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
+                    Label {
+                        text: departureTime
+                        width: (parent.width - 3 * listHead.spacing) / 4
                     }
-                    text: departureTime
-                    width: (parent.width  - 40) / 4
-                }
 
-                Label {
-                    id: lbl_arrivaltime
-                    anchors {
-                        left: lbl_departuretime.right
-                        leftMargin: 10
+                    Label {
+                        text: arrivalTime
+                        width: (parent.width - 3 * listHead.spacing) / 4
                     }
-                    text: arrivalTime
-                    width: (parent.width  - 40) / 4
-                }
 
-                Label {
-                    id: lbl_duration
-                    anchors {
-                        left: lbl_arrivaltime.right
-                        leftMargin: 10
+                    Label {
+                        horizontalAlignment: Text.AlignHCenter
+                        text: duration
+                        width: (parent.width - 3 * listHead.spacing) / 4
                     }
-                    horizontalAlignment: Text.AlignHCenter
-                    text: duration
-                    width: (parent.width  - 40) / 4
-                }
 
-                Label {
-                    id: lbl_transfers
-                    anchors {
-                        left: lbl_duration.right
-                        leftMargin: 10
+                    Label {
+                        horizontalAlignment: Text.AlignHCenter
+                        text: transfers
+                        width: (parent.width - 3 * listHead.spacing) / 4
                     }
-                    horizontalAlignment: Text.AlignHCenter
-                    text: transfers
-                    width: (parent.width  - 40) / 4
                 }
 
                 Label {
-                    id: lbl_traintyp
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        top: lbl_departuretime.bottom
-                        topMargin: 5
-                    }
                     text: trainType
-                    width: parent.width - 40
+                    width: parent.width
                 }
 
                 Label {
-                    id: lbl_miscinfo
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        top: lbl_traintyp.bottom
-                        topMargin: 5
-                    }
-                    visible: (miscInfo == "") ? false : true
+                    visible: miscInfo !== ""
                     text: miscInfo
-                    width: parent.width - 40
+                    width: parent.width
                     font.bold: true
                 }
-
             }
         }
     }
@@ -290,7 +250,6 @@ Page {
         }
     }
 
-
     JourneyDetailsResultsPage {
         id: detailsResultsPage
     }
@@ -307,22 +266,20 @@ Page {
             }
         }
 
-        ButtonRow {
-            ToolButton {
-                text:qsTr("Earlier")
-                visible: !searchIndicatorVisible;
-                onClicked: {
-                    searchIndicatorVisible = true
-                    fahrplanBackend.parser.searchJourneyEarlier();
-                }
+        ToolButton {
+            text:qsTr("Earlier")
+            visible: !searchIndicatorVisible;
+            onClicked: {
+                searchIndicatorVisible = true
+                fahrplanBackend.parser.searchJourneyEarlier();
             }
-            ToolButton {
-                text:qsTr("Later")
-                visible: !searchIndicatorVisible;
-                onClicked: {
-                    searchIndicatorVisible = true
-                    fahrplanBackend.parser.searchJourneyLater();
-                }
+        }
+        ToolButton {
+            text:qsTr("Later")
+            visible: !searchIndicatorVisible;
+            onClicked: {
+                searchIndicatorVisible = true
+                fahrplanBackend.parser.searchJourneyLater();
             }
         }
     }

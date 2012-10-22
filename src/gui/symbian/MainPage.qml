@@ -86,7 +86,7 @@ Page {
                 verticalCenter: parent.verticalCenter
             }
             font.bold: true;
-            font.pixelSize: 28
+            font.pixelSize: 26
             color: "White"
 
             text: fahrplanBackend.parserName
