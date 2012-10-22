@@ -465,7 +465,7 @@ Page {
 
         ToolButton {
             id: exitIcon
-            iconSource: "image://theme/qtg_graf_popup_close_normal"
+            iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-close.png"
             onClicked: {
                 Qt.quit();
             }

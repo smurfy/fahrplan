@@ -100,7 +100,9 @@ symbian {
         src/gui/symbian/components/StationSelect.qml \
         src/gui/symbian/icon/icon-m-toolbar-train.svg \
         src/gui/symbian/icon/icon-m-toolbar-help.svg \
-        src/gui/symbian/icon/icon-m-toolbar-clock.svg
+        src/gui/symbian/icon/icon-m-toolbar-clock.svg \
+        src/gui/symbian/icon/icon-m-toolbar-close.png \
+        src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png
 }
 
 contains(MEEGO_EDITION,harmattan) {

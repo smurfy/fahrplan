@@ -55,11 +55,12 @@ Item {
             topMargin: platformStyle.paddingSmall
             left: parent.left
             leftMargin: platformStyle.paddingMedium
-            rightMargin: platformStyle.paddingMedium
             right: icon.left
+            rightMargin: platformStyle.paddingMedium
         }
         text: ""
         font.pixelSize: platformStyle.fontSizeLarge + 2
+        wrapMode: Text.WordWrap
     }
 
     Image {
