@@ -3,6 +3,7 @@ import QtQuick 1.1
 import com.nokia.extras 1.1
 import com.nokia.symbian 1.1
 import "components"
+import "js/style.js" as Style
 
 Page {
     id: searchDetailResultsPage
@@ -24,33 +25,34 @@ Page {
         Item {
             id: titleBar
 
-            height: journeyStations.height + journeyDate.height + 20
+            height: journeyStations.height + journeyDate.height + 2 * platformStyle.paddingMedium
             width: parent.width
 
             Label {
                 id: journeyStations
                 text: ""
-                font.pixelSize: 30
+                font.pixelSize: 26
                 anchors {
                     left: parent.left
-                    leftMargin: 10
+                    leftMargin: platformStyle.paddingMedium
                     right: parent.right
-                    rightMargin: 10
+                    rightMargin: platformStyle.paddingMedium
                     top: parent.top
-                    topMargin: 10
+                    topMargin: platformStyle.paddingMedium
                 }
                 width: parent.width
+                wrapMode: Text.WordWrap
             }
 
             Item {
                 id: journeyDate
                 anchors {
                     left: parent.left
-                    leftMargin: 10
+                    leftMargin: platformStyle.paddingMedium
                     right: parent.right
-                    rightMargin: 10
+                    rightMargin: platformStyle.paddingMedium
                     top: journeyStations.bottom
-                    topMargin: 10
+                    topMargin: platformStyle.paddingMedium
                 }
                 width: parent.width
                 height: lbljourneyDate.height
@@ -58,22 +60,22 @@ Page {
                 Label {
                     id: lbljourneyDate
                     anchors {
-                        left: parent.left
                         top: parent.top
+                        right: lbljourneyDuration.left
+                        rightMargin: platformStyle.paddingMedium
+                        left: parent.left
                     }
-                    width: ((parent.width / 3) * 2) - 20
-                    color: "Grey"
+                    color: platformStyle.colorNormalMid
+                    wrapMode: Text.WordWrap
                 }
 
                 Label {
                     id: lbljourneyDuration
                     anchors {
                         right: parent.right
-                        left: lbljourneyDate.right
                         top: parent.top
                     }
-                    width: (parent.width / 3) - 20
-                    color: "Grey"
+                    color: platformStyle.colorNormalMid
                     horizontalAlignment: Text.AlignRight
                 }
             }
@@ -89,19 +91,19 @@ Page {
             running: true
             visible: false
 
-            width: 96; height: width
-//            platformStyle: BusyIndicatorStyle { size: "large" }
+            width: platformStyle.graphicSizeLarge; height: width
         }
 
         ListView {
             id: listView
             anchors {
                 top: titleBar.bottom
-                topMargin: 10
+                topMargin: platformStyle.paddingMedium
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
             }
             visible: !searchIndicator.visible
-            height: (parent.height - titleBar.height) - 20
-            width: parent.width
             model: journeyDetailResultModel
             delegate:  journeyDetailResultDelegate
             clip: true
@@ -128,122 +130,142 @@ Page {
                 width: parent.width
                 height: parent.height
 
-                Item {
+                Rectangle {
                      id: item_station
 
+                     height: visible ? lbl_station.height + 2 * platformStyle.paddingMedium : 0
+                     color: Style.listBackgroundOdd
                      visible: isStation
-                     height: visible ? lbl_station.height + 20 : 0
 
-                     width: parent.width
-
-                     Rectangle {
-                         anchors {
-                             fill: parent
-                         }
-                         color: "White"
+                     anchors {
+                         left: parent.left
+                         right: parent.right
                      }
 
-                     Rectangle {
-                         anchors {
-                             left: parent.left
-                             leftMargin: 81
-                             top: parent.top
-                             topMargin: (isStart) ? parent.height / 2 : 0
-                         }
-                         color: "#0d70c5"
-                         height: (isStart || isStop) ? parent.height / 2  : parent.height
-                         width: 8
-                     }
+                     Item {
+                         id: times
 
-                     Rectangle {
-                         anchors {
-                             left: parent.left
-                             leftMargin: 70
-                             verticalCenter: parent.verticalCenter
-                         }
-
-                         gradient: Gradient {
-                             GradientStop {
-                                 position: 0.00;
-                                 color: "#0d70c5";
-                             }
-                             GradientStop {
-                                 position: 0.38;
-                                 color: "#0d70c5";
-                             }
-                             GradientStop {
-                                 position: 0.39;
-                                 color: "White";
-                             }
-                             GradientStop {
-                                 position: 0.50;
-                                 color: "White";
-                             }
-                             GradientStop {
-                                 position: 0.61;
-                                 color: "White";
-                             }
-                             GradientStop {
-                                 position: 0.62;
-                                 color: "#0d70c5";
-                             }
-                             GradientStop {
-                                 position: 1.0;
-                                 color: "#0d70c5";
-                             }
-                         }
-                         radius: 15
-                         height: 30
-                         width: 30
-                     }
-
-                     Label {
-                         anchors {
-                             left: parent.left
-                             leftMargin: 8
-                             top: parent.top
-                         }
-
-                         text: arrivalTime
-                         width: parent.width - 10
-                     }
-
-                     Label {
+                         width: childrenRect.width
+                         height: parent.height
 
                          anchors {
                              left: parent.left
-                             leftMargin: 8
-                             bottom: parent.bottom
+                             leftMargin: platformStyle.paddingMedium
                          }
 
-                         text: departureTime
-                         width: parent.width - 10
+                         Label {
+                             anchors {
+                                 top: parent.top
+                                 topMargin: platformStyle.paddingSmall
+                                 left: parent.left
+                             }
+
+                             text: arrivalTime
+                         }
+
+                         Label {
+                             anchors {
+                                 left: parent.left
+                                 bottom: parent.bottom
+                                 bottomMargin: platformStyle.paddingSmall
+                             }
+
+                             text: departureTime
+                         }
+                     }
+
+                     Item {
+                         id: circle
+
+                         width: childrenRect.width
+                         height: parent.height
+
+                         anchors {
+                             left: times.right
+                             leftMargin: platformStyle.paddingMedium
+                         }
+
+                         Rectangle {
+                             anchors {
+                                 left: parent.left
+                                 leftMargin: 11
+                                 top: parent.top
+                                 topMargin: (isStart) ? parent.height / 2 : 0
+                             }
+                             color: "#0d70c5"
+                             height: (isStart || isStop) ? parent.height / 2  : parent.height
+                             width: 8
+                         }
+
+                         Rectangle {
+                             anchors {
+                                 left: parent.left
+                                 verticalCenter: parent.verticalCenter
+                             }
+
+                             gradient: Gradient {
+                                 GradientStop {
+                                     position: 0.00;
+                                     color: "#0d70c5";
+                                 }
+                                 GradientStop {
+                                     position: 0.38;
+                                     color: "#0d70c5";
+                                 }
+                                 GradientStop {
+                                     position: 0.39;
+                                     color: Style.listBackgroundOdd
+                                 }
+                                 GradientStop {
+                                     position: 0.50;
+                                     color: Style.listBackgroundOdd
+                                 }
+                                 GradientStop {
+                                     position: 0.61;
+                                     color: Style.listBackgroundOdd
+                                 }
+                                 GradientStop {
+                                     position: 0.62;
+                                     color: "#0d70c5";
+                                 }
+                                 GradientStop {
+                                     position: 1.0;
+                                     color: "#0d70c5";
+                                 }
+                             }
+                             radius: 15
+                             smooth: true
+                             height: 30
+                             width: 30
+                         }
                      }
 
                      Item {
                         id: lbl_station
 
-                        height: lbl_station_name.height + lbl_station_info.height
-                        width: (parent.width - 110)
+                        height: childrenRect.height
 
                         anchors {
-                            left: parent.left
-                            leftMargin: 110
                             verticalCenter: parent.verticalCenter
+                            left: circle.right
+                            leftMargin: platformStyle.paddingMedium
+                            right: parent.right
+                            rightMargin: platformStyle.paddingMedium
                         }
 
                         Label {
                             id: lbl_station_name
                             text: stationName
                             width: parent.width
+                            wrapMode: Text.WordWrap
                         }
 
                         Label {
-
                             anchors {
                                 top: lbl_station_name.bottom
+                                topMargin: platformStyle.paddingSmall
                             }
-                            color: "DarkGrey"
+                            color: platformStyle.colorNormalMid
                             id: lbl_station_info
                             text: stationInfo
                             width: parent.width
@@ -251,29 +273,23 @@ Page {
                      }
                 }
 
-                Item {
+                Rectangle {
                     id: item_train
+
+                    height: visible ? lbl_train.height + 30 : 0
+                    color: Style.listBackgroundEven
+                    visible: isTrain
 
                     anchors {
                         top: item_station.bottom
-                    }
-
-                    visible: isTrain
-                    height: visible ? lbl_train.height + 30 : 0
-
-                    width: parent.width
-
-                    Rectangle {
-                        anchors {
-                            fill: parent
-                        }
-                        color: "LightGrey"
+                        left: parent.left
+                        right: parent.right
                     }
 
                     Rectangle {
                         anchors {
                             left: parent.left
-                            leftMargin: 81
+                            leftMargin: times.width + (circle.width - width) / 2 + 2 * platformStyle.paddingMedium
                         }
                         color: "#0d70c5"
                         height: parent.height
@@ -284,12 +300,14 @@ Page {
                         id: lbl_train
                         anchors {
                             left: parent.left
-                            leftMargin: 110
+                            leftMargin: times.width + circle.width + 3 * platformStyle.paddingMedium
+                            right: parent.right
+                            rightMargin: platformStyle.paddingMedium
                             verticalCenter: parent.verticalCenter
                         }
                         text: trainName
                         font.bold: true
-                        width: (parent.width  - 110)
+                        wrapMode: Text.WordWrap
                     }
                 }
             }
@@ -308,7 +326,7 @@ Page {
                 banner.text = qsTr("Journey has been added to your calendar.");
             else
                 banner.text = qsTr("Failed to add Journey to your calendar!");
-            banner.show();
+            banner.open();
             calendarIcon.enabled = true
         }
 
@@ -410,14 +428,6 @@ Page {
         }
     }
 
-    InfoBanner {
-            id: banner
-            objectName: "FahrplanCalendarInfoBanner"
-            text: ""
-            anchors.top: parent.top
-            anchors.topMargin: 10
-    }
-
     ToolBarLayout {
         id: journeyDetailResultsToolbar
 
@@ -431,7 +441,7 @@ Page {
 
         ToolButton {
             id : calendarIcon;
-            iconSource: enabled ? "toolbar-list" : "image://theme/progress_78_01"
+            iconSource: enabled ? "qrc:/src/gui/symbian/icon/icon-m-content-calendar.png" : "qrc:/src/gui/symbian/icon/icon-m-blank.png"
 
             visible: !searchIndicator.visible
 
@@ -442,9 +452,8 @@ Page {
 
             BusyIndicator {
                 visible: !calendarIcon.enabled
-                running: true
-                width: 24; height: width
-//                style: BusyIndicatorStyle { size: "small" }
+                running: visible
+                width: platformStyle.graphicSizeSmall; height: width
                 anchors.centerIn: parent
             }
         }

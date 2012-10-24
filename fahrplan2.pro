@@ -99,6 +99,8 @@ symbian {
         src/gui/symbian/components/SubTitleButton.qml \
         src/gui/symbian/components/StationSelect.qml \
         src/gui/symbian/js/style.js \
+        src/gui/symbian/icon/icon-m-blank.png \
+        src/gui/symbian/icon/icon-m-content-calendar.png \
         src/gui/symbian/icon/icon-m-toolbar-train.svg \
         src/gui/symbian/icon/icon-m-toolbar-help.svg \
         src/gui/symbian/icon/icon-m-toolbar-clock.svg \

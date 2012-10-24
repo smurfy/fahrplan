@@ -9,6 +9,8 @@
         <file>src/gui/symbian/JourneyDetailsResultsPage.qml</file>
         <file>src/gui/symbian/AboutPage.qml</file>
         <file>src/gui/symbian/TimeTableResultsPage.qml</file>
+        <file>src/gui/symbian/icon/icon-m-blank.png</file>
+        <file>src/gui/symbian/icon/icon-m-content-calendar.png</file>
         <file>src/gui/symbian/icon/icon-m-toolbar-help.svg</file>
         <file>src/gui/symbian/icon/icon-m-toolbar-clock.svg</file>
         <file>src/gui/symbian/icon/icon-m-toolbar-close.png</file>
