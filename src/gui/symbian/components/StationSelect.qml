@@ -3,6 +3,7 @@ import QtQuick 1.1
 import QtMobility.location 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
+import "../js/style.js" as Style
 
 Page {
     id: stationSelect
@@ -126,7 +127,7 @@ Page {
             wrapMode: Text.WordWrap
             height: parent.height - search.top - stationSelectToolbar.height
             text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
-            color: "DarkGrey"
+            color: platformStyle.colorNormalMid
             font.pixelSize: 2 * platformStyle.fontSizeMedium
             visible: (stationsFavoritesModel.count == 0 && listView.model === stationsFavoritesModel)
             horizontalAlignment: Text.AlignHCenter
@@ -167,7 +168,7 @@ Page {
             Rectangle {
                 id: background
                 anchors.fill: parent
-                color: "DarkGrey"
+                color: Style.listBackgroundHighlight
                 visible: mouseArea.pressed
             }
 
@@ -246,7 +247,7 @@ Page {
                     verticalCenter: parent.verticalCenter
                 }
                 text: miscinfo
-                color: "DarkGrey";
+                color: Style.listBackgroundHighlight
             }
 
             BusyIndicator {

@@ -2,6 +2,7 @@ import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "components"
+import "js/style.js" as Style
 
 Page {
     property alias fahrplanBackend: fahrplanBackend
@@ -42,7 +43,7 @@ Page {
 
             Label {
                 id: journeyDate
-                color: "Grey"
+                color: platformStyle.colorNormalMid
                 anchors {
                     left: parent.left
                     leftMargin: platformStyle.paddingMedium
@@ -132,18 +133,18 @@ Page {
             id: delegateItem
 
             width: listView.width
-            height: labels.height + 2 * platformStyle.paddingLarge
+            height: labels.height + 2 * platformStyle.paddingMedium
             visible: !searchIndicator.visible
 
             Rectangle {
                 anchors.fill: parent
-                color: itemNum % 2 ? "#222" : "#333"
+                color: itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven
             }
 
             Rectangle {
                 id: background
                 anchors.fill: parent
-                color: "DarkGrey"
+                color: Style.listBackgroundHighlight
                 visible: mouseArea.pressed
             }
 
@@ -164,10 +165,10 @@ Page {
                 id: labels
 
                 height: childrenRect.height
-                spacing: platformStyle.paddingMedium
+                spacing: platformStyle.paddingSmall
                 anchors {
                     top: parent.top
-                    topMargin: platformStyle.paddingLarge
+                    topMargin: platformStyle.paddingMedium
                     left: parent.left
                     leftMargin: platformStyle.paddingMedium
                     right: parent.right

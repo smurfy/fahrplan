@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
+import "../js/style.js" as Style
 
 Item {
     id: subTitleButton
@@ -17,7 +18,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: "DarkGrey"
+        color: Style.listBackgroundHighlight
         visible: mouseArea.pressed
     }
 
