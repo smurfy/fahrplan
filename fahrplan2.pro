@@ -25,7 +25,16 @@ symbian:TARGET.UID3 = 0xE4182966
 #symbian:DEPLOYMENT.installer_header = 0x2002CCCF
 
 # Allow network access on Symbian
-symbian:TARGET.CAPABILITY += NetworkServices Location WriteUserData
+symbian {
+    TARGET = Fahrplan
+    ICON = data/fahrplan2.svg
+    # ReadUserData - needed for access to all SSL certificates
+    #   and avoid "CSymbianCertificateRetriever: failed to retrieve a certificate, error  -46"
+    # WriteUserData - needed to create calendar events
+    # NetworkServices - needed for, well, network access :-)
+    # Location - needed for searching the nearest station
+    TARGET.CAPABILITY += ReadUserData WriteUserData NetworkServices Location
+}
 
 CONFIG += debug
 

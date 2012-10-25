@@ -32,7 +32,7 @@ CalendarThreadWrapper::~CalendarThreadWrapper()
 
 void CalendarThreadWrapper::addToCalendar()
 {
-    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
 
     QString desc;
     const QString viaStation = m_result->viaStation();
