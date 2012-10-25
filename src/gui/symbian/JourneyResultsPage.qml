@@ -116,7 +116,7 @@ Page {
                 bottom: parent.bottom
             }
             model: journeyResultModel
-            delegate:  journeyResultDelegate
+            delegate: journeyResultDelegate
             clip: true
             visible: !searchIndicator.visible
         }
@@ -129,17 +129,12 @@ Page {
     Component {
         id: journeyResultDelegate
 
-        Item {
+        Rectangle {
             id: delegateItem
 
             width: listView.width
             height: labels.height + 2 * platformStyle.paddingMedium
-            visible: !searchIndicator.visible
-
-            Rectangle {
-                anchors.fill: parent
-                color: itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven
-            }
+            color: itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven
 
             Rectangle {
                 id: background

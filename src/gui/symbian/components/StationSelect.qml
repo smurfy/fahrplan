@@ -232,11 +232,12 @@ Page {
                 anchors {
                     left: showfavorite ? img_fav.right : parent.left
                     leftMargin: platformStyle.paddingMedium
-                    rightMargin: 20
-                    right: process ? process.left : parent.right
+                    right: lbl_miscinfo.left
+                    rightMargin: platformStyle.paddingMedium
                     verticalCenter: parent.verticalCenter
                 }
                 text: name
+                wrapMode: Text.WordWrap
             }
 
             Label {
