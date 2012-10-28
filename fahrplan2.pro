@@ -87,7 +87,9 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmlnri.cpp
 
 TRANSLATIONS += \
-    translations/fahrplan_de.ts
+    translations/fahrplan_de.ts \
+    translations/fahrplan_ru.ts \
+    translations/fahrplan_uk.ts
 
 OTHER_FILES += \
     data/fahrplan2.svg \
@@ -208,3 +210,15 @@ HEADERS += \
     src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
     src/parser/parser_xmlnri.h
+
+# This hack is needed for lupdate to pick up texts from QML files
+translate_hack {
+    SOURCES += \
+        src/gui/fremantle/*.qml \
+        src/gui/fremantle/components/*.qml \
+        src/gui/fremantle/hildon/*.qml \
+        src/gui/harmattan/*.qml \
+        src/gui/harmattan/components/*.qml \
+        src/gui/symbian/*.qml \
+        src/gui/symbian/components/*.qml
+}
