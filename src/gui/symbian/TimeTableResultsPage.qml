@@ -24,7 +24,7 @@ Page {
             id: titleBar
 
             width: parent.width
-            height: timetableTitle.height + 2 * platformStyle.paddingMedium
+            height: timetableTitle.height + platformStyle.paddingMedium
 
             Label {
                 id: timetableTitle
@@ -46,10 +46,7 @@ Page {
 
         BusyIndicator {
             id: searchIndicator
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-            }
+            anchors.centerIn: parent
             running: true
             visible: false
 

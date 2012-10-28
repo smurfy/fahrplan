@@ -83,11 +83,7 @@ Page {
 
         BusyIndicator {
             id: searchIndicator
-            anchors {
-                top: titleBar.bottom
-                topMargin: 50;
-                horizontalCenter: parent.horizontalCenter
-            }
+            anchors.centerIn: parent
             running: true
             visible: false
 
@@ -160,7 +156,10 @@ Page {
                                  left: parent.left
                              }
 
-                             text: arrivalTime
+                             // This hack is needed to have correct padding for the line
+                             text: arrivalTime != "" ? arrivalTime : "00:00"
+                             color: item_station.color
+                             platformInverted: appWindow.platformInverted
                          }
 
                          Label {

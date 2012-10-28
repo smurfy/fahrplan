@@ -57,10 +57,7 @@ Page {
 
         BusyIndicator {
             id: searchIndicator
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-            }
+            anchors.centerIn: parent
             running: true
             visible: false
 
