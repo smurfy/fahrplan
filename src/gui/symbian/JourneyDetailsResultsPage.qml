@@ -42,6 +42,7 @@ Page {
                 }
                 width: parent.width
                 wrapMode: Text.WordWrap
+                platformInverted: appWindow.platformInverted
             }
 
             Item {
@@ -65,8 +66,9 @@ Page {
                         rightMargin: platformStyle.paddingMedium
                         left: parent.left
                     }
-                    color: platformStyle.colorNormalMid
+                    color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
                     wrapMode: Text.WordWrap
+                    platformInverted: appWindow.platformInverted
                 }
 
                 Label {
@@ -75,8 +77,9 @@ Page {
                         right: parent.right
                         top: parent.top
                     }
-                    color: platformStyle.colorNormalMid
+                    color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
                     horizontalAlignment: Text.AlignRight
+                    platformInverted: appWindow.platformInverted
                 }
             }
         }
@@ -88,6 +91,7 @@ Page {
             visible: false
 
             width: platformStyle.graphicSizeLarge; height: width
+            platformInverted: appWindow.platformInverted
         }
 
         ListView {
@@ -107,6 +111,7 @@ Page {
 
         ScrollDecorator {
             flickableItem: listView
+            platformInverted: appWindow.platformInverted
         }
     }
 
@@ -130,7 +135,7 @@ Page {
                      id: item_station
 
                      height: visible ? lbl_station.height + 2 * platformStyle.paddingMedium : 0
-                     color: Style.listBackgroundOdd
+                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
                      visible: isStation
 
                      anchors {
@@ -170,6 +175,7 @@ Page {
                              }
 
                              text: departureTime
+                             platformInverted: appWindow.platformInverted
                          }
                      }
 
@@ -213,15 +219,15 @@ Page {
                                  }
                                  GradientStop {
                                      position: 0.39;
-                                     color: Style.listBackgroundOdd
+                                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
                                  }
                                  GradientStop {
                                      position: 0.50;
-                                     color: Style.listBackgroundOdd
+                                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
                                  }
                                  GradientStop {
                                      position: 0.61;
-                                     color: Style.listBackgroundOdd
+                                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
                                  }
                                  GradientStop {
                                      position: 0.62;
@@ -257,6 +263,7 @@ Page {
                             text: stationName
                             width: parent.width
                             wrapMode: Text.WordWrap
+                            platformInverted: appWindow.platformInverted
                         }
 
                         Label {
@@ -264,10 +271,11 @@ Page {
                                 top: lbl_station_name.bottom
                                 topMargin: platformStyle.paddingSmall
                             }
-                            color: platformStyle.colorNormalMid
+                            color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
                             id: lbl_station_info
                             text: stationInfo
                             width: parent.width
+                            platformInverted: appWindow.platformInverted
                         }
                      }
                 }
@@ -276,7 +284,7 @@ Page {
                     id: item_train
 
                     height: visible ? lbl_train.height + 30 : 0
-                    color: Style.listBackgroundEven
+                    color: appWindow.platformInverted ? Style.listBackgroundEvenInverted : Style.listBackgroundEven
                     visible: isTrain
 
                     anchors {
@@ -307,6 +315,7 @@ Page {
                         text: trainName
                         font.bold: true
                         wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
                 }
             }
@@ -433,6 +442,7 @@ Page {
         ToolButton {
             id : backIcon;
             iconSource: "toolbar-back"
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 pageStack.pop();
             }
@@ -440,9 +450,10 @@ Page {
 
         ToolButton {
             id : calendarIcon;
-            iconSource: enabled ? "qrc:/src/gui/symbian/icon/icon-m-content-calendar.png" : "qrc:/src/gui/symbian/icon/icon-m-blank.png"
 
+            iconSource: enabled ? Style.getIconFromQrc(platformInverted, "icon-m-content-calendar") : Style.getIconFromQrc(false, "icon-m-blank")
             visible: !searchIndicator.visible
+            platformInverted: appWindow.platformInverted
 
             onClicked: {
                 calendarIcon.enabled = false
@@ -454,6 +465,7 @@ Page {
                 running: visible
                 width: platformStyle.graphicSizeSmall; height: width
                 anchors.centerIn: parent
+                platformInverted: appWindow.platformInverted
             }
         }
     }

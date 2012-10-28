@@ -44,6 +44,7 @@ Page {
 
             SearchBox {
                 id: searchBox
+                platformInverted: appWindow.platformInverted
 
                 anchors {
                     left: parent.left
@@ -81,7 +82,7 @@ Page {
                     bottom: parent.bottom
                     right: parent.right
                 }
-                source: "image://theme/qtg_fr_tab_bar"
+                source: Style.getIconFromTheme(appWindow.platformInverted, "qtg_fr_tab_bar")
                 border {
                     left: platformStyle.borderSizeMedium
                     top: platformStyle.borderSizeMedium
@@ -97,8 +98,8 @@ Page {
                     rightMargin: visible ? platformStyle.paddingMedium : 0
                     verticalCenter: parent.verticalCenter
                 }
-                platformInverted: true
-                iconSource: "qrc:/src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png"
+                platformInverted: !appWindow.platformInverted
+                iconSource: Style.getIconFromQrc(platformInverted, "icon-s-calendar-location-picker")
                 width: visible ? 60 : 0
 
                 onClicked: {
@@ -122,16 +123,17 @@ Page {
             }
         }
 
-        Text {
+        Label {
             width: parent.width
             wrapMode: Text.WordWrap
             height: parent.height - search.top - stationSelectToolbar.height
             text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
-            color: platformStyle.colorNormalMid
+            color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
             font.pixelSize: 2 * platformStyle.fontSizeMedium
             visible: (stationsFavoritesModel.count == 0 && listView.model === stationsFavoritesModel)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            platformInverted: appWindow.platformInverted
             anchors {
                 top: search.bottom
                 left: parent.left
@@ -190,7 +192,7 @@ Page {
 
             Image {
                 id: img_fav
-                source: isfavorite ? "image://theme/qtg_graf_rating_rated" : "image://theme/qtg_graf_rating_unrated"
+                source: Style.getIconFromTheme(appWindow.platformInverted, isfavorite ? "qtg_graf_rating_rated" : "qtg_graf_rating_unrated")
                 visible: showfavorite
                 sourceSize {
                     width: platformStyle.graphicSizeSmall
@@ -237,6 +239,7 @@ Page {
                     verticalCenter: parent.verticalCenter
                 }
                 text: name
+                platformInverted: appWindow.platformInverted
                 wrapMode: Text.WordWrap
             }
 
@@ -280,6 +283,7 @@ Page {
         ToolButton {
             id : backIcon
             iconSource: "toolbar-back"
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 pageStack.pop();
             }
@@ -288,7 +292,8 @@ Page {
         ButtonRow {
             ToolButton {
                 id: favIcon
-                iconSource: "image://theme/qtg_graf_rating_rated"
+                iconSource: Style.getIconFromTheme(platformInverted, "qtg_graf_rating_rated")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     updateFavorites();
                     listView.model = stationsFavoritesModel
@@ -302,6 +307,7 @@ Page {
             ToolButton {
                 id: searchIcon
                 iconSource: "toolbar-search"
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     listView.model = stationsResultModel
                     favIcon.checked = false;

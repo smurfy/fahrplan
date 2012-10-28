@@ -41,6 +41,7 @@ Page {
                 }
                 width: parent.width
                 wrapMode: Text.WordWrap
+                platformInverted: appWindow.platformInverted
             }
         }
 
@@ -51,6 +52,7 @@ Page {
             visible: false
 
             width: platformStyle.graphicSizeLarge; height: width
+            platformInverted: appWindow.platformInverted
         }
 
         ListView {
@@ -70,6 +72,7 @@ Page {
 
         ScrollDecorator {
             flickableItem: listView
+            platformInverted: appWindow.platformInverted
         }
     }
 
@@ -81,7 +84,12 @@ Page {
 
             width: listView.width
             height: grid.height + 2 * platformStyle.paddingMedium
-            color: itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven
+            color: {
+                if (appWindow.platformInverted)
+                    return itemNum % 2 ? Style.listBackgroundOddInverted : Style.listBackgroundEvenInverted;
+                else
+                    return itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven;
+            }
 
             Rectangle {
                 id: background
@@ -115,6 +123,7 @@ Page {
                         text: time
                         font.bold: true
                         width: (parent.width - grid.spacing) / 3
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
@@ -122,6 +131,7 @@ Page {
                         text: destination
                         width: (parent.width - grid.spacing) * 2 / 3
                         wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
@@ -130,6 +140,7 @@ Page {
                         font.bold: true
                         width: (parent.width - grid.spacing) / 3
                         wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
@@ -137,6 +148,7 @@ Page {
                         text: stationplatform
                         width: (parent.width - grid.spacing) * 2 / 3
                         wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Item {
@@ -152,6 +164,7 @@ Page {
                         width: (parent.width - grid.spacing) * 2 / 3
                         font.bold: true
                         wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
                 }
             }
@@ -216,6 +229,7 @@ Page {
         ToolButton {
             id : backIcon;
             iconSource: "toolbar-back"
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 pageStack.pop();
                 fahrplanBackend.parser.cancelRequest();

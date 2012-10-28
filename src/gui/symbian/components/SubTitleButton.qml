@@ -7,7 +7,8 @@ Item {
 
     property alias titleText: title.text
     property alias subTitleText: subTitle.text
-    property alias icon: icon.source
+    property string icon: "qtg_graf_choice_list_indicator"
+    property bool platformInverted: false
 
     signal clicked
     signal pressAndHold
@@ -47,6 +48,7 @@ Item {
         font.bold: true
         font.pixelSize: platformStyle.fontSizeLarge
         text: "-"
+        platformInverted: subTitleButton.platformInverted
     }
 
     Label {
@@ -61,6 +63,7 @@ Item {
         }
         text: ""
         font.pixelSize: platformStyle.fontSizeLarge + 2
+        platformInverted: subTitleButton.platformInverted
         wrapMode: Text.WordWrap
     }
 
@@ -74,6 +77,6 @@ Item {
         }
         height: sourceSize.height
         width: sourceSize.width
-        source: "image://theme/qtg_graf_choice_list_indicator"
+        source: Style.getIconFromTheme(subTitleButton.platformInverted, subTitleButton.icon)
     }
 }

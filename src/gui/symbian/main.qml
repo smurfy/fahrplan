@@ -9,5 +9,8 @@ PageStackWindow {
 
     MainPage { id: mainPage }
 
-    InfoBanner { id: banner }
+    InfoBanner {
+        id: banner
+        platformInverted: appWindow.platformInverted
+    }
 }

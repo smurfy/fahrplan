@@ -2,6 +2,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
 import "components"
+import "js/style.js" as Style
 import Fahrplan 1.0
 
 Page {
@@ -102,7 +103,7 @@ Page {
             }
             height: sourceSize.height
             width: sourceSize.width
-            source: "image://theme/qtg_graf_choice_list_indicator"
+            source: Style.getIconFromTheme(false, "qtg_graf_choice_list_indicator")
         }
     }
 
@@ -144,7 +145,8 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
                 }
-                icon: "image://theme/toolbar-next"
+                icon: "toolbar-next"
+                platformInverted: appWindow.platformInverted
             }
             SubTitleButton {
                 id: viaButton
@@ -157,7 +159,8 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
                 }
-                icon: "image://theme/toolbar-next"
+                icon: "toolbar-next"
+                platformInverted: appWindow.platformInverted
             }
             SubTitleButton {
                 id: arrivalButton
@@ -170,7 +173,8 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
                 }
-                icon: "image://theme/toolbar-next"
+                icon: "toolbar-next"
+                platformInverted: appWindow.platformInverted
             }
             SubTitleButton {
                 id: stationButton
@@ -180,7 +184,8 @@ Page {
                 onClicked: {
                     pageStack.push(stationStationSelect)
                 }
-                icon: "image://theme/toolbar-next"
+                icon: "toolbar-next"
+                platformInverted: appWindow.platformInverted
             }
             SubTitleButton {
                 id: directionButton
@@ -193,13 +198,15 @@ Page {
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
                 }
-                icon: "image://theme/toolbar-next"
+                platformInverted: appWindow.platformInverted
+                icon: "toolbar-next"
             }
             SubTitleButton {
                 id: datePickerButton
                 titleText: qsTr("Date")
                 subTitleText: qsTr("please select")
                 width: parent.width
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     datePicker.open();
                 }
@@ -210,6 +217,7 @@ Page {
                 titleText: qsTr("Time")
                 subTitleText: qsTr("please select")
                 width: parent.width
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     timePicker.open();
                 }
@@ -224,10 +232,12 @@ Page {
                     Button {
                         id: modeDep
                         text: qsTr("Departure")
+                        platformInverted: appWindow.platformInverted
                     }
                     Button {
                         id: modeArr
                         text: qsTr("Arrival")
+                        platformInverted: appWindow.platformInverted
                     }
                 }
             }
@@ -237,6 +247,7 @@ Page {
                 titleText: qsTr("Trains")
                 subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
                 width: parent.width
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     selectTrainrestrictionsDialog.open();
                 }
@@ -250,6 +261,7 @@ Page {
                     topMargin: 20
                     horizontalCenter: parent.horizontalCenter
                 }
+                platformInverted: appWindow.platformInverted
 
                 onClicked: {
                     fahrplanBackend.storeSettingsValue("stationStation", stationButton.subTitleText);
@@ -297,6 +309,7 @@ Page {
                     topMargin: 20
                     horizontalCenter: parent.horizontalCenter
                 }
+                platformInverted: appWindow.platformInverted
 
                 onClicked: {
 
@@ -336,6 +349,7 @@ Page {
 
     ScrollDecorator {
         flickableItem: flickable
+        platformInverted: appWindow.platformInverted
     }
 
     StationSelect {
@@ -389,6 +403,7 @@ Page {
         id: selectBackendDialog
         titleText: qsTr("Select backend")
         model: parserBackendModel
+        platformInverted: appWindow.platformInverted
         onAccepted: {
             fahrplanBackend.setParser(selectBackendDialog.selectedIndex);
         }
@@ -402,6 +417,7 @@ Page {
         id: selectTrainrestrictionsDialog
         titleText: qsTr("Select train")
         model: trainrestrictionsModel
+        platformInverted: appWindow.platformInverted
         onAccepted: {
         }
     }
@@ -427,6 +443,7 @@ Page {
         titleText: qsTr("Date")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
+        platformInverted: appWindow.platformInverted
         onAccepted: {
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             datePickerButton.subTitleText = Qt.formatDate(selDate);
@@ -447,6 +464,7 @@ Page {
         rejectButtonText: qsTr("Cancel")
         fields: DateTime.Hours | DateTime.Minutes
         hourMode: DateTime.TwentyFourHours // FIXME should set through i18n
+        platformInverted: appWindow.platformInverted
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
             timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
@@ -465,7 +483,8 @@ Page {
 
         ToolButton {
             id: exitIcon
-            iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-close.png"
+            iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-close", ".png")
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 Qt.quit();
             }
@@ -473,7 +492,8 @@ Page {
         ButtonRow{
             ToolButton {
                 id: searchMode0Toggle
-                iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-train.svg";
+                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-train", ".svg")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     searchmode = 0;
                     updateButtonVisibility();
@@ -483,7 +503,8 @@ Page {
             }
             ToolButton {
                 id: searchMode1Toggle
-                iconSource: "qrc:/src/gui/symbian/icon/icon-m-toolbar-clock.svg";
+                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-clock", ".svg");
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     searchmode = 1;
                     updateButtonVisibility();
@@ -493,10 +514,32 @@ Page {
             }
         }
         ToolButton {
-            id : aboutIcon;
-            iconSource: "toolbar-settings"
+            id : aboutIcon
+            iconSource: "toolbar-menu"
+            platformInverted: appWindow.platformInverted
             onClicked: {
-                pageStack.push(aboutPage);
+                mainMenu.open();
+            }
+        }
+    }
+
+    Menu {
+        id: mainMenu
+        platformInverted: appWindow.platformInverted
+        content: MenuLayout {
+            MenuItem {
+                text: qsTr("Toggle Inverted Style")
+                platformInverted: appWindow.platformInverted
+                onClicked: {
+                    appWindow.platformInverted = !appWindow.platformInverted;
+                }
+            }
+            MenuItem {
+                text: qsTr("About")
+                platformInverted: appWindow.platformInverted
+                onClicked: {
+                    pageStack.push(aboutPage);
+                }
             }
         }
     }

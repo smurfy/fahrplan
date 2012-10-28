@@ -43,12 +43,13 @@ Page {
                 }
 
                 font.pixelSize: platformStyle.fontSizeLarge
+                platformInverted: appWindow.platformInverted
             }
 
             Label {
                 textFormat: Text.RichText
                 text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
-                color: "darkgrey"
+                color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
                 anchors {
                     left: logoImg.right
                     leftMargin: platformStyle.paddingLarge
@@ -56,6 +57,7 @@ Page {
                 }
 
                 font.pixelSize: platformStyle.fontSizeSmall
+                platformInverted: appWindow.platformInverted
             }
 
             height: logoImg.height
@@ -92,6 +94,7 @@ Page {
             wrapMode: Text.WordWrap
             width: parent.width
             textFormat: Text.RichText
+            platformInverted: appWindow.platformInverted
 
             onLinkActivated : Qt.openUrlExternally(link);
         }
@@ -107,6 +110,7 @@ Page {
         ToolButton {
             id : backIcon;
             iconSource: "toolbar-back"
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 pageStack.pop();
             }
@@ -115,5 +119,6 @@ Page {
 
     ScrollDecorator {
         flickableItem: flickable
+        platformInverted: appWindow.platformInverted
     }
 }

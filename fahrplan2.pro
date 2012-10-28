@@ -136,10 +136,16 @@ symbian {
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/icon-m-blank.png \
         src/gui/symbian/icon/icon-m-content-calendar.png \
+        src/gui/symbian/icon/icon-m-content-calendar-inverse.png \
         src/gui/symbian/icon/icon-m-toolbar-train.svg \
+        src/gui/symbian/icon/icon-m-toolbar-train-inverse.svg \
         src/gui/symbian/icon/icon-m-toolbar-help.svg \
+        src/gui/symbian/icon/icon-m-toolbar-help-inverse.svg \
         src/gui/symbian/icon/icon-m-toolbar-clock.svg \
+        src/gui/symbian/icon/icon-m-toolbar-clock-inverse.svg \
         src/gui/symbian/icon/icon-m-toolbar-close.png \
+        src/gui/symbian/icon/icon-m-toolbar-close-inverse.png \
+        src/gui/symbian/icon/icon-s-calendar-location-picker.png \
         src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png
 }
 

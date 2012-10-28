@@ -39,11 +39,12 @@ Page {
                 }
                 width: parent.width
                 wrapMode: Text.WordWrap
+                platformInverted: appWindow.platformInverted
             }
 
             Label {
                 id: journeyDate
-                color: platformStyle.colorNormalMid
+                color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
                 anchors {
                     left: parent.left
                     leftMargin: platformStyle.paddingMedium
@@ -52,6 +53,7 @@ Page {
                 }
                 width: parent.width
                 visible: !searchIndicatorVisible
+                platformInverted: appWindow.platformInverted
             }
         }
 
@@ -62,6 +64,7 @@ Page {
             visible: false
 
             width: platformStyle.graphicSizeLarge; height: width
+            platformInverted: appWindow.platformInverted
         }
 
         Row {
@@ -83,23 +86,27 @@ Page {
             Label {
                 text: qsTr("Dep.")
                 width: (parent.width - 3 * listHead.spacing) / 4
+                platformInverted: appWindow.platformInverted
             }
 
             Label {
                 text: qsTr("Arr.")
                 width: (parent.width - 3 * listHead.spacing) / 4
+                platformInverted: appWindow.platformInverted
             }
 
             Label {
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("Dur.")
                 width: (parent.width - 3 * listHead.spacing) / 4
+                platformInverted: appWindow.platformInverted
             }
 
             Label {
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("Trans.")
                 width: (parent.width - 3 * listHead.spacing) / 4
+                platformInverted: appWindow.platformInverted
             }
         }
 
@@ -120,6 +127,7 @@ Page {
 
         ScrollDecorator {
             flickableItem: listView
+            platformInverted: appWindow.platformInverted
         }
     }
 
@@ -131,7 +139,12 @@ Page {
 
             width: listView.width
             height: labels.height + 2 * platformStyle.paddingMedium
-            color: itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven
+            color: {
+                if (appWindow.platformInverted)
+                    return itemNum % 2 ? Style.listBackgroundOddInverted : Style.listBackgroundEvenInverted;
+                else
+                    return itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven;
+            }
 
             Rectangle {
                 id: background
@@ -175,29 +188,34 @@ Page {
                     Label {
                         text: departureTime
                         width: (parent.width - 3 * listHead.spacing) / 4
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
                         text: arrivalTime
                         width: (parent.width - 3 * listHead.spacing) / 4
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
                         horizontalAlignment: Text.AlignHCenter
                         text: duration
                         width: (parent.width - 3 * listHead.spacing) / 4
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
                         horizontalAlignment: Text.AlignHCenter
                         text: transfers
                         width: (parent.width - 3 * listHead.spacing) / 4
+                        platformInverted: appWindow.platformInverted
                     }
                 }
 
                 Label {
                     text: trainType
                     width: parent.width
+                    platformInverted: appWindow.platformInverted
                 }
 
                 Label {
@@ -205,6 +223,7 @@ Page {
                     text: miscInfo
                     width: parent.width
                     font.bold: true
+                    platformInverted: appWindow.platformInverted
                 }
             }
         }
@@ -253,6 +272,7 @@ Page {
         ToolButton {
             id : backIcon;
             iconSource: "toolbar-back"
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 pageStack.pop();
                 fahrplanBackend.parser.cancelRequest();
@@ -261,17 +281,19 @@ Page {
 
         ToolButton {
             text:qsTr("Earlier")
-            visible: !searchIndicatorVisible;
+            visible: !searchIndicatorVisible
+            platformInverted: appWindow.platformInverted
             onClicked: {
-                searchIndicatorVisible = true
+                searchIndicatorVisible = true;
                 fahrplanBackend.parser.searchJourneyEarlier();
             }
         }
         ToolButton {
             text:qsTr("Later")
-            visible: !searchIndicatorVisible;
+            visible: !searchIndicatorVisible
+            platformInverted: appWindow.platformInverted
             onClicked: {
-                searchIndicatorVisible = true
+                searchIndicatorVisible = true;
                 fahrplanBackend.parser.searchJourneyLater();
             }
         }
