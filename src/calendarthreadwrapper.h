@@ -26,7 +26,7 @@
 #include <QThread>
 #include <QCoreApplication>
 
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5)
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
 
 #include <qmobilityglobal.h>
 #include <QOrganizerManager>

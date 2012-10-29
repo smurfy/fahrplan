@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data/fahrplan2.svg</file>
+        <file>src/gui/symbian/main.qml</file>
+        <file>src/gui/symbian/MainPage.qml</file>
+        <file>src/gui/symbian/components/StationSelect.qml</file>
+        <file>src/gui/symbian/components/SubTitleButton.qml</file>
+        <file>src/gui/symbian/JourneyResultsPage.qml</file>
+        <file>src/gui/symbian/JourneyDetailsResultsPage.qml</file>
+        <file>src/gui/symbian/AboutPage.qml</file>
+        <file>src/gui/symbian/TimeTableResultsPage.qml</file>
+        <file>src/gui/symbian/icon/icon-m-blank.png</file>
+        <file>src/gui/symbian/icon/icon-m-content-calendar.png</file>
+        <file>src/gui/symbian/icon/icon-m-content-calendar-inverse.png</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-clock.svg</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-clock-inverse.svg</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-close.png</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-close-inverse.png</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-train.svg</file>
+        <file>src/gui/symbian/icon/icon-m-toolbar-train-inverse.svg</file>
+        <file>src/gui/symbian/icon/icon-s-calendar-location-picker.png</file>
+        <file>src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png</file>
+        <file>src/gui/symbian/js/style.js</file>
+        <file>translations/fahrplan_de.qm</file>
+    </qresource>
+</RCC>
