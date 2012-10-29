@@ -21,7 +21,7 @@
 #include <QtGui/QApplication>
 #include <qplatformdefs.h>
 
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
     #include <QtDeclarative>
 #elif defined(Q_WS_WIN) || defined(Q_WS_X11)
     #include "gui/desktop-test/mainwindow.h"
@@ -42,11 +42,16 @@ int main(int argc, char *argv[])
     translator.load(QString("fahrplan_%1").arg(QLocale::system().name()), ":/translations");
     app.installTranslator(&translator);
 
+
+    qDebug()<<"Startup";
+
     #if defined(Q_WS_WIN)
+        qDebug()<<"Windows";
         MainWindow w;
         w.show();
-    #elif defined(Q_WS_X11) || defined(Q_OS_SYMBIAN)
-        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
+    #elif defined(Q_WS_X11) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+            qDebug()<<"QML";
             qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
             qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
             qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
@@ -62,13 +67,16 @@ int main(int argc, char *argv[])
         #endif
 
         #if defined(MEEGO_EDITION_HARMATTAN)
+            qDebug()<<"Harmattan";
             view.setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));
             view.showFullScreen();
         #elif defined(Q_WS_MAEMO_5)
+            qDebug()<<"Maemo5";
             qmlRegisterType<HildonHelper>("HildonHelper", 1, 0, "HildonHelper");
             view.setSource(QUrl("qrc:/src/gui/fremantle/main.qml"));
             view.show();
-        #elif defined(Q_OS_SYMBIAN)
+        #elif defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+            qDebug()<<"Symbian";
             view.setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
             view.showFullScreen();
         #else
@@ -78,6 +86,8 @@ int main(int argc, char *argv[])
     #else
         //Unknown
     #endif
+
+    qDebug()<<"Exec";
 
     return app.exec();
 }

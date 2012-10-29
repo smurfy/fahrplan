@@ -84,44 +84,11 @@ TRANSLATIONS += \
     translations/fahrplan_de.ts
 
 OTHER_FILES += \
-    src/gui/harmattan/MainPage.qml \
-    src/gui/harmattan/JourneyResultsPage.qml \
-    src/gui/harmattan/JourneyDetailsResultsPage.qml \
-    src/gui/harmattan/TimeTableResultsPage.qml \
-    src/gui/harmattan/main.qml \
-    src/gui/harmattan/components/SubTitleButton.qml \
-    src/gui/harmattan/components/StationSelect.qml \
-    data/fahrplan2_fremantle.desktop \
-    data/fahrplan2_harmattan.desktop \
     data/fahrplan2.svg \
     data/fahrplan2_64.png \
-    data/fahrplan2_80.png \
-    qtc_packaging/debian_harmattan/rules \
-    qtc_packaging/debian_harmattan/README \
-    qtc_packaging/debian_harmattan/copyright \
-    qtc_packaging/debian_harmattan/control \
-    qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog \
-    qtc_packaging/debian_harmattan/manifest.aegis \
-    qtc_packaging/debian_fremantle/rules \
-    qtc_packaging/debian_fremantle/README \
-    qtc_packaging/debian_fremantle/copyright \
-    qtc_packaging/debian_fremantle/control \
-    qtc_packaging/debian_fremantle/compat \
-    qtc_packaging/debian_fremantle/changelog \
-    src/gui/fremantle/main.qml \
-    src/gui/fremantle/components/SubTitleButton.qml \
-    src/gui/fremantle/hildon/style.js \
-    src/gui/fremantle/hildon/hildon.js \
-    src/gui/fremantle/hildon/HildonWindow.qml \
-    src/gui/fremantle/hildon/HildonTouchListRow.qml \
-    src/gui/fremantle/hildon/HildonLabel.qml \
-    src/gui/fremantle/hildon/HildonDialogButton.qml \
-    src/gui/fremantle/hildon/HildonDialog.qml \
-    src/gui/fremantle/hildon/HildonButton.qml \
-    src/gui/harmattan/AboutPage.qml
+    data/fahrplan2_80.png
 
-symbian {
+symbian || simulator {
     RESOURCES += symbian_res.qrc
 
     OTHER_FILES += \
@@ -152,6 +119,30 @@ symbian {
 contains(MEEGO_EDITION,harmattan) {
     RESOURCES += harmattan_res.qrc
 
+    OTHER_FILES += \
+        src/gui/harmattan/MainPage.qml \
+        src/gui/harmattan/JourneyResultsPage.qml \
+        src/gui/harmattan/JourneyDetailsResultsPage.qml \
+        src/gui/harmattan/TimeTableResultsPage.qml \
+        src/gui/harmattan/main.qml \
+        src/gui/harmattan/components/SubTitleButton.qml \
+        src/gui/harmattan/components/StationSelect.qml \
+        src/gui/harmattan/AboutPage.qml \
+        data/fahrplan2_harmattan.desktop \
+        qtc_packaging/debian_harmattan/rules \
+        qtc_packaging/debian_harmattan/README \
+        qtc_packaging/debian_harmattan/copyright \
+        qtc_packaging/debian_harmattan/control \
+        qtc_packaging/debian_harmattan/compat \
+        qtc_packaging/debian_harmattan/changelog \
+        qtc_packaging/debian_harmattan/manifest.aegis \
+        qtc_packaging/debian_fremantle/rules \
+        qtc_packaging/debian_fremantle/README \
+        qtc_packaging/debian_fremantle/copyright \
+        qtc_packaging/debian_fremantle/control \
+        qtc_packaging/debian_fremantle/compat \
+        qtc_packaging/debian_fremantle/changelog
+
     DEFINES += Q_WS_MAEMO_6
     DEFINES += MEEGO_EDITION_HARMATTAN
 }
@@ -161,10 +152,23 @@ maemo5 {
     HEADERS += src/gui/fremantle/hildon_helper.h
     SOURCES += src/gui/fremantle/hildon_helper.cpp
 
+    OTHER_FILES += \
+        data/fahrplan2_fremantle.desktop \
+        src/gui/fremantle/main.qml \
+        src/gui/fremantle/components/SubTitleButton.qml \
+        src/gui/fremantle/hildon/style.js \
+        src/gui/fremantle/hildon/hildon.js \
+        src/gui/fremantle/hildon/HildonWindow.qml \
+        src/gui/fremantle/hildon/HildonTouchListRow.qml \
+        src/gui/fremantle/hildon/HildonLabel.qml \
+        src/gui/fremantle/hildon/HildonDialogButton.qml \
+        src/gui/fremantle/hildon/HildonDialog.qml \
+        src/gui/fremantle/hildon/HildonButton.qml
+
     DEFINES += Q_WS_MAEMO_5
 }
 
-win32 {
+win32: !simulator {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
