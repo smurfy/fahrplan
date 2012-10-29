@@ -111,8 +111,6 @@ Page {
         anchors {
             topMargin: 10
             top: titleBar.bottom
-            bottom: mainToolbar.top
-            bottomMargin: 10
         }
         width: mainPage.width
         height: mainPage.height - titleBar.height - 20
@@ -401,6 +399,7 @@ Page {
         titleText: qsTr("Select train")
         model: trainrestrictionsModel
         onAccepted: {
+           trainrestrictionsButton.subTitleText = selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
         }
     }
 

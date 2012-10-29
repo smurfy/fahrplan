@@ -112,11 +112,9 @@ Page {
         anchors {
             topMargin: platformStyle.paddingMedium
             top: titleBar.bottom
-            bottom: mainToolbar.top
-            bottomMargin: platformStyle.paddingMedium
         }
         width: mainPage.width
-        height: mainPage.height - titleBar.height - 2 * platformStyle.paddingMedium
+        height: mainPage.height - titleBar.height - (2 * platformStyle.paddingMedium)
         contentWidth: buttons.width
         contentHeight: buttons.height
         flickableDirection: Flickable.VerticalFlick
@@ -419,6 +417,7 @@ Page {
         model: trainrestrictionsModel
         platformInverted: appWindow.platformInverted
         onAccepted: {
+           trainrestrictionsButton.subTitleText = selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
         }
     }
 
@@ -687,7 +686,7 @@ Page {
                 });
             }
             selectTrainrestrictionsDialog.selectedIndex = (items.length > 0) ? 0 : -1;
-            if (selectTrainrestrictionsDialog.selectedIndex >= 0) {
+            if (selectTrainrestrictionsDialog.selectedIndex >= 0 &&  selectTrainrestrictionsDialog.model) {
                 var selObj = selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex)
                 if (selObj) {
                     trainrestrictionsButton.subTitleText = selObj.name
