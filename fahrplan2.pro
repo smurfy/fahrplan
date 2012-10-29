@@ -3,8 +3,10 @@
 QMAKE_TARGET_COMPANY = smurfy <maemo@smurfy.de>
 QMAKE_TARGET_PRODUCT = Fahrplan
 QMAKE_TARGET_DESCRIPTION = A Journey planner/Railway Time table for many train lines in Europe and Australia
-QMAKE_TARGET_COPYRIGHT = Copyright © smurfy <maemo@smurfy.de>
-VERSION = 2.0.8
+QMAKE_TARGET_COPYRIGHT = smurfy <maemo@smurfy.de>
+VERSION = 2.0.9
+
+DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
 
 #Fix for Harmattan
 exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmattan): {
