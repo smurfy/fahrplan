@@ -6,7 +6,11 @@ QMAKE_TARGET_DESCRIPTION = A Journey planner/Railway Time table for many train l
 QMAKE_TARGET_COPYRIGHT = smurfy <maemo@smurfy.de>
 VERSION = 2.0.9
 
-DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
+symbian {
+    DEFINES += FAHRPLAN_VERSION=\"$$VERSION\"
+} else {
+    DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
+}
 
 #Fix for Harmattan
 exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmattan): {
