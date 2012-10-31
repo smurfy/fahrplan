@@ -21,8 +21,5 @@
         <file>src/gui/symbian/icon/icon-s-calendar-location-picker.png</file>
         <file>src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png</file>
         <file>src/gui/symbian/js/style.js</file>
-        <file>translations/fahrplan_de.qm</file>
-        <file>translations/fahrplan_ru.qm</file>
-        <file>translations/fahrplan_uk.qm</file>
     </qresource>
 </RCC>

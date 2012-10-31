@@ -11,8 +11,5 @@
         <file>src/gui/harmattan/icon/icon-m-toolbar-help.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-clock.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-train.svg</file>
-        <file>translations/fahrplan_de.qm</file>
-        <file>translations/fahrplan_ru.qm</file>
-        <file>translations/fahrplan_uk.qm</file>
     </qresource>
 </RCC>

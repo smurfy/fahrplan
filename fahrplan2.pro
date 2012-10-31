@@ -64,12 +64,39 @@ symbian {
     default_deployment.pkg_prerules += qt-components
 }
 
-CONFIG += debug
-
-CONFIG += mobility
+CONFIG += mobility debug
 MOBILITY += location organizer
 
-# The .cpp file which was generated for your project. Feel free to hack it.
+TRANSLATIONS += \
+    translations/fahrplan_de.ts \
+    translations/fahrplan_ru.ts \
+    translations/fahrplan_uk.ts
+
+OTHER_FILES += \
+    data/fahrplan2.svg \
+    data/fahrplan2_64.png \
+    data/fahrplan2_80.png
+
+
+RESOURCES += \
+    translations_res.qrc
+
+HEADERS += \
+    src/parser/parser_hafasxml.h \
+    src/parser/parser_abstract.h \
+    src/parser/parser_definitions.h \
+    src/parser/parser_xmlsbbch.h \
+    src/parser/parser_xmlrejseplanendk.h \
+    src/parser/parser_xmloebbat.h \
+    src/parser/parser_xmlvasttrafikse.h \
+    src/parser/parser_131500comau.h \
+    src/fahrplan.h \
+    src/fahrplan_backend_manager.h \
+    src/parser/parser_mobilebahnde.h \
+    src/fahrplan_favorites_manager.h \
+    src/calendarthreadwrapper.h \
+    src/parser/parser_xmlnri.h
+
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
     src/parser/parser_abstract.cpp \
@@ -85,16 +112,6 @@ SOURCES += src/main.cpp \
     src/fahrplan_favorites_manager.cpp \
     src/calendarthreadwrapper.cpp \
     src/parser/parser_xmlnri.cpp
-
-TRANSLATIONS += \
-    translations/fahrplan_de.ts \
-    translations/fahrplan_ru.ts \
-    translations/fahrplan_uk.ts
-
-OTHER_FILES += \
-    data/fahrplan2.svg \
-    data/fahrplan2_64.png \
-    data/fahrplan2_80.png
 
 symbian || simulator {
     RESOURCES += symbian_res.qrc
@@ -182,10 +199,6 @@ win32: !simulator {
     FORMS += src/gui/desktop-test/mainwindow.ui
 }
 
-# Please do not modify the following two lines. Required for deployment.
-include(deployment.pri)
-qtcAddDeployment()
-
 # enable booster
 symbian {
     CONFIG += symbian_appbooster
@@ -194,22 +207,6 @@ symbian {
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
 }
-
-HEADERS += \
-    src/parser/parser_hafasxml.h \
-    src/parser/parser_abstract.h \
-    src/parser/parser_definitions.h \
-    src/parser/parser_xmlsbbch.h \
-    src/parser/parser_xmlrejseplanendk.h \
-    src/parser/parser_xmloebbat.h \
-    src/parser/parser_xmlvasttrafikse.h \
-    src/parser/parser_131500comau.h \
-    src/fahrplan.h \
-    src/fahrplan_backend_manager.h \
-    src/parser/parser_mobilebahnde.h \
-    src/fahrplan_favorites_manager.h \
-    src/calendarthreadwrapper.h \
-    src/parser/parser_xmlnri.h
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
@@ -222,3 +219,7 @@ translate_hack {
         src/gui/symbian/*.qml \
         src/gui/symbian/components/*.qml
 }
+
+# Please do not modify the following two lines. Required for deployment.
+include(deployment.pri)
+qtcAddDeployment()
