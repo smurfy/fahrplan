@@ -194,6 +194,39 @@ symbian {
     # range value if unprotected UID is defined for the application and
     # 0x2002CCCF value if protected UID is given to the application
     DEPLOYMENT.installer_header = 0x2002CCCF
+
+    QMAKE_TARGET_COMPANY = smurfy <maemo@smurfy.de>
+    QMAKE_TARGET_PRODUCT = Fahrplan
+    QMAKE_TARGET_DESCRIPTION = A Journey planner/Railway Time table for many train lines in Europe and Australia
+    QMAKE_TARGET_COPYRIGHT = smurfy <maemo@smurfy.de>
+
+    DEPLOYMENT.display_name = $$QMAKE_TARGET_PRODUCT
+    ICON = data/fahrplan2.svg
+    CONFIG += qt-components
+
+    TARGET.EPOCHEAPSIZE = 0x20000 0x2000000
+
+    # Set correct capabilities:
+    # ReadUserData - needed for access to all SSL certificates
+    #   and avoid "CSymbianCertificateRetriever: failed to retrieve a certificate, error  -46"
+    # WriteUserData - needed to create calendar events
+    # NetworkServices - needed for, well, network access :-)
+    # Location - needed for searching the nearest station
+    TARGET.CAPABILITY += ReadUserData WriteUserData NetworkServices Location
+
+    vendor = \
+        "%{\"$$QMAKE_TARGET_COMPANY\"}" \
+        ":\"$$QMAKE_TARGET_COMPANY\""
+    default_deployment.pkg_prerules += vendor
+
+    # Next lines replace automatic addition of Qt Components dependency to .sis file
+    # with the manual one. For some reason, minimal required version is set to 1.0
+    # instead of 1.1 so we want to replace it with the correct dependency.
+    CONFIG += qt-components_build
+    qt-components = \
+        "; Default dependency to Qt Quick Components for Symbian library" \
+        "(0x200346DE), 1, 1, 0, {\"Qt Quick components for Symbian\"}"
+    default_deployment.pkg_prerules += qt-components
 }
 
 # Please do not modify the following two lines. Required for deployment.
