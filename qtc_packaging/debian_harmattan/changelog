@@ -1,3 +1,12 @@
+fahrplan2 (2.0.9) unstable; urgency=low
+  * Optimized UI
+  * Added Ukrainian Translation
+  * Added Russian Translation
+  * Added Symbian Support
+  * Added Support for vasttrafik.se
+  
+ -- smurfy <maemo@smurfy.de>  Thu, 31 Oct 2012 20:00:00 +0200
+
 fahrplan2 (2.0.8) unstable; urgency=low
   * Optimized UI for PR1.2
   * Added display of realtime tracking infos in result and departure montitor
