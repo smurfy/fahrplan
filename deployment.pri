@@ -30,7 +30,12 @@ symbian {
     CONFIG += qt-components
 
     TARGET.EPOCHEAPSIZE = 0x20000 0x2000000
-    TARGET.UID3 = 0xE4182966
+
+    # This UID is from my (smurfy's) offical nokia symbian package range. So
+    # if you decide to fork my project and publish the app to the store make sure
+    # you request your own uid's or your publish will fail.
+    # for development only this should work just fine.
+    TARGET.UID3 = 0x2006D175
 
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
