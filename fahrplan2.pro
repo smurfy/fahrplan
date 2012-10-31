@@ -178,6 +178,24 @@ translate_hack {
         src/gui/symbian/components/*.qml
 }
 
+# Symbian Deployment Settings
+symbian {
+    # Do not move this settings to deployment.pri, it seams that it need to be defined in
+    # the pro file
+
+    # This UID is from my (smurfy's) offical nokia symbian package range. So
+    # if you decide to fork my project and publish the app to the store make sure
+    # you request your own uid's or your publish will fail.
+    # for development only this should work just fine.
+    TARGET.UID3 = 0x2006D175
+    # Smart Installer package's UID
+    # This UID is from the protected range and therefore the package will
+    # fail to install if self-signed. By default qmake uses the unprotected
+    # range value if unprotected UID is defined for the application and
+    # 0x2002CCCF value if protected UID is given to the application
+    DEPLOYMENT.installer_header = 0x2002CCCF
+}
+
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
 qtcAddDeployment()

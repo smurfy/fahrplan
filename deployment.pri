@@ -31,19 +31,6 @@ symbian {
 
     TARGET.EPOCHEAPSIZE = 0x20000 0x2000000
 
-    # This UID is from my (smurfy's) offical nokia symbian package range. So
-    # if you decide to fork my project and publish the app to the store make sure
-    # you request your own uid's or your publish will fail.
-    # for development only this should work just fine.
-    TARGET.UID3 = 0x2006D175
-
-    # Smart Installer package's UID
-    # This UID is from the protected range and therefore the package will
-    # fail to install if self-signed. By default qmake uses the unprotected
-    # range value if unprotected UID is defined for the application and
-    # 0x2002CCCF value if protected UID is given to the application
-    #DEPLOYMENT.installer_header = 0x2002CCCF
-
     # Set correct capabilities:
     # ReadUserData - needed for access to all SSL certificates
     #   and avoid "CSymbianCertificateRetriever: failed to retrieve a certificate, error  -46"
