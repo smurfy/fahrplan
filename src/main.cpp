@@ -23,6 +23,8 @@
 
 #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
     #include <QtDeclarative>
+    #include <MDeclarativeCache>
+    #include <QtCore/QtGlobal>
 #elif defined(Q_WS_WIN) || defined(Q_WS_X11)
     #include "gui/desktop-test/mainwindow.h"
 #endif
@@ -33,14 +35,21 @@
 
 #include "fahrplan.h"
 
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+Q_DECL_EXPORT
+#endif
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+        QApplication* app = MDeclarativeCache::qApplication(argc, argv);
+    #else
+        QApplication* app = new QApplication(argc, argv);
+    #endif
 
     // Install translations
     QTranslator translator;
     translator.load(QString("fahrplan_%1").arg(QLocale::system().name()), ":/translations");
-    app.installTranslator(&translator);
+    app->installTranslator(&translator);
 
 
     qDebug()<<"Startup";
@@ -63,22 +72,22 @@ int main(int argc, char *argv[])
             qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
             qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
             qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
-            QDeclarativeView view;
+            QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
         #endif
 
         #if defined(MEEGO_EDITION_HARMATTAN)
             qDebug()<<"Harmattan";
-            view.setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));
-            view.showFullScreen();
+            view->setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));
+            view->showFullScreen();
         #elif defined(Q_WS_MAEMO_5)
             qDebug()<<"Maemo5";
             qmlRegisterType<HildonHelper>("HildonHelper", 1, 0, "HildonHelper");
-            view.setSource(QUrl("qrc:/src/gui/fremantle/main.qml"));
-            view.show();
+            view->setSource(QUrl("qrc:/src/gui/fremantle/main.qml"));
+            view->show();
         #elif defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
             qDebug()<<"Symbian";
-            view.setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
-            view.showFullScreen();
+            view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
+            view->showFullScreen();
         #else
             MainWindow w;
             w.show();
@@ -89,5 +98,5 @@ int main(int argc, char *argv[])
 
     qDebug()<<"Exec";
 
-    return app.exec();
+    return app->exec();
 }

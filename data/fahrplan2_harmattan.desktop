@@ -4,7 +4,7 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=Fahrplan
-Exec=/usr/bin/invoker --single-instance --splash /opt/fahrplan2/data/splash.jpg --type=e /opt/fahrplan2/bin/fahrplan2
+Exec=/usr/bin/invoker --single-instance --splash /opt/fahrplan2/data/splash.jpg --type=d /opt/fahrplan2/bin/fahrplan2
 Icon=/usr/share/icons/hicolor/scalable/apps/fahrplan2.svg
 X-Window-Icon=
 X-HildonDesk-ShowInToolbar=true

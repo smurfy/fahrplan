@@ -161,7 +161,9 @@ win32: !simulator {
 symbian {
     #CONFIG += symbian_appbooster
 } else {
-    CONFIG += qdeclarative-boostable
+    CONFIG += qt-boostable qdeclarative-boostable
+    LIBS += -lmdeclarativecache
+    INCLUDEPATH += /usr/include/applauncherd
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
 }
