@@ -159,7 +159,7 @@ win32: !simulator {
 
 # enable booster
 symbian {
-    #CONFIG += symbian_appbooster
+    CONFIG += symbian_appbooster
 } else {
     CONFIG += qt-boostable qdeclarative-boostable
     LIBS += -lmdeclarativecache
