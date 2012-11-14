@@ -23,10 +23,13 @@
 
 #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
     #include <QtDeclarative>
-    #include <MDeclarativeCache>
     #include <QtCore/QtGlobal>
 #elif defined(Q_WS_WIN) || defined(Q_WS_X11)
     #include "gui/desktop-test/mainwindow.h"
+#endif
+
+#if defined(MEEGO_EDITION_HARMATTAN)
+    #include <MDeclarativeCache>
 #endif
 
 #if defined(Q_WS_MAEMO_5)
@@ -40,7 +43,7 @@ Q_DECL_EXPORT
 #endif
 int main(int argc, char *argv[])
 {
-    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+    #if defined(MEEGO_EDITION_HARMATTAN)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #else
         QApplication* app = new QApplication(argc, argv);
@@ -72,7 +75,12 @@ int main(int argc, char *argv[])
             qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
             qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
             qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
-            QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
+
+            #if defined(MEEGO_EDITION_HARMATTAN)
+                QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
+            #else
+                QDeclarativeView* view = new QDeclarativeView();
+            #endif
         #endif
 
         #if defined(MEEGO_EDITION_HARMATTAN)
