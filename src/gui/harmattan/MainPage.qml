@@ -437,11 +437,12 @@ Page {
         }
     }
 
-    TimePickerDialog {
+    TimePickerDialogAdv {
         id: timePicker
         titleText: qsTr("Time")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
+        newButtonText: qsTr("Now")
         fields: DateTime.Hours | DateTime.Minutes
         hourMode: DateTime.TwentyFourHours // FIXME should set through i18n
         onAccepted: {

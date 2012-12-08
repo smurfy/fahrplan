@@ -33,8 +33,7 @@ TRANSLATIONS += \
 OTHER_FILES += \
     data/fahrplan2.svg \
     data/fahrplan2_64.png \
-    data/fahrplan2_80.png
-
+    data/fahrplan2_80.png \
 
 RESOURCES += \
     translations_res.qrc
@@ -110,6 +109,7 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/main.qml \
         src/gui/harmattan/components/SubTitleButton.qml \
         src/gui/harmattan/components/StationSelect.qml \
+        src/gui/harmattan/components/TimePickerDialogAdv.qml \
         src/gui/harmattan/AboutPage.qml \
         data/fahrplan2_harmattan.desktop \
         qtc_packaging/debian_harmattan/rules \
