@@ -156,14 +156,13 @@ Page {
 
                          Label {
                              anchors {
+                                 left: parent.left
                                  top: parent.top
                                  topMargin: platformStyle.paddingSmall
-                                 left: parent.left
                              }
 
                              // This hack is needed to have correct padding for the line
-                             text: arrivalTime != "" ? arrivalTime : "00:00"
-                             color: item_station.color
+                             text: arrivalTime != "" ? arrivalTime : " "
                              platformInverted: appWindow.platformInverted
                          }
 
