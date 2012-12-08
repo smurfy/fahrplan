@@ -157,9 +157,9 @@ win32: !simulator {
     FORMS += src/gui/desktop-test/mainwindow.ui
 }
 
-# enable booster
+# enable booster and Add dependency to Symbian components
 symbian {
-    CONFIG += symbian_appbooster
+    CONFIG += symbian_appbooster qt-components
 }
 
 !win32: !symbian {
