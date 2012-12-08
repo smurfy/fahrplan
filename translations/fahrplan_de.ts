@@ -466,7 +466,7 @@
         <location filename="../src/parser/parser_hafasxml.cpp" line="1021"/>
         <location filename="../src/parser/parser_hafasxml.cpp" line="1025"/>
         <source>Platform </source>
-        <translation>Plattform</translation>
+        <translation>Plattform </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/parser/parser_hafasxml.cpp" line="1084"/>
@@ -714,7 +714,7 @@
     <message>
         <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="185"/>
         <source>Pl. </source>
-        <translation>Gl.</translation>
+        <translation>Gl. </translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/TimeTableResultsPage.qml" line="190"/>
