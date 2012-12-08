@@ -160,7 +160,9 @@ win32: !simulator {
 # enable booster
 symbian {
     CONFIG += symbian_appbooster
-} else {
+}
+
+!win32: !symbian {
     CONFIG += qt-boostable qdeclarative-boostable
     LIBS += -lmdeclarativecache
     INCLUDEPATH += /usr/include/applauncherd
