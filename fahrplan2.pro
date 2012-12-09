@@ -19,7 +19,6 @@ exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmat
 QML_IMPORT_PATH =
 
 QT += declarative xmlpatterns network xml
-
 maemo5:QT += maemo5
 
 CONFIG += mobility debug
@@ -38,6 +37,9 @@ OTHER_FILES += \
 RESOURCES += \
     translations_res.qrc
 
+# Zlib todo for other systems ugly hack
+INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib
+
 HEADERS += \
     src/parser/parser_hafasxml.h \
     src/parser/parser_abstract.h \
@@ -52,7 +54,8 @@ HEADERS += \
     src/parser/parser_mobilebahnde.h \
     src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
-    src/parser/parser_xmlnri.h
+    src/parser/parser_xmlnri.h \
+    src/parser/parser_hafasbinary.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -68,7 +71,8 @@ SOURCES += src/main.cpp \
     src/parser/parser_mobilebahnde.cpp \
     src/fahrplan_favorites_manager.cpp \
     src/calendarthreadwrapper.cpp \
-    src/parser/parser_xmlnri.cpp
+    src/parser/parser_xmlnri.cpp \
+    src/parser/parser_hafasbinary.cpp
 
 symbian || simulator {
     RESOURCES += symbian_res.qrc

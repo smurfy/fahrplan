@@ -84,7 +84,8 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
 {
     QNetworkRequest request;
     request.setUrl(url);
-    request.setRawHeader("User-Agent", "-");
+    request.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20100101 Firefox/13.0");
+    request.setRawHeader("Cache-Control", "no-cache");
 
     if (data.isNull()) {
         lastRequest = NetworkManager->get(request);

@@ -18,35 +18,27 @@
 
 */
 
-#ifndef FAHRPLAN_BACKEND_MANAGER_H
-#define FAHRPLAN_BACKEND_MANAGER_H
+#ifndef PARSER_HAFASBINARY_H
+#define PARSER_HAFASBINARY_H
 
-#include "parser/parser_hafasxml.h"
-#include "parser/parser_hafasbinary.h"
-#include "parser/parser_xmloebbat.h"
-#include "parser/parser_xmlvasttrafikse.h"
-#include "parser/parser_xmlrejseplanendk.h"
-#include "parser/parser_xmlsbbch.h"
-#include "parser/parser_xmlnri.h"
-#include "parser/parser_mobilebahnde.h"
-#include "parser/parser_131500comau.h"
+#include <QObject>
+#include <QDataStream>
+#include <zlib.h>
+#include "parser_hafasxml.h"
 
-class FahrplanBackendManager : public QObject
+class ParserHafasBinary : public ParserHafasXml
 {
     Q_OBJECT
-
-    public:
-        explicit FahrplanBackendManager(int defaultParser, QObject *parent = 0);
-        QStringList getParserList();
-        void setParser(int index);
-        ParserAbstract *getParser();
-
-    signals:
-        void parserChanged(QString name, int index);
-
-    private:
-        ParserAbstract *m_parser;
-        int currentParserIndex;
+public:
+    explicit ParserHafasBinary(QObject *parent = 0);
+    static QString getName() { return "HafasBinary"; }
+    QString name() { return "HafasBinary"; }
+protected:
+    QString baseBinaryUrl;
+    void parseSearchJourneyPart1(QNetworkReply *networkReply);
+    void parseSearchJourneyPart2(QNetworkReply *networkReply);
+    void parseSearchJourney(QNetworkReply *networkReply);
+    QByteArray gzipDecompress(QByteArray compressData);
 };
 
-#endif // FAHRPLAN_BACKEND_MANAGER_H
+#endif // PARSER_HAFASBINARY_H

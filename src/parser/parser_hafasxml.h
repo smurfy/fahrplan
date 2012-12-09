@@ -93,6 +93,9 @@ protected:
     QString baseUrl;
     QString baseSTTableUrl;
     ParserHafasXmlHeader hafasHeader;
+    ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
+    ParserHafasXmlJourneyDetailRequestData journeyDetailRequestData;
+
     int STTableMode;
     void parseTimeTable(QNetworkReply *networkReply);
     void parseStationsByName(QNetworkReply *networkReply);
@@ -103,21 +106,19 @@ protected:
     void parseJourneyDetails(QNetworkReply *networkReply);
 
     StationsResultList* internalParseStationsByName(const QString &data);
+    QString getTrainRestrictionsCodes(int trainrestrictions);
+    void parseSearchJourneyPart1(QNetworkReply *networkReply);
+    void parseSearchJourneyPart2(QNetworkReply *networkReply);
+    ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
 
 private:
     QString conResCtxt;
     JourneyResultList *lastJourneyResultList;
-    ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
-    ParserHafasXmlJourneyDetailRequestData journeyDetailRequestData;
     ParserHafasXmlGetTimeTableForStationRequestData getTimeTableForStationRequestData;
     QList<JourneyDetailResultList*> journeyDetailInlineData;
-    QString getTrainRestrictionsCodes(int trainrestrictions);
     QString cleanHafasDate(const QString &time);
     QDateTime cleanHafasDateTime(const QString &time, QDate date);
     QByteArray getStationsExternalIds(const QString &departureStation, const QString &arrivalStation, const QString &viaStation);
-    ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
-    void parseSearchJourneyPart1(QNetworkReply *networkReply);
-    void parseSearchJourneyPart2(QNetworkReply *networkReply);
     void parseTimeTableMode1(QNetworkReply *networkReply);
     void parseTimeTableMode0Part1(QNetworkReply *networkReply);
     void parseTimeTableMode0Part2(QNetworkReply *networkReply);
