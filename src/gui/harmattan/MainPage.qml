@@ -193,40 +193,30 @@ Page {
                 }
                 icon: "image://theme/icon-m-common-drilldown-arrow"
             }
+
             SubTitleButton {
-                id: datePickerButton
-                titleText: qsTr("Date")
+                id: dateTimePickerButton
+                titleText: qsTr("Date / Time")
                 subTitleText: qsTr("please select")
                 width: parent.width
                 onClicked: {
-                    datePicker.open();
+                    dateTimePicker.open();
                 }
             }
 
-            SubTitleButton {
-                id: timePickerButton
-                titleText: qsTr("Time")
-                subTitleText: qsTr("please select")
+            ButtonRow {
                 width: parent.width
-                onClicked: {
-                    timePicker.open();
+                anchors {
+                    leftMargin: 10
+                    rightMargin: 10
                 }
-
-                ButtonRow {
-                    anchors {
-                        right: parent.right
-                        rightMargin: 50
-                        verticalCenter: parent.verticalCenter
-                    }
-                    width: parent.width * 2 / 3
-                    Button {
-                        id: modeDep
-                        text: qsTr("Departure")
-                    }
-                    Button {
-                        id: modeArr
-                        text: qsTr("Arrival")
-                    }
+                Button {
+                    id: modeDep
+                    text: qsTr("Departure")
+                }
+                Button {
+                    id: modeArr
+                    text: qsTr("Arrival")
                 }
             }
 
@@ -264,8 +254,7 @@ Page {
                         directionStation = "";
                     }
 
-                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
-                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
+                    var selDateTime = new Date(dateTimePicker.year, dateTimePicker.month - 1, dateTimePicker.day, dateTimePicker.hour, dateTimePicker.minute);
                     var selMode = ParserAbstract.Arrival;
                     if (modeDep.checked) {
                         selMode = ParserAbstract.Departure;
@@ -282,7 +271,7 @@ Page {
                     pageStack.push(timetablePage);
 
 
-                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selDate, selTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selDateTime, selDateTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
@@ -315,8 +304,7 @@ Page {
                     resultsPage.journeyStationsTitleText = viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText).arg(viaStation);
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
-                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
-                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
+                    var selDateTime = new Date(dateTimePicker.year, dateTimePicker.month - 1, dateTimePicker.day, dateTimePicker.hour, dateTimePicker.minute);
                     var selMode = ParserAbstract.Arrival;
                     if (modeDep.checked) {
                         selMode = ParserAbstract.Departure;
@@ -324,7 +312,7 @@ Page {
                     if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                     }
-                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDateTime, selDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }
@@ -419,42 +407,20 @@ Page {
         id: aboutPage
     }
 
-    DatePickerDialog {
-        id: datePicker
-        titleText: qsTr("Date")
-        acceptButtonText: qsTr("Ok")
-        rejectButtonText: qsTr("Cancel")
-        onAccepted: {
-            var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
-            datePickerButton.subTitleText = Qt.formatDate(selDate);
-        }
-        Component.onCompleted: {
-            var d = new Date();
-            datePicker.year = d.getFullYear();
-            datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
-            datePicker.day = d.getDate();
-            datePickerButton.subTitleText = Qt.formatDate(d);
-        }
-    }
 
-    TimePickerDialogAdv {
-        id: timePicker
-        titleText: qsTr("Time")
+    DateTimePickerDialog {
+        id: dateTimePicker
+        titleText: qsTr("Select date and time")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
-        newButtonText: qsTr("Now")
-        fields: DateTime.Hours | DateTime.Minutes
-        hourMode: DateTime.TwentyFourHours // FIXME should set through i18n
+        nowButtonText: qsTr("Now")
         onAccepted: {
-            var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
+            var d = new Date(dateTimePicker.year, dateTimePicker.month - 1, dateTimePicker.day, dateTimePicker.hour, dateTimePicker.minute, 0);
+            dateTimePickerButton.subTitleText = Qt.formatDate(d) + " " + Qt.formatTime(d, "hh:mm");
         }
         Component.onCompleted: {
             var d = new Date();
-            timePicker.hour = d.getHours();
-            timePicker.minute = d.getMinutes();
-            timePicker.second = d.getSeconds();
-            timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
+            dateTimePickerButton.subTitleText = Qt.formatDate(d) + " " + Qt.formatTime(d, "hh:mm");
         }
     }
 

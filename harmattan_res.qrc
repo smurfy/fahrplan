@@ -11,6 +11,6 @@
         <file>src/gui/harmattan/icon/icon-m-toolbar-help.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-clock.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-train.svg</file>
-        <file>src/gui/harmattan/components/TimePickerDialogAdv.qml</file>
+        <file>src/gui/harmattan/components/DateTimePickerDialog.qml</file>
     </qresource>
 </RCC>
