@@ -33,10 +33,10 @@ public:
     explicit ParserHafasBinary(QObject *parent = 0);
     static QString getName() { return "HafasBinary"; }
     QString name() { return "HafasBinary"; }
+    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+
 protected:
     QString baseBinaryUrl;
-    void parseSearchJourneyPart1(QNetworkReply *networkReply);
-    void parseSearchJourneyPart2(QNetworkReply *networkReply);
     void parseSearchJourney(QNetworkReply *networkReply);
     QByteArray gzipDecompress(QByteArray compressData);
     QDate toDate(quint16 date);

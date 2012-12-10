@@ -25,63 +25,48 @@ ParserHafasBinary::ParserHafasBinary(QObject *parent)
 {
      Q_UNUSED(parent);
 
-    baseXmlUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
+    baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
     baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
-    baseUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
+    baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
     baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
     STTableMode = 1;
 }
 
+void ParserHafasBinary::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
+{
+    currentRequestState = FahrplanNS::searchJourneyRequest;
+
+    QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
+
+    QUrl uri = baseBinaryUrl;
+    uri.addQueryItem("start", "Suchen");
+    uri.addEncodedQueryItem("REQ0JourneyStopsS0ID", QUrl::toPercentEncoding("A=1@G=" + departureStation));
+    uri.addEncodedQueryItem("REQ0JourneyStopsZ0ID", QUrl::toPercentEncoding("A=1@G=" + arrivalStation));
+
+    //Todo: via station :)
+
+    uri.addQueryItem("REQ0JourneyDate", date.toString("dd.MM.yyyy"));
+    uri.addQueryItem("REQ0JourneyTime", time.toString("hh:mm"));
+    uri.addQueryItem("REQ0HafasSearchForw", QString::number(mode));
+    uri.addQueryItem("REQ0JourneyProduct_prod_list_1", trainrestr);
+    uri.addQueryItem("h2g-direct", "11");
+    sendHttpRequest(uri);
+}
+
 void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 {
-    switch (searchJourneyRequestData.progress) {
-    case 1:
-        parseSearchJourneyPart1(networkReply);
-        break;
-    case 2:
-        parseSearchJourneyPart2(networkReply);
-        break;
-    }
-}
-
-void ParserHafasBinary::parseSearchJourneyPart1(QNetworkReply *networkReply)
-{
-    ParserHafasXmlExternalIds extIds = parseExternalIds(networkReply->readAll());
-
-    if (!extIds.departureId.isEmpty() && !extIds.arrivalId.isEmpty()) {
-
-        currentRequestState = FahrplanNS::searchJourneyRequest;
-        searchJourneyRequestData.progress = 2;
-
-        QString trainrestr = getTrainRestrictionsCodes(searchJourneyRequestData.trainrestrictions);
-
-        QUrl uri = baseBinaryUrl;
-        uri.addQueryItem("start", "Suchen");
-        uri.addEncodedQueryItem("REQ0JourneyStopsS0ID", QUrl::toPercentEncoding("A=1@L=" + extIds.departureId));
-        uri.addEncodedQueryItem("REQ0JourneyStopsZ0ID", QUrl::toPercentEncoding("A=1@L=" + extIds.arrivalId));
-
-        //Todo: via station :)
-
-        uri.addQueryItem("REQ0JourneyDate", searchJourneyRequestData.date.toString("dd.MM.yyyy"));
-        uri.addQueryItem("REQ0JourneyTime", searchJourneyRequestData.time.toString("hh:mm"));
-        uri.addQueryItem("REQ0HafasSearchForw", QString::number(searchJourneyRequestData.mode));
-        uri.addQueryItem("REQ0JourneyProduct_prod_list_1", trainrestr);
-        uri.addQueryItem("h2g-direct", "11");
-        sendHttpRequest(uri);
-    }
-}
-
-void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
-{
     lastJourneyResultList = new JourneyResultList();
+    journeyDetailInlineData.clear();
 
     QByteArray tmpBuffer = networkReply->readAll();
     QByteArray buffer = gzipDecompress(tmpBuffer);
 
+    /*
     QFile file("f://out.txt");
     file.open(QIODevice::WriteOnly);
     file.write(buffer);
     file.close();
+*/
 
     QDataStream hafasData(buffer);
     hafasData.setByteOrder(QDataStream::LittleEndian);
@@ -391,9 +376,12 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
                 lastJourneyResultList->appendItem(item);
             }
         }
+        emit journeyResult(lastJourneyResultList);
+    } else if (errorCode == 8) {
+        emit errorOccured(tr("Sorry one station name is to ambiguous"));
+    } else {
+        emit errorOccured(tr("An error ocurred with the backend"));
     }
-
-    emit journeyResult(lastJourneyResultList);
 }
 
 QDateTime ParserHafasBinary::toTime(quint16 time)
