@@ -110,12 +110,12 @@ protected:
     void parseSearchJourneyPart1(QNetworkReply *networkReply);
     void parseSearchJourneyPart2(QNetworkReply *networkReply);
     ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
+    JourneyResultList *lastJourneyResultList;
+    QList<JourneyDetailResultList*> journeyDetailInlineData;
 
 private:
     QString conResCtxt;
-    JourneyResultList *lastJourneyResultList;
     ParserHafasXmlGetTimeTableForStationRequestData getTimeTableForStationRequestData;
-    QList<JourneyDetailResultList*> journeyDetailInlineData;
     QString cleanHafasDate(const QString &time);
     QDateTime cleanHafasDateTime(const QString &time, QDate date);
     QByteArray getStationsExternalIds(const QString &departureStation, const QString &arrivalStation, const QString &viaStation);

@@ -73,6 +73,8 @@ void ParserHafasBinary::parseSearchJourneyPart1(QNetworkReply *networkReply)
 
 void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
 {
+    lastJourneyResultList = new JourneyResultList();
+
     QByteArray tmpBuffer = networkReply->readAll();
     QByteArray buffer = gzipDecompress(tmpBuffer);
 
@@ -297,8 +299,14 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
             }*/
 
             qDebug()<<"conId"<<connectionId;
+            QStringList lineNames;
+
+            JourneyDetailResultList *inlineResults = new JourneyDetailResultList();
 
             for (int iPart = 0; iPart < numParts; iPart++) {
+
+                JourneyDetailResultItem *inlineItem = new JourneyDetailResultItem();
+
                 hafasData.device()->seek(0x4a + partsOffset + iPart * 20);
 
                 quint16 plannedDepartureTimeInt;
@@ -337,10 +345,49 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
                 QString plannedDeparture = strings[plannedDeparturePtr];
                 QString plannedArrival = strings[plannedArrivalPtr];
 
+                if (type == 2) {
+                    lineNames.append(lineName);
+                }
+
                 qDebug()<<type<<lineName<<plannedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<plannedArrival<<plannedArrivalPosition;
+
+                inlineItem->setDepartureDateTime(plannedDepartureTime);
+                inlineItem->setDepartureStation(plannedDeparture);
+                inlineItem->setDepartureInfo(plannedDeparturePosition);
+                inlineItem->setArrivalDateTime(plannedArrivalTime);
+                inlineItem->setArrivalStation(plannedArrival);
+                inlineItem->setArrivalInfo(plannedArrivalPosition);
+                inlineItem->setTrain(lineName);
+                inlineResults->appendItem(inlineItem);
+            }
+
+            if (inlineResults->itemcount() > 0) {
+                inlineResults->setId(connectionId);
+                inlineResults->setDuration(durationTime.time().toString());
+                inlineResults->setDepartureStation(inlineResults->getItem(0)->departureStation());
+                inlineResults->setArrivalStation(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalStation());
+                journeyDetailInlineData.append(inlineResults);
+
+                lineNames.removeDuplicates();
+
+                JourneyResultItem *item = new JourneyResultItem();
+                item->setDate(journeyDate);
+                item->setId(connectionId);
+                item->setTransfers(QString::number(numChanges));
+                item->setDuration(durationTime.time().toString());
+                item->setMiscInfo("");
+                item->setTrainType(lineNames.join(", ").trimmed());
+                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().toString());
+                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().toString());
+                if (serviceTxt != "always") {
+                    item->setMiscInfo(serviceTxt);
+                }
+                lastJourneyResultList->appendItem(item);
             }
         }
     }
+
+    emit journeyResult(lastJourneyResultList);
 }
 
 QDateTime ParserHafasBinary::toTime(quint16 time)
