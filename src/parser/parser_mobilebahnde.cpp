@@ -23,9 +23,9 @@
 ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent)
 {
      Q_UNUSED(parent);
-     baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
+     baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
      baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
-     baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
+     baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
      baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
      STTableMode = 1;
 }

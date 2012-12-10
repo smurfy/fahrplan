@@ -24,14 +24,10 @@
 ParserHafasBinary::ParserHafasBinary(QObject *parent)
 {
     Q_UNUSED(parent);
-
-    /*
-    baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
-    baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
-    baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
-    baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
-    */
-    STTableMode = 1;
+    // baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
+    // baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
+    // baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
+    // baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
 }
 
 bool ParserHafasBinary::supportsVia()
@@ -333,10 +329,10 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 QString plannedDeparturePosition = strings[departurePlatformPtr];
                 QString plannedArrivalPosition = strings[arrivalPlatformPtr];
 
-                if (plannedDeparturePosition == "----") {
+                if (plannedDeparturePosition == "---") {
                     plannedDeparturePosition = "";
                 }
-                if (plannedArrivalPosition == "----") {
+                if (plannedArrivalPosition == "---") {
                     plannedArrivalPosition = "";
                 }
 
