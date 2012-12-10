@@ -333,6 +333,13 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 QString plannedDeparturePosition = strings[departurePlatformPtr];
                 QString plannedArrivalPosition = strings[arrivalPlatformPtr];
 
+                if (plannedDeparturePosition == "----") {
+                    plannedDeparturePosition = "";
+                }
+                if (plannedArrivalPosition == "----") {
+                    plannedArrivalPosition = "";
+                }
+
                 //Getting Station Names last because we seeking in the buffer
                 hafasData.device()->seek((plannedDepartureIdx * 14) + stationTablePtr);
                 hafasData >> plannedDeparturePtr;
@@ -360,7 +367,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
             if (inlineResults->itemcount() > 0) {
                 inlineResults->setId(connectionId);
-                inlineResults->setDuration(durationTime.time().toString());
+                inlineResults->setDuration(durationTime.time().toString("hh:mm"));
                 inlineResults->setDepartureStation(inlineResults->getItem(0)->departureStation());
                 inlineResults->setArrivalStation(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalStation());
                 inlineResults->setDepartureDateTime(inlineResults->getItem(0)->departureDateTime());
@@ -373,7 +380,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setDate(journeyDate);
                 item->setId(connectionId);
                 item->setTransfers(QString::number(numChanges));
-                item->setDuration(durationTime.time().toString());
+                item->setDuration(durationTime.time().toString("hh:mm"));
                 item->setMiscInfo("");
                 item->setTrainType(lineNames.join(", ").trimmed());
                 item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString("hh:mm"));
