@@ -420,6 +420,13 @@ Page {
         }
         Component.onCompleted: {
             var d = new Date();
+
+            dateTimePicker.day = d.getDate();
+            dateTimePicker.month = d.getMonth() + 1;
+            dateTimePicker.year = d.getFullYear();
+            dateTimePicker.hour = d.getHours();
+            dateTimePicker.minute = d.getMinutes();
+
             dateTimePickerButton.subTitleText = Qt.formatDate(d) + " " + Qt.formatTime(d, "hh:mm");
         }
     }

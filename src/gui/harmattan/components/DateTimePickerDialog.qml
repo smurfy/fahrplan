@@ -54,7 +54,18 @@ TumblerDialog {
     property alias nowButtonText: nowButton.text
 
     titleText: "Select date and time"
-    columns: [ dayColumn, monthColumn, yearColumn, hourColumn, minuteColumn ]
+
+    content: Item {
+        height: 300
+        width: parent.width
+        Tumbler {
+            id: tumbler
+            height: 300
+            privateDelayInit: true
+
+            columns: [ dayColumn, monthColumn, yearColumn, hourColumn, minuteColumn ]
+        }
+    }
 
     TumblerColumn {
         id: dayColumn
@@ -191,8 +202,7 @@ TumblerDialog {
             nowButtonContainer.anchors.top = buttons[0].bottom;
             nowButtonContainer.anchors.topMargin = 20
 
-            setToday();
-
+            tumbler.privateInitialize();
             internal.initialized = true;
         }
 
