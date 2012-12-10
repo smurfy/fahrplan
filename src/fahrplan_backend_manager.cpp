@@ -61,6 +61,8 @@ void FahrplanBackendManager::setParser(int index)
     }
 
     switch (index) {
+        default:
+            currentParserIndex = 0;
         case 0:
             m_parser = new ParserMobileBahnDe();
             break;
