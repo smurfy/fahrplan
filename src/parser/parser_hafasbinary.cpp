@@ -28,7 +28,7 @@ ParserHafasBinary::ParserHafasBinary(QObject *parent)
     baseXmlUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
     baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
     baseUrl = "http://mobile.bahn.de/bin/mobil/query.exe";
-    baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
+    baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
     STTableMode = 1;
 }
 
@@ -76,12 +76,10 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
     QByteArray tmpBuffer = networkReply->readAll();
     QByteArray buffer = gzipDecompress(tmpBuffer);
 
-/*
     QFile file("f://out.txt");
     file.open(QIODevice::WriteOnly);
     file.write(buffer);
     file.close();
-*/
 
     QDataStream hafasData(buffer);
     hafasData.setByteOrder(QDataStream::LittleEndian);
@@ -146,17 +144,36 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
         quint16 requestIdPtr;
         quint16 encodingPtr;
         quint32 connectionDetailsPtr;
+        quint32 attrsOffset;
+        quint16 idPtr;
         hafasData >> seqNr;
         hafasData >> requestIdPtr;
         hafasData >> connectionDetailsPtr;
         hafasData.device()->seek(hafasData.device()->pos() + 16);
         hafasData >> encodingPtr;
+        hafasData >> idPtr;
+        hafasData >> attrsOffset;
         QString encoding = strings[encodingPtr];
         QString requestId = strings[requestIdPtr];
+        QString id = strings[idPtr];
+
+        quint32 connectionAttrsPtr;
+        if (extensionHeaderLength >= 0x30) {
+            if (extensionHeaderLength < 0x32) {
+                qWarning()<<"too short: " + extensionHeaderLength;
+                return;
+            }
+            hafasData.device()->seek(extensionHeaderPtr + 0x2c);
+            hafasData >> connectionAttrsPtr;
+        } else {
+            connectionAttrsPtr = 0;
+        }
 
         qDebug()<<"seqNr:"<<seqNr;
         qDebug()<<"reqId:"<<requestId;
         qDebug()<<"encoding:"<<encoding;
+        qDebug()<<"id:"<<id;
+        qDebug()<<connectionAttrsPtr;
 
         hafasData.device()->seek(connectionDetailsPtr);
         quint16 connectionDetailsVersion;
@@ -189,11 +206,10 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
         hafasData >> numConnections;
         hafasData.device()->seek(hafasData.device()->pos() + 4 + 4);
         hafasData >> dateDays;
+        QDate journeyDate = toDate(dateDays);
         QString resDeparture = strings[resDeparturePtr];
         QString resArrival = strings[resArrivalPtr];
-        QDate journeyDate;
-        journeyDate.setYMD(1980, 1, 1);
-        journeyDate = journeyDate.addDays(dateDays);
+
         qDebug()<<resDeparture<<resArrival<<numConnections<<journeyDate;
 
         for (int iConnection = 0; iConnection < numConnections; iConnection++) {
@@ -202,15 +218,157 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
             quint32 partsOffset;
             quint16 numParts;
             quint16 numChanges;
+            quint16 durationInt;
             hafasData >> serviceDaysTableOffset;
             hafasData >> partsOffset;
             hafasData >> numParts;
             hafasData >> numChanges;
-            //time
+            hafasData >> durationInt;
+            QDateTime durationTime = toTime(durationInt);
 
-            qDebug()<<serviceDaysTableOffset<<partsOffset<<numParts<<numParts;
+            qDebug()<<serviceDaysTableOffset<<partsOffset<<numParts<<numParts<<durationTime.time();
+
+            hafasData.device()->seek(serviceDaysTablePtr + serviceDaysTableOffset);
+
+            quint16 serviceTxtPtr;
+            quint16 serviceBitBase;
+            quint16 serviceBitLength;
+            hafasData >> serviceTxtPtr;
+            hafasData >> serviceBitBase;
+            hafasData >> serviceBitLength;
+            QString serviceTxt = strings[serviceTxtPtr];
+
+            int connectionDayOffset = serviceBitBase * 8;
+            for (int i = 0; i < serviceBitLength; i++)
+            {
+                qint8 serviceBits;
+                hafasData >> serviceBits;
+                if (serviceBits == 0)
+                {
+                    connectionDayOffset += 8;
+                    continue;
+                }
+                while ((serviceBits & 0x80) == 0)
+                {
+                    serviceBits = serviceBits << 1;
+                    connectionDayOffset++;
+                }
+                break;
+            }
+
+            qDebug()<<serviceTxt<<connectionDayOffset;
+
+            hafasData.device()->seek(connectionDetailsPtr + connectionDetailsIndexOffset + iConnection * 2);
+            quint16 connectionDetailsOffset;
+            hafasData >> connectionDetailsOffset;
+
+            hafasData.device()->seek(connectionDetailsPtr + connectionDetailsOffset);
+            quint16 realtimeStatus;
+            quint16 delay;
+            hafasData >> realtimeStatus;
+            hafasData >> delay;
+
+            qDebug()<<"RT"<<realtimeStatus<<delay;
+
+            QString connectionId = "TMPC" + QString::number(iConnection);
+            /*
+            if (connectionAttrsPtr != 0) {
+                hafasData.device()->seek(connectionAttrsPtr + iConnection * 2);
+                quint16 connectionAttrsIndex;
+                hafasData >> connectionAttrsIndex;
+                hafasData.device()->seek(attrsOffset + connectionAttrsIndex * 4);
+                while (true)
+                {
+                    quint16 keyPtr;
+                    hafasData >> keyPtr;
+                    if (!strings.contains(keyPtr)) {
+                        break;
+                    }
+                    QString key = strings[keyPtr];
+                    if (key == "ConnectionId") {
+                        quint16 valuePtr;
+                        hafasData >> valuePtr;
+                        connectionId = strings[valuePtr];
+                        break;
+                    } else {
+                        hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    }
+                }
+            }*/
+
+            qDebug()<<"conId"<<connectionId;
+
+            for (int iPart = 0; iPart < numParts; iPart++) {
+                hafasData.device()->seek(0x4a + partsOffset + iPart * 20);
+
+                quint16 plannedDepartureTimeInt;
+                hafasData >> plannedDepartureTimeInt;
+                QDateTime plannedDepartureTime = toTime(plannedDepartureTimeInt, journeyDate.addDays(connectionDayOffset));
+                quint16 plannedDepartureIdx;
+                quint16 plannedDeparturePtr;
+                hafasData >> plannedDepartureIdx;
+
+                quint16 plannedArrivalTimeInt;
+                hafasData >> plannedArrivalTimeInt;
+                QDateTime plannedArrivalTime = toTime(plannedArrivalTimeInt, journeyDate.addDays(connectionDayOffset));
+                quint16 plannedArrivalIdx;
+                quint16 plannedArrivalPtr;
+                hafasData >> plannedArrivalIdx;
+
+                quint16 type;
+                quint16 lineNamePtr;
+                quint16 departurePlatformPtr;
+                quint16 arrivalPlatformPtr;
+                hafasData >> type;
+                hafasData >> lineNamePtr;
+                hafasData >> departurePlatformPtr;
+                hafasData >> arrivalPlatformPtr;
+
+                QString lineName = strings[lineNamePtr];
+                QString plannedDeparturePosition = strings[departurePlatformPtr];
+                QString plannedArrivalPosition = strings[arrivalPlatformPtr];
+
+                //Getting Station Names last because we seeking in the buffer
+                hafasData.device()->seek((plannedDepartureIdx * 14) + stationTablePtr);
+                hafasData >> plannedDeparturePtr;
+                hafasData.device()->seek((plannedArrivalIdx * 14) + stationTablePtr);
+                hafasData >> plannedArrivalPtr;
+
+                QString plannedDeparture = strings[plannedDeparturePtr];
+                QString plannedArrival = strings[plannedArrivalPtr];
+
+                qDebug()<<type<<lineName<<plannedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<plannedArrival<<plannedArrivalPosition;
+            }
         }
     }
+}
+
+QDateTime ParserHafasBinary::toTime(quint16 time)
+{
+    QDateTime tmpDateTime;
+    if (time == 0xffff)
+        return tmpDateTime;
+    int hours = time / 100;
+    int minutes = time % 100;
+    return tmpDateTime.addSecs(((hours * 60) + minutes) * 60);
+}
+
+QDateTime ParserHafasBinary::toTime(quint16 time, QDate baseDate)
+{
+    QDateTime tmpDateTime;
+    if (time == 0xffff)
+        return tmpDateTime;
+    tmpDateTime.setDate(baseDate);
+    int hours = time / 100;
+    int minutes = time % 100;
+    return tmpDateTime.addSecs(((hours * 60) + minutes) * 60);
+}
+
+QDate ParserHafasBinary::toDate(quint16 date)
+{
+    QDate tmpDate;
+    tmpDate.setYMD(1980, 1, 1);
+    return tmpDate.addDays(date - 1);
 }
 
 QByteArray ParserHafasBinary::gzipDecompress(QByteArray compressData)

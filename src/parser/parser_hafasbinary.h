@@ -39,6 +39,9 @@ protected:
     void parseSearchJourneyPart2(QNetworkReply *networkReply);
     void parseSearchJourney(QNetworkReply *networkReply);
     QByteArray gzipDecompress(QByteArray compressData);
+    QDate toDate(quint16 date);
+    QDateTime toTime(quint16 time, QDate baseDate);
+    QDateTime toTime(quint16 time);
 };
 
 #endif // PARSER_HAFASBINARY_H
