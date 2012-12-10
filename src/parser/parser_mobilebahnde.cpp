@@ -461,7 +461,7 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
      QString xhtml = networkReply->readAll();
 
      //We use Regex to get each element details page
-     QRegExp regexp = QRegExp("<div class=\"rline haupt\".*>(.*)</div>");
+     QRegExp regexp = QRegExp("<div class=\"rline haupt.*\">(.*)</div>");
      regexp.setMinimal(true);
 
      int idx = 0;
@@ -510,13 +510,29 @@ QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
                  qDebug() << "parserMobileBahnDe::getJourneyDetailsData - Query 3 Failed";
              }
 
-             /*
+             query.setQuery("declare default element namespace \"http://www.w3.org/1999/xhtml\"; declare variable $path external; doc($path)/html/body/div/@class/string()");
+
+             QStringList motResults;
+             if (!query.evaluateTo(&motResults))
+             {
+                 qDebug() << "parserMobileBahnDe::getJourneyDetailsData - Query 4 Failed";
+             }
+
+
              qDebug() <<num;
-             qDebug() <<element;
-             qDebug() <<stationResults;
-             qDebug() <<trainnrResults;
-             qDebug() <<txtResults;
-             */
+             //qDebug() <<element;
+             qDebug() <<"ST:"<<stationResults;
+             qDebug() <<"TRAIN:"<<trainnrResults;
+             qDebug() <<"OTHER:"<<txtResults;
+             qDebug() <<"MOT:"<<motResults;
+
+             QString motTest = motResults.join("");
+             if (motTest.contains("mot")) {
+                 qDebug()<<"is TRAIN line";
+             } else {
+                 qDebug()<<"is STATION line";
+             }
+
 
              if (stationResults.count() == 2)
              {
