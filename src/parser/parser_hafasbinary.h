@@ -34,6 +34,7 @@ public:
     static QString getName() { return "HafasBinary"; }
     QString name() { return "HafasBinary"; }
     void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+    bool supportsVia();
 
 protected:
     QString baseBinaryUrl;

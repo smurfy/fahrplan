@@ -25,7 +25,7 @@
 #include <QtNetwork>
 #include <QtXmlPatterns/QXmlQuery>
 #include <QXmlResultItems>
-#include "parser_hafasxml.h"
+#include "parser_hafasbinary.h"
 
 struct ParserMobileBahnDeSearchJourneyRequestData
 {
@@ -40,10 +40,9 @@ struct ParserMobileBahnDeSearchJourneyRequestData
 };
 
 /*
- * bahn.de parser based for findstationby name and coordinates on the
- * hafasxml interface. for everything else we parse the bahn.de mobile website.
+ * bahn.de parser uses the binary interface
  */
-class ParserMobileBahnDe : public ParserHafasXml
+class ParserMobileBahnDe : public ParserHafasBinary
 {
     Q_OBJECT
 public:
@@ -52,31 +51,13 @@ public:
     QString name() { return "bahn.de"; }
 
 public slots:
-    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
-    void searchJourneyLater();
-    void searchJourneyEarlier();
-    void getJourneyDetails(const QString &id);
     bool supportsGps();
-    bool supportsVia();
     bool supportsTimeTable();
     QStringList getTrainRestrictions();
 
 protected:
-    void parseSearchJourney(QNetworkReply *networkReply);
-    void parseSearchLaterJourney(QNetworkReply *networkReply);
-    void parseSearchEalierJourney(QNetworkReply *networkReply);
-    void parseJourneyDetails(QNetworkReply *networkReply);
-
 private:
-    QString lastLaterUrl;
-    QString lastEarlierUrl;
-    JourneyResultList *lastJourneyResultList;
-    ParserMobileBahnDeSearchJourneyRequestData searchJourneyRequestData;
-    ParserHafasXmlJourneyDetailRequestData journeyDetailRequestData;
-    void parseSearchJourneyCheckForId(QNetworkReply *networkReply);
     QString getTrainRestrictionsCodes(int trainrestrictions);
-    void parseSearchJourneyPart1(const QString &data);
-    void parseSearchJourneyPart2(const QString &data);
 };
 
 #endif // PARSER_MOBILEBAHNDE_H

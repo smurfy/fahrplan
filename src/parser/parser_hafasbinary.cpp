@@ -23,13 +23,21 @@
 
 ParserHafasBinary::ParserHafasBinary(QObject *parent)
 {
-     Q_UNUSED(parent);
+    Q_UNUSED(parent);
 
+    /*
     baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
     baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
     baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
     baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
+    */
     STTableMode = 1;
+}
+
+bool ParserHafasBinary::supportsVia()
+{
+    //not yet at least
+    return false;
 }
 
 void ParserHafasBinary::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
