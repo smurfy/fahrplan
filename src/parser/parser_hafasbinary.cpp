@@ -212,6 +212,10 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
         QString resDeparture = strings[resDeparturePtr];
         QString resArrival = strings[resArrivalPtr];
 
+        lastJourneyResultList->setDepartureStation(resDeparture);
+        lastJourneyResultList->setArrivalStation(resArrival);
+        lastJourneyResultList->setTimeInfo(journeyDate.toString());
+
         qDebug()<<resDeparture<<resArrival<<numConnections<<journeyDate;
 
         for (int iConnection = 0; iConnection < numConnections; iConnection++) {
@@ -377,8 +381,8 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
                 item->setDuration(durationTime.time().toString());
                 item->setMiscInfo("");
                 item->setTrainType(lineNames.join(", ").trimmed());
-                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().toString());
-                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().toString());
+                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString("hh:mm"));
+                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString("hh:mm"));
                 if (serviceTxt != "always") {
                     item->setMiscInfo(serviceTxt);
                 }
