@@ -370,6 +370,8 @@ void ParserHafasBinary::parseSearchJourneyPart2(QNetworkReply *networkReply)
                 inlineResults->setDuration(durationTime.time().toString());
                 inlineResults->setDepartureStation(inlineResults->getItem(0)->departureStation());
                 inlineResults->setArrivalStation(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalStation());
+                inlineResults->setDepartureDateTime(inlineResults->getItem(0)->departureDateTime());
+                inlineResults->setArrivalDateTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime());
                 journeyDetailInlineData.append(inlineResults);
 
                 lineNames.removeDuplicates();
