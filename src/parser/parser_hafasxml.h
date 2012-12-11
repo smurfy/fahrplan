@@ -66,6 +66,13 @@ struct ParserHafasXmlExternalIds
     QString arrivalId;
 };
 
+struct ParserHafasXmlContext
+{
+    QString seqNr;
+    QString ident;
+    QString ld;
+};
+
 class ParserHafasXml : public ParserAbstract
 {
     Q_OBJECT
@@ -95,14 +102,14 @@ protected:
     ParserHafasXmlHeader hafasHeader;
     ParserHafasXmlSearchJourneyRequestData searchJourneyRequestData;
     ParserHafasXmlJourneyDetailRequestData journeyDetailRequestData;
-
+    ParserHafasXmlContext hafasContext;
     int STTableMode;
     void parseTimeTable(QNetworkReply *networkReply);
     void parseStationsByName(QNetworkReply *networkReply);
     void parseStationsByCoordinates(QNetworkReply *networkReply);
     void parseSearchJourney(QNetworkReply *networkReply);
     void parseSearchLaterJourney(QNetworkReply *networkReply);
-    void parseSearchEalierJourney(QNetworkReply *networkReply);
+    void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
 
     StationsResultList* internalParseStationsByName(const QString &data);
@@ -114,7 +121,6 @@ protected:
     QList<JourneyDetailResultList*> journeyDetailInlineData;
 
 private:
-    QString conResCtxt;
     ParserHafasXmlGetTimeTableForStationRequestData getTimeTableForStationRequestData;
     QString cleanHafasDate(const QString &time);
     QDateTime cleanHafasDateTime(const QString &time, QDate date);

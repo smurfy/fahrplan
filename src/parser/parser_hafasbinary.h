@@ -34,10 +34,14 @@ public:
     static QString getName() { return "HafasBinary"; }
     QString name() { return "HafasBinary"; }
     void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+    void searchJourneyEarlier();
+    void searchJourneyLater();
 
 protected:
     QString baseBinaryUrl;
     void parseSearchJourney(QNetworkReply *networkReply);
+    void parseSearchLaterJourney(QNetworkReply *networkReply);
+    void parseSearchEarlierJourney(QNetworkReply *networkReply);
     QByteArray gzipDecompress(QByteArray compressData);
     QDate toDate(quint16 date);
     QDateTime toTime(quint16 time, QDate baseDate);

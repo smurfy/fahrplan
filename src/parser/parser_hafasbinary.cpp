@@ -32,7 +32,13 @@ ParserHafasBinary::ParserHafasBinary(QObject *parent)
 
 void ParserHafasBinary::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
+    if (currentRequestState != FahrplanNS::noneRequest) {
+        return;
+    }
+
     currentRequestState = FahrplanNS::searchJourneyRequest;
+    hafasContext.seqNr = "";
+    lastJourneyResultList = NULL;
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -71,7 +77,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
     QDataStream hafasData(buffer);
     hafasData.setByteOrder(QDataStream::LittleEndian);
-    quint16 hafasVersion;
+
+    qint16 hafasVersion;
     hafasData >> hafasVersion;
 
     if (hafasVersion != 5 && hafasVersion != 6) {
@@ -83,13 +90,13 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     qDebug()<<"Binary-Data Version: "<<hafasVersion;
 
     //Basic data offsets
-    quint32 serviceDaysTablePtr;
-    quint32 stringTablePtr;
-    quint32 stationTablePtr;
-    quint32 commentTablePtr;
-    quint32 extensionHeaderPtr;
-    quint32 extensionHeaderLength;
-    quint16 errorCode;
+    qint32 serviceDaysTablePtr;
+    qint32 stringTablePtr;
+    qint32 stationTablePtr;
+    qint32 commentTablePtr;
+    qint32 extensionHeaderPtr;
+    qint32 extensionHeaderLength;
+    qint16 errorCode;
 
     hafasData.device()->seek(0x20);
     hafasData >> serviceDaysTablePtr;
@@ -128,24 +135,24 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     //Looks ok, parsing
     if (errorCode == 0) {
         hafasData.device()->seek(extensionHeaderPtr + 0x8);
-        quint16 seqNr;
-        quint16 requestIdPtr;
-        quint16 encodingPtr;
-        quint32 connectionDetailsPtr;
-        quint32 attrsOffset;
-        quint16 idPtr;
+        qint16 seqNr;
+        qint16 requestIdPtr;
+        qint16 encodingPtr;
+        qint32 connectionDetailsPtr;
+        qint32 attrsOffset;
+        qint16 ldPtr;
         hafasData >> seqNr;
         hafasData >> requestIdPtr;
         hafasData >> connectionDetailsPtr;
         hafasData.device()->seek(hafasData.device()->pos() + 16);
         hafasData >> encodingPtr;
-        hafasData >> idPtr;
+        hafasData >> ldPtr;
         hafasData >> attrsOffset;
         QString encoding = strings[encodingPtr];
         QString requestId = strings[requestIdPtr];
-        QString id = strings[idPtr];
+        QString ld = strings[ldPtr];
 
-        quint32 connectionAttrsPtr;
+        qint32 connectionAttrsPtr;
         if (extensionHeaderLength >= 0x30) {
             if (extensionHeaderLength < 0x32) {
                 qWarning()<<"too short: " + extensionHeaderLength;
@@ -160,7 +167,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         qDebug()<<"seqNr:"<<seqNr;
         qDebug()<<"reqId:"<<requestId;
         qDebug()<<"encoding:"<<encoding;
-        qDebug()<<"id:"<<id;
+        qDebug()<<"ld:"<<ld;
         qDebug()<<connectionAttrsPtr;
 
         hafasData.device()->seek(connectionDetailsPtr);
@@ -171,11 +178,11 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             return;
         }
         hafasData.device()->seek(hafasData.device()->pos() + 2);
-        quint16 connectionDetailsIndexOffset;
-        quint16 connectionDetailsPartOffset;
-        quint16 connectionDetailsPartSize;
-        quint16 stopsSize;
-        quint16 stopsOffset;
+        qint16 connectionDetailsIndexOffset;
+        qint16 connectionDetailsPartOffset;
+        qint16 connectionDetailsPartSize;
+        qint16 stopsSize;
+        qint16 stopsOffset;
         hafasData >> connectionDetailsIndexOffset;
         hafasData >> connectionDetailsPartOffset;
         hafasData >> connectionDetailsPartSize;
@@ -183,10 +190,10 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         hafasData >> stopsOffset;
 
         hafasData.device()->seek(0x02);
-        quint16 resDeparturePtr;
-        quint16 resArrivalPtr;
-        quint16 numConnections;
-        quint16 dateDays;
+        qint16 resDeparturePtr;
+        qint16 resArrivalPtr;
+        qint16 numConnections;
+        qint16 dateDays;
         hafasData >> resDeparturePtr;
         hafasData.device()->seek(hafasData.device()->pos() + 2 + 2 + 4 + 4);
         hafasData >> resArrivalPtr;
@@ -206,11 +213,11 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
         for (int iConnection = 0; iConnection < numConnections; iConnection++) {
             hafasData.device()->seek(0x4a + iConnection * 12);
-            quint16 serviceDaysTableOffset;
-            quint32 partsOffset;
-            quint16 numParts;
-            quint16 numChanges;
-            quint16 durationInt;
+            qint16 serviceDaysTableOffset;
+            qint32 partsOffset;
+            qint16 numParts;
+            qint16 numChanges;
+            qint16 durationInt;
             hafasData >> serviceDaysTableOffset;
             hafasData >> partsOffset;
             hafasData >> numParts;
@@ -222,9 +229,9 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
             hafasData.device()->seek(serviceDaysTablePtr + serviceDaysTableOffset);
 
-            quint16 serviceTxtPtr;
-            quint16 serviceBitBase;
-            quint16 serviceBitLength;
+            qint16 serviceTxtPtr;
+            qint16 serviceBitBase;
+            qint16 serviceBitLength;
             hafasData >> serviceTxtPtr;
             hafasData >> serviceBitBase;
             hafasData >> serviceBitLength;
@@ -251,34 +258,36 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             qDebug()<<serviceTxt<<connectionDayOffset;
 
             hafasData.device()->seek(connectionDetailsPtr + connectionDetailsIndexOffset + iConnection * 2);
-            quint16 connectionDetailsOffset;
+            qint16 connectionDetailsOffset;
             hafasData >> connectionDetailsOffset;
 
+            /*
             hafasData.device()->seek(connectionDetailsPtr + connectionDetailsOffset);
-            quint16 realtimeStatus;
-            quint16 delay;
+            qint16 realtimeStatus;
+            qint16 delay;
             hafasData >> realtimeStatus;
             hafasData >> delay;
 
             qDebug()<<"RT"<<realtimeStatus<<delay;
+            */
 
             QString connectionId = "TMPC" + QString::number(iConnection);
             /*
             if (connectionAttrsPtr != 0) {
                 hafasData.device()->seek(connectionAttrsPtr + iConnection * 2);
-                quint16 connectionAttrsIndex;
+                qint16 connectionAttrsIndex;
                 hafasData >> connectionAttrsIndex;
                 hafasData.device()->seek(attrsOffset + connectionAttrsIndex * 4);
                 while (true)
                 {
-                    quint16 keyPtr;
+                    qint16 keyPtr;
                     hafasData >> keyPtr;
                     if (!strings.contains(keyPtr)) {
                         break;
                     }
                     QString key = strings[keyPtr];
                     if (key == "ConnectionId") {
-                        quint16 valuePtr;
+                        qint16 valuePtr;
                         hafasData >> valuePtr;
                         connectionId = strings[valuePtr];
                         break;
@@ -299,24 +308,24 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 hafasData.device()->seek(0x4a + partsOffset + iPart * 20);
 
-                quint16 plannedDepartureTimeInt;
+                qint16 plannedDepartureTimeInt;
                 hafasData >> plannedDepartureTimeInt;
                 QDateTime plannedDepartureTime = toTime(plannedDepartureTimeInt, journeyDate.addDays(connectionDayOffset));
-                quint16 plannedDepartureIdx;
-                quint16 plannedDeparturePtr;
+                qint16 plannedDepartureIdx;
+                qint16 plannedDeparturePtr;
                 hafasData >> plannedDepartureIdx;
 
-                quint16 plannedArrivalTimeInt;
+                qint16 plannedArrivalTimeInt;
                 hafasData >> plannedArrivalTimeInt;
                 QDateTime plannedArrivalTime = toTime(plannedArrivalTimeInt, journeyDate.addDays(connectionDayOffset));
-                quint16 plannedArrivalIdx;
-                quint16 plannedArrivalPtr;
+                qint16 plannedArrivalIdx;
+                qint16 plannedArrivalPtr;
                 hafasData >> plannedArrivalIdx;
 
-                quint16 type;
-                quint16 lineNamePtr;
-                quint16 departurePlatformPtr;
-                quint16 arrivalPlatformPtr;
+                qint16 type;
+                qint16 lineNamePtr;
+                qint16 departurePlatformPtr;
+                qint16 arrivalPlatformPtr;
                 hafasData >> type;
                 hafasData >> lineNamePtr;
                 hafasData >> departurePlatformPtr;
@@ -378,18 +387,79 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setTrainType(lineNames.join(", ").trimmed());
                 item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString("hh:mm"));
                 item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString("hh:mm"));
-                if (serviceTxt != "always") {
-                    item->setMiscInfo(serviceTxt);
-                }
                 lastJourneyResultList->appendItem(item);
             }
         }
+
+        hafasContext.seqNr = QString::number(seqNr);
+        hafasContext.ld = ld;
+        hafasContext.ident = requestId;
+
         emit journeyResult(lastJourneyResultList);
     } else if (errorCode == 8) {
         emit errorOccured(tr("Sorry one station name is to ambiguous"));
     } else {
         emit errorOccured(tr("An error ocurred with the backend"));
     }
+}
+
+void ParserHafasBinary::parseSearchLaterJourney(QNetworkReply *networkReply)
+{
+    parseSearchJourney(networkReply);
+}
+
+void ParserHafasBinary::parseSearchEarlierJourney(QNetworkReply *networkReply)
+{
+    parseSearchJourney(networkReply);
+}
+
+
+void ParserHafasBinary::searchJourneyLater()
+{
+    if (hafasContext.seqNr.isEmpty()) {
+        emit errorOccured(tr("Internal error occured, going later is not possible"));
+        return;
+    }
+
+    if (currentRequestState != FahrplanNS::noneRequest) {
+        return;
+    }
+
+    currentRequestState = FahrplanNS::searchJourneyLaterRequest;
+
+    QUrl uri = baseBinaryUrl;
+    uri.addQueryItem("seqnr", hafasContext.seqNr);
+    uri.addQueryItem("ident", hafasContext.ident);
+    uri.addQueryItem("REQ0HafasScrollDir", "1");
+    uri.addQueryItem("h2g-direct", "11");
+    if (!hafasContext.ld.isEmpty()) {
+        uri.addQueryItem("ld", hafasContext.ld);
+    }
+    sendHttpRequest(uri);
+}
+
+void ParserHafasBinary::searchJourneyEarlier()
+{
+    if (hafasContext.seqNr.isEmpty()) {
+        emit errorOccured(tr("Internal error occured, going earlier is not possible"));
+        return;
+    }
+
+    if (currentRequestState != FahrplanNS::noneRequest) {
+        return;
+    }
+
+    currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
+
+    QUrl uri = baseBinaryUrl;
+    uri.addQueryItem("seqnr", hafasContext.seqNr);
+    uri.addQueryItem("ident", hafasContext.ident);
+    uri.addQueryItem("REQ0HafasScrollDir", "0");
+    uri.addQueryItem("h2g-direct", "11");
+    if (!hafasContext.ld.isEmpty()) {
+        uri.addQueryItem("ld", hafasContext.ld);
+    }
+    sendHttpRequest(uri);
 }
 
 QDateTime ParserHafasBinary::toTime(quint16 time)

@@ -78,7 +78,7 @@ protected:
     virtual void parseStationsByCoordinates(QNetworkReply *networkReply);
     virtual void parseSearchJourney(QNetworkReply *networkReply);
     virtual void parseSearchLaterJourney(QNetworkReply *networkReply);
-    virtual void parseSearchEalierJourney(QNetworkReply *networkReply);
+    virtual void parseSearchEarlierJourney(QNetworkReply *networkReply);
     virtual void parseJourneyDetails(QNetworkReply *networkReply);
     void sendHttpRequest(QUrl url, QByteArray data);
     void sendHttpRequest(QUrl url);

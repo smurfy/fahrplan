@@ -467,7 +467,7 @@ void ParserHafasXml::searchJourney(const QString &departureStation, const QStrin
     }
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
-    conResCtxt = "";
+    hafasContext.seqNr = "";
     lastJourneyResultList = NULL;
 
     searchJourneyRequestData.progress = 1;
@@ -802,13 +802,13 @@ void ParserHafasXml::parseSearchJourneyPart2(QNetworkReply *networkReply)
         qDebug() << "parserHafasXml::getJourneyData 14 - Query Failed";
     }
 
-    conResCtxt = ConResCtxtResult.join("");
+    hafasContext.seqNr = ConResCtxtResult.join("");
     emit journeyResult(lastJourneyResultList);
 }
 
 void ParserHafasXml::searchJourneyLater()
 {
-    if (conResCtxt.isEmpty()) {
+    if (hafasContext.seqNr.isEmpty()) {
         emit errorOccured(tr("Internal error occured, going later is not possible"));
         return;
     }
@@ -823,7 +823,7 @@ void ParserHafasXml::searchJourneyLater()
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
     postData.append("<ConScrReq scrDir=\"F\" nrCons=\"5\">");
     postData.append("<ConResCtxt>");
-    postData.append(conResCtxt);
+    postData.append(hafasContext.seqNr);
     postData.append("</ConResCtxt>");
     postData.append("</ConScrReq>");
     postData.append("</ReqC>");
@@ -833,7 +833,7 @@ void ParserHafasXml::searchJourneyLater()
 
 void ParserHafasXml::searchJourneyEarlier()
 {
-    if (conResCtxt.isEmpty()) {
+    if (hafasContext.seqNr.isEmpty()) {
         emit errorOccured(tr("Internal error occured, going earlier is not possible"));
         return;
     }
@@ -848,7 +848,7 @@ void ParserHafasXml::searchJourneyEarlier()
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
     postData.append("<ConScrReq scrDir=\"B\" nrCons=\"5\">");
     postData.append("<ConResCtxt>");
-    postData.append(conResCtxt);
+    postData.append(hafasContext.seqNr);
     postData.append("</ConResCtxt>");
     postData.append("</ConScrReq>");
     postData.append("</ReqC>");
@@ -861,7 +861,7 @@ void ParserHafasXml::parseSearchLaterJourney(QNetworkReply *networkReply)
     parseSearchJourneyPart2(networkReply);
 }
 
-void ParserHafasXml::parseSearchEalierJourney(QNetworkReply *networkReply)
+void ParserHafasXml::parseSearchEarlierJourney(QNetworkReply *networkReply)
 {
     parseSearchJourneyPart2(networkReply);
 }
