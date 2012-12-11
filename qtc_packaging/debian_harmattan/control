@@ -2,7 +2,7 @@ Source: fahrplan2
 Section: user/navigation
 Priority: optional
 Maintainer: smurfy <maemo@smurfy.de>
-Build-Depends: debhelper (>= 5), libqt4-dev, libqmsystem2-dev, libqtm-dev, aegis-builder (>= 1.4)
+Build-Depends: debhelper (>= 5), libqt4-dev, libqmsystem2-dev, libqtm-dev, aegis-builder (>= 1.4), applauncherd-dev, pkg-config
 Standards-Version: 3.7.3
 Homepage: https://garage.maemo.org/projects/fahrplan/
 
