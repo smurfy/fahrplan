@@ -1,3 +1,9 @@
+fahrplan2 (2.0.10) unstable; urgency=low
+  * Fixed bahn.de backend
+  * Added now button to harmattan ui
+  
+ -- smurfy <maemo@smurfy.de>  Tue, 11 Dec 2012 23:00:00 +0200
+
 fahrplan2 (2.0.9) unstable; urgency=low
   * Optimized UI
   * Added Ukrainian Translation
@@ -6,7 +12,7 @@ fahrplan2 (2.0.9) unstable; urgency=low
   * Added Support for vasttrafik.se
   
  -- smurfy <maemo@smurfy.de>  Thu, 31 Oct 2012 20:00:00 +0200
- 
+
 fahrplan2 (2.0.8) unstable; urgency=low
   * Optimized UI for PR1.2
   * Added display of realtime tracking infos in result and departure montitor
