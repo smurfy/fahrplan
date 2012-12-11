@@ -30,12 +30,6 @@ ParserHafasBinary::ParserHafasBinary(QObject *parent)
     // baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
 }
 
-bool ParserHafasBinary::supportsVia()
-{
-    //not yet at least
-    return false;
-}
-
 void ParserHafasBinary::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
     currentRequestState = FahrplanNS::searchJourneyRequest;
@@ -47,7 +41,10 @@ void ParserHafasBinary::searchJourney(const QString &departureStation, const QSt
     uri.addEncodedQueryItem("REQ0JourneyStopsS0ID", QUrl::toPercentEncoding("A=1@G=" + departureStation));
     uri.addEncodedQueryItem("REQ0JourneyStopsZ0ID", QUrl::toPercentEncoding("A=1@G=" + arrivalStation));
 
-    //Todo: via station :)
+    if (!viaStation.isEmpty()) {
+        uri.addQueryItem("REQ0JourneyStops1.0A", "1");
+        uri.addQueryItem("REQ0JourneyStops1.0G", viaStation);
+    }
 
     uri.addQueryItem("REQ0JourneyDate", date.toString("dd.MM.yyyy"));
     uri.addQueryItem("REQ0JourneyTime", time.toString("hh:mm"));
