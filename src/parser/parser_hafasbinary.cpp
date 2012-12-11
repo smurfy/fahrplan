@@ -454,7 +454,7 @@ void ParserHafasBinary::searchJourneyEarlier()
     QUrl uri = baseBinaryUrl;
     uri.addQueryItem("seqnr", hafasContext.seqNr);
     uri.addQueryItem("ident", hafasContext.ident);
-    uri.addQueryItem("REQ0HafasScrollDir", "0");
+    uri.addQueryItem("REQ0HafasScrollDir", "2");
     uri.addQueryItem("h2g-direct", "11");
     if (!hafasContext.ld.isEmpty()) {
         uri.addQueryItem("ld", hafasContext.ld);
