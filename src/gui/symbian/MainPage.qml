@@ -221,6 +221,15 @@ Page {
                 Switch {
                     id: fromNowSwitch
                     signal clicked
+                    Component.onCompleted: {
+                        if(fahrplanBackend.getSettingsValue("fromNow", false)=="true") {
+                            fromNowSwitch.checked = true
+                        }
+                        else {
+                            fromNowSwitch.checked = false
+                        }
+                        updateButtonVisibility()
+                    }
                     anchors {
                         right: parent.right
                         rightMargin: platformStyle.paddingMedium
@@ -229,14 +238,17 @@ Page {
                     }
                     onClicked: {
                         updateButtonVisibility()
+                        if (checked == true)
+                            {
+                            fahrplanBackend.storeSettingsValue("fromNow", true)
+                        } else
+                        {
+                            fahrplanBackend.storeSettingsValue("fromNow", false)
+                        }
+
                     }
-
-                }
-
-
-
-
             }
+       }
 
 
 
@@ -494,13 +506,6 @@ Page {
             var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
             datePickerButton.subTitleText = Qt.formatDate(selDate);
         }
-        Component.onCompleted: {
-            var d = new Date();
-            datePicker.year = d.getFullYear();
-            datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
-            datePicker.day = d.getDate();
-            datePickerButton.subTitleText = Qt.formatDate(d);
-        }
     }
 
     TimePickerDialog {
@@ -516,11 +521,8 @@ Page {
             timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
         }
         Component.onCompleted: {
-            var d = new Date();
-            timePicker.hour = d.getHours();
-            timePicker.minute = d.getMinutes();
-            timePicker.second = d.getSeconds();
-            timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
+            //setToday sets both the time and the date to today, so only needed here (seems to work)
+            setToday();
         }
     }
 
