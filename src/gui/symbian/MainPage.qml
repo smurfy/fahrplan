@@ -19,6 +19,8 @@ Page {
             searchmode = 0;
         }
 
+
+
         if (searchmode == 0) {
             viaButton.visible = fahrplanBackend.parser.supportsVia();
             departureButton.visible = true;
@@ -42,6 +44,18 @@ Page {
             searchMode1Toggle.checked = true;
 
         }
+
+        if (fromNowSwitch.checked ==true) {
+            datePickerButton.visible = false;
+            timePickerButton.visible = false;
+            modeDep.checked = true;
+            setToday();
+        } else {
+            datePickerButton.visible = true;
+            timePickerButton.visible = true;
+
+    }
+
     }
 
     Item {
@@ -200,6 +214,33 @@ Page {
                 icon: "toolbar-next"
             }
             SubTitleButton {
+                titleText: qsTr("Departure: Now")
+                iconVisible: false
+                subTitleHeight: 0
+                platformInverted: appWindow.platformInverted
+                Switch {
+                    id: fromNowSwitch
+                    signal clicked
+                    anchors {
+                        right: parent.right
+                        rightMargin: platformStyle.paddingMedium
+                        verticalCenter: parent.verticalCenter
+
+                    }
+                    onClicked: {
+                        updateButtonVisibility()
+                    }
+
+                }
+
+
+
+
+            }
+
+
+
+            SubTitleButton {
                 id: datePickerButton
                 titleText: qsTr("Date")
                 subTitleText: qsTr("please select")
@@ -277,6 +318,9 @@ Page {
                         directionStation = "";
                     }
 
+                    if (fromNowSwitch.checked == true) {
+                        setToday();
+                    }
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = ParserAbstract.Arrival;
@@ -330,6 +374,9 @@ Page {
                     resultsPage.journeyStationsTitleText = viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText).arg(viaStation);
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
+                    if (fromNowSwitch.checked ==true) {
+                        setToday();
+                    }
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = ParserAbstract.Arrival;
@@ -704,6 +751,8 @@ Page {
         }
     }
 
+
+
     // Disable exit icon when page deactivates and start
     // the timer to enable it back when it activates.
     onStatusChanged: {
@@ -716,6 +765,18 @@ Page {
             break;
         default:
         }
+    }
+
+    function setToday() {
+        var d = new Date();
+        timePicker.hour = d.getHours();
+        timePicker.minute = d.getMinutes();
+        timePicker.second = d.getSeconds();
+        timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
+        datePicker.year = d.getFullYear();
+        datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
+        datePicker.day = d.getDate();
+        datePickerButton.subTitleText = Qt.formatDate(d);
     }
 
 }

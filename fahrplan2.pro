@@ -38,7 +38,7 @@ RESOURCES += \
     translations_res.qrc
 
 # Zlib todo for other systems ugly hack
-INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib
+INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:\QtSDK\QtSources\4.8.1\src\3rdparty\zlib
 
 HEADERS += \
     src/parser/parser_hafasxml.h \
@@ -161,9 +161,9 @@ win32: !simulator {
     FORMS += src/gui/desktop-test/mainwindow.ui
 }
 
-# enable booster and Add dependency to Symbian components
+# enable booster
 symbian {
-    CONFIG += symbian_appbooster qt-components
+    CONFIG += symbian_appbooster
 }
 
 !win32: !symbian {

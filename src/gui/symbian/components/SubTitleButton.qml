@@ -6,6 +6,8 @@ Item {
     id: subTitleButton
 
     property alias titleText: title.text
+    property alias iconVisible: icon.visible
+    property alias subTitleHeight: subTitle.height
     property alias subTitleText: subTitle.text
     property string icon: "qtg_graf_choice_list_indicator"
     property bool platformInverted: false
