@@ -66,6 +66,13 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     journeyDetailInlineData.clear();
 
     QByteArray tmpBuffer = networkReply->readAll();
+
+    if (tmpBuffer.count() < 10 || tmpBuffer[0] != 0x1f) {
+        qWarning()<<"Bad data in response (can not find gzip magic number)";
+        emit errorOccured(tr("An error ocurred with the backend"));
+        return;
+    }
+
     QByteArray buffer = gzipDecompress(tmpBuffer);
 
     /*
