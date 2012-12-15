@@ -283,10 +283,10 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
             item->setLongitude(longitude);
             qreal latitude = getAttribute(locationNode, "lat").toFloat();
             item->setLatitude(latitude);
+            qlonglong id = getAttribute(locationNode, "id").toLongLong();
+            item->setStationId(QString::number(id));
 
             result.appendItem(item);
-
-            qlonglong id = getAttribute(locationNode, "id").toLongLong();
             cachedStationNameToId[stationName] = id;
             cachedStationIdToLongitude[id] = longitude;
             cachedStationIdToLatitude[id] = latitude;

@@ -141,8 +141,9 @@ QStringList ParserAbstract::getTrainRestrictions()
     return result;
 }
 
-void ParserAbstract::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, QTime time, Mode mode, int trainrestrictions)
+void ParserAbstract::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
+    qDebug() << "ParserAbstract::getTimeTableForStation";
     Q_UNUSED(stationName);
     Q_UNUSED(directionStationName);
     Q_UNUSED(date);

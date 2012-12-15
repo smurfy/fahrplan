@@ -409,6 +409,7 @@ StationsResultList* ParserHafasXml::internalParseStationsByName(const QString &d
                 StationsResultItem *item = new StationsResultItem();
                 item->setStationName(xml.attributes().value("n").toString());
                 item->setStationType(xml.attributes().value("t").toString());
+                item->setStationId(xml.attributes().value("i").toString());
                 item->setLongitude(xml.attributes().value("x").toString().toInt());
                 item->setLatitude(xml.attributes().value("y").toString().toInt());
                 QString miscInfo = xml.attributes().value("dist").toString();
