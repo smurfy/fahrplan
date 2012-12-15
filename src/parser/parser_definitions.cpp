@@ -135,13 +135,25 @@ void StationsResultItem::setStationName(const QString &stationName)
 
 QString StationsResultItem::stationType() const
 {
-    return m_stationName;
+    return m_stationType;
 }
 
 void StationsResultItem::setStationType(const QString &stationType)
 {
     m_stationType = stationType;
 }
+
+
+QString StationsResultItem::stationId() const
+{
+    return m_stationId;
+}
+
+void StationsResultItem::setStationId(const QString &stationId)
+{
+    m_stationId = stationId;
+}
+
 
 QString StationsResultItem::miscInfo() const
 {

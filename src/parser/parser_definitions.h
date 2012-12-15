@@ -99,6 +99,7 @@ class StationsResultItem : public QObject
     Q_OBJECT
     Q_PROPERTY(QString stationName READ stationName WRITE setStationName)
     Q_PROPERTY(QString stationTyp READ stationType WRITE setStationType)
+    Q_PROPERTY(QString stationId READ stationId WRITE setStationId)
     Q_PROPERTY(QString miscInfo READ miscInfo WRITE setMiscInfo)
     Q_PROPERTY(qreal longitude READ longitude WRITE setLongitude)
     Q_PROPERTY(qreal latitude READ latitude WRITE setLatitude)
@@ -108,6 +109,8 @@ class StationsResultItem : public QObject
         void setStationName(const QString &);
         QString stationType() const;
         void setStationType(const QString &);
+        QString stationId() const;
+        void setStationId(const QString &);
         QString miscInfo() const;
         void setMiscInfo(const QString &);
         qreal longitude();
@@ -117,6 +120,7 @@ class StationsResultItem : public QObject
     private:
         QString m_stationName;
         QString m_stationType;
+        QString m_stationId;
         QString m_miscInfo;
         qreal m_longitude;
         qreal m_latitude;
