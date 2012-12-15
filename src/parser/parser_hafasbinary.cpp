@@ -231,8 +231,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             hafasData >> numChanges;
             hafasData >> durationInt;
             QDateTime durationTime = toTime(durationInt);
-
-            qDebug()<<serviceDaysTableOffset<<partsOffset<<numParts<<numParts<<durationTime.time();
+            qDebug()<<serviceDaysTableOffset<<partsOffset<<numParts<<numParts<<durationTime;
 
             hafasData.device()->seek(serviceDaysTablePtr + serviceDaysTableOffset);
 
@@ -376,7 +375,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
             if (inlineResults->itemcount() > 0) {
                 inlineResults->setId(connectionId);
-                inlineResults->setDuration(durationTime.time().toString("hh:mm"));
+                inlineResults->setDuration(formatDuration(durationTime));
                 inlineResults->setDepartureStation(inlineResults->getItem(0)->departureStation());
                 inlineResults->setArrivalStation(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalStation());
                 inlineResults->setDepartureDateTime(inlineResults->getItem(0)->departureDateTime());
@@ -389,7 +388,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setDate(journeyDate);
                 item->setId(connectionId);
                 item->setTransfers(QString::number(numChanges));
-                item->setDuration(durationTime.time().toString("hh:mm"));
+                item->setDuration(formatDuration(durationTime));
                 item->setMiscInfo("");
                 item->setTrainType(lineNames.join(", ").trimmed());
                 item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString("hh:mm"));
@@ -469,6 +468,18 @@ void ParserHafasBinary::searchJourneyEarlier()
     sendHttpRequest(uri);
 }
 
+QString ParserHafasBinary::formatDuration(QDateTime durationTime)
+{
+    QString tmpDuration = durationTime.time().toString("hh:mm");
+    QDateTime refDate;
+    refDate.setDate(QDate::currentDate());
+    int days = refDate.daysTo(durationTime);
+    if (days > 0) {
+        tmpDuration = QString::number(days) + "d " + tmpDuration;
+    }
+    return tmpDuration;
+}
+
 QDateTime ParserHafasBinary::toTime(quint16 time)
 {
     QDateTime tmpDateTime;
@@ -476,6 +487,7 @@ QDateTime ParserHafasBinary::toTime(quint16 time)
         return tmpDateTime;
     int hours = time / 100;
     int minutes = time % 100;
+    tmpDateTime.setDate(QDate::currentDate());
     return tmpDateTime.addSecs(((hours * 60) + minutes) * 60);
 }
 

@@ -46,6 +46,7 @@ protected:
     QDate toDate(quint16 date);
     QDateTime toTime(quint16 time, QDate baseDate);
     QDateTime toTime(quint16 time);
+    QString formatDuration(QDateTime durationTime);
 };
 
 #endif // PARSER_HAFASBINARY_H
