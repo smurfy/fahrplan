@@ -38,7 +38,7 @@ RESOURCES += \
     translations_res.qrc
 
 # Zlib todo for other systems ugly hack
-INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:\QtSDK\QtSources\4.8.1\src\3rdparty\zlib
+INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib
 
 HEADERS += \
     src/parser/parser_hafasxml.h \
@@ -113,7 +113,6 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/main.qml \
         src/gui/harmattan/components/SubTitleButton.qml \
         src/gui/harmattan/components/StationSelect.qml \
-        src/gui/harmattan/components/DateTimePickerDialog.qml \
         src/gui/harmattan/AboutPage.qml \
         data/fahrplan2_harmattan.desktop \
         qtc_packaging/debian_harmattan/rules \

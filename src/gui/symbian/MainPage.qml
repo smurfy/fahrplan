@@ -19,8 +19,6 @@ Page {
             searchmode = 0;
         }
 
-
-
         if (searchmode == 0) {
             viaButton.visible = fahrplanBackend.parser.supportsVia();
             departureButton.visible = true;
@@ -42,20 +40,19 @@ Page {
             startSearch.visible = false;
             searchMode0Toggle.checked = false;
             searchMode1Toggle.checked = true;
-
         }
-
-        if (fromNowSwitch.checked ==true) {
-            datePickerButton.visible = false;
-            timePickerButton.visible = false;
-            modeDep.checked = true;
-            setToday();
-        } else {
-            datePickerButton.visible = true;
-            timePickerButton.visible = true;
-
     }
 
+    function setToday() {
+        var d = new Date();
+        timePicker.hour = d.getHours();
+        timePicker.minute = d.getMinutes();
+        timePicker.second = d.getSeconds();
+        timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
+        datePicker.year = d.getFullYear();
+        datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
+        datePicker.day = d.getDate();
+        datePickerButton.subTitleText = Qt.formatDate(d);
     }
 
     Item {
@@ -213,50 +210,13 @@ Page {
                 platformInverted: appWindow.platformInverted
                 icon: "toolbar-next"
             }
-            SubTitleButton {
-                titleText: qsTr("Departure: Now")
-                iconVisible: false
-                subTitleHeight: 0
-                platformInverted: appWindow.platformInverted
-                Switch {
-                    id: fromNowSwitch
-                    signal clicked
-                    Component.onCompleted: {
-                        if(fahrplanBackend.getSettingsValue("fromNow", false)=="true") {
-                            fromNowSwitch.checked = true
-                        }
-                        else {
-                            fromNowSwitch.checked = false
-                        }
-                        updateButtonVisibility()
-                    }
-                    anchors {
-                        right: parent.right
-                        rightMargin: platformStyle.paddingMedium
-                        verticalCenter: parent.verticalCenter
-
-                    }
-                    onClicked: {
-                        updateButtonVisibility()
-                        if (checked == true)
-                            {
-                            fahrplanBackend.storeSettingsValue("fromNow", true)
-                        } else
-                        {
-                            fahrplanBackend.storeSettingsValue("fromNow", false)
-                        }
-
-                    }
-            }
-       }
-
-
 
             SubTitleButton {
                 id: datePickerButton
                 titleText: qsTr("Date")
                 subTitleText: qsTr("please select")
                 width: parent.width
+                visible: !fromNowSwitch.checked
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     datePicker.open();
@@ -268,6 +228,7 @@ Page {
                 titleText: qsTr("Time")
                 subTitleText: qsTr("please select")
                 width: parent.width
+                visible: !fromNowSwitch.checked
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     timePicker.open();
@@ -293,6 +254,23 @@ Page {
                 }
             }
 
+
+            SubTitleButton {
+                titleText: qsTr("Departure: Now")
+                iconVisible: false
+                platformInverted: appWindow.platformInverted
+                Switch {
+                    id: fromNowSwitch
+                    platformInverted: appWindow.platformInverted
+                    checked: fahrplanBackend.getSettingsValue("fromNow", false) == "true" ? true : false
+                    anchors {
+                        right: parent.right
+                        rightMargin: platformStyle.paddingMedium
+                        verticalCenter: parent.verticalCenter
+                    }
+                }
+            }
+
             SubTitleButton {
                 id: trainrestrictionsButton
                 titleText: qsTr("Trains")
@@ -307,7 +285,7 @@ Page {
             Button {
                 id: timetableSearch
                 width: parent.width * 2 / 3
-                text: modeDep.checked ? qsTr("Show departures") : qsTr("Show arrivals")
+                text: modeDep.checked || fromNowSwitch.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
                     topMargin: 20
                     horizontalCenter: parent.horizontalCenter
@@ -317,6 +295,7 @@ Page {
                 onClicked: {
                     fahrplanBackend.storeSettingsValue("stationStation", stationButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("directionStation", directionButton.subTitleText);
+                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
 
                     //Validation
                     if (stationButton.subTitleText == qsTr("please select")) {
@@ -330,17 +309,16 @@ Page {
                         directionStation = "";
                     }
 
-                    if (fromNowSwitch.checked == true) {
+                    if (fromNowSwitch.checked) {
                         setToday();
                     }
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked) {
+                    if (modeDep.checked || fromNowSwitch.checked) {
                         selMode = ParserAbstract.Departure;
                         timetablePage.timetableTitleText = qsTr("Departures");
-                    }
-                    if (modeArr.checked) {
+                    } else if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                         timetablePage.timetableTitleText = qsTr("Arrivals")
                     }
@@ -370,6 +348,7 @@ Page {
                     fahrplanBackend.storeSettingsValue("viaStation", viaButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("departureStation", departureButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("arrivalStation", arrivalButton.subTitleText);
+                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
 
                     //Validation
                     if (departureButton.subTitleText == qsTr("please select") || arrivalButton.subTitleText == qsTr("please select")) {
@@ -386,16 +365,15 @@ Page {
                     resultsPage.journeyStationsTitleText = viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText).arg(viaStation);
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
-                    if (fromNowSwitch.checked ==true) {
+                    if (fromNowSwitch.checked) {
                         setToday();
                     }
                     var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
                     var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked) {
+                    if (modeDep.checked || fromNowSwitch.checked) {
                         selMode = ParserAbstract.Departure;
-                    }
-                    if (modeArr.checked) {
+                    } else if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                     }
                     fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
@@ -768,17 +746,4 @@ Page {
         default:
         }
     }
-
-    function setToday() {
-        var d = new Date();
-        timePicker.hour = d.getHours();
-        timePicker.minute = d.getMinutes();
-        timePicker.second = d.getSeconds();
-        timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
-        datePicker.year = d.getFullYear();
-        datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
-        datePicker.day = d.getDate();
-        datePickerButton.subTitleText = Qt.formatDate(d);
-    }
-
 }

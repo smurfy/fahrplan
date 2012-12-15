@@ -7,7 +7,6 @@ Item {
 
     property alias titleText: title.text
     property alias iconVisible: icon.visible
-    property alias subTitleHeight: subTitle.height
     property alias subTitleText: subTitle.text
     property string icon: "qtg_graf_choice_list_indicator"
     property bool platformInverted: false
@@ -64,9 +63,10 @@ Item {
             rightMargin: platformStyle.paddingMedium
         }
         text: ""
-        font.pixelSize: platformStyle.fontSizeLarge + 2
+        font.pixelSize: subTitle.text != "" ?  platformStyle.fontSizeLarge + 2 : 0
         platformInverted: subTitleButton.platformInverted
         wrapMode: Text.WordWrap
+        visible: subTitle.text != "" ? true : false
     }
 
     Image {

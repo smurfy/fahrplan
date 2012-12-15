@@ -39,8 +39,19 @@ Page {
             startSearch.visible = false;
             searchMode0Toggle.checked = false;
             searchMode1Toggle.checked = true;
-
         }
+    }
+
+    function setToday() {
+        var d = new Date();
+        timePicker.hour = d.getHours();
+        timePicker.minute = d.getMinutes();
+        timePicker.second = d.getSeconds();
+        timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
+        datePicker.year = d.getFullYear();
+        datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
+        datePicker.day = d.getDate();
+        datePickerButton.subTitleText = Qt.formatDate(d);
     }
 
     Item {
@@ -195,28 +206,56 @@ Page {
             }
 
             SubTitleButton {
-                id: dateTimePickerButton
-                titleText: qsTr("Date / Time")
+                id: datePickerButton
+                titleText: qsTr("Date")
                 subTitleText: qsTr("please select")
                 width: parent.width
+                visible: !fromNowSwitch.checked
                 onClicked: {
-                    dateTimePicker.open();
+                    datePicker.open();
                 }
             }
 
-            ButtonRow {
+            SubTitleButton {
+                id: timePickerButton
+                titleText: qsTr("Time")
+                subTitleText: qsTr("please select")
                 width: parent.width
-                anchors {
-                    leftMargin: 10
-                    rightMargin: 10
+                visible: !fromNowSwitch.checked
+                onClicked: {
+                    timePicker.open();
                 }
-                Button {
-                    id: modeDep
-                    text: qsTr("Departure")
+
+                ButtonRow {
+                    anchors {
+                        right: parent.right
+                        rightMargin: 50
+                        verticalCenter: parent.verticalCenter
+                    }
+                    width: parent.width * 3 / 5
+                    Button {
+                        id: modeDep
+                        text: qsTr("Departure")
+                    }
+                    Button {
+                        id: modeArr
+                        text: qsTr("Arrival")
+                    }
                 }
-                Button {
-                    id: modeArr
-                    text: qsTr("Arrival")
+            }
+
+            SubTitleButton {
+                titleText: qsTr("Departure: Now")
+                iconVisible: false
+                subTitleText: ""
+                Switch {
+                    id: fromNowSwitch
+                    checked: fahrplanBackend.getSettingsValue("fromNow", false) == "true" ? true : false
+                    anchors {
+                        right: parent.right
+                        rightMargin: 10
+                        verticalCenter: parent.verticalCenter
+                    }
                 }
             }
 
@@ -232,7 +271,7 @@ Page {
 
             Button {
                 id: timetableSearch
-                text: modeDep.checked ? qsTr("Show departures") : qsTr("Show arrivals")
+                text: modeDep.checked || fromNowSwitch.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
                     topMargin: 20
                     horizontalCenter: parent.horizontalCenter
@@ -241,6 +280,7 @@ Page {
                 onClicked: {
                     fahrplanBackend.storeSettingsValue("stationStation", stationButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("directionStation", directionButton.subTitleText);
+                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
 
                     //Validation
                     if (stationButton.subTitleText == qsTr("please select")) {
@@ -253,14 +293,16 @@ Page {
                     if (directionStation == qsTr("please select") || !fahrplanBackend.parser.supportsTimeTableDirection()) {
                         directionStation = "";
                     }
-
-                    var selDateTime = new Date(dateTimePicker.year, dateTimePicker.month - 1, dateTimePicker.day, dateTimePicker.hour, dateTimePicker.minute);
+                    if (fromNowSwitch.checked) {
+                        setToday();
+                    }
+                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
+                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked) {
+                    if (modeDep.checked || fromNowSwitch.checked) {
                         selMode = ParserAbstract.Departure;
                         timetablePage.timetableTitleText = qsTr("Departures");
-                    }
-                    if (modeArr.checked) {
+                    } else if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                         timetablePage.timetableTitleText = qsTr("Arrivals")
                     }
@@ -269,9 +311,7 @@ Page {
                     timetablePage.selMode = selMode
 
                     pageStack.push(timetablePage);
-
-
-                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selDateTime, selDateTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selDate, selTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
@@ -284,10 +324,10 @@ Page {
                 }
 
                 onClicked: {
-
                     fahrplanBackend.storeSettingsValue("viaStation", viaButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("departureStation", departureButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("arrivalStation", arrivalButton.subTitleText);
+                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
 
                     //Validation
                     if (departureButton.subTitleText == qsTr("please select") || arrivalButton.subTitleText == qsTr("please select")) {
@@ -304,15 +344,18 @@ Page {
                     resultsPage.journeyStationsTitleText = viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText).arg(viaStation);
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
-                    var selDateTime = new Date(dateTimePicker.year, dateTimePicker.month - 1, dateTimePicker.day, dateTimePicker.hour, dateTimePicker.minute);
-                    var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked) {
-                        selMode = ParserAbstract.Departure;
+                    if (fromNowSwitch.checked) {
+                        setToday();
                     }
-                    if (modeArr.checked) {
+                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
+                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
+                    var selMode = ParserAbstract.Arrival;
+                    if (modeDep.checked || fromNowSwitch.checked) {
+                        selMode = ParserAbstract.Departure;
+                    } else if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                     }
-                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDateTime, selDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }
@@ -408,26 +451,31 @@ Page {
     }
 
 
-    DateTimePickerDialog {
-        id: dateTimePicker
-        titleText: qsTr("Select date and time")
+    DatePickerDialog {
+        id: datePicker
+        titleText: qsTr("Date")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
-        nowButtonText: qsTr("Now")
         onAccepted: {
-            var d = new Date(dateTimePicker.year, dateTimePicker.month - 1, dateTimePicker.day, dateTimePicker.hour, dateTimePicker.minute, 0);
-            dateTimePickerButton.subTitleText = Qt.formatDate(d) + " " + Qt.formatTime(d, "hh:mm");
+            var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
+            datePickerButton.subTitleText = Qt.formatDate(selDate);
+        }
+    }
+
+    TimePickerDialog {
+        id: timePicker
+        titleText: qsTr("Time")
+        acceptButtonText: qsTr("Ok")
+        rejectButtonText: qsTr("Cancel")
+        fields: DateTime.Hours | DateTime.Minutes
+        hourMode: DateTime.TwentyFourHours // FIXME should set through i18n
+        onAccepted: {
+            var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
+            timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
         }
         Component.onCompleted: {
-            var d = new Date();
-
-            dateTimePicker.day = d.getDate();
-            dateTimePicker.month = d.getMonth() + 1;
-            dateTimePicker.year = d.getFullYear();
-            dateTimePicker.hour = d.getHours();
-            dateTimePicker.minute = d.getMinutes();
-
-            dateTimePickerButton.subTitleText = Qt.formatDate(d) + " " + Qt.formatTime(d, "hh:mm");
+            //setToday sets both the time and the date to today, so only needed here (seems to work)
+            setToday();
         }
     }
 

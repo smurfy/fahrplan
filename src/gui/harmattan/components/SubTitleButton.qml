@@ -5,6 +5,7 @@ Item {
     id: subTitleButton
 
     property alias titleText: title.text
+    property alias iconVisible: icon.visible
     property alias subTitleText: subTitle.text
     property alias icon: icon.source
 
@@ -59,7 +60,8 @@ Item {
             right: icon.left
         }
         text: ""
-        font.pixelSize: 28
+        font.pixelSize: subTitle.text != "" ? 28 : 0
+        visible: subTitle.text != "" ? true : false
     }
 
     Image {
