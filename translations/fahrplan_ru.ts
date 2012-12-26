@@ -44,31 +44,31 @@
     <name>JourneyDetailsResultsPage</name>
     <message>
         <location filename="../src/gui/harmattan/JourneyDetailsResultsPage.qml" line="307"/>
-        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="334"/>
+        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="333"/>
         <source>Journey has been added to your calendar.</source>
         <translation>Поездка была добавлена в ваш календарь.</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/JourneyDetailsResultsPage.qml" line="309"/>
-        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="336"/>
+        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="335"/>
         <source>Failed to add Journey to your calendar!</source>
         <translation>Не удалось добавить поездку в ваш календарь!</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/JourneyDetailsResultsPage.qml" line="320"/>
-        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="347"/>
+        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="346"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>от &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/JourneyDetailsResultsPage.qml" line="320"/>
-        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="347"/>
+        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="346"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>от &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;, через &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/JourneyDetailsResultsPage.qml" line="331"/>
-        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="358"/>
+        <location filename="../src/gui/symbian/JourneyDetailsResultsPage.qml" line="357"/>
         <source>Dur.: %1</source>
         <translation>Длит.: %1</translation>
     </message>
@@ -139,242 +139,248 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="136"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="137"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="147"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="148"/>
         <source>Departure Station</source>
         <translation>Станция отправления</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="137"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="150"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="163"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="176"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="186"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="199"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="209"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="256"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="263"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="304"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="311"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="512"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="559"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="616"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="617"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="618"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="619"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="620"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="138"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="152"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="166"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="180"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="148"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="161"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="174"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="187"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="197"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="211"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="222"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="286"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="293"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="333"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="340"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="534"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="581"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="638"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="639"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="640"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="641"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="642"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="149"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="163"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="177"/>
         <location filename="../src/gui/symbian/MainPage.qml" line="191"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="205"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="216"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="269"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="276"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="319"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="326"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="552"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="599"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="656"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="657"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="658"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="659"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="660"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="202"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="217"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="229"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="301"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="308"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="354"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="361"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="579"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="626"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="683"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="684"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="685"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="686"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="687"/>
         <source>please select</source>
         <translation>пожалуйста, выберите</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="149"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="151"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="160"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="162"/>
         <source>Via Station</source>
         <translation>Через станцию</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="162"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="165"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="173"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="176"/>
         <source>Arrival Station</source>
         <translation>Станция прибытия</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="175"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="179"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="186"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="190"/>
         <source>Station</source>
         <translation>Станция, либо остановка</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="185"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="190"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="196"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="201"/>
         <source>Direction</source>
         <translation>Направление</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="198"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="424"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="204"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="442"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="210"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="456"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="216"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="479"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="208"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="442"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="215"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="461"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="221"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="467"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="228"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="491"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="224"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="232"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="238"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="246"/>
         <source>Departure</source>
         <translation>Отправление</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="228"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="237"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="242"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="251"/>
         <source>Arrival</source>
         <translation>Прибытие</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="235"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="245"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="248"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="259"/>
+        <source>Departure: Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="264"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="276"/>
         <source>Trains</source>
         <translation>Виды транспорта</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="245"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="257"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="274"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="288"/>
         <source>Show departures</source>
         <translation>Показать отправления</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="245"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="257"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="274"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="288"/>
         <source>Show arrivals</source>
         <translation>Показать прибытия</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="257"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="270"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="287"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="302"/>
         <source>Please select a Station</source>
         <translation>Пожалуйста, выберите станцию, либо остановку</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="272"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="285"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="304"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="320"/>
         <source>Departures</source>
         <translation>Отправления</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="276"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="289"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="307"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="323"/>
         <source>Arrivals</source>
         <translation>Прибытия</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="291"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="305"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="320"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="339"/>
         <source>Start search</source>
         <translation>Начать поиск</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="305"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="320"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="334"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="355"/>
         <source>Please select a departure and arrival station.</source>
         <translation>Пожалуйста, выберите станции отправления и прибытия.</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="315"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="330"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="344"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="365"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>от &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="315"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="330"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="344"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="365"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>от &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;, через &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="386"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="402"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="417"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="439"/>
         <source>Select backend</source>
         <translation>Выберите поставщика</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="399"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="416"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="430"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="453"/>
         <source>Select train</source>
         <translation>Выберите виды транспорта</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="425"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="443"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="443"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="462"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="457"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="468"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="480"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="492"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="426"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="444"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="444"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="463"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="458"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="469"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="481"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="493"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="510"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="557"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="550"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="597"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="532"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="579"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="577"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="624"/>
         <source>Clear station</source>
         <translation>Очистить станцию</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="524"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="564"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="546"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="591"/>
         <source>Select station</source>
         <translation>Выберите станцию</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="531"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="571"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="553"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="598"/>
         <source>Switch with Departure station</source>
         <translation>Обменять со станцией отправления</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="540"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="580"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="562"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="607"/>
         <source>Switch with Arrival station</source>
         <translation>Обменять со станцией прибытия</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="549"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="589"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="571"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="616"/>
         <source>Switch with Via station</source>
         <translation>Обменять с промежуточной станцией</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="594"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="634"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="616"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="661"/>
         <source>No results found</source>
         <translation>Ничего не найдено</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="601"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="641"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="623"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="668"/>
         <source>Error loading details</source>
         <translation>Ощибка загрузки деталей поездки</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbian/MainPage.qml" line="530"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="557"/>
         <source>Toggle Inverted Style</source>
         <translation>Переключить инвертированный стиль</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbian/MainPage.qml" line="537"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="564"/>
         <source>About</source>
         <translation>Про</translation>
     </message>
@@ -489,9 +495,34 @@
 <context>
     <name>ParserAbstract</name>
     <message>
-        <location filename="../src/parser/parser_abstract.cpp" line="109"/>
+        <location filename="../src/parser/parser_abstract.cpp" line="110"/>
         <source>Request timed out.</source>
         <translation>Превышен интервал ожидания запроса.</translation>
+    </message>
+</context>
+<context>
+    <name>ParserHafasBinary</name>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="72"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="93"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="408"/>
+        <source>An error ocurred with the backend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="406"/>
+        <source>Sorry one station name is to ambiguous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="426"/>
+        <source>Internal error occured, going later is not possible</source>
+        <translation type="unfinished">Произошла внутренняя ошибка: более поздняя поездка невозможна</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="450"/>
+        <source>Internal error occured, going earlier is not possible</source>
+        <translation type="unfinished">Произошла внутренняя ошибка: более ранняя поездка невозможна</translation>
     </message>
 </context>
 <context>
@@ -508,55 +539,55 @@
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="255"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="626"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="627"/>
         <source>Internal Error occured, missing station ids</source>
         <translation>Сталася внутрішня помилка: отсутствуют идентификаторы станций</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="456"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="457"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="457"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="458"/>
         <source>All without ICE</source>
         <translation>Все, кроме ICE</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="458"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="459"/>
         <source>Only local transport</source>
         <translation>Только общественный транспорт</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="459"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="460"/>
         <source>Local transport without S-Bahn</source>
         <translation>Общественный транспорт, кроме S-Bahn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="812"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="813"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Произошла внутренняя ошибка: более поздняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="837"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="838"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Произошла внутренняя ошибка: более ранняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="889"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="910"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="890"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="911"/>
         <source>Internal error occured: JourneyResultdata not present!</source>
         <translation>Произошла внутренняя ошибка: отсутствует JourneyResultdata!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1022"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1026"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1023"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1027"/>
         <source>Platform </source>
         <translation>Платформа</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1085"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1104"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1086"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1105"/>
         <source>Walk for %n min</source>
         <translation>
             <numerusform>Идти пешком %n минуту</numerusform>
@@ -565,7 +596,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1088"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1089"/>
         <source>Use a Bike for %n min</source>
         <translation>
             <numerusform>Ехать велосипедом %n минуту</numerusform>
@@ -574,7 +605,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1091"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1092"/>
         <source>Use a car for %n min</source>
         <translation>
             <numerusform>Ехать машиной %n минуту</numerusform>
@@ -583,7 +614,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1094"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1095"/>
         <source>Take a taxi for %n min</source>
         <translation>
             <numerusform>Ехать на такси %n минуту</numerusform>
@@ -592,7 +623,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1100"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1101"/>
         <source>Transfer for %n min</source>
         <translation>
             <numerusform>Пересадка %n минуту</numerusform>
@@ -601,12 +632,12 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1137"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1138"/>
         <source>Internal error occured, Error parsing details data</source>
         <translation>Произошла внутренняя ошибка: ошибка разбора данных</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1172"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1173"/>
         <source>d</source>
         <translation>дн</translation>
     </message>
@@ -614,49 +645,44 @@
 <context>
     <name>ParserMobileBahnDe</name>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="53"/>
+        <location filename="../src/parser/parser_mobilebahnde.cpp" line="46"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="54"/>
+        <location filename="../src/parser/parser_mobilebahnde.cpp" line="47"/>
         <source>All without ICE</source>
         <translation>Все, кроме ICE</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="55"/>
+        <location filename="../src/parser/parser_mobilebahnde.cpp" line="48"/>
         <source>Only local transport</source>
         <translation>Только общественный транспорт</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="56"/>
+        <location filename="../src/parser/parser_mobilebahnde.cpp" line="49"/>
         <source>Local transport without S-Bahn</source>
         <translation>Общественный транспорт, кроме S-Bahn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="265"/>
         <source>Warning</source>
-        <translation>Внимание</translation>
+        <translation type="obsolete">Внимание</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="372"/>
         <source>On-Time</source>
-        <translation>По расписанию</translation>
+        <translation type="obsolete">По расписанию</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="397"/>
         <source>Internal error occured, going later is not possible</source>
-        <translation>Произошла внутренняя ошибка: более поздняя поездка невозможна</translation>
+        <translation type="obsolete">Произошла внутренняя ошибка: более поздняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="413"/>
         <source>Internal error occured, going earlier is not possible</source>
-        <translation>Произошла внутренняя ошибка: более ранняя поездка невозможна</translation>
+        <translation type="obsolete">Произошла внутренняя ошибка: более ранняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_mobilebahnde.cpp" line="444"/>
         <source>Internal error occured, requesting invalid details data.</source>
-        <translation>Произошла внутренняя ошибка: запрос недействительных деталей поездки.</translation>
+        <translation type="obsolete">Произошла внутренняя ошибка: запрос недействительных деталей поездки.</translation>
     </message>
 </context>
 <context>
