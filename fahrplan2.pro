@@ -162,7 +162,9 @@ win32: !simulator {
 
 # enable booster
 symbian {
-    CONFIG += symbian_appbooster
+    #appbooster on symbian is not as great.
+    #so we disabled it see https://github.com/smurfy/fahrplan/issues/27
+    #CONFIG += symbian_appbooster
 }
 
 !win32: !symbian {
