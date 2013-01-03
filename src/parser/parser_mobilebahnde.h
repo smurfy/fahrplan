@@ -51,7 +51,6 @@ public:
     QString name() { return "bahn.de"; }
 
 public slots:
-    bool supportsGps();
     QStringList getTrainRestrictions();
 
 protected:
