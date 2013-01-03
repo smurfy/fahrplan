@@ -14,225 +14,114 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="findStationsByName">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>10</y>
-      <width>131</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>findStationsByName</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="findStationResults">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>641</width>
-      <height>141</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="findStationsByCoordinates">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>10</y>
-      <width>151</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>findStationsByCoordinates</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="searchJourney">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>200</y>
-      <width>131</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>searchJourney</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="departureStaion">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>200</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Zurich</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="arrivalStation">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>200</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Reckingen</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="searchJourneyResults">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>230</y>
-      <width>651</width>
-      <height>131</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="searchJourneyEarlier">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>370</y>
-      <width>121</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>searchJourneyEarlier</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="searchJourneyLater">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>370</y>
-      <width>121</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>searchJourneyLater</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="cancelRequest">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>620</y>
-      <width>101</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>cancelRequest</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="getJourneyDetails">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>410</y>
-      <width>111</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>getJourneyDetails</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="journeyResultItemId">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>410</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>C1-1</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="getJourneyDetailsResults">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>440</y>
-      <width>641</width>
-      <height>171</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="viaStation">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>200</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Göschenen</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="trainRestrictions">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>200</y>
-      <width>141</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="parser">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>91</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="getTimeTableForStation">
-    <property name="geometry">
-     <rect>
-      <x>224</x>
-      <y>10</y>
-      <width>141</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>getTimeTableForStation</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="stationName">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>10</y>
-      <width>101</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Zurich</string>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QComboBox" name="parser"/>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QLineEdit" name="stationName">
+      <property name="text">
+       <string>Zurich</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3" colspan="2">
+     <widget class="QPushButton" name="getTimeTableForStation">
+      <property name="text">
+       <string>getTimeTableForStation</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="5">
+     <widget class="QPushButton" name="findStationsByName">
+      <property name="text">
+       <string>findStationsByName</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QPushButton" name="findStationsByCoordinates">
+      <property name="text">
+       <string>findStationsByCoordinates</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="7">
+     <widget class="QTextEdit" name="findStationResults"/>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QLineEdit" name="departureStaion">
+      <property name="text">
+       <string>Zurich</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2" colspan="2">
+     <widget class="QLineEdit" name="viaStation">
+      <property name="text">
+       <string>Göschenen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QLineEdit" name="arrivalStation">
+      <property name="text">
+       <string>Reckingen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="5">
+     <widget class="QComboBox" name="trainRestrictions"/>
+    </item>
+    <item row="2" column="6">
+     <widget class="QPushButton" name="searchJourney">
+      <property name="text">
+       <string>searchJourney</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="7">
+     <widget class="QTextEdit" name="searchJourneyResults"/>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QPushButton" name="searchJourneyEarlier">
+      <property name="text">
+       <string>searchJourneyEarlier</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2" colspan="3">
+     <widget class="QPushButton" name="searchJourneyLater">
+      <property name="text">
+       <string>searchJourneyLater</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" colspan="2">
+     <widget class="QLineEdit" name="journeyResultItemId">
+      <property name="text">
+       <string>C1-1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2" colspan="2">
+     <widget class="QPushButton" name="getJourneyDetails">
+      <property name="text">
+       <string>getJourneyDetails</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="7">
+     <widget class="QTextEdit" name="getJourneyDetailsResults"/>
+    </item>
+    <item row="7" column="6">
+     <widget class="QPushButton" name="cancelRequest">
+      <property name="text">
+       <string>cancelRequest</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
