@@ -34,9 +34,6 @@ public:
 
 protected:
     void parseStationsByName(QNetworkReply *networkReply);
-    bool supportsTimeTable();
-
-public slots:
     QStringList getTrainRestrictions();
     QString getTrainRestrictionsCodes(int trainrestrictions);
 };

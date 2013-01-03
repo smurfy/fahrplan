@@ -30,11 +30,6 @@ ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent)
      STTableMode = 1;
 }
 
-bool ParserMobileBahnDe::supportsTimeTable()
-{
-    return true;
-}
-
 bool ParserMobileBahnDe::supportsGps()
 {
     return true;

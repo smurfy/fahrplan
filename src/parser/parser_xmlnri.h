@@ -32,10 +32,9 @@ public:
     static QString getName() { return "reiseinfo.no / nri"; }
     QString name() { return "reiseinfo.no / nri"; }
 
-public slots:
+protected:
     QStringList getTrainRestrictions();
     QString getTrainRestrictionsCodes(int trainrestrictions);
-    bool supportsTimeTable();
 };
 
 #endif // PARSER_XMLNRI_H

@@ -31,11 +31,6 @@ ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent)
      hafasHeader.ver = "2.3";
 }
 
-bool ParserXmlSbbCh::supportsTimeTable()
-{
-    return true;
-}
-
 void ParserXmlSbbCh::parseStationsByName(QNetworkReply *networkReply)
 {
     QString data = QString::fromUtf8(networkReply->readAll());
