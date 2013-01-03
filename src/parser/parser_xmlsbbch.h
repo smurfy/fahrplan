@@ -33,7 +33,6 @@ public:
     QString name() { return "sbb.ch"; }
 
 protected:
-    void parseStationsByName(QNetworkReply *networkReply);
     bool supportsTimeTable();
 
 public slots:

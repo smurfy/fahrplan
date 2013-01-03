@@ -36,13 +36,6 @@ bool ParserXmlSbbCh::supportsTimeTable()
     return true;
 }
 
-void ParserXmlSbbCh::parseStationsByName(QNetworkReply *networkReply)
-{
-    QString data = QString::fromUtf8(networkReply->readAll());
-    StationsResultList *result = internalParseStationsByName(data);
-    emit stationsResult(result);
-}
-
 QStringList ParserXmlSbbCh::getTrainRestrictions()
 {
     QStringList result;
