@@ -38,7 +38,6 @@ protected:
 
 public slots:
     QStringList getTrainRestrictions();
-    QString getTrainRestrictionsCodes(int trainrestrictions);
 };
 
 #endif // PARSER_XMLSBBCH_H

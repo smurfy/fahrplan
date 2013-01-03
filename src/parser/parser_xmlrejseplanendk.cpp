@@ -35,19 +35,6 @@ bool ParserXmlRejseplanenDk::supportsTimeTable()
     return true;
 }
 
-
-QString ParserXmlRejseplanenDk::getTrainRestrictionsCodes(int trainrestrictions)
-{
-    QString trainrestr = "1111111111111111";
-    if (trainrestrictions == 0) {
-        trainrestr = "1111111111111111"; //ALL
-    } else if (trainrestrictions == 1) {
-        trainrestr = "0111111111000000"; //All without ICE
-    }
-
-    return trainrestr;
-}
-
 QStringList ParserXmlRejseplanenDk::getTrainRestrictions()
 {
     QStringList result;

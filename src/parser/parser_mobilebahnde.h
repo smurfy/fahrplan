@@ -54,10 +54,6 @@ public slots:
     bool supportsGps();
     bool supportsTimeTable();
     QStringList getTrainRestrictions();
-
-protected:
-private:
-    QString getTrainRestrictionsCodes(int trainrestrictions);
 };
 
 #endif // PARSER_MOBILEBAHNDE_H

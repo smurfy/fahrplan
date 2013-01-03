@@ -41,16 +41,3 @@ QStringList ParserXmlOebbAt::getTrainRestrictions()
     result.append(tr("Einfach-Raus-Ticket"));
     return result;
 }
-
-QString ParserXmlOebbAt::getTrainRestrictionsCodes(int trainrestrictions)
-{
-    QString trainrestr = "1111111111010000";
-    if (trainrestrictions == 0) {
-        trainrestr = "1111111111010000"; //ALL
-    } else if (trainrestrictions == 1) {
-        trainrestr = "0111111111010000"; //All without ICE, TGV
-    } else if (trainrestrictions == 2) {
-        trainrestr = "0000110011000000"; //Einfach-Raus-Ticket
-    }
-    return trainrestr;
-}

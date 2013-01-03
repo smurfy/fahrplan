@@ -50,19 +50,3 @@ QStringList ParserMobileBahnDe::getTrainRestrictions()
     return result;
 }
 
-QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
-{
-    QString trainrestr = "1:1111111111000000";
-    if (trainrestrictions == 0) {
-        trainrestr = "1:1111111111000000"; //ALL
-    } else if (trainrestrictions == 1) {
-        trainrestr = "2:0111111111000000"; //All without ICE
-    } else if (trainrestrictions == 2) {
-        trainrestr = "4:00011111110000000"; //Only local transport
-    } else if (trainrestrictions == 3) {
-        trainrestr = "4:0001011111000000"; //Only local transport without S-Bahn
-    }
-
-    return trainrestr;
-}
-

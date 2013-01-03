@@ -34,7 +34,6 @@ public:
 
 public slots:
     QStringList getTrainRestrictions();
-    QString getTrainRestrictionsCodes(int trainrestrictions);
     bool supportsTimeTable();
 };
 

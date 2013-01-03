@@ -39,9 +39,3 @@ QStringList ParserXmlNri::getTrainRestrictions()
     result.append(tr("All"));
     return result;
 }
-
-QString ParserXmlNri::getTrainRestrictionsCodes(int trainrestrictions)
-{
-    QString trainrestr = "1111111111111111";
-    return trainrestr;
-}

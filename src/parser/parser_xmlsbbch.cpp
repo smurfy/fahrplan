@@ -43,18 +43,6 @@ void ParserXmlSbbCh::parseStationsByName(QNetworkReply *networkReply)
     emit stationsResult(result);
 }
 
-QString ParserXmlSbbCh::getTrainRestrictionsCodes(int trainrestrictions)
-{
-    QString trainrestr = "1111111111111111";
-    if (trainrestrictions == 0) {
-        trainrestr = "1111111111111111"; //ALL
-    } else if (trainrestrictions == 1) {
-        trainrestr = "0111111111000000"; //All without ICE
-    }
-
-    return trainrestr;
-}
-
 QStringList ParserXmlSbbCh::getTrainRestrictions()
 {
     QStringList result;
