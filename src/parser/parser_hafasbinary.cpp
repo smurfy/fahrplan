@@ -428,8 +428,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setDuration(formatDuration(durationTime));
                 item->setMiscInfo("");
                 item->setTrainType(lineNames.join(", ").trimmed());
-                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString("hh:mm"));
-                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString("hh:mm"));
+                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString(tr("hh:mm")));
+                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString(tr("hh:mm")));
                 journeyResultsByArrivalMap.insert(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime(), item);
             }
         }
@@ -445,7 +445,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
         emit journeyResult(lastJourneyResultList);
     } else if (errorCode == 8) {
-        emit errorOccured(tr("Sorry one station name is to ambiguous"));
+        emit errorOccured(tr("Sorry one station name is too ambiguous"));
     } else {
         emit errorOccured(tr("An error ocurred with the backend"));
     }

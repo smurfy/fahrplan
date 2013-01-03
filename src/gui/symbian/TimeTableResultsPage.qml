@@ -212,7 +212,7 @@ Page {
                 }
 
                 timetableResultModel.append({
-                    "time": Qt.formatTime( item.time,"hh:mm"),
+                    "time": Qt.formatTime( item.time, qsTr("hh:mm")),
                     "trainType": item.trainType,
                     "destination": dirlabel,
                     "stationplatform": stationplatform,

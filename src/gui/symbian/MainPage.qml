@@ -55,7 +55,7 @@ Page {
         timePicker.hour = d.getHours();
         timePicker.minute = d.getMinutes();
         timePicker.second = d.getSeconds();
-        timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
+        timePickerButton.subTitleText = Qt.formatTime(d, qsTr("hh:mm"));
         datePicker.year = d.getFullYear();
         datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
         datePicker.day = d.getDate();
@@ -500,11 +500,16 @@ Page {
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
         fields: DateTime.Hours | DateTime.Minutes
-        hourMode: DateTime.TwentyFourHours // FIXME should set through i18n
+        hourMode: {
+            if (qsTr("hh:mm").toLowerCase().indexOf("ap") < 0)
+                return DateTime.TwentyFourHours;
+            else
+                return DateTime.TwelveHours;
+        }
         platformInverted: appWindow.platformInverted
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
+            timePickerButton.subTitleText = Qt.formatTime(selTime, qsTr("hh:mm"));
         }
         Component.onCompleted: {
             //setToday sets both the time and the date to today, so only needed here (seems to work)

@@ -351,8 +351,8 @@ Page {
                     arrivalDate = "";
                 }
 
-                lbljourneyDate.text = departureDate + " " + Qt.formatTime(result.departureDateTime,"hh:mm") + " - " +
-                        arrivalDate + " " + Qt.formatTime(result.arrivalDateTime,"hh:mm");
+                lbljourneyDate.text = departureDate + " " + Qt.formatTime(result.departureDateTime, qsTr("hh:mm")) + " - " +
+                        arrivalDate + " " + Qt.formatTime(result.arrivalDateTime, qsTr("hh:mm"));
 
                 lbljourneyDuration.text = qsTr("Dur.: %1").arg(result.duration);
 
@@ -378,7 +378,7 @@ Page {
                                                             "stationName" : item.departureStation,
                                                             "stationInfo" : item.departureInfo,
                                                             "arrivalTime" : "",
-                                                            "departureTime" : Qt.formatTime(item.departureDateTime,"hh:mm"),
+                                                            "departureTime" : Qt.formatTime(item.departureDateTime, qsTr("hh:mm")),
                                                             "isStation" : true,
                                                             "isTrain" : true
 
@@ -394,7 +394,7 @@ Page {
                                                             "trainName" : "",
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" :  item.arrivalInfo,
-                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime,"hh:mm"),
+                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, qsTr("hh:mm")),
                                                             "departureTime" : "",
                                                             "isStation" : true,
                                                             "isTrain" : false
@@ -419,8 +419,8 @@ Page {
                                                             "trainName" :  nextItem.train + " " + nextItem.info,
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" : stationInfo,
-                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime,"hh:mm"),
-                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime,"hh:mm"),
+                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime, qsTr("hh:mm")),
+                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime, qsTr("hh:mm")),
                                                             "isStation" : true,
                                                             "isTrain" : true
 
