@@ -30,11 +30,6 @@ ParserXmlRejseplanenDk::ParserXmlRejseplanenDk(QObject *parent)
      STTableMode = 1;
 }
 
-bool ParserXmlRejseplanenDk::supportsTimeTable()
-{
-    return true;
-}
-
 QStringList ParserXmlRejseplanenDk::getTrainRestrictions()
 {
     QStringList result;

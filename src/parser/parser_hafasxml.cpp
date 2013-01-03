@@ -52,15 +52,12 @@ bool ParserHafasXml::supportsVia()
 
 bool ParserHafasXml::supportsTimeTable()
 {
-    return false;
+    return true;
 }
 
 bool ParserHafasXml::supportsTimeTableDirection()
 {
-    if (supportsTimeTable() && STTableMode == 0) {
-        return true;
-    }
-    return false;
+    return STTableMode == 0;
 }
 
 void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)

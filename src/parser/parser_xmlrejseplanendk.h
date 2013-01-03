@@ -32,9 +32,8 @@ public:
     static QString getName() { return "rejseplanen.dk"; }
     QString name() { return "rejseplanen.dk"; }
 
-public slots:
+protected:
     QStringList getTrainRestrictions();
-    bool supportsTimeTable();
 };
 
 #endif // PARSER_XMLREJSEPLANENDK_H

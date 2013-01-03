@@ -28,11 +28,6 @@ ParserXmlOebbAt::ParserXmlOebbAt(QObject *parent)
      STTableMode = 1;
 }
 
-bool ParserXmlOebbAt::supportsTimeTable()
-{
-    return true;
-}
-
 QStringList ParserXmlOebbAt::getTrainRestrictions()
 {
     QStringList result;

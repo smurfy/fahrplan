@@ -28,11 +28,6 @@ ParserXmlNri::ParserXmlNri(QObject *parent)
      STTableMode = 1;
 }
 
-bool ParserXmlNri::supportsTimeTable()
-{
-    return true;
-}
-
 QStringList ParserXmlNri::getTrainRestrictions()
 {
     QStringList result;

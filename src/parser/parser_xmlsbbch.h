@@ -33,9 +33,6 @@ public:
     QString name() { return "sbb.ch"; }
 
 protected:
-    bool supportsTimeTable();
-
-public slots:
     QStringList getTrainRestrictions();
 };
 

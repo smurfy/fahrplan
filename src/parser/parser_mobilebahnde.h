@@ -52,7 +52,6 @@ public:
 
 public slots:
     bool supportsGps();
-    bool supportsTimeTable();
     QStringList getTrainRestrictions();
 };
 
