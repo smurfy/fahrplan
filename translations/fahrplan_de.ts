@@ -153,166 +153,180 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="147"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="148"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="18"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="546"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="19"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="579"/>
+        <source>Opt-Out: gps location support</source>
+        <translation>GPS Standortbestimmung ausschalten</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="19"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="20"/>
+        <source>Opt-In: gps location support</source>
+        <translation>GPS Standortbestimmung einschalten</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="154"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="155"/>
         <source>Departure Station</source>
         <translation>Abfahrtsstation</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="148"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="161"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="174"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="187"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="197"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="211"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="222"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="286"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="155"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="168"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="181"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="194"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="204"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="218"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="229"/>
         <location filename="../src/gui/harmattan/MainPage.qml" line="293"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="333"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="300"/>
         <location filename="../src/gui/harmattan/MainPage.qml" line="340"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="534"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="581"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="638"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="639"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="640"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="641"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="642"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="149"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="163"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="177"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="191"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="202"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="217"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="229"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="301"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="347"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="577"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="624"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="682"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="683"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="684"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="685"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="686"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="156"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="170"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="184"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="198"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="209"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="224"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="236"/>
         <location filename="../src/gui/symbian/MainPage.qml" line="308"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="354"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="315"/>
         <location filename="../src/gui/symbian/MainPage.qml" line="361"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="579"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="626"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="683"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="684"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="685"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="686"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="687"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="368"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="609"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="656"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="713"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="714"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="715"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="716"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="717"/>
         <source>please select</source>
         <translation>bitte auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="160"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="162"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="167"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="169"/>
         <source>Via Station</source>
         <translation>Zwischenstopstation</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="173"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="176"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="180"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="183"/>
         <source>Arrival Station</source>
         <translation>Ankunftsstation</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="186"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="190"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="193"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="197"/>
         <source>Station</source>
         <translation>Station</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="196"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="201"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="203"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="208"/>
         <source>Direction</source>
         <translation>Richtung</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="210"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="456"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="216"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="479"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="217"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="463"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="223"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="486"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="221"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="467"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="228"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="491"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="228"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="474"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="235"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="498"/>
         <source>Time</source>
         <translation>Uhrzeit</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="238"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="246"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="245"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="253"/>
         <source>Departure</source>
         <translation>Abfahrt</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="242"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="251"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="249"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="258"/>
         <source>Arrival</source>
         <translation>Ankunft</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="248"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="259"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="255"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="266"/>
         <source>Departure: Now</source>
         <translation>Aktuelle Abfahrten</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="264"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="276"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="271"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="283"/>
         <source>Trains</source>
         <translation>Züge</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="274"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="288"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="281"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="295"/>
         <source>Show departures</source>
         <translation>Abfahrten anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="274"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="288"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="281"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="295"/>
         <source>Show arrivals</source>
         <translation>Ankünfte anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="287"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="302"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="294"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="309"/>
         <source>Please select a Station</source>
         <translation>Bitte eine Station wählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="304"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="320"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="311"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="327"/>
         <source>Departures</source>
         <translation>Abfahrten</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="307"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="323"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="314"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="330"/>
         <source>Arrivals</source>
         <translation>Ankünfte</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="320"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="339"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="327"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="346"/>
         <source>Start search</source>
         <translation>Suche starten</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="334"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="355"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="341"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="362"/>
         <source>Please select a departure and arrival station.</source>
         <translation>Bitte wählen Sie eine Abfahrts- und Ankunftsstation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="344"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="365"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="351"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="372"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; nach &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="344"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="365"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="351"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="372"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; über &lt;b&gt;%3&lt;/b&gt; nach &lt;b&gt;%2&lt;/b</translation>
     </message>
@@ -321,84 +335,93 @@
         <translation type="obsolete"> nach </translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="417"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="439"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="424"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="446"/>
         <source>Select backend</source>
         <translation>Backend auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="430"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="453"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="437"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="460"/>
         <source>Select train</source>
         <translation>Zug auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="457"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="468"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="480"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="492"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="464"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="475"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="567"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="487"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="499"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="600"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="458"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="469"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="481"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="493"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="465"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="476"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="488"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="500"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="532"/>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="579"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="577"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="624"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="562"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="595"/>
+        <source>Hello&lt;br/&gt;Sorry about this dialog, but the new Nokia store regulations require it.&lt;br/&gt;&lt;br/&gt;Please read the Privacy Policy of fahrplan. (available on the about page)&lt;br/&gt;&lt;br/&gt;If you want, you can also disable the gps features of fahrplan via the about menu.</source>
+        <translation>Hallo&lt;br/&gt;Entschuldigung für diesen dialog, aber die neuen Nokia Store Bestimmung schreiben dies vor.&lt;br/&gt;&lt;br/&gt;Bitte die Datenschutzvereinbarung lesen. (über menü)&lt;br/&gt;&lt;br/&gt;GPS Standortbestimmung kann über das über menü deaktiviert werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="575"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="622"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="607"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="654"/>
         <source>Clear station</source>
         <translation>Station entfernen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="546"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="591"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="589"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="621"/>
         <source>Select station</source>
         <translation>Station wählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="553"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="598"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="596"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="628"/>
         <source>Switch with Departure station</source>
         <translation>Mit Abfahrtsstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="562"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="607"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="605"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="637"/>
         <source>Switch with Arrival station</source>
         <translation>Mit Ankunftsstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="571"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="616"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="614"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="646"/>
         <source>Switch with Via station</source>
         <translation>Mit Zwischenstopstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="616"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="661"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="659"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="691"/>
         <source>No results found</source>
         <translation>Keine Ergebnisse gefunden</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/MainPage.qml" line="623"/>
-        <location filename="../src/gui/symbian/MainPage.qml" line="668"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="666"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="698"/>
         <source>Error loading details</source>
         <translation>Fehler beim Laden der Details</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbian/MainPage.qml" line="557"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="564"/>
         <source>Toggle Inverted Style</source>
         <translation>Wechsle zwischen invertierter Anzeige</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbian/MainPage.qml" line="564"/>
+        <location filename="../src/gui/harmattan/MainPage.qml" line="539"/>
+        <location filename="../src/gui/symbian/MainPage.qml" line="571"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
@@ -887,14 +910,14 @@
         <translation>%1 zu Favoriten hinzugefügt</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="356"/>
-        <location filename="../src/gui/symbian/components/StationSelect.qml" line="355"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="352"/>
+        <location filename="../src/gui/symbian/components/StationSelect.qml" line="350"/>
         <source>Searching for stations...</source>
         <translation>Suche nach Stationen ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="370"/>
-        <location filename="../src/gui/symbian/components/StationSelect.qml" line="369"/>
+        <location filename="../src/gui/harmattan/components/StationSelect.qml" line="366"/>
+        <location filename="../src/gui/symbian/components/StationSelect.qml" line="364"/>
         <source>Waiting for GPS lock...</source>
         <translation>Warte auf GPS Daten ...</translation>
     </message>
