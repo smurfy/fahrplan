@@ -70,6 +70,8 @@ Page {
                   "If you like fahrplan, i would appreciate a donation.<br><br><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a>" +
                   "<br><br>" +
                   "If you encounter bugs or have feature requests visit the <br><br><a href=\"https://github.com/smurfy/fahrplan/issues\">Fahrplan issue tracker on GitHub</a>" +
+                  "<br><br><b>Privacy Policy</b><br>" +
+                  "<a href=\"https://github.com/smurfy/fahrplan/wiki/Privacy-Policy-for-fahrplan\">View online</a>" +
                   "<br><br><b>License</b><br>" +
                   "This program is free software; you can redistribute it and/or modify
             it under the terms of the GNU General Public License as published by
