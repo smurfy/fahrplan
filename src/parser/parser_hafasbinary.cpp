@@ -332,10 +332,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 qint16 lineNamePtr;
                 qint16 departurePlatformPtr;
                 qint16 arrivalPlatformPtr;
+                qint16 partAttrIndex;
                 hafasData >> type;
                 hafasData >> lineNamePtr;
                 hafasData >> departurePlatformPtr;
                 hafasData >> arrivalPlatformPtr;
+                hafasData >> partAttrIndex;
 
                 QString lineName = strings[lineNamePtr];
                 QString plannedDeparturePosition = strings[departurePlatformPtr];
@@ -357,11 +359,42 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 QString plannedDeparture = strings[plannedDeparturePtr];
                 QString plannedArrival = strings[plannedArrivalPtr];
 
-                if (type == 2) {
-                    lineNames.append(lineName);
+                hafasData.device()->seek(attrsOffset + partAttrIndex * 4);
+
+                QString category = "";
+
+                while (true)
+                {
+                    qint16 tmpTxtPtr;
+                    hafasData >> tmpTxtPtr;
+                    QString key = strings[tmpTxtPtr];
+
+                    if (key.isEmpty() || key == "---") {
+                        break;
+                    } else if (key == "Direction") {
+                        //directionStr = strings.read(is);
+                        hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else if (key == "Class") {
+                        //lineClass = Integer.parseInt(strings.read(is));
+                        hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else if (key == "Category") {
+                         hafasData >> tmpTxtPtr;
+                         category = strings[tmpTxtPtr];
+                        //lineCategory = strings.read(is);
+                         hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else if (key == "Operator") {
+                        //lineOperator = strings.read(is);
+                         hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else {
+                        hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    }
+                 }
+
+                if (type == 2 && !category.isEmpty()) {
+                    lineNames.append(category);
                 }
 
-                qDebug()<<type<<lineName<<plannedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<plannedArrival<<plannedArrivalPosition;
+                qDebug()<<type<<lineName<<plannedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<plannedArrival<<plannedArrivalPosition<<category;
 
                 inlineItem->setDepartureDateTime(plannedDepartureTime);
                 inlineItem->setDepartureStation(plannedDeparture);
