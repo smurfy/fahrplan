@@ -323,10 +323,6 @@ Page {
     FahrplanBackend {
         id: fahrplanBackend
 
-        onParserChanged: {
-            gpsButton.visible = fahrplanBackend.parser.supportsGps();
-            updateFavorites();
-        }
 
         onParserStationsResult: {
             stationsResultModel.clear();
@@ -396,5 +392,14 @@ Page {
         else if (method == PositionSource.AllPositioningMethods)
             return "Multiple"
         return "source error";
+    }
+
+    onStatusChanged: {
+        switch (status) {
+            case PageStatus.Activating:
+                gpsButton.visible = fahrplanBackend.parser.supportsGps() && (fahrplanBackend.getSettingsValue("enableGps", "true") == "true");
+                updateFavorites();
+                break;
+        }
     }
 }

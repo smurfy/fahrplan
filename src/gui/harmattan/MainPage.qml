@@ -12,6 +12,13 @@ Page {
     property int searchmode : 0
     property bool startup : true
 
+    function updateGpsButtonText()
+    {
+        toggleGpsButton.text = fahrplanBackend.getSettingsValue("enableGps", "true") == "true" ?
+                    qsTr("Opt-Out: gps location support") :
+                    qsTr("Opt-In: gps location support");
+    }
+
     function updateButtonVisibility()
     {
         if (!fahrplanBackend.parser.supportsTimeTable()) {
@@ -512,7 +519,7 @@ Page {
             id : aboutIcon;
             iconId: "toolbar-settings";
             onClicked: {
-                pageStack.push(aboutPage);
+                helpContextMenu.open();
             }
         }
     }
@@ -524,6 +531,42 @@ Page {
             anchors.top: parent.top
             anchors.topMargin: 10
     }
+
+    ContextMenu {
+        id: helpContextMenu
+        MenuLayout {
+            MenuItem {
+                text: qsTr("About")
+                onClicked: {
+                    pageStack.push(aboutPage);
+                }
+            }
+            MenuItem {
+                id: toggleGpsButton
+                text: ""
+                onClicked: {
+                    if (fahrplanBackend.getSettingsValue("enableGps", "true") == "true") {
+                        fahrplanBackend.storeSettingsValue("enableGps", "false");
+                    } else {
+                        fahrplanBackend.storeSettingsValue("enableGps", "true");
+                    }
+                    updateGpsButtonText();
+                }
+            }
+        }
+    }
+
+
+    QueryDialog {
+            id: firstStartDialog;
+            message: qsTr("Hello<br/>" +
+                "Sorry about this dialog, but the new Nokia store regulations require it.<br/><br/>" +
+                "Please read the Privacy Policy of fahrplan. (available on the about page)<br/><br/>" +
+                "If you want, you can also disable the gps features of fahrplan via the about menu."
+            )
+            acceptButtonText: qsTr("Ok")
+    }
+
 
     ContextMenu {
         id: timeTableSelectContextMenu
@@ -631,6 +674,7 @@ Page {
         }
 
         onParserChanged: {
+
             console.log("Switching to " + name);
             currentParserName.text = fahrplanBackend.parserName;
 
@@ -642,6 +686,7 @@ Page {
                 directionButton.subTitleText = fahrplanBackend.getSettingsValue("directionStation", qsTr("please select"));
                 startup = false;
             }
+
 
             updateButtonVisibility();
 
@@ -674,6 +719,18 @@ Page {
                     trainrestrictionsButton.subTitleText = selObj.name
                 }
             }
+        }
+    }
+
+    onStatusChanged: {
+        switch (status) {
+            case PageStatus.Active:
+                if (fahrplanBackend.getSettingsValue("firstStart", "true") == "true") {
+                    firstStartDialog.open();
+                    fahrplanBackend.storeSettingsValue("firstStart", "false");
+                }
+                updateGpsButtonText();
+                break;
         }
     }
 }
