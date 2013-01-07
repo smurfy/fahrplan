@@ -543,7 +543,7 @@ Page {
             }
             MenuItem {
                 id: toggleGpsButton
-                text: ""
+                text: qsTr("Opt-Out: gps location support")
                 onClicked: {
                     if (fahrplanBackend.getSettingsValue("enableGps", "true") == "true") {
                         fahrplanBackend.storeSettingsValue("enableGps", "false");
