@@ -1,4 +1,4 @@
-VERSION = 2.0.11
+VERSION = 2.0.12
 
 # Make the Version available in the C++ source too
 symbian {
