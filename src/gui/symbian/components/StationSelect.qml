@@ -322,6 +322,10 @@ Page {
     FahrplanBackend {
         id: fahrplanBackend
 
+        onParserChanged: {
+            updateFavorites();
+        }
+
         onParserStationsResult: {
             stationsResultModel.clear();
             for (var i = 0; i < result.count; i++) {
