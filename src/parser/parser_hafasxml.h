@@ -112,15 +112,16 @@ protected:
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
 
-    StationsResultList* internalParseStationsByName(const QString &data);
     QString getTrainRestrictionsCodes(int trainrestrictions);
-    void parseSearchJourneyPart1(QNetworkReply *networkReply);
-    void parseSearchJourneyPart2(QNetworkReply *networkReply);
-    ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
     JourneyResultList *lastJourneyResultList;
     QList<JourneyDetailResultList*> journeyDetailInlineData;
 
 private:
+    StationsResultList* internalParseStationsByName(const QString &data);
+    void parseSearchJourneyPart1(QNetworkReply *networkReply);
+    void parseSearchJourneyPart2(QNetworkReply *networkReply);
+    ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
+
     ParserHafasXmlGetTimeTableForStationRequestData getTimeTableForStationRequestData;
     QString cleanHafasDate(const QString &time);
     QDateTime cleanHafasDateTime(const QString &time, QDate date);
