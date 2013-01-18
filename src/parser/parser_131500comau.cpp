@@ -20,6 +20,9 @@
 
 #include "parser_131500comau.h"
 
+#include <QBuffer>
+#include <QNetworkReply>
+
 Parser131500ComAu::Parser131500ComAu(QObject *parent) :
     ParserAbstract(parent)
 {

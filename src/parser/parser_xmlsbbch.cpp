@@ -20,6 +20,8 @@
 
 #include "parser_xmlsbbch.h"
 
+#include <QNetworkReply>
+
 ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent) :
     ParserHafasXml(parent)
 {

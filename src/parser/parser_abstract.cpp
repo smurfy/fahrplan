@@ -20,6 +20,11 @@
 
 #include "parser_abstract.h"
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QTimer>
+
 ParserAbstract::ParserAbstract(QObject *parent) :
     QObject(parent)
 {

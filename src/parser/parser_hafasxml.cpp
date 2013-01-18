@@ -20,6 +20,10 @@
 
 #include "parser_hafasxml.h"
 
+#include <QBuffer>
+#include <QNetworkReply>
+#include <QXmlStreamReader>
+
 ParserHafasXml::ParserHafasXml(QObject *parent) :
     ParserAbstract(parent)
 {

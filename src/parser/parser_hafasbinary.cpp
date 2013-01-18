@@ -20,6 +20,8 @@
 
 #include "parser_hafasbinary.h"
 
+#include <QNetworkReply>
+
 
 ParserHafasBinary::ParserHafasBinary(QObject *parent) :
     ParserHafasXml(parent)
