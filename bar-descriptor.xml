@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+    <id>de.smurfy.fahrplan</id>
+    <author>smurfy (maemo@smurfy.de)</author>
+    <publisher>smurfy (maemo@smurfy.de)</publisher>
+    <!-- <authorId></authorId> -->
+    <name>Fahrplan</name>
+    <versionNumber>2.0.12</versionNumber>
+    <description>A Journey planner/Railway Time table for many train lines in Europe and Australia</description>
+    <initialWindow>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+        <autoOrients>false</autoOrients>
+        <aspectRatio>portrait</aspectRatio>
+    </initialWindow>
+    <env value="app/native/imports" var="QML_IMPORT_PATH"/>
+    <env value="app/native/plugins:/usr/lib/qt4/plugins" var="QT_PLUGIN_PATH"/>
+    <env value="app/native/lib:/usr/lib/qt4/lib/" var="LD_LIBRARY_PATH"/>
+
+    <action system="true">run_native</action>
+    <permission>access_internet</permission>
+    <permission>access_location_services</permission>
+    <permission>access_pimdomain_calendars</permission>
+
+    <asset path="fahrplan2" type="Qnx/Elf" entry="true">fahrplan2</asset>
+
+    <!-- These values will be replaced when deploying in Qt Creator -->
+    <asset path="%SRC_DIR%/3rdparty/connys-qt-components/imports">imports</asset>
+    <asset path="%SRC_DIR%/data/fahrplan2_150.png">fahrplan2.png</asset>
+    <icon>
+        <image>fahrplan2.png</image>
+    </icon>
+</qnx>

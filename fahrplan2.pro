@@ -24,12 +24,13 @@ exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmat
 QML_IMPORT_PATH =
 
 QT += declarative xmlpatterns network xml
+blackberry: QT += opengl
 maemo5:QT += maemo5
 
 CONFIG += debug
-!maemo5: CONFIG += mobility
+!maemo5:!blackberry: CONFIG += mobility
 maemo5: CONFIG += mobility11
-MOBILITY += location organizer
+!blackberry: MOBILITY += location organizer
 
 TRANSLATIONS += \
     translations/fahrplan_de.ts \
@@ -40,6 +41,7 @@ OTHER_FILES += \
     data/fahrplan2.svg \
     data/fahrplan2_64.png \
     data/fahrplan2_80.png \
+    date/fahrplan2_150.png
 
 RESOURCES += \
     translations_res.qrc
@@ -143,6 +145,39 @@ maemo5 {
 
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
+}
+
+blackberry {
+    RESOURCES += blackberry_res.qrc
+
+    OTHER_FILES += \
+        bar-descriptor.xml \
+        src/gui/blackberry/components/PositionSource.qml \
+        src/gui/symbian/TimeTableResultsPage.qml \
+        src/gui/symbian/MainPage.qml \
+        src/gui/symbian/main.qml \
+        src/gui/symbian/JourneyResultsPage.qml \
+        src/gui/symbian/JourneyDetailsResultsPage.qml \
+        src/gui/symbian/AboutPage.qml \
+        src/gui/symbian/components/SubTitleButton.qml \
+        src/gui/symbian/components/StationSelect.qml \
+        src/gui/symbian/js/style.js \
+        src/gui/symbian/icon/icon-m-blank.png \
+        src/gui/symbian/icon/icon-m-content-calendar.png \
+        src/gui/symbian/icon/icon-m-content-calendar-inverse.png \
+        src/gui/symbian/icon/icon-m-toolbar-train.svg \
+        src/gui/symbian/icon/icon-m-toolbar-train-inverse.svg \
+        src/gui/symbian/icon/icon-m-toolbar-help.svg \
+        src/gui/symbian/icon/icon-m-toolbar-help-inverse.svg \
+        src/gui/symbian/icon/icon-m-toolbar-clock.svg \
+        src/gui/symbian/icon/icon-m-toolbar-clock-inverse.svg \
+        src/gui/symbian/icon/icon-m-toolbar-close.png \
+        src/gui/symbian/icon/icon-m-toolbar-close-inverse.png \
+        src/gui/symbian/icon/icon-s-calendar-location-picker.png \
+        src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png
+
+    # For Qt Creator completion to work correctly
+    QML_IMPORT_PATH = 3rdparty/connys-qt-components/imports
 }
 
 win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {

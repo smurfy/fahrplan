@@ -21,7 +21,7 @@
 #include <QtGui/QApplication>
 #include <qplatformdefs.h>
 
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
     #include <QtDeclarative>
     #include <QtCore/QtGlobal>
 #elif defined(Q_WS_WIN) || defined(Q_WS_X11)
@@ -34,6 +34,10 @@
 
 #if defined(Q_WS_MAEMO_5)
     #include "gui/fremantle/hildon_helper.h"
+#endif
+
+#if defined(Q_OS_BLACKBERRY)
+    #include <QGLWidget>
 #endif
 
 #include "fahrplan.h"
@@ -54,15 +58,14 @@ int main(int argc, char *argv[])
     translator.load(QString("fahrplan_%1").arg(QLocale::system().name()), ":/translations");
     app->installTranslator(&translator);
 
-
     qDebug()<<"Startup";
 
     #if defined(Q_WS_WIN)
         qDebug()<<"Windows";
         MainWindow w;
         w.show();
-    #elif defined(Q_WS_X11) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+    #elif defined(Q_OS_UNIX) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
+        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
             qDebug()<<"QML";
             qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
             qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
@@ -94,6 +97,17 @@ int main(int argc, char *argv[])
             view->show();
         #elif defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
             qDebug()<<"Symbian";
+            view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
+            view->showFullScreen();
+        #elif defined(Q_OS_BLACKBERRY)
+            qDebug() << "Blackberry";
+
+            // Improves touch handling
+            QApplication::setStartDragDistance(42);
+
+            QGLWidget *gl = new QGLWidget();
+            view->setViewport(gl);
+            view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
             view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
             view->showFullScreen();
         #else

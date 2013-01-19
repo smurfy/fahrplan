@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>data/fahrplan2.svg</file>
+        <file alias="src/gui/symbian/components/PositionSource.qml">src/gui/blackberry/components/PositionSource.qml</file>
         <file>src/gui/symbian/main.qml</file>
         <file>src/gui/symbian/MainPage.qml</file>
-        <file>src/gui/symbian/components/PositionSource.qml</file>
         <file>src/gui/symbian/components/StationSelect.qml</file>
         <file>src/gui/symbian/components/SubTitleButton.qml</file>
         <file>src/gui/symbian/JourneyResultsPage.qml</file>
