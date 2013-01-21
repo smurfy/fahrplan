@@ -1,5 +1,10 @@
 VERSION = 2.0.12
 
+MOC_DIR = tmp
+UI_DIR = tmp
+OBJECTS_DIR = tmp
+RCC_DIR = tmp
+
 # Make the Version available in the C++ source too
 symbian {
     DEFINES += FAHRPLAN_VERSION=\"$$VERSION\"
