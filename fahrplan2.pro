@@ -1,5 +1,10 @@
 VERSION = 2.0.12
 
+MOC_DIR = tmp
+UI_DIR = tmp
+OBJECTS_DIR = tmp
+RCC_DIR = tmp
+
 # Make the Version available in the C++ source too
 symbian {
     DEFINES += FAHRPLAN_VERSION=\"$$VERSION\"
@@ -38,7 +43,7 @@ RESOURCES += \
     translations_res.qrc
 
 # Zlib todo for other systems ugly hack
-INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib
+!unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib
 
 HEADERS += \
     src/parser/parser_hafasxml.h \
@@ -154,7 +159,7 @@ maemo5 {
     DEFINES += Q_WS_MAEMO_5
 }
 
-win32: !simulator {
+win32|unix: !simulator {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
@@ -167,7 +172,7 @@ symbian {
     #CONFIG += symbian_appbooster
 }
 
-!win32: !symbian {
+!win32: !unix: !symbian {
     CONFIG += qt-boostable qdeclarative-boostable
     LIBS += -lmdeclarativecache
     INCLUDEPATH += /usr/include/applauncherd
