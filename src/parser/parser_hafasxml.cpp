@@ -83,25 +83,20 @@ void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QS
 
     if (STTableMode == 1) {
         QString trainrestr = getTrainRestrictionsCodes(getTimeTableForStationRequestData.trainrestrictions);
-        QByteArray postData;
-        postData.append("productsFilter=");
-        postData.append(trainrestr);
-        postData.append("&boardType=");
+        QUrl url(baseSTTableUrl);
+        url.addQueryItem("productsFilter", trainrestr);
         if (getTimeTableForStationRequestData.mode == Departure) {
-            postData.append("dep");
+            url.addQueryItem("boardType", "dep");
         } else /* (getTimeTableForStationRequestData.mode == Arrival) */ {
-            postData.append("arr");
+            url.addQueryItem("boardType", "arr");
         }
-        postData.append("&date=");
-        postData.append(getTimeTableForStationRequestData.date.toString("dd.MM.yyyy"));
-        postData.append("&time=");
-        postData.append(getTimeTableForStationRequestData.time.toString("hh:mm"));
-        postData.append("&input=");
-        postData.append(stationName);
-        postData.append("&maxJourneys=50");
-        postData.append("&start=yes");
-        postData.append("&L=vs_java3");
-        sendHttpRequest(QUrl(baseSTTableUrl), postData);
+        url.addQueryItem("date", getTimeTableForStationRequestData.date.toString("dd.MM.yyyy"));
+        url.addQueryItem("time", getTimeTableForStationRequestData.time.toString("hh:mm"));
+        url.addQueryItem("input", stationName);
+        url.addQueryItem("maxJourneys", "50");
+        url.addQueryItem("start", "yes");
+        url.addQueryItem("L", "vs_java3");
+        sendHttpRequest(url);
     }
 }
 
