@@ -173,6 +173,7 @@ void MainWindow::searchJourneyLaterClicked()
 void MainWindow::journeyResult(JourneyResultList *result)
 {
     ui->searchJourneyResults->clear();
+    ui->journeyResultItemIds->clear();
 
     ui->searchJourneyResults->append(result->departureStation());
     ui->searchJourneyResults->append(result->arrivalStation());
@@ -191,6 +192,8 @@ void MainWindow::journeyResult(JourneyResultList *result)
         ui->searchJourneyResults->append(item->miscInfo());
         ui->searchJourneyResults->append(item->internalData1());
         ui->searchJourneyResults->append(item->internalData2());
+
+        ui->journeyResultItemIds->addItem(item->id());
     }
 
     if (result->itemcount() == 0) {
@@ -202,7 +205,7 @@ void MainWindow::getJourneyDetailsClicked()
 {
     ui->getJourneyDetailsResults->clear();
     ui->getJourneyDetailsResults->append("Loading...");
-    fahrplan->parser()->getJourneyDetails(ui->journeyResultItemId->text());
+    fahrplan->parser()->getJourneyDetails(ui->journeyResultItemIds->currentText());
 }
 
 void MainWindow::journeyDetailResult(JourneyDetailResultList *result)
