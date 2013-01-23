@@ -218,6 +218,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
         qDebug()<<resDeparture<<resArrival<<numConnections<<journeyDate;
 
+        QMultiMap<QDateTime, JourneyResultItem*> journeyResultsByArrivalMap;
+
         for (int iConnection = 0; iConnection < numConnections; iConnection++) {
             hafasData.device()->seek(0x4a + iConnection * 12);
             qint16 serviceDaysTableOffset;
@@ -426,8 +428,13 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setTrainType(lineNames.join(", ").trimmed());
                 item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString("hh:mm"));
                 item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString("hh:mm"));
-                lastJourneyResultList->appendItem(item);
+                journeyResultsByArrivalMap.insert(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime(), item);
             }
+        }
+
+        QList<JourneyResultItem*> journeyResultsByArrivalList = journeyResultsByArrivalMap.values();
+        Q_FOREACH(JourneyResultItem *item, journeyResultsByArrivalList) {
+            lastJourneyResultList->appendItem(item);
         }
 
         hafasContext.seqNr = QString::number(seqNr);
