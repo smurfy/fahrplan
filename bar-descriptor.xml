@@ -25,7 +25,7 @@
     <asset path="fahrplan2" type="Qnx/Elf" entry="true">fahrplan2</asset>
 
     <!-- These values will be replaced when deploying in Qt Creator -->
-    <asset path="%SRC_DIR%/3rdparty/connys-qt-components/imports">imports</asset>
+    <asset path="%SRC_DIR%/3rdparty/bb10-qt-components/imports">imports</asset>
     <asset path="%SRC_DIR%/data/fahrplan2_150.png">fahrplan2.png</asset>
     <icon>
         <image>fahrplan2.png</image>

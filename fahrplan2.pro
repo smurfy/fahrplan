@@ -177,7 +177,7 @@ blackberry {
         src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.png
 
     # For Qt Creator completion to work correctly
-    QML_IMPORT_PATH = 3rdparty/connys-qt-components/imports
+    QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
 win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {

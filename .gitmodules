@@ -1,3 +1,3 @@
-[submodule "3rdparty/connys-qt-components"]
-	path = 3rdparty/connys-qt-components
-	url = git://gitorious.org/~conny/qt-components/connys-qt-components.git
+[submodule "3rdparty/bb10-qt-components"]
+	path = 3rdparty/bb10-qt-components
+	url = git://gitorious.org/~leppa/qt-components/bb10-qt-components.git
