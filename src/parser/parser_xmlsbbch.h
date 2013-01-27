@@ -33,12 +33,7 @@ public:
     QString name() { return "sbb.ch"; }
 
 protected:
-    void parseStationsByName(QNetworkReply *networkReply);
-    bool supportsTimeTable();
-
-public slots:
     QStringList getTrainRestrictions();
-    QString getTrainRestrictionsCodes(int trainrestrictions);
 };
 
 #endif // PARSER_XMLSBBCH_H

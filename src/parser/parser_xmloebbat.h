@@ -32,10 +32,8 @@ public:
     static QString getName() { return "öbb.at"; }
     QString name() { return "öbb.at"; }
 
-public slots:
+protected:
     QStringList getTrainRestrictions();
-    QString getTrainRestrictionsCodes(int trainrestrictions);
-    bool supportsTimeTable();
 };
 
 #endif // PARSER_XMLOEBBAT_H

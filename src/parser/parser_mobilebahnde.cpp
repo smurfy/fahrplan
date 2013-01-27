@@ -30,16 +30,6 @@ ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent)
      STTableMode = 1;
 }
 
-bool ParserMobileBahnDe::supportsTimeTable()
-{
-    return true;
-}
-
-bool ParserMobileBahnDe::supportsGps()
-{
-    return true;
-}
-
 QStringList ParserMobileBahnDe::getTrainRestrictions()
 {
     QStringList result;
@@ -48,21 +38,5 @@ QStringList ParserMobileBahnDe::getTrainRestrictions()
     result.append(tr("Only local transport"));
     result.append(tr("Local transport without S-Bahn"));
     return result;
-}
-
-QString ParserMobileBahnDe::getTrainRestrictionsCodes(int trainrestrictions)
-{
-    QString trainrestr = "1:1111111111000000";
-    if (trainrestrictions == 0) {
-        trainrestr = "1:1111111111000000"; //ALL
-    } else if (trainrestrictions == 1) {
-        trainrestr = "2:0111111111000000"; //All without ICE
-    } else if (trainrestrictions == 2) {
-        trainrestr = "4:00011111110000000"; //Only local transport
-    } else if (trainrestrictions == 3) {
-        trainrestr = "4:0001011111000000"; //Only local transport without S-Bahn
-    }
-
-    return trainrestr;
 }
 

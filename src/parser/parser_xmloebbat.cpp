@@ -28,11 +28,6 @@ ParserXmlOebbAt::ParserXmlOebbAt(QObject *parent)
      STTableMode = 1;
 }
 
-bool ParserXmlOebbAt::supportsTimeTable()
-{
-    return true;
-}
-
 QStringList ParserXmlOebbAt::getTrainRestrictions()
 {
     QStringList result;
@@ -40,17 +35,4 @@ QStringList ParserXmlOebbAt::getTrainRestrictions()
     result.append(tr("All without ICE, TGV"));
     result.append(tr("Einfach-Raus-Ticket"));
     return result;
-}
-
-QString ParserXmlOebbAt::getTrainRestrictionsCodes(int trainrestrictions)
-{
-    QString trainrestr = "1111111111010000";
-    if (trainrestrictions == 0) {
-        trainrestr = "1111111111010000"; //ALL
-    } else if (trainrestrictions == 1) {
-        trainrestr = "0111111111010000"; //All without ICE, TGV
-    } else if (trainrestrictions == 2) {
-        trainrestr = "0000110011000000"; //Einfach-Raus-Ticket
-    }
-    return trainrestr;
 }
