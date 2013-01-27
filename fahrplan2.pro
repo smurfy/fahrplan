@@ -79,7 +79,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmlnri.cpp \
     src/parser/parser_hafasbinary.cpp
 
-symbian || simulator {
+symbian|simulator {
     RESOURCES += symbian_res.qrc
 
     OTHER_FILES += \
@@ -159,7 +159,7 @@ maemo5 {
     DEFINES += Q_WS_MAEMO_5
 }
 
-win32|unix: !simulator {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan) {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
@@ -172,7 +172,7 @@ symbian {
     #CONFIG += symbian_appbooster
 }
 
-!win32: !unix: !symbian {
+maemo5|contains(MEEGO_EDITION,harmattan) {
     CONFIG += qt-boostable qdeclarative-boostable
     LIBS += -lmdeclarativecache
     INCLUDEPATH += /usr/include/applauncherd
