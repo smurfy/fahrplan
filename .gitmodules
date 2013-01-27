@@ -1,0 +1,3 @@
+[submodule "3rdparty/connys-qt-components"]
+	path = 3rdparty/connys-qt-components
+	url = git://gitorious.org/~conny/qt-components/connys-qt-components.git
