@@ -1,3 +1,9 @@
+.make.cache
 Makefile
-fahrplan2
+bld.inf
+debian/
+fahrplan2*
+moc/
+obj/
+rcc/
 tmp
