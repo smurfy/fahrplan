@@ -109,6 +109,10 @@ int main(int argc, char *argv[])
             view->setViewport(gl);
             view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
             view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
+
+            // Hide Symbian-style status bar on BlackBerry
+            view->rootObject()->setProperty("showStatusBar", false);
+
             view->showFullScreen();
         #else
             MainWindow w;

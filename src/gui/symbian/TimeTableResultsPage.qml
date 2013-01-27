@@ -30,7 +30,7 @@ Page {
                 id: timetableTitle
                 text: ""
                 font.bold: true
-                font.pixelSize: 26
+                font.pixelSize: privateStyle.statusBarHeight
                 anchors {
                     left: parent.left
                     leftMargin: platformStyle.paddingMedium

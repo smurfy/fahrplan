@@ -28,7 +28,7 @@ Page {
             Label {
                 id: journeyStations
                 text: ""
-                font.pixelSize: 26
+                font.pixelSize: privateStyle.statusBarHeight
                 anchors {
                     left: parent.left
                     leftMargin: platformStyle.paddingMedium
