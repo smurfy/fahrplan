@@ -79,7 +79,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_xmlnri.cpp \
     src/parser/parser_hafasbinary.cpp
 
-symbian || simulator {
+symbian|simulator {
     RESOURCES += symbian_res.qrc
 
     OTHER_FILES += \
@@ -159,7 +159,7 @@ maemo5 {
     DEFINES += Q_WS_MAEMO_5
 }
 
-win32|unix: !simulator {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan) {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
@@ -172,7 +172,7 @@ symbian {
     #CONFIG += symbian_appbooster
 }
 
-!win32: !unix: !symbian {
+maemo5|contains(MEEGO_EDITION,harmattan) {
     CONFIG += qt-boostable qdeclarative-boostable
     LIBS += -lmdeclarativecache
     INCLUDEPATH += /usr/include/applauncherd
@@ -200,8 +200,11 @@ symbian {
     # This UID is from my (smurfy's) offical nokia symbian package range. So
     # if you decide to fork my project and publish the app to the store make sure
     # you request your own uid's or your publish will fail.
-    # for development only this should work just fine.
-    TARGET.UID3 = 0x2006D175
+#    TARGET.UID3 = 0x2006D175
+
+    # Use this UID for development purposes.
+    TARGET.UID3 = 0xE4182966
+
     # Smart Installer package's UID
     # This UID is from the protected range and therefore the package will
     # fail to install if self-signed. By default qmake uses the unprotected
