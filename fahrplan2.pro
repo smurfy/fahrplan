@@ -160,7 +160,7 @@ maemo5 {
     DEFINES += Q_WS_MAEMO_5
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan) {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
