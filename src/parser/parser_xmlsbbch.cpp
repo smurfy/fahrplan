@@ -31,13 +31,6 @@ ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent)
      hafasHeader.ver = "2.3";
 }
 
-void ParserXmlSbbCh::parseStationsByName(QNetworkReply *networkReply)
-{
-    QString data = QString::fromUtf8(networkReply->readAll());
-    StationsResultList *result = internalParseStationsByName(data);
-    emit stationsResult(result);
-}
-
 QString ParserXmlSbbCh::getTrainRestrictionsCodes(int trainrestrictions)
 {
     QString trainrestr = "1111111111111111";

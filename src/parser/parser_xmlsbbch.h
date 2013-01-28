@@ -33,7 +33,6 @@ public:
     QString name() { return "sbb.ch"; }
 
 protected:
-    void parseStationsByName(QNetworkReply *networkReply);
     QStringList getTrainRestrictions();
     QString getTrainRestrictionsCodes(int trainrestrictions);
 };
