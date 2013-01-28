@@ -111,13 +111,13 @@ protected:
     void parseSearchLaterJourney(QNetworkReply *networkReply);
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
+    virtual QString getTrainRestrictionsCodes(int trainrestrictions);
 
-    QString getTrainRestrictionsCodes(int trainrestrictions);
     JourneyResultList *lastJourneyResultList;
     QList<JourneyDetailResultList*> journeyDetailInlineData;
+    StationsResultList* internalParseStationsByName(const QString &data);
 
 private:
-    StationsResultList* internalParseStationsByName(const QString &data);
     void parseSearchJourneyPart1(QNetworkReply *networkReply);
     void parseSearchJourneyPart2(QNetworkReply *networkReply);
     ParserHafasXmlExternalIds parseExternalIds(QByteArray data);
