@@ -508,8 +508,8 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
             detailsList->setViaStation(journeyResultList->viaStation());
             detailsList->setArrivalStation(journeyResultList->arrivalStation());
             detailsList->setDuration(jritem->duration());
-            detailsList->setArrivalDateTime(journeyStart);
-            detailsList->setDepartureDateTime(journeyEnd);
+            detailsList->setArrivalDateTime(journeyEnd);
+            detailsList->setDepartureDateTime(journeyStart);
             cachedJourneyDetails[id] = detailsList;
 
             if (!m_earliestArrival.isValid() || journeyEnd < m_earliestArrival)
