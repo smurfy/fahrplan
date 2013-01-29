@@ -24,7 +24,7 @@ ParserXmlRejseplanenDk::ParserXmlRejseplanenDk(QObject *parent)
 {
      Q_UNUSED(parent);
      baseXmlUrl = "http://www.rejseplanen.dk/bin/query.exe";
-     baseSTTableUrl = "http://www.rejseplanen.dk/mobil-bin/stboard.exe/en";
+     baseSTTableUrl = "http://mobil.rejseplanen.dk/mobil-bin/stboard.exe/en";
      baseUrl = "http://www.rejseplanen.dk/bin/query.exe";
 
      STTableMode = 1;
