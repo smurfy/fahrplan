@@ -44,8 +44,10 @@ void ParserHafasBinary::searchJourney(const QString &departureStation, const QSt
 
     QUrl uri = baseBinaryUrl;
     uri.addQueryItem("start", "Suchen");
-    uri.addEncodedQueryItem("REQ0JourneyStopsS0ID", QUrl::toPercentEncoding("A=1@G=" + departureStation));
-    uri.addEncodedQueryItem("REQ0JourneyStopsZ0ID", QUrl::toPercentEncoding("A=1@G=" + arrivalStation));
+    uri.addQueryItem("REQ0JourneyStopsS0A", "1");
+    uri.addQueryItem("REQ0JourneyStopsS0G", departureStation);
+    uri.addQueryItem("REQ0JourneyStopsZ0A", "1");
+    uri.addQueryItem("REQ0JourneyStopsZ0G", arrivalStation);
 
     if (!viaStation.isEmpty()) {
         uri.addQueryItem("REQ0JourneyStops1.0A", "1");
@@ -67,7 +69,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
     QByteArray tmpBuffer = networkReply->readAll();
 
-    if (tmpBuffer.count() < 10 || tmpBuffer[0] != 0x1f) {
+    if (tmpBuffer.count() < 10 || tmpBuffer.at(0) != 0x1f) {
         qWarning()<<"Bad data in response (can not find gzip magic number)";
         emit errorOccured(tr("An error ocurred with the backend"));
         return;
