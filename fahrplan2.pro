@@ -150,9 +150,12 @@ maemo5 {
 blackberry {
     RESOURCES += blackberry_res.qrc
 
+    HEADERS += src/blackberrypositionsource.h
+    SOURCES += src/blackberrypositionsource.cpp
+    LIBS += -lQtLocationSubset
+
     OTHER_FILES += \
         bar-descriptor.xml \
-        src/gui/blackberry/components/PositionSource.qml \
         src/gui/symbian/TimeTableResultsPage.qml \
         src/gui/symbian/MainPage.qml \
         src/gui/symbian/main.qml \

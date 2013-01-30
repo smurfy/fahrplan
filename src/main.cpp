@@ -37,6 +37,7 @@
 #endif
 
 #if defined(Q_OS_BLACKBERRY)
+    #include "blackberrypositionsource.h"
     #include <QGLWidget>
 #endif
 
@@ -101,6 +102,11 @@ int main(int argc, char *argv[])
             view->showFullScreen();
         #elif defined(Q_OS_BLACKBERRY)
             qDebug() << "Blackberry";
+
+            // QML wrapper around Qt Mobility Subset
+            qmlRegisterType<QtMobilitySubset::BlackBerryPositionSource>("QtMobility.location", 1, 1, "PositionSource");
+            qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryPosition>("QtMobility.location", 1, 1, "Position", "Cant't create Position type");
+            qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryCoordinate>("QtMobility.location", 1, 1, "Coordinate", "Cant't create Coordinate type");
 
             // Improves touch handling
             QApplication::setStartDragDistance(42);
