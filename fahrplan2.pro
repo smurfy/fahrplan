@@ -44,7 +44,7 @@ RESOURCES += \
 
 # Zlib todo for other systems ugly hack
 !unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib
-unix: LIBS += -lz
+unix:!symbian: LIBS += -lz
 
 HEADERS += \
     src/parser/parser_hafasxml.h \
