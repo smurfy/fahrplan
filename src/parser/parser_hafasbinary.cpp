@@ -44,8 +44,10 @@ void ParserHafasBinary::searchJourney(const QString &departureStation, const QSt
 
     QUrl uri = baseBinaryUrl;
     uri.addQueryItem("start", "Suchen");
-    uri.addEncodedQueryItem("REQ0JourneyStopsS0ID", QUrl::toPercentEncoding("A=1@G=" + departureStation));
-    uri.addEncodedQueryItem("REQ0JourneyStopsZ0ID", QUrl::toPercentEncoding("A=1@G=" + arrivalStation));
+    uri.addQueryItem("REQ0JourneyStopsS0A", "1");
+    uri.addQueryItem("REQ0JourneyStopsS0G", departureStation);
+    uri.addQueryItem("REQ0JourneyStopsZ0A", "1");
+    uri.addQueryItem("REQ0JourneyStopsZ0G", arrivalStation);
 
     if (!viaStation.isEmpty()) {
         uri.addQueryItem("REQ0JourneyStops1.0A", "1");
