@@ -126,7 +126,7 @@ void MainWindow::timeTableResult(TimeTableResultList *result)
     for (int i=0; i < result->itemcount(); i++) {
         TimeTableResultItem *item = result->getItem(i);
         ui->findStationResults->append(item->stationName());
-        ui->findStationResults->append(item->time().toString("hh:mm"));
+        ui->findStationResults->append(item->time().toString(tr("hh:mm")));
         ui->findStationResults->append(item->destinationName());
         ui->findStationResults->append(item->trainType());
         ui->findStationResults->append(item->platform());
