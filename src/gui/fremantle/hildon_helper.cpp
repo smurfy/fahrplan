@@ -25,12 +25,12 @@ HildonHelper::HildonHelper(QObject *parent) :
 {
 }
 
-QColor HildonHelper::standardColor(QString name)
+QColor HildonHelper::standardColor(const QString &name)
 {
     return QMaemo5Style::standardColor(name);
 }
 
-QFont HildonHelper::standardFont(QString name)
+QFont HildonHelper::standardFont(const QString &name)
 {
     return QMaemo5Style::standardFont(name);
 }
