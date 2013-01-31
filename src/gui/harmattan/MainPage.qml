@@ -522,15 +522,15 @@ Page {
             }
         }
         ToolIcon {
-            id : aboutIcon;
-            iconId: "toolbar-settings";
+            id : aboutIcon
+            iconId: "toolbar-view-menu"
             onClicked: {
                 helpContextMenu.open();
             }
         }
     }
 
-    InfoBanner{
+    InfoBanner {
             id: banner
             objectName: "fahrplanInfoBanner"
             text: ""
@@ -541,6 +541,13 @@ Page {
     ContextMenu {
         id: helpContextMenu
         MenuLayout {
+            MenuItem {
+                text: qsTr("Toggle Inverted Style")
+                onClicked: {
+                    theme.inverted = !theme.inverted;
+                    fahrplanBackend.storeSettingsValue("invertedStyle", theme.inverted);
+                }
+            }
             MenuItem {
                 id: toggleGpsButton
                 text: qsTr("Opt-Out: gps location support")
@@ -738,5 +745,9 @@ Page {
                 updateGpsButtonText();
                 break;
         }
+    }
+
+    Component.onCompleted: {
+        theme.inverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
     }
 }
