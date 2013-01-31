@@ -566,6 +566,7 @@ Page {
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     appWindow.platformInverted = !appWindow.platformInverted;
+                    fahrplanBackend.storeSettingsValue("invertedStyle", appWindow.platformInverted);
                 }
             }
             MenuItem {
@@ -789,5 +790,9 @@ Page {
             break;
         default:
         }
+    }
+
+    Component.onCompleted: {
+        appWindow.platformInverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
     }
 }
