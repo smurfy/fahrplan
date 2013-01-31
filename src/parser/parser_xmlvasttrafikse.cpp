@@ -484,7 +484,8 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
             }
 
             if (journeyStart.time() > journeyEnd.time())
-                journeyEnd.addDays(1);
+                journeyEnd = journeyEnd.addDays(1);
+
             jritem->setDate(journeyStart.date());
             jritem->setDepartureTime(journeyStart.time().toString("hh:mm"));
             jritem->setArrivalTime(journeyEnd.time().toString("hh:mm"));
