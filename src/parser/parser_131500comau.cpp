@@ -20,9 +20,12 @@
 
 #include "parser_131500comau.h"
 
-Parser131500ComAu::Parser131500ComAu(QObject *parent)
+#include <QBuffer>
+#include <QNetworkReply>
+
+Parser131500ComAu::Parser131500ComAu(QObject *parent) :
+    ParserAbstract(parent)
 {
-     Q_UNUSED(parent);
 }
 
 bool Parser131500ComAu::supportsGps()

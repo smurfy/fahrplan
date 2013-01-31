@@ -20,9 +20,9 @@
 
 #include "parser_mobilebahnde.h"
 
-ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent)
+ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent) :
+    ParserHafasBinary(parent)
 {
-     Q_UNUSED(parent);
      baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
      baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
      baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
