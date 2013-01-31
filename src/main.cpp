@@ -108,6 +108,11 @@ int main(int argc, char *argv[])
             qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryPosition>("QtMobility.location", 1, 1, "Position", "Cant't create Position type");
             qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryCoordinate>("QtMobility.location", 1, 1, "Coordinate", "Cant't create Coordinate type");
 
+            // HACK: Don't show Nokia privacy dialog on BlackBerry
+            QSettings *settings = new QSettings("smurfy", "fahrplan2");
+            settings->setValue("firstStart", "false");
+            delete settings;
+
             // Improves touch handling
             QApplication::setStartDragDistance(42);
 
