@@ -128,11 +128,12 @@ Page {
     Flickable {
         id: flickable
         anchors {
-            topMargin: platformStyle.paddingMedium
             top: titleBar.bottom
+            topMargin: platformStyle.paddingMedium
+            bottom: parent.bottom
+            bottomMargin: platformStyle.paddingMedium
         }
         width: mainPage.width
-        height: mainPage.height - titleBar.height - (2 * platformStyle.paddingMedium)
         contentWidth: buttons.width
         contentHeight: buttons.height
         flickableDirection: Flickable.VerticalFlick

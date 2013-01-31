@@ -11,7 +11,6 @@ Page {
         id: flickable
 
         flickableDirection: Flickable.VerticalFlick
-        clip: true
         contentWidth: aboutPage.width - 2 * platformStyle.paddingLarge
         contentHeight: aboutContainer.height + moreText.height + 2 * platformStyle.paddingLarge
 

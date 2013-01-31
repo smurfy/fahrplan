@@ -36,6 +36,7 @@ Page {
             id: search
 
             height: 60
+            z: 10
 
             anchors {
                 left: parent.left
@@ -145,15 +146,14 @@ Page {
         ListView {
             id: listView
             anchors {
-                topMargin: platformStyle.paddingMedium
                 top: search.bottom
+                topMargin: platformStyle.paddingMedium
+                bottom: parent.bottom
                 bottomMargin: platformStyle.paddingMedium
             }
-            height: parent.height - stationSelectToolbar.height
             width: parent.width
             model: stationsFavoritesModel
             delegate: stationsResultDelegate
-            clip: true
             visible: (stationsFavoritesModel.count > 0 && listView.model === stationsFavoritesModel) || listView.model === stationsResultModel
         }
     }
