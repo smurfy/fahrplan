@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>data/fahrplan2.svg</file>
         <file>src/gui/harmattan/main.qml</file>
         <file>src/gui/harmattan/MainPage.qml</file>
         <file>src/gui/harmattan/components/StationSelect.qml</file>

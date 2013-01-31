@@ -22,9 +22,13 @@
 #define PARSER_ABSTRACT_H
 
 #include <QObject>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
+#include <QStringList>
 #include "parser_definitions.h"
+
+class QNetworkAccessManager;
+class QNetworkReply;
+class QTimer;
+class QUrl;
 
 class ParserAbstract : public QObject
 {

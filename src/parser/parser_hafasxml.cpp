@@ -20,10 +20,13 @@
 
 #include "parser_hafasxml.h"
 
-ParserHafasXml::ParserHafasXml(QObject *parent)
-{
-     Q_UNUSED(parent);
+#include <QBuffer>
+#include <QNetworkReply>
+#include <QXmlStreamReader>
 
+ParserHafasXml::ParserHafasXml(QObject *parent) :
+    ParserAbstract(parent)
+{
      //baseUrl = "http://fahrplan.oebb.at/bin/query.exe"; //OEB (fully operational/no RT) //no xmlhandle, detaildate already present!
      //baseUrl = "http://hafas.bene-system.com/bin/query.exe"; //hafas dev?? system? / no gps
      //baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe"; //bahn.de (journey stuff fails)

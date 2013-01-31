@@ -20,9 +20,9 @@
 
 #include "parser_xmlrejseplanendk.h"
 
-ParserXmlRejseplanenDk::ParserXmlRejseplanenDk(QObject *parent)
+ParserXmlRejseplanenDk::ParserXmlRejseplanenDk(QObject *parent) :
+    ParserHafasXml(parent)
 {
-     Q_UNUSED(parent);
      baseXmlUrl = "http://www.rejseplanen.dk/bin/query.exe";
      baseSTTableUrl = "http://mobil.rejseplanen.dk/mobil-bin/stboard.exe/en";
      baseUrl = "http://www.rejseplanen.dk/bin/query.exe";

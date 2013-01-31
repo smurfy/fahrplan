@@ -19,11 +19,13 @@
 
 */
 
+#include "parser_xmlvasttrafikse.h"
+
 #include <QDebug>
 
+#include <QtCore/QUrl>
+#include <QtNetwork/QNetworkReply>
 #include <QtXml/QDomDocument>
-
-#include "parser_xmlvasttrafikse.h"
 
 const qlonglong ParserXmlVasttrafikSe::ERR_UNKNOWN_STATION = 0;
 const qlonglong ParserXmlVasttrafikSe::ERR_INVALID_STATION = -1;
