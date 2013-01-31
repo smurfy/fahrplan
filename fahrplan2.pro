@@ -131,7 +131,6 @@ contains(MEEGO_EDITION,harmattan) {
         qtc_packaging/debian_harmattan/changelog \
         qtc_packaging/debian_harmattan/manifest.aegis
 
-    DEFINES += Q_WS_MAEMO_6
     DEFINES += MEEGO_EDITION_HARMATTAN
     CONFIG += qt-boostable qdeclarative-boostable
     LIBS += -lmdeclarativecache
@@ -155,8 +154,6 @@ maemo5 {
         src/gui/fremantle/hildon/HildonDialogButton.qml \
         src/gui/fremantle/hildon/HildonDialog.qml \
         src/gui/fremantle/hildon/HildonButton.qml
-
-    DEFINES += Q_WS_MAEMO_5
 }
 
 win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
