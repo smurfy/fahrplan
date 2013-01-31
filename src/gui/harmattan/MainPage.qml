@@ -542,12 +542,6 @@ Page {
         id: helpContextMenu
         MenuLayout {
             MenuItem {
-                text: qsTr("About")
-                onClicked: {
-                    pageStack.push(aboutPage);
-                }
-            }
-            MenuItem {
                 id: toggleGpsButton
                 text: qsTr("Opt-Out: gps location support")
                 onClicked: {
@@ -557,6 +551,12 @@ Page {
                         fahrplanBackend.storeSettingsValue("enableGps", "true");
                     }
                     updateGpsButtonText();
+                }
+            }
+            MenuItem {
+                text: qsTr("About")
+                onClicked: {
+                    pageStack.push(aboutPage);
                 }
             }
         }
