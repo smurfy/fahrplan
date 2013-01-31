@@ -33,7 +33,7 @@ Page {
 
             Image {
                 id: logoImg
-                source: "file://usr/share/icons/hicolor/scalable/apps/fahrplan2.svg"
+                source: "qrc:/data/fahrplan2.svg"
             }
 
             Text {
