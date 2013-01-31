@@ -20,9 +20,9 @@
 
 #include "parser_xmlsbbch.h"
 
-ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent)
+ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent) :
+    ParserHafasXml(parent)
 {
-     Q_UNUSED(parent);
      baseXmlUrl = "http://fahrplan.sbb.ch/bin/extxml.exe";
      baseUrl = "http://fahrplan.sbb.ch/bin/query.exe";
 

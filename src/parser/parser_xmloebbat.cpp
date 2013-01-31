@@ -20,9 +20,9 @@
 
 #include "parser_xmloebbat.h"
 
-ParserXmlOebbAt::ParserXmlOebbAt(QObject *parent)
+ParserXmlOebbAt::ParserXmlOebbAt(QObject *parent) :
+    ParserHafasXml(parent)
 {
-    Q_UNUSED(parent)
     baseXmlUrl = "http://fahrplan.oebb.at/bin/query.exe";
     baseSTTableUrl = "http://fahrplan.oebb.at/bin/stboard.exe/en";
     baseUrl = "http://fahrplan.oebb.at/bin/query.exe";

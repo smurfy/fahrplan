@@ -21,9 +21,9 @@
 #include "parser_hafasbinary.h"
 
 
-ParserHafasBinary::ParserHafasBinary(QObject *parent)
+ParserHafasBinary::ParserHafasBinary(QObject *parent) :
+    ParserHafasXml(parent)
 {
-    Q_UNUSED(parent);
     // baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
     // baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
     // baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe";

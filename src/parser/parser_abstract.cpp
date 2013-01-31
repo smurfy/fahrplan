@@ -20,10 +20,9 @@
 
 #include "parser_abstract.h"
 
-ParserAbstract::ParserAbstract(QObject *parent)
+ParserAbstract::ParserAbstract(QObject *parent) :
+    QObject(parent)
 {
-    Q_UNUSED(parent);
-
     NetworkManager = new QNetworkAccessManager(this);
     connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));
 

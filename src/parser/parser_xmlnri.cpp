@@ -20,9 +20,9 @@
 
 #include "parser_xmlnri.h"
 
-ParserXmlNri::ParserXmlNri(QObject *parent)
+ParserXmlNri::ParserXmlNri(QObject *parent) :
+    ParserHafasXml(parent)
 {
-    Q_UNUSED(parent)
     baseXmlUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
     baseSTTableUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/stboard.exe/en";
     baseUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
