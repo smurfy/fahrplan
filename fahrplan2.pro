@@ -46,7 +46,7 @@ RESOURCES += \
 
 # Zlib todo for other systems ugly hack
 !unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib
-unix: LIBS += -lz
+unix:!symbian: LIBS += -lz
 
 HEADERS += \
     src/parser/parser_hafasxml.h \
@@ -159,7 +159,7 @@ maemo5 {
     DEFINES += Q_WS_MAEMO_5
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan) {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui

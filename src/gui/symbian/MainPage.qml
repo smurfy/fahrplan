@@ -128,11 +128,12 @@ Page {
     Flickable {
         id: flickable
         anchors {
-            topMargin: platformStyle.paddingMedium
             top: titleBar.bottom
+            topMargin: platformStyle.paddingMedium
+            bottom: parent.bottom
+            bottomMargin: platformStyle.paddingMedium
         }
         width: mainPage.width
-        height: mainPage.height - titleBar.height - (2 * platformStyle.paddingMedium)
         contentWidth: buttons.width
         contentHeight: buttons.height
         flickableDirection: Flickable.VerticalFlick
@@ -602,9 +603,12 @@ Page {
 
     ContextMenu {
         id: timeTableSelectContextMenu
+        platformInverted: appWindow.platformInverted
+
         MenuLayout {
             MenuItem {
                 text: qsTr("Clear station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     directionButton.subTitleText = qsTr("please select")
                 }
@@ -613,12 +617,15 @@ Page {
     }
 
     ContextMenu {
-        property SubTitleButton opener
         id: stationSelectContextMenu
+        property SubTitleButton opener
+        platformInverted: appWindow.platformInverted
+
         MenuLayout {
             MenuItem {
                 id: selectStationMenu
                 text: qsTr("Select station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     stationSelectContextMenu.opener.clicked();
                 }
@@ -626,6 +633,7 @@ Page {
             MenuItem {
                 id: switchWithDepartureStation
                 text: qsTr("Switch with Departure station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = departureButton.subTitleText
@@ -635,6 +643,7 @@ Page {
             MenuItem {
                 id: switchWithArrivalStation
                 text: qsTr("Switch with Arrival station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = arrivalButton.subTitleText
@@ -644,6 +653,7 @@ Page {
             MenuItem {
                 id: switchWithViaStation
                 text: qsTr("Switch with Via station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = viaButton.subTitleText
@@ -652,6 +662,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Clear station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     stationSelectContextMenu.opener.subTitleText = qsTr("please select")
                 }

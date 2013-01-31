@@ -100,6 +100,8 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
 
 void ParserAbstract::networkReplyDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
+    Q_UNUSED(bytesReceived)
+    Q_UNUSED(bytesTotal)
     requestTimeout->stop();
     requestTimeout->start(30000);
 }

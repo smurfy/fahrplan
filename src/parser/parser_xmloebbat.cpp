@@ -22,10 +22,11 @@
 
 ParserXmlOebbAt::ParserXmlOebbAt(QObject *parent)
 {
-     baseXmlUrl = "http://fahrplan.oebb.at/bin/query.exe";
-     baseSTTableUrl = "http://fahrplan.oebb.at/bin/stboard.exe/en";
-     baseUrl = "http://fahrplan.oebb.at/bin/query.exe";
-     STTableMode = 1;
+    Q_UNUSED(parent)
+    baseXmlUrl = "http://fahrplan.oebb.at/bin/query.exe";
+    baseSTTableUrl = "http://fahrplan.oebb.at/bin/stboard.exe/en";
+    baseUrl = "http://fahrplan.oebb.at/bin/query.exe";
+    STTableMode = 1;
 }
 
 QStringList ParserXmlOebbAt::getTrainRestrictions()

@@ -124,7 +124,6 @@ Page {
                         "miscinfo": ""
                     })
 
-                    positionSource.active = true;
                     positionSource.start();
                 }
             }
@@ -359,7 +358,6 @@ Page {
                     "showfavorite": false,
                     "miscinfo": ""
                 })
-                positionSource.active = false;
                 positionSource.stop();
 
                 fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
