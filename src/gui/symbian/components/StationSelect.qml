@@ -36,6 +36,7 @@ Page {
             id: search
 
             height: 60
+            z: 10
 
             anchors {
                 left: parent.left
@@ -117,8 +118,7 @@ Page {
                         "miscinfo": ""
                     })
 
-                    positionSource.active = true;
-                    positionSource.start();
+                    positionSource.update();
                 }
             }
         }
@@ -146,15 +146,14 @@ Page {
         ListView {
             id: listView
             anchors {
-                topMargin: platformStyle.paddingMedium
                 top: search.bottom
+                topMargin: platformStyle.paddingMedium
+                bottom: parent.bottom
                 bottomMargin: platformStyle.paddingMedium
             }
-            height: parent.height - stationSelectToolbar.height
             width: parent.width
             model: stationsFavoritesModel
             delegate: stationsResultDelegate
-            clip: true
             visible: (stationsFavoritesModel.count > 0 && listView.model === stationsFavoritesModel) || listView.model === stationsResultModel
         }
     }
@@ -358,8 +357,6 @@ Page {
                     "showfavorite": false,
                     "miscinfo": ""
                 })
-                positionSource.active = false;
-                positionSource.stop();
 
                 fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
             } else {

@@ -22,10 +22,11 @@
 
 ParserXmlNri::ParserXmlNri(QObject *parent)
 {
-     baseXmlUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
-     baseSTTableUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/stboard.exe/en";
-     baseUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
-     STTableMode = 1;
+    Q_UNUSED(parent)
+    baseXmlUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
+    baseSTTableUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/stboard.exe/en";
+    baseUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
+    STTableMode = 1;
 }
 
 QStringList ParserXmlNri::getTrainRestrictions()
@@ -37,6 +38,7 @@ QStringList ParserXmlNri::getTrainRestrictions()
 
 QString ParserXmlNri::getTrainRestrictionsCodes(int trainrestrictions)
 {
+    Q_UNUSED(trainrestrictions)
     QString trainrestr = "1111111111111111";
     return trainrestr;
 }

@@ -114,6 +114,7 @@ void Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
         wrapper->moveToThread(workerThread);
         workerThread->start();
     #else
+        Q_UNUSED(result)
         emit addCalendarEntryComplete(false);
     #endif
 }
