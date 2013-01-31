@@ -55,7 +55,7 @@ Page {
         timePicker.hour = d.getHours();
         timePicker.minute = d.getMinutes();
         timePicker.second = d.getSeconds();
-        timePickerButton.subTitleText = Qt.formatTime(d, "hh:mm");
+        timePickerButton.subTitleText = Qt.formatTime(d, qsTr("hh:mm"));
         datePicker.year = d.getFullYear();
         datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
         datePicker.day = d.getDate();
@@ -128,11 +128,12 @@ Page {
     Flickable {
         id: flickable
         anchors {
-            topMargin: platformStyle.paddingMedium
             top: titleBar.bottom
+            topMargin: platformStyle.paddingMedium
+            bottom: parent.bottom
+            bottomMargin: platformStyle.paddingMedium
         }
         width: mainPage.width
-        height: mainPage.height - titleBar.height - (2 * platformStyle.paddingMedium)
         contentWidth: buttons.width
         contentHeight: buttons.height
         flickableDirection: Flickable.VerticalFlick
@@ -499,11 +500,16 @@ Page {
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
         fields: DateTime.Hours | DateTime.Minutes
-        hourMode: DateTime.TwentyFourHours // FIXME should set through i18n
+        hourMode: {
+            if (qsTr("hh:mm").toLowerCase().indexOf("ap") < 0)
+                return DateTime.TwentyFourHours;
+            else
+                return DateTime.TwelveHours;
+        }
         platformInverted: appWindow.platformInverted
         onAccepted: {
             var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            timePickerButton.subTitleText = Qt.formatTime(selTime, "hh:mm");
+            timePickerButton.subTitleText = Qt.formatTime(selTime, qsTr("hh:mm"));
         }
         Component.onCompleted: {
             //setToday sets both the time and the date to today, so only needed here (seems to work)
@@ -565,6 +571,7 @@ Page {
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     appWindow.platformInverted = !appWindow.platformInverted;
+                    fahrplanBackend.storeSettingsValue("invertedStyle", appWindow.platformInverted);
                 }
             }
             MenuItem {
@@ -602,9 +609,12 @@ Page {
 
     ContextMenu {
         id: timeTableSelectContextMenu
+        platformInverted: appWindow.platformInverted
+
         MenuLayout {
             MenuItem {
                 text: qsTr("Clear station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     directionButton.subTitleText = qsTr("please select")
                 }
@@ -613,12 +623,15 @@ Page {
     }
 
     ContextMenu {
-        property SubTitleButton opener
         id: stationSelectContextMenu
+        property SubTitleButton opener
+        platformInverted: appWindow.platformInverted
+
         MenuLayout {
             MenuItem {
                 id: selectStationMenu
                 text: qsTr("Select station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     stationSelectContextMenu.opener.clicked();
                 }
@@ -626,6 +639,7 @@ Page {
             MenuItem {
                 id: switchWithDepartureStation
                 text: qsTr("Switch with Departure station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = departureButton.subTitleText
@@ -635,6 +649,7 @@ Page {
             MenuItem {
                 id: switchWithArrivalStation
                 text: qsTr("Switch with Arrival station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = arrivalButton.subTitleText
@@ -644,6 +659,7 @@ Page {
             MenuItem {
                 id: switchWithViaStation
                 text: qsTr("Switch with Via station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     var oldVal = stationSelectContextMenu.opener.subTitleText
                     stationSelectContextMenu.opener.subTitleText = viaButton.subTitleText
@@ -652,6 +668,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Clear station")
+                platformInverted: appWindow.platformInverted
                 onClicked: {
                     stationSelectContextMenu.opener.subTitleText = qsTr("please select")
                 }
@@ -778,5 +795,9 @@ Page {
             break;
         default:
         }
+    }
+
+    Component.onCompleted: {
+        appWindow.platformInverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
     }
 }

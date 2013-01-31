@@ -326,8 +326,8 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
         item->setTransfers(QString::number(changes));
         item->setDuration(durationStr);
         item->setTrainType(trains.join(", "));
-        item->setDepartureTime(QTime::fromString(departResult[i].trimmed(), "h:map").toString("hh:mm"));
-        item->setArrivalTime(QTime::fromString(arriveResult[i].trimmed(), "h:map").toString("hh:mm"));
+        item->setDepartureTime(QTime::fromString(departResult[i].trimmed(), "h:map").toString(tr("hh:mm")));
+        item->setArrivalTime(QTime::fromString(arriveResult[i].trimmed(), "h:map").toString(tr("hh:mm")));
         item->setInternalData1(detailsResult[i]);
 
         lastJourneyResultList->appendItem(item);

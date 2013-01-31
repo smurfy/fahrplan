@@ -26,7 +26,9 @@ QML_IMPORT_PATH =
 QT += declarative xmlpatterns network xml
 maemo5:QT += maemo5
 
-CONFIG += mobility debug
+CONFIG += debug
+!maemo5: CONFIG += mobility
+maemo5: CONFIG += mobility11
 MOBILITY += location organizer
 
 TRANSLATIONS += \
@@ -44,7 +46,7 @@ RESOURCES += \
 
 # Zlib todo for other systems ugly hack
 !unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib
-unix: LIBS += -lz
+unix:!symbian: LIBS += -lz
 
 HEADERS += \
     src/parser/parser_hafasxml.h \
@@ -127,16 +129,13 @@ contains(MEEGO_EDITION,harmattan) {
         qtc_packaging/debian_harmattan/control \
         qtc_packaging/debian_harmattan/compat \
         qtc_packaging/debian_harmattan/changelog \
-        qtc_packaging/debian_harmattan/manifest.aegis \
-        qtc_packaging/debian_fremantle/rules \
-        qtc_packaging/debian_fremantle/README \
-        qtc_packaging/debian_fremantle/copyright \
-        qtc_packaging/debian_fremantle/control \
-        qtc_packaging/debian_fremantle/compat \
-        qtc_packaging/debian_fremantle/changelog
+        qtc_packaging/debian_harmattan/manifest.aegis
 
     DEFINES += Q_WS_MAEMO_6
     DEFINES += MEEGO_EDITION_HARMATTAN
+    CONFIG += qt-boostable qdeclarative-boostable
+    LIBS += -lmdeclarativecache
+    INCLUDEPATH += /usr/include/applauncherd
 }
 
 maemo5 {
@@ -160,7 +159,7 @@ maemo5 {
     DEFINES += Q_WS_MAEMO_5
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan) {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
@@ -174,9 +173,6 @@ symbian {
 }
 
 maemo5|contains(MEEGO_EDITION,harmattan) {
-    CONFIG += qt-boostable qdeclarative-boostable
-    LIBS += -lmdeclarativecache
-    INCLUDEPATH += /usr/include/applauncherd
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
 }
