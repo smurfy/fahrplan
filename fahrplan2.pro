@@ -120,8 +120,6 @@ contains(MEEGO_EDITION,harmattan) {
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
     CONFIG += qt-boostable qdeclarative-boostable
-    LIBS += -lmdeclarativecache
-    INCLUDEPATH += /usr/include/applauncherd
 }
 
 maemo5 {
