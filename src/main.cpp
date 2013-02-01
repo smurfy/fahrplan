@@ -20,36 +20,34 @@
 
 #include <QtCore/QTranslator>
 #include <QtGui/QApplication>
-#include <qplatformdefs.h>
 
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
+#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
-    #include <QtCore/QtGlobal>
-#elif defined(Q_WS_WIN) || defined(Q_WS_X11)
+#else
     #include "gui/desktop-test/mainwindow.h"
 #endif
 
-#if defined(MEEGO_EDITION_HARMATTAN)
+#if defined(BUILD_FOR_HARMATTAN)
     #include <MDeclarativeCache>
 #endif
 
-#if defined(Q_WS_MAEMO_5)
+#if defined(BUILD_FOR_MAEMO_5)
     #include "gui/fremantle/hildon_helper.h"
 #endif
 
-#if defined(Q_OS_BLACKBERRY)
+#if defined(BUILD_FOR_BLACKBERRY)
     #include "blackberrypositionsource.h"
     #include <QGLWidget>
 #endif
 
 #include "fahrplan.h"
 
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 Q_DECL_EXPORT
 #endif
 int main(int argc, char *argv[])
 {
-    #if defined(MEEGO_EDITION_HARMATTAN)
+    #if defined(BUILD_FOR_HARMATTAN)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #else
         QApplication* app = new QApplication(argc, argv);
@@ -62,46 +60,40 @@ int main(int argc, char *argv[])
 
     qDebug()<<"Startup";
 
-    #if defined(Q_WS_WIN)
-        qDebug()<<"Windows";
-        MainWindow w;
-        w.show();
-    #elif defined(Q_OS_UNIX) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
-        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
-            qDebug()<<"QML";
-            qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
-            qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
-            qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
-            qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
-            qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
-            qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
-            qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
-            qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
-            qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
-            qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
-            qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
+    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
+        qDebug()<<"QML";
+        qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
+        qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
+        qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
+        qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
+        qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
+        qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
+        qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
+        qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
+        qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
+        qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
+        qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
 
-            #if defined(MEEGO_EDITION_HARMATTAN)
-                QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
-            #else
-                QDeclarativeView* view = new QDeclarativeView();
-            #endif
+        #if defined(BUILD_FOR_HARMATTAN)
+            QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
+        #else
+            QDeclarativeView* view = new QDeclarativeView();
         #endif
 
-        #if defined(MEEGO_EDITION_HARMATTAN)
+        #if defined(BUILD_FOR_HARMATTAN)
             qDebug()<<"Harmattan";
             view->setSource(QUrl("qrc:/src/gui/harmattan/main.qml"));
             view->showFullScreen();
-        #elif defined(Q_WS_MAEMO_5)
+        #elif defined(BUILD_FOR_MAEMO_5)
             qDebug()<<"Maemo5";
             qmlRegisterType<HildonHelper>("HildonHelper", 1, 0, "HildonHelper");
             view->setSource(QUrl("qrc:/src/gui/fremantle/main.qml"));
             view->show();
-        #elif defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+        #elif defined(BUILD_FOR_SYMBIAN)
             qDebug()<<"Symbian";
             view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
             view->showFullScreen();
-        #elif defined(Q_OS_BLACKBERRY)
+        #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 
             // QML wrapper around Qt Mobility Subset
@@ -126,12 +118,11 @@ int main(int argc, char *argv[])
             view->rootObject()->setProperty("showStatusBar", false);
 
             view->showFullScreen();
-        #else
-            MainWindow w;
-            w.show();
         #endif
     #else
-        //Unknown
+        qDebug()<<"Desktop";
+        MainWindow w;
+        w.show();
     #endif
 
     qDebug()<<"Exec";

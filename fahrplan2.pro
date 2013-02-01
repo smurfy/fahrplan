@@ -116,9 +116,9 @@ contains(MEEGO_EDITION,harmattan) {
         qtc_packaging/debian_harmattan/changelog \
         qtc_packaging/debian_harmattan/manifest.aegis
 
-    DEFINES += MEEGO_EDITION_HARMATTAN
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
+    DEFINES += BUILD_FOR_HARMATTAN
     CONFIG += qt-boostable qdeclarative-boostable
 }
 
@@ -140,6 +140,7 @@ maemo5 {
         src/gui/fremantle/hildon/HildonDialog.qml \
         src/gui/fremantle/hildon/HildonButton.qml
 
+    DEFINES += BUILD_FOR_MAEMO_5
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
 }
@@ -163,6 +164,8 @@ blackberry {
         src/gui/symbian/components/StationSelect.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
+
+    DEFINES += BUILD_FOR_BLACKBERRY
 
     # For Qt Creator completion to work correctly
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
@@ -188,6 +191,8 @@ symbian|simulator {
         src/gui/symbian/components/StationSelect.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
+
+    DEFINES += BUILD_FOR_SYMBIAN
 
     !simulator {
         #
