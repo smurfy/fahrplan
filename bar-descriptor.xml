@@ -19,7 +19,7 @@
 
     <action system="true">run_native</action>
     <permission>access_internet</permission>
-    <permission>access_location_services</permission>
+    <permission>read_geolocation</permission>
     <permission>access_pimdomain_calendars</permission>
 
     <asset path="fahrplan2" type="Qnx/Elf" entry="true">fahrplan2</asset>
