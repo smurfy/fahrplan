@@ -27,7 +27,7 @@
     #include "gui/desktop-test/mainwindow.h"
 #endif
 
-#if defined(BUILD_FOR_HARMATTAN)
+#if defined(HAVE_DECLARATIVE_CACHE)
     #include <MDeclarativeCache>
 #endif
 
@@ -47,7 +47,7 @@ Q_DECL_EXPORT
 #endif
 int main(int argc, char *argv[])
 {
-    #if defined(BUILD_FOR_HARMATTAN)
+    #if defined(HAVE_DECLARATIVE_CACHE)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #else
         QApplication* app = new QApplication(argc, argv);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
         qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
 
-        #if defined(BUILD_FOR_HARMATTAN)
+        #if defined(HAVE_DECLARATIVE_CACHE)
             QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
         #else
             QDeclarativeView* view = new QDeclarativeView();

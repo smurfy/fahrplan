@@ -118,7 +118,7 @@ contains(MEEGO_EDITION,harmattan) {
 
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
-    DEFINES += BUILD_FOR_HARMATTAN
+    DEFINES += BUILD_FOR_HARMATTAN HAVE_DECLARATIVE_CACHE
     CONFIG += qt-boostable qdeclarative-boostable
 }
 
