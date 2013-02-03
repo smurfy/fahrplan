@@ -152,7 +152,7 @@ blackberry {
 
     HEADERS += src/blackberrypositionsource.h
     SOURCES += src/blackberrypositionsource.cpp
-    LIBS += -lQtLocationSubset
+    LIBS += -lQtLocationSubset -lbbpim
 
     OTHER_FILES += \
         bar-descriptor.xml \

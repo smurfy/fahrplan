@@ -20,6 +20,12 @@
 
 #include "calendarthreadwrapper.h"
 
+#ifdef Q_OS_BLACKBERRY
+#   include <bb/pim/calendar/CalendarService>
+#   include <bb/pim/calendar/CalendarEvent>
+using namespace bb::pim::calendar;
+#endif
+
 CalendarThreadWrapper::CalendarThreadWrapper(JourneyDetailResultList *result, QObject *parent) :
     QObject(parent), m_result(result)
 {
@@ -32,7 +38,7 @@ CalendarThreadWrapper::~CalendarThreadWrapper()
 
 void CalendarThreadWrapper::addToCalendar()
 {
-    #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY)
 
     QString desc;
     const QString viaStation = m_result->viaStation();
@@ -69,7 +75,22 @@ void CalendarThreadWrapper::addToCalendar()
 
     desc.append(tr("\n(added by fahrplan app, please recheck informations before travel.)"));
 
+#ifdef Q_OS_BLACKBERRY
 
+    CalendarService service;
+    QPair<AccountId, FolderId> folder = service.defaultCalendarFolder();
+
+    CalendarEvent event;
+    event.setAccountId(folder.first);
+    event.setFolderId(folder.second);
+    event.setSubject(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+    event.setStartTime(m_result->departureDateTime());
+    event.setEndTime(m_result->arrivalDateTime());
+    event.setBody(desc);
+
+    emit addCalendarEntryComplete(service.createEvent(event) == Result::Success);
+
+#else // Q_OS_BLACKBERRY
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
 
@@ -82,12 +103,13 @@ void CalendarThreadWrapper::addToCalendar()
     event.setEndDateTime(m_result->arrivalDateTime());
 
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
+#endif // Q_OS_BLACKBERRY
 
-    #else
+#else
 
     emit addCalendarEntryComplete(false);
 
-    #endif
+#endif
 
     QThread::currentThread()->exit(0);
 
