@@ -521,7 +521,7 @@ Page {
 
         ToolButton {
             id: exitIcon
-            iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-close", ".png")
+            iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-close")
             platformInverted: appWindow.platformInverted
             onClicked: {
                 Qt.quit();
@@ -530,7 +530,7 @@ Page {
         ButtonRow{
             ToolButton {
                 id: searchMode0Toggle
-                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-train", ".svg")
+                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-train")
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     searchmode = 0;
@@ -541,7 +541,7 @@ Page {
             }
             ToolButton {
                 id: searchMode1Toggle
-                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-clock", ".svg");
+                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-clock");
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     searchmode = 1;

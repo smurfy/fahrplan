@@ -13,7 +13,7 @@ var listBackgroundHighlightInverted = "#888"
 
 function getIconFromQrc(inverted, icon, type)
 {
-    var t = (typeof type == "undefined") ? ".png" : type;
+    var t = (typeof type == "undefined") ? ".svg" : type;
     return "qrc:/src/gui/symbian/icon/" + icon + (inverted ? "-inverse" : "") + t;
 }
 

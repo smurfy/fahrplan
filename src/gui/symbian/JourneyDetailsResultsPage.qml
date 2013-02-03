@@ -450,7 +450,7 @@ Page {
         ToolButton {
             id : calendarIcon;
 
-            iconSource: enabled ? Style.getIconFromQrc(platformInverted, "icon-m-content-calendar") : Style.getIconFromQrc(false, "icon-m-blank")
+            iconSource: enabled ? Style.getIconFromQrc(platformInverted, "icon-m-content-calendar") : Style.getIconFromQrc(false, "icon-m-blank", ".png")
             visible: !searchIndicator.visible
             platformInverted: appWindow.platformInverted
 
