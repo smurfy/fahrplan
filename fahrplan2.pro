@@ -27,7 +27,6 @@ QT += declarative xmlpatterns network xml
 blackberry: QT += opengl
 maemo5:QT += maemo5
 
-CONFIG += debug
 !maemo5:!blackberry: CONFIG += mobility
 maemo5: CONFIG += mobility11
 !blackberry: MOBILITY += location organizer
