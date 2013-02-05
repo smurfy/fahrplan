@@ -20,6 +20,10 @@
 
 #include "fahrplan.h"
 
+#include "calendarthreadwrapper.h"
+
+#include <QThread>
+
 FahrplanBackendManager *Fahrplan::m_parser_manager;
 FahrplanFavoritesManager *Fahrplan::m_favorites_manager;
 

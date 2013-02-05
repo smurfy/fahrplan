@@ -18,6 +18,7 @@
 
 */
 
+#include <QtCore/QTranslator>
 #include <QtGui/QApplication>
 #include <qplatformdefs.h>
 

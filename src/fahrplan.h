@@ -25,7 +25,6 @@
 #include <QSettings>
 #include "fahrplan_backend_manager.h"
 #include "fahrplan_favorites_manager.h"
-#include "calendarthreadwrapper.h"
 
 class Fahrplan : public QObject
 {

@@ -24,8 +24,6 @@
 #include <QObject>
 #include <QDebug>
 #include <QDate>
-#include <qdeclarative.h>
-#include <QDeclarativeListProperty>
 
 namespace FahrplanNS
 {
