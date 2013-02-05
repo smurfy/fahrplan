@@ -1,4 +1,4 @@
-Fahrplan for N950, N9 and newer Symbian Phones
+Fahrplan for N950, N9, newer Symbian Phones and Blackberry 10
 
 A Journey planner/Railway Time table for many train lines in europe and australia.
 
@@ -11,7 +11,7 @@ Current supported backends are:
 * reiseinfo.no (norway)
 * vasttrafik.se (western sweden)
 
-To install Fahrplan on your N9 or N950, visit the Store and search for fahrplan.
+To install Fahrplan on your N9, N950 or Symbian phone, visit the Store and search for fahrplan.
 
 Project:
 https://garage.maemo.org/projects/fahrplan/
