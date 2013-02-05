@@ -31,7 +31,7 @@ Page {
             Label {
                 id: journeyStations
                 text: ""
-                font.pixelSize: 26
+                font.pixelSize: privateStyle.statusBarHeight
                 anchors {
                     left: parent.left
                     leftMargin: platformStyle.paddingMedium
@@ -192,13 +192,13 @@ Page {
                          Rectangle {
                              anchors {
                                  left: parent.left
-                                 leftMargin: 11
+                                 leftMargin: (platformStyle.graphicSizeSmall - width) / 2
                                  top: parent.top
                                  topMargin: (isStart) ? parent.height / 2 : 0
                              }
                              color: "#0d70c5"
                              height: (isStart || isStop) ? parent.height / 2  : parent.height
-                             width: 8
+                             width: platformStyle.graphicSizeSmall / 4
                          }
 
                          Rectangle {
@@ -237,10 +237,10 @@ Page {
                                      color: "#0d70c5";
                                  }
                              }
-                             radius: 15
+                             radius: platformStyle.graphicSizeSmall / 2
                              smooth: true
-                             height: 30
-                             width: 30
+                             height: platformStyle.graphicSizeSmall
+                             width: height
                          }
                      }
 
@@ -299,7 +299,7 @@ Page {
                         }
                         color: "#0d70c5"
                         height: parent.height
-                        width: 8
+                        width: platformStyle.graphicSizeSmall / 4
                     }
 
                     Label {
@@ -450,7 +450,7 @@ Page {
         ToolButton {
             id : calendarIcon;
 
-            iconSource: enabled ? Style.getIconFromQrc(platformInverted, "icon-m-content-calendar") : Style.getIconFromQrc(false, "icon-m-blank")
+            iconSource: enabled ? Style.getIconFromQrc(platformInverted, "icon-m-content-calendar") : Style.getIconFromQrc(false, "icon-m-blank", ".png")
             visible: !searchIndicator.visible
             platformInverted: appWindow.platformInverted
 

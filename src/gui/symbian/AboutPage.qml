@@ -30,6 +30,11 @@ Page {
             Image {
                 id: logoImg
                 source: "qrc:/data/fahrplan2.svg"
+
+                sourceSize {
+                    width: platformStyle.graphicSizeLarge
+                    height: platformStyle.graphicSizeLarge
+                }
             }
 
             Label {

@@ -35,7 +35,7 @@ Page {
         Item {
             id: search
 
-            height: 60
+            height: privateStyle.tabBarHeightPortrait
             z: 10
 
             anchors {
@@ -101,7 +101,7 @@ Page {
                 }
                 platformInverted: !appWindow.platformInverted
                 iconSource: Style.getIconFromQrc(platformInverted, "icon-s-calendar-location-picker")
-                width: visible ? 60 : 0
+                width: visible ? height : 0
 
                 onClicked: {
                     listView.model = stationsResultModel
@@ -164,7 +164,7 @@ Page {
         Item {
             id: delegateItem
             width: listView.width
-            height: 30 + lbl_stationname.height
+            height: 2 * platformStyle.paddingLarge + lbl_stationname.height
 
             Rectangle {
                 id: background
@@ -257,7 +257,7 @@ Page {
                 id: indicator
                 anchors {
                     right: parent.right
-                    rightMargin: 20
+                    rightMargin: platformStyle.graphicSizeTiny
                     verticalCenter: parent.verticalCenter
                 }
                 running: process

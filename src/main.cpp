@@ -21,7 +21,7 @@
 #include <QtGui/QApplication>
 #include <qplatformdefs.h>
 
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
     #include <QtDeclarative>
     #include <QtCore/QtGlobal>
 #elif defined(Q_WS_WIN) || defined(Q_WS_X11)
@@ -34,6 +34,11 @@
 
 #if defined(Q_WS_MAEMO_5)
     #include "gui/fremantle/hildon_helper.h"
+#endif
+
+#if defined(Q_OS_BLACKBERRY)
+    #include "blackberrypositionsource.h"
+    #include <QGLWidget>
 #endif
 
 #include "fahrplan.h"
@@ -54,15 +59,14 @@ int main(int argc, char *argv[])
     translator.load(QString("fahrplan_%1").arg(QLocale::system().name()), ":/translations");
     app->installTranslator(&translator);
 
-
     qDebug()<<"Startup";
 
     #if defined(Q_WS_WIN)
         qDebug()<<"Windows";
         MainWindow w;
         w.show();
-    #elif defined(Q_WS_X11) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+    #elif defined(Q_OS_UNIX) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
+        #if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY) || defined(Q_WS_SIMULATOR)
             qDebug()<<"QML";
             qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
             qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
@@ -95,6 +99,31 @@ int main(int argc, char *argv[])
         #elif defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
             qDebug()<<"Symbian";
             view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
+            view->showFullScreen();
+        #elif defined(Q_OS_BLACKBERRY)
+            qDebug() << "Blackberry";
+
+            // QML wrapper around Qt Mobility Subset
+            qmlRegisterType<QtMobilitySubset::BlackBerryPositionSource>("QtMobility.location", 1, 1, "PositionSource");
+            qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryPosition>("QtMobility.location", 1, 1, "Position", "Cant't create Position type");
+            qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryCoordinate>("QtMobility.location", 1, 1, "Coordinate", "Cant't create Coordinate type");
+
+            // HACK: Don't show Nokia privacy dialog on BlackBerry
+            QSettings *settings = new QSettings("smurfy", "fahrplan2");
+            settings->setValue("firstStart", "false");
+            delete settings;
+
+            // Improves touch handling
+            QApplication::setStartDragDistance(42);
+
+            QGLWidget *gl = new QGLWidget();
+            view->setViewport(gl);
+            view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+            view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
+
+            // Hide Symbian-style status bar on BlackBerry
+            view->rootObject()->setProperty("showStatusBar", false);
+
             view->showFullScreen();
         #else
             MainWindow w;

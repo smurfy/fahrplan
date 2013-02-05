@@ -66,7 +66,8 @@ Page {
         id: titleBar
 
         width: parent.width
-        height: 60
+        height: privateStyle.tabBarHeightPortrait
+        z: 10
 
         Rectangle {
             anchors.fill: parent
@@ -105,7 +106,7 @@ Page {
                 verticalCenter: parent.verticalCenter
             }
             font.bold: true;
-            font.pixelSize: 26
+            font.pixelSize: privateStyle.statusBarHeight
             color: "White"
 
             text: fahrplanBackend.parserName
@@ -114,14 +115,16 @@ Page {
         Image {
             id: icon
 
+            source: Style.getIconFromTheme(false, "qtg_graf_choice_list_indicator")
+            sourceSize {
+                width: platformStyle.graphicSizeTiny
+                height: platformStyle.graphicSizeTiny
+            }
             anchors {
                 right: parent.right
                 rightMargin: 10
                 verticalCenter: parent.verticalCenter
             }
-            height: sourceSize.height
-            width: sourceSize.width
-            source: Style.getIconFromTheme(false, "qtg_graf_choice_list_indicator")
         }
     }
 
@@ -137,10 +140,6 @@ Page {
         contentWidth: buttons.width
         contentHeight: buttons.height
         flickableDirection: Flickable.VerticalFlick
-
-        onMovementStarted: {
-            flickable.clip = true;
-        }
 
         Column {
             id: buttons
@@ -245,7 +244,7 @@ Page {
                 ButtonRow {
                     anchors {
                         right: parent.right
-                        rightMargin: 50
+                        rightMargin: platformStyle.graphicSizeTiny + 2 * platformStyle.paddingMedium
                         verticalCenter: parent.verticalCenter
                     }
                     width: parent.width * 3 / 5
@@ -522,7 +521,7 @@ Page {
 
         ToolButton {
             id: exitIcon
-            iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-close", ".png")
+            iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-close")
             platformInverted: appWindow.platformInverted
             onClicked: {
                 Qt.quit();
@@ -531,7 +530,7 @@ Page {
         ButtonRow{
             ToolButton {
                 id: searchMode0Toggle
-                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-train", ".svg")
+                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-train")
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     searchmode = 0;
@@ -542,7 +541,7 @@ Page {
             }
             ToolButton {
                 id: searchMode1Toggle
-                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-clock", ".svg");
+                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-clock");
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     searchmode = 1;
