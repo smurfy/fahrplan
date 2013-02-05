@@ -72,13 +72,15 @@ Item {
     Image {
         id: icon
 
+        source: Style.getIconFromTheme(subTitleButton.platformInverted, subTitleButton.icon)
+        sourceSize {
+            width: platformStyle.graphicSizeTiny
+            height: platformStyle.graphicSizeTiny
+        }
         anchors {
             right: parent.right
             rightMargin: platformStyle.paddingMedium
             verticalCenter: parent.verticalCenter
         }
-        height: sourceSize.height
-        width: sourceSize.width
-        source: Style.getIconFromTheme(subTitleButton.platformInverted, subTitleButton.icon)
     }
 }
