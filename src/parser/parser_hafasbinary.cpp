@@ -166,7 +166,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         qint32 connectionAttrsPtr;
         if (extensionHeaderLength >= 0x30) {
             if (extensionHeaderLength < 0x32) {
-                qWarning()<<"too short: " + extensionHeaderLength;
+                qWarning() << "too short:" << extensionHeaderLength;
                 return;
             }
             hafasData.device()->seek(extensionHeaderPtr + 0x2c);

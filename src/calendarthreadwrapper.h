@@ -23,20 +23,6 @@
 
 #include <QObject>
 #include "parser/parser_definitions.h"
-#include <QThread>
-#include <QCoreApplication>
-
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
-
-#include <qmobilityglobal.h>
-#include <QOrganizerManager>
-#include <QOrganizerEvent>
-
-QTM_BEGIN_NAMESPACE
-QTM_END_NAMESPACE
-QTM_USE_NAMESPACE
-
-#endif
 
 class CalendarThreadWrapper : public QObject
 {

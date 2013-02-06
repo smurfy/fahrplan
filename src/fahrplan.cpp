@@ -20,6 +20,10 @@
 
 #include "fahrplan.h"
 
+#include "calendarthreadwrapper.h"
+
+#include <QThread>
+
 FahrplanBackendManager *Fahrplan::m_parser_manager;
 FahrplanFavoritesManager *Fahrplan::m_favorites_manager;
 
@@ -101,7 +105,6 @@ void Fahrplan::setParser(int index)
 
 void Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
 {
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY)
     QThread *workerThread = new QThread(this);
     CalendarThreadWrapper *wrapper = new CalendarThreadWrapper(result);
 
@@ -113,11 +116,8 @@ void Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
 
     wrapper->moveToThread(workerThread);
     workerThread->start();
-#else
-    Q_UNUSED(result)
-    emit addCalendarEntryComplete(false);
-#endif
 }
+
 void Fahrplan::onStationsResult(StationsResultList *result)
 {
     emit parserStationsResult(result);
