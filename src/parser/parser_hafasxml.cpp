@@ -373,13 +373,16 @@ void ParserHafasXml::findStationsByCoordinates(qreal longitude, qreal latitude)
     regexp.indexIn(sLatitude);
     sLatitude = regexp.cap(1) + regexp.cap(2);
 
-    QString fullUrl = baseUrl + "/eol?look_x=" +
-                      sLongitude +
-                      "&look_y=" +
-                      sLatitude +
-                      "&performLocating=2&tpl=stopsnear&L=vs_java&look_maxdist=5000&look_maxno=40";
+    QUrl fullUrl(baseUrl + "/eol");
+    fullUrl.addQueryItem("look_x", sLongitude);
+    fullUrl.addQueryItem("look_y", sLatitude);
+    fullUrl.addQueryItem("performLocating", "2");
+    fullUrl.addQueryItem("tpl", "stopsnear");
+    fullUrl.addQueryItem("L", "vs_java");
+    fullUrl.addQueryItem("look_maxdist", "5000");
+    fullUrl.addQueryItem("look_maxno", "40");
 
-    sendHttpRequest(QUrl(fullUrl));
+    sendHttpRequest(fullUrl);
 }
 
 void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)

@@ -20,10 +20,18 @@
 
 #include "calendarthreadwrapper.h"
 
+#include <QCoreApplication>
+#include <QThread>
+
 #ifdef Q_OS_BLACKBERRY
 #   include <bb/pim/calendar/CalendarService>
 #   include <bb/pim/calendar/CalendarEvent>
 using namespace bb::pim::calendar;
+#else
+#   include <qmobilityglobal.h>
+#   include <QOrganizerManager>
+#   include <QOrganizerEvent>
+QTM_USE_NAMESPACE
 #endif
 
 CalendarThreadWrapper::CalendarThreadWrapper(JourneyDetailResultList *result, QObject *parent) :
@@ -38,8 +46,6 @@ CalendarThreadWrapper::~CalendarThreadWrapper()
 
 void CalendarThreadWrapper::addToCalendar()
 {
-#if defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN) || defined(Q_OS_BLACKBERRY)
-
     QString desc;
     const QString viaStation = m_result->viaStation();
     if (viaStation.isEmpty())
@@ -104,12 +110,6 @@ void CalendarThreadWrapper::addToCalendar()
 
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
 #endif // Q_OS_BLACKBERRY
-
-#else
-
-    emit addCalendarEntryComplete(false);
-
-#endif
 
     QThread::currentThread()->exit(0);
 

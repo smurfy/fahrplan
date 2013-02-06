@@ -20,6 +20,16 @@
 
 #include "fahrplan_backend_manager.h"
 
+#include "parser/parser_hafasxml.h"
+#include "parser/parser_hafasbinary.h"
+#include "parser/parser_xmloebbat.h"
+#include "parser/parser_xmlvasttrafikse.h"
+#include "parser/parser_xmlrejseplanendk.h"
+#include "parser/parser_xmlsbbch.h"
+#include "parser/parser_xmlnri.h"
+#include "parser/parser_mobilebahnde.h"
+#include "parser/parser_131500comau.h"
+
 FahrplanBackendManager::FahrplanBackendManager(int defaultParser, QObject *parent) :
     QObject(parent)
 {
