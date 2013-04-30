@@ -54,10 +54,18 @@ Page {
                 }
 
                 onSearchTextChanged: {
-                    search.findStationsByName();
+                    searchTimer.restart();
                 }
 
                 placeHolderText: qsTr("Search for Station...")
+            }
+
+            Timer {
+                id: searchTimer
+                interval: 1000
+                onTriggered: {
+                    search.findStationsByName();
+                }
             }
 
             function findStationsByName(){
