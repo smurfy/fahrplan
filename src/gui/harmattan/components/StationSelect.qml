@@ -58,9 +58,9 @@ Page {
                     topMargin: 10
                 }
 
-                onTextChanged: {
-                    search.findStationsByName();
-                }
+                onTextChanged: search.findStationsByName();
+                Keys.onReturnPressed: search.findStationsByName();
+                Keys.onEnterPressed: search.findStationsByName();
 
 
                 platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
@@ -81,7 +81,11 @@ Page {
                 }
             }
 
-            function findStationsByName(){
+            function findStationsByName()
+            {
+                if (searchBox.text == "")
+                    return;
+
                 stationsResultModel.clear();
                 stationsResultModel.append({
                     "name": qsTr("Searching ..."),
