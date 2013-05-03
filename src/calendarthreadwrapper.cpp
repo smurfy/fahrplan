@@ -93,6 +93,7 @@ void CalendarThreadWrapper::addToCalendar()
     event.setStartTime(m_result->departureDateTime());
     event.setEndTime(m_result->arrivalDateTime());
     event.setBody(desc);
+    event.setReminder(-1);
 
     emit addCalendarEntryComplete(service.createEvent(event) == Result::Success);
 

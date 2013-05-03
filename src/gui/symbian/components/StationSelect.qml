@@ -53,14 +53,29 @@ Page {
                     verticalCenter: parent.verticalCenter
                 }
 
-                onSearchTextChanged: {
-                    search.findStationsByName();
-                }
+                onSearchTextChanged: searchTimer.restart();
+                Keys.onReturnPressed: search.findStationsByName();
+                Keys.onEnterPressed: search.findStationsByName();
 
                 placeHolderText: qsTr("Search for Station...")
             }
 
-            function findStationsByName(){
+            Timer {
+                id: searchTimer
+                interval: 1000
+                onTriggered: {
+                    search.findStationsByName();
+                }
+            }
+
+            function findStationsByName()
+            {
+                if (searchBox.searchText == "")
+                    return;
+
+                if (searchTimer.running)
+                    searchTimer.stop();
+
                 stationsResultModel.clear();
                 stationsResultModel.append({
                     "name": qsTr("Searching ..."),
