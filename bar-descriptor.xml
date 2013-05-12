@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8' standalone='no'?>
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
     <id>de.smurfy.fahrplan</id>
     <author>smurfy (maemo@smurfy.de)</author>
@@ -27,7 +27,10 @@
     <!-- These values will be replaced when deploying in Qt Creator -->
     <asset path="%SRC_DIR%/3rdparty/bb10-qt-components/imports">imports</asset>
     <asset path="%SRC_DIR%/data/fahrplan2_150.png">fahrplan2.png</asset>
+    <asset path="%SRC_DIR%/data/splash_bb10.png">splashscreen.png</asset>
+
     <icon>
         <image>fahrplan2.png</image>
     </icon>
+    <splashscreen>splashscreen.png</splashscreen>
 </qnx>
