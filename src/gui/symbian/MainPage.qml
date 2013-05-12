@@ -584,6 +584,9 @@ Page {
                 id: toggleGpsButton
                 text: qsTr("Opt-Out: gps location support")
                 platformInverted: appWindow.platformInverted
+                // No need for GPS opt out on BlackBerry because user
+                // can disable it in the application permissions.
+                visible: appWindow.showStatusBar
                 onClicked: {
                     if (fahrplanBackend.getSettingsValue("enableGps", "true") == "true") {
                         fahrplanBackend.storeSettingsValue("enableGps", "false");
