@@ -150,7 +150,12 @@ Page {
 
             Rectangle {
                 anchors.fill: parent
-                color: itemNum % 2 ? "White" : "LightGrey"
+                color: {
+                    if (theme.inverted)
+                        return itemNum % 2 ? "#111" : "#333"
+                    else
+                        return itemNum % 2 ? "White" : "LightGrey"
+                }
             }
 
             Rectangle {

@@ -44,7 +44,7 @@ Page {
 
             Rectangle {
                 anchors.fill: parent
-                color: "LightGrey"
+                color: theme.inverted ? "#222" : "LightGrey"
             }
 
             TextField {
@@ -109,7 +109,7 @@ Page {
                     top: parent.top
                     topMargin: 10
                 }
-                platformStyle: ButtonStyle { inverted: true }
+                platformStyle: ButtonStyle { inverted: !theme.inverted }
                 iconSource: "image://theme/icon-s-calendar-location-picker-inverse"
                 width: visible ? 80 : 0
 

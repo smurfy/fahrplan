@@ -139,7 +139,7 @@ Page {
                          anchors {
                              fill: parent
                          }
-                         color: "White"
+                         color: theme.inverted ? "#111" : "White"
                      }
 
                      Rectangle {
@@ -172,15 +172,15 @@ Page {
                              }
                              GradientStop {
                                  position: 0.39;
-                                 color: "White";
+                                 color: theme.inverted ? "#111" : "White"
                              }
                              GradientStop {
                                  position: 0.50;
-                                 color: "White";
+                                 color: theme.inverted ? "#111" : "White"
                              }
                              GradientStop {
                                  position: 0.61;
-                                 color: "White";
+                                 color: theme.inverted ? "#111" : "White"
                              }
                              GradientStop {
                                  position: 0.62;
@@ -266,7 +266,7 @@ Page {
                         anchors {
                             fill: parent
                         }
-                        color: "LightGrey"
+                        color: theme.inverted ? "#333" : "LightGrey"
                     }
 
                     Rectangle {
