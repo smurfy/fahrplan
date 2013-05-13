@@ -37,6 +37,7 @@
 
 #if defined(BUILD_FOR_BLACKBERRY)
     #include "blackberrypositionsource.h"
+    #include <bps/geolocation.h>
     #include <QGLWidget>
 #endif
 
@@ -101,9 +102,18 @@ int main(int argc, char *argv[])
             qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryPosition>("QtMobility.location", 1, 1, "Position", "Cant't create Position type");
             qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryCoordinate>("QtMobility.location", 1, 1, "Coordinate", "Cant't create Coordinate type");
 
-            // HACK: Don't show Nokia privacy dialog on BlackBerry
             QSettings *settings = new QSettings("smurfy", "fahrplan2");
+
+            // HACK: Don't show Nokia privacy dialog on BlackBerry
             settings->setValue("firstStart", "false");
+
+            // Check if GPS Location permission is set
+            // and geolocation services are enabled.
+            int res = geolocation_request_events(0);
+            if (res == BPS_SUCCESS)
+                geolocation_stop_events(0);
+            settings->setValue("enableGps", res == BPS_SUCCESS);
+
             delete settings;
 
             // Improves touch handling

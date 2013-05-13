@@ -387,18 +387,6 @@ Page {
             anchors.topMargin: 10
     }
 
-    function printableMethod(method) {
-        if (method == PositionSource.SatellitePositioningMethod)
-            return "Satellite";
-        else if (method == PositionSource.NoPositioningMethod)
-            return "Not available"
-        else if (method == PositionSource.NonSatellitePositioningMethod)
-            return "Non-satellite"
-        else if (method == PositionSource.AllPositioningMethods)
-            return "Multiple"
-        return "source error";
-    }
-
     onStatusChanged: {
         switch (status) {
             case PageStatus.Activating:
