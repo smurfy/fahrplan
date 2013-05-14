@@ -574,13 +574,6 @@ Page {
                 }
             }
             MenuItem {
-                text: qsTr("About")
-                platformInverted: appWindow.platformInverted
-                onClicked: {
-                    pageStack.push(aboutPage);
-                }
-            }
-            MenuItem {
                 id: toggleGpsButton
                 text: qsTr("Opt-Out: gps location support")
                 platformInverted: appWindow.platformInverted
@@ -594,6 +587,13 @@ Page {
                         fahrplanBackend.storeSettingsValue("enableGps", "true");
                     }
                     updateGpsButtonText();
+                }
+            }
+            MenuItem {
+                text: qsTr("About")
+                platformInverted: appWindow.platformInverted
+                onClicked: {
+                    pageStack.push(aboutPage);
                 }
             }
         }
