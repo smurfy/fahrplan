@@ -11,6 +11,7 @@ Page {
 
     property int searchmode : 0
     property bool startup : true
+    property string inverseSuffix: theme.inverted ? "-inverse" : ""
 
     function updateGpsButtonText()
     {
@@ -160,7 +161,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
             }
             SubTitleButton {
                 id: viaButton
@@ -173,7 +174,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
             }
             SubTitleButton {
                 id: arrivalButton
@@ -186,7 +187,7 @@ Page {
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
             }
             SubTitleButton {
                 id: stationButton
@@ -196,7 +197,7 @@ Page {
                 onClicked: {
                     pageStack.push(stationStationSelect)
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
             }
             SubTitleButton {
                 id: directionButton
@@ -209,7 +210,7 @@ Page {
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow"
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
             }
 
             SubTitleButton {
@@ -499,7 +500,7 @@ Page {
             ToolButton {
                 id: searchMode0Toggle
                 platformStyle: TabButtonStyle{}
-                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train.svg";
+                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train" + inverseSuffix + ".svg";
                 onClicked: {
                     searchmode = 0;
                     updateButtonVisibility();
@@ -511,7 +512,7 @@ Page {
             ToolButton {
                 id: searchMode1Toggle
                 platformStyle: TabButtonStyle{}
-                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock.svg";
+                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock" + inverseSuffix + ".svg";
                 onClicked: {
                     searchmode = 1;
                     updateButtonVisibility();

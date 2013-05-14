@@ -11,6 +11,7 @@ Page {
     property alias subTitleText: lbljourneyDate.text
     property alias subTitleText2: lbljourneyDuration.text
     property alias searchIndicatorVisible: searchIndicator.visible
+    property string inverseSuffix: theme.inverted ? "-inverse" : ""
 
     property JourneyDetailResultList currentResult;
 
@@ -429,9 +430,8 @@ Page {
         }
 
         ToolIcon {
-            id : calendarIcon;
-            iconId: "toolbar-list"
-            iconSource: enabled ? "" : "image://theme/progress_78_01"
+            id : calendarIcon
+            iconSource: enabled ? "qrc:/src/gui/harmattan/icon/icon-m-content-calendar" + inverseSuffix + ".svg" : "image://theme/progress_78_01"
 
             visible: !searchIndicator.visible
 

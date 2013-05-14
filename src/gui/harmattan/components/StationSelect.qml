@@ -8,6 +8,9 @@ import "."
 Page {
     id: stationSelect
 
+    property string whiteSuffix: theme.inverted ? "-white" : ""
+    property string inverseSuffix: theme.inverted ? "-inverse" : ""
+
     signal stationSelected ( string name )
 
     function updateFavorites()
@@ -110,7 +113,7 @@ Page {
                     topMargin: 10
                 }
                 platformStyle: ButtonStyle { inverted: !theme.inverted }
-                iconSource: "image://theme/icon-s-calendar-location-picker-inverse"
+                iconSource: "image://theme/icon-s-calendar-location-picker" + (theme.inverted ? "" : "-inverse")
                 width: visible ? 80 : 0
 
                 onClicked: {
@@ -201,7 +204,7 @@ Page {
 
             Image {
                 id: img_fav
-                source: isfavorite ? "image://theme/icon-s-common-favorite-mark" : "image://theme/icon-s-common-favorite-unmark"
+                source: isfavorite ? "image://theme/icon-s-common-favorite-mark" + inverseSuffix : "image://theme/icon-s-common-favorite-unmark" + inverseSuffix
                 visible: showfavorite
                 anchors {
                     left: parent.left
@@ -295,7 +298,7 @@ Page {
             ToolButton {
                 id: favIcon
                 platformStyle: TabButtonStyle{}
-                iconSource: "image://theme/icon-m-toolbar-favorite-mark"
+                iconSource: "image://theme/icon-m-toolbar-favorite-mark" + whiteSuffix
                 onClicked: {
                     updateFavorites();
                     listView.model = stationsFavoritesModel
@@ -310,7 +313,7 @@ Page {
             ToolButton {
                     id: searchIcon
                     platformStyle: TabButtonStyle{}
-                    iconSource: "image://theme/icon-m-toolbar-search"
+                    iconSource: "image://theme/icon-m-toolbar-search" + whiteSuffix
                     onClicked: {
                         listView.model = stationsResultModel
                         favIcon.checked = false;
