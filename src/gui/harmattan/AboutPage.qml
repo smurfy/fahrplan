@@ -36,9 +36,12 @@ Page {
                 source: "qrc:/data/fahrplan2.svg"
             }
 
+            LabelStyle { id: style }
+
             Text {
-                text: qsTr("About Fahrplan")
                 id: aboutText
+                text: qsTr("About Fahrplan")
+                color: style.textColor
                 anchors {
                     left: logoImg.right
                     leftMargin: 30
@@ -53,7 +56,7 @@ Page {
             Text {
                 textFormat: Text.RichText
                 text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
-                color: "darkgrey"
+                color: theme.inverted ? "lightgrey" : "darkgrey"
                 anchors {
                     left: logoImg.right
                     leftMargin: 30
@@ -70,6 +73,7 @@ Page {
 
         Text {
             id: moreText
+            color: style.textColor
             text: "This or prior versions uses code contribution by:<br><i>gri</i>, <i>lorenzph</i>, <i>CaCO3</i>, <i>hcm</i>, <i>thp</i>, <i>qwerty12</i>, <i>qbast</i>, <i>Thomas Fischer</i>, <i>Oleksii Serdiuk</li>, <i>NightShift79</i>, <i>pirast</i>" +
                   "<br><br>" +
                   "If you like fahrplan, i would appreciate a donation.<br><br><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a>" +

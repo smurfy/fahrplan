@@ -9,8 +9,11 @@
         <file>src/gui/harmattan/JourneyDetailsResultsPage.qml</file>
         <file>src/gui/harmattan/AboutPage.qml</file>
         <file>src/gui/harmattan/TimeTableResultsPage.qml</file>
-        <file>src/gui/harmattan/icon/icon-m-toolbar-help.svg</file>
+        <file>src/gui/harmattan/icon/icon-m-content-calendar.svg</file>
+        <file>src/gui/harmattan/icon/icon-m-content-calendar-inverse.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-clock.svg</file>
+        <file>src/gui/harmattan/icon/icon-m-toolbar-clock-inverse.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-train.svg</file>
+        <file>src/gui/harmattan/icon/icon-m-toolbar-train-inverse.svg</file>
     </qresource>
 </RCC>

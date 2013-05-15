@@ -11,6 +11,7 @@ Page {
     property alias subTitleText: lbljourneyDate.text
     property alias subTitleText2: lbljourneyDuration.text
     property alias searchIndicatorVisible: searchIndicator.visible
+    property string inverseSuffix: theme.inverted ? "-inverse" : ""
 
     property JourneyDetailResultList currentResult;
 
@@ -139,7 +140,7 @@ Page {
                          anchors {
                              fill: parent
                          }
-                         color: "White"
+                         color: theme.inverted ? "#111" : "White"
                      }
 
                      Rectangle {
@@ -172,15 +173,15 @@ Page {
                              }
                              GradientStop {
                                  position: 0.39;
-                                 color: "White";
+                                 color: theme.inverted ? "#111" : "White"
                              }
                              GradientStop {
                                  position: 0.50;
-                                 color: "White";
+                                 color: theme.inverted ? "#111" : "White"
                              }
                              GradientStop {
                                  position: 0.61;
-                                 color: "White";
+                                 color: theme.inverted ? "#111" : "White"
                              }
                              GradientStop {
                                  position: 0.62;
@@ -266,7 +267,7 @@ Page {
                         anchors {
                             fill: parent
                         }
-                        color: "LightGrey"
+                        color: theme.inverted ? "#333" : "LightGrey"
                     }
 
                     Rectangle {
@@ -429,9 +430,8 @@ Page {
         }
 
         ToolIcon {
-            id : calendarIcon;
-            iconId: "toolbar-list"
-            iconSource: enabled ? "" : "image://theme/progress_78_01"
+            id : calendarIcon
+            iconSource: enabled ? "qrc:/src/gui/harmattan/icon/icon-m-content-calendar" + inverseSuffix + ".svg" : "image://theme/progress_78_01"
 
             visible: !searchIndicator.visible
 
