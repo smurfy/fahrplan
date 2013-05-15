@@ -59,13 +59,7 @@ class Fahrplan : public QObject
         void addCalendarEntryComplete(bool success);
 
     private slots:
-        void onStationsResult(StationsResultList *result);
-        void onJourneyResult(JourneyResultList *result);
-        void onJourneyDetailsResult(JourneyDetailResultList *result);
-        void onTimeTableResult(TimeTableResultList *result);
-        void onErrorOccured(const QString &msg);
         void onParserChanged(const QString &name, int index);
-        void onFavoritesChanged(const QStringList &favorites);
 
     private:
         static FahrplanBackendManager *m_parser_manager;

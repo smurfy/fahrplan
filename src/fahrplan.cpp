@@ -42,7 +42,7 @@ Fahrplan::Fahrplan(QObject *parent) :
     }
 
     connect(m_parser_manager, SIGNAL(parserChanged(const QString &, int)), this, SLOT(onParserChanged(const QString &, int)));
-    connect(m_favorites_manager, SIGNAL(favoritesChanged(const QStringList &)), this, SLOT(onFavoritesChanged(const QStringList &)));
+    connect(m_favorites_manager, SIGNAL(favoritesChanged(const QStringList &)), this, SIGNAL(favoritesChanged(QStringList)));
 }
 
 void Fahrplan::storeSettingsValue(const QString &key, const QString &value)
@@ -70,19 +70,14 @@ QString Fahrplan::getVersion()
     return FAHRPLAN_VERSION;
 }
 
-void Fahrplan::onFavoritesChanged(const QStringList &favorites)
-{
-    favoritesChanged(favorites);
-}
-
 void Fahrplan::onParserChanged(const QString &name, int index)
 {
     //We need to reconnect all Signals to the new Parser
-    connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(onStationsResult(StationsResultList*)));
-    connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SLOT(onJourneyResult(JourneyResultList*)));
-    connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SLOT(onErrorOccured(QString)));
-    connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SLOT(onJourneyDetailsResult(JourneyDetailResultList*)));
-    connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimeTableResultList*)), this, SLOT(onTimeTableResult(TimeTableResultList*)));
+    connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsResultList*)), this, SIGNAL(parserStationsResult(StationsResultList*)));
+    connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(parserJourneyResult(JourneyResultList*)));
+    connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
+    connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
+    connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimeTableResultList*)), this, SIGNAL(parserTimeTableResult(TimeTableResultList*)));
 
     emit parserChanged(name, index);
 }
@@ -118,27 +113,3 @@ void Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
     workerThread->start();
 }
 
-void Fahrplan::onStationsResult(StationsResultList *result)
-{
-    emit parserStationsResult(result);
-}
-
-void Fahrplan::onJourneyResult(JourneyResultList *result)
-{
-    emit parserJourneyResult(result);
-}
-
-void Fahrplan::onTimeTableResult(TimeTableResultList *result)
-{
-    emit parserTimeTableResult(result);
-}
-
-void Fahrplan::onJourneyDetailsResult(JourneyDetailResultList *result)
-{
-    emit parserJourneyDetailsResult(result);
-}
-
-void Fahrplan::onErrorOccured(const QString &msg)
-{
-    emit parserErrorOccured(msg);
-}
