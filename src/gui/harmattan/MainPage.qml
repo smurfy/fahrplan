@@ -12,6 +12,7 @@ Page {
     property int searchmode : 0
     property bool startup : true
     property string inverseSuffix: theme.inverted ? "-inverse" : ""
+    property variant selectedDateTime
 
     function updateGpsButtonText()
     {
@@ -51,15 +52,14 @@ Page {
     }
 
     function setToday() {
-        var d = new Date();
-        timePicker.hour = d.getHours();
-        timePicker.minute = d.getMinutes();
-        timePicker.second = d.getSeconds();
-        timePickerButton.subTitleText = Qt.formatTime(d, qsTr("hh:mm"));
-        datePicker.year = d.getFullYear();
-        datePicker.month = d.getMonth() + 1; // month is 0 based in Date()
-        datePicker.day = d.getDate();
-        datePickerButton.subTitleText = Qt.formatDate(d);
+        selectedDateTime = new Date();
+        datePicker.year = selectedDateTime.getFullYear();
+        // JavaScript Date's month is 0 based while DatePicker's is 1 based.
+        datePicker.month = selectedDateTime.getMonth() + 1;
+        datePicker.day = selectedDateTime.getDate();
+        timePicker.hour = selectedDateTime.getHours();
+        timePicker.minute = selectedDateTime.getMinutes();
+        timePicker.second = selectedDateTime.getSeconds();
     }
 
     Item {
@@ -216,7 +216,7 @@ Page {
             SubTitleButton {
                 id: datePickerButton
                 titleText: qsTr("Date")
-                subTitleText: qsTr("please select")
+                subTitleText: Qt.formatDate(selectedDateTime)
                 width: parent.width
                 visible: !fromNowSwitch.checked
                 onClicked: {
@@ -227,7 +227,7 @@ Page {
             SubTitleButton {
                 id: timePickerButton
                 titleText: qsTr("Time")
-                subTitleText: qsTr("please select")
+                subTitleText: Qt.formatTime(selectedDateTime, qsTr("hh:mm"))
                 width: parent.width
                 visible: !fromNowSwitch.checked
                 onClicked: {
@@ -304,8 +304,6 @@ Page {
                     if (fromNowSwitch.checked) {
                         setToday();
                     }
-                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
-                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = ParserAbstract.Arrival;
                     if (modeDep.checked || fromNowSwitch.checked) {
                         selMode = ParserAbstract.Departure;
@@ -319,7 +317,7 @@ Page {
                     timetablePage.selMode = selMode
 
                     pageStack.push(timetablePage);
-                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selDate, selTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selectedDateTime, selectedDateTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
@@ -355,15 +353,13 @@ Page {
                     if (fromNowSwitch.checked) {
                         setToday();
                     }
-                    var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
-                    var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
                     var selMode = ParserAbstract.Arrival;
                     if (modeDep.checked || fromNowSwitch.checked) {
                         selMode = ParserAbstract.Departure;
                     } else if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                     }
-                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selDate, selTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selectedDateTime, selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }
@@ -465,8 +461,16 @@ Page {
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
         onAccepted: {
-            var selDate = new Date(datePicker.year, datePicker.month - 1, datePicker.day);
-            datePickerButton.subTitleText = Qt.formatDate(selDate);
+            // We need to re-assign to selectedDateTime to trigger bindings.
+            // Editing selectedDateTime directly won't trigger bindings
+            // reevaluation because its tiggered only when the property itself
+            // changes, not when something inside the object it holds does.
+            var dateTime = selectedDateTime;
+            dateTime.setFullYear(datePicker.year);
+            // JavaScript Date's month is 0 based while DatePicker's is 1 based.
+            dateTime.setMonth(datePicker.month - 1);
+            dateTime.setDate(datePicker.day);
+            selectedDateTime = dateTime;
         }
     }
 
@@ -484,12 +488,13 @@ Page {
         }
 
         onAccepted: {
-            var selTime = new Date(1970, 2, 1, timePicker.hour, timePicker.minute, timePicker.second);
-            timePickerButton.subTitleText = Qt.formatTime(selTime, qsTr("hh:mm"));
-        }
-        Component.onCompleted: {
-            //setToday sets both the time and the date to today, so only needed here (seems to work)
-            setToday();
+            // We need to re-assign to selectedDateTime to trigger bindings.
+            // See explanation in datePicker::onAccepted.
+            var dateTime = selectedDateTime;
+            dateTime.setHours(timePicker.hour);
+            dateTime.setMinutes(timePicker.minute);
+            dateTime.setSeconds(timePicker.second);
+            selectedDateTime = dateTime;
         }
     }
 
@@ -750,5 +755,6 @@ Page {
 
     Component.onCompleted: {
         theme.inverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
+        setToday();
     }
 }
