@@ -106,7 +106,9 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/main.qml \
         src/gui/harmattan/components/SubTitleButton.qml \
         src/gui/harmattan/components/StationSelect.qml \
+        src/gui/harmattan/components/SwitchLabel.qml \
         src/gui/harmattan/AboutPage.qml \
+        src/gui/harmattan/SettingsPage.qml \
         data/fahrplan2_harmattan.desktop \
         qtc_packaging/debian_harmattan/rules \
         qtc_packaging/debian_harmattan/README \
