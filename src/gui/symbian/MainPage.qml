@@ -14,13 +14,6 @@ Page {
     property bool startup : true
     property variant selectedDateTime
 
-    function updateGpsButtonText()
-    {
-        toggleGpsButton.text = fahrplanBackend.getSettingsValue("enableGps", "true") == "true" ?
-                    qsTr("Opt-Out: gps location support") :
-                    qsTr("Opt-In: gps location support");
-    }
-
     function updateButtonVisibility()
     {
         if (!fahrplanBackend.parser.supportsTimeTable()) {
@@ -473,10 +466,6 @@ Page {
         id: timetablePage
     }
 
-    AboutPage {
-        id: aboutPage
-    }
-
     DatePickerDialog {
         id: datePicker
         titleText: qsTr("Date")
@@ -557,50 +546,9 @@ Page {
             }
         }
         ToolButton {
-            id : aboutIcon
-            iconSource: "toolbar-menu"
+            iconSource: "toolbar-settings"
             platformInverted: appWindow.platformInverted
-            onClicked: {
-                mainMenu.open();
-            }
-        }
-    }
-
-    Menu {
-        id: mainMenu
-        platformInverted: appWindow.platformInverted
-        content: MenuLayout {
-            MenuItem {
-                text: qsTr("Toggle Inverted Style")
-                platformInverted: appWindow.platformInverted
-                onClicked: {
-                    appWindow.platformInverted = !appWindow.platformInverted;
-                    fahrplanBackend.storeSettingsValue("invertedStyle", appWindow.platformInverted);
-                }
-            }
-            MenuItem {
-                id: toggleGpsButton
-                text: qsTr("Opt-Out: gps location support")
-                platformInverted: appWindow.platformInverted
-                // No need for GPS opt out on BlackBerry because user
-                // can disable it in the application permissions.
-                visible: appWindow.showStatusBar
-                onClicked: {
-                    if (fahrplanBackend.getSettingsValue("enableGps", "true") == "true") {
-                        fahrplanBackend.storeSettingsValue("enableGps", "false");
-                    } else {
-                        fahrplanBackend.storeSettingsValue("enableGps", "true");
-                    }
-                    updateGpsButtonText();
-                }
-            }
-            MenuItem {
-                text: qsTr("About")
-                platformInverted: appWindow.platformInverted
-                onClicked: {
-                    pageStack.push(aboutPage);
-                }
-            }
+            onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
         }
     }
 
@@ -795,7 +743,6 @@ Page {
         switch (status) {
         case PageStatus.Active:
             exitIconDelay.start();
-            updateGpsButtonText();
             break;
         case PageStatus.Deactivating:
             exitIcon.enabled = false;
