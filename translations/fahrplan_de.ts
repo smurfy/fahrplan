@@ -504,7 +504,7 @@
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.cpp" line="129"/>
         <source>hh:mm</source>
-        <translation type="unfinished"></translation>
+        <translation>hh:mm</translation>
     </message>
 </context>
 <context>
@@ -581,7 +581,7 @@
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="450"/>
         <source>Sorry one station name is too ambiguous</source>
-        <translation type="unfinished">Ein Stationsname ist leider nicht eindeutig</translation>
+        <translation>Ein Stationsname ist leider nicht eindeutig</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="470"/>
@@ -911,36 +911,36 @@
         <location filename="../src/gui/harmattan/SettingsPage.qml" line="29"/>
         <location filename="../src/gui/symbian/SettingsPage.qml" line="29"/>
         <source>Settings</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/SettingsPage.qml" line="52"/>
         <location filename="../src/gui/symbian/SettingsPage.qml" line="52"/>
         <source>GPS location support</source>
-        <translation type="unfinished">GPS Standortbestimmung</translation>
+        <translation>GPS Standortbestimmung</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/SettingsPage.qml" line="53"/>
         <location filename="../src/gui/symbian/SettingsPage.qml" line="53"/>
         <source>Opted-in</source>
-        <translation type="unfinished">Eingeschaltet</translation>
+        <translation>Eingeschaltet</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/SettingsPage.qml" line="53"/>
         <location filename="../src/gui/symbian/SettingsPage.qml" line="53"/>
         <source>Opted-out</source>
-        <translation type="unfinished">Ausgeschaltet</translation>
+        <translation>Ausgeschaltet</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/SettingsPage.qml" line="63"/>
         <location filename="../src/gui/symbian/SettingsPage.qml" line="65"/>
         <source>Inverted style</source>
-        <translation type="unfinished">Invertierter Anzeige</translation>
+        <translation>Invertierter Anzeige</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/SettingsPage.qml" line="64"/>
         <source>Use dark color scheme</source>
-        <translation type="unfinished">Dunkles Farbschema benutzen</translation>
+        <translation>Dunkles Farbschema benutzen</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/SettingsPage.qml" line="79"/>
@@ -951,7 +951,7 @@
     <message>
         <location filename="../src/gui/symbian/SettingsPage.qml" line="66"/>
         <source>Use light color scheme</source>
-        <translation type="unfinished">Helles Farbschema benutzen</translation>
+        <translation>Helles Farbschema benutzen</translation>
     </message>
 </context>
 <context>
