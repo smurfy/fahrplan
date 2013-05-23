@@ -89,7 +89,10 @@ void CalendarThreadWrapper::addToCalendar()
     CalendarEvent event;
     event.setAccountId(folder.first);
     event.setFolderId(folder.second);
-    event.setSubject(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+    if (viaStation.isEmpty())
+        event.setSubject(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+    else
+        event.setSubject(tr("Journey: %1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
     event.setStartTime(m_result->departureDateTime());
     event.setEndTime(m_result->arrivalDateTime());
     event.setBody(desc);
