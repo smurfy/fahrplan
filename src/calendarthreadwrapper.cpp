@@ -27,7 +27,7 @@
 #   include <bb/pim/calendar/CalendarService>
 #   include <bb/pim/calendar/CalendarEvent>
 using namespace bb::pim::calendar;
-#elseifdef MEEGO_EDITION_HARMATTAN || Q_WS_MAEMO_) || Q_OS_SYMBIAN
+#elif defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
 #   include <qmobilityglobal.h>
 #   include <QOrganizerManager>
 #   include <QOrganizerEvent>
@@ -89,7 +89,10 @@ void CalendarThreadWrapper::addToCalendar()
     CalendarEvent event;
     event.setAccountId(folder.first);
     event.setFolderId(folder.second);
-    event.setSubject(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+    if (viaStation.isEmpty())
+        event.setSubject(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+    else
+        event.setSubject(tr("Journey: %1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
     event.setStartTime(m_result->departureDateTime());
     event.setEndTime(m_result->arrivalDateTime());
     event.setBody(desc);
@@ -97,7 +100,7 @@ void CalendarThreadWrapper::addToCalendar()
 
     emit addCalendarEntryComplete(service.createEvent(event) == Result::Success);
 
-#elseifdef MEEGO_EDITION_HARMATTAN || Q_WS_MAEMO_5 || Q_OS_SYMBIAN
+#elif defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
 
     QOrganizerManager defaultManager;
     QOrganizerEvent event;

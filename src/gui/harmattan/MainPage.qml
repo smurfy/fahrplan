@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import com.nokia.meego 1.1
 import com.nokia.extras 1.1
 import "components"
 import Fahrplan 1.0
@@ -13,13 +13,6 @@ Page {
     property bool startup : true
     property string inverseSuffix: theme.inverted ? "-inverse" : ""
     property variant selectedDateTime
-
-    function updateGpsButtonText()
-    {
-        toggleGpsButton.text = fahrplanBackend.getSettingsValue("enableGps", "true") == "true" ?
-                    qsTr("Opt-Out: gps location support") :
-                    qsTr("Opt-In: gps location support");
-    }
 
     function updateButtonVisibility()
     {
@@ -450,11 +443,6 @@ Page {
         id: timetablePage
     }
 
-    AboutPage {
-        id: aboutPage
-    }
-
-
     DatePickerDialog {
         id: datePicker
         titleText: qsTr("Date")
@@ -528,11 +516,8 @@ Page {
             }
         }
         ToolIcon {
-            id : aboutIcon
-            iconId: "toolbar-view-menu"
-            onClicked: {
-                helpContextMenu.open();
-            }
+            iconId: "toolbar-settings"
+            onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
         }
     }
 
@@ -543,38 +528,6 @@ Page {
             anchors.top: parent.top
             anchors.topMargin: 10
     }
-
-    ContextMenu {
-        id: helpContextMenu
-        MenuLayout {
-            MenuItem {
-                text: qsTr("Toggle Inverted Style")
-                onClicked: {
-                    theme.inverted = !theme.inverted;
-                    fahrplanBackend.storeSettingsValue("invertedStyle", theme.inverted);
-                }
-            }
-            MenuItem {
-                id: toggleGpsButton
-                text: qsTr("Opt-Out: gps location support")
-                onClicked: {
-                    if (fahrplanBackend.getSettingsValue("enableGps", "true") == "true") {
-                        fahrplanBackend.storeSettingsValue("enableGps", "false");
-                    } else {
-                        fahrplanBackend.storeSettingsValue("enableGps", "true");
-                    }
-                    updateGpsButtonText();
-                }
-            }
-            MenuItem {
-                text: qsTr("About")
-                onClicked: {
-                    pageStack.push(aboutPage);
-                }
-            }
-        }
-    }
-
 
     QueryDialog {
             id: firstStartDialog;
@@ -748,7 +701,6 @@ Page {
                     firstStartDialog.open();
                     fahrplanBackend.storeSettingsValue("firstStart", "false");
                 }
-                updateGpsButtonText();
                 break;
         }
     }

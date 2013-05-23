@@ -5,10 +5,12 @@
         <file>src/gui/harmattan/MainPage.qml</file>
         <file>src/gui/harmattan/components/StationSelect.qml</file>
         <file>src/gui/harmattan/components/SubTitleButton.qml</file>
+        <file>src/gui/harmattan/components/SwitchLabel.qml</file>
         <file>src/gui/harmattan/JourneyResultsPage.qml</file>
         <file>src/gui/harmattan/JourneyDetailsResultsPage.qml</file>
         <file>src/gui/harmattan/AboutPage.qml</file>
         <file>src/gui/harmattan/TimeTableResultsPage.qml</file>
+        <file>src/gui/harmattan/SettingsPage.qml</file>
         <file>src/gui/harmattan/icon/icon-m-content-calendar.svg</file>
         <file>src/gui/harmattan/icon/icon-m-content-calendar-inverse.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-clock.svg</file>
