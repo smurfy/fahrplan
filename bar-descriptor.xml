@@ -5,7 +5,7 @@
     <publisher>smurfy (maemo@smurfy.de)</publisher>
     <!-- <authorId></authorId> -->
     <name>Fahrplan</name>
-    <versionNumber>2.0.12</versionNumber>
+    <versionNumber>2.0.13</versionNumber>
     <description>A Journey planner/Railway Time table for many train lines in Europe and Australia</description>
     <initialWindow>
         <systemChrome>none</systemChrome>
