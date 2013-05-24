@@ -1,3 +1,11 @@
+fahrplan2 (2.0.13) unstable; urgency=low
+  * Fixed sbb.ch
+  * Added inverse display for N9
+  * Fixed some other minor bugs
+  * Moved settings to seperate window
+
+ -- smurfy <maemo@smurfy.de>  Fri, 24 May 2013 12:00:00 +0200
+ 
 fahrplan2 (2.0.12) unstable; urgency=low
   * Added privacy stuff
   * Fixed favorites
