@@ -27,8 +27,9 @@ ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent) :
 {
      baseXmlUrl = "http://fahrplan.sbb.ch/bin/extxml.exe";
      baseUrl = "http://fahrplan.sbb.ch/bin/query.exe";
+     userAgent = "SBBMobile/4.8 CFNetwork/609.1.4 Darwin/13.0.0";
 
-     hafasHeader.accessid = "MJXZ841ZfsmqqmSymWhBPy5dMNoqoGsHInHbWJQ5PTUZOJ1rLTkn8vVZOZDFfSe";
+     hafasHeader.accessid = "YJpyuPISerpXNNRTo50fNMP0yVu7L6IMuOaBgS0Xz89l3f6I3WhAjnto4kS9oz1";
      hafasHeader.prod = "iPhone3.1";
      hafasHeader.ver = "2.3";
 }

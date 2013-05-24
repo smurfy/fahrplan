@@ -36,6 +36,8 @@ ParserAbstract::ParserAbstract(QObject *parent) :
     requestTimeout = new QTimer();
 
     connect(requestTimeout, SIGNAL(timeout()), this, SLOT(networkReplyTimedOut()));
+
+    userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20100101 Firefox/13.0";
 }
 
 ParserAbstract::~ParserAbstract()
@@ -88,7 +90,7 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
 {
     QNetworkRequest request;
     request.setUrl(url);
-    request.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20100101 Firefox/13.0");
+    request.setRawHeader("User-Agent", userAgent.toAscii());
     request.setRawHeader("Cache-Control", "no-cache");
 
     if (data.isNull()) {

@@ -72,6 +72,7 @@ protected slots:
     void networkReplyTimedOut();
 
 protected:
+    QString userAgent;
     QNetworkAccessManager *NetworkManager;
     FahrplanNS::curReqStates currentRequestState;
     QNetworkReply *lastRequest;
