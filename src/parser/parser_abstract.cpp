@@ -90,7 +90,11 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
 {
     QNetworkRequest request;
     request.setUrl(url);
+#if defined(BUILD_FOR_QT5)
+    request.setRawHeader("User-Agent", userAgent.toLocal8Bit());
+#else
     request.setRawHeader("User-Agent", userAgent.toAscii());
+#endif
     request.setRawHeader("Cache-Control", "no-cache");
 
     if (data.isNull()) {
