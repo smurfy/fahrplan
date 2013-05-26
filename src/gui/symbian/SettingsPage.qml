@@ -38,14 +38,11 @@ Page {
     }
 
     Column {
-        spacing: platformStyle.paddingMedium
         anchors {
             top: header.bottom
-            topMargin: platformStyle.paddingMedium
+            topMargin: platformStyle.paddingSmall
             left: parent.left
-            leftMargin: platformStyle.paddingMedium
             right: parent.right
-            rightMargin: platformStyle.paddingMedium
         }
 
         SwitchLabel {
@@ -83,7 +80,7 @@ Page {
         platformInverted: appWindow.platformInverted
         anchors {
             bottom: parent.bottom
-            bottomMargin: platformStyle.paddingMedium
+            bottomMargin: platformStyle.paddingLarge
             horizontalCenter: parent.horizontalCenter
         }
 

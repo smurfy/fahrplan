@@ -5,6 +5,7 @@
         <file>src/gui/symbian/MainPage.qml</file>
         <file>src/gui/symbian/components/StationSelect.qml</file>
         <file>src/gui/symbian/components/SubTitleButton.qml</file>
+        <file>src/gui/symbian/components/TwoLineLabel.qml</file>
         <file>src/gui/symbian/components/SwitchLabel.qml</file>
         <file>src/gui/symbian/JourneyResultsPage.qml</file>
         <file>src/gui/symbian/JourneyDetailsResultsPage.qml</file>

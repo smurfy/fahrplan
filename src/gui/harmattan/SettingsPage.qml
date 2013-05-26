@@ -38,14 +38,11 @@ Page {
     }
 
     Column {
-        spacing: UiConstants.DefaultMargin
         anchors {
             top: header.bottom
             topMargin: UiConstants.DefaultMargin
             left: parent.left
-            leftMargin: UiConstants.DefaultMargin
             right: parent.right
-            rightMargin: UiConstants.DefaultMargin
         }
 
         SwitchLabel {

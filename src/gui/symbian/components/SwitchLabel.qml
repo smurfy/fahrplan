@@ -4,50 +4,36 @@ import com.nokia.symbian 1.1
 Item {
     id: root
 
-    property alias title: lblTitle.text
-    property alias subtitle: lblSubtitle.text
+    property alias title: labels.title
+    property alias subtitle: labels.subtitle
     property alias checked: checkbox.checked
     property bool platformInverted: false
 
-    height: childrenRect.height
+    height: 2 * platformStyle.paddingMedium + Math.max(labels.height, checkbox.height)
     anchors {
         left: parent.left
         right: parent.right
     }
 
-    Item {
+    TwoLineLabel {
         id: labels
-
-        width: childrenRect.width
-        height: childrenRect.height
-        anchors.left: parent.left
-
-        ListItemText {
-            id: lblTitle
-            role: "Title"
-            platformInverted: root.platformInverted
-            anchors {
-                top: parent.top
-                left: parent.left
-            }
-        }
-        ListItemText {
-            id: lblSubtitle
-            role: "Subtitle"
-            visible: text != ""
-            height: visible ? implicitHeight : 0
-            platformInverted: root.platformInverted
-            anchors {
-                top: lblTitle.bottom
-                left: parent.left
-            }
+        platformInverted: root.platformInverted
+        anchors {
+            top: parent.top
+            topMargin: platformStyle.paddingMedium
+            left: parent.left
+            leftMargin: platformStyle.paddingLarge
+            right: checkbox.left
+            rightMargin: platformStyle.paddingLarge
         }
     }
+
     Switch {
         id: checkbox
         platformInverted: root.platformInverted
         anchors {
             right: parent.right
+            rightMargin: platformStyle.paddingLarge
             verticalCenter: labels.verticalCenter
         }
     }

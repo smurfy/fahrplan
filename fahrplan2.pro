@@ -117,6 +117,7 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/main.qml \
         src/gui/harmattan/components/SubTitleButton.qml \
         src/gui/harmattan/components/StationSelect.qml \
+        src/gui/harmattan/components/TwoLineLabel.qml \
         src/gui/harmattan/components/SwitchLabel.qml \
         src/gui/harmattan/AboutPage.qml \
         src/gui/harmattan/SettingsPage.qml \
@@ -202,8 +203,11 @@ blackberry {
         src/gui/symbian/JourneyResultsPage.qml \
         src/gui/symbian/JourneyDetailsResultsPage.qml \
         src/gui/symbian/AboutPage.qml \
+        src/gui/symbian/SettingsPage.qml \
         src/gui/symbian/components/SubTitleButton.qml \
         src/gui/symbian/components/StationSelect.qml \
+        src/gui/symbian/components/TwoLineLabel.qml \
+        src/gui/symbian/components/SwitchLabel.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
@@ -229,8 +233,11 @@ symbian|simulator {
         src/gui/symbian/JourneyResultsPage.qml \
         src/gui/symbian/JourneyDetailsResultsPage.qml \
         src/gui/symbian/AboutPage.qml \
+        src/gui/symbian/SettingsPage.qml \
         src/gui/symbian/components/SubTitleButton.qml \
         src/gui/symbian/components/StationSelect.qml \
+        src/gui/symbian/components/TwoLineLabel.qml \
+        src/gui/symbian/components/SwitchLabel.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
