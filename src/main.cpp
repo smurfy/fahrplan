@@ -50,6 +50,7 @@
 #endif
 
 #include "fahrplan.h"
+#include "fahrplan_calendar_manager.h"
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 Q_DECL_EXPORT
@@ -75,6 +76,7 @@ int main(int argc, char *argv[])
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanParserThread>("Fahrplan", 1, 0, "FahrplanParserThread");
         qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
+        qmlRegisterType<FahrplanCalendarManager>("Fahrplan", 1, 0, "CalendarManager");
         qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
         qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");

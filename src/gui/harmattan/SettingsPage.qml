@@ -68,6 +68,14 @@ Page {
                 checked = theme.inverted;
             }
         }
+        SelectLabel {
+            title: qsTr("Add journeys to calendar")
+            subtitle: calendarManager.selectedCalendarName
+            onClicked: {
+                calendarsList.selectedIndex = calendarManager.selectedIndex;
+                calendarsList.open();
+            }
+        }
     }
 
     Button {
@@ -83,8 +91,23 @@ Page {
         onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
     }
 
+    SelectionDialog {
+        id: calendarsList
+
+        titleText: qsTr("Select a calendar")
+        model: calendarManager
+
+        onSelectedIndexChanged: {
+            calendarManager.selectedIndex = selectedIndex;
+        }
+    }
+
     FahrplanBackend {
         id: fahrplanBackend
+    }
+
+    CalendarManager {
+        id: calendarManager
     }
 
     tools: ToolBarLayout {
@@ -92,5 +115,10 @@ Page {
             iconId: "toolbar-back"
             onClicked: pageStack.pop();
         }
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Activating)
+            calendarManager.reload();
     }
 }
