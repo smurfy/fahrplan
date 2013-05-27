@@ -27,7 +27,7 @@
 #   include <bb/pim/calendar/CalendarService>
 #   include <bb/pim/calendar/CalendarEvent>
 using namespace bb::pim::calendar;
-#elif defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
+#elif defined(BUILD_FOR_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
 #   include <qmobilityglobal.h>
 #   include <QOrganizerManager>
 #   include <QOrganizerEvent>
@@ -100,7 +100,7 @@ void CalendarThreadWrapper::addToCalendar()
 
     emit addCalendarEntryComplete(service.createEvent(event) == Result::Success);
 
-#elif defined(MEEGO_EDITION_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
+#elif defined(BUILD_FOR_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
 
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
