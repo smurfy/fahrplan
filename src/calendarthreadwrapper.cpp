@@ -23,11 +23,11 @@
 #include <QCoreApplication>
 #include <QThread>
 
-#ifdef Q_OS_BLACKBERRY
+#ifdef BUILD_FOR_BLACKBERRY
 #   include <bb/pim/calendar/CalendarService>
 #   include <bb/pim/calendar/CalendarEvent>
 using namespace bb::pim::calendar;
-#elif defined(BUILD_FOR_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
+#elif defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 #   include <qmobilityglobal.h>
 #   include <QOrganizerManager>
 #   include <QOrganizerEvent>
@@ -81,7 +81,7 @@ void CalendarThreadWrapper::addToCalendar()
 
     desc.append(tr("\n(added by fahrplan app, please recheck informations before travel.)"));
 
-#ifdef Q_OS_BLACKBERRY
+#ifdef BUILD_FOR_BLACKBERRY
 
     CalendarService service;
     QPair<AccountId, FolderId> folder = service.defaultCalendarFolder();
@@ -100,7 +100,7 @@ void CalendarThreadWrapper::addToCalendar()
 
     emit addCalendarEntryComplete(service.createEvent(event) == Result::Success);
 
-#elif defined(BUILD_FOR_HARMATTAN) || defined(Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
+#elif defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
