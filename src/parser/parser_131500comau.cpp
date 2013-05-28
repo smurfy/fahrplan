@@ -85,7 +85,11 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     QString element = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">\n<body>\n" + regexp.cap(0) + "\n</body>\n</html>\n";
 
     QBuffer readBuffer;
+#if defined(BUILD_FOR_QT5)
+    readBuffer.setData(element.toLocal8Bit());
+#else
     readBuffer.setData(element.toAscii());
+#endif
     readBuffer.open(QIODevice::ReadOnly);
 
     QXmlQuery query;
@@ -187,7 +191,11 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
     //qDebug()<<element;
 
     QBuffer readBuffer;
+#if defined(BUILD_FOR_QT5)
+    readBuffer.setData(element.toLocal8Bit());
+#else
     readBuffer.setData(element.toAscii());
+#endif
     readBuffer.open(QIODevice::ReadOnly);
 
     QXmlQuery query;
@@ -274,7 +282,11 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
         element.replace("bulletin.gif\">", "bulletin.gif\" />");
 
         QBuffer readBuffer;
+#if defined(BUILD_FOR_QT5)
+        readBuffer.setData(element.toLocal8Bit());
+#else
         readBuffer.setData(element.toAscii());
+#endif
         readBuffer.open(QIODevice::ReadOnly);
 
         QXmlQuery query;

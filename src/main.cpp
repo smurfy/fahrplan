@@ -19,7 +19,12 @@
 */
 
 #include <QtCore/QTranslator>
-#include <QtGui/QApplication>
+
+#if defined(BUILD_FOR_QT5)
+    #include <QtWidgets/QApplication>
+#else
+    #include <QtGui/QApplication>
+#endif
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
