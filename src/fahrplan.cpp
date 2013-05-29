@@ -55,7 +55,7 @@ QString Fahrplan::getSettingsValue(const QString &key, const QString &defaultVal
     return settings->value(key, defaultValue).toString();
 }
 
-ParserAbstract* Fahrplan::parser()
+FahrplanParserThread* Fahrplan::parser()
 {
     return m_parser_manager->getParser();
 }
@@ -78,7 +78,6 @@ void Fahrplan::onParserChanged(const QString &name, int index)
     connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
     connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
     connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimeTableResultList*)), this, SIGNAL(parserTimeTableResult(TimeTableResultList*)));
-
     emit parserChanged(name, index);
 }
 

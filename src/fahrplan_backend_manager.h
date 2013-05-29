@@ -21,7 +21,7 @@
 #ifndef FAHRPLAN_BACKEND_MANAGER_H
 #define FAHRPLAN_BACKEND_MANAGER_H
 
-#include "parser/parser_abstract.h"
+#include "fahrplan_parser_thread.h"
 
 class FahrplanBackendManager : public QObject
 {
@@ -31,13 +31,13 @@ class FahrplanBackendManager : public QObject
         explicit FahrplanBackendManager(int defaultParser, QObject *parent = 0);
         QStringList getParserList();
         void setParser(int index);
-        ParserAbstract *getParser();
+        FahrplanParserThread *getParser();
 
     signals:
         void parserChanged(QString name, int index);
 
     private:
-        ParserAbstract *m_parser;
+        FahrplanParserThread *m_parser;
         int currentParserIndex;
 };
 

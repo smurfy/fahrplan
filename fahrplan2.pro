@@ -64,7 +64,8 @@ HEADERS += \
     src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
     src/parser/parser_xmlnri.h \
-    src/parser/parser_hafasbinary.h
+    src/parser/parser_hafasbinary.h \
+    src/fahrplan_parser_thread.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -81,7 +82,8 @@ SOURCES += src/main.cpp \
     src/fahrplan_favorites_manager.cpp \
     src/calendarthreadwrapper.cpp \
     src/parser/parser_xmlnri.cpp \
-    src/parser/parser_hafasbinary.cpp
+    src/parser/parser_hafasbinary.cpp \
+    src/fahrplan_parser_thread.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
