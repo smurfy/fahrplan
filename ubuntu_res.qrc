@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data/fahrplan2.svg</file>
+        <file>src/gui/ubuntu/main.qml</file>
+        <file>src/gui/ubuntu/MainPage.qml</file>
+        <file>src/gui/ubuntu/JourneyResultsPage.qml</file>
+        <file>src/gui/ubuntu/JourneyDetailsResultsPage.qml</file>
+        <file>src/gui/ubuntu/AboutPage.qml</file>
+        <file>src/gui/ubuntu/TimeTableResultsPage.qml</file>
+        <file>src/gui/ubuntu/SettingsPage.qml</file>
+        <file>src/gui/ubuntu/components/Scroller.qml</file>
+        <file>src/gui/ubuntu/components/DatePicker.qml</file>
+        <file>src/gui/ubuntu/components/TimePicker.qml</file>
+        <file>src/gui/ubuntu/components/StationSelect.qml</file>
+    </qresource>
+</RCC>

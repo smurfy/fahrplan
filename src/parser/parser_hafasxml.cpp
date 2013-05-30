@@ -146,7 +146,7 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 {
     TimeTableResultList *result = new TimeTableResultList();
 
-    QString data = networkReply->readAll();
+    QString data = QString::fromLatin1(networkReply->readAll());
 
     //Add a root element, because its sometimes missing
     if (data.indexOf("StationTable") == -1) {
@@ -226,10 +226,11 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 
 void ParserHafasXml::parseTimeTableMode0Part1(QNetworkReply *networkReply)
 {
-    QString data = networkReply->readAll();
+    QString data = QString::fromLatin1(networkReply->readAll());
 
 #if defined(BUILD_FOR_QT5)
-    ParserHafasXmlExternalIds extIds = parseExternalIds(data.toLocal8Bit());
+    ParserHafasXmlExternalIds extIds = parseExternalIds(data.toUtf8());
+    qDebug() << "--------------------------" << data;
 #else
     ParserHafasXmlExternalIds extIds = parseExternalIds(data.toAscii());
 #endif
@@ -281,7 +282,7 @@ void ParserHafasXml::parseTimeTableMode0Part2(QNetworkReply *networkReply)
 {
     TimeTableResultList *result = new TimeTableResultList();
 
-    QString data = QString::fromUtf8(networkReply->readAll());
+    QString data = QString::fromLatin1(networkReply->readAll());
 
     QXmlStreamReader xml;
     xml.addData(data);
@@ -424,7 +425,7 @@ void ParserHafasXml::findStationsByCoordinates(qreal longitude, qreal latitude)
 
 void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)
 {
-    QString data = networkReply->readAll();
+    QString data = QString::fromLatin1(networkReply->readAll());
     StationsResultList *result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
@@ -465,7 +466,7 @@ StationsResultList* ParserHafasXml::internalParseStationsByName(const QString &d
 
 void ParserHafasXml::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
-    QString data = QString::fromUtf8(networkReply->readAll());
+    QString data = QString::fromLatin1(networkReply->readAll());
     StationsResultList *result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
@@ -949,6 +950,7 @@ void ParserHafasXml::getJourneyDetails(const QString &id)
 
 JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray data)
 {
+    qDebug() << ";;;;;;;;;;;;;;;" << data;
     JourneyDetailResultList *results = new JourneyDetailResultList();
 
     QBuffer readBuffer;

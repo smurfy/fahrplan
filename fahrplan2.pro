@@ -131,6 +131,35 @@ contains(MEEGO_EDITION,harmattan) {
     CONFIG += qt-boostable qdeclarative-boostable
 }
 
+ubuntu: {
+    message("Ubuntu build")
+    RESOURCES += ubuntu_res.qrc
+
+    OTHER_FILES += \
+        src/gui/harmattan/MainPage.qml \
+        src/gui/harmattan/JourneyResultsPage.qml \
+        src/gui/harmattan/JourneyDetailsResultsPage.qml \
+        src/gui/harmattan/TimeTableResultsPage.qml \
+        src/gui/harmattan/main.qml \
+        src/gui/harmattan/components/SubTitleButton.qml \
+        src/gui/harmattan/components/StationSelect.qml \
+        src/gui/harmattan/components/SwitchLabel.qml \
+        src/gui/harmattan/AboutPage.qml \
+        src/gui/harmattan/SettingsPage.qml \
+#        data/fahrplan2_harmattan.desktop \
+#        qtc_packaging/debian_harmattan/rules \
+#        qtc_packaging/debian_harmattan/README \
+#        qtc_packaging/debian_harmattan/copyright \
+#        qtc_packaging/debian_harmattan/control \
+#        qtc_packaging/debian_harmattan/compat \
+#        qtc_packaging/debian_harmattan/changelog \
+#        qtc_packaging/debian_harmattan/manifest.aegis
+
+    QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
+    QMAKE_LFLAGS += -pie -rdynamic
+    DEFINES += BUILD_FOR_UBUNTU
+}
+
 maemo5 {
     RESOURCES += fremantle_res.qrc
     HEADERS += src/gui/fremantle/hildon_helper.h

@@ -104,7 +104,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     QByteArray buffer = gzipDecompress(tmpBuffer);
 
     /*
-    QFile file("f://out.txt");
+    QFile file("/tmp/out.txt");
     file.open(QIODevice::WriteOnly);
     file.write(buffer);
     file.close();
@@ -155,12 +155,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     //Read strings
     hafasData.device()->seek(stringTablePtr);
     QMap<int, QString> strings;
-    QString tmpString;
+    QByteArray tmpString;
     for (int num = 0; num < (serviceDaysTablePtr - stringTablePtr); num++) {
         qint8 c;
         hafasData>>c;
         if (c == 0) {
-            strings.insert((num - tmpString.length()), tmpString.trimmed());
+            strings.insert((num - tmpString.length()), QString::fromLatin1(tmpString.trimmed()));
             tmpString.clear();
         } else {
             tmpString.append((char)c);

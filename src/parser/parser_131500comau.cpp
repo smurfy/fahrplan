@@ -80,13 +80,13 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     QRegExp regexp = QRegExp("<select name=\"(.*)\" id=\"from\" size=\"6\" class=\"multiple\">(.*)</select>");
     regexp.setMinimal(true);
 
-    regexp.indexIn(networkReply->readAll());
+    regexp.indexIn(QString::fromLatin1(networkReply->readAll()));
 
     QString element = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">\n<body>\n" + regexp.cap(0) + "\n</body>\n</html>\n";
 
     QBuffer readBuffer;
 #if defined(BUILD_FOR_QT5)
-    readBuffer.setData(element.toLocal8Bit());
+    readBuffer.setData(element.toLatin1());
 #else
     readBuffer.setData(element.toAscii());
 #endif
@@ -192,7 +192,7 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
 
     QBuffer readBuffer;
 #if defined(BUILD_FOR_QT5)
-    readBuffer.setData(element.toLocal8Bit());
+    readBuffer.setData(element.toLatin1());
 #else
     readBuffer.setData(element.toAscii());
 #endif
@@ -283,7 +283,7 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
 
         QBuffer readBuffer;
 #if defined(BUILD_FOR_QT5)
-        readBuffer.setData(element.toLocal8Bit());
+        readBuffer.setData(element.toLatin1());
 #else
         readBuffer.setData(element.toAscii());
 #endif

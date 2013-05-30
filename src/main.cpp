@@ -28,6 +28,9 @@
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
+#elif defined(BUILD_FOR_UBUNTU)
+    #include <QtQuick>
+    #include <QtQml>
 #else
     #include "gui/desktop-test/mainwindow.h"
 #endif
@@ -66,7 +69,7 @@ int main(int argc, char *argv[])
 
     qDebug()<<"Startup";
 
-    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
+    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
         qDebug()<<"QML";
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
@@ -82,6 +85,8 @@ int main(int argc, char *argv[])
 
         #if defined(HAVE_DECLARATIVE_CACHE)
             QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
+        #elif defined(BUILD_FOR_QT5)
+            QQuickView *view = new QQuickView();
         #else
             QDeclarativeView* view = new QDeclarativeView();
         #endif
@@ -99,6 +104,10 @@ int main(int argc, char *argv[])
             qDebug()<<"Symbian";
             view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
             view->showFullScreen();
+        #elif defined(BUILD_FOR_UBUNTU)
+            qDebug()<<"Ubuntu";
+            view->setSource(QUrl("qrc:/src/gui/ubuntu/main.qml"));
+            view->show();
         #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 
