@@ -99,7 +99,9 @@ translate_hack {
         src/gui/harmattan/*.qml \
         src/gui/harmattan/components/*.qml \
         src/gui/symbian/*.qml \
-        src/gui/symbian/components/*.qml
+        src/gui/symbian/components/*.qml \
+        src/gui/ubuntu/*.qml \
+        src/gui/ubuntu/components/*.qml
 }
 
 contains(MEEGO_EDITION,harmattan) {

@@ -107,7 +107,12 @@ int main(int argc, char *argv[])
         #elif defined(BUILD_FOR_UBUNTU)
             qDebug()<<"Ubuntu";
             view->setSource(QUrl("qrc:/src/gui/ubuntu/main.qml"));
-            view->show();
+            view->setResizeMode(QQuickView::SizeRootObjectToView);
+            if (QApplication::arguments().contains("--fullscreen")) {
+                view->showFullScreen();
+            } else {
+                view->show();
+            }
         #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 

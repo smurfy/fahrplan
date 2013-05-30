@@ -52,14 +52,20 @@ Dialog {
             spacing: units.gu(1)
             Button {
                 text: "Cancel"
-                onClicked: root.rejected()
+                onClicked: {
+                    root.rejected()
+                    PopupUtils.close(root)
+                }
                 width: (parent.width - parent.spacing) / 2
             }
             Button {
                 text: "OK"
                 color: "#dd4814"
 
-                onClicked: root.accepted(root.hour, root.minute)
+                onClicked: {
+                    root.accepted(root.hour, root.minute)
+                    PopupUtils.close(root)
+                }
                 width: (parent.width - parent.spacing) / 2
             }
         }

@@ -1,7 +1,6 @@
 /.make.cache
 /Makefile
 /bld.inf
-/debian/
 /fahrplan2*
 /moc/
 /obj/

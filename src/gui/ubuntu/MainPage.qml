@@ -262,7 +262,6 @@ Page {
                                                       var newDate = selectedDateTime
                                                       newDate.setFullYear(year, month, day)
                                                       selectedDateTime = newDate
-                                                      PopupUtils.close(popupObj)
                                                   })
 
                     }
@@ -283,7 +282,6 @@ Page {
                                                       var newDate = selectedDateTime
                                                       newDate.setHours(hour, minute)
                                                       selectedDateTime = newDate
-                                                      PopupUtils.close(popupObj)
                                                   })
                     }
                 }
