@@ -1,5 +1,5 @@
 This package was debianized by Michael Zanetti <michael_zanetti@gmx.net> on
-Sat, 09 Apr 2011 18:13:12 +0200.
+Fri, 31 Mar 2013 18:13:12 +0200.
 
 Upstream Author(s):
 
@@ -7,7 +7,7 @@ Upstream Author(s):
 
 Copyright:
 
-    <Copyright (C) 2011 Michael Zanetti>
+    <Copyright (C) 2013 Michael Zanetti>
 
 License:
 
@@ -28,9 +28,5 @@ License:
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
 
-The Debian packaging is (C) 2011, unknown <micha@unknown> and
+The Debian packaging is (C) 2013, Michael Zanetti <michael_zanetti@gmx.net> and
 is licensed under the GPL, see above.
-
-
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.
