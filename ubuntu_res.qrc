@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>data/fahrplan2.svg</file>
         <file>src/gui/ubuntu/main.qml</file>
         <file>src/gui/ubuntu/MainPage.qml</file>
         <file>src/gui/ubuntu/JourneyResultsPage.qml</file>
@@ -12,5 +11,6 @@
         <file>src/gui/ubuntu/components/DatePicker.qml</file>
         <file>src/gui/ubuntu/components/TimePicker.qml</file>
         <file>src/gui/ubuntu/components/StationSelect.qml</file>
+        <file alias="fahrplan2.svg">data/fahrplan2-square.svg</file>
     </qresource>
 </RCC>

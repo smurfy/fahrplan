@@ -114,7 +114,7 @@ symbian {
     } else:ubuntu {
         desktopfile.files = data/$${TARGET}_ubuntu.desktop
         desktopfile.path = /usr/share/applications
-        icon.files = data/$${TARGET}.svg
+        icon.files = data/$${TARGET}-square.svg
         icon.path = /usr/share/icons/hicolor/scalable/apps
     }
     target.path = $${installPrefix}/bin

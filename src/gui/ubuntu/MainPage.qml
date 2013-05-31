@@ -471,6 +471,7 @@ Page {
                 delegate: ListItems.Standard {
                     text: modelData
                     onClicked: {
+                        print("ffffffffff", ListView.view.model.get(index).actionID, ListView.view.model.get(index).modelData)
                         switch(ListView.view.model.get(index).actionID) {
                         case 0:
                             var oldVal = stationSelectPopover.opener.subText
@@ -515,7 +516,7 @@ Page {
         if (opener != viaButton && fahrplanBackend.parser.supportsVia()) {
             contextMenuModel.append({modelData: qsTr("Switch with Via station"), actionID: 2})
         }
-        contextMenuModel.append({modelData: qsTr("Clear station"), actionId: 3})
+        contextMenuModel.append({modelData: qsTr("Clear station"), actionID: 3})
 
         PopupUtils.open(stationSelectContextMenu, opener, {"opener": opener});
     }
