@@ -471,7 +471,7 @@ Page {
                 delegate: ListItems.Standard {
                     text: modelData
                     onClicked: {
-                        switch(ListView.view.model.get(index).actionId) {
+                        switch(ListView.view.model.get(index).actionID) {
                         case 0:
                             var oldVal = stationSelectPopover.opener.subText
                             stationSelectPopover.opener.subText = departureButton.subText

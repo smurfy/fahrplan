@@ -96,6 +96,7 @@ Item {
                 anchors.centerIn: parent
                 text: modelData
             }
+            onClicked: listView.currentIndex = index
         }
         property int contentHeight: pathItemCount * highlightItem.height
         path: Path {

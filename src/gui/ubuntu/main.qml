@@ -7,9 +7,19 @@ MainView {
     height: units.gu(71)
 
     Tabs {
+        onCurrentPageChanged: {
+            while (journeyPageStack.depth > 1) {
+                journeyPageStack.pop()
+            }
+            while (timeTablePageStack.depth > 1) {
+                timeTablePageStack.pop()
+            }
+        }
+
         Tab {
             title: qsTr("Journey")
             page: PageStack {
+                id: journeyPageStack
                 Component.onCompleted: push(journeyPage)
                 MainPage {
                     id: journeyPage
@@ -21,7 +31,7 @@ MainView {
         Tab {
             title: qsTr("Time table")
             page: PageStack {
-                id: pageStack
+                id: timeTablePageStack
                 Component.onCompleted: push(timeTablePage)
                 MainPage {
                     id: timeTablePage
