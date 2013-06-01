@@ -2,6 +2,7 @@
 /Makefile
 /bld.inf
 /fahrplan2*
+/debian/
 /moc/
 /obj/
 /rcc/
