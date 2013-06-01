@@ -41,8 +41,6 @@ Fahrplan::Fahrplan(QObject *parent) :
         m_favorites_manager = new FahrplanFavoritesManager();
     }
 
-    bindParserSignals();
-
     connect(m_parser_manager, SIGNAL(parserChanged(const QString &, int)), this, SLOT(onParserChanged(const QString &, int)));
     connect(m_favorites_manager, SIGNAL(favoritesChanged(const QStringList &)), this, SIGNAL(favoritesChanged(QStringList)));
 }
@@ -55,7 +53,6 @@ void Fahrplan::bindParserSignals()
         connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
         connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
         connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimeTableResultList*)), this, SIGNAL(parserTimeTableResult(TimeTableResultList*)));
-
     }
 }
 
