@@ -274,7 +274,7 @@ void ParserHafasXml::parseTimeTableMode0Part2(QNetworkReply *networkReply)
 {
     TimeTableResultList *result = new TimeTableResultList();
 
-    QString data = QString::fromLatin1(networkReply->readAll());
+    QString data = QString::fromUtf8(networkReply->readAll());
 
     QXmlStreamReader xml;
     xml.addData(data);
