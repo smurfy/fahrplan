@@ -53,7 +53,7 @@ RESOURCES += \
     translations_res.qrc
 
 # Zlib todo for other systems ugly hack
-!unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib
+!unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib G:/SDK/QTMobile/QtSources/4.8.1/src/3rdparty/zlib
 unix:!symbian: LIBS += -lz
 
 HEADERS += \
@@ -138,24 +138,24 @@ ubuntu: {
     RESOURCES += ubuntu_res.qrc
 
     OTHER_FILES += \
-        src/gui/harmattan/MainPage.qml \
-        src/gui/harmattan/JourneyResultsPage.qml \
-        src/gui/harmattan/JourneyDetailsResultsPage.qml \
-        src/gui/harmattan/TimeTableResultsPage.qml \
-        src/gui/harmattan/main.qml \
-        src/gui/harmattan/components/SubTitleButton.qml \
-        src/gui/harmattan/components/StationSelect.qml \
-        src/gui/harmattan/components/SwitchLabel.qml \
-        src/gui/harmattan/AboutPage.qml \
-        src/gui/harmattan/SettingsPage.qml \
-#        data/fahrplan2_harmattan.desktop \
-#        qtc_packaging/debian_harmattan/rules \
-#        qtc_packaging/debian_harmattan/README \
-#        qtc_packaging/debian_harmattan/copyright \
-#        qtc_packaging/debian_harmattan/control \
-#        qtc_packaging/debian_harmattan/compat \
-#        qtc_packaging/debian_harmattan/changelog \
-#        qtc_packaging/debian_harmattan/manifest.aegis
+        src/gui/ubuntu/MainPage.qml \
+        src/gui/ubuntu/JourneyResultsPage.qml \
+        src/gui/ubuntu/JourneyDetailsResultsPage.qml \
+        src/gui/ubuntu/TimeTableResultsPage.qml \
+        src/gui/ubuntu/main.qml \
+        src/gui/ubuntu/components/Scroller.qml \
+        src/gui/ubuntu/components/StationSelect.qml \
+        src/gui/ubuntu/components/DatePicker.qml \
+        src/gui/ubuntu/components/TimePicker.qml \
+        src/gui/ubuntu/AboutPage.qml \
+        src/gui/ubuntu/SettingsPage.qml \
+        data/fahrplan2_ubuntu.desktop \
+        qtc_packaging/ubuntu/changelog \
+        qtc_packaging/ubuntu/compat \
+        qtc_packaging/ubuntu/control \
+        qtc_packaging/ubuntu/copyright \
+        qtc_packaging/ubuntu/rules \
+        qtc_packaging/ubuntu/source/format
 
     QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -pie -rdynamic
