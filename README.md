@@ -51,7 +51,7 @@ Please consult the COMPILE.md file.
 Source:
 -------
 
-Source code for all version is available at github.com/smurfy/fahrplan.
+Source code for all version is available at http://github.com/smurfy/fahrplan.
 For old no longer maintained code of fahrplan (used on the N900 only) visit:
 https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan
 
