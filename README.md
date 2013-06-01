@@ -1,8 +1,15 @@
-Fahrplan for N950, N9, newer Symbian Phones, Blackberry 10 and Ubuntu Touch
-===========================================================================
+Fahrplan
+========
 
 A journey planner and timetable application for a lot of train and
 public transport lines in Europe and Australia.
+
+Supported devices:
+------------------
+* N9(50)
+* new Symbian phones (Belle and Anna)
+* Blackberry 10
+* Ubuntu Touch
 
 Fahrplan features:
 ------------------
