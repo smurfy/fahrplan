@@ -57,7 +57,7 @@ based on arm architecture and Ubuntu 13.04 (raring) using pbuilder:
 (add the Ubuntu Touch SDK ppa to your build environment when asked:
 http://ppa.launchpad.net/ubuntu-sdk-team/ppa/ubuntu)
 
-        cp -r qtc_packaging/ubuntu debian
+	cp -r qtc_packaging/ubuntu debian
 	pbuilder -p raring-armhf
 
 
