@@ -1,5 +1,5 @@
-Compiling Fahrplan for your platform from source
-================================================
+Compiling fahrplan from source
+==============================
 
 Test application
 ----------------
@@ -33,7 +33,11 @@ Ubuntu Touch
 
 Can be compiled with Qt5. Requires ubuntu-ui-toolkit. [2]
 
+Install the ubuntu-sdk
+
 	sudo apt-get install ubuntu-sdk
+	
+Compile
 
 	QT_SELECT=qt5 qmake fahrplan2.pro CONFIG+=ubuntu
 	make
@@ -53,6 +57,7 @@ based on arm architecture and Ubuntu 13.04 (raring) using pbuilder:
 (add the Ubuntu Touch SDK ppa to your build environment when asked:
 http://ppa.launchpad.net/ubuntu-sdk-team/ppa/ubuntu)
 
+        cp -r qtc_packaging/ubuntu debian
 	pbuilder -p raring-armhf
 
 

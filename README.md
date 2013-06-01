@@ -1,8 +1,15 @@
-Fahrplan for N950, N9, newer Symbian Phones, Blackberry 10 and Ubuntu Touch
-===========================================================================
+Fahrplan
+========
 
 A journey planner and timetable application for a lot of train and
 public transport lines in Europe and Australia.
+
+Supported devices:
+------------------
+* N9(50)
+* new Symbian phones (Belle and Anna)
+* Blackberry 10
+* Ubuntu Touch
 
 Fahrplan features:
 ------------------
@@ -44,7 +51,7 @@ Please consult the COMPILE.md file.
 Source:
 -------
 
-Source code for all version is available at github.com/smurfy/fahrplan.
+Source code for all version is available at http://github.com/smurfy/fahrplan.
 For old no longer maintained code of fahrplan (used on the N900 only) visit:
 https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan
 
