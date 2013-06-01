@@ -27,6 +27,10 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtXml/QDomDocument>
 
+#if defined(BUILD_FOR_QT5)
+    #include <QUrlQuery>
+#endif
+
 const qlonglong ParserXmlVasttrafikSe::ERR_UNKNOWN_STATION = 0;
 const qlonglong ParserXmlVasttrafikSe::ERR_INVALID_STATION = -1;
 
@@ -80,21 +84,31 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const QString &stationName, c
         return;
     }
 
-    QUrl url(baseRestUrl + (mode == Departure ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
-    url.addQueryItem("authKey", apiKey);
-    url.addQueryItem("format", "xml");
-    url.addQueryItem("date", date.toString("yyyy-MM-dd"));
-    url.addQueryItem("time", time.toString("hh:mm"));
-    url.addQueryItem("id", QString::number(stationId));
-    url.addQueryItem("useVas", "1");
-    url.addQueryItem("useLDTrain", "0");
-    url.addQueryItem("useRegTrain", "1");
-    url.addQueryItem("useBus", "1");
-    url.addQueryItem("useBoat", "1");
-    url.addQueryItem("useTram", "1");
-    url.addQueryItem("excludeDR", "1");
+    QUrl uri(baseRestUrl + (mode == Departure ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
 
-    sendHttpRequest(url);
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+#else
+    QUrl query;
+#endif
+    query.addQueryItem("authKey", apiKey);
+    query.addQueryItem("format", "xml");
+    query.addQueryItem("date", date.toString("yyyy-MM-dd"));
+    query.addQueryItem("time", time.toString("hh:mm"));
+    query.addQueryItem("id", QString::number(stationId));
+    query.addQueryItem("useVas", "1");
+    query.addQueryItem("useLDTrain", "0");
+    query.addQueryItem("useRegTrain", "1");
+    query.addQueryItem("useBus", "1");
+    query.addQueryItem("useBoat", "1");
+    query.addQueryItem("useTram", "1");
+    query.addQueryItem("excludeDR", "1");
+#if defined(BUILD_FOR_QT5)
+    uri.setQuery(query);
+#else
+    uri.setQueryItems(query.queryItems());
+#endif
+    sendHttpRequest(uri);
 }
 
 void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
@@ -105,12 +119,21 @@ void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
         return;
     currentRequestState = FahrplanNS::stationsByNameRequest;
 
-    QUrl url(baseRestUrl + QLatin1String("location.name"));
-    url.addQueryItem("authKey", apiKey);
-    url.addQueryItem("format", "xml");
-    url.addQueryItem("input", stationName);
-
-    sendHttpRequest(url);
+    QUrl uri(baseRestUrl + QLatin1String("location.name"));
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+#else
+    QUrl query;
+#endif
+    query.addQueryItem("authKey", apiKey);
+    query.addQueryItem("format", "xml");
+    query.addQueryItem("input", stationName);
+#if defined(BUILD_FOR_QT5)
+    uri.setQuery(query);
+#else
+    uri.setQueryItems(query.queryItems());
+#endif
+    sendHttpRequest(uri);
 }
 
 void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal latitude)
@@ -121,14 +144,23 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
         return;
     currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
 
-    QUrl url(baseRestUrl + QLatin1String("location.nearbystops"));
-    url.addQueryItem("authKey", apiKey);
-    url.addQueryItem("format", "xml");
-    url.addQueryItem("originCoordLat", QString::number(latitude));
-    url.addQueryItem("originCoordLong", QString::number(longitude));
-    url.addQueryItem("maxNo", QString::number(5));
-
-    sendHttpRequest(url);
+    QUrl uri(baseRestUrl + QLatin1String("location.nearbystops"));
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+#else
+    QUrl query;
+#endif
+    query.addQueryItem("authKey", apiKey);
+    query.addQueryItem("format", "xml");
+    query.addQueryItem("originCoordLat", QString::number(latitude));
+    query.addQueryItem("originCoordLong", QString::number(longitude));
+    query.addQueryItem("maxNo", QString::number(5));
+#if defined(BUILD_FOR_QT5)
+    uri.setQuery(query);
+#else
+    uri.setQueryItems(query.queryItems());
+#endif
+    sendHttpRequest(uri);
 }
 
 void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
@@ -205,27 +237,36 @@ void ParserXmlVasttrafikSe::searchJourney(const QString &departureStation, const
         return;
     }
 
-    QUrl url(baseRestUrl + QLatin1String("trip"));
-    url.addQueryItem("authKey", apiKey);
-    url.addQueryItem("format", "xml");
-    url.addQueryItem("date", date.toString("yyyy-MM-dd"));
-    url.addQueryItem("time", time.toString("hh:mm"));
-    url.addQueryItem("originId", QString::number(departureStationId));
+    QUrl uri(baseRestUrl + QLatin1String("trip"));
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+#else
+    QUrl query;
+#endif
+    query.addQueryItem("authKey", apiKey);
+    query.addQueryItem("format", "xml");
+    query.addQueryItem("date", date.toString("yyyy-MM-dd"));
+    query.addQueryItem("time", time.toString("hh:mm"));
+    query.addQueryItem("originId", QString::number(departureStationId));
     if (viaStationId > 0)
-        url.addQueryItem("viaId", QString::number(viaStationId));
+        query.addQueryItem("viaId", QString::number(viaStationId));
     if (mode == Arrival)
-        url.addQueryItem("searchForArrival", "yes");
-    url.addQueryItem("destId", QString::number(arrivalStationId));
-    url.addQueryItem("useVas", "1");
-    url.addQueryItem("useLDTrain", "0");
-    url.addQueryItem("useRegTrain", "1");
-    url.addQueryItem("useBus", "1");
-    url.addQueryItem("useBoat", "1");
-    url.addQueryItem("useTram", "1");
-    url.addQueryItem("excludeDR", "1");
-    url.addQueryItem("numTrips", "5");
-
-    sendHttpRequest(url);
+        query.addQueryItem("searchForArrival", "yes");
+    query.addQueryItem("destId", QString::number(arrivalStationId));
+    query.addQueryItem("useVas", "1");
+    query.addQueryItem("useLDTrain", "0");
+    query.addQueryItem("useRegTrain", "1");
+    query.addQueryItem("useBus", "1");
+    query.addQueryItem("useBoat", "1");
+    query.addQueryItem("useTram", "1");
+    query.addQueryItem("excludeDR", "1");
+    query.addQueryItem("numTrips", "5");
+#if defined(BUILD_FOR_QT5)
+    uri.setQuery(query);
+#else
+    uri.setQueryItems(query.queryItems());
+#endif
+    sendHttpRequest(uri);
 }
 
 void ParserXmlVasttrafikSe::getJourneyDetails(const QString &id)
@@ -267,7 +308,12 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
 
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query(networkReply->url().query());
+    const QString stationNameFromQueryString = query.queryItemValue(QLatin1String("input"));
+#else
     const QString stationNameFromQueryString = networkReply->url().queryItemValue(QLatin1String("input"));
+#endif
     if (!stationNameFromQueryString.isEmpty()) {
         /// just in case the station does not exist for this provider
         cachedStationNameToId[stationNameFromQueryString] = ERR_INVALID_STATION;

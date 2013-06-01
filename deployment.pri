@@ -81,7 +81,11 @@ symbian {
             QMAKE_EXTRA_TARGETS += first copydeploymentfolders
         }
     }
-    installPrefix = /opt/$${TARGET}
+    ubuntu {
+        installPrefix = /usr/
+    } else {
+        installPrefix = /opt/$${TARGET}
+    }
     for(deploymentfolder, DEPLOYMENTFOLDERS) {
         item = item$${deploymentfolder}
         itemfiles = $${item}.files
@@ -107,6 +111,11 @@ symbian {
         export(splash.files)
         export(splash.path)
         INSTALLS += splash
+    } else:ubuntu {
+        desktopfile.files = data/$${TARGET}_ubuntu.desktop
+        desktopfile.path = /usr/share/applications
+        icon.files = data/$${TARGET}-square.svg
+        icon.path = /usr/share/icons/hicolor/scalable/apps
     }
     target.path = $${installPrefix}/bin
     export(icon.files)

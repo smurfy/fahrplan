@@ -24,6 +24,10 @@
 #include <QNetworkReply>
 #include <QXmlStreamReader>
 
+#if defined(BUILD_FOR_QT5)
+  #include <QUrlQuery>
+#endif
+
 ParserHafasXml::ParserHafasXml(QObject *parent) :
     ParserAbstract(parent)
 {
@@ -86,20 +90,30 @@ void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QS
 
     if (STTableMode == 1) {
         QString trainrestr = getTrainRestrictionsCodes(getTimeTableForStationRequestData.trainrestrictions);
-        QUrl url(baseSTTableUrl);
-        url.addQueryItem("productsFilter", trainrestr);
+        QUrl uri(baseSTTableUrl);
+#if defined(BUILD_FOR_QT5)
+        QUrlQuery query;
+#else
+        QUrl query;
+#endif
+        query.addQueryItem("productsFilter", trainrestr);
         if (getTimeTableForStationRequestData.mode == Departure) {
-            url.addQueryItem("boardType", "dep");
+            query.addQueryItem("boardType", "dep");
         } else /* (getTimeTableForStationRequestData.mode == Arrival) */ {
-            url.addQueryItem("boardType", "arr");
+            query.addQueryItem("boardType", "arr");
         }
-        url.addQueryItem("date", getTimeTableForStationRequestData.date.toString("dd.MM.yyyy"));
-        url.addQueryItem("time", getTimeTableForStationRequestData.time.toString("hh:mm"));
-        url.addQueryItem("input", stationName);
-        url.addQueryItem("maxJourneys", "50");
-        url.addQueryItem("start", "yes");
-        url.addQueryItem("L", "vs_java3");
-        sendHttpRequest(url);
+        query.addQueryItem("date", getTimeTableForStationRequestData.date.toString("dd.MM.yyyy"));
+        query.addQueryItem("time", getTimeTableForStationRequestData.time.toString("hh:mm"));
+        query.addQueryItem("input", stationName);
+        query.addQueryItem("maxJourneys", "50");
+        query.addQueryItem("start", "yes");
+        query.addQueryItem("L", "vs_java3");
+#if defined(BUILD_FOR_QT5)
+        uri.setQuery(query);
+#else
+        uri.setQueryItems(query.queryItems());
+#endif
+        sendHttpRequest(uri);
     }
 }
 
@@ -125,7 +139,7 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 {
     TimeTableResultList *result = new TimeTableResultList();
 
-    QString data = networkReply->readAll();
+    QString data = QString::fromLatin1(networkReply->readAll());
 
     //Add a root element, because its sometimes missing
     if (data.indexOf("StationTable") == -1) {
@@ -205,9 +219,13 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 
 void ParserHafasXml::parseTimeTableMode0Part1(QNetworkReply *networkReply)
 {
-    QString data = networkReply->readAll();
+    QString data = QString::fromLatin1(networkReply->readAll());
 
+#if defined(BUILD_FOR_QT5)
+    ParserHafasXmlExternalIds extIds = parseExternalIds(data.toUtf8());
+#else
     ParserHafasXmlExternalIds extIds = parseExternalIds(data.toAscii());
+#endif
     if (!extIds.departureId.isEmpty()) {
 
         currentRequestState = FahrplanNS::getTimeTableForStationRequest;
@@ -256,7 +274,7 @@ void ParserHafasXml::parseTimeTableMode0Part2(QNetworkReply *networkReply)
 {
     TimeTableResultList *result = new TimeTableResultList();
 
-    QString data = QString::fromUtf8(networkReply->readAll());
+    QString data = QString::fromLatin1(networkReply->readAll());
 
     QXmlStreamReader xml;
     xml.addData(data);
@@ -373,21 +391,30 @@ void ParserHafasXml::findStationsByCoordinates(qreal longitude, qreal latitude)
     regexp.indexIn(sLatitude);
     sLatitude = regexp.cap(1) + regexp.cap(2);
 
-    QUrl fullUrl(baseUrl + "/eol");
-    fullUrl.addQueryItem("look_x", sLongitude);
-    fullUrl.addQueryItem("look_y", sLatitude);
-    fullUrl.addQueryItem("performLocating", "2");
-    fullUrl.addQueryItem("tpl", "stopsnear");
-    fullUrl.addQueryItem("L", "vs_java");
-    fullUrl.addQueryItem("look_maxdist", "5000");
-    fullUrl.addQueryItem("look_maxno", "40");
-
-    sendHttpRequest(fullUrl);
+    QUrl uri(baseUrl + "/eol");
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+#else
+    QUrl query;
+#endif
+    query.addQueryItem("look_x", sLongitude);
+    query.addQueryItem("look_y", sLatitude);
+    query.addQueryItem("performLocating", "2");
+    query.addQueryItem("tpl", "stopsnear");
+    query.addQueryItem("L", "vs_java");
+    query.addQueryItem("look_maxdist", "5000");
+    query.addQueryItem("look_maxno", "40");
+#if defined(BUILD_FOR_QT5)
+    uri.setQuery(query);
+#else
+    uri.setQueryItems(query.queryItems());
+#endif
+    sendHttpRequest(uri);
 }
 
 void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)
 {
-    QString data = networkReply->readAll();
+    QString data = QString::fromLatin1(networkReply->readAll());
     StationsResultList *result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
@@ -428,7 +455,7 @@ StationsResultList* ParserHafasXml::internalParseStationsByName(const QString &d
 
 void ParserHafasXml::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
-    QString data = QString::fromUtf8(networkReply->readAll());
+    QString data = QString::fromLatin1(networkReply->readAll());
     StationsResultList *result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
@@ -912,6 +939,7 @@ void ParserHafasXml::getJourneyDetails(const QString &id)
 
 JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray data)
 {
+    qDebug() << ";;;;;;;;;;;;;;;" << data;
     JourneyDetailResultList *results = new JourneyDetailResultList();
 
     QBuffer readBuffer;

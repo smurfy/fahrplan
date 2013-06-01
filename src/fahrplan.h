@@ -60,6 +60,7 @@ class Fahrplan : public QObject
 
     private slots:
         void onParserChanged(const QString &name, int index);
+        void bindParserSignals();
 
     private:
         static FahrplanBackendManager *m_parser_manager;
