@@ -1,22 +1,37 @@
 Fahrplan for N950, N9, newer Symbian Phones, Blackberry 10 and Ubuntu Touch
+A journey planner and timetable application for a lot of train and
+public transport lines in Europe and Australia.
 
-A Journey planner/Railway Time table for many train lines in europe and australia.
+Fahrplan features:
+* Plan a journey from one station/stop to another (with one via station
+  if supported by provider).
+* Select type of transportation (depends on provider).
+* Real-time timetable information for a station/stop (with direction if
+  supported by provider).
+* Find a nearby station based on your GPS location (if supported by
+  provider).
+* Add station to favorites for quick access in future.
+* Add journey to calendar.
 
-Current supported backends are:
-* bahn.de (germany and europe)
-* sbb.ch (swiss)
-* www.131500.com.au (nsw, australia)
-* rejseplanen.dk (denmark)
-* oebb.at (austria)
-* reiseinfo.no (norway)
-* vasttrafik.se (western sweden)
+Currently supported providers are:
+* bahn.de (Germany and Europe) - supports via station and GPS location.
+* sbb.ch (Switzerland) - support via station, timetable with direction
+  and GPS location.
+* 131500.com.au (NSW, Australia) - only journey planing supported.
+* rejseplanen.dk (Denmark) - supports via station and GPS location.
+* oebb.at (Austria) - supports via station and GPS location.
+* reiseinfo.no (Norway) - supports GPS location.
+* vasttrafik.se (western Sweden) - supports via station and GPS
+  location.
 
-To install Fahrplan on your N9, N950 or Symbian phone, visit the Store and search for fahrplan.
+To install Fahrplan on your N9, N950, Symbian or BlackBerry 10 phone,
+visit the corresponding application Store and search for fahrplan.
 
 Project:
 https://garage.maemo.org/projects/fahrplan/
 
-You find here all new Code for the new Fahrplan. Old N900 only code is still available at
+You find here all new Code for the new Fahrplan. Old N900 only code is
+still available at
 https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan
 
 Compiling:
