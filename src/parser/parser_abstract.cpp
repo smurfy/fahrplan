@@ -90,7 +90,12 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
 {
     QNetworkRequest request;
     request.setUrl(url);
+#if defined(BUILD_FOR_QT5)
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    request.setRawHeader("User-Agent", userAgent.toLatin1());
+#else
     request.setRawHeader("User-Agent", userAgent.toAscii());
+#endif
     request.setRawHeader("Cache-Control", "no-cache");
 
     if (data.isNull()) {

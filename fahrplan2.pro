@@ -23,7 +23,14 @@ exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmat
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-QT += declarative xmlpatterns network xml
+
+contains(QT_VERSION, ^5\\..\\..*) {
+  QT += quick qml xmlpatterns network xml widgets
+  DEFINES += BUILD_FOR_QT5
+} else {
+  QT += declarative xmlpatterns network xml
+}
+
 blackberry: QT += opengl
 maemo5:QT += maemo5
 
@@ -92,7 +99,9 @@ translate_hack {
         src/gui/harmattan/*.qml \
         src/gui/harmattan/components/*.qml \
         src/gui/symbian/*.qml \
-        src/gui/symbian/components/*.qml
+        src/gui/symbian/components/*.qml \
+        src/gui/ubuntu/*.qml \
+        src/gui/ubuntu/components/*.qml
 }
 
 contains(MEEGO_EDITION,harmattan) {
@@ -122,6 +131,35 @@ contains(MEEGO_EDITION,harmattan) {
     QMAKE_LFLAGS += -pie -rdynamic
     DEFINES += BUILD_FOR_HARMATTAN HAVE_DECLARATIVE_CACHE
     CONFIG += qt-boostable qdeclarative-boostable
+}
+
+ubuntu: {
+    message("Ubuntu build")
+    RESOURCES += ubuntu_res.qrc
+
+    OTHER_FILES += \
+        src/gui/harmattan/MainPage.qml \
+        src/gui/harmattan/JourneyResultsPage.qml \
+        src/gui/harmattan/JourneyDetailsResultsPage.qml \
+        src/gui/harmattan/TimeTableResultsPage.qml \
+        src/gui/harmattan/main.qml \
+        src/gui/harmattan/components/SubTitleButton.qml \
+        src/gui/harmattan/components/StationSelect.qml \
+        src/gui/harmattan/components/SwitchLabel.qml \
+        src/gui/harmattan/AboutPage.qml \
+        src/gui/harmattan/SettingsPage.qml \
+#        data/fahrplan2_harmattan.desktop \
+#        qtc_packaging/debian_harmattan/rules \
+#        qtc_packaging/debian_harmattan/README \
+#        qtc_packaging/debian_harmattan/copyright \
+#        qtc_packaging/debian_harmattan/control \
+#        qtc_packaging/debian_harmattan/compat \
+#        qtc_packaging/debian_harmattan/changelog \
+#        qtc_packaging/debian_harmattan/manifest.aegis
+
+    QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
+    QMAKE_LFLAGS += -pie -rdynamic
+    DEFINES += BUILD_FOR_UBUNTU
 }
 
 maemo5 {

@@ -22,6 +22,9 @@
 
 #include <QNetworkReply>
 
+#if defined(BUILD_FOR_QT5)
+    #include <QUrlQuery>
+#endif
 
 ParserHafasBinary::ParserHafasBinary(QObject *parent) :
     ParserHafasXml(parent)
@@ -45,6 +48,26 @@ void ParserHafasBinary::searchJourney(const QString &departureStation, const QSt
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
     QUrl uri = baseBinaryUrl;
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+    query.addQueryItem("start", "Suchen");
+    query.addQueryItem("REQ0JourneyStopsS0A", "1");
+    query.addQueryItem("REQ0JourneyStopsS0G", departureStation);
+    query.addQueryItem("REQ0JourneyStopsZ0A", "1");
+    query.addQueryItem("REQ0JourneyStopsZ0G", arrivalStation);
+
+    if (!viaStation.isEmpty()) {
+        query.addQueryItem("REQ0JourneyStops1.0A", "1");
+        query.addQueryItem("REQ0JourneyStops1.0G", viaStation);
+    }
+
+    query.addQueryItem("REQ0JourneyDate", date.toString("dd.MM.yyyy"));
+    query.addQueryItem("REQ0JourneyTime", time.toString("hh:mm"));
+    query.addQueryItem("REQ0HafasSearchForw", QString::number(mode));
+    query.addQueryItem("REQ0JourneyProduct_prod_list_1", trainrestr);
+    query.addQueryItem("h2g-direct", "11");
+    uri.setQuery(query);
+#else
     uri.addQueryItem("start", "Suchen");
     uri.addQueryItem("REQ0JourneyStopsS0A", "1");
     uri.addQueryItem("REQ0JourneyStopsS0G", departureStation);
@@ -61,6 +84,7 @@ void ParserHafasBinary::searchJourney(const QString &departureStation, const QSt
     uri.addQueryItem("REQ0HafasSearchForw", QString::number(mode));
     uri.addQueryItem("REQ0JourneyProduct_prod_list_1", trainrestr);
     uri.addQueryItem("h2g-direct", "11");
+#endif
     sendHttpRequest(uri);
 }
 
@@ -80,7 +104,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     QByteArray buffer = gzipDecompress(tmpBuffer);
 
     /*
-    QFile file("f://out.txt");
+    QFile file("/tmp/out.txt");
     file.open(QIODevice::WriteOnly);
     file.write(buffer);
     file.close();
@@ -131,12 +155,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     //Read strings
     hafasData.device()->seek(stringTablePtr);
     QMap<int, QString> strings;
-    QString tmpString;
+    QByteArray tmpString;
     for (int num = 0; num < (serviceDaysTablePtr - stringTablePtr); num++) {
         qint8 c;
         hafasData>>c;
         if (c == 0) {
-            strings.insert((num - tmpString.length()), tmpString.trimmed());
+            strings.insert((num - tmpString.length()), QString::fromLatin1(tmpString.trimmed()));
             tmpString.clear();
         } else {
             tmpString.append((char)c);
@@ -478,6 +502,17 @@ void ParserHafasBinary::searchJourneyLater()
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
 
     QUrl uri = baseBinaryUrl;
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+    query.addQueryItem("seqnr", hafasContext.seqNr);
+    query.addQueryItem("ident", hafasContext.ident);
+    query.addQueryItem("REQ0HafasScrollDir", "1");
+    query.addQueryItem("h2g-direct", "11");
+    if (!hafasContext.ld.isEmpty()) {
+        query.addQueryItem("ld", hafasContext.ld);
+    }
+    uri.setQuery(query);
+#else
     uri.addQueryItem("seqnr", hafasContext.seqNr);
     uri.addQueryItem("ident", hafasContext.ident);
     uri.addQueryItem("REQ0HafasScrollDir", "1");
@@ -485,6 +520,7 @@ void ParserHafasBinary::searchJourneyLater()
     if (!hafasContext.ld.isEmpty()) {
         uri.addQueryItem("ld", hafasContext.ld);
     }
+#endif
     sendHttpRequest(uri);
 }
 
@@ -502,6 +538,17 @@ void ParserHafasBinary::searchJourneyEarlier()
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
 
     QUrl uri = baseBinaryUrl;
+#if defined(BUILD_FOR_QT5)
+    QUrlQuery query;
+    query.addQueryItem("seqnr", hafasContext.seqNr);
+    query.addQueryItem("ident", hafasContext.ident);
+    query.addQueryItem("REQ0HafasScrollDir", "2");
+    query.addQueryItem("h2g-direct", "11");
+    if (!hafasContext.ld.isEmpty()) {
+        query.addQueryItem("ld", hafasContext.ld);
+    }
+    uri.setQuery(query);
+#else
     uri.addQueryItem("seqnr", hafasContext.seqNr);
     uri.addQueryItem("ident", hafasContext.ident);
     uri.addQueryItem("REQ0HafasScrollDir", "2");
@@ -509,6 +556,7 @@ void ParserHafasBinary::searchJourneyEarlier()
     if (!hafasContext.ld.isEmpty()) {
         uri.addQueryItem("ld", hafasContext.ld);
     }
+#endif
     sendHttpRequest(uri);
 }
 
@@ -549,7 +597,7 @@ QDateTime ParserHafasBinary::toTime(quint16 time, QDate baseDate)
 QDate ParserHafasBinary::toDate(quint16 date)
 {
     QDate tmpDate;
-    tmpDate.setYMD(1980, 1, 1);
+    tmpDate.setDate(1980, 1, 1);
     return tmpDate.addDays(date - 1);
 }
 
