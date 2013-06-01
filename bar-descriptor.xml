@@ -6,7 +6,7 @@
     <!-- <authorId></authorId> -->
     <name>Fahrplan</name>
     <versionNumber>2.0.13</versionNumber>
-    <description>A Journey planner/Railway Time table for many train lines in Europe and Australia</description>
+    <description>A journey planner and timetable application for a lot of train and public transport lines in Europe and Australia.</description>
     <initialWindow>
         <systemChrome>none</systemChrome>
         <transparent>false</transparent>
