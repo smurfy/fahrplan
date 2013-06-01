@@ -455,7 +455,8 @@ StationsResultList* ParserHafasXml::internalParseStationsByName(const QString &d
 
 void ParserHafasXml::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
-    QString data = QString::fromLatin1(networkReply->readAll());
+    //Normally hafas returns the data as Latin1, but here we get utf8.
+    QString data = QString::fromUtf8(networkReply->readAll());
     StationsResultList *result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
