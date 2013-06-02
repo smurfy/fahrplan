@@ -21,11 +21,70 @@
 #include "fahrplan_favorites_manager.h"
 
 FahrplanFavoritesManager::FahrplanFavoritesManager(QObject *parent) :
-    QObject(parent)
+    QAbstractListModel(parent)
 {
-    settings = new QSettings("smurfy", "fahrplan2");
+    settings = new QSettings("smurfy", "fahrplan2", this);
+
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+    setRoleNames(roleNames());
+#endif
+
     favorites = settings->value("favorites", favorites).toStringList();
     favorites.sort();
+}
+
+QHash<int, QByteArray> FahrplanFavoritesManager::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles.insert(Name, "name");
+    roles.insert(Process, "process");
+    roles.insert(Internal, "internal");
+    roles.insert(IsFavorite, "isfavorite");
+    roles.insert(ShowFavorite, "showfavorite");
+    roles.insert(MiscInfo, "miscinfo");
+    return roles;
+}
+
+int FahrplanFavoritesManager::rowCount(const QModelIndex &parent) const
+{
+    if (parent.isValid())
+        return 0;
+
+    return favorites.count();
+}
+
+QVariant FahrplanFavoritesManager::data(const QModelIndex &index, int role) const
+{
+    if (!index.isValid() || (index.row() < 0) || (index.row() >= favorites.count()))
+        return QVariant();
+
+    switch (role) {
+    case Name:
+        return favorites.at(index.row());
+        break;
+    case Process:
+        return false;
+        break;
+    case Internal:
+        return false;
+        break;
+    case IsFavorite:
+        return true;
+        break;
+    case ShowFavorite:
+        return true;
+        break;
+    case MiscInfo:
+        return "";
+        break;
+    default:
+        return QVariant();
+    }
+}
+
+int FahrplanFavoritesManager::count() const
+{
+    return rowCount();
 }
 
 QStringList FahrplanFavoritesManager::getFavorites()
@@ -36,9 +95,12 @@ QStringList FahrplanFavoritesManager::getFavorites()
 void FahrplanFavoritesManager::addFavorite(const QString &name)
 {
     if (!isFavorite(name)) {
+        beginResetModel();
         favorites.append(name);
         favorites.removeDuplicates();
         favorites.sort();
+        endResetModel();
+        emit countChanged();
         emit favoritesChanged(favorites);
         settings->setValue("favorites", favorites);
     }
@@ -46,16 +108,25 @@ void FahrplanFavoritesManager::addFavorite(const QString &name)
 
 void FahrplanFavoritesManager::removeFavorite(const QString &name)
 {
-    if (isFavorite(name)) {
-        int index = favorites.indexOf(name);
-        favorites.removeAt(index);
-        favorites.sort();
-        emit favoritesChanged(favorites);
-        settings->setValue("favorites", favorites);
-    }
+    int index = favorites.indexOf(name);
+    if (index >=0)
+        removeFavorite(index);
 }
 
-bool FahrplanFavoritesManager::isFavorite(const QString &name)
+void FahrplanFavoritesManager::removeFavorite(int index)
+{
+    if ((index < 0) || (index >= favorites.count()))
+        return;
+
+    beginRemoveRows(QModelIndex(), index, index);
+    favorites.removeAt(index);
+    endRemoveRows();
+    emit countChanged();
+    emit favoritesChanged(favorites);
+    settings->setValue("favorites", favorites);
+}
+
+bool FahrplanFavoritesManager::isFavorite(const QString &name) const
 {
     return favorites.contains(name);
 }

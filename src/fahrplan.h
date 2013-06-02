@@ -30,7 +30,7 @@ class Fahrplan : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(ParserAbstract *parser READ parser)
-    Q_PROPERTY(FahrplanFavoritesManager *favorites READ favorites)
+    Q_PROPERTY(FahrplanFavoritesManager *favorites READ favorites CONSTANT)
     Q_PROPERTY(QString parserName READ parserName)
     Q_PROPERTY(QString version READ getVersion)
 

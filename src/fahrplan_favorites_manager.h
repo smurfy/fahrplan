@@ -23,21 +23,40 @@
 
 #include <QSettings>
 #include <QStringList>
+#include <QAbstractListModel>
 
-class FahrplanFavoritesManager : public QObject
+class FahrplanFavoritesManager: public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 
     public:
+        enum DisplayRoles {
+            Name = Qt::UserRole,
+            Process,
+            Internal,
+            IsFavorite,
+            ShowFavorite,
+            MiscInfo
+        };
+
         explicit FahrplanFavoritesManager(QObject *parent = 0);
 
+        int count() const;
+
+        QHash<int, QByteArray> roleNames() const;
+        int rowCount(const QModelIndex &parent = QModelIndex()) const;
+        QVariant data(const QModelIndex &index, int role = Name) const;
+
     public slots:
-        void addFavorite(const QString &name);
-        void removeFavorite(const QString &name);
-        bool isFavorite(const QString &name);
+        void addFavorite(const QString &index);
+        void removeFavorite(const QString &index);
+        void removeFavorite(int index);
+        bool isFavorite(const QString &name) const;
         QStringList getFavorites();
 
     signals:
+        void countChanged();
         void favoritesChanged(QStringList);
 
     private:
