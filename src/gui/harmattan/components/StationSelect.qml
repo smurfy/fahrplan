@@ -13,22 +13,6 @@ Page {
 
     signal stationSelected ( string name )
 
-    function updateFavorites()
-    {
-        stationsFavoritesModel.clear();
-        var favorites = fahrplanBackend.favorites.getFavorites();
-        for (var i = 0; i < favorites.length; i++) {
-            stationsFavoritesModel.append({
-                "name": favorites[i],
-                "process": false,
-                "internal": false,
-                "isfavorite": true,
-                "showfavorite": true,
-                "miscinfo": ""
-            })
-        }
-    }
-
     tools: stationSelectToolbar
 
     Item {
@@ -143,7 +127,7 @@ Page {
             text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
             color: "DarkGrey"
             font.pixelSize: 50
-            visible: (stationsFavoritesModel.count == 0 && listView.model == stationsFavoritesModel)
+            visible: (fahrplanBackend.favorites.count == 0 && listView.model == fahrplanBackend.favorites)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors {
@@ -164,10 +148,10 @@ Page {
             }
             height: parent.height - stationSelectToolbar.height
             width: parent.width
-            model: stationsFavoritesModel
+            model: fahrplanBackend.favorites
             delegate: stationsResultDelegate
             clip: true
-            visible: (stationsFavoritesModel.count > 0 && listView.model == stationsFavoritesModel) || listView.model == stationsResultModel
+            visible: (fahrplanBackend.favorites.count > 0 && listView.model == fahrplanBackend.favorites) || listView.model == stationsResultModel
         }
     }
 
@@ -279,10 +263,6 @@ Page {
         id: stationsResultModel
     }
 
-    ListModel {
-        id: stationsFavoritesModel
-    }
-
     ToolBarLayout {
         id:stationSelectToolbar
 
@@ -300,8 +280,7 @@ Page {
                 platformStyle: TabButtonStyle{}
                 iconSource: "image://theme/icon-m-toolbar-favorite-mark" + whiteSuffix
                 onClicked: {
-                    updateFavorites();
-                    listView.model = stationsFavoritesModel
+                    listView.model = fahrplanBackend.favorites
 
                     favIcon.checked = true;
                     searchIcon.checked = false;
@@ -329,10 +308,6 @@ Page {
     FahrplanBackend {
         id: fahrplanBackend
 
-        onParserChanged: {
-            updateFavorites();
-        }
-
         onParserStationsResult: {
             stationsResultModel.clear();
             for (var i = 0; i < result.count; i++) {
@@ -346,9 +321,6 @@ Page {
                     "miscinfo": item.miscInfo
                 });
             }
-        }
-        onFavoritesChanged: {
-            updateFavorites();
         }
     }
 
@@ -394,7 +366,6 @@ Page {
         switch (status) {
             case PageStatus.Activating:
                 gpsButton.visible = fahrplanBackend.parser.supportsGps() && (fahrplanBackend.getSettingsValue("enableGps", "true") == "true");
-                updateFavorites();
                 break;
         }
     }
