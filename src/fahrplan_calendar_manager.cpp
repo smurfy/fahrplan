@@ -9,6 +9,8 @@
 #ifdef BUILD_FOR_BLACKBERRY
 #   include <bb/pim/calendar/CalendarService>
 #   include <bb/pim/calendar/CalendarFolder>
+#   include <bb/pim/account/AccountService>
+#   include <bb/pim/account/Account>
 #else
 #   include <QOrganizerManager>
 #endif
@@ -139,12 +141,20 @@ void FahrplanCalendarManager::getCalendarsList()
     int folderId = settings->value("FolderId", -1).toInt();
 
     bb::pim::calendar::CalendarService service;
+    bb::pim::account::AccountService accservice;
     QList<bb::pim::calendar::CalendarFolder> folders = service.folders();
     foreach (const bb::pim::calendar::CalendarFolder &folder, folders) {
         if (!folder.isVisible() || folder.isReadOnly())
             continue;
 
-        m_calendars << CalendarInfo(folder.name(), folder.accountId(), folder.id());
+        QString account;
+        if (folder.accountId() == 1)
+            account = tr("Local Calendar");
+        else
+            account = accservice.account(folder.accountId()).displayName();
+        m_calendars << CalendarInfo(tr("%1 (%2)", "Calendar name (Account name)")
+                                    .arg(folder.name()).arg(account)
+                                    , folder.accountId(), folder.id());
         if ((folder.id() == folderId) && (folder.accountId() == accountId)) {
             m_selectedIndex = m_calendars.count() - 1;
             emit selectedIndexChanged();

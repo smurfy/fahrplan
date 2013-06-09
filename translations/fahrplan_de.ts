@@ -68,20 +68,31 @@
 <context>
     <name>FahrplanCalendarManager</name>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="94"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="101"/>
         <source>&lt;loading calendars list...&gt;</source>
         <translation type="unfinished">&lt;Kalender Liste wird geladen...&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="96"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="104"/>
         <source>&lt;invalid calendar&gt;</source>
         <translation type="unfinished">&lt;ungültiger Kalender&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="98"/>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="111"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="106"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="121"/>
         <source>Default Calendar</source>
         <translation type="unfinished">Standard Kalender</translation>
+    </message>
+    <message>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="152"/>
+        <source>Local Calendar</source>
+        <translation type="unfinished">Lokaler Kalender</translation>
+    </message>
+    <message>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="155"/>
+        <source>%1 (%2)</source>
+        <comment>Calendar name (Account name)</comment>
+        <translation></translation>
     </message>
 </context>
 <context>

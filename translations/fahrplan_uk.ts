@@ -69,20 +69,31 @@
 <context>
     <name>FahrplanCalendarManager</name>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="94"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="101"/>
         <source>&lt;loading calendars list...&gt;</source>
         <translation>&lt;завантаження переліку календарів...&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="96"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="104"/>
         <source>&lt;invalid calendar&gt;</source>
         <translation>&lt;недійсний календар&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="98"/>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="111"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="106"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="121"/>
         <source>Default Calendar</source>
         <translation>Календар за промовчанням</translation>
+    </message>
+    <message>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="152"/>
+        <source>Local Calendar</source>
+        <translation>Локальний</translation>
+    </message>
+    <message>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="155"/>
+        <source>%1 (%2)</source>
+        <comment>Calendar name (Account name)</comment>
+        <translation></translation>
     </message>
 </context>
 <context>
