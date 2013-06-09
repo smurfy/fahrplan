@@ -20,16 +20,6 @@
 
 #include "fahrplan_backend_manager.h"
 
-#include "parser/parser_hafasxml.h"
-#include "parser/parser_hafasbinary.h"
-#include "parser/parser_xmloebbat.h"
-#include "parser/parser_xmlvasttrafikse.h"
-#include "parser/parser_xmlrejseplanendk.h"
-#include "parser/parser_xmlsbbch.h"
-#include "parser/parser_xmlnri.h"
-#include "parser/parser_mobilebahnde.h"
-#include "parser/parser_131500comau.h"
-
 FahrplanBackendManager::FahrplanBackendManager(int defaultParser, QObject *parent) :
     QObject(parent)
 {
@@ -50,7 +40,7 @@ QStringList FahrplanBackendManager::getParserList()
     return result;
 }
 
-ParserAbstract *FahrplanBackendManager::getParser()
+FahrplanParserThread *FahrplanBackendManager::getParser()
 {
     if (!m_parser) {
         setParser(currentParserIndex);
@@ -70,31 +60,8 @@ void FahrplanBackendManager::setParser(int index)
         delete m_parser;
     }
 
-    switch (index) {
-        default:
-            currentParserIndex = 0;
-        case 0:
-            m_parser = new ParserMobileBahnDe();
-            break;
-        case 1:
-            m_parser = new ParserXmlOebbAt();
-            break;
-        case 2:
-            m_parser = new ParserXmlRejseplanenDk();
-            break;
-        case 3:
-            m_parser = new ParserXmlSbbCh();
-            break;
-        case 4:
-            m_parser = new Parser131500ComAu();
-            break;
-        case 5:
-            m_parser = new ParserXmlNri();
-            break;
-        case 6:
-            m_parser = new ParserXmlVasttrafikSe();
-            break;
-    }
+    m_parser = new FahrplanParserThread();
+    m_parser->init(index);
 
     emit parserChanged(m_parser->name(), currentParserIndex);
 }

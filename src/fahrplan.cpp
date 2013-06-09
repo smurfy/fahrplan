@@ -66,7 +66,7 @@ QString Fahrplan::getSettingsValue(const QString &key, const QString &defaultVal
     return settings->value(key, defaultValue).toString();
 }
 
-ParserAbstract* Fahrplan::parser()
+FahrplanParserThread* Fahrplan::parser()
 {
     return m_parser_manager->getParser();
 }
@@ -85,7 +85,6 @@ void Fahrplan::onParserChanged(const QString &name, int index)
 {
     //We need to reconnect all Signals to the new Parser
     bindParserSignals();
-
     emit parserChanged(name, index);
 }
 
