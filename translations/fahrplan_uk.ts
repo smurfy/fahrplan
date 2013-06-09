@@ -69,13 +69,18 @@
 <context>
     <name>FahrplanCalendarManager</name>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="87"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="94"/>
+        <source>&lt;loading calendars list...&gt;</source>
+        <translation>&lt;завантаження переліку календарів...&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="96"/>
         <source>&lt;invalid calendar&gt;</source>
         <translation>&lt;недійсний календар&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="89"/>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="99"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="98"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="111"/>
         <source>Default Calendar</source>
         <translation>Календар за промовчанням</translation>
     </message>

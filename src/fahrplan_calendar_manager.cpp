@@ -1,6 +1,8 @@
 #include "fahrplan_calendar_manager.h"
 
 #include <QSettings>
+#include <QtConcurrentRun>
+#include <QFutureWatcher>
 
 #ifdef BUILD_FOR_BLACKBERRY
 #   include <bb/pim/calendar/CalendarService>
@@ -19,7 +21,12 @@ FahrplanCalendarManager::FahrplanCalendarManager(QObject *parent)
 
     settings = new QSettings("smurfy", "fahrplan2", this);
 
-    reload();
+    m_watcher = new QFutureWatcher<void>(this);
+    connect(m_watcher, SIGNAL(finished()), SLOT(getCalendarsListFinished()));
+    connect(m_watcher, SIGNAL(started()), SIGNAL(selectedCalendarNameChanged()));
+
+    // Change of slectedIndex always changes selectedCalendarName
+    connect(this, SIGNAL(selectedIndexChanged()), SIGNAL(selectedCalendarNameChanged()));
 }
 
 int FahrplanCalendarManager::rowCount(const QModelIndex &parent) const
@@ -83,6 +90,8 @@ void FahrplanCalendarManager::setSelectedIndex(int index)
 
 QString FahrplanCalendarManager::selectedCalendarName() const
 {
+    if (m_watcher->isRunning())
+        return tr("<loading calendars list...>");
     if ((m_selectedIndex < 0) || (m_selectedIndex >= m_calendars.count()))
         return tr("<invalid calendar>");
     else if (m_selectedIndex == 0)
@@ -93,11 +102,24 @@ QString FahrplanCalendarManager::selectedCalendarName() const
 
 void FahrplanCalendarManager::reload()
 {
+    if (m_watcher->isRunning())
+        m_watcher->waitForFinished();
+
     beginResetModel();
 
     m_calendars.clear();
     m_calendars << CalendarInfo(tr("Default Calendar"));
+    m_selectedIndex = 0;
 
+    // Run fetch in a separate thread.
+    QFuture<void> future = QtConcurrent::run(this, &FahrplanCalendarManager::getCalendarsList);
+    m_watcher->setFuture(future);
+
+    // endResetModel() will be called in getCalendarsListFinished() function.
+}
+
+void FahrplanCalendarManager::getCalendarsList()
+{
     settings->beginGroup("Calendar");
 #ifdef BUILD_FOR_BLACKBERRY
     int accountId = settings->value("AccountId", -1).toInt();
@@ -156,15 +178,16 @@ void FahrplanCalendarManager::reload()
             continue;
 
         m_calendars << CalendarInfo(collection.metaData(QOrganizerCollection::KeyName).toString(), collection.id().toString());
-        if (collection.id() == collectionId) {
+        if (collection.id() == collectionId)
             m_selectedIndex = m_calendars.count() - 1;
-            emit selectedIndexChanged();
-        }
     }
 #endif
     settings->endGroup();
+}
 
+void FahrplanCalendarManager::getCalendarsListFinished()
+{
     endResetModel();
-
     emit countChanged();
+    emit selectedIndexChanged();
 }

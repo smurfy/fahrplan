@@ -26,12 +26,15 @@ struct CalendarInfo
 };
 
 class QSettings;
+template <typename T>
+class QFutureWatcher;
+
 class FahrplanCalendarManager: public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(int selectedIndex READ selectedIndex WRITE setSelectedIndex NOTIFY selectedIndexChanged)
-    Q_PROPERTY(QString selectedCalendarName READ selectedCalendarName NOTIFY selectedIndexChanged)
+    Q_PROPERTY(QString selectedCalendarName READ selectedCalendarName NOTIFY selectedCalendarNameChanged)
 
 public:
     explicit FahrplanCalendarManager(QObject *parent = 0);
@@ -51,12 +54,19 @@ public:
 signals:
     void countChanged();
     void selectedIndexChanged();
+    void selectedCalendarNameChanged();
 
 private:
     QSettings *settings;
+    QFutureWatcher<void> *m_watcher;
 
     QList<CalendarInfo> m_calendars;
     int m_selectedIndex;
+
+    void getCalendarsList();
+
+private slots:
+    void getCalendarsListFinished();
 };
 
 #endif // FAHRPLAN_CALENDAR_MANAGER_H
