@@ -22,6 +22,7 @@
 
 #include <QCoreApplication>
 #include <QThread>
+#include <QSettings>
 
 #ifdef BUILD_FOR_BLACKBERRY
 #   include <bb/pim/calendar/CalendarService>
@@ -81,10 +82,21 @@ void CalendarThreadWrapper::addToCalendar()
 
     desc.append(tr("\n(added by fahrplan app, please recheck informations before travel.)"));
 
+    QSettings settings("smurfy", "fahrplan2");
+
 #ifdef BUILD_FOR_BLACKBERRY
 
     CalendarService service;
-    QPair<AccountId, FolderId> folder = service.defaultCalendarFolder();
+
+    QPair<AccountId, FolderId> folder;
+
+    settings.beginGroup("Calendar");
+    folder.first = settings.value("AccountId", -1).toInt();
+    if (folder.first >= 0)
+        folder.second = settings.value("FolderId", -1).toInt();
+
+    if ((folder.first < 0) || (folder.second < 0))
+        folder = service.defaultCalendarFolder();
 
     CalendarEvent event;
     event.setAccountId(folder.first);
@@ -112,6 +124,13 @@ void CalendarThreadWrapper::addToCalendar()
     event.setDescription(desc);
     event.setStartDateTime(m_result->departureDateTime());
     event.setEndDateTime(m_result->arrivalDateTime());
+
+    QString id = settings.value("Calendar/CollectionId").toString();
+    if (!id.isEmpty()) {
+        QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);
+        if (!collectionId.isNull())
+            event.setCollectionId(collectionId);
+    }
 
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
 #endif
