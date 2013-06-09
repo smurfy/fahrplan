@@ -26,8 +26,10 @@ struct CalendarInfo
 };
 
 class QSettings;
+#ifndef QT_NO_CONCURRENT
 template <typename T>
 class QFutureWatcher;
+#endif
 
 class FahrplanCalendarManager: public QAbstractListModel
 {
@@ -58,7 +60,9 @@ signals:
 
 private:
     QSettings *settings;
+#ifndef QT_NO_CONCURRENT
     QFutureWatcher<void> *m_watcher;
+#endif
 
     QList<CalendarInfo> m_calendars;
     int m_selectedIndex;

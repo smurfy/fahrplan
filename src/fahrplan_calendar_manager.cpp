@@ -1,8 +1,10 @@
 #include "fahrplan_calendar_manager.h"
 
 #include <QSettings>
-#include <QtConcurrentRun>
-#include <QFutureWatcher>
+#ifndef QT_NO_CONCURRENT
+#   include <QtConcurrentRun>
+#   include <QFutureWatcher>
+#endif
 
 #ifdef BUILD_FOR_BLACKBERRY
 #   include <bb/pim/calendar/CalendarService>
@@ -21,9 +23,11 @@ FahrplanCalendarManager::FahrplanCalendarManager(QObject *parent)
 
     settings = new QSettings("smurfy", "fahrplan2", this);
 
+#ifndef QT_NO_CONCURRENT
     m_watcher = new QFutureWatcher<void>(this);
     connect(m_watcher, SIGNAL(finished()), SLOT(getCalendarsListFinished()));
     connect(m_watcher, SIGNAL(started()), SIGNAL(selectedCalendarNameChanged()));
+#endif
 
     // Change of slectedIndex always changes selectedCalendarName
     connect(this, SIGNAL(selectedIndexChanged()), SIGNAL(selectedCalendarNameChanged()));
@@ -90,8 +94,10 @@ void FahrplanCalendarManager::setSelectedIndex(int index)
 
 QString FahrplanCalendarManager::selectedCalendarName() const
 {
+#ifndef QT_NO_CONCURRENT
     if (m_watcher->isRunning())
         return tr("<loading calendars list...>");
+#endif
     if ((m_selectedIndex < 0) || (m_selectedIndex >= m_calendars.count()))
         return tr("<invalid calendar>");
     else if (m_selectedIndex == 0)
@@ -102,8 +108,10 @@ QString FahrplanCalendarManager::selectedCalendarName() const
 
 void FahrplanCalendarManager::reload()
 {
+#ifndef QT_NO_CONCURRENT
     if (m_watcher->isRunning())
         m_watcher->waitForFinished();
+#endif
 
     beginResetModel();
 
@@ -111,11 +119,16 @@ void FahrplanCalendarManager::reload()
     m_calendars << CalendarInfo(tr("Default Calendar"));
     m_selectedIndex = 0;
 
+#ifndef QT_NO_CONCURRENT
     // Run fetch in a separate thread.
     QFuture<void> future = QtConcurrent::run(this, &FahrplanCalendarManager::getCalendarsList);
     m_watcher->setFuture(future);
+#else
+    getCalendarsList();
+    getCalendarsListFinished();
+#endif
 
-    // endResetModel() will be called in getCalendarsListFinished() function.
+    // endResetModel() is called in getCalendarsListFinished() function.
 }
 
 void FahrplanCalendarManager::getCalendarsList()
