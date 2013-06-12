@@ -1,15 +1,22 @@
 import QtQuick 1.1
 import com.nokia.meego 1.1
 
-Item {
+MouseArea {
+    id: root
+
     property alias title: labels.title
     property alias subtitle: labels.subtitle
-    property alias checked: checkbox.checked
 
-    height: 2 * UiConstants.ButtonSpacing + Math.max(labels.height, checkbox.height)
+    implicitHeight: 2 * UiConstants.ButtonSpacing + Math.max(labels.height, icon.height)
     anchors {
         left: parent.left
         right: parent.right
+    }
+
+    Rectangle {
+        color: "DarkGrey"
+        visible: parent.pressed
+        anchors.fill: parent
     }
 
     TwoLineLabel {
@@ -19,17 +26,21 @@ Item {
             topMargin: UiConstants.ButtonSpacing
             left: parent.left
             leftMargin: UiConstants.DefaultMargin
-            right: checkbox.left
+            right: icon.left
             rightMargin: UiConstants.DefaultMargin
         }
     }
 
-    Switch {
-        id: checkbox
+    Image {
+        id: icon
+
+        source: "image://theme/meegotouch-combobox-indicator" + platformStyle.__invertedString
+        height: sourceSize.height
+        width: sourceSize.width
         anchors {
             right: parent.right
             rightMargin: UiConstants.DefaultMargin
-            verticalCenter: labels.verticalCenter
+            verticalCenter: parent.verticalCenter
         }
     }
 }

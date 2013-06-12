@@ -38,14 +38,11 @@ Page {
     }
 
     Column {
-        spacing: platformStyle.paddingMedium
         anchors {
             top: header.bottom
-            topMargin: platformStyle.paddingMedium
+            topMargin: platformStyle.paddingSmall
             left: parent.left
-            leftMargin: platformStyle.paddingMedium
             right: parent.right
-            rightMargin: platformStyle.paddingMedium
         }
 
         SwitchLabel {
@@ -74,24 +71,57 @@ Page {
                 checked = appWindow.platformInverted;
             }
         }
+        SelectLabel {
+            title: qsTr("Add journeys to calendar")
+            subtitle: calendarManager.selectedCalendarName
+            platformInverted: appWindow.platformInverted
+            onClicked: {
+                calendarsList.selectedIndex = calendarManager.selectedIndex;
+                calendarsList.open();
+            }
+        }
     }
 
     Button {
         id: aboutButton
 
         text: qsTr("About")
+        width: parent.width / 2
         platformInverted: appWindow.platformInverted
         anchors {
             bottom: parent.bottom
-            bottomMargin: platformStyle.paddingMedium
+            bottomMargin: platformStyle.paddingLarge
             horizontalCenter: parent.horizontalCenter
         }
 
         onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
     }
 
+    SelectionDialog {
+        id: calendarsList
+
+        titleText: qsTr("Select a calendar")
+        selectedIndex: calendarManager.selectedIndex
+        platformInverted: appWindow.platformInverted
+
+        model: calendarManager
+        delegate: MenuItem {
+            text: model.name
+            platformInverted: appWindow.platformInverted
+
+            onClicked: {
+                calendarManager.selectedIndex = index;
+                calendarsList.accept();
+            }
+        }
+    }
+
     FahrplanBackend {
         id: fahrplanBackend
+    }
+
+    CalendarManager {
+        id: calendarManager
     }
 
     tools: ToolBarLayout {
@@ -100,5 +130,10 @@ Page {
             platformInverted: appWindow.platformInverted
             onClicked: pageStack.pop();
         }
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Activating)
+            calendarManager.reload();
     }
 }
