@@ -1,3 +1,9 @@
+fahrplan2 (2.0.13-ubuntu1) saucy; urgency=low
+
+  * fix fullscreen issue
+
+ -- Michael Zanetti <michael_zanetti@gmx.net>  Thu, 20 Jun 2013 23:27:26 +0200
+
 fahrplan2 (2.0.13) raring; urgency=low
 
   * Initial release.
