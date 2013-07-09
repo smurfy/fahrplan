@@ -61,10 +61,23 @@ http://ppa.launchpad.net/ubuntu-sdk-team/ppa/ubuntu)
 	pbuilder -p raring-armhf
 
 
-Blackberry 10
+BlackBerry 10
 -------------
 
-//TODO Blackberry
+You will need to install BlackBerry 10 Native SDK [3]. BlackBerry 10
+port currently depends on Symbian Qt Components rebuild for BlackBerry.
+Please, consult 3rdparty/README.txt file for instructions about how to
+compile these components.
+
+These instructions assume that you use Qt Creator for compilation so
+you need to configure BlackBerry 10 target in it. See "Getting the
+BlackBerry code signing keys" section of Qt Creator with BlackBerry 10
+[4] wiki page for instructions.
+
+After this, open fahrplan2.pro in Qt Creator, select BlackBerry 10 as a
+target and compile it. If you want to deploy to a real device, you will
+need to request and setup signing keys. Please, consult Qt Creator with
+BlackBerry 10 [4] wiki page for more information.
 
 Sailfish OS
 -----------
@@ -76,4 +89,6 @@ References and links
 
 1. http://www.developer.nokia.com/info/sw.nokia.com/id/da8df288-e615-443d-be5c-00c8a72435f8/Qt_SDK.html
 2. http://developer.ubuntu.com/get-started/
-3. https://sailfishos.org/develop.html
+3. https://developer.blackberry.com/native/download/
+4. http://qt-project.org/wiki/Qt-Creator-with-BlackBerry-10
+5. https://sailfishos.org/develop.html
