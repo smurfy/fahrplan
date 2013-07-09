@@ -2,10 +2,11 @@
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
     <id>de.smurfy.fahrplan</id>
     <author>smurfy (maemo@smurfy.de)</author>
-    <publisher>smurfy (maemo@smurfy.de)</publisher>
-    <!-- <authorId></authorId> -->
+    <publisher>Oleksii Serdiuk</publisher>
+    <authorId>gYAAgFEzqeGb8kgSIn13NIOmc_c</authorId>
     <name>Fahrplan</name>
     <versionNumber>2.0.13</versionNumber>
+    <buildId>2</buildId>
     <description>A Journey planner/Railway Time table for many train lines in Europe and Australia</description>
     <initialWindow>
         <systemChrome>none</systemChrome>
