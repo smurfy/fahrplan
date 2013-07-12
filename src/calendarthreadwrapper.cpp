@@ -48,10 +48,6 @@ void CalendarThreadWrapper::addToCalendar()
 {
     QString desc;
     const QString viaStation = m_result->viaStation();
-    if (viaStation.isEmpty())
-        desc.append(tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()) + "\n");
-    else
-        desc.append(tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation) + "\n");
 
     if (!m_result->info().isEmpty()) {
         desc.append(m_result->info() + "\n");
@@ -60,26 +56,23 @@ void CalendarThreadWrapper::addToCalendar()
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
 
-        if (!item->train().isEmpty()) {
-            desc.append(item->train() + "\n");
-        }
-        desc.append(item->departureDateTime().date().toString() + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
+        desc.append(item->departureDateTime().date().toString("dd.MM.yyyy") + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
         if (!item->departureInfo().isEmpty()) {
-            desc.append(" - " + item->departureInfo());
+            desc.append("/" + item->departureInfo().replace("Pl. ",""));
         }
         desc.append("\n");
-        desc.append(item->arrivalDateTime().date().toString() + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
+        if (!item->train().isEmpty()) {
+            desc.append("--- " + item->train() + " ---\n");
+        }
+        desc.append(item->arrivalDateTime().date().toString("dd.MM.yyyy") + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
         if (!item->arrivalInfo().isEmpty()) {
-            desc.append(" - " + item->arrivalInfo());
+          desc.append("/" + item->arrivalInfo().replace("Pl. ",""));
         }
         desc.append("\n");
         if (!item->info().isEmpty()) {
             desc.append(item->info() + "\n");
         }
-        desc.append("--\n");
     }
-
-    desc.append(tr("\n(added by fahrplan app, please recheck informations before travel.)"));
 
     QSettings settings("smurfy", "fahrplan2");
 
@@ -117,9 +110,9 @@ void CalendarThreadWrapper::addToCalendar()
     QOrganizerEvent event;
 
     if (viaStation.isEmpty())
-        event.setDisplayLabel(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
+        event.setDisplayLabel(tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
     else
-        event.setDisplayLabel(tr("Journey: %1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
+        event.setDisplayLabel(tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
     event.setDescription(desc);
     event.setStartDateTime(m_result->departureDateTime());
     event.setEndDateTime(m_result->arrivalDateTime());
