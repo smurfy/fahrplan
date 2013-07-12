@@ -25,7 +25,7 @@
     #include <QtGui/QApplication>
 #endif
 
-#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
+#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_SAILFISHOS)
     #include <QtDeclarative>
 #elif defined(BUILD_FOR_UBUNTU)
     #include <QtQuick>
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
     qDebug()<<"Startup";
 
-    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
+    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU) || defined(BUILD_FOR_SAILFISHOS)
         qDebug()<<"QML";
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
@@ -115,6 +115,15 @@ int main(int argc, char *argv[])
             } else {
                 view->show();
             }
+        #elif defined(BUILD_FOR_SAILFISHOS)
+            qDebug()<<"SailfishOs";
+            view->setSource(QUrl("qrc:/src/gui/sailfishos/main.qml"));
+            view->setAttribute(Qt::WA_OpaquePaintEvent);
+            view->setAttribute(Qt::WA_NoSystemBackground);
+            view->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
+            view->viewport()->setAttribute(Qt::WA_NoSystemBackground);
+
+            view->showFullScreen();
         #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 

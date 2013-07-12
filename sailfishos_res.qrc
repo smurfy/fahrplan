@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/gui/sailfishos/Cover.qml</file>
+        <file>src/gui/sailfishos/main.qml</file>
+        <file>src/gui/sailfishos/MainPage.qml</file>
+        <file>src/gui/sailfishos/components/SubTitleButton.qml</file>
+    </qresource>
+</RCC>

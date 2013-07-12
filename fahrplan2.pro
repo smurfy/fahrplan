@@ -105,7 +105,9 @@ translate_hack {
         src/gui/symbian/*.qml \
         src/gui/symbian/components/*.qml \
         src/gui/ubuntu/*.qml \
-        src/gui/ubuntu/components/*.qml
+        src/gui/ubuntu/components/*.qml \
+        src/gui/sailfishos/*.qml  \
+        src/gui/sailfishos/components/*.qml
 }
 
 contains(MEEGO_EDITION,harmattan) {
@@ -219,6 +221,18 @@ blackberry {
 
     # For Qt Creator completion to work correctly
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
+}
+
+exists($$QMAKE_INCDIR_QT"/../sailfishsilicabackground/sailfishsilicabackground.h") {
+   DEFINES += BUILD_FOR_SAILFISHOS
+
+   RESOURCES += sailfishos_res.qrc
+
+   OTHER_FILES += \
+        src/gui/sailfishos/main.qml \
+        src/gui/sailfishos/Cover.qml \
+        src/gui/sailfishos/MainPage.qml \
+        src/gui/sailfishos/components/SubTitleButton.qml
 }
 
 win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
