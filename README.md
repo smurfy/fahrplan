@@ -4,14 +4,15 @@ Fahrplan
 A journey planner and timetable application for a lot of train and
 public transport lines in Europe and Australia.
 
-Supported devices:
-------------------
-* N9(50)
-* new Symbian phones (Belle and Anna)
-* Blackberry 10
-* Ubuntu Touch
+Supported Operating Systems/Devices:
+------------------------------------
+* Meego Harmattan: Nokia N9 and N950.
+* Nokia's Symbian touch phones (Symbian^3, Anna and Belle). Symbian^1
+  (a.k.a. S60 5th Edition) should also work but was never tested.
+* BlackBerry 10: BlackBerry Z10, Q10 and Q5.
+* Ubuntu Touch.
 
-Fahrplan features:
+Fahrplan Features:
 ------------------
 
 * Plan a journey from one station/stop to another (with one via station
@@ -24,8 +25,8 @@ Fahrplan features:
 * Add station to favorites for quick access in future.
 * Add journey to calendar.
 
-Currently supported providers are:
-----------------------------------
+Currently Supported Providers:
+------------------------------
 
 * bahn.de (Germany and Europe) - supports via station and GPS location.
 * sbb.ch (Switzerland) - support via station, timetable with direction
@@ -40,18 +41,38 @@ Currently supported providers are:
 Installation:
 -------------
 
-To install Fahrplan on your N9, N950, Symbian, BlackBerry 10 or Ubuntu Touch
-phone, visit the corresponding application Store and search for fahrplan.
+To install Fahrplan on your N9, N950, Symbian, BlackBerry 10 or Ubuntu
+Touch phone, visit the corresponding application Store and search for
+fahrplan.
 
 Compiling:
 ----------
 
-Please consult the COMPILE.md file.
+Please consult the [COMPILE.md][1] file.
 
 Source:
 -------
 
-Source code for all version is available at http://github.com/smurfy/fahrplan.
-For old no longer maintained code of fahrplan (used on the N900 only) visit:
-https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan
+Source code for all versions is available at
+<http://github.com/smurfy/fahrplan>. For old no longer maintained code
+of fahrplan (used on the N900 only) visit:
+<https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan>
 
+Copyright:
+----------
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+[1]: COMPILE.md
