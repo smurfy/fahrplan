@@ -219,12 +219,21 @@ void FahrplanCalendarManager::getCalendarsList()
                 )
             continue;
 
-        m_calendars << CalendarInfo(collection.metaData(QOrganizerCollection::KeyName).toString(), collection.id().toString());
+        m_calendars << CalendarInfo(normalizeCalendarName(collection.metaData(QOrganizerCollection::KeyName).toString()), collection.id().toString());
         if (collection.id() == collectionId)
             m_selectedIndex = m_calendars.count() - 1;
     }
 #endif
     settings->endGroup();
+}
+
+QString FahrplanCalendarManager::normalizeCalendarName(QString name)
+{
+    if (name == "qtn_caln_personal_caln") {
+        return tr("Personal");
+    }
+
+    return name;
 }
 
 void FahrplanCalendarManager::getCalendarsListFinished()

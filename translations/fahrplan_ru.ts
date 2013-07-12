@@ -96,6 +96,11 @@
         <comment>Calendar name (Account name)</comment>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="233"/>
+        <source>Personal</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>JourneyDetailsResultsPage</name>

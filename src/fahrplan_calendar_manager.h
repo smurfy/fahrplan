@@ -87,6 +87,7 @@ private:
     int m_selectedIndex;
 
     void getCalendarsList();
+    QString normalizeCalendarName(QString name);
 
 private slots:
     void getCalendarsListFinished();
