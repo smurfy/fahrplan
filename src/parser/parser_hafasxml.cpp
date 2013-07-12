@@ -1046,11 +1046,11 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
             item->setArrivalStation(arrivalResults[i].trimmed());
             if (depPlatResult[i].trimmed() != "")
             {
-                item->setDepartureInfo(tr("Platform ") + depPlatResult[i].trimmed());
+                item->setDepartureInfo(tr("Pl.") + " " + depPlatResult[i].trimmed());
             }
             if (arrPlatResult[i].trimmed() != "")
             {
-                item->setArrivalInfo(tr("Platform ") + arrPlatResult[i].trimmed());
+                item->setArrivalInfo(tr("Pl.") + " " + arrPlatResult[i].trimmed());
             }
 
             //Check for train or if walking

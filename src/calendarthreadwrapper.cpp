@@ -41,40 +41,45 @@ CalendarThreadWrapper::CalendarThreadWrapper(JourneyDetailResultList *result, QO
 
 CalendarThreadWrapper::~CalendarThreadWrapper()
 {
-    qDebug() << "Destroyed";
+
 }
 
 void CalendarThreadWrapper::addToCalendar()
 {
-    QString desc;
     const QString viaStation = m_result->viaStation();
+    QSettings settings("smurfy", "fahrplan2");
+    QString calendarEntryTitle;
+    QString calendarEntryDesc;
+
+    if (viaStation.isEmpty())
+        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation());
+    else
+        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation);
 
     if (!m_result->info().isEmpty()) {
-        desc.append(m_result->info() + "\n");
+        calendarEntryDesc.append(m_result->info() + "\n");
     }
 
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
 
-        desc.append(item->departureDateTime().date().toString("dd.MM.yyyy") + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
+        calendarEntryDesc.append(item->departureDateTime().date().toString("dd.MM.yyyy") + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
         if (!item->departureInfo().isEmpty()) {
-            desc.append("/" + item->departureInfo().replace("Pl. ",""));
+            calendarEntryDesc.append("/" + item->departureInfo().replace(tr("Pl."),"").trimmed());
         }
-        desc.append("\n");
+        calendarEntryDesc.append("\n");
         if (!item->train().isEmpty()) {
-            desc.append("--- " + item->train() + " ---\n");
+            calendarEntryDesc.append("--- " + item->train() + " ---\n");
         }
-        desc.append(item->arrivalDateTime().date().toString("dd.MM.yyyy") + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
+        calendarEntryDesc.append(item->arrivalDateTime().date().toString("dd.MM.yyyy") + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
         if (!item->arrivalInfo().isEmpty()) {
-          desc.append("/" + item->arrivalInfo().replace("Pl. ",""));
+          calendarEntryDesc.append("/" + item->arrivalInfo().replace(tr("Pl."),"").trimmed());
         }
-        desc.append("\n");
+        calendarEntryDesc.append("\n");
         if (!item->info().isEmpty()) {
-            desc.append(item->info() + "\n");
+            calendarEntryDesc.append(item->info() + "\n");
         }
     }
-
-    QSettings settings("smurfy", "fahrplan2");
 
 #ifdef BUILD_FOR_BLACKBERRY
 
@@ -93,13 +98,10 @@ void CalendarThreadWrapper::addToCalendar()
     CalendarEvent event;
     event.setAccountId(folder.first);
     event.setFolderId(folder.second);
-    if (viaStation.isEmpty())
-        event.setSubject(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
-    else
-        event.setSubject(tr("Journey: %1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
+    event.setSubject(calendarEntryTitle);
     event.setStartTime(m_result->departureDateTime());
     event.setEndTime(m_result->arrivalDateTime());
-    event.setBody(desc);
+    event.setBody(calendarEntryDesc);
     event.setReminder(-1);
 
     emit addCalendarEntryComplete(service.createEvent(event) == Result::Success);
@@ -108,14 +110,10 @@ void CalendarThreadWrapper::addToCalendar()
 
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
-
-    if (viaStation.isEmpty())
-        event.setDisplayLabel(tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
-    else
-        event.setDisplayLabel(tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
-    event.setDescription(desc);
+    event.setDisplayLabel(calendarEntryTitle);
     event.setStartDateTime(m_result->departureDateTime());
     event.setEndDateTime(m_result->arrivalDateTime());
+    event.setDescription(calendarEntryDesc);
 
     QString id = settings.value("Calendar/CollectionId").toString();
     if (!id.isEmpty()) {

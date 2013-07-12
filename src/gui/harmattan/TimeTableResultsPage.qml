@@ -221,7 +221,7 @@ Page {
                 var stationplatform = item.stationName;
 
                 if (item.platform) {
-                    stationplatform = qsTr("Pl. ") + item.platform;
+                    stationplatform = qsTr("Pl.") + " " + item.platform;
                     if (item.stationName) {
                         stationplatform += " / " + item.stationName;
                     }
