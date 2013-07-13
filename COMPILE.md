@@ -83,8 +83,8 @@ BlackBerry 10][4] wiki page for more information.
 Sailfish OS
 -----------
 
-[Not yet supported.][5]
-
+Can be compiled with Qt4 (>= 4.8.0).
+Use the [Sailfish SDK][5] to build.
 
 [1]: http://www.developer.nokia.com/info/sw.nokia.com/id/da8df288-e615-443d-be5c-00c8a72435f8/Qt_SDK.html
 [2]: http://developer.ubuntu.com/get-started/
