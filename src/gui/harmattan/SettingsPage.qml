@@ -1,3 +1,22 @@
+/****************************************************************************
+**
+**  This file is a part of Fahrplan.
+**
+**  This program is free software; you can redistribute it and/or modify
+**  it under the terms of the GNU General Public License as published by
+**  the Free Software Foundation; either version 2 of the License, or
+**  (at your option) any later version.
+**
+**  This program is distributed in the hope that it will be useful,
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+**  GNU General Public License for more details.
+**
+**  You should have received a copy of the GNU General Public License along
+**  with this program.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
+
 import QtQuick 1.1
 import com.nokia.meego 1.1
 import Fahrplan 1.0
@@ -38,14 +57,11 @@ Page {
     }
 
     Column {
-        spacing: UiConstants.DefaultMargin
         anchors {
             top: header.bottom
             topMargin: UiConstants.DefaultMargin
             left: parent.left
-            leftMargin: UiConstants.DefaultMargin
             right: parent.right
-            rightMargin: UiConstants.DefaultMargin
         }
 
         SwitchLabel {
@@ -71,6 +87,14 @@ Page {
                 checked = theme.inverted;
             }
         }
+        SelectLabel {
+            title: qsTr("Add journeys to calendar")
+            subtitle: calendarManager.selectedCalendarName
+            onClicked: {
+                calendarsList.selectedIndex = calendarManager.selectedIndex;
+                calendarsList.open();
+            }
+        }
     }
 
     Button {
@@ -86,8 +110,23 @@ Page {
         onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
     }
 
+    SelectionDialog {
+        id: calendarsList
+
+        titleText: qsTr("Select a calendar")
+        model: calendarManager
+
+        onSelectedIndexChanged: {
+            calendarManager.selectedIndex = selectedIndex;
+        }
+    }
+
     FahrplanBackend {
         id: fahrplanBackend
+    }
+
+    CalendarManager {
+        id: calendarManager
     }
 
     tools: ToolBarLayout {
@@ -95,5 +134,10 @@ Page {
             iconId: "toolbar-back"
             onClicked: pageStack.pop();
         }
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Activating)
+            calendarManager.reload();
     }
 }

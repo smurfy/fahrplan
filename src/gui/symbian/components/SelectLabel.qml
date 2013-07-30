@@ -18,37 +18,53 @@
 ****************************************************************************/
 
 import QtQuick 1.1
-import com.nokia.meego 1.1
+import com.nokia.symbian 1.1
+import "../js/style.js" as Style
 
-Item {
+MouseArea {
+    id: root
+
     property alias title: labels.title
     property alias subtitle: labels.subtitle
-    property alias checked: checkbox.checked
+    property bool platformInverted: false
 
-    height: 2 * UiConstants.ButtonSpacing + Math.max(labels.height, checkbox.height)
+    implicitHeight: 2 * platformStyle.paddingMedium + Math.max(labels.height, icon.height)
     anchors {
         left: parent.left
         right: parent.right
     }
 
+    Rectangle {
+        color: Style.listBackgroundHighlight
+        visible: parent.pressed
+        anchors.fill: parent
+    }
+
     TwoLineLabel {
         id: labels
+        platformInverted: root.platformInverted
         anchors {
             top: parent.top
-            topMargin: UiConstants.ButtonSpacing
+            topMargin: platformStyle.paddingMedium
             left: parent.left
-            leftMargin: UiConstants.DefaultMargin
-            right: checkbox.left
-            rightMargin: UiConstants.DefaultMargin
+            leftMargin: platformStyle.paddingLarge
+            right: icon.left
+            rightMargin: platformStyle.paddingLarge
         }
     }
 
-    Switch {
-        id: checkbox
+    Image {
+        id: icon
+
+        source: Style.getIconFromTheme(root.platformInverted, "qtg_graf_choice_list_indicator")
+        sourceSize {
+            width: platformStyle.graphicSizeSmall
+            height: platformStyle.graphicSizeSmall
+        }
         anchors {
             right: parent.right
-            rightMargin: UiConstants.DefaultMargin
-            verticalCenter: labels.verticalCenter
+            rightMargin: platformStyle.paddingLarge
+            verticalCenter: parent.verticalCenter
         }
     }
 }

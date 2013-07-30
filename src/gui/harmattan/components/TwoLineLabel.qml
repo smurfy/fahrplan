@@ -21,34 +21,38 @@ import QtQuick 1.1
 import com.nokia.meego 1.1
 
 Item {
-    property alias title: labels.title
-    property alias subtitle: labels.subtitle
-    property alias checked: checkbox.checked
+    id: root
 
-    height: 2 * UiConstants.ButtonSpacing + Math.max(labels.height, checkbox.height)
-    anchors {
-        left: parent.left
-        right: parent.right
-    }
+    property alias title: lblTitle.text
+    property alias subtitle: lblSubtitle.text
+    property bool platformInverted: false
 
-    TwoLineLabel {
-        id: labels
+    implicitWidth: Math.max(lblTitle.implicitWidth, lblSubtitle.implicitWidth)
+    height: childrenRect.height
+
+    Label {
+        id: lblTitle
+        font: UiConstants.TitleFont
+        wrapMode: Text.WordWrap
+        maximumLineCount: 2
         anchors {
             top: parent.top
-            topMargin: UiConstants.ButtonSpacing
             left: parent.left
-            leftMargin: UiConstants.DefaultMargin
-            right: checkbox.left
-            rightMargin: UiConstants.DefaultMargin
+            right: parent.right
         }
     }
-
-    Switch {
-        id: checkbox
+    Label {
+        id: lblSubtitle
+        font: UiConstants.SubtitleFont
+        visible: text != ""
+        height: visible ? implicitHeight : 0
+        wrapMode: Text.WordWrap
+        maximumLineCount: 2
         anchors {
+            top: lblTitle.bottom
+            topMargin: UiConstants.ButtonSpacing
+            left: parent.left
             right: parent.right
-            rightMargin: UiConstants.DefaultMargin
-            verticalCenter: labels.verticalCenter
         }
     }
 }

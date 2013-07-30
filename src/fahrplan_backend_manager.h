@@ -1,27 +1,26 @@
-/*******************************************************************************
-
-    This file is a part of Fahrplan for maemo 2009-2012
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
-*/
+/****************************************************************************
+**
+**  This file is a part of Fahrplan.
+**
+**  This program is free software; you can redistribute it and/or modify
+**  it under the terms of the GNU General Public License as published by
+**  the Free Software Foundation; either version 2 of the License, or
+**  (at your option) any later version.
+**
+**  This program is distributed in the hope that it will be useful,
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+**  GNU General Public License for more details.
+**
+**  You should have received a copy of the GNU General Public License along
+**  with this program.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
 
 #ifndef FAHRPLAN_BACKEND_MANAGER_H
 #define FAHRPLAN_BACKEND_MANAGER_H
 
-#include "parser/parser_abstract.h"
+#include "fahrplan_parser_thread.h"
 
 class FahrplanBackendManager : public QObject
 {
@@ -31,13 +30,13 @@ class FahrplanBackendManager : public QObject
         explicit FahrplanBackendManager(int defaultParser, QObject *parent = 0);
         QStringList getParserList();
         void setParser(int index);
-        ParserAbstract *getParser();
+        FahrplanParserThread *getParser();
 
     signals:
         void parserChanged(QString name, int index);
 
     private:
-        ParserAbstract *m_parser;
+        FahrplanParserThread *m_parser;
         int currentParserIndex;
 };
 

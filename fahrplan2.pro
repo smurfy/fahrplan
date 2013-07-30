@@ -71,7 +71,9 @@ HEADERS += \
     src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
     src/parser/parser_xmlnri.h \
-    src/parser/parser_hafasbinary.h
+    src/parser/parser_hafasbinary.h \
+    src/fahrplan_parser_thread.h \
+    src/fahrplan_calendar_manager.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -88,7 +90,9 @@ SOURCES += src/main.cpp \
     src/fahrplan_favorites_manager.cpp \
     src/calendarthreadwrapper.cpp \
     src/parser/parser_xmlnri.cpp \
-    src/parser/parser_hafasbinary.cpp
+    src/parser/parser_hafasbinary.cpp \
+    src/fahrplan_parser_thread.cpp \
+    src/fahrplan_calendar_manager.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
@@ -115,7 +119,9 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/main.qml \
         src/gui/harmattan/components/SubTitleButton.qml \
         src/gui/harmattan/components/StationSelect.qml \
+        src/gui/harmattan/components/TwoLineLabel.qml \
         src/gui/harmattan/components/SwitchLabel.qml \
+        src/gui/harmattan/components/SelectLabel.qml \
         src/gui/harmattan/AboutPage.qml \
         src/gui/harmattan/SettingsPage.qml \
         data/fahrplan2_harmattan.desktop \
@@ -200,8 +206,12 @@ blackberry {
         src/gui/symbian/JourneyResultsPage.qml \
         src/gui/symbian/JourneyDetailsResultsPage.qml \
         src/gui/symbian/AboutPage.qml \
+        src/gui/symbian/SettingsPage.qml \
         src/gui/symbian/components/SubTitleButton.qml \
         src/gui/symbian/components/StationSelect.qml \
+        src/gui/symbian/components/TwoLineLabel.qml \
+        src/gui/symbian/components/SwitchLabel.qml \
+        src/gui/symbian/components/SelectLabel.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
@@ -227,8 +237,12 @@ symbian|simulator {
         src/gui/symbian/JourneyResultsPage.qml \
         src/gui/symbian/JourneyDetailsResultsPage.qml \
         src/gui/symbian/AboutPage.qml \
+        src/gui/symbian/SettingsPage.qml \
         src/gui/symbian/components/SubTitleButton.qml \
         src/gui/symbian/components/StationSelect.qml \
+        src/gui/symbian/components/TwoLineLabel.qml \
+        src/gui/symbian/components/SwitchLabel.qml \
+        src/gui/symbian/components/SelectLabel.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 

@@ -1,27 +1,27 @@
-/*******************************************************************************
-
-    This file is a part of Fahrplan for maemo 2009-2012
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
-*/
+/****************************************************************************
+**
+**  This file is a part of Fahrplan.
+**
+**  This program is free software; you can redistribute it and/or modify
+**  it under the terms of the GNU General Public License as published by
+**  the Free Software Foundation; either version 2 of the License, or
+**  (at your option) any later version.
+**
+**  This program is distributed in the hope that it will be useful,
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+**  GNU General Public License for more details.
+**
+**  You should have received a copy of the GNU General Public License along
+**  with this program.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
 
 #include "calendarthreadwrapper.h"
 
 #include <QCoreApplication>
 #include <QThread>
+#include <QSettings>
 
 #ifdef BUILD_FOR_BLACKBERRY
 #   include <bb/pim/calendar/CalendarService>
@@ -41,61 +41,67 @@ CalendarThreadWrapper::CalendarThreadWrapper(JourneyDetailResultList *result, QO
 
 CalendarThreadWrapper::~CalendarThreadWrapper()
 {
-    qDebug() << "Destroyed";
+
 }
 
 void CalendarThreadWrapper::addToCalendar()
 {
-    QString desc;
     const QString viaStation = m_result->viaStation();
+    QSettings settings("smurfy", "fahrplan2");
+    QString calendarEntryTitle;
+    QString calendarEntryDesc;
+
     if (viaStation.isEmpty())
-        desc.append(tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()) + "\n");
+        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation());
     else
-        desc.append(tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation) + "\n");
+        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation);
 
     if (!m_result->info().isEmpty()) {
-        desc.append(m_result->info() + "\n");
+        calendarEntryDesc.append(m_result->info() + "\n");
     }
 
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
 
-        if (!item->train().isEmpty()) {
-            desc.append(item->train() + "\n");
-        }
-        desc.append(item->departureDateTime().date().toString() + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
+        calendarEntryDesc.append(item->departureDateTime().date().toString("dd.MM.yyyy") + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
         if (!item->departureInfo().isEmpty()) {
-            desc.append(" - " + item->departureInfo());
+            calendarEntryDesc.append("/" + item->departureInfo().replace(tr("Pl."),"").trimmed());
         }
-        desc.append("\n");
-        desc.append(item->arrivalDateTime().date().toString() + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
+        calendarEntryDesc.append("\n");
+        if (!item->train().isEmpty()) {
+            calendarEntryDesc.append("--- " + item->train() + " ---\n");
+        }
+        calendarEntryDesc.append(item->arrivalDateTime().date().toString("dd.MM.yyyy") + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
         if (!item->arrivalInfo().isEmpty()) {
-            desc.append(" - " + item->arrivalInfo());
+          calendarEntryDesc.append("/" + item->arrivalInfo().replace(tr("Pl."),"").trimmed());
         }
-        desc.append("\n");
+        calendarEntryDesc.append("\n");
         if (!item->info().isEmpty()) {
-            desc.append(item->info() + "\n");
+            calendarEntryDesc.append(item->info() + "\n");
         }
-        desc.append("--\n");
     }
-
-    desc.append(tr("\n(added by fahrplan app, please recheck informations before travel.)"));
 
 #ifdef BUILD_FOR_BLACKBERRY
 
     CalendarService service;
-    QPair<AccountId, FolderId> folder = service.defaultCalendarFolder();
+
+    QPair<AccountId, FolderId> folder;
+
+    settings.beginGroup("Calendar");
+    folder.first = settings.value("AccountId", -1).toInt();
+    if (folder.first >= 0)
+        folder.second = settings.value("FolderId", -1).toInt();
+
+    if ((folder.first < 0) || (folder.second < 0))
+        folder = service.defaultCalendarFolder();
 
     CalendarEvent event;
     event.setAccountId(folder.first);
     event.setFolderId(folder.second);
-    if (viaStation.isEmpty())
-        event.setSubject(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
-    else
-        event.setSubject(tr("Journey: %1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
+    event.setSubject(calendarEntryTitle);
     event.setStartTime(m_result->departureDateTime());
     event.setEndTime(m_result->arrivalDateTime());
-    event.setBody(desc);
+    event.setBody(calendarEntryDesc);
     event.setReminder(-1);
 
     emit addCalendarEntryComplete(service.createEvent(event) == Result::Success);
@@ -104,14 +110,17 @@ void CalendarThreadWrapper::addToCalendar()
 
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
-
-    if (viaStation.isEmpty())
-        event.setDisplayLabel(tr("Journey: %1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()));
-    else
-        event.setDisplayLabel(tr("Journey: %1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation));
-    event.setDescription(desc);
+    event.setDisplayLabel(calendarEntryTitle);
     event.setStartDateTime(m_result->departureDateTime());
     event.setEndDateTime(m_result->arrivalDateTime());
+    event.setDescription(calendarEntryDesc);
+
+    QString id = settings.value("Calendar/CollectionId").toString();
+    if (!id.isEmpty()) {
+        QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);
+        if (!collectionId.isNull())
+            event.setCollectionId(collectionId);
+    }
 
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
 #endif
