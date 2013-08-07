@@ -33,7 +33,17 @@ class Fahrplan : public QObject
     Q_PROPERTY(QString parserName READ parserName)
     Q_PROPERTY(QString version READ getVersion)
 
+    Q_ENUMS(StationType)
+
     public:
+        enum StationType {
+            DepartureStation,
+            ViaStation,
+            ArrivalStation,
+            CurrentStation,
+            DirectionStation
+        };
+
         explicit Fahrplan(QObject *parent = 0);
         FahrplanParserThread* parser();
         FahrplanFavoritesManager* favorites();

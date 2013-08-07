@@ -21,8 +21,9 @@
 #define PARSER_DEFINITIONS_H
 
 #include <QObject>
-#include <QDebug>
 #include <QDate>
+#include <QVariant>
+#include <QDebug>
 
 namespace FahrplanNS
 {
@@ -91,6 +92,27 @@ class TimeTableResultList : public QObject
         QList<TimeTableResultItem*> m_items;
 };
 
+struct Station
+{
+    bool valid;
+    QVariant id;
+    QString name;
+    QString type;
+    QString miscInfo;
+    qreal latitude;
+    qreal longitude;
+
+public:
+    Station();
+    explicit Station(bool isValid);
+
+    bool operator ==(const Station &other) const;
+    bool operator <(const Station &other) const;
+};
+typedef QList<Station> StationsList;
+Q_DECLARE_METATYPE(Station)
+Q_DECLARE_METATYPE(StationsList)
+
 class StationsResultItem : public QObject
 {
     Q_OBJECT
@@ -98,8 +120,8 @@ class StationsResultItem : public QObject
     Q_PROPERTY(QString stationTyp READ stationType WRITE setStationType)
     Q_PROPERTY(QString stationId READ stationId WRITE setStationId)
     Q_PROPERTY(QString miscInfo READ miscInfo WRITE setMiscInfo)
-    Q_PROPERTY(qreal longitude READ longitude WRITE setLongitude)
     Q_PROPERTY(qreal latitude READ latitude WRITE setLatitude)
+    Q_PROPERTY(qreal longitude READ longitude WRITE setLongitude)
 
     public:
         QString stationName() const;
@@ -110,17 +132,12 @@ class StationsResultItem : public QObject
         void setStationId(const QString &);
         QString miscInfo() const;
         void setMiscInfo(const QString &);
-        qreal longitude();
-        void setLongitude(qreal);
         qreal latitude();
         void setLatitude(qreal);
+        qreal longitude();
+        void setLongitude(qreal);
     private:
-        QString m_stationName;
-        QString m_stationType;
-        QString m_stationId;
-        QString m_miscInfo;
-        qreal m_longitude;
-        qreal m_latitude;
+        Station m_station;
 };
 
 

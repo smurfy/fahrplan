@@ -120,68 +120,109 @@ void TimeTableResultList::appendItem(TimeTableResultItem *item)
 }
 
 
+//-------------- Station
+
+Station::Station()
+    : valid(true)
+    , latitude(0)
+    , longitude(0)
+{}
+
+Station::Station(bool isValid)
+    : valid(isValid)
+    , latitude(0)
+    , longitude(0)
+{}
+
+bool Station::operator ==(const Station &other) const
+{
+    if (valid != other.valid)
+        return false;
+    if (id != other.id)
+        return false;
+    // Comparing ID should be enough, cause it's uniquie identifier
+    // of the station. Everything else is details.
+//    if (name != other.name)
+//        return false;
+//    if (type != other.type)
+//        return false;
+//    if (miscInfo != other.miscInfo)
+//        return false;
+//    if (qFuzzyCompare(latitude, other.latitude))
+//        return false;
+//    if (qFuzzyCompare(longitude, other.longitude))
+//        return false;
+    return true;
+}
+
+bool Station::operator <(const Station &other) const
+{
+    return name < other.name;
+}
+
+
 //-------------- StationsResultItem
 
 QString StationsResultItem::stationName() const
 {
-    return m_stationName;
+    return m_station.name;
 }
 
 void StationsResultItem::setStationName(const QString &stationName)
 {
-    m_stationName = stationName;
+    m_station.name = stationName;
 }
 
 QString StationsResultItem::stationType() const
 {
-    return m_stationType;
+    return m_station.type;
 }
 
 void StationsResultItem::setStationType(const QString &stationType)
 {
-    m_stationType = stationType;
+    m_station.type = stationType;
 }
 
 
 QString StationsResultItem::stationId() const
 {
-    return m_stationId;
+    return m_station.id.toString();
 }
 
 void StationsResultItem::setStationId(const QString &stationId)
 {
-    m_stationId = stationId;
+    m_station.id = stationId;
 }
 
 
 QString StationsResultItem::miscInfo() const
 {
-    return m_miscInfo;
+    return m_station.miscInfo;
 }
 
 void StationsResultItem::setMiscInfo(const QString &miscInfo)
 {
-    m_miscInfo = miscInfo;
-}
-
-qreal StationsResultItem::longitude()
-{
-    return m_longitude;
-}
-
-void StationsResultItem::setLongitude(qreal longitude)
-{
-    m_longitude = longitude;
+    m_station.miscInfo = miscInfo;
 }
 
 qreal StationsResultItem::latitude()
 {
-    return m_latitude;
+    return m_station.latitude;
 }
 
 void StationsResultItem::setLatitude(qreal latitude)
 {
-    m_latitude = latitude;
+    m_station.latitude = latitude;
+}
+
+qreal StationsResultItem::longitude()
+{
+    return m_station.longitude;
+}
+
+void StationsResultItem::setLongitude(qreal longitude)
+{
+    m_station.longitude = longitude;
 }
 
 //------------- StationsResultList
