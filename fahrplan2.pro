@@ -69,13 +69,14 @@ HEADERS += \
     src/fahrplan.h \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
-    src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
     src/parser/parser_xmlnri.h \
     src/parser/parser_hafasbinary.h \
     src/fahrplan_parser_thread.h \
     src/fahrplan_calendar_manager.h \
-    src/models/stationslistmodel.h
+    src/models/stationslistmodel.h \
+    src/models/favorites.h \
+    src/models/stationsearchresults.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -89,13 +90,14 @@ SOURCES += src/main.cpp \
     src/fahrplan.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
-    src/fahrplan_favorites_manager.cpp \
     src/calendarthreadwrapper.cpp \
     src/parser/parser_xmlnri.cpp \
     src/parser/parser_hafasbinary.cpp \
     src/fahrplan_parser_thread.cpp \
     src/fahrplan_calendar_manager.cpp \
-    src/models/stationslistmodel.cpp
+    src/models/stationslistmodel.cpp \
+    src/models/favorites.cpp \
+    src/models/stationsearchresults.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
@@ -224,7 +226,7 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!blackberry {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui

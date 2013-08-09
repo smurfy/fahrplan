@@ -54,15 +54,13 @@ public:
 
 public slots:
     void selectStation(int type, int index);
-    void addToFavorites(int index);
-    void removeFromFavorites(int index);
 
 signals:
     void countChanged();
     void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     void stationSelected(Fahrplan::StationType type, const Station &station);
 
-private:
+protected:
     StationsList m_list;
 };
 

@@ -18,13 +18,15 @@
 ****************************************************************************/
 
 #include "fahrplan.h"
-
+#include "fahrplan_parser_thread.h"
+#include "fahrplan_backend_manager.h"
 #include "calendarthreadwrapper.h"
+#include "models/favorites.h"
 
 #include <QThread>
 
-FahrplanBackendManager *Fahrplan::m_parser_manager;
-FahrplanFavoritesManager *Fahrplan::m_favorites_manager;
+FahrplanBackendManager *Fahrplan::m_parser_manager = NULL;
+Favorites *Fahrplan::m_favorites_manager = NULL;
 
 Fahrplan::Fahrplan(QObject *parent) :
     QObject(parent)
@@ -37,11 +39,10 @@ Fahrplan::Fahrplan(QObject *parent) :
     }
 
     if (!m_favorites_manager) {
-        m_favorites_manager = new FahrplanFavoritesManager();
+        m_favorites_manager = new Favorites(this);
     }
 
     connect(m_parser_manager, SIGNAL(parserChanged(const QString &, int)), this, SLOT(onParserChanged(const QString &, int)));
-    connect(m_favorites_manager, SIGNAL(favoritesChanged(const QStringList &)), this, SIGNAL(favoritesChanged(QStringList)));
 }
 
 void Fahrplan::bindParserSignals()
@@ -70,7 +71,7 @@ FahrplanParserThread* Fahrplan::parser()
     return m_parser_manager->getParser();
 }
 
-FahrplanFavoritesManager* Fahrplan::favorites()
+Favorites* Fahrplan::favorites() const
 {
     return m_favorites_manager;
 }

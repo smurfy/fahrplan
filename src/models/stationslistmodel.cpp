@@ -19,10 +19,8 @@
 
 #include "stationslistmodel.h"
 
-#include "fahrplan_favorites_manager.h"
-
-StationsListModel::StationsListModel(Fahrplan *fahrplan)
-    : QAbstractListModel(fahrplan)
+StationsListModel::StationsListModel(QObject *parent)
+    : QAbstractListModel(parent)
 {
 #if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     setRoleNames(roleNames());
@@ -68,8 +66,8 @@ QVariant StationsListModel::data(const QModelIndex &index, int role) const
         return item.name;
     case Type:
         return item.type;
-    case  IsFavorite:
-        return qobject_cast<Fahrplan *>(QObject::parent())->favorites()->isFavorite(item.name);
+    case IsFavorite:
+        return false;
     case MiscInfo:
         return item.miscInfo;
     case Latitude:
@@ -103,24 +101,4 @@ void StationsListModel::selectStation(int type, int index)
         return;
 
     emit stationSelected(static_cast<Fahrplan::StationType>(type), m_list.at(index));
-}
-
-void StationsListModel::addToFavorites(int index)
-{
-    if (index < 0 || index >= m_list.count())
-        return;
-
-    qobject_cast<Fahrplan *>(QObject::parent())->favorites()->addFavorite(m_list.at(index).name);
-    QModelIndex i = this->index(index, 0);
-    emit dataChanged(i, i);
-}
-
-void StationsListModel::removeFromFavorites(int index)
-{
-    if (index < 0 || index >= m_list.count())
-        return;
-
-    qobject_cast<Fahrplan *>(QObject::parent())->favorites()->removeFavorite(m_list.at(index).name);
-    QModelIndex i = this->index(index, 0);
-    emit dataChanged(i, i);
 }

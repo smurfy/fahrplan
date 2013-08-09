@@ -49,7 +49,10 @@
 #endif
 
 #include "fahrplan.h"
+#include "parser/parser_abstract.h"
+#include "fahrplan_parser_thread.h"
 #include "fahrplan_calendar_manager.h"
+#include "models/favorites.h"
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 Q_DECL_EXPORT
@@ -74,7 +77,9 @@ int main(int argc, char *argv[])
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanParserThread>("Fahrplan", 1, 0, "FahrplanParserThread");
-        qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
+        qmlRegisterUncreatableType<Favorites>("Fahrplan", 1, 0, "Favorites"
+            , "Favorites cannot be created from QML. "
+              "Access it through FahrplanBackend.favorites.");
         qmlRegisterType<FahrplanCalendarManager>("Fahrplan", 1, 0, "CalendarManager");
         qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
         qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");

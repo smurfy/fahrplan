@@ -20,18 +20,24 @@
 #ifndef FAHRPLAN_H
 #define FAHRPLAN_H
 
+#include "parser/parser_definitions.h"
+#include "parser/parser_abstract.h"
+
 #include <QObject>
 #include <QSettings>
-#include "fahrplan_backend_manager.h"
-#include "fahrplan_favorites_manager.h"
+#include <QStringList>
 
+class FahrplanBackendManager;
+class FahrplanParserThread;
+class Favorites;
 class Fahrplan : public QObject
 {
     Q_OBJECT
+
     Q_PROPERTY(FahrplanParserThread *parser READ parser)
-    Q_PROPERTY(FahrplanFavoritesManager *favorites READ favorites CONSTANT)
+    Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
     Q_PROPERTY(QString parserName READ parserName)
-    Q_PROPERTY(QString version READ getVersion)
+    Q_PROPERTY(QString version READ getVersion CONSTANT)
 
     Q_ENUMS(StationType)
 
@@ -45,8 +51,8 @@ class Fahrplan : public QObject
         };
 
         explicit Fahrplan(QObject *parent = 0);
-        FahrplanParserThread* parser();
-        FahrplanFavoritesManager* favorites();
+        FahrplanParserThread *parser();
+        Favorites *favorites() const;
         QString parserName();
         QString getVersion();
 
@@ -73,7 +79,7 @@ class Fahrplan : public QObject
 
     private:
         static FahrplanBackendManager *m_parser_manager;
-        static FahrplanFavoritesManager *m_favorites_manager;
+        static Favorites *m_favorites_manager;
         QSettings *settings;
 };
 #endif // FAHRPLAN_H
