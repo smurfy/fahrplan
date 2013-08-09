@@ -29,15 +29,23 @@
 
 class FahrplanBackendManager;
 class FahrplanParserThread;
+class StationSearchResults;
 class Favorites;
 class Fahrplan : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(FahrplanParserThread *parser READ parser)
-    Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
     Q_PROPERTY(QString parserName READ parserName)
     Q_PROPERTY(QString version READ getVersion CONSTANT)
+
+    Q_PROPERTY(StationSearchResults* stationSearchResults READ stationSearchResults CONSTANT)
+    Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
+    Q_PROPERTY(QString departureStationName READ departureStationName NOTIFY departureStationChanged)
+    Q_PROPERTY(QString viaStationName READ viaStationName NOTIFY viaStationChanged)
+    Q_PROPERTY(QString arrivalStationName READ arrivalStationName NOTIFY arrivalStationChanged)
+    Q_PROPERTY(QString currentStationName READ currentStationName NOTIFY currentStationChanged)
+    Q_PROPERTY(QString directionStationName READ directionStationName NOTIFY directionStationChanged)
 
     Q_ENUMS(StationType)
 
@@ -56,30 +64,61 @@ class Fahrplan : public QObject
         QString parserName();
         QString getVersion();
 
+        StationSearchResults* stationSearchResults() const;
+        QString departureStationName() const;
+        QString viaStationName() const;
+        QString arrivalStationName() const;
+        QString currentStationName() const;
+        QString directionStationName() const;
+
     public slots:
         QStringList getParserList();
         void setParser(int index);
         void storeSettingsValue(const QString &key, const QString &value);
         QString getSettingsValue(const QString &key, const QString &defaultValue);
+        void swapStations(int type1, int type2);
+        void resetStation(int type);
+        void getTimeTable(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+        void searchJourney(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
         void addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
 
     signals:
-        void parserStationsResult(StationsResultList *result);
+        void departureStationChanged();
+        void viaStationChanged();
+        void arrivalStationChanged();
+        void currentStationChanged();
+        void directionStationChanged();
+
+        void parserStationsResult();
         void parserJourneyResult(JourneyResultList *result);
         void parserJourneyDetailsResult(JourneyDetailResultList *result);
         void parserTimeTableResult(TimeTableResultList *result);
         void parserErrorOccured(const QString &msg);
         void parserChanged(const QString &name, int index);
-        void favoritesChanged(const QStringList &favorites);
         void addCalendarEntryComplete(bool success);
 
     private slots:
+        void selectStation(Fahrplan::StationType type, const Station &station);
         void onParserChanged(const QString &name, int index);
+        void onStationSearchResults(StationsResultList *list);
         void bindParserSignals();
 
     private:
         static FahrplanBackendManager *m_parser_manager;
+        static StationSearchResults *m_stationSearchResults;
         static Favorites *m_favorites_manager;
         QSettings *settings;
+
+        Station m_departureStation;
+        Station m_viaStation;
+        Station m_arrivalStation;
+        Station m_currentStation;
+        Station m_directionStation;
+
+        Station getStation(StationType type) const;
+        void saveStationToSettings(const QString &key, const Station &station);
+        Station loadStationFromSettigns(const QString &key);
 };
+Q_DECLARE_METATYPE(Fahrplan::StationType)
+
 #endif // FAHRPLAN_H

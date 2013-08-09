@@ -52,6 +52,7 @@
 #include "parser/parser_abstract.h"
 #include "fahrplan_parser_thread.h"
 #include "fahrplan_calendar_manager.h"
+#include "models/stationsearchresults.h"
 #include "models/favorites.h"
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
@@ -74,13 +75,18 @@ int main(int argc, char *argv[])
 
     #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
         qDebug()<<"QML";
+        qRegisterMetaType<Station>();
+        qRegisterMetaType<Fahrplan::StationType>();
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanParserThread>("Fahrplan", 1, 0, "FahrplanParserThread");
+        qmlRegisterType<FahrplanCalendarManager>("Fahrplan", 1, 0, "CalendarManager");
+        qmlRegisterUncreatableType<StationSearchResults>("Fahrplan", 1, 0, "StationSearchResults"
+            , "StationSearchResults cannot be created from QML. "
+              "Access it through FahrplanBackend.stationSearchResults.");
         qmlRegisterUncreatableType<Favorites>("Fahrplan", 1, 0, "Favorites"
             , "Favorites cannot be created from QML. "
               "Access it through FahrplanBackend.favorites.");
-        qmlRegisterType<FahrplanCalendarManager>("Fahrplan", 1, 0, "CalendarManager");
         qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
         qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
