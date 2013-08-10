@@ -53,14 +53,11 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
     QUrl query;
 #endif
     query.addQueryItem("start", "Suchen");
-    query.addQueryItem("REQ0JourneyStopsS0A", "1");
-    query.addQueryItem("REQ0JourneyStopsS0G", departureStation.name);
-    query.addQueryItem("REQ0JourneyStopsZ0A", "1");
-    query.addQueryItem("REQ0JourneyStopsZ0G", arrivalStation.name);
+    query.addQueryItem("REQ0JourneyStopsS0ID", departureStation.id.toString());
+    query.addQueryItem("REQ0JourneyStopsZ0ID", arrivalStation.id.toString());
 
-    if (!viaStation.name.isEmpty()) {
-        query.addQueryItem("REQ0JourneyStops1.0A", "1");
-        query.addQueryItem("REQ0JourneyStops1.0G", viaStation.name);
+    if (viaStation.id.isValid()) {
+        query.addQueryItem("REQ0JourneyStops1.0ID", viaStation.id.toString());
     }
 
     query.addQueryItem("REQ0JourneyDate", date.toString("dd.MM.yyyy"));
