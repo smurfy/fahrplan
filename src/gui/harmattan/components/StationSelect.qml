@@ -26,10 +26,10 @@ import com.nokia.extras 1.1
 Page {
     id: stationSelect
 
+    property int type: FahrplanBackend.DepartureStation
+
     property string whiteSuffix: theme.inverted ? "-white" : ""
     property string inverseSuffix: theme.inverted ? "-inverse" : ""
-
-    signal stationSelected ( string name )
 
     tools: stationSelectToolbar
 
@@ -91,16 +91,8 @@ Page {
                 if (searchBox.text == "")
                     return;
 
-                stationsResultModel.clear();
-                stationsResultModel.append({
-                    "name": qsTr("Searching ..."),
-                    "process": true,
-                    "internal": true,
-                    "isfavorite": false,
-                    "showfavorite": false,
-                    "miscinfo": ""
-                })
-                listView.model = stationsResultModel
+                indicator.show(qsTr("Searching ..."));
+                listView.model = fahrplanBackend.stationSearchResults;
                 favIcon.checked = false;
                 searchIcon.checked = true;
                 fahrplanBackend.parser.findStationsByName(searchBox.text);
@@ -119,20 +111,10 @@ Page {
                 width: visible ? 80 : 0
 
                 onClicked: {
-                    listView.model = stationsResultModel
+                    indicator.show(qsTr("Requesting GPS..."));
+                    listView.model = fahrplanBackend.stationSearchResults;
                     favIcon.checked = false;
                     searchIcon.checked = true;
-
-                    stationsResultModel.clear();
-                    stationsResultModel.append({
-                        "name": qsTr("Requesting GPS..."),
-                        "process": true,
-                        "internal": true,
-                        "isfavorite": false,
-                        "showfavorite": false,
-                        "miscinfo": ""
-                    })
-
                     positionSource.start();
                 }
             }
@@ -157,19 +139,24 @@ Page {
             }
         }
 
+        BusyLabel {
+            id: indicator
+            anchors.top: search.bottom
+        }
+
         ListView {
             id: listView
             anchors {
+                top: indicator.bottom
                 topMargin: 10
-                top: search.bottom
+                bottom: parent.bottom
                 bottomMargin: 10
             }
-            height: parent.height - stationSelectToolbar.height
             width: parent.width
             model: fahrplanBackend.favorites
             delegate: stationsResultDelegate
             clip: true
-            visible: (fahrplanBackend.favorites.count > 0 && listView.model == fahrplanBackend.favorites) || listView.model == stationsResultModel
+            visible: (fahrplanBackend.favorites.count > 0 && listView.model === fahrplanBackend.favorites) || listView.model === fahrplanBackend.stationSearchResults
         }
     }
 
@@ -190,7 +177,6 @@ Page {
 
             MouseArea {
                 id: mouseArea
-                enabled: !internal
                 anchors {
                     left: lbl_stationname.left
                     top: background.top
@@ -198,16 +184,14 @@ Page {
                     bottom: background.bottom
                 }
                 onClicked: {
-                    if (!internal) {
-                        stationSelect.stationSelected(name)
-                    }
+                    listView.model.selectStation(stationSelect.type, model.index);
+                    pageStack.pop();
                 }
             }
 
             Image {
                 id: img_fav
-                source: isfavorite ? "image://theme/icon-s-common-favorite-mark" + inverseSuffix : "image://theme/icon-s-common-favorite-unmark" + inverseSuffix
-                visible: showfavorite
+                source: model.isFavorite ? "image://theme/icon-s-common-favorite-mark" + inverseSuffix : "image://theme/icon-s-common-favorite-unmark" + inverseSuffix
                 anchors {
                     left: parent.left
                     leftMargin: 10
@@ -225,16 +209,14 @@ Page {
                 }
 
                 onClicked: {
-                    if (showfavorite) {
-                        if (fahrplanBackend.favorites.isFavorite(lbl_stationname.text)) {
-                            banner.text = qsTr("Removing '%1' from favorites").arg(lbl_stationname.text)
-                            banner.show();
-                            fahrplanBackend.favorites.removeFavorite(lbl_stationname.text);
-                        } else {
-                            banner.text = qsTr("Adding '%1' to favorites").arg(lbl_stationname.text)
-                            banner.show();
-                            fahrplanBackend.favorites.addFavorite(lbl_stationname.text);
-                        }
+                    if (model.isFavorite) {
+                        banner.text = qsTr("Removing '%1' from favorites").arg(lbl_stationname.text);
+                        banner.show();
+                        listView.model.removeFromFavorites(model.index);
+                    } else {
+                        banner.text = qsTr("Adding '%1' to favorites").arg(lbl_stationname.text);
+                        banner.show();
+                        listView.model.addToFavorites(model.index);
                     }
                 }
             }
@@ -242,13 +224,13 @@ Page {
             Label {
                 id: lbl_stationname
                 anchors {
-                    left: showfavorite ? img_fav.right : parent.left
+                    left: img_fav.right
                     leftMargin: 10
                     rightMargin: 20
-                    right: process ? process.left : parent.right
+                    right: lbl_miscinfo.left
                     verticalCenter: parent.verticalCenter
                 }
-                text: name
+                text: model.name
             }
 
             Label {
@@ -258,27 +240,10 @@ Page {
                     rightMargin: 10
                     verticalCenter: parent.verticalCenter
                 }
-                text: miscinfo
+                text: model.miscInfo
                 color: "DarkGrey";
             }
-
-            BusyIndicator {
-                id: indicator
-                anchors {
-                    right: parent.right
-                    rightMargin: 20
-                    verticalCenter: parent.verticalCenter
-                }
-                running: process
-                visible: process
-
-                platformStyle: BusyIndicatorStyle { size: "small" }
-            }
         }
-    }
-
-    ListModel {
-        id: stationsResultModel
     }
 
     ToolBarLayout {
@@ -312,7 +277,7 @@ Page {
                     platformStyle: TabButtonStyle{}
                     iconSource: "image://theme/icon-m-toolbar-search" + whiteSuffix
                     onClicked: {
-                        listView.model = stationsResultModel
+                        listView.model = fahrplanBackend.stationSearchResults
                         favIcon.checked = false;
                         searchIcon.checked = true;
                     }
@@ -323,51 +288,16 @@ Page {
         }
     }
 
-    Connections {
-        target: fahrplanBackend
-
-        onParserStationsResult: {
-            stationsResultModel.clear();
-            for (var i = 0; i < result.count; i++) {
-                var item = result.getItem(i);
-                stationsResultModel.append({
-                    "name": item.stationName,
-                    "process": false,
-                    "internal": false,
-                    "isfavorite": fahrplanBackend.favorites.isFavorite(item.stationName),
-                    "showfavorite": true,
-                    "miscinfo": item.miscInfo
-                });
-            }
-        }
-    }
-
     PositionSource {
         id: positionSource
         onPositionChanged: {
             if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
-                stationsResultModel.clear();
-                stationsResultModel.append({
-                    "name": qsTr("Searching for stations..."),
-                    "process": true,
-                    "internal": true,
-                    "isfavorite": false,
-                    "showfavorite": false,
-                    "miscinfo": ""
-                })
+                indicator.show(qsTr("Searching for stations..."));
                 positionSource.stop();
 
                 fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
             } else {
-                stationsResultModel.clear();
-                stationsResultModel.append({
-                    "name": qsTr("Waiting for GPS lock..."),
-                    "process": true,
-                    "internal": true,
-                    "isfavorite": false,
-                    "showfavorite": false,
-                    "miscinfo": ""
-                })
+                indicator.show(qsTr("Waiting for GPS lock..."));
             }
         }
     }
@@ -377,6 +307,15 @@ Page {
             case PageStatus.Activating:
                 gpsButton.visible = fahrplanBackend.parser.supportsGps() && (fahrplanBackend.getSettingsValue("enableGps", "true") == "true");
                 break;
+        }
+    }
+
+    Connections {
+        target: fahrplanBackend
+
+        onParserStationsResult: {
+            console.debug(fahrplanBackend.stationSearchResults.count);
+            indicator.hide();
         }
     }
 }

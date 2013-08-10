@@ -87,8 +87,6 @@ int main(int argc, char *argv[])
         qmlRegisterUncreatableType<Favorites>("Fahrplan", 1, 0, "Favorites"
             , "Favorites cannot be created from QML. "
               "Access it through FahrplanBackend.favorites.");
-        qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
-        qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
         qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
         qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");

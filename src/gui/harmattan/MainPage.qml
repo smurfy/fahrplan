@@ -43,7 +43,7 @@ Page {
             viaButton.visible = fahrplanBackend.parser.supportsVia();
             departureButton.visible = true;
             arrivalButton.visible = true;
-            stationButton.visible = false;
+            currentButton.visible = false;
             directionButton.visible = false;
             timetableSearch.visible = false;
             startSearch.visible = true;
@@ -54,7 +54,7 @@ Page {
             viaButton.visible = false;
             departureButton.visible = false;
             arrivalButton.visible = false;
-            stationButton.visible = true;
+            currentButton.visible = true;
             directionButton.visible = fahrplanBackend.parser.supportsTimeTableDirection();
             timetableSearch.visible = true;
             startSearch.visible = false;
@@ -164,65 +164,89 @@ Page {
 
             SubTitleButton {
                 id: departureButton
+
+                type: FahrplanBackend.DepartureStation
                 titleText: qsTr("Departure Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.departureStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(departureStationSelect)
+                    pageStack.push(stationSelect, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+                onReset: {
+                    fahrplanBackend.resetStation(type);
+                }
             }
             SubTitleButton {
                 id: viaButton
+
+                type: FahrplanBackend.ViaStation
                 titleText: qsTr("Via Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.viaStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(viaStationSelect)
+                    pageStack.push(stationSelect, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+                onReset: {
+                    fahrplanBackend.resetStation(type);
+                }
             }
             SubTitleButton {
                 id: arrivalButton
+
+                type: FahrplanBackend.ArrivalStation
                 titleText: qsTr("Arrival Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.arrivalStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(arrivalStationSelect)
+                    pageStack.push(stationSelect, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+                onReset: {
+                    fahrplanBackend.resetStation(type);
+                }
             }
             SubTitleButton {
-                id: stationButton
+                id: currentButton
+
+                type: FahrplanBackend.CurrentStation
                 titleText: qsTr("Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.currentStationName
                 width: parent.width
-                onClicked: {
-                    pageStack.push(stationStationSelect)
-                }
                 icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
+                onClicked: {
+                    pageStack.push(stationSelect, { type: type })
+                }
             }
             SubTitleButton {
                 id: directionButton
+
+                type: FahrplanBackend.DirectionStation
                 titleText: qsTr("Direction")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.directionStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(directionStationSelect)
+                    pageStack.push(stationSelect, { type: type })
                 }
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
                 }
-                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
             }
 
             SubTitleButton {
@@ -298,21 +322,15 @@ Page {
                 }
 
                 onClicked: {
-                    fahrplanBackend.storeSettingsValue("stationStation", stationButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("directionStation", directionButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
 
                     //Validation
-                    if (stationButton.subTitleText == qsTr("please select")) {
+                    if (currentButton.subTitleText == qsTr("please select")) {
                         banner.text = qsTr("Please select a Station");
                         banner.show();
                         return;
                     }
 
-                    var directionStation = directionButton.subTitleText;
-                    if (directionStation == qsTr("please select") || !fahrplanBackend.parser.supportsTimeTableDirection()) {
-                        directionStation = "";
-                    }
                     if (fromNowSwitch.checked) {
                         setToday();
                     }
@@ -329,7 +347,7 @@ Page {
                     timetablePage.selMode = selMode
 
                     pageStack.push(timetablePage);
-                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selectedDateTime, selectedDateTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.getTimeTable(selectedDateTime, selectedDateTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
@@ -342,9 +360,6 @@ Page {
                 }
 
                 onClicked: {
-                    fahrplanBackend.storeSettingsValue("viaStation", viaButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("departureStation", departureButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("arrivalStation", arrivalButton.subTitleText);
                     fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
 
                     //Validation
@@ -371,7 +386,7 @@ Page {
                     } else if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                     }
-                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selectedDateTime, selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.searchJourney(selectedDateTime, selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }
@@ -380,53 +395,6 @@ Page {
     ScrollDecorator {
         flickableItem: flickable
     }
-
-    StationSelect {
-        id: departureStationSelect
-
-        onStationSelected: {
-            departureButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-    StationSelect {
-        id: arrivalStationSelect
-
-        onStationSelected: {
-            arrivalButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-    StationSelect {
-        id: viaStationSelect
-
-        onStationSelected: {
-            viaButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-    StationSelect {
-        id: stationStationSelect
-
-        onStationSelected: {
-            stationButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-
-    StationSelect {
-        id: directionStationSelect
-
-        onStationSelected: {
-            directionButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
 
     SelectionDialog {
         id: selectBackendDialog
@@ -557,7 +525,7 @@ Page {
             MenuItem {
                 text: qsTr("Clear station")
                 onClicked: {
-                    directionButton.subTitleText = qsTr("please select")
+                    fahrplanBackend.resetStation(FahrplanBackend.DirectionStation);
                 }
             }
         }
@@ -578,33 +546,27 @@ Page {
                 id: switchWithDepartureStation
                 text: qsTr("Switch with Departure station")
                 onClicked: {
-                    var oldVal = stationSelectContextMenu.opener.subTitleText
-                    stationSelectContextMenu.opener.subTitleText = departureButton.subTitleText
-                    departureButton.subTitleText = oldVal;
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.DepartureStation)
                 }
             }
             MenuItem {
                 id: switchWithArrivalStation
                 text: qsTr("Switch with Arrival station")
                 onClicked: {
-                    var oldVal = stationSelectContextMenu.opener.subTitleText
-                    stationSelectContextMenu.opener.subTitleText = arrivalButton.subTitleText
-                    arrivalButton.subTitleText = oldVal;
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ArrivalStation)
                 }
             }
             MenuItem {
                 id: switchWithViaStation
                 text: qsTr("Switch with Via station")
                 onClicked: {
-                    var oldVal = stationSelectContextMenu.opener.subTitleText
-                    stationSelectContextMenu.opener.subTitleText = viaButton.subTitleText
-                    viaButton.subTitleText = oldVal;
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ViaStation)
                 }
             }
             MenuItem {
                 text: qsTr("Clear station")
                 onClicked: {
-                    stationSelectContextMenu.opener.subTitleText = qsTr("please select")
+                    stationSelectContextMenu.opener.reset();
                 }
             }
         }
@@ -657,19 +619,8 @@ Page {
         }
 
         onParserChanged: {
-
             console.log("Switching to " + name);
             currentParserName.text = fahrplanBackend.parserName;
-
-            if (startup) {
-                viaButton.subTitleText = fahrplanBackend.getSettingsValue("viaStation", qsTr("please select"));
-                departureButton.subTitleText = fahrplanBackend.getSettingsValue("departureStation", qsTr("please select"));
-                arrivalButton.subTitleText = fahrplanBackend.getSettingsValue("arrivalStation", qsTr("please select"));
-                stationButton.subTitleText = fahrplanBackend.getSettingsValue("stationStation", qsTr("please select"));
-                directionButton.subTitleText = fahrplanBackend.getSettingsValue("directionStation", qsTr("please select"));
-                startup = false;
-            }
-
 
             updateButtonVisibility();
 

@@ -8,6 +8,7 @@
         <file>src/gui/symbian/components/TwoLineLabel.qml</file>
         <file>src/gui/symbian/components/SwitchLabel.qml</file>
         <file>src/gui/symbian/components/SelectLabel.qml</file>
+        <file>src/gui/symbian/components/BusyLabel.qml</file>
         <file>src/gui/symbian/JourneyResultsPage.qml</file>
         <file>src/gui/symbian/JourneyDetailsResultsPage.qml</file>
         <file>src/gui/symbian/AboutPage.qml</file>
