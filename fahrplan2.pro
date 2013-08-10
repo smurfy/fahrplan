@@ -127,6 +127,7 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/components/TwoLineLabel.qml \
         src/gui/harmattan/components/SwitchLabel.qml \
         src/gui/harmattan/components/SelectLabel.qml \
+        src/gui/harmattan/components/BusyLabel.qml \
         src/gui/harmattan/AboutPage.qml \
         src/gui/harmattan/SettingsPage.qml \
         data/fahrplan2_harmattan.desktop \
@@ -217,6 +218,7 @@ blackberry {
         src/gui/symbian/components/TwoLineLabel.qml \
         src/gui/symbian/components/SwitchLabel.qml \
         src/gui/symbian/components/SelectLabel.qml \
+        src/gui/symbian/components/BusyLabel.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
@@ -248,6 +250,7 @@ symbian|simulator {
         src/gui/symbian/components/TwoLineLabel.qml \
         src/gui/symbian/components/SwitchLabel.qml \
         src/gui/symbian/components/SelectLabel.qml \
+        src/gui/symbian/components/BusyLabel.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
