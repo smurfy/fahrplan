@@ -344,8 +344,8 @@ Page {
         id: journeyDetailResultModel
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         onAddCalendarEntryComplete: {
             if (success)

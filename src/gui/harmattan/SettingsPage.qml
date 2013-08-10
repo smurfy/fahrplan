@@ -107,7 +107,7 @@ Page {
             horizontalCenter: parent.horizontalCenter
         }
 
-        onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
+        onClicked: pageStack.push(aboutPage);
     }
 
     SelectionDialog {
@@ -121,12 +121,13 @@ Page {
         }
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
-    }
-
     CalendarManager {
         id: calendarManager
+    }
+
+    Component {
+        id: aboutPage
+        AboutPage {}
     }
 
     tools: ToolBarLayout {

@@ -200,8 +200,8 @@ Page {
             anchors.topMargin: 10
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         onParserErrorOccured: {
             banner.text = msg;

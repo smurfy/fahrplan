@@ -194,8 +194,8 @@ Page {
         id: timetableResultModel
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         onParserErrorOccured: {
             banner.text = msg;

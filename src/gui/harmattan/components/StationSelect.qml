@@ -22,7 +22,6 @@ import QtQuick 1.1
 import QtMobility.location 1.1
 import com.nokia.meego 1.1
 import com.nokia.extras 1.1
-import "."
 
 Page {
     id: stationSelect
@@ -324,8 +323,8 @@ Page {
         }
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         onParserStationsResult: {
             stationsResultModel.clear();
@@ -371,14 +370,6 @@ Page {
                 })
             }
         }
-    }
-
-    InfoBanner{
-            id: banner
-            objectName: "fahrplanInfoBannerStationSelect"
-            text: ""
-            anchors.top: parent.top
-            anchors.topMargin: 10
     }
 
     onStatusChanged: {

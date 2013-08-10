@@ -536,16 +536,8 @@ Page {
         }
         ToolIcon {
             iconId: "toolbar-settings"
-            onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+            onClicked: pageStack.push(settingsPage);
         }
-    }
-
-    InfoBanner {
-            id: banner
-            objectName: "fahrplanInfoBanner"
-            text: ""
-            anchors.top: parent.top
-            anchors.topMargin: 10
     }
 
     QueryDialog {
@@ -711,6 +703,16 @@ Page {
                 }
             }
         }
+    }
+
+    Component {
+        id: stationSelect
+        StationSelect {}
+    }
+
+    Component {
+        id: settingsPage
+        SettingsPage {}
     }
 
     onStatusChanged: {

@@ -567,7 +567,7 @@ Page {
         ToolButton {
             iconSource: "toolbar-settings"
             platformInverted: appWindow.platformInverted
-            onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+            onClicked: pageStack.push(settingsPage);
         }
     }
 
@@ -754,6 +754,16 @@ Page {
                 fahrplanBackend.storeSettingsValue("firstStart", "false");
             }
         }
+    }
+
+    Component {
+        id: stationSelect
+        StationSelect {}
+    }
+
+    Component {
+        id: settingsPage
+        SettingsPage {}
     }
 
     // Disable exit icon when page deactivates and start

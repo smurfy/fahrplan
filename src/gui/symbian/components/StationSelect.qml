@@ -331,8 +331,8 @@ Page {
         }
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         onParserStationsResult: {
             stationsResultModel.clear();
