@@ -34,7 +34,7 @@ ParserHafasBinary::ParserHafasBinary(QObject *parent) :
     // baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
 }
 
-void ParserHafasBinary::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
+void ParserHafasBinary::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -54,13 +54,13 @@ void ParserHafasBinary::searchJourney(const QString &departureStation, const QSt
 #endif
     query.addQueryItem("start", "Suchen");
     query.addQueryItem("REQ0JourneyStopsS0A", "1");
-    query.addQueryItem("REQ0JourneyStopsS0G", departureStation);
+    query.addQueryItem("REQ0JourneyStopsS0G", departureStation.name);
     query.addQueryItem("REQ0JourneyStopsZ0A", "1");
-    query.addQueryItem("REQ0JourneyStopsZ0G", arrivalStation);
+    query.addQueryItem("REQ0JourneyStopsZ0G", arrivalStation.name);
 
-    if (!viaStation.isEmpty()) {
+    if (!viaStation.name.isEmpty()) {
         query.addQueryItem("REQ0JourneyStops1.0A", "1");
-        query.addQueryItem("REQ0JourneyStops1.0G", viaStation);
+        query.addQueryItem("REQ0JourneyStops1.0G", viaStation.name);
     }
 
     query.addQueryItem("REQ0JourneyDate", date.toString("dd.MM.yyyy"));

@@ -66,7 +66,7 @@ bool ParserHafasXml::supportsTimeTableDirection()
     return STTableMode == 0;
 }
 
-void ParserHafasXml::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
+void ParserHafasXml::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -486,7 +486,7 @@ QStringList ParserHafasXml::getTrainRestrictions()
     return result;
 }
 
-void ParserHafasXml::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
+void ParserHafasXml::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -503,7 +503,7 @@ void ParserHafasXml::searchJourney(const QString &departureStation, const QStrin
     searchJourneyRequestData.trainrestrictions = trainrestrictions;
 
     //First Request, to get external ids
-    QByteArray postData = getStationsExternalIds(departureStation, arrivalStation, viaStation);
+    QByteArray postData = getStationsExternalIds(departureStation.name, arrivalStation.name, viaStation.name);
 
     sendHttpRequest(QUrl(baseXmlUrl), postData);
 }

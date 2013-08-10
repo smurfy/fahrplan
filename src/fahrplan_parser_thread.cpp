@@ -36,9 +36,9 @@ void FahrplanParserThread::init(int parserIndex)
 }
 
 
-void FahrplanParserThread::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
+void FahrplanParserThread::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
-    emit requestGetTimeTableForStation(stationName, directionStationName, date, time, mode, trainrestrictions);
+    emit requestGetTimeTableForStation(currentStation, directionStation, date, time, mode, trainrestrictions);
 }
 
 void FahrplanParserThread::findStationsByName(const QString &stationName)
@@ -51,9 +51,9 @@ void FahrplanParserThread::findStationsByCoordinates(qreal longitude, qreal lati
     emit requestFindStationsByCoordinates(longitude, latitude);
 }
 
-void FahrplanParserThread::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
+void FahrplanParserThread::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
-    emit requestSearchJourney(departureStation, arrivalStation, viaStation, date, time, mode, trainrestrictions);
+    emit requestSearchJourney(departureStation, viaStation, arrivalStation, date, time, mode, trainrestrictions);
 }
 
 void FahrplanParserThread::searchJourneyLater()
@@ -143,8 +143,8 @@ void FahrplanParserThread::run()
     connect(this, SIGNAL(requestFindStationsByName(QString)), m_parser, SLOT(findStationsByName(QString)), Qt::QueuedConnection);
     connect(this, SIGNAL(requestFindStationsByCoordinates(qreal,qreal)), m_parser, SLOT(findStationsByCoordinates(qreal,qreal)), Qt::QueuedConnection);
     connect(this, SIGNAL(requestGetJourneyDetails(QString)), m_parser, SLOT(getJourneyDetails(QString)), Qt::QueuedConnection);
-    connect(this, SIGNAL(requestGetTimeTableForStation(QString,QString,QDate,QTime,ParserAbstract::Mode,int)), m_parser, SLOT(getTimeTableForStation(QString,QString,QDate,QTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
-    connect(this, SIGNAL(requestSearchJourney(QString,QString,QString,QDate,QTime,ParserAbstract::Mode,int)), m_parser, SLOT(searchJourney(QString,QString,QString,QDate,QTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(requestGetTimeTableForStation(Station,Station,QDate,QTime,ParserAbstract::Mode,int)), m_parser, SLOT(getTimeTableForStation(Station,Station,QDate,QTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(requestSearchJourney(Station,Station,Station,QDate,QTime,ParserAbstract::Mode,int)), m_parser, SLOT(searchJourney(Station,Station,Station,QDate,QTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
     connect(this, SIGNAL(requestSearchJourneyEarlier()), m_parser, SLOT(searchJourneyEarlier()), Qt::QueuedConnection);
     connect(this, SIGNAL(requestSearchJourneyLater()), m_parser, SLOT(searchJourneyLater()), Qt::QueuedConnection);
 

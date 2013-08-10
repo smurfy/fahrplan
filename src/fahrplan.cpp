@@ -189,12 +189,12 @@ void Fahrplan::resetStation(int type)
 
 void Fahrplan::searchJourney(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
-    m_parser_manager->getParser()->searchJourney(m_departureStation.name, m_arrivalStation.name, m_viaStation.name, date, time, mode, trainrestrictions);
+    m_parser_manager->getParser()->searchJourney(m_departureStation, m_viaStation, m_arrivalStation, date, time, mode, trainrestrictions);
 }
 
 void Fahrplan::getTimeTable(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
-    m_parser_manager->getParser()->getTimeTableForStation(m_currentStation.name, m_directionStation.name, date, time, mode, trainrestrictions);
+    m_parser_manager->getParser()->getTimeTableForStation(m_currentStation, m_directionStation, date, time, mode, trainrestrictions);
 }
 
 void Fahrplan::onParserChanged(const QString &name, int index)

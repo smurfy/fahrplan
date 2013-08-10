@@ -113,7 +113,7 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     emit stationsResult(&result);
 }
 
-void Parser131500ComAu::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
+void Parser131500ComAu::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -140,8 +140,8 @@ void Parser131500ComAu::searchJourney(const QString &departureStation, const QSt
     fullUrl.append("&itd_itdTimeMinute=" + time.toString("mm"));
     fullUrl.append("&itd_itdTripDateTimeDepArr=" + modeString);
     fullUrl.append("&itd_itdTimeAMPM=" + hourStr);
-    fullUrl.append("&itd_name_origin=" + departureStation);
-    fullUrl.append("&itd_name_destination=" + arrivalStation);
+    fullUrl.append("&itd_name_origin=" + departureStation.name);
+    fullUrl.append("&itd_name_destination=" + arrivalStation.name);
 
     // itd_inclMOT_5 = bus
     // itd_inclMOT_1 = train

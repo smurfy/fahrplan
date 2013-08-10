@@ -37,13 +37,13 @@ class FahrplanParserThread : public QThread
     Q_OBJECT
 public:
     explicit FahrplanParserThread(QObject *parent = 0);
-    
+
 signals:
     //Internal
-    void requestGetTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void requestGetTimeTableForStation(const Station &stationName, const Station &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
     void requestFindStationsByName(const QString &stationName);
     void requestFindStationsByCoordinates(qreal longitude, qreal latitude);
-    void requestSearchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void requestSearchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
     void requestSearchJourneyLater();
     void requestSearchJourneyEarlier();
     void requestGetJourneyDetails(const QString &id);
@@ -59,10 +59,10 @@ signals:
 public slots:
     void init(int parserIndex);
 
-    void getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
