@@ -29,10 +29,11 @@ class Favorites: public StationsListModel
     Q_OBJECT
 
 public:
-    explicit Favorites(QObject *parent = 0);
+    explicit Favorites(Fahrplan *parent = 0);
 
     QVariant data(const QModelIndex &index, int role = Name) const;
 
+    void reload();
     bool isFavorite(const Station &name) const;
 
 public slots:
@@ -46,6 +47,7 @@ signals:
 private:
     QSettings *m_settings;
 
+    void loadFavorites();
     void saveToSettings();
 };
 

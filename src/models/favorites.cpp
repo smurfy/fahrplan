@@ -17,26 +17,15 @@
 **
 ****************************************************************************/
 
+#include "fahrplan_parser_thread.h"
 #include "models/favorites.h"
 
 #include <QSettings>
 
-Favorites::Favorites(QObject *parent)
+Favorites::Favorites(Fahrplan *parent)
     : StationsListModel(parent)
 {
     m_settings = new QSettings("smurfy", "fahrplan2", this);
-
-    int size = m_settings->beginReadArray("favorites");
-    for (int k = 0; k < size; ++k) {
-        m_settings->setArrayIndex(k);
-
-        Station station;
-        station.id = m_settings->value("id");
-        station.name = m_settings->value("name").toString();
-        m_list << station;
-    }
-    m_settings->endArray();
-    qSort(m_list);
 }
 
 QVariant Favorites::data(const QModelIndex &index, int role) const
@@ -89,13 +78,44 @@ void Favorites::removeFromFavorites(int index)
     saveToSettings();
 }
 
+void Favorites::reload()
+{
+    if (!m_settings->group().isEmpty())
+        m_settings->endGroup();
+    m_settings->beginGroup(qobject_cast<Fahrplan *>(QObject::parent())->parser()->uid());
+
+    beginResetModel();
+    m_list.clear();
+    loadFavorites();
+    endResetModel();
+}
+
 bool Favorites::isFavorite(const Station &station) const
 {
     return m_list.contains(station);
 }
 
+void Favorites::loadFavorites()
+{
+    int size = m_settings->beginReadArray("favorites");
+    for (int k = 0; k < size; ++k) {
+        m_settings->setArrayIndex(k);
+
+        Station station;
+        station.id = m_settings->value("id");
+        station.name = m_settings->value("name").toString();
+        m_list << station;
+    }
+    m_settings->endArray();
+    qSort(m_list);
+}
+
 void Favorites::saveToSettings()
 {
+    // Clean up before storing. If we don't do it and the list is shorter than
+    // the previous one was, there will be junk entries left in the .ini file.
+    m_settings->remove("favorites");
+
     m_settings->beginWriteArray("favorites");
     int size = m_list.size();
     for (int k = 0; k < size; ++k) {

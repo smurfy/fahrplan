@@ -98,7 +98,7 @@ class Fahrplan : public QObject
         void addCalendarEntryComplete(bool success);
 
     private slots:
-        void selectStation(Fahrplan::StationType type, const Station &station);
+        void setStation(Fahrplan::StationType type, const Station &station);
         void onParserChanged(const QString &name, int index);
         void onStationSearchResults(StationsResultList *list);
         void bindParserSignals();
@@ -106,7 +106,7 @@ class Fahrplan : public QObject
     private:
         static FahrplanBackendManager *m_parser_manager;
         static StationSearchResults *m_stationSearchResults;
-        static Favorites *m_favorites_manager;
+        static Favorites *m_favorites;
         QSettings *settings;
 
         Station m_departureStation;
@@ -116,6 +116,7 @@ class Fahrplan : public QObject
         Station m_directionStation;
 
         Station getStation(StationType type) const;
+        void loadStations();
         void saveStationToSettings(const QString &key, const Station &station);
         Station loadStationFromSettigns(const QString &key);
 };

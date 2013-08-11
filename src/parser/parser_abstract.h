@@ -42,6 +42,7 @@ public:
 
     static QString getName() { return "Abstract"; }
     virtual QString name() { return "Abstract"; }
+    virtual QString uid() { return metaObject()->className(); }
 
 public slots:
     virtual void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);

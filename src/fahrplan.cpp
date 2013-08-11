@@ -28,7 +28,7 @@
 
 FahrplanBackendManager *Fahrplan::m_parser_manager = NULL;
 StationSearchResults *Fahrplan::m_stationSearchResults= NULL;
-Favorites *Fahrplan::m_favorites_manager = NULL;
+Favorites *Fahrplan::m_favorites = NULL;
 
 Fahrplan::Fahrplan(QObject *parent)
     : QObject(parent)
@@ -44,23 +44,17 @@ Fahrplan::Fahrplan(QObject *parent)
     }
     connect(m_parser_manager, SIGNAL(parserChanged(const QString &, int)), this, SLOT(onParserChanged(const QString &, int)));
 
-    if (!m_favorites_manager) {
-        m_favorites_manager = new Favorites(this);
+    if (!m_favorites) {
+        m_favorites = new Favorites(this);
     }
-    connect(m_favorites_manager, SIGNAL(stationSelected(Fahrplan::StationType,Station))
-            , SLOT(selectStation(Fahrplan::StationType,Station)));
+    connect(m_favorites, SIGNAL(stationSelected(Fahrplan::StationType,Station))
+            , SLOT(setStation(Fahrplan::StationType,Station)));
 
     if (!m_stationSearchResults) {
         m_stationSearchResults = new StationSearchResults(this);
     }
     connect(m_stationSearchResults, SIGNAL(stationSelected(Fahrplan::StationType,Station))
-            , SLOT(selectStation(Fahrplan::StationType,Station)));
-
-    m_departureStation = loadStationFromSettigns("departureStation");
-    m_viaStation = loadStationFromSettigns("viaStation");
-    m_arrivalStation = loadStationFromSettigns("arrivalStation");
-    m_currentStation = loadStationFromSettigns("currentStation");
-    m_directionStation = loadStationFromSettigns("directionStation");
+            , SLOT(setStation(Fahrplan::StationType,Station)));
 }
 
 void Fahrplan::bindParserSignals()
@@ -91,7 +85,7 @@ FahrplanParserThread* Fahrplan::parser()
 
 Favorites* Fahrplan::favorites() const
 {
-    return m_favorites_manager;
+    return m_favorites;
 }
 
 QString Fahrplan::getVersion()
@@ -144,7 +138,7 @@ QString Fahrplan::directionStationName() const
         return tr("please select");
 }
 
-void Fahrplan::selectStation(Fahrplan::StationType type, const Station &station)
+void Fahrplan::setStation(Fahrplan::StationType type, const Station &station)
 {
     switch (type) {
     case DepartureStation:
@@ -178,13 +172,13 @@ void Fahrplan::selectStation(Fahrplan::StationType type, const Station &station)
 void Fahrplan::swapStations(int type1, int type2)
 {
     Station tmp = getStation(StationType(type1));
-    selectStation(StationType(type1), getStation(StationType(type2)));
-    selectStation(StationType(type2), tmp);
+    setStation(StationType(type1), getStation(StationType(type2)));
+    setStation(StationType(type2), tmp);
 }
 
 void Fahrplan::resetStation(int type)
 {
-    selectStation(StationType(type), Station(false));
+    setStation(StationType(type), Station(false));
 }
 
 void Fahrplan::searchJourney(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
@@ -201,6 +195,10 @@ void Fahrplan::onParserChanged(const QString &name, int index)
 {
     //We need to reconnect all Signals to the new Parser
     bindParserSignals();
+    m_stationSearchResults->setStationsList(StationsList());
+    loadStations();
+    if (m_favorites)
+        m_favorites->reload();
     emit parserChanged(name, index);
 }
 
@@ -274,21 +272,38 @@ Station Fahrplan::getStation(StationType type) const
     }
 }
 
+void Fahrplan::loadStations()
+{
+    setStation(DepartureStation, loadStationFromSettigns("departureStation"));
+    setStation(ViaStation, loadStationFromSettigns("viaStation"));
+    setStation(ArrivalStation, loadStationFromSettigns("arrivalStation"));
+    setStation(CurrentStation, loadStationFromSettigns("currentStation"));
+    setStation(DirectionStation, loadStationFromSettigns("directionStation"));
+}
+
 void Fahrplan::saveStationToSettings(const QString &key, const Station &station)
 {
-    if (!station.valid)
+    settings->beginGroup(m_parser_manager->getParser()->uid());
+
+    if (!station.valid) {
         settings->remove(key);
+        settings->endGroup();
+        return;
+    }
 
     settings->beginGroup(key);
     settings->setValue("id", station.id);
     settings->setValue("name", station.name);
-    settings->endGroup();
+    settings->endGroup(); // key
+
+    settings->endGroup(); // Parser UID
 }
 
 Station Fahrplan::loadStationFromSettigns(const QString &key)
 {
     Station station(false);
 
+    settings->beginGroup(m_parser_manager->getParser()->uid());
     settings->beginGroup(key);
 
     station.id = settings->value("id");
@@ -298,7 +313,8 @@ Station Fahrplan::loadStationFromSettigns(const QString &key)
             station.valid = true;
     }
 
-    settings->endGroup();
+    settings->endGroup(); // key
+    settings->endGroup(); // Parser UID
 
     return station;
 }
