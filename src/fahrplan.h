@@ -78,6 +78,8 @@ class Fahrplan : public QObject
         QString getSettingsValue(const QString &key, const QString &defaultValue);
         void swapStations(int type1, int type2);
         void resetStation(int type);
+        void findStationsByName(const QString &stationName);
+        void findStationsByCoordinates(qreal longitude, qreal latitude);
         void getTimeTable(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
         void searchJourney(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
         void addJourneyDetailResultToCalendar(JourneyDetailResultList *result);

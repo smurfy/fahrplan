@@ -95,7 +95,7 @@ Page {
                 listView.model = fahrplanBackend.stationSearchResults;
                 favIcon.checked = false;
                 searchIcon.checked = true;
-                fahrplanBackend.parser.findStationsByName(searchBox.text);
+                fahrplanBackend.findStationsByName(searchBox.text);
             }
 
             Button {
@@ -295,7 +295,7 @@ Page {
                 indicator.show(qsTr("Searching for stations..."));
                 positionSource.stop();
 
-                fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
+                fahrplanBackend.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
             } else {
                 indicator.show(qsTr("Waiting for GPS lock..."));
             }

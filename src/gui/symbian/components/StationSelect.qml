@@ -83,7 +83,7 @@ Page {
                 listView.model = fahrplanBackend.stationSearchResults;
                 favIcon.checked = false;
                 searchIcon.checked = true;
-                fahrplanBackend.parser.findStationsByName(searchBox.searchText);
+                fahrplanBackend.findStationsByName(searchBox.searchText);
             }
 
             BorderImage {
@@ -303,7 +303,7 @@ Page {
         onPositionChanged: {
             if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
                 indicator.show(qsTr("Searching for stations..."));
-                fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
+                fahrplanBackend.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
             } else {
                 indicator.show(qsTr("Waiting for GPS lock..."));
             }

@@ -181,6 +181,18 @@ void Fahrplan::resetStation(int type)
     setStation(StationType(type), Station(false));
 }
 
+void Fahrplan::findStationsByName(const QString &stationName)
+{
+    m_stationSearchResults->setStationsList(StationsList());
+    m_parser_manager->getParser()->findStationsByName(stationName);
+}
+
+void Fahrplan::findStationsByCoordinates(qreal longitude, qreal latitude)
+{
+    m_stationSearchResults->setStationsList(StationsList());
+    m_parser_manager->getParser()->findStationsByCoordinates(longitude, latitude);
+}
+
 void Fahrplan::searchJourney(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
 {
     m_parser_manager->getParser()->searchJourney(m_departureStation, m_viaStation, m_arrivalStation, date, time, mode, trainrestrictions);
