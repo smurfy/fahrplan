@@ -35,8 +35,12 @@ Fahrplan::Fahrplan(QObject *parent)
     , m_departureStation(Station(false))
     , m_viaStation(Station(false))
     , m_arrivalStation(Station(false))
+    , m_mode(DepartureMode)
+    , m_dateTime(QDateTime::currentDateTime())
 {
     settings = new QSettings("smurfy", "fahrplan2");
+
+    setMode(static_cast<Mode>(settings->value("mode", DepartureMode).toInt()));
 
     if (!m_parser_manager) {
         int currentBackend = settings->value("currentBackend", 0).toInt();
@@ -136,6 +140,36 @@ QString Fahrplan::directionStationName() const
         return m_directionStation.name;
     else
         return tr("please select");
+}
+
+Fahrplan::Mode Fahrplan::mode() const
+{
+    return m_mode;
+}
+
+void Fahrplan::setMode(Fahrplan::Mode mode)
+{
+    if (mode == m_mode)
+        return;
+
+    m_mode = mode;
+    emit modeChanged();
+
+    settings->setValue("mode", static_cast<int>(m_mode));
+}
+
+QDateTime Fahrplan::dateTime() const
+{
+    return m_dateTime;
+}
+
+void Fahrplan::setDateTime(const QDateTime &dateTime)
+{
+    if (dateTime == m_dateTime)
+        return;
+
+    m_dateTime = dateTime;
+    emit dateTimeChanged();
 }
 
 void Fahrplan::setStation(Fahrplan::StationType type, const Station &station)

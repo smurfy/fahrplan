@@ -35,7 +35,7 @@ class ParserAbstract : public QObject
     Q_ENUMS(Mode)
 
 public:
-    enum Mode { Arrival = 0, Departure = 1 };
+    enum Mode { Departure = 0, Arrival = 1 };
 
     explicit ParserAbstract(QObject *parent = 0);
     ~ParserAbstract();

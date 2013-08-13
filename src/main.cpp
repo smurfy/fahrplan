@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
         qDebug()<<"QML";
         qRegisterMetaType<Station>();
         qRegisterMetaType<Fahrplan::StationType>();
+        qRegisterMetaType<Fahrplan::Mode>();
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanParserThread>("Fahrplan", 1, 0, "FahrplanParserThread");

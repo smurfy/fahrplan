@@ -47,7 +47,11 @@ class Fahrplan : public QObject
     Q_PROPERTY(QString currentStationName READ currentStationName NOTIFY currentStationChanged)
     Q_PROPERTY(QString directionStationName READ directionStationName NOTIFY directionStationChanged)
 
+    Q_PROPERTY(Mode mode READ mode WRITE setMode NOTIFY modeChanged)
+    Q_PROPERTY(QDateTime dateTime READ dateTime WRITE setDateTime NOTIFY dateTimeChanged)
+
     Q_ENUMS(StationType)
+    Q_ENUMS(Mode)
 
     public:
         enum StationType {
@@ -56,6 +60,12 @@ class Fahrplan : public QObject
             ArrivalStation,
             CurrentStation,
             DirectionStation
+        };
+
+        enum Mode {
+            DepartureMode = ParserAbstract::Departure,
+            ArrivalMode = ParserAbstract::Arrival,
+            NowMode
         };
 
         explicit Fahrplan(QObject *parent = 0);
@@ -70,6 +80,12 @@ class Fahrplan : public QObject
         QString arrivalStationName() const;
         QString currentStationName() const;
         QString directionStationName() const;
+
+        Fahrplan::Mode mode() const;
+        void setMode(Fahrplan::Mode mode);
+
+        QDateTime dateTime() const;
+        void setDateTime(const QDateTime &dateTime);
 
     public slots:
         QStringList getParserList();
@@ -90,6 +106,9 @@ class Fahrplan : public QObject
         void arrivalStationChanged();
         void currentStationChanged();
         void directionStationChanged();
+
+        void modeChanged();
+        void dateTimeChanged();
 
         void parserStationsResult();
         void parserJourneyResult(JourneyResultList *result);
@@ -117,11 +136,15 @@ class Fahrplan : public QObject
         Station m_currentStation;
         Station m_directionStation;
 
+        Mode m_mode;
+        QDateTime m_dateTime;
+
         Station getStation(StationType type) const;
         void loadStations();
         void saveStationToSettings(const QString &key, const Station &station);
         Station loadStationFromSettigns(const QString &key);
 };
 Q_DECLARE_METATYPE(Fahrplan::StationType)
+Q_DECLARE_METATYPE(Fahrplan::Mode)
 
 #endif // FAHRPLAN_H
