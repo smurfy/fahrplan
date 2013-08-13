@@ -113,7 +113,7 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     emit stationsResult(&result);
 }
 
-void Parser131500ComAu::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
+void Parser131500ComAu::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -127,7 +127,7 @@ void Parser131500ComAu::searchJourney(const Station &departureStation, const Sta
     }
 
     QString hourStr = "am";
-    int hour = time.toString("hh").toInt();
+    int hour = dateTime.toString("hh").toInt();
     if (hour > 12) {
         hour = hour - 12;
         hourStr = "pm";
@@ -135,9 +135,9 @@ void Parser131500ComAu::searchJourney(const Station &departureStation, const Sta
 
     //Request one. (Station selection and receiving an up to date cookie.)
     QString fullUrl = "http://www.131500.com.au/plan-your-trip/trip-planner?session=invalidate&itd_cmd=invalid&itd_includedMeans=checkbox&itd_inclMOT_7=1&itd_anyObjFilter_origin=2&itd_anyObjFilter_destination=2&x=37&y=12";
-    fullUrl.append("&itd_itdDate=" + date.toString("yyyyMMdd"));
+    fullUrl.append("&itd_itdDate=" + dateTime.toString("yyyyMMdd"));
     fullUrl.append("&itd_itdTimeHour=" + QString::number(hour));
-    fullUrl.append("&itd_itdTimeMinute=" + time.toString("mm"));
+    fullUrl.append("&itd_itdTimeMinute=" + dateTime.toString("mm"));
     fullUrl.append("&itd_itdTripDateTimeDepArr=" + modeString);
     fullUrl.append("&itd_itdTimeAMPM=" + hourStr);
     fullUrl.append("&itd_name_origin=" + departureStation.name);

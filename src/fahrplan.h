@@ -80,8 +80,8 @@ class Fahrplan : public QObject
         void resetStation(int type);
         void findStationsByName(const QString &stationName);
         void findStationsByCoordinates(qreal longitude, qreal latitude);
-        void getTimeTable(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
-        void searchJourney(const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+        void getTimeTable(const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
+        void searchJourney(const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
         void addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
 
     signals:

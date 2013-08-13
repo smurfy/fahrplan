@@ -35,7 +35,7 @@ public:
 public slots:
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
 //    void searchJourneyLater();
 //    void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);

@@ -347,7 +347,7 @@ Page {
                     timetablePage.selMode = selMode
 
                     pageStack.push(timetablePage);
-                    fahrplanBackend.getTimeTable(selectedDateTime, selectedDateTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.getTimeTable(selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
@@ -386,7 +386,7 @@ Page {
                     } else if (modeArr.checked) {
                         selMode = ParserAbstract.Arrival;
                     }
-                    fahrplanBackend.searchJourney(selectedDateTime, selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.searchJourney(selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }

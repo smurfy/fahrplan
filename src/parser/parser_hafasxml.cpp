@@ -66,7 +66,7 @@ bool ParserHafasXml::supportsTimeTableDirection()
     return STTableMode == 0;
 }
 
-void ParserHafasXml::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
+void ParserHafasXml::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -89,12 +89,12 @@ void ParserHafasXml::getTimeTableForStation(const Station &currentStation, const
         }
         postData.append("\" maxJourneys=\"40\">");
         postData.append("<Time>");
-        postData.append(time.toString("hh:mm"));
+        postData.append(dateTime.toString("hh:mm"));
         postData.append("</Time>");
         postData.append("<Period><DateBegin><Date>");
-        postData.append(date.toString("yyyyMMdd"));
+        postData.append(dateTime.toString("yyyyMMdd"));
         postData.append("</Date></DateBegin><DateEnd><Date>");
-        postData.append(date.toString("yyyyMMdd"));
+        postData.append(dateTime.toString("yyyyMMdd"));
         postData.append("</Date></DateEnd></Period>");
         postData.append("<TableStation externalId=\"");
         postData.append(parseExternalIds(currentStation.id));
@@ -127,8 +127,8 @@ void ParserHafasXml::getTimeTableForStation(const Station &currentStation, const
         } else /* (getTimeTableForStationRequestData.mode == Arrival) */ {
             query.addQueryItem("boardType", "arr");
         }
-        query.addQueryItem("date", date.toString("dd.MM.yyyy"));
-        query.addQueryItem("time", time.toString("hh:mm"));
+        query.addQueryItem("date", dateTime.toString("dd.MM.yyyy"));
+        query.addQueryItem("time", dateTime.toString("hh:mm"));
         query.addQueryItem("input", currentStation.name);
         query.addQueryItem("REQ0JourneyStopsSID", currentStation.id.toString());
         query.addQueryItem("maxJourneys", "50");
@@ -450,7 +450,7 @@ QStringList ParserHafasXml::getTrainRestrictions()
     return result;
 }
 
-void ParserHafasXml::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
+void ParserHafasXml::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -489,9 +489,9 @@ void ParserHafasXml::searchJourney(const Station &departureStation, const Statio
     postData.append("\" distance=\"0\"></Station>");
     postData.append("</Dest>");
     postData.append("<ReqT time=\"");
-    postData.append(time.toString("hh:mm"));
+    postData.append(dateTime.toString("hh:mm"));
     postData.append("\" date=\"");
-    postData.append(date.toString("yyyyMMdd"));
+    postData.append(dateTime.toString("yyyyMMdd"));
     postData.append("\" a=\"");
     postData.append((mode == Arrival) ? "1" : "0");
     postData.append("\"></ReqT>");

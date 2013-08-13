@@ -36,10 +36,10 @@ public:
     }
 
 public slots:
-    virtual void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+    virtual void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, Mode mode, int trainrestrictions);
     virtual void findStationsByName(const QString &stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
-    virtual void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    virtual void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     virtual void searchJourneyLater();
     virtual void searchJourneyEarlier();
     virtual void getJourneyDetails(const QString &id);
@@ -68,8 +68,7 @@ private:
         Station departureStation;
         Station arrivalStation;
         Station viaStation;
-        QDate date;
-        QTime time;
+        QDateTime dateTime;
         Mode mode;
         int trainrestrictions;
     } m_searchJourneyParameters;
@@ -78,8 +77,7 @@ private:
         bool isValid;
         Station currentStation;
         Station directionStation;
-        QDate date;
-        QTime time;
+        QDateTime dateTime;
         Mode mode;
         int trainrestrictions;
     } m_timeTableForStationParameters;
