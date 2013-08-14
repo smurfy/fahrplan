@@ -457,10 +457,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         hafasContext.ident = requestId;
 
         emit journeyResult(lastJourneyResultList);
-    } else if (errorCode == 8) {
-        emit errorOccured(tr("Sorry one station name is too ambiguous"));
     } else {
-        emit errorOccured(tr("An error ocurred with the backend"));
+        emit errorOccured(errorString(errorCode));
     }
 }
 
@@ -631,3 +629,24 @@ QByteArray ParserHafasBinary::gzipDecompress(QByteArray compressData)
     return uncompressed;
 }
 
+QString ParserHafasBinary::errorString(int error) const
+{
+    // Some error code descriptions can be found here:
+    // http://code.google.com/p/public-transport-enabler/source/browse/enabler/src/de/schildbach/pte/AbstractHafasProvider.java
+    switch (error) {
+    case 1:
+        return tr("Your session has expired. Please, perform the search again.");
+    case 8:
+        return tr("One of the station names is too ambiguous.");
+    case 890:
+        return tr("No connections have been found that correspond to your request.");
+    case 899:
+        return tr("There was an unsuccessful or incomplete search due to a timetable change.");
+    case 9240:
+        return tr("Unfortunately there was no route found.");
+    case 9360:
+        return tr("Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.");
+    default:
+        return tr("Unknown error ocurred with the backend (error %1)").arg(error);
+    }
+}

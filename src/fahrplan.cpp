@@ -203,16 +203,16 @@ void Fahrplan::setStation(Fahrplan::StationType type, const Station &station)
     }
 }
 
-void Fahrplan::swapStations(int type1, int type2)
+void Fahrplan::swapStations(StationType type1, StationType type2)
 {
-    Station tmp = getStation(StationType(type1));
-    setStation(StationType(type1), getStation(StationType(type2)));
-    setStation(StationType(type2), tmp);
+    Station tmp = getStation(type1);
+    setStation(type1, getStation(type2));
+    setStation(type2, tmp);
 }
 
-void Fahrplan::resetStation(int type)
+void Fahrplan::resetStation(Fahrplan::StationType type)
 {
-    setStation(StationType(type), Station(false));
+    setStation(type, Station(false));
 }
 
 void Fahrplan::findStationsByName(const QString &stationName)
