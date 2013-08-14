@@ -29,17 +29,11 @@
     #include <QUrlQuery>
 #endif
 
-const qlonglong ParserXmlVasttrafikSe::ERR_UNKNOWN_STATION = 0;
-const qlonglong ParserXmlVasttrafikSe::ERR_INVALID_STATION = -1;
-
 const qlonglong ParserXmlVasttrafikSe::TRIP_RTDATA_NONE = -1;
 const qlonglong ParserXmlVasttrafikSe::TRIP_RTDATA_ONTIME = 1;
 const qlonglong ParserXmlVasttrafikSe::TRIP_RTDATA_WARNING = 2;
 
 
-QMap<QString, qlonglong> cachedStationNameToId;
-QMap<qlonglong, qreal> cachedStationIdToLongitude;
-QMap<qlonglong, qreal> cachedStationIdToLatitude;
 QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
 
 
@@ -53,33 +47,13 @@ ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
 }
 
 
-void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, Mode mode, int trainrestrictions)
+void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
 {
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
 
     m_timeTableForStationParameters.isValid = false;
-
-    qlonglong stationId = cachedStationNameToId.value(currentStation.name, ERR_UNKNOWN_STATION);
-
-    if (stationId == ERR_UNKNOWN_STATION) {
-        m_timeTableForStationParameters.isValid = true;
-        m_timeTableForStationParameters.currentStation = currentStation;
-        m_timeTableForStationParameters.directionStation = directionStation;
-        m_timeTableForStationParameters.dateTime = dateTime;
-        m_timeTableForStationParameters.mode = mode;
-        m_timeTableForStationParameters.trainrestrictions = trainrestrictions;
-
-        currentRequestState = FahrplanNS::noneRequest;
-        qDebug() << "Resolving id for station name" << currentStation.name;
-        findStationsByName(currentStation.name);
-        return;
-    } else if (stationId == ERR_INVALID_STATION) {
-        currentRequestState = FahrplanNS::noneRequest;
-        emit timeTableResult(new TimeTableResultList());
-        return;
-    }
 
     QUrl uri(baseRestUrl + (mode == Departure ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
 
@@ -92,7 +66,7 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation
     query.addQueryItem("format", "xml");
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
-    query.addQueryItem("id", QString::number(stationId));
+    query.addQueryItem("id", currentStation.id.toString());
     query.addQueryItem("useVas", "1");
     query.addQueryItem("useLDTrain", "0");
     query.addQueryItem("useRegTrain", "1");
@@ -176,63 +150,6 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
     m_searchJourneyParameters.mode = mode;
     m_searchJourneyParameters.trainrestrictions = trainrestrictions;
 
-    qlonglong departureStationId = cachedStationNameToId.value(departureStation.name, ERR_UNKNOWN_STATION);
-    if (departureStationId == ERR_UNKNOWN_STATION) {
-        m_searchJourneyParameters.isValid = true;
-        currentRequestState = FahrplanNS::noneRequest;
-        qDebug() << "Resolving id for departure station" << departureStation.name;
-        findStationsByName(departureStation.name);
-        return;
-    } else if (departureStationId == ERR_INVALID_STATION) {
-        currentRequestState = FahrplanNS::noneRequest;
-        JourneyResultList *jrl = new JourneyResultList();
-        jrl->setTimeInfo(tr("Invalid departure station"));
-        jrl->setDepartureStation(departureStation.name);
-        jrl->setViaStation(viaStation.name);
-        jrl->setArrivalStation(arrivalStation.name);
-        emit journeyResult(jrl);
-        return;
-    }
-
-    qlonglong viaStationId = ERR_INVALID_STATION;
-    if (!viaStation.name.isEmpty()) {
-        viaStationId = cachedStationNameToId.value(viaStation.name, ERR_UNKNOWN_STATION);
-        if (viaStationId == ERR_UNKNOWN_STATION) {
-            m_searchJourneyParameters.isValid = true;
-            currentRequestState = FahrplanNS::noneRequest;
-            qDebug() << "Resolving id for via station" << viaStation.name;
-            findStationsByName(viaStation.name);
-            return;
-        } else if (viaStationId == ERR_INVALID_STATION) {
-            currentRequestState = FahrplanNS::noneRequest;
-            JourneyResultList *jrl = new JourneyResultList();
-            jrl->setTimeInfo(tr("Invalid via station"));
-            jrl->setDepartureStation(departureStation.name);
-            jrl->setViaStation(viaStation.name);
-            jrl->setArrivalStation(arrivalStation.name);
-            emit journeyResult(jrl);
-            return;
-        }
-    }
-
-    qlonglong arrivalStationId = cachedStationNameToId.value(arrivalStation.name, ERR_UNKNOWN_STATION);
-    if (arrivalStationId == ERR_UNKNOWN_STATION) {
-        m_searchJourneyParameters.isValid = true;
-        currentRequestState = FahrplanNS::noneRequest;
-        qDebug() << "Resolving id for arrival station" << arrivalStation.name;
-        findStationsByName(arrivalStation.name);
-        return;
-    } else if (arrivalStationId == ERR_INVALID_STATION) {
-        currentRequestState = FahrplanNS::noneRequest;
-        JourneyResultList *jrl = new JourneyResultList();
-        jrl->setTimeInfo(tr("Invalid arrival station"));
-        jrl->setDepartureStation(departureStation.name);
-        jrl->setViaStation(viaStation.name);
-        jrl->setArrivalStation(arrivalStation.name);
-        emit journeyResult(jrl);
-        return;
-    }
-
     QUrl uri(baseRestUrl + QLatin1String("trip"));
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
@@ -243,12 +160,12 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
     query.addQueryItem("format", "xml");
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
-    query.addQueryItem("originId", QString::number(departureStationId));
-    if (viaStationId > 0)
-        query.addQueryItem("viaId", QString::number(viaStationId));
+    query.addQueryItem("originId", departureStation.id.toString());
+    if (viaStation.valid)
+        query.addQueryItem("viaId", viaStation.id.toString());
     if (mode == Arrival)
         query.addQueryItem("searchForArrival", "yes");
-    query.addQueryItem("destId", QString::number(arrivalStationId));
+    query.addQueryItem("destId", arrivalStation.id.toString());
     query.addQueryItem("useVas", "1");
     query.addQueryItem("useLDTrain", "0");
     query.addQueryItem("useRegTrain", "1");
@@ -304,17 +221,6 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
 
-#if defined(BUILD_FOR_QT5)
-    QUrlQuery query(networkReply->url().query());
-    const QString stationNameFromQueryString = query.queryItemValue(QLatin1String("input"));
-#else
-    const QString stationNameFromQueryString = networkReply->url().queryItemValue(QLatin1String("input"));
-#endif
-    if (!stationNameFromQueryString.isEmpty()) {
-        /// just in case the station does not exist for this provider
-        cachedStationNameToId[stationNameFromQueryString] = ERR_INVALID_STATION;
-    }
-
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList locationList = doc.elementsByTagName("StopLocation");
@@ -327,13 +233,10 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
             item->setLongitude(longitude);
             qreal latitude = getAttribute(locationNode, "lat").toFloat();
             item->setLatitude(latitude);
-            qlonglong id = getAttribute(locationNode, "id").toLongLong();
-            item->setStationId(QString::number(id));
+            const QString id = getAttribute(locationNode, "id");
+            item->setStationId(id);
 
             result.appendItem(item);
-            cachedStationNameToId[stationName] = id;
-            cachedStationIdToLongitude[id] = longitude;
-            cachedStationIdToLatitude[id] = latitude;
         }
     }
 
@@ -373,8 +276,6 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
             QDomNode node = nodeList.item(i);
             TimeTableResultItem *item = new TimeTableResultItem();
 
-            const QString stationName = getAttribute(node, "stop");
-            qlonglong stationId = cachedStationNameToId.value(stationName, ERR_UNKNOWN_STATION);
             item->setDestinationName(getAttribute(node, isArrival ? "origin" : "direction"));
             item->setPlatform(getAttribute(node, "track"));
             const QString connectionName = i18nConnectionType(getAttribute(node, "name"));
@@ -394,10 +295,6 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
                     item->setMiscInfo(tr("<span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
                 else
                     item->setMiscInfo(tr("<span style=\"color:#093; font-weight: normal;\">on time</span>"));
-            }
-            if (stationId > 0) {
-                item->setLongitude(cachedStationIdToLongitude[stationId]);
-                item->setLatitude(cachedStationIdToLatitude[stationId]);
             }
 
             result->appendItem(item);
