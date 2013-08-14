@@ -24,7 +24,6 @@ import "components"
 
 Page {
     property alias searchResults: searchResults
-    property alias journeyStationsTitleText: journeyStations.text
     property alias searchIndicatorVisible: searchIndicator.visible
 
     id: searchResultsPage
@@ -44,8 +43,16 @@ Page {
 
             Label {
                 id: journeyStations
-                text: ""
+
+                width: parent.width
                 font.pixelSize: 30
+                text: {
+                    if (fahrplanBackend.viaStationName == qsTr("please select")) {
+                        return qsTr("<b>%1</b> to <b>%2</b>").arg(fahrplanBackend.departureStationName).arg(fahrplanBackend.arrivalStationName);
+                    } else {
+                        return qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(fahrplanBackend.departureStationName).arg(fahrplanBackend.arrivalStationName).arg(fahrplanBackend.viaStationName);
+                    }
+                }
                 anchors {
                     left: parent.left
                     leftMargin: 10
@@ -54,7 +61,6 @@ Page {
                     top: parent.top
                     topMargin: 10
                 }
-                width: parent.width
             }
 
             Label {

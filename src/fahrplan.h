@@ -92,12 +92,12 @@ class Fahrplan : public QObject
         void setParser(int index);
         void storeSettingsValue(const QString &key, const QString &value);
         QString getSettingsValue(const QString &key, const QString &defaultValue);
-        void swapStations(int type1, int type2);
-        void resetStation(int type);
+        void swapStations(Fahrplan::StationType type1, Fahrplan::StationType type2);
+        void resetStation(Fahrplan::StationType type);
         void findStationsByName(const QString &stationName);
         void findStationsByCoordinates(qreal longitude, qreal latitude);
-        void getTimeTable(const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
-        void searchJourney(const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
+        void getTimeTable(int trainrestrictions);
+        void searchJourney(int trainrestrictions);
         void addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
 
     signals:

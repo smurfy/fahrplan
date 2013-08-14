@@ -227,14 +227,32 @@ void Fahrplan::findStationsByCoordinates(qreal longitude, qreal latitude)
     m_parser_manager->getParser()->findStationsByCoordinates(longitude, latitude);
 }
 
-void Fahrplan::searchJourney(const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
+void Fahrplan::searchJourney(int trainrestrictions)
 {
-    m_parser_manager->getParser()->searchJourney(m_departureStation, m_viaStation, m_arrivalStation, dateTime, mode, trainrestrictions);
+    ParserAbstract::Mode mode;
+
+    if (m_mode == NowMode) {
+        setDateTime(QDateTime::currentDateTime());
+        mode = ParserAbstract::Departure;
+    } else {
+        mode = ParserAbstract::Mode(m_mode);
+    }
+
+    m_parser_manager->getParser()->searchJourney(m_departureStation, m_viaStation, m_arrivalStation, m_dateTime, mode, trainrestrictions);
 }
 
-void Fahrplan::getTimeTable(const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
+void Fahrplan::getTimeTable(int trainrestrictions)
 {
-    m_parser_manager->getParser()->getTimeTableForStation(m_currentStation, m_directionStation, dateTime, mode, trainrestrictions);
+    ParserAbstract::Mode mode;
+
+    if (m_mode == NowMode) {
+        setDateTime(QDateTime::currentDateTime());
+        mode = ParserAbstract::Departure;
+    } else {
+        mode = ParserAbstract::Mode(m_mode);
+    }
+
+    m_parser_manager->getParser()->getTimeTableForStation(m_currentStation, m_directionStation, m_dateTime, mode, trainrestrictions);
 }
 
 void Fahrplan::onParserChanged(const QString &name, int index)

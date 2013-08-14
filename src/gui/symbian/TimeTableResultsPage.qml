@@ -25,10 +25,7 @@ import "components"
 import "js/style.js" as Style
 
 Page {
-    property alias timetableTitleText: timetableTitle.text
     property alias searchIndicatorVisible: searchIndicator.visible
-
-    property int selMode : 0
 
     id: searchResultsPage
 
@@ -47,7 +44,7 @@ Page {
 
             Label {
                 id: timetableTitle
-                text: ""
+                text: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
                 font.bold: true
                 font.pixelSize: privateStyle.statusBarHeight
                 anchors {
@@ -222,13 +219,10 @@ Page {
                 }
 
                 var dirlabel = "";
-                if (selMode == 1) {
-                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName)
-                } else if (selMode == 0) {
-                    dirlabel = qsTr("from <b>%1</b>").arg(item.destinationName)
-                } else {
-                    dirlabel = "\u2013"
-                }
+                if (fahrplanBackend.mode === FahrplanBackend.ArrivalMode)
+                    dirlabel = qsTr("from <b>%1</b>").arg(item.destinationName);
+                else
+                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName);
 
                 timetableResultModel.append({
                     "time": Qt.formatTime( item.time, qsTr("hh:mm")),

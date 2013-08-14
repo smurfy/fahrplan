@@ -31,7 +31,6 @@ Page {
     property int searchmode : 0
     property bool startup : true
     property string inverseSuffix: theme.inverted ? "-inverse" : ""
-    property variant selectedDateTime
 
     function updateButtonVisibility()
     {
@@ -61,17 +60,6 @@ Page {
             searchMode0Toggle.checked = false;
             searchMode1Toggle.checked = true;
         }
-    }
-
-    function setToday() {
-        selectedDateTime = new Date();
-        datePicker.year = selectedDateTime.getFullYear();
-        // JavaScript Date's month is 0 based while DatePicker's is 1 based.
-        datePicker.month = selectedDateTime.getMonth() + 1;
-        datePicker.day = selectedDateTime.getDate();
-        timePicker.hour = selectedDateTime.getHours();
-        timePicker.minute = selectedDateTime.getMinutes();
-        timePicker.second = selectedDateTime.getSeconds();
     }
 
     Item {
@@ -252,22 +240,22 @@ Page {
             SubTitleButton {
                 id: datePickerButton
                 titleText: qsTr("Date")
-                subTitleText: Qt.formatDate(selectedDateTime)
+                subTitleText: Qt.formatDate(fahrplanBackend.dateTime)
                 width: parent.width
                 visible: !fromNowSwitch.checked
                 onClicked: {
-                    datePicker.open();
+                    datePicker.show();
                 }
             }
 
             SubTitleButton {
                 id: timePickerButton
                 titleText: qsTr("Time")
-                subTitleText: Qt.formatTime(selectedDateTime, qsTr("hh:mm"))
+                subTitleText: Qt.formatTime(fahrplanBackend.dateTime, qsTr("hh:mm"))
                 width: parent.width
                 visible: !fromNowSwitch.checked
                 onClicked: {
-                    timePicker.open();
+                    timePicker.show();
                 }
 
                 ButtonRow {
@@ -279,11 +267,21 @@ Page {
                     width: parent.width * 3 / 5
                     Button {
                         id: modeDep
+                        checked: fahrplanBackend.mode === FahrplanBackend.DepartureMode
                         text: qsTr("Departure")
+                        onCheckedChanged: {
+                            if (checked)
+                                fahrplanBackend.mode = FahrplanBackend.DepartureMode;
+                        }
                     }
                     Button {
                         id: modeArr
+                        checked: fahrplanBackend.mode === FahrplanBackend.ArrivalMode
                         text: qsTr("Arrival")
+                        onCheckedChanged: {
+                            if (checked)
+                                fahrplanBackend.mode = FahrplanBackend.ArrivalMode;
+                        }
                     }
                 }
             }
@@ -294,11 +292,18 @@ Page {
                 subTitleText: ""
                 Switch {
                     id: fromNowSwitch
-                    checked: fahrplanBackend.getSettingsValue("fromNow", false) == "true" ? true : false
+                    checked: fahrplanBackend.mode === FahrplanBackend.NowMode
                     anchors {
                         right: parent.right
                         rightMargin: 10
                         verticalCenter: parent.verticalCenter
+                    }
+
+                    onCheckedChanged: {
+                        if (checked)
+                            fahrplanBackend.mode = FahrplanBackend.NowMode;
+                        else
+                            fahrplanBackend.mode = FahrplanBackend.DepartureMode;
                     }
                 }
             }
@@ -322,8 +327,6 @@ Page {
                 }
 
                 onClicked: {
-                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
-
                     //Validation
                     if (currentButton.subTitleText == qsTr("please select")) {
                         banner.text = qsTr("Please select a Station");
@@ -331,23 +334,10 @@ Page {
                         return;
                     }
 
-                    if (fromNowSwitch.checked) {
-                        setToday();
-                    }
-                    var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked || fromNowSwitch.checked) {
-                        selMode = ParserAbstract.Departure;
-                        timetablePage.timetableTitleText = qsTr("Departures");
-                    } else if (modeArr.checked) {
-                        selMode = ParserAbstract.Arrival;
-                        timetablePage.timetableTitleText = qsTr("Arrivals")
-                    }
-
                     timetablePage.searchIndicatorVisible = true;
-                    timetablePage.selMode = selMode
-
                     pageStack.push(timetablePage);
-                    fahrplanBackend.getTimeTable(selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+
+                    fahrplanBackend.getTimeTable(selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
@@ -360,8 +350,6 @@ Page {
                 }
 
                 onClicked: {
-                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
-
                     //Validation
                     if (departureButton.subTitleText == qsTr("please select") || arrivalButton.subTitleText == qsTr("please select")) {
                         banner.text = qsTr("Please select a departure and arrival station.");
@@ -369,24 +357,10 @@ Page {
                         return;
                     }
 
-                    var viaStation = viaButton.subTitleText;
-                    if (viaStation == qsTr("please select") || !fahrplanBackend.parser.supportsVia()) {
-                        viaStation = "";
-                    }
-
-                    resultsPage.journeyStationsTitleText = viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText).arg(viaStation);
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
-                    if (fromNowSwitch.checked) {
-                        setToday();
-                    }
-                    var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked || fromNowSwitch.checked) {
-                        selMode = ParserAbstract.Departure;
-                    } else if (modeArr.checked) {
-                        selMode = ParserAbstract.Arrival;
-                    }
-                    fahrplanBackend.searchJourney(selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+
+                    fahrplanBackend.searchJourney(selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }
@@ -432,25 +406,45 @@ Page {
 
     DatePickerDialog {
         id: datePicker
+
+        function show()
+        {
+            year = fahrplanBackend.dateTime.getFullYear();
+            // JavaScript Date's month is 0 based while DatePicker's is 1 based.
+            month = fahrplanBackend.dateTime.getMonth() + 1;
+            day = fahrplanBackend.dateTime.getDate();
+            open();
+        }
+
         titleText: qsTr("Date")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
+
         onAccepted: {
             // We need to re-assign to selectedDateTime to trigger bindings.
             // Editing selectedDateTime directly won't trigger bindings
             // reevaluation because its tiggered only when the property itself
             // changes, not when something inside the object it holds does.
-            var dateTime = selectedDateTime;
+            var dateTime = fahrplanBackend.dateTime;
             dateTime.setFullYear(datePicker.year);
             // JavaScript Date's month is 0 based while DatePicker's is 1 based.
             dateTime.setMonth(datePicker.month - 1);
             dateTime.setDate(datePicker.day);
-            selectedDateTime = dateTime;
+            fahrplanBackend.dateTime = dateTime;
         }
     }
 
     TimePickerDialog {
         id: timePicker
+
+        function show()
+        {
+            hour = fahrplanBackend.dateTime.getHours();
+            minute = fahrplanBackend.dateTime.getMinutes();
+            second = fahrplanBackend.dateTime.getSeconds();
+            open();
+        }
+
         titleText: qsTr("Time")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
@@ -465,11 +459,11 @@ Page {
         onAccepted: {
             // We need to re-assign to selectedDateTime to trigger bindings.
             // See explanation in datePicker::onAccepted.
-            var dateTime = selectedDateTime;
+            var dateTime = fahrplanBackend.dateTime;
             dateTime.setHours(timePicker.hour);
             dateTime.setMinutes(timePicker.minute);
             dateTime.setSeconds(timePicker.second);
-            selectedDateTime = dateTime;
+            fahrplanBackend.dateTime = dateTime;
         }
     }
 
@@ -618,6 +612,16 @@ Page {
             banner.show();
         }
 
+        onModeChanged: {
+            if (mode == FahrplanBackend.NowMode) {
+                fromNowSwitch.checked = true;
+                return;
+            }
+            fromNowSwitch.checked = false;
+            modeDep.checked = fahrplanBackend.mode === FahrplanBackend.DepartureMode;
+            modeArr.checked = fahrplanBackend.mode === FahrplanBackend.ArrivalMode;
+        }
+
         onParserChanged: {
             console.log("Switching to " + name);
             currentParserName.text = fahrplanBackend.parserName;
@@ -679,6 +683,5 @@ Page {
 
     Component.onCompleted: {
         theme.inverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
-        setToday();
     }
 }
