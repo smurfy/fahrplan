@@ -660,9 +660,8 @@ Page {
         }
     }
 
-    Component {
+    StationSelect {
         id: stationSelect
-        StationSelect {}
     }
 
     Component {
