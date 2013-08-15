@@ -74,7 +74,7 @@ void Parser131500ComAu::findStationsByCoordinates(qreal longitude, qreal latitud
 
 void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
 {
-    StationsResultList result;
+    StationsList result;
 
     QRegExp regexp = QRegExp("<select name=\"(.*)\" id=\"from\" size=\"6\" class=\"multiple\">(.*)</select>");
     regexp.setMinimal(true);
@@ -105,12 +105,12 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     for (int i = 0; i < stationNames.count(); i++) {
         //Remove unneeded stuff from the result
         stationNames[i].replace(" (Location)", "");
-        StationsResultItem *item = new StationsResultItem();
-        item->setStationName(stationNames[i].trimmed());
-        result.appendItem(item);
+        Station item;
+        item.name = stationNames[i].trimmed();
+        result << item;
     }
 
-    emit stationsResult(&result);
+    emit stationsResult(result);
 }
 
 void Parser131500ComAu::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)

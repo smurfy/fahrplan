@@ -64,7 +64,7 @@ Fahrplan::Fahrplan(QObject *parent)
 void Fahrplan::bindParserSignals()
 {
     if (m_parser_manager->getParser()) {
-        connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsResultList*)), this, SLOT(onStationSearchResults(StationsResultList*)));
+        connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsList)), this, SLOT(onStationSearchResults(StationsList)));
         connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(parserJourneyResult(JourneyResultList*)));
         connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
         connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
@@ -266,23 +266,9 @@ void Fahrplan::onParserChanged(const QString &name, int index)
     emit parserChanged(name, index);
 }
 
-void Fahrplan::onStationSearchResults(StationsResultList *list)
+void Fahrplan::onStationSearchResults(const StationsList &result)
 {
-    StationsList stations;
-    Station station;
-    StationsResultItem *item;
-    for (int k = 0; k < list->itemcount(); k++) {
-        item = list->getItem(k);
-        station = Station();
-        station.id = item->stationId();
-        station.name = item->stationName();
-        station.type = item->stationType();
-        station.miscInfo = item->miscInfo();
-        station.latitude = item->latitude();
-        station.longitude = item->longitude();
-        stations << station;
-    }
-    m_stationSearchResults->setStationsList(stations);
+    m_stationSearchResults->setStationsList(result);
 
     emit parserStationsResult();
 }

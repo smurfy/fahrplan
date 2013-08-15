@@ -113,47 +113,6 @@ typedef QList<Station> StationsList;
 Q_DECLARE_METATYPE(Station)
 Q_DECLARE_METATYPE(StationsList)
 
-class StationsResultItem : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QString stationName READ stationName WRITE setStationName)
-    Q_PROPERTY(QString stationTyp READ stationType WRITE setStationType)
-    Q_PROPERTY(QString stationId READ stationId WRITE setStationId)
-    Q_PROPERTY(QString miscInfo READ miscInfo WRITE setMiscInfo)
-    Q_PROPERTY(qreal latitude READ latitude WRITE setLatitude)
-    Q_PROPERTY(qreal longitude READ longitude WRITE setLongitude)
-
-    public:
-        QString stationName() const;
-        void setStationName(const QString &);
-        QString stationType() const;
-        void setStationType(const QString &);
-        QString stationId() const;
-        void setStationId(const QString &);
-        QString miscInfo() const;
-        void setMiscInfo(const QString &);
-        qreal latitude();
-        void setLatitude(qreal);
-        qreal longitude();
-        void setLongitude(qreal);
-    private:
-        Station m_station;
-};
-
-
-class StationsResultList : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(qreal count READ itemcount)
-    public slots:
-        StationsResultItem *getItem(int);
-    public:
-        void appendItem(StationsResultItem *item);
-        qreal itemcount();
-    private:
-        QList<StationsResultItem*> m_items;
-};
-
 class JourneyResultItem : public QObject
 {
     Q_OBJECT

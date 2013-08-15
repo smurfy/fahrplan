@@ -216,7 +216,7 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
 {
     qDebug() << "ParserXmlVasttrafikSe::parseStationsByName(networkReply.url()=" << networkReply->url().toString() << ")";
 
-    StationsResultList result;
+    StationsList result;
     QTextStream ts(networkReply->readAll());
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
@@ -226,17 +226,14 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
         QDomNodeList locationList = doc.elementsByTagName("StopLocation");
         for (unsigned int i = 0; i < locationList.length(); ++i) {
             QDomNode locationNode = locationList.item(i);
-            StationsResultItem *item = new StationsResultItem();
-            const QString stationName = getAttribute(locationNode, "name");
-            item->setStationName(stationName);
-            qreal longitude = getAttribute(locationNode, "lon").toFloat();
-            item->setLongitude(longitude);
-            qreal latitude = getAttribute(locationNode, "lat").toFloat();
-            item->setLatitude(latitude);
-            const QString id = getAttribute(locationNode, "id");
-            item->setStationId(id);
 
-            result.appendItem(item);
+            Station item;
+            item.id = getAttribute(locationNode, "id");
+            item.name = getAttribute(locationNode, "name");
+            item.latitude = getAttribute(locationNode, "lat").toFloat();
+            item.longitude = getAttribute(locationNode, "lon").toFloat();
+
+            result << item;
         }
     }
 
@@ -245,7 +242,7 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     } else if (m_searchJourneyParameters.isValid) {
         searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.dateTime, m_searchJourneyParameters.mode, m_searchJourneyParameters.trainrestrictions);
     } else {
-        emit stationsResult(&result);
+        emit stationsResult(result);
     }
 }
 

@@ -378,13 +378,13 @@ void ParserHafasXml::findStationsByCoordinates(qreal longitude, qreal latitude)
 void ParserHafasXml::parseStationsByName(QNetworkReply *networkReply)
 {
     QString data = QString::fromLatin1(networkReply->readAll());
-    StationsResultList *result = internalParseStationsByName(data);
+    const StationsList result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
 
-StationsResultList* ParserHafasXml::internalParseStationsByName(const QString &data)
+StationsList ParserHafasXml::internalParseStationsByName(const QString &data) const
 {
-    StationsResultList *result = new StationsResultList();
+    StationsList result;
 
     QXmlStreamReader xml;
     xml.addData(data);
@@ -394,17 +394,17 @@ StationsResultList* ParserHafasXml::internalParseStationsByName(const QString &d
         if (xml.isStartElement()) {
             if (xml.name() == "MLc")
             {
-                StationsResultItem *item = new StationsResultItem();
-                item->setStationName(xml.attributes().value("n").toString());
-                item->setStationType(xml.attributes().value("t").toString());
-                item->setStationId(xml.attributes().value("i").toString());
-                item->setLongitude(xml.attributes().value("x").toString().toInt());
-                item->setLatitude(xml.attributes().value("y").toString().toInt());
+                Station item;
+                item.id = xml.attributes().value("i").toString();
+                item.name = xml.attributes().value("n").toString();
+                item.type = xml.attributes().value("t").toString();
+                item.latitude = xml.attributes().value("y").toString().toInt();
+                item.longitude = xml.attributes().value("x").toString().toInt();
                 QString miscInfo = xml.attributes().value("dist").toString();
                 if (!miscInfo.isEmpty()) {
-                    item->setMiscInfo(miscInfo + "m");
+                    item.miscInfo = miscInfo + "m";
                 }
-                result->appendItem(item);
+                result << item;
             }
         }
     }
@@ -420,7 +420,7 @@ void ParserHafasXml::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
     //Normally hafas returns the data as Latin1, but here we get utf8.
     QString data = QString::fromUtf8(networkReply->readAll());
-    StationsResultList *result = internalParseStationsByName(data);
+    const StationsList result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
 

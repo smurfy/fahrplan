@@ -94,7 +94,7 @@ protected:
 
     JourneyResultList *lastJourneyResultList;
     QList<JourneyDetailResultList*> journeyDetailInlineData;
-    StationsResultList* internalParseStationsByName(const QString &data);
+    StationsList internalParseStationsByName(const QString &data) const;
 
 private:
     QString parseExternalIds(const QVariant &id) const;

@@ -60,7 +60,7 @@ public slots:
     void cancelRequest();
 
 signals:
-    void stationsResult(StationsResultList *result);
+    void stationsResult(const StationsList &result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
     void timeTableResult(TimeTableResultList *result);

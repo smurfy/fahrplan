@@ -50,7 +50,7 @@ signals:
     void requestCancelRequest();
 
     //Real ones
-    void stationsResult(StationsResultList *result);
+    void stationsResult(const StationsList &result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
     void timeTableResult(TimeTableResultList *result);

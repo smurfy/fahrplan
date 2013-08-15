@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
     #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
         qDebug()<<"QML";
         qRegisterMetaType<Station>();
+        qRegisterMetaType<StationsList>();
         qRegisterMetaType<Fahrplan::StationType>();
         qRegisterMetaType<Fahrplan::Mode>();
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");

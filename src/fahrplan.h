@@ -121,7 +121,7 @@ class Fahrplan : public QObject
     private slots:
         void setStation(Fahrplan::StationType type, const Station &station);
         void onParserChanged(const QString &name, int index);
-        void onStationSearchResults(StationsResultList *list);
+        void onStationSearchResults(const StationsList &result);
         void bindParserSignals();
 
     private:
