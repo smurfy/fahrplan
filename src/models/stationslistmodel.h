@@ -53,6 +53,7 @@ public:
     void setStationsList(const StationsList &list);
 
 public slots:
+    void clear();
     void selectStation(int type, int index);
 
 signals:

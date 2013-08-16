@@ -95,6 +95,14 @@ void StationsListModel::setStationsList(const StationsList &list)
     emit countChanged();
 }
 
+void StationsListModel::clear()
+{
+    beginResetModel();
+    m_list.clear();
+    endResetModel();
+    emit countChanged();
+}
+
 void StationsListModel::selectStation(int type, int index)
 {
     if (index < 0 || index >= m_list.count())

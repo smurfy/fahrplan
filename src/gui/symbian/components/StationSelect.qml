@@ -115,6 +115,7 @@ Page {
 
                 onClicked: {
                     indicator.show(qsTr("Requesting GPS..."));
+                    fahrplanBackend.stationSearchResults.clear();
                     listView.model = fahrplanBackend.stationSearchResults;
                     favIcon.checked = false;
                     searchIcon.checked = true;
