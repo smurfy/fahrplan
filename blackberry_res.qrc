@@ -2,18 +2,18 @@
     <qresource prefix="/">
         <file>data/fahrplan2.svg</file>
         <file>src/gui/symbian/main.qml</file>
-        <file>src/gui/symbian/MainPage.qml</file>
-        <file>src/gui/symbian/components/StationSelect.qml</file>
         <file>src/gui/symbian/components/SubTitleButton.qml</file>
         <file>src/gui/symbian/components/TwoLineLabel.qml</file>
         <file>src/gui/symbian/components/SwitchLabel.qml</file>
         <file>src/gui/symbian/components/SelectLabel.qml</file>
         <file>src/gui/symbian/components/BusyLabel.qml</file>
-        <file>src/gui/symbian/JourneyResultsPage.qml</file>
-        <file>src/gui/symbian/JourneyDetailsResultsPage.qml</file>
-        <file>src/gui/symbian/AboutPage.qml</file>
-        <file>src/gui/symbian/TimeTableResultsPage.qml</file>
-        <file>src/gui/symbian/SettingsPage.qml</file>
+        <file>src/gui/symbian/pages/AboutPage.qml</file>
+        <file>src/gui/symbian/pages/JourneyDetailsResultsPage.qml</file>
+        <file>src/gui/symbian/pages/JourneyResultsPage.qml</file>
+        <file>src/gui/symbian/pages/MainPage.qml</file>
+        <file>src/gui/symbian/pages/SettingsPage.qml</file>
+        <file>src/gui/symbian/pages/StationSelectPage.qml</file>
+        <file>src/gui/symbian/pages/TimeTableResultsPage.qml</file>
         <file>src/gui/symbian/icon/icon-m-blank.png</file>
         <file>src/gui/symbian/icon/icon-m-content-calendar.svg</file>
         <file>src/gui/symbian/icon/icon-m-content-calendar-inverse.svg</file>

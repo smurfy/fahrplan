@@ -20,7 +20,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.1
 import com.nokia.extras 1.1
-import "components"
+import "../components"
 import Fahrplan 1.0
 
 Page {
@@ -160,7 +160,7 @@ Page {
                 icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
@@ -179,7 +179,7 @@ Page {
                 icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
@@ -198,7 +198,7 @@ Page {
                 icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
@@ -217,7 +217,7 @@ Page {
                 icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
             }
             SubTitleButton {
@@ -230,7 +230,7 @@ Page {
                 icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
@@ -660,8 +660,8 @@ Page {
         }
     }
 
-    StationSelect {
-        id: stationSelect
+    StationSelectPage {
+        id: stationSelectPage
     }
 
     Component {

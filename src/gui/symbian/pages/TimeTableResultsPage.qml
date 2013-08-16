@@ -19,12 +19,12 @@
 
 import Fahrplan 1.0
 import QtQuick 1.1
-import com.nokia.meego 1.1
+import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
-import "components"
+import "../components"
+import "../js/style.js" as Style
 
 Page {
-    property alias timetableTitleText: timetableTitle.text
     property alias searchIndicatorVisible: searchIndicator.visible
 
     id: searchResultsPage
@@ -40,148 +40,149 @@ Page {
             id: titleBar
 
             width: parent.width
-            height: 70
+            height: timetableTitle.height + platformStyle.paddingMedium
 
             Label {
                 id: timetableTitle
                 text: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
-                font.bold: true;
-                font.pixelSize: 32
+                font.bold: true
+                font.pixelSize: privateStyle.statusBarHeight
                 anchors {
                     left: parent.left
-                    leftMargin: 10
+                    leftMargin: platformStyle.paddingMedium
                     right: parent.right
-                    rightMargin: 10
-                    verticalCenter: parent.verticalCenter
+                    rightMargin: platformStyle.paddingMedium
+                    top: parent.top
+                    topMargin: platformStyle.paddingMedium
                 }
                 width: parent.width
+                wrapMode: Text.WordWrap
+                platformInverted: appWindow.platformInverted
             }
         }
 
         BusyIndicator {
             id: searchIndicator
-            anchors {
-                top: titleBar.bottom
-                topMargin: 50;
-                horizontalCenter: parent.horizontalCenter
-            }
+            anchors.centerIn: parent
             running: true
             visible: false
 
-            platformStyle: BusyIndicatorStyle { size: "large" }
+            width: platformStyle.graphicSizeLarge; height: width
+            platformInverted: appWindow.platformInverted
         }
 
         ListView {
             id: listView
             anchors {
                 top: titleBar.bottom
-                topMargin: 10
+                topMargin: platformStyle.paddingMedium
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
             }
-            height: parent.height - titleBar.height - 20
-            width: parent.width
             model: timetableResultModel
-            delegate:  timetableResultDelegate
+            delegate: timetableResultDelegate
             clip: true
-
             visible: !searchIndicator.visible
         }
 
         ScrollDecorator {
             flickableItem: listView
+            platformInverted: appWindow.platformInverted
         }
     }
 
     Component {
         id: timetableResultDelegate
 
-        Item {
+        Rectangle {
             id: delegateItem
-            width: listView.width
-            height: 40 + lbl_destination.height + (lbl_station.height > lbl_type.height ? lbl_station.height : lbl_type.height) + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
 
-            Rectangle {
-                anchors.fill: parent
-                color: {
-                    if (theme.inverted)
-                        return itemNum % 2 ? "#111" : "#333"
-                    else
-                        return itemNum % 2 ? "White" : "LightGrey"
-                }
+            width: listView.width
+            height: grid.height + 2 * platformStyle.paddingMedium
+            color: {
+                if (appWindow.platformInverted)
+                    return itemNum % 2 ? Style.listBackgroundOddInverted : Style.listBackgroundEvenInverted;
+                else
+                    return itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven;
             }
 
             Rectangle {
                 id: background
                 anchors.fill: parent
-                color: "DarkGrey"
+                color: Style.listBackgroundHighlight
                 visible: mouseArea.pressed
             }
 
             Item {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    top: parent.top
-                    topMargin: 10
-                }
-
                 width: parent.width
                 height: parent.height
 
                 Grid {
+                    id: grid
+
                     columns: 2
-                    spacing: 10
+                    height: childrenRect.height
+                    spacing: platformStyle.paddingMedium
 
                     anchors {
-                        leftMargin: 10
+                        top: parent.top
+                        topMargin: platformStyle.paddingMedium
                         left: parent.left
+                        leftMargin: platformStyle.paddingMedium
+                        right: parent.right
+                        rightMargin: platformStyle.paddingMedium
                     }
-
-                    width: parent.width
-                    height: parent.height
 
                     Label {
                         id: lbl_time
                         text: time
                         font.bold: true
-                        width: (parent.width  - 40) / 3
+                        width: (parent.width - grid.spacing) / 3
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
                         id: lbl_destination
                         text: destination
-                        width: ((parent.width  - 40) / 3) * 2
+                        width: (parent.width - grid.spacing) * 2 / 3
+                        wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
                         id: lbl_type
                         text: trainType
                         font.bold: true
-                        width: (parent.width  - 40) / 3
+                        width: (parent.width - grid.spacing) / 3
+                        wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
 
                     Label {
                         id: lbl_station
                         text: stationplatform
-                        width: ((parent.width  - 40) / 3) * 2
+                        width: (parent.width - grid.spacing) * 2 / 3
+                        wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
 
-
-                    Label {
-                        id: lbl_miscinfo_title
-                        visible: (miscInfo == "") ? false : true
-                        text: ""
-                        width: (parent.width  - 40) / 3
+                    Item {
+                        visible: miscInfo !== ""
+                        width: (parent.width - grid.spacing) / 3
+                        height: lbl_miscinfo.height
                     }
 
                     Label {
                         id: lbl_miscinfo
-                        visible: (miscInfo == "") ? false : true
+                        visible: miscInfo !== ""
                         text: miscInfo
-                        width: ((parent.width  - 40) / 3)  * 2
+                        width: (parent.width - grid.spacing) * 2 / 3
                         font.bold: true
+                        wrapMode: Text.WordWrap
+                        platformInverted: appWindow.platformInverted
                     }
                 }
-
-
             }
         }
     }
@@ -190,20 +191,12 @@ Page {
         id: timetableResultModel
     }
 
-    InfoBanner{
-            id: banner
-            objectName: "fahrplanInfoBanner"
-            text: ""
-            anchors.top: parent.top
-            anchors.topMargin: 10
-    }
-
     Connections {
         target: fahrplanBackend
 
         onParserErrorOccured: {
             banner.text = msg;
-            banner.show();
+            banner.open();
         }
 
         onParserTimeTableResult: {
@@ -229,7 +222,7 @@ Page {
                 if (fahrplanBackend.mode === FahrplanBackend.ArrivalMode)
                     dirlabel = qsTr("from <b>%1</b>").arg(item.destinationName);
                 else
-                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName);                    dirlabel = "\u2013"
+                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName);
 
                 timetableResultModel.append({
                     "time": Qt.formatTime( item.time, qsTr("hh:mm")),
@@ -246,9 +239,10 @@ Page {
     ToolBarLayout {
         id: timetableResultsToolbar
 
-        ToolIcon {
+        ToolButton {
             id : backIcon;
-            iconId: "toolbar-back"
+            iconSource: "toolbar-back"
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 pageStack.pop();
                 fahrplanBackend.parser.cancelRequest();

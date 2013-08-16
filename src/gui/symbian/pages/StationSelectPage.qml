@@ -22,6 +22,7 @@ import QtQuick 1.1
 import QtMobility.location 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
+import "../components"
 import "../js/style.js" as Style
 
 Page {

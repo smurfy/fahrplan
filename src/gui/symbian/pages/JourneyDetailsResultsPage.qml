@@ -21,8 +21,8 @@ import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.extras 1.1
 import com.nokia.symbian 1.1
-import "components"
-import "js/style.js" as Style
+import "../components"
+import "../js/style.js" as Style
 
 Page {
     id: searchDetailResultsPage

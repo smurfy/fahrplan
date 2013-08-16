@@ -20,8 +20,8 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import com.nokia.extras 1.1
-import "components"
-import "js/style.js" as Style
+import "../components"
+import "../js/style.js" as Style
 import Fahrplan 1.0
 
 Page {
@@ -161,7 +161,7 @@ Page {
                 platformInverted: appWindow.platformInverted
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
@@ -181,7 +181,7 @@ Page {
                 platformInverted: appWindow.platformInverted
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
@@ -201,7 +201,7 @@ Page {
                 platformInverted: appWindow.platformInverted
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
@@ -221,7 +221,7 @@ Page {
                 platformInverted: appWindow.platformInverted
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
             }
             SubTitleButton {
@@ -235,7 +235,7 @@ Page {
                 platformInverted: appWindow.platformInverted
 
                 onClicked: {
-                    pageStack.push(stationSelect, { type: type })
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
@@ -716,8 +716,8 @@ Page {
         }
     }
 
-    StationSelect {
-        id: stationSelect
+    StationSelectPage {
+        id: stationSelectPage
     }
 
     Component {
