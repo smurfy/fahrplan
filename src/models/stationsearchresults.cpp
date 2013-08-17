@@ -24,7 +24,11 @@
 
 StationSearchResults::StationSearchResults(Fahrplan *parent)
     : StationsListModel(parent)
-{}
+{
+    // When favorites change, we need to trigger view update
+    // so that stars states in the search results are updated.
+    connect(parent->favorites(), SIGNAL(countChanged()), this, SLOT(onCountChanged()));
+}
 
 QVariant StationSearchResults::data(const QModelIndex &index, int role) const
 {
@@ -56,4 +60,9 @@ void StationSearchResults::removeFromFavorites(int index)
     qobject_cast<Fahrplan *>(QObject::parent())->favorites()->removeFromFavorites(m_list.at(index));
     QModelIndex i = this->index(index, 0);
     emit dataChanged(i, i);
+}
+
+void StationSearchResults::onCountChanged()
+{
+    emit dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, 0));
 }

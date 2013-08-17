@@ -81,9 +81,8 @@ Page {
                     searchTimer.stop();
 
                 indicator.show(qsTr("Searching ..."));
-                listView.model = fahrplanBackend.stationSearchResults;
-                favIcon.checked = false;
-                searchIcon.checked = true;
+                tabs.currentTab = stationSearchResultsTab;
+                tabIcons.checkedButton = searchIcon;
                 fahrplanBackend.findStationsByName(searchBox.searchText);
             }
 
@@ -117,31 +116,10 @@ Page {
                 onClicked: {
                     indicator.show(qsTr("Requesting GPS..."));
                     fahrplanBackend.stationSearchResults.clear();
-                    listView.model = fahrplanBackend.stationSearchResults;
-                    favIcon.checked = false;
-                    searchIcon.checked = true;
+                    tabs.currentTab = stationSearchResultsTab;
+                    tabIcons.checkedButton = searchIcon;
                     positionSource.update();
                 }
-            }
-        }
-
-        Label {
-            width: parent.width
-            wrapMode: Text.WordWrap
-            height: parent.height - search.top - stationSelectToolbar.height
-            text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
-            color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
-            font.pixelSize: 2 * platformStyle.fontSizeMedium
-            visible: (fahrplanBackend.favorites.count == 0 && listView.model === fahrplanBackend.favorites)
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            platformInverted: appWindow.platformInverted
-            anchors {
-                top: search.bottom
-                left: parent.left
-                leftMargin: 20
-                right: parent.right
-                rightMargin: 20
             }
         }
 
@@ -151,109 +129,36 @@ Page {
             anchors.top: search.bottom
         }
 
-        ListView {
-            id: listView
+        TabGroup {
+            id: tabs
             anchors {
                 top: indicator.bottom
-                topMargin: platformStyle.paddingMedium
+                left: parent.left
                 bottom: parent.bottom
-                bottomMargin: platformStyle.paddingMedium
-            }
-            width: parent.width
-            model: fahrplanBackend.favorites
-            delegate: stationsResultDelegate
-            visible: (fahrplanBackend.favorites.count > 0 && listView.model === fahrplanBackend.favorites) || listView.model === fahrplanBackend.stationSearchResults
-        }
-    }
-
-    Component {
-        id: stationsResultDelegate
-
-        Item {
-            id: delegateItem
-            width: listView.width
-            height: 2 * platformStyle.paddingLarge + lbl_stationname.height
-
-            Rectangle {
-                id: background
-                anchors.fill: parent
-                color: Style.listBackgroundHighlight
-                visible: mouseArea.pressed
+                right: parent.right
             }
 
-            MouseArea {
-                id: mouseArea
-                anchors {
-                    left: lbl_stationname.left
-                    top: background.top
-                    right: background.right
-                    bottom: background.bottom
-                }
-                onClicked: {
-                    listView.model.selectStation(stationSelect.type, model.index);
-                    pageStack.pop();
-                }
-            }
+            StationsListPage {
+                id: favoritesTab
 
-            Image {
-                id: img_fav
-                source: Style.getIconFromTheme(appWindow.platformInverted, model.isFavorite ? "qtg_graf_rating_rated" : "qtg_graf_rating_unrated")
-                sourceSize {
-                    width: platformStyle.graphicSizeSmall
-                    height: platformStyle.graphicSizeSmall
-                }
-                anchors {
-                    left: parent.left
-                    leftMargin: platformStyle.paddingMedium
-                    verticalCenter: parent.verticalCenter
-                }
-            }
-
-            MouseArea {
-                id: mouseArea_fav
-                anchors {
-                    top: background.top
-                    bottom: background.bottom
-                    left: background.left
-                    right: lbl_stationname.left
-                }
-
-                onClicked: {
-                    if (model.isFavorite) {
-                        banner.text = qsTr("Removing '%1' from favorites").arg(lbl_stationname.text);
-                        banner.open();
-                        listView.model.removeFromFavorites(model.index);
-                    } else {
-                        banner.text = qsTr("Adding '%1' to favorites").arg(lbl_stationname.text);
-                        banner.open();
-                        listView.model.addToFavorites(model.index);
-                    }
-                }
-            }
-
-            Label {
-                id: lbl_stationname
-                anchors {
-                    left: img_fav.right
-                    leftMargin: platformStyle.paddingMedium
-                    right: lbl_miscinfo.left
-                    rightMargin: platformStyle.paddingMedium
-                    verticalCenter: parent.verticalCenter
-                }
-                text: model.name
+                emptyText: qsTr("Click the star icon in the search results to add or remove a station as a favorite")
+                model: fahrplanBackend.favorites
                 platformInverted: appWindow.platformInverted
-                wrapMode: Text.WordWrap
-            }
 
-            Label {
-                id: lbl_miscinfo
-                anchors {
-                    right: parent.right
-                    rightMargin: platformStyle.paddingMedium
-                    verticalCenter: parent.verticalCenter
+                onStationSelected:  {
+                    stationSelect.pageStack.pop();
                 }
-                text: model.miscInfo
-                color: Style.listBackgroundHighlight
+            }
+            StationsListPage {
+                id: stationSearchResultsTab
+
+                emptyText: qsTr("Start typing station name into the search box to see a list stations")
+                model: fahrplanBackend.stationSearchResults
+                platformInverted: appWindow.platformInverted
+
+                onStationSelected:  {
+                    stationSelect.pageStack.pop();
+                }
             }
         }
     }
@@ -271,31 +176,21 @@ Page {
         }
 
         ButtonRow {
-            ToolButton {
+            id: tabIcons
+
+            TabButton {
                 id: favIcon
+
+                tab: favoritesTab
                 iconSource: Style.getIconFromTheme(platformInverted, "qtg_graf_rating_rated")
                 platformInverted: appWindow.platformInverted
-                onClicked: {
-                    listView.model = fahrplanBackend.favorites;
-
-                    favIcon.checked = true;
-                    searchIcon.checked = false;
-                }
-                checkable: true
-                checked: true
             }
-            ToolButton {
+            TabButton {
                 id: searchIcon
+
+                tab: stationSearchResultsTab
                 iconSource: "toolbar-search"
                 platformInverted: appWindow.platformInverted
-                onClicked: {
-                    listView.model = fahrplanBackend.stationSearchResults;
-
-                    favIcon.checked = false;
-                    searchIcon.checked = true;
-                }
-                checkable: true
-                checked: false
             }
         }
     }

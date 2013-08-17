@@ -23,6 +23,7 @@ import QtMobility.location 1.1
 import com.nokia.meego 1.1
 import com.nokia.extras 1.1
 import "../components"
+import "../delegates"
 
 Page {
     id: stationSelect
@@ -41,7 +42,8 @@ Page {
         Item {
             id: search
 
-            height: 70
+            height: UiConstants.HeaderDefaultHeightPortrait
+            z: 10
 
             anchors {
                 left: parent.left
@@ -93,9 +95,7 @@ Page {
                     return;
 
                 indicator.show(qsTr("Searching ..."));
-                listView.model = fahrplanBackend.stationSearchResults;
-                favIcon.checked = false;
-                searchIcon.checked = true;
+                tabs.currentTab = stationSearchResultsTab;
                 fahrplanBackend.findStationsByName(searchBox.text);
             }
 
@@ -114,30 +114,9 @@ Page {
                 onClicked: {
                     indicator.show(qsTr("Requesting GPS..."));
                     fahrplanBackend.stationSearchResults.clear();
-                    listView.model = fahrplanBackend.stationSearchResults;
-                    favIcon.checked = false;
-                    searchIcon.checked = true;
+                    tabs.currentTab = stationSearchResultsTab;
                     positionSource.start();
                 }
-            }
-        }
-
-        Text {
-            width: parent.width
-            wrapMode: Text.WordWrap
-            height: parent.height - search.top - stationSelectToolbar.height
-            text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
-            color: "DarkGrey"
-            font.pixelSize: 50
-            visible: (fahrplanBackend.favorites.count == 0 && listView.model == fahrplanBackend.favorites)
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            anchors {
-                top: search.bottom
-                left: parent.left
-                leftMargin: 20
-                right: parent.right
-                rightMargin: 20
             }
         }
 
@@ -146,104 +125,36 @@ Page {
             anchors.top: search.bottom
         }
 
-        ListView {
-            id: listView
+        TabGroup {
+            id: tabs
+
+            currentTab: favoritesTab
             anchors {
                 top: indicator.bottom
-                topMargin: 10
+                left: parent.left
                 bottom: parent.bottom
-                bottomMargin: 10
-            }
-            width: parent.width
-            model: fahrplanBackend.favorites
-            delegate: stationsResultDelegate
-            clip: true
-            visible: (fahrplanBackend.favorites.count > 0 && listView.model === fahrplanBackend.favorites) || listView.model === fahrplanBackend.stationSearchResults
-        }
-    }
-
-    Component {
-        id: stationsResultDelegate
-
-        Item {
-            id: delegateItem
-            width: listView.width
-            height: 30 + lbl_stationname.height
-
-            Rectangle {
-                id: background
-                anchors.fill: parent
-                color: "DarkGrey"
-                visible: mouseArea.pressed
+                right: parent.right
             }
 
-            MouseArea {
-                id: mouseArea
-                anchors {
-                    left: lbl_stationname.left
-                    top: background.top
-                    right: background.right
-                    bottom: background.bottom
-                }
-                onClicked: {
-                    listView.model.selectStation(stationSelect.type, model.index);
-                    pageStack.pop();
+            StationsListPage {
+                id: favoritesTab
+
+                emptyText: qsTr("Click the star icon in the search results to add or remove a station as a favorite")
+                model: fahrplanBackend.favorites
+
+                onStationSelected:  {
+                    stationSelect.pageStack.pop();
                 }
             }
+            StationsListPage {
+                id: stationSearchResultsTab
 
-            Image {
-                id: img_fav
-                source: model.isFavorite ? "image://theme/icon-s-common-favorite-mark" + inverseSuffix : "image://theme/icon-s-common-favorite-unmark" + inverseSuffix
-                anchors {
-                    left: parent.left
-                    leftMargin: 10
-                    verticalCenter: parent.verticalCenter
-                }
-            }
+                emptyText: qsTr("Start typing station name into the search box to see a list stations")
+                model: fahrplanBackend.stationSearchResults
 
-            MouseArea {
-                id: mouseArea_fav
-                anchors {
-                    top: background.top
-                    bottom: background.bottom
-                    left: background.left
-                    right: lbl_stationname.left
+                onStationSelected:  {
+                    stationSelect.pageStack.pop();
                 }
-
-                onClicked: {
-                    if (model.isFavorite) {
-                        banner.text = qsTr("Removing '%1' from favorites").arg(lbl_stationname.text);
-                        banner.show();
-                        listView.model.removeFromFavorites(model.index);
-                    } else {
-                        banner.text = qsTr("Adding '%1' to favorites").arg(lbl_stationname.text);
-                        banner.show();
-                        listView.model.addToFavorites(model.index);
-                    }
-                }
-            }
-
-            Label {
-                id: lbl_stationname
-                anchors {
-                    left: img_fav.right
-                    leftMargin: 10
-                    rightMargin: 20
-                    right: lbl_miscinfo.left
-                    verticalCenter: parent.verticalCenter
-                }
-                text: model.name
-            }
-
-            Label {
-                id: lbl_miscinfo
-                anchors {
-                    right: parent.right
-                    rightMargin: 10
-                    verticalCenter: parent.verticalCenter
-                }
-                text: model.miscInfo
-                color: "DarkGrey";
             }
         }
     }
@@ -259,34 +170,19 @@ Page {
             }
         }
 
-        ButtonRow{
-            ToolButton {
-                id: favIcon
-                platformStyle: TabButtonStyle{}
-                iconSource: "image://theme/icon-m-toolbar-favorite-mark" + whiteSuffix
-                onClicked: {
-                    listView.model = fahrplanBackend.favorites
+        ButtonRow {
+            id: tabIcons
 
-                    favIcon.checked = true;
-                    searchIcon.checked = false;
-                }
-                flat: true
-                checkable: true
-                checked: true
+            TabButton {
+                id: favIcon
+                tab: favoritesTab
+                iconSource: "image://theme/icon-m-toolbar-favorite-mark" + whiteSuffix
             }
-            ToolButton {
-                    id: searchIcon
-                    platformStyle: TabButtonStyle{}
-                    iconSource: "image://theme/icon-m-toolbar-search" + whiteSuffix
-                    onClicked: {
-                        listView.model = fahrplanBackend.stationSearchResults
-                        favIcon.checked = false;
-                        searchIcon.checked = true;
-                    }
-                    flat: true
-                    checkable: true
-                    checked: false
-                }
+            TabButton {
+                id: searchIcon
+                tab: stationSearchResultsTab
+                iconSource: "image://theme/icon-m-toolbar-search" + whiteSuffix
+            }
         }
     }
 
@@ -316,7 +212,6 @@ Page {
         target: fahrplanBackend
 
         onParserStationsResult: {
-            console.debug(fahrplanBackend.stationSearchResults.count);
             indicator.hide();
         }
     }

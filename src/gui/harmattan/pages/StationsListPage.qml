@@ -17,26 +17,40 @@
 **
 ****************************************************************************/
 
-#ifndef STATIONSEARCHRESULTS_H
-#define STATIONSEARCHRESULTS_H
+import QtQuick 1.1
+import com.nokia.meego 1.1
+import "../delegates"
 
-#include "stationslistmodel.h"
+Page {
+    id: root
 
-class StationSearchResults: public StationsListModel
-{
-    Q_OBJECT
+    property string emptyText
+    property alias model: listView.model
 
-public:
-    explicit StationSearchResults(Fahrplan *parent = 0);
+    signal stationSelected()
 
-    QVariant data(const QModelIndex &index, int role) const;
+    ListView {
+        id: listView
 
-public slots:
-    void addToFavorites(int index);
-    void removeFromFavorites(int index);
+        anchors.fill: parent
+        delegate: StationDelegate {
+            onStationSelected: root.stationSelected()
+        }
+    }
 
-private slots:
-    void onCountChanged();
-};
+    Text {
+        text: root.emptyText
+        color: "DarkGrey"
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        opacity: (listView.count == 0) ? 1.0 : 0.0
+        font.pixelSize: 2 * UiConstants.HeaderDefaultTopSpacingPortrait
+        anchors {
+            fill: parent
+            margins: UiConstants.HeaderDefaultTopSpacingPortrait
+        }
 
-#endif // STATIONSEARCHRESULTS_H
+        Behavior on opacity { NumberAnimation { duration: 100 } }
+    }
+}
