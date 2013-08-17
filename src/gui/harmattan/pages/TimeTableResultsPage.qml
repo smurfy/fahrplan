@@ -226,10 +226,11 @@ Page {
                 }
 
                 var dirlabel = "";
+
                 if (fahrplanBackend.mode === FahrplanBackend.ArrivalMode)
                     dirlabel = qsTr("from <b>%1</b>").arg(item.destinationName);
                 else
-                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName);                    dirlabel = "\u2013"
+                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName);
 
                 timetableResultModel.append({
                     "time": Qt.formatTime( item.time, qsTr("hh:mm")),

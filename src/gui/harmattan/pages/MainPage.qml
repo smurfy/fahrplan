@@ -62,6 +62,17 @@ Page {
         }
     }
 
+    function updateModeCheckboxes()
+    {
+        if (fahrplanBackend.mode === FahrplanBackend.NowMode) {
+            fromNowSwitch.checked = true;
+            return;
+        }
+        fromNowSwitch.checked = false;
+        modeDep.checked = fahrplanBackend.mode === FahrplanBackend.DepartureMode;
+        modeArr.checked = fahrplanBackend.mode === FahrplanBackend.ArrivalMode;
+    }
+
     Item {
         id: titleBar
 
@@ -267,20 +278,16 @@ Page {
                     width: parent.width * 3 / 5
                     Button {
                         id: modeDep
-                        checked: fahrplanBackend.mode === FahrplanBackend.DepartureMode
                         text: qsTr("Departure")
-                        onCheckedChanged: {
-                            if (checked)
-                                fahrplanBackend.mode = FahrplanBackend.DepartureMode;
+                        onClicked: {
+                            fahrplanBackend.mode = FahrplanBackend.DepartureMode;
                         }
                     }
                     Button {
                         id: modeArr
-                        checked: fahrplanBackend.mode === FahrplanBackend.ArrivalMode
                         text: qsTr("Arrival")
-                        onCheckedChanged: {
-                            if (checked)
-                                fahrplanBackend.mode = FahrplanBackend.ArrivalMode;
+                        onClicked: {
+                            fahrplanBackend.mode = FahrplanBackend.ArrivalMode;
                         }
                     }
                 }
@@ -290,9 +297,9 @@ Page {
                 titleText: qsTr("Departure: Now")
                 iconVisible: false
                 subTitleText: ""
+
                 Switch {
                     id: fromNowSwitch
-                    checked: fahrplanBackend.mode === FahrplanBackend.NowMode
                     anchors {
                         right: parent.right
                         rightMargin: 10
@@ -613,13 +620,7 @@ Page {
         }
 
         onModeChanged: {
-            if (mode == FahrplanBackend.NowMode) {
-                fromNowSwitch.checked = true;
-                return;
-            }
-            fromNowSwitch.checked = false;
-            modeDep.checked = fahrplanBackend.mode === FahrplanBackend.DepartureMode;
-            modeArr.checked = fahrplanBackend.mode === FahrplanBackend.ArrivalMode;
+            updateModeCheckboxes();
         }
 
         onParserChanged: {
@@ -681,6 +682,7 @@ Page {
     }
 
     Component.onCompleted: {
+        updateModeCheckboxes();
         theme.inverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
     }
 }
