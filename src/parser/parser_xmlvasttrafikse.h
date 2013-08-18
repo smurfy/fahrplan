@@ -36,10 +36,10 @@ public:
     }
 
 public slots:
-    virtual void getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+    virtual void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, Mode mode, int trainrestrictions);
     virtual void findStationsByName(const QString &stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
-    virtual void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+    virtual void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     virtual void searchJourneyLater();
     virtual void searchJourneyEarlier();
     virtual void getJourneyDetails(const QString &id);
@@ -57,29 +57,25 @@ protected:
     virtual void parseSearchJourney(QNetworkReply *networkReply);
 
 private:
-    static const qlonglong ERR_UNKNOWN_STATION;
-    static const qlonglong ERR_INVALID_STATION;
     static const qlonglong TRIP_RTDATA_NONE;
     static const qlonglong TRIP_RTDATA_ONTIME;
     static const qlonglong TRIP_RTDATA_WARNING;
 
     struct {
         bool isValid;
-        QString departureStation;
-        QString arrivalStation;
-        QString viaStation;
-        QDate date;
-        QTime time;
+        Station departureStation;
+        Station arrivalStation;
+        Station viaStation;
+        QDateTime dateTime;
         Mode mode;
         int trainrestrictions;
     } m_searchJourneyParameters;
 
     struct {
         bool isValid;
-        QString stationName;
-        QString directionStationName;
-        QDate date;
-        QTime time;
+        Station currentStation;
+        Station directionStation;
+        QDateTime dateTime;
         Mode mode;
         int trainrestrictions;
     } m_timeTableForStationParameters;

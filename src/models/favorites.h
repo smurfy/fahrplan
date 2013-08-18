@@ -20,28 +20,32 @@
 #ifndef FAHRPLAN_FAVORITES_MANAGER_H
 #define FAHRPLAN_FAVORITES_MANAGER_H
 
-#include <QSettings>
-#include <QStringList>
+#include "parser/parser_definitions.h"
+#include "models/stationslistmodel.h"
 
-class FahrplanFavoritesManager : public QObject
+class QSettings;
+class Favorites: public StationsListModel
 {
     Q_OBJECT
 
-    public:
-        explicit FahrplanFavoritesManager(QObject *parent = 0);
+public:
+    explicit Favorites(Fahrplan *parent = 0);
 
-    public slots:
-        void addFavorite(const QString &name);
-        void removeFavorite(const QString &name);
-        bool isFavorite(const QString &name);
-        QStringList getFavorites();
+    QVariant data(const QModelIndex &index, int role = Name) const;
 
-    signals:
-        void favoritesChanged(QStringList);
+    void reload();
+    bool isFavorite(const Station &name) const;
 
-    private:
-        QStringList favorites;
-        QSettings *settings;
+public slots:
+    void addToFavorites(const Station &station);
+    void removeFromFavorites(const Station &station);
+    void removeFromFavorites(int index);
+
+private:
+    QSettings *m_settings;
+
+    void loadFavorites();
+    void saveToSettings();
 };
 
 #endif // FAHRPLAN_FAVORITES_MANAGER_H

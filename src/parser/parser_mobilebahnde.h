@@ -26,18 +26,6 @@
 #include <QXmlResultItems>
 #include "parser_hafasbinary.h"
 
-struct ParserMobileBahnDeSearchJourneyRequestData
-{
-    int progress;
-    QDate date;
-    QTime time;
-    ParserAbstract::Mode mode;
-    int trainrestrictions;
-    QString departureStation;
-    QString viaStation;
-    QString arrivalStation;
-};
-
 /*
  * bahn.de parser uses the binary interface
  */

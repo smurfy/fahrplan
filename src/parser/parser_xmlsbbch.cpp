@@ -36,7 +36,7 @@ ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent) :
 void ParserXmlSbbCh::parseStationsByName(QNetworkReply *networkReply)
 {
     QString data = QString::fromUtf8(networkReply->readAll());
-    StationsResultList *result = internalParseStationsByName(data);
+    const StationsList result = internalParseStationsByName(data);
     emit stationsResult(result);
 }
 

@@ -52,6 +52,7 @@ OTHER_FILES += \
 RESOURCES += \
     translations_res.qrc
 
+INCLUDEPATH += src
 # Zlib todo for other systems ugly hack
 !unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib G:/SDK/QTMobile/QtSources/4.8.1/src/3rdparty/zlib
 unix:!symbian: LIBS += -lz
@@ -68,12 +69,15 @@ HEADERS += \
     src/fahrplan.h \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
-    src/fahrplan_favorites_manager.h \
     src/calendarthreadwrapper.h \
     src/parser/parser_xmlnri.h \
     src/parser/parser_hafasbinary.h \
     src/fahrplan_parser_thread.h \
-    src/fahrplan_calendar_manager.h
+    src/fahrplan_calendar_manager.h \
+    src/models/stationslistmodel.h \
+    src/models/favorites.h \
+    src/models/stationsearchresults.h \
+    src/models/timetable.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -87,12 +91,15 @@ SOURCES += src/main.cpp \
     src/fahrplan.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
-    src/fahrplan_favorites_manager.cpp \
     src/calendarthreadwrapper.cpp \
     src/parser/parser_xmlnri.cpp \
     src/parser/parser_hafasbinary.cpp \
     src/fahrplan_parser_thread.cpp \
-    src/fahrplan_calendar_manager.cpp
+    src/fahrplan_calendar_manager.cpp \
+    src/models/stationslistmodel.cpp \
+    src/models/favorites.cpp \
+    src/models/stationsearchresults.cpp \
+    src/models/timetable.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
@@ -102,8 +109,12 @@ translate_hack {
         src/gui/fremantle/hildon/*.qml \
         src/gui/harmattan/*.qml \
         src/gui/harmattan/components/*.qml \
+        src/gui/harmattan/delegates/*.qml \
+        src/gui/harmattan/pages/*.qml \
         src/gui/symbian/*.qml \
         src/gui/symbian/components/*.qml \
+        src/gui/symbian/delegates/*.qml \
+        src/gui/symbian/pages/*.qml \
         src/gui/ubuntu/*.qml \
         src/gui/ubuntu/components/*.qml
 }
@@ -112,18 +123,25 @@ contains(MEEGO_EDITION,harmattan) {
     RESOURCES += harmattan_res.qrc
 
     OTHER_FILES += \
-        src/gui/harmattan/MainPage.qml \
-        src/gui/harmattan/JourneyResultsPage.qml \
-        src/gui/harmattan/JourneyDetailsResultsPage.qml \
-        src/gui/harmattan/TimeTableResultsPage.qml \
         src/gui/harmattan/main.qml \
         src/gui/harmattan/components/SubTitleButton.qml \
         src/gui/harmattan/components/StationSelect.qml \
         src/gui/harmattan/components/TwoLineLabel.qml \
         src/gui/harmattan/components/SwitchLabel.qml \
         src/gui/harmattan/components/SelectLabel.qml \
-        src/gui/harmattan/AboutPage.qml \
-        src/gui/harmattan/SettingsPage.qml \
+        src/gui/harmattan/components/BusyLabel.qml \
+        src/gui/harmattan/delegates/StationDelegate.qml \
+        src/gui/harmattan/delegates/JourneyDelegate.qml \
+        src/gui/harmattan/delegates/JourneyDetailsDelegate.qml \
+        src/gui/harmattan/delegates/TimetableEntryDelegate.qml \
+        src/gui/harmattan/pages/AboutPage.qml \
+        src/gui/harmattan/pages/JourneyDetailsResultsPage.qml \
+        src/gui/harmattan/pages/JourneyResultsPage.qml \
+        src/gui/harmattan/pages/MainPage.qml \
+        src/gui/harmattan/pages/SettingsPage.qml \
+        src/gui/harmattan/pages/StationSelectPage.qml \
+        src/gui/harmattan/pages/StationsListPage.qml \
+        src/gui/harmattan/pages/TimetablePage.qml \
         data/fahrplan2_harmattan.desktop \
         qtc_packaging/debian_harmattan/rules \
         qtc_packaging/debian_harmattan/README \
@@ -200,18 +218,24 @@ blackberry {
 
     OTHER_FILES += \
         bar-descriptor.xml \
-        src/gui/symbian/TimeTableResultsPage.qml \
-        src/gui/symbian/MainPage.qml \
         src/gui/symbian/main.qml \
-        src/gui/symbian/JourneyResultsPage.qml \
-        src/gui/symbian/JourneyDetailsResultsPage.qml \
-        src/gui/symbian/AboutPage.qml \
-        src/gui/symbian/SettingsPage.qml \
         src/gui/symbian/components/SubTitleButton.qml \
-        src/gui/symbian/components/StationSelect.qml \
         src/gui/symbian/components/TwoLineLabel.qml \
         src/gui/symbian/components/SwitchLabel.qml \
         src/gui/symbian/components/SelectLabel.qml \
+        src/gui/symbian/components/BusyLabel.qml \
+        src/gui/symbian/delegates/StationDelegate.qml \
+        src/gui/symbian/delegates/JourneyDelegate.qml \
+        src/gui/symbian/delegates/JourneyDetailsDelegate.qml \
+        src/gui/symbian/delegates/TimetableEntryDelegate.qml \
+        src/gui/symbian/pages/AboutPage.qml \
+        src/gui/symbian/pages/JourneyDetailsResultsPage.qml \
+        src/gui/symbian/pages/JourneyResultsPage.qml \
+        src/gui/symbian/pages/MainPage.qml \
+        src/gui/symbian/pages/SettingsPage.qml \
+        src/gui/symbian/pages/StationSelectPage.qml \
+        src/gui/symbian/pages/StationsListPage.qml \
+        src/gui/symbian/pages/TimetablePage.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
@@ -221,7 +245,7 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!blackberry {
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
@@ -231,18 +255,24 @@ symbian|simulator {
     RESOURCES += symbian_res.qrc
 
     OTHER_FILES += \
-        src/gui/symbian/TimeTableResultsPage.qml \
-        src/gui/symbian/MainPage.qml \
         src/gui/symbian/main.qml \
-        src/gui/symbian/JourneyResultsPage.qml \
-        src/gui/symbian/JourneyDetailsResultsPage.qml \
-        src/gui/symbian/AboutPage.qml \
-        src/gui/symbian/SettingsPage.qml \
         src/gui/symbian/components/SubTitleButton.qml \
-        src/gui/symbian/components/StationSelect.qml \
         src/gui/symbian/components/TwoLineLabel.qml \
         src/gui/symbian/components/SwitchLabel.qml \
         src/gui/symbian/components/SelectLabel.qml \
+        src/gui/symbian/components/BusyLabel.qml \
+        src/gui/symbian/delegates/StationDelegate.qml \
+        src/gui/symbian/delegates/JourneyDelegate.qml \
+        src/gui/symbian/delegates/JourneyDetailsDelegate.qml \
+        src/gui/symbian/delegates/TimetableEntryDelegate.qml \
+        src/gui/symbian/pages/AboutPage.qml \
+        src/gui/symbian/pages/JourneyDetailsResultsPage.qml \
+        src/gui/symbian/pages/JourneyResultsPage.qml \
+        src/gui/symbian/pages/MainPage.qml \
+        src/gui/symbian/pages/SettingsPage.qml \
+        src/gui/symbian/pages/StationSelectPage.qml \
+        src/gui/symbian/pages/StationsListPage.qml \
+        src/gui/symbian/pages/TimetablePage.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 

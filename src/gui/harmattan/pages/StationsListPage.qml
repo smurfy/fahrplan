@@ -19,22 +19,38 @@
 
 import QtQuick 1.1
 import com.nokia.meego 1.1
-import com.nokia.extras 1.1
-import "pages"
+import "../delegates"
 
-PageStackWindow {
-    id: appWindow
+Page {
+    id: root
 
-    initialPage: mainPage
+    property string emptyText
+    property alias model: listView.model
 
-    MainPage{ id: mainPage }
+    signal stationSelected()
 
-    InfoBanner {
-        id: banner
+    ListView {
+        id: listView
 
-        anchors {
-            top: parent.top
-            topMargin: 42
+        anchors.fill: parent
+        delegate: StationDelegate {
+            onStationSelected: root.stationSelected()
         }
+    }
+
+    Text {
+        text: root.emptyText
+        color: "DarkGrey"
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        opacity: (listView.count == 0) ? 1.0 : 0.0
+        font.pixelSize: 2 * UiConstants.HeaderDefaultTopSpacingPortrait
+        anchors {
+            fill: parent
+            margins: UiConstants.HeaderDefaultTopSpacingPortrait
+        }
+
+        Behavior on opacity { NumberAnimation { duration: 100 } }
     }
 }

@@ -24,6 +24,7 @@ import "../js/style.js" as Style
 Item {
     id: subTitleButton
 
+    property int type
     property alias titleText: title.text
     property alias iconVisible: icon.visible
     property alias subTitleText: subTitle.text
@@ -32,6 +33,7 @@ Item {
 
     signal clicked
     signal pressAndHold
+    signal reset
 
     height: title.height + subTitle.height + platformStyle.paddingMedium + platformStyle.paddingLarge
     width: parent.width

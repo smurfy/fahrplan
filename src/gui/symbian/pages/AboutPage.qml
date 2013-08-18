@@ -123,10 +123,6 @@ Page {
         }
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
-    }
-
     ToolBarLayout {
         id: aboutToolbar
 
