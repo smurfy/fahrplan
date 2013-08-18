@@ -53,7 +53,7 @@ signals:
     void stationsResult(const StationsList &result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
-    void timeTableResult(TimeTableResultList *result);
+    void timeTableResult(const TimetableEntriesList &result);
     void errorOccured(QString msg);
 
 public slots:

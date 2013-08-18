@@ -159,7 +159,7 @@ void FahrplanParserThread::run()
     connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), Qt::QueuedConnection);
     connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(journeyResult(JourneyResultList*)), Qt::QueuedConnection);
     connect(m_parser, SIGNAL(stationsResult(StationsList)), this, SIGNAL(stationsResult(StationsList)), Qt::QueuedConnection);
-    connect(m_parser, SIGNAL(timeTableResult(TimeTableResultList*)), this, SIGNAL(timeTableResult(TimeTableResultList*)), Qt::QueuedConnection);
+    connect(m_parser, SIGNAL(timetableResult(TimetableEntriesList)), this, SIGNAL(timeTableResult(TimetableEntriesList)), Qt::QueuedConnection);
 
     m_ready = true;
     exec();

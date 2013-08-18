@@ -156,7 +156,7 @@ void ParserHafasXml::parseTimeTable(QNetworkReply *networkReply)
 
 void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 {
-    TimeTableResultList *result = new TimeTableResultList();
+    TimetableEntriesList result;
 
     QString data = QString::fromLatin1(networkReply->readAll());
 
@@ -179,7 +179,7 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
         }
 
         if (xml.isStartElement() && (xml.name() == "Journey")) {
-            TimeTableResultItem *item = new TimeTableResultItem();
+            TimetableEntry item;
 
             QString dest = xml.attributes().value("dir").toString().simplified();
             QString station = xml.attributes().value("depStation").toString().simplified();
@@ -219,23 +219,23 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
                 miscInfo.append(reasonDelay);
             }
 
-            item->setDestinationName(dest);
-            item->setStationName(station);
-            item->setPlatform(xml.attributes().value("platform").toString().simplified());
-            item->setTrainType(train);
-            item->setTime(QTime::fromString(xml.attributes().value("fpTime").toString(), "hh:mm"));
-            item->setMiscInfo(miscInfo);
+            item.currentStation = station;
+            item.destinationStation = dest;
+            item.trainType = train;
+            item.platform = xml.attributes().value("platform").toString().simplified();
+            item.time = QTime::fromString(xml.attributes().value("fpTime").toString(), "hh:mm");
+            item.miscInfo = miscInfo;
 
-            result->appendItem(item);
+            result << item;
         }
 
     }
-    emit timeTableResult(result);
+    emit timetableResult(result);
 }
 
 void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
 {
-    TimeTableResultList *result = new TimeTableResultList();
+    TimetableEntriesList result;
 
     QString data = QString::fromUtf8(networkReply->readAll());
 
@@ -245,14 +245,14 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
     while (!xml.atEnd()) {
         xml.readNext();
         if (xml.isStartElement() && (xml.name() == "STBJourney")) {
-            TimeTableResultItem *item = new TimeTableResultItem();
+            TimetableEntry item;
 
             while (!xml.atEnd()) {
                 xml.readNext();
                 if (xml.isStartElement() && xml.name() == "Station") {
-                    item->setStationName(xml.attributes().value("name").toString().simplified());
-                    item->setLongitude(xml.attributes().value("x").toString().toInt());
-                    item->setLatitude(xml.attributes().value("y").toString().toInt());
+                    item.currentStation = xml.attributes().value("name").toString().simplified();
+                    item.latitude = xml.attributes().value("y").toString().toInt();
+                    item.longitude = xml.attributes().value("x").toString().toInt();
                 }
 
                 if (xml.isStartElement() && (xml.name() == "Dep" || xml.name() == "Arr" )) {
@@ -260,7 +260,7 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                         xml.readNext();
                         if (xml.isStartElement() && xml.name() == "Time") {
                             xml.readNext();
-                            item->setTime(QTime::fromString(xml.text().toString(), "hh:mm"));
+                            item.time = QTime::fromString(xml.text().toString(), "hh:mm");
                         }
 
                         if (xml.isStartElement() && xml.name() == "Platform") {
@@ -268,7 +268,7 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                                 xml.readNext();
                                 if (xml.isStartElement() && xml.name() == "Text") {
                                     xml.readNext();
-                                    item->setPlatform(xml.text().toString().simplified());
+                                    item.platform = xml.text().toString().simplified();
                                 }
 
                                 if (xml.isEndElement() && xml.name() == "Platform") {
@@ -291,10 +291,10 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                             xml.readNext();
 
                             if (currentAttributeType == "DIRECTION") {
-                                item->setDestinationName(xml.text().toString().simplified());
+                                item.destinationStation = xml.text().toString().simplified();
                             }
                             if (currentAttributeType == "NAME") {
-                                item->setTrainType(xml.text().toString().simplified());
+                                item.trainType = xml.text().toString().simplified();
                             }
                         }
 
@@ -304,14 +304,14 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                     }
                 }
                 if (xml.isEndElement() && xml.name() == "STBJourney") {
-                    result->appendItem(item);
+                    result << item;
                     break;
                 }
             }
         }
     }
 
-    emit timeTableResult(result);
+    emit timetableResult(result);
 }
 
 void ParserHafasXml::findStationsByName(const QString &stationName)

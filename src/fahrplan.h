@@ -30,6 +30,7 @@
 class FahrplanBackendManager;
 class FahrplanParserThread;
 class StationSearchResults;
+class Timetable;
 class Favorites;
 class Fahrplan : public QObject
 {
@@ -39,8 +40,9 @@ class Fahrplan : public QObject
     Q_PROPERTY(QString parserName READ parserName)
     Q_PROPERTY(QString version READ getVersion CONSTANT)
 
-    Q_PROPERTY(StationSearchResults* stationSearchResults READ stationSearchResults CONSTANT)
+    Q_PROPERTY(StationSearchResults *stationSearchResults READ stationSearchResults CONSTANT)
     Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
+    Q_PROPERTY(Timetable *timetable READ timetable CONSTANT)
     Q_PROPERTY(QString departureStationName READ departureStationName NOTIFY departureStationChanged)
     Q_PROPERTY(QString viaStationName READ viaStationName NOTIFY viaStationChanged)
     Q_PROPERTY(QString arrivalStationName READ arrivalStationName NOTIFY arrivalStationChanged)
@@ -74,7 +76,8 @@ class Fahrplan : public QObject
         QString parserName();
         QString getVersion();
 
-        StationSearchResults* stationSearchResults() const;
+        StationSearchResults *stationSearchResults() const;
+        Timetable *timetable() const;
         QString departureStationName() const;
         QString viaStationName() const;
         QString arrivalStationName() const;
@@ -113,7 +116,7 @@ class Fahrplan : public QObject
         void parserStationsResult();
         void parserJourneyResult(JourneyResultList *result);
         void parserJourneyDetailsResult(JourneyDetailResultList *result);
-        void parserTimeTableResult(TimeTableResultList *result);
+        void parserTimeTableResult();
         void parserErrorOccured(const QString &msg);
         void parserChanged(const QString &name, int index);
         void addCalendarEntryComplete(bool success);
@@ -122,12 +125,14 @@ class Fahrplan : public QObject
         void setStation(Fahrplan::StationType type, const Station &station);
         void onParserChanged(const QString &name, int index);
         void onStationSearchResults(const StationsList &result);
+        void onTimetableResult(const TimetableEntriesList &timetableEntries);
         void bindParserSignals();
 
     private:
         static FahrplanBackendManager *m_parser_manager;
         static StationSearchResults *m_stationSearchResults;
         static Favorites *m_favorites;
+        static Timetable *m_timetable;
         QSettings *settings;
 
         Station m_departureStation;

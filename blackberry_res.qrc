@@ -18,7 +18,7 @@
         <file>src/gui/symbian/pages/SettingsPage.qml</file>
         <file>src/gui/symbian/pages/StationSelectPage.qml</file>
         <file>src/gui/symbian/pages/StationsListPage.qml</file>
-        <file>src/gui/symbian/pages/TimeTableResultsPage.qml</file>
+        <file>src/gui/symbian/pages/TimetablePage.qml</file>
         <file>src/gui/symbian/icon/icon-m-blank.png</file>
         <file>src/gui/symbian/icon/icon-m-content-calendar.svg</file>
         <file>src/gui/symbian/icon/icon-m-content-calendar-inverse.svg</file>

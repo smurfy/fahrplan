@@ -17,6 +17,7 @@
 **
 ****************************************************************************/
 
+import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../js/style.js" as Style
@@ -63,7 +64,7 @@ Rectangle {
             }
             Label {
                 id: lbl_destination
-                text: model.destination
+                text: "%1 <b>%2</b>".arg(fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("from") : qsTr("to")).arg(model.destinationStation)
                 width: (parent.width - grid.spacing) * 2 / 3
                 wrapMode: Text.WordWrap
                 platformInverted: appWindow.platformInverted
@@ -78,7 +79,18 @@ Rectangle {
             }
             Label {
                 id: lbl_station
-                text: model.stationplatform
+                text: {
+                    var platform;
+                    if (model.platform) {
+                        platform = qsTr("Pl. %1").arg(model.platform);
+                        if (model.currentStation) {
+                            platform += " / " + model.currentStation;
+                        }
+                    } else {
+                        platform = model.currentStation;
+                    }
+                    return platform;
+                }
                 width: (parent.width - grid.spacing) * 2 / 3
                 wrapMode: Text.WordWrap
                 platformInverted: appWindow.platformInverted

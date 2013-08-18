@@ -700,14 +700,6 @@ Page {
         }
     }
 
-    JourneyResultsPage {
-        id: resultsPage
-    }
-
-    TimeTableResultsPage {
-        id: timetablePage
-    }
-
     // Timer which enables exit icon after 1 second
     Timer {
         id: exitIconDelay
@@ -723,6 +715,14 @@ Page {
 
     StationSelectPage {
         id: stationSelectPage
+    }
+
+    JourneyResultsPage {
+        id: resultsPage
+    }
+
+    TimetablePage {
+        id: timetablePage
     }
 
     Component {

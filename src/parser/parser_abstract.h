@@ -28,7 +28,6 @@ class QNetworkAccessManager;
 class QNetworkReply;
 class QTimer;
 class QUrl;
-
 class ParserAbstract : public QObject
 {
     Q_OBJECT
@@ -63,7 +62,7 @@ signals:
     void stationsResult(const StationsList &result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
-    void timeTableResult(TimeTableResultList *result);
+    void timetableResult(const TimetableEntriesList &timetableEntries);
     void errorOccured(QString msg);
 
 protected slots:

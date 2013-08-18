@@ -256,7 +256,7 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
 {
     qDebug() << "ParserXmlVasttrafikSe::parseTimeTable(networkReply.url()=" << networkReply->url().toString() << ")";
 
-    TimeTableResultList *result = new TimeTableResultList();
+    TimetableEntriesList result;
     QTextStream ts(networkReply->readAll());
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
@@ -271,34 +271,34 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
         }
         for (unsigned int i = 0; i < nodeList.length(); ++i) {
             QDomNode node = nodeList.item(i);
-            TimeTableResultItem *item = new TimeTableResultItem();
+            TimetableEntry item;
 
-            item->setDestinationName(getAttribute(node, isArrival ? "origin" : "direction"));
-            item->setPlatform(getAttribute(node, "track"));
+            item.destinationStation = getAttribute(node, isArrival ? "origin" : "direction");
+            item.platform = getAttribute(node, "track");
             const QString connectionName = i18nConnectionType(getAttribute(node, "name"));
             const QString fgColor = getAttribute(node, "fgColor");
             const QString bgColor = getAttribute(node, "bgColor");
             if (!fgColor.isEmpty() && !bgColor.isEmpty())
-                item->setTrainType(QString(QLatin1String("<span style=\"color:%2; background-color: %3;\">%1</span>")).arg(connectionName).arg(fgColor).arg(bgColor));
+                item.trainType = QString::fromLatin1("<span style=\"color:%2; background-color: %3;\">%1</span>").arg(connectionName).arg(fgColor).arg(bgColor);
             else
-                item->setTrainType(connectionName);
+                item.trainType = connectionName;
             const QTime scheduledTime = QTime::fromString(getAttribute(node, "time"), QLatin1String("hh:mm"));
-            item->setTime(scheduledTime);
+            item.time = scheduledTime;
             const QString realTimeStr = getAttribute(node, "rtTime");
             if (!realTimeStr.isEmpty()) {
                 const QTime realTimeTime = QTime::fromString(realTimeStr, QLatin1String("hh:mm"));
                 const int minutesTo = scheduledTime.msecsTo(realTimeTime) / 60000;
                 if (minutesTo > 3)
-                    item->setMiscInfo(tr("<span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
+                    item.miscInfo = tr("<span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo);
                 else
-                    item->setMiscInfo(tr("<span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                    item.miscInfo = tr("<span style=\"color:#093; font-weight: normal;\">on time</span>");
             }
 
-            result->appendItem(item);
+            result << item;
         }
     }
 
-    emit timeTableResult(result);
+    emit timetableResult(result);
 }
 
 void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)

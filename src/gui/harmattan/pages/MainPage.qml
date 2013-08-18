@@ -403,14 +403,6 @@ Page {
         id: trainrestrictionsModel
     }
 
-    JourneyResultsPage {
-        id: resultsPage
-    }
-
-    TimeTableResultsPage {
-        id: timetablePage
-    }
-
     DatePickerDialog {
         id: datePicker
 
@@ -663,6 +655,14 @@ Page {
 
     StationSelectPage {
         id: stationSelectPage
+    }
+
+    JourneyResultsPage {
+        id: resultsPage
+    }
+
+    TimetablePage {
+        id: timetablePage
     }
 
     Component {

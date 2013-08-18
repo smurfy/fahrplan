@@ -18,7 +18,7 @@
         <file>src/gui/harmattan/pages/SettingsPage.qml</file>
         <file>src/gui/harmattan/pages/StationSelectPage.qml</file>
         <file>src/gui/harmattan/pages/StationsListPage.qml</file>
-        <file>src/gui/harmattan/pages/TimeTableResultsPage.qml</file>
+        <file>src/gui/harmattan/pages/TimetablePage.qml</file>
         <file>src/gui/harmattan/icon/icon-m-content-calendar.svg</file>
         <file>src/gui/harmattan/icon/icon-m-content-calendar-inverse.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-clock.svg</file>

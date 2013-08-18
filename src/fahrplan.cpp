@@ -23,12 +23,14 @@
 #include "calendarthreadwrapper.h"
 #include "models/favorites.h"
 #include "models/stationsearchresults.h"
+#include "models/timetable.h"
 
 #include <QThread>
 
 FahrplanBackendManager *Fahrplan::m_parser_manager = NULL;
 StationSearchResults *Fahrplan::m_stationSearchResults= NULL;
 Favorites *Fahrplan::m_favorites = NULL;
+Timetable *Fahrplan::m_timetable = NULL;
 
 Fahrplan::Fahrplan(QObject *parent)
     : QObject(parent)
@@ -59,6 +61,10 @@ Fahrplan::Fahrplan(QObject *parent)
     }
     connect(m_stationSearchResults, SIGNAL(stationSelected(Fahrplan::StationType,Station))
             , SLOT(setStation(Fahrplan::StationType,Station)));
+
+    if (!m_timetable) {
+        m_timetable = new Timetable(this);
+    }
 }
 
 void Fahrplan::bindParserSignals()
@@ -68,7 +74,7 @@ void Fahrplan::bindParserSignals()
         connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(parserJourneyResult(JourneyResultList*)));
         connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
         connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
-        connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimeTableResultList*)), this, SIGNAL(parserTimeTableResult(TimeTableResultList*)));
+        connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimetableEntriesList)), this, SLOT(onTimetableResult(TimetableEntriesList)));
     }
 }
 
@@ -100,6 +106,11 @@ QString Fahrplan::getVersion()
 StationSearchResults *Fahrplan::stationSearchResults() const
 {
     return m_stationSearchResults;
+}
+
+Timetable *Fahrplan::timetable() const
+{
+    return m_timetable;
 }
 
 QString Fahrplan::departureStationName() const
@@ -271,6 +282,13 @@ void Fahrplan::onStationSearchResults(const StationsList &result)
     m_stationSearchResults->setStationsList(result);
 
     emit parserStationsResult();
+}
+
+void Fahrplan::onTimetableResult(const TimetableEntriesList &timetableEntries)
+{
+    m_timetable->setTimetableEntries(timetableEntries);
+
+    emit parserTimeTableResult();
 }
 
 QString Fahrplan::parserName()

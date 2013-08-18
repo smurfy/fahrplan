@@ -41,9 +41,6 @@ public slots:
     void removeFromFavorites(const Station &station);
     void removeFromFavorites(int index);
 
-signals:
-    void countChanged();
-
 private:
     QSettings *m_settings;
 

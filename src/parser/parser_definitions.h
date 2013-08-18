@@ -39,59 +39,6 @@ namespace FahrplanNS
     };
 }
 
-class TimeTableResultItem : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QString stationName READ stationName WRITE setStationName)
-    Q_PROPERTY(QString trainType READ trainType WRITE setTrainType)
-    Q_PROPERTY(QString destinationName READ destinationName WRITE setDestinationName)
-    Q_PROPERTY(QTime time READ time WRITE setTime)
-    Q_PROPERTY(QString platform READ platform WRITE setPlatform)
-    Q_PROPERTY(qreal longitude READ longitude WRITE setLongitude)
-    Q_PROPERTY(qreal latitude READ latitude WRITE setLatitude)
-    Q_PROPERTY(QString miscInfo READ miscInfo WRITE setMiscInfo)
-
-    public:
-        QString stationName() const;
-        void setStationName(const QString &);
-        QString trainType() const;
-        void setTrainType(const QString &);
-        QString destinationName() const;
-        void setDestinationName(const QString &);
-        QTime time() const;
-        void setTime(const QTime &);
-        QString platform() const;
-        void setPlatform(const QString &);
-        qreal longitude();
-        void setLongitude(qreal);
-        qreal latitude();
-        void setLatitude(qreal);
-        QString miscInfo() const;
-        void setMiscInfo(const QString &);
-    private:
-        QString m_stationName;
-        QString m_trainType;
-        QString m_destinationName;
-        QTime m_time;
-        QString m_platform;
-        qreal m_longitude;
-        qreal m_latitude;
-        QString m_miscInfo;
-};
-
-class TimeTableResultList : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(qreal count READ itemcount)
-    public slots:
-        TimeTableResultItem *getItem(int);
-    public:
-        void appendItem(TimeTableResultItem *item);
-        qreal itemcount();
-    private:
-        QList<TimeTableResultItem*> m_items;
-};
-
 struct Station
 {
     bool valid;
@@ -112,6 +59,24 @@ public:
 typedef QList<Station> StationsList;
 Q_DECLARE_METATYPE(Station)
 Q_DECLARE_METATYPE(StationsList)
+
+struct TimetableEntry
+{
+    QString currentStation;
+    QString destinationStation;
+    QString trainType;
+    QString platform;
+    QTime time;
+    QString miscInfo;
+    qreal latitude;
+    qreal longitude;
+
+public:
+    TimetableEntry();
+};
+typedef QList<TimetableEntry> TimetableEntriesList;
+Q_DECLARE_METATYPE(TimetableEntry)
+Q_DECLARE_METATYPE(TimetableEntriesList)
 
 class JourneyResultItem : public QObject
 {

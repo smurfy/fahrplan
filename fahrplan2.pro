@@ -76,7 +76,8 @@ HEADERS += \
     src/fahrplan_calendar_manager.h \
     src/models/stationslistmodel.h \
     src/models/favorites.h \
-    src/models/stationsearchresults.h
+    src/models/stationsearchresults.h \
+    src/models/timetable.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -97,7 +98,8 @@ SOURCES += src/main.cpp \
     src/fahrplan_calendar_manager.cpp \
     src/models/stationslistmodel.cpp \
     src/models/favorites.cpp \
-    src/models/stationsearchresults.cpp
+    src/models/stationsearchresults.cpp \
+    src/models/timetable.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
@@ -139,7 +141,7 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/pages/SettingsPage.qml \
         src/gui/harmattan/pages/StationSelectPage.qml \
         src/gui/harmattan/pages/StationsListPage.qml \
-        src/gui/harmattan/pages/TimeTableResultsPage.qml \
+        src/gui/harmattan/pages/TimetablePage.qml \
         data/fahrplan2_harmattan.desktop \
         qtc_packaging/debian_harmattan/rules \
         qtc_packaging/debian_harmattan/README \
@@ -233,7 +235,7 @@ blackberry {
         src/gui/symbian/pages/SettingsPage.qml \
         src/gui/symbian/pages/StationSelectPage.qml \
         src/gui/symbian/pages/StationsListPage.qml \
-        src/gui/symbian/pages/TimeTableResultsPage.qml \
+        src/gui/symbian/pages/TimetablePage.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
@@ -270,7 +272,7 @@ symbian|simulator {
         src/gui/symbian/pages/SettingsPage.qml \
         src/gui/symbian/pages/StationSelectPage.qml \
         src/gui/symbian/pages/StationsListPage.qml \
-        src/gui/symbian/pages/TimeTableResultsPage.qml \
+        src/gui/symbian/pages/TimetablePage.qml \
         src/gui/symbian/js/style.js \
         src/gui/symbian/icon/*
 
