@@ -129,6 +129,9 @@ contains(MEEGO_EDITION,harmattan) {
         src/gui/harmattan/components/SelectLabel.qml \
         src/gui/harmattan/components/BusyLabel.qml \
         src/gui/harmattan/delegates/StationDelegate.qml \
+        src/gui/harmattan/delegates/JourneyDelegate.qml \
+        src/gui/harmattan/delegates/JourneyDetailsDelegate.qml \
+        src/gui/harmattan/delegates/TimetableEntryDelegate.qml \
         src/gui/harmattan/pages/AboutPage.qml \
         src/gui/harmattan/pages/JourneyDetailsResultsPage.qml \
         src/gui/harmattan/pages/JourneyResultsPage.qml \
@@ -220,6 +223,9 @@ blackberry {
         src/gui/symbian/components/SelectLabel.qml \
         src/gui/symbian/components/BusyLabel.qml \
         src/gui/symbian/delegates/StationDelegate.qml \
+        src/gui/symbian/delegates/JourneyDelegate.qml \
+        src/gui/symbian/delegates/JourneyDetailsDelegate.qml \
+        src/gui/symbian/delegates/TimetableEntryDelegate.qml \
         src/gui/symbian/pages/AboutPage.qml \
         src/gui/symbian/pages/JourneyDetailsResultsPage.qml \
         src/gui/symbian/pages/JourneyResultsPage.qml \
@@ -254,6 +260,9 @@ symbian|simulator {
         src/gui/symbian/components/SelectLabel.qml \
         src/gui/symbian/components/BusyLabel.qml \
         src/gui/symbian/delegates/StationDelegate.qml \
+        src/gui/symbian/delegates/JourneyDelegate.qml \
+        src/gui/symbian/delegates/JourneyDetailsDelegate.qml \
+        src/gui/symbian/delegates/TimetableEntryDelegate.qml \
         src/gui/symbian/pages/AboutPage.qml \
         src/gui/symbian/pages/JourneyDetailsResultsPage.qml \
         src/gui/symbian/pages/JourneyResultsPage.qml \

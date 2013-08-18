@@ -21,7 +21,7 @@ import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.extras 1.1
 import com.nokia.symbian 1.1
-import "../components"
+import "../delegates"
 import "../js/style.js" as Style
 
 Page {
@@ -115,6 +115,10 @@ Page {
 
         ListView {
             id: listView
+
+            model: journeyDetailResultModel
+            clip: true
+            visible: !searchIndicator.visible
             anchors {
                 top: titleBar.bottom
                 topMargin: platformStyle.paddingMedium
@@ -122,221 +126,12 @@ Page {
                 right: parent.right
                 bottom: parent.bottom
             }
-            visible: !searchIndicator.visible
-            model: journeyDetailResultModel
-            delegate:  journeyDetailResultDelegate
-            clip: true
+            delegate: JourneyDetailsDelegate {}
         }
 
         ScrollDecorator {
             flickableItem: listView
             platformInverted: appWindow.platformInverted
-        }
-    }
-
-    Component {
-        id: journeyDetailResultDelegate
-
-        Item {
-            id: delegateItem
-            width: listView.width
-            height: isStation ? isTrain ? item_train.height + item_station.height : item_station.height : isTrain ? item_train.height : 0
-
-            Item {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-
-                width: parent.width
-                height: parent.height
-
-                Rectangle {
-                     id: item_station
-
-                     height: visible ? lbl_station.height + 2 * platformStyle.paddingMedium : 0
-                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
-                     visible: isStation
-
-                     anchors {
-                         left: parent.left
-                         right: parent.right
-                     }
-
-                     Item {
-                         id: times
-
-                         width: childrenRect.width
-                         height: parent.height
-
-                         anchors {
-                             left: parent.left
-                             leftMargin: platformStyle.paddingMedium
-                         }
-
-                         Label {
-                             anchors {
-                                 left: parent.left
-                                 top: parent.top
-                                 topMargin: platformStyle.paddingSmall
-                             }
-
-                             // This hack is needed to have correct padding for the line
-                             text: arrivalTime != "" ? arrivalTime : " "
-                             platformInverted: appWindow.platformInverted
-                         }
-
-                         Label {
-                             anchors {
-                                 left: parent.left
-                                 bottom: parent.bottom
-                                 bottomMargin: platformStyle.paddingSmall
-                             }
-
-                             text: departureTime
-                             platformInverted: appWindow.platformInverted
-                         }
-                     }
-
-                     Item {
-                         id: circle
-
-                         width: childrenRect.width
-                         height: parent.height
-
-                         anchors {
-                             left: times.right
-                             leftMargin: platformStyle.paddingMedium
-                         }
-
-                         Rectangle {
-                             anchors {
-                                 left: parent.left
-                                 leftMargin: (platformStyle.graphicSizeSmall - width) / 2
-                                 top: parent.top
-                                 topMargin: (isStart) ? parent.height / 2 : 0
-                             }
-                             color: "#0d70c5"
-                             height: (isStart || isStop) ? parent.height / 2  : parent.height
-                             width: platformStyle.graphicSizeSmall / 4
-                         }
-
-                         Rectangle {
-                             anchors {
-                                 left: parent.left
-                                 verticalCenter: parent.verticalCenter
-                             }
-
-                             gradient: Gradient {
-                                 GradientStop {
-                                     position: 0.00;
-                                     color: "#0d70c5";
-                                 }
-                                 GradientStop {
-                                     position: 0.38;
-                                     color: "#0d70c5";
-                                 }
-                                 GradientStop {
-                                     position: 0.39;
-                                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
-                                 }
-                                 GradientStop {
-                                     position: 0.50;
-                                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
-                                 }
-                                 GradientStop {
-                                     position: 0.61;
-                                     color: appWindow.platformInverted ? Style.listBackgroundOddInverted : Style.listBackgroundOdd
-                                 }
-                                 GradientStop {
-                                     position: 0.62;
-                                     color: "#0d70c5";
-                                 }
-                                 GradientStop {
-                                     position: 1.0;
-                                     color: "#0d70c5";
-                                 }
-                             }
-                             radius: platformStyle.graphicSizeSmall / 2
-                             smooth: true
-                             height: platformStyle.graphicSizeSmall
-                             width: height
-                         }
-                     }
-
-                     Item {
-                        id: lbl_station
-
-                        height: childrenRect.height
-
-                        anchors {
-                            verticalCenter: parent.verticalCenter
-                            left: circle.right
-                            leftMargin: platformStyle.paddingMedium
-                            right: parent.right
-                            rightMargin: platformStyle.paddingMedium
-                        }
-
-                        Label {
-                            id: lbl_station_name
-                            text: stationName
-                            width: parent.width
-                            wrapMode: Text.WordWrap
-                            platformInverted: appWindow.platformInverted
-                        }
-
-                        Label {
-                            anchors {
-                                top: lbl_station_name.bottom
-                                topMargin: platformStyle.paddingSmall
-                            }
-                            color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
-                            id: lbl_station_info
-                            text: stationInfo
-                            width: parent.width
-                            platformInverted: appWindow.platformInverted
-                        }
-                     }
-                }
-
-                Rectangle {
-                    id: item_train
-
-                    height: visible ? lbl_train.height + 30 : 0
-                    color: appWindow.platformInverted ? Style.listBackgroundEvenInverted : Style.listBackgroundEven
-                    visible: isTrain
-
-                    anchors {
-                        top: item_station.bottom
-                        left: parent.left
-                        right: parent.right
-                    }
-
-                    Rectangle {
-                        anchors {
-                            left: parent.left
-                            leftMargin: times.width + (circle.width - width) / 2 + 2 * platformStyle.paddingMedium
-                        }
-                        color: "#0d70c5"
-                        height: parent.height
-                        width: platformStyle.graphicSizeSmall / 4
-                    }
-
-                    Label {
-                        id: lbl_train
-                        anchors {
-                            left: parent.left
-                            leftMargin: times.width + circle.width + 3 * platformStyle.paddingMedium
-                            right: parent.right
-                            rightMargin: platformStyle.paddingMedium
-                            verticalCenter: parent.verticalCenter
-                        }
-                        text: trainName
-                        font.bold: true
-                        wrapMode: Text.WordWrap
-                        platformInverted: appWindow.platformInverted
-                    }
-                }
-            }
         }
     }
 

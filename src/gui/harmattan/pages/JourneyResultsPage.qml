@@ -20,7 +20,7 @@
 import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.meego 1.1
-import "../components"
+import "../delegates"
 
 Page {
     property alias searchResults: searchResults
@@ -147,141 +147,30 @@ Page {
 
         ListView {
             id: listView
+
+            width: parent.width
+            height: (parent.height - titleBar.height - listHead.height) - 10
+            model: journeyResultModel
+            clip: true
+            visible: !searchIndicator.visible
             anchors {
                 top: listHead.bottom
                 topMargin: 10
             }
-            height: (parent.height - titleBar.height - listHead.height) - 10
-            width: parent.width
-            model: journeyResultModel
-            delegate:  journeyResultDelegate
-            clip: true
-            visible: !searchIndicator.visible
-        }
-
-        ScrollDecorator {
-            flickableItem: listView
-        }
-    }
-
-    Component {
-        id: journeyResultDelegate
-
-        Item {
-            id: delegateItem
-            width: listView.width
-            height: 30 + lbl_departuretime.height + lbl_traintyp.height + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
-
-            Rectangle {
-                anchors.fill: parent
-                color: {
-                    if (theme.inverted)
-                        return itemNum % 2 ? "#111" : "#333"
-                    else
-                        return itemNum % 2 ? "White" : "LightGrey"
-                }
-            }
-
-            Rectangle {
-                id: background
-                anchors.fill: parent
-                color: "DarkGrey"
-                visible: mouseArea.pressed
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: background
+            delegate: JourneyDelegate {
                 onClicked: {
-
                     detailsResultsPage.titleText = qsTr("Loading details");
                     detailsResultsPage.subTitleText = qsTr("please wait...");
                     detailsResultsPage.subTitleText2 = "";
                     detailsResultsPage.searchIndicatorVisible = true;
                     pageStack.push(detailsResultsPage);
-                    fahrplanBackend.parser.getJourneyDetails(id);
+                    fahrplanBackend.parser.getJourneyDetails(model.id);
                 }
             }
+        }
 
-            Item {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    top: parent.top
-                    topMargin: 10
-                }
-
-                width: parent.width
-                height: parent.height
-
-                Label {
-                    id: lbl_departuretime
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                    }
-                    text: departureTime
-                    width: (parent.width  - 40) / 4
-                }
-
-                Label {
-                    id: lbl_arrivaltime
-                    anchors {
-                        left: lbl_departuretime.right
-                        leftMargin: 10
-                    }
-                    text: arrivalTime
-                    width: (parent.width  - 40) / 4
-                }
-
-                Label {
-                    id: lbl_duration
-                    anchors {
-                        left: lbl_arrivaltime.right
-                        leftMargin: 10
-                    }
-                    horizontalAlignment: Text.AlignHCenter
-                    text: duration
-                    width: (parent.width  - 40) / 4
-                }
-
-                Label {
-                    id: lbl_transfers
-                    anchors {
-                        left: lbl_duration.right
-                        leftMargin: 10
-                    }
-                    horizontalAlignment: Text.AlignHCenter
-                    text: transfers
-                    width: (parent.width  - 40) / 4
-                }
-
-                Label {
-                    id: lbl_traintyp
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        top: lbl_departuretime.bottom
-                        topMargin: 5
-                    }
-                    text: trainType
-                    width: parent.width - 40
-                }
-
-                Label {
-                    id: lbl_miscinfo
-                    anchors {
-                        left: parent.left
-                        leftMargin: 10
-                        top: lbl_traintyp.bottom
-                        topMargin: 5
-                    }
-                    visible: (miscInfo == "") ? false : true
-                    text: miscInfo
-                    width: parent.width - 40
-                    font.bold: true
-                }
-
-            }
+        ScrollDecorator {
+            flickableItem: listView
         }
     }
 
@@ -311,16 +200,10 @@ Page {
                     "trainType": item.trainType,
                     "duration": item.duration,
                     "transfers": item.transfers,
-                    "miscInfo": item.miscInfo,
-                    "itemNum" : i
+                    "miscInfo": item.miscInfo
                 });
             }
         }
-    }
-
-
-    JourneyDetailsResultsPage {
-        id: detailsResultsPage
     }
 
     ToolBarLayout {
@@ -353,5 +236,9 @@ Page {
                 }
             }
         }
+    }
+
+    JourneyDetailsResultsPage {
+        id: detailsResultsPage
     }
 }

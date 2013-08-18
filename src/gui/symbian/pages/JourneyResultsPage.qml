@@ -20,7 +20,7 @@
 import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "../components"
+import "../delegates"
 import "../js/style.js" as Style
 
 Page {
@@ -136,6 +136,10 @@ Page {
 
         ListView {
             id: listView
+
+            model: journeyResultModel
+            clip: true
+            visible: !searchIndicator.visible
             anchors {
                 top: listHead.bottom
                 topMargin: platformStyle.paddingMedium
@@ -143,113 +147,22 @@ Page {
                 right: parent.right
                 bottom: parent.bottom
             }
-            model: journeyResultModel
-            delegate: journeyResultDelegate
-            clip: true
-            visible: !searchIndicator.visible
-        }
 
-        ScrollDecorator {
-            flickableItem: listView
-            platformInverted: appWindow.platformInverted
-        }
-    }
-
-    Component {
-        id: journeyResultDelegate
-
-        Rectangle {
-            id: delegateItem
-
-            width: listView.width
-            height: labels.height + 2 * platformStyle.paddingMedium
-            color: {
-                if (appWindow.platformInverted)
-                    return itemNum % 2 ? Style.listBackgroundOddInverted : Style.listBackgroundEvenInverted;
-                else
-                    return itemNum % 2 ? Style.listBackgroundOdd : Style.listBackgroundEven;
-            }
-
-            Rectangle {
-                id: background
-                anchors.fill: parent
-                color: Style.listBackgroundHighlight
-                visible: mouseArea.pressed
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: background
+            delegate: JourneyDelegate {
                 onClicked: {
                     detailsResultsPage.titleText = qsTr("Loading details");
                     detailsResultsPage.subTitleText = qsTr("please wait...");
                     detailsResultsPage.subTitleText2 = "";
                     detailsResultsPage.searchIndicatorVisible = true;
                     pageStack.push(detailsResultsPage);
-                    fahrplanBackend.parser.getJourneyDetails(id);
+                    fahrplanBackend.parser.getJourneyDetails(model.id);
                 }
             }
+        }
 
-            Column {
-                id: labels
-
-                height: childrenRect.height
-                spacing: platformStyle.paddingSmall
-                anchors {
-                    top: parent.top
-                    topMargin: platformStyle.paddingMedium
-                    left: parent.left
-                    leftMargin: platformStyle.paddingMedium
-                    right: parent.right
-                    rightMargin: platformStyle.paddingMedium
-                }
-
-                Row {
-                    width: parent.width
-                    height: childrenRect.height
-                    spacing: platformStyle.paddingMedium
-
-                    Label {
-                        text: departureTime
-                        width: (parent.width - 3 * listHead.spacing) / 4
-                        platformInverted: appWindow.platformInverted
-                    }
-
-                    Label {
-                        text: arrivalTime
-                        width: (parent.width - 3 * listHead.spacing) / 4
-                        platformInverted: appWindow.platformInverted
-                    }
-
-                    Label {
-                        horizontalAlignment: Text.AlignHCenter
-                        text: duration
-                        width: (parent.width - 3 * listHead.spacing) / 4
-                        platformInverted: appWindow.platformInverted
-                    }
-
-                    Label {
-                        horizontalAlignment: Text.AlignHCenter
-                        text: transfers
-                        width: (parent.width - 3 * listHead.spacing) / 4
-                        platformInverted: appWindow.platformInverted
-                    }
-                }
-
-                Label {
-                    text: trainType
-                    width: parent.width
-                    platformInverted: appWindow.platformInverted
-                }
-
-                Label {
-                    visible: miscInfo !== ""
-                    text: miscInfo
-                    width: parent.width
-                    font.bold: true
-                    platformInverted: appWindow.platformInverted
-                }
-            }
+        ScrollDecorator {
+            flickableItem: listView
+            platformInverted: appWindow.platformInverted
         }
     }
 
@@ -279,8 +192,7 @@ Page {
                     "trainType": item.trainType,
                     "duration": item.duration,
                     "transfers": item.transfers,
-                    "miscInfo": item.miscInfo,
-                    "itemNum" : i
+                    "miscInfo": item.miscInfo
                 });
             }
         }

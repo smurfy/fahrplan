@@ -8,6 +8,9 @@
         <file>src/gui/harmattan/components/SelectLabel.qml</file>
         <file>src/gui/harmattan/components/BusyLabel.qml</file>
         <file>src/gui/harmattan/delegates/StationDelegate.qml</file>
+        <file>src/gui/harmattan/delegates/JourneyDelegate.qml</file>
+        <file>src/gui/harmattan/delegates/JourneyDetailsDelegate.qml</file>
+        <file>src/gui/harmattan/delegates/TimetableEntryDelegate.qml</file>
         <file>src/gui/harmattan/pages/AboutPage.qml</file>
         <file>src/gui/harmattan/pages/JourneyDetailsResultsPage.qml</file>
         <file>src/gui/harmattan/pages/JourneyResultsPage.qml</file>

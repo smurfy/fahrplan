@@ -8,13 +8,16 @@
         <file>src/gui/symbian/components/SelectLabel.qml</file>
         <file>src/gui/symbian/components/BusyLabel.qml</file>
         <file>src/gui/symbian/delegates/StationDelegate.qml</file>
+        <file>src/gui/symbian/delegates/JourneyDelegate.qml</file>
+        <file>src/gui/symbian/delegates/JourneyDetailsDelegate.qml</file>
+        <file>src/gui/symbian/delegates/TimetableEntryDelegate.qml</file>
         <file>src/gui/symbian/pages/AboutPage.qml</file>
         <file>src/gui/symbian/pages/JourneyDetailsResultsPage.qml</file>
         <file>src/gui/symbian/pages/JourneyResultsPage.qml</file>
         <file>src/gui/symbian/pages/MainPage.qml</file>
         <file>src/gui/symbian/pages/SettingsPage.qml</file>
         <file>src/gui/symbian/pages/StationSelectPage.qml</file>
-        <file>src/gui/symbian/pages/StationsResultPage.qml</file>
+        <file>src/gui/symbian/pages/StationsListPage.qml</file>
         <file>src/gui/symbian/pages/TimeTableResultsPage.qml</file>
         <file>src/gui/symbian/icon/icon-m-blank.png</file>
         <file>src/gui/symbian/icon/icon-m-content-calendar.svg</file>
