@@ -65,18 +65,17 @@ Item {
             height: platformStyle.graphicSizeSmall
         }
         anchors {
-            left: parent.left
-            leftMargin: platformStyle.paddingMedium
             verticalCenter: parent.verticalCenter
         }
     }
 
     MouseArea {
+
+        id: mouseArea_fav
+
         anchors {
             top: background.top
-            left: background.left
             bottom: background.bottom
-            right: lbl_stationname.left
         }
 
         onClicked: {
@@ -99,7 +98,6 @@ Item {
         wrapMode: Text.WordWrap
         platformInverted: root.platformInverted
         anchors {
-            left: img_fav.right
             leftMargin: platformStyle.paddingMedium
             right: lbl_miscinfo.left
             rightMargin: platformStyle.paddingMedium
@@ -113,9 +111,26 @@ Item {
         text: model.miscInfo
         color: Style.listBackgroundHighlight
         anchors {
-            right: parent.right
             rightMargin: platformStyle.paddingMedium
             verticalCenter: parent.verticalCenter
+        }
+    }
+
+    Component.onCompleted: {
+        if (fahrplanBackend.getSettingsValue("favStarIconPos", "true") == "true") {
+            img_fav.anchors.left = root.left
+            img_fav.anchors.leftMargin = platformStyle.paddingMedium
+            lbl_stationname.anchors.left = img_fav.right
+            lbl_miscinfo.anchors.right = root.right
+            mouseArea_fav.anchors.left = background.left
+            mouseArea_fav.anchors.right = lbl_stationname.left
+        } else {
+            img_fav.anchors.right = root.right
+            img_fav.anchors.rightMargin = platformStyle.paddingMedium
+            lbl_stationname.anchors.left = root.left
+            lbl_miscinfo.anchors.right = img_fav.left
+            mouseArea_fav.anchors.left = lbl_miscinfo.right
+            mouseArea_fav.anchors.right = background.right
         }
     }
 }

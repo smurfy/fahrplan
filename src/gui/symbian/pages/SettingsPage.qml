@@ -90,6 +90,18 @@ Page {
                 checked = appWindow.platformInverted;
             }
         }
+        SwitchLabel {
+            title: qsTr("Favorites star position (requires restart)")
+            subtitle: checked ? qsTr("Left") : qsTr("Right")
+
+            onCheckedChanged: {
+                fahrplanBackend.storeSettingsValue("favStarIconPos", checked);
+            }
+
+            Component.onCompleted: {
+                checked = fahrplanBackend.getSettingsValue("favStarIconPos", true);
+            }
+        }
         SelectLabel {
             title: qsTr("Add journeys to calendar")
             subtitle: calendarManager.selectedCalendarName
