@@ -18,10 +18,9 @@
 ****************************************************************************/
 
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.1
 import com.nokia.extras 1.1
-import "components"
-import "js/style.js" as Style
+import "../components"
 import Fahrplan 1.0
 
 Page {
@@ -31,7 +30,7 @@ Page {
 
     property int searchmode : 0
     property bool startup : true
-    property variant selectedDateTime
+    property string inverseSuffix: theme.inverted ? "-inverse" : ""
 
     function updateButtonVisibility()
     {
@@ -43,7 +42,7 @@ Page {
             viaButton.visible = fahrplanBackend.parser.supportsVia();
             departureButton.visible = true;
             arrivalButton.visible = true;
-            stationButton.visible = false;
+            currentButton.visible = false;
             directionButton.visible = false;
             timetableSearch.visible = false;
             startSearch.visible = true;
@@ -54,7 +53,7 @@ Page {
             viaButton.visible = false;
             departureButton.visible = false;
             arrivalButton.visible = false;
-            stationButton.visible = true;
+            currentButton.visible = true;
             directionButton.visible = fahrplanBackend.parser.supportsTimeTableDirection();
             timetableSearch.visible = true;
             startSearch.visible = false;
@@ -63,23 +62,22 @@ Page {
         }
     }
 
-    function setToday() {
-        selectedDateTime = new Date();
-        datePicker.year = selectedDateTime.getFullYear();
-        // JavaScript Date's month is 0 based while DatePicker's is 1 based.
-        datePicker.month = selectedDateTime.getMonth() + 1;
-        datePicker.day = selectedDateTime.getDate();
-        timePicker.hour = selectedDateTime.getHours();
-        timePicker.minute = selectedDateTime.getMinutes();
-        timePicker.second = selectedDateTime.getSeconds()
+    function updateModeCheckboxes()
+    {
+        if (fahrplanBackend.mode === FahrplanBackend.NowMode) {
+            fromNowSwitch.checked = true;
+            return;
+        }
+        fromNowSwitch.checked = false;
+        modeDep.checked = fahrplanBackend.mode === FahrplanBackend.DepartureMode;
+        modeArr.checked = fahrplanBackend.mode === FahrplanBackend.ArrivalMode;
     }
 
     Item {
         id: titleBar
 
         width: parent.width
-        height: privateStyle.tabBarHeightPortrait
-        z: 10
+        height: 70
 
         Rectangle {
             anchors.fill: parent
@@ -118,7 +116,7 @@ Page {
                 verticalCenter: parent.verticalCenter
             }
             font.bold: true;
-            font.pixelSize: privateStyle.statusBarHeight
+            font.pixelSize: 32
             color: "White"
 
             text: fahrplanBackend.parserName
@@ -127,31 +125,32 @@ Page {
         Image {
             id: icon
 
-            source: Style.getIconFromTheme(false, "qtg_graf_choice_list_indicator")
-            sourceSize {
-                width: platformStyle.graphicSizeTiny
-                height: platformStyle.graphicSizeTiny
-            }
             anchors {
                 right: parent.right
                 rightMargin: 10
                 verticalCenter: parent.verticalCenter
             }
+            height: sourceSize.height
+            width: sourceSize.width
+            source: "image://theme/meegotouch-combobox-indicator-inverted"
         }
     }
 
     Flickable {
         id: flickable
         anchors {
+            topMargin: 10
             top: titleBar.bottom
-            topMargin: platformStyle.paddingMedium
-            bottom: parent.bottom
-            bottomMargin: platformStyle.paddingMedium
         }
         width: mainPage.width
+        height: mainPage.height - titleBar.height - 20
         contentWidth: buttons.width
         contentHeight: buttons.height
         flickableDirection: Flickable.VerticalFlick
+
+        onMovementStarted: {
+            flickable.clip = true;
+        }
 
         Column {
             id: buttons
@@ -164,128 +163,154 @@ Page {
 
             SubTitleButton {
                 id: departureButton
+
+                type: FahrplanBackend.DepartureStation
                 titleText: qsTr("Departure Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.departureStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(departureStationSelect)
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(departureButton);
                 }
-                icon: "toolbar-next"
-                platformInverted: appWindow.platformInverted
+                onReset: {
+                    fahrplanBackend.resetStation(type);
+                }
             }
             SubTitleButton {
                 id: viaButton
+
+                type: FahrplanBackend.ViaStation
                 titleText: qsTr("Via Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.viaStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(viaStationSelect)
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(viaButton);
                 }
-                icon: "toolbar-next"
-                platformInverted: appWindow.platformInverted
+                onReset: {
+                    fahrplanBackend.resetStation(type);
+                }
             }
             SubTitleButton {
                 id: arrivalButton
+
+                type: FahrplanBackend.ArrivalStation
                 titleText: qsTr("Arrival Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.arrivalStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(arrivalStationSelect)
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     stationSelectContextMenu.openMenu(arrivalButton);
                 }
-                icon: "toolbar-next"
-                platformInverted: appWindow.platformInverted
+                onReset: {
+                    fahrplanBackend.resetStation(type);
+                }
             }
             SubTitleButton {
-                id: stationButton
+                id: currentButton
+
+                type: FahrplanBackend.CurrentStation
                 titleText: qsTr("Station")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.currentStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(stationStationSelect)
+                    pageStack.push(stationSelectPage, { type: type })
                 }
-                icon: "toolbar-next"
-                platformInverted: appWindow.platformInverted
             }
             SubTitleButton {
                 id: directionButton
+
+                type: FahrplanBackend.DirectionStation
                 titleText: qsTr("Direction")
-                subTitleText: qsTr("please select")
+                subTitleText: fahrplanBackend.directionStationName
                 width: parent.width
+                icon: "image://theme/icon-m-common-drilldown-arrow" + inverseSuffix
+
                 onClicked: {
-                    pageStack.push(directionStationSelect)
+                    pageStack.push(stationSelectPage, { type: type })
                 }
                 onPressAndHold: {
                     timeTableSelectContextMenu.open();
                 }
-                platformInverted: appWindow.platformInverted
-                icon: "toolbar-next"
             }
 
             SubTitleButton {
                 id: datePickerButton
                 titleText: qsTr("Date")
-                subTitleText: Qt.formatDate(selectedDateTime) //qsTr("please select")
+                subTitleText: Qt.formatDate(fahrplanBackend.dateTime)
                 width: parent.width
                 visible: !fromNowSwitch.checked
-                platformInverted: appWindow.platformInverted
                 onClicked: {
-                    datePicker.open();
+                    datePicker.show();
                 }
             }
 
             SubTitleButton {
                 id: timePickerButton
                 titleText: qsTr("Time")
-                subTitleText: Qt.formatTime(selectedDateTime, qsTr("hh:mm")) //qsTr("please select")
+                subTitleText: Qt.formatTime(fahrplanBackend.dateTime, qsTr("hh:mm"))
                 width: parent.width
                 visible: !fromNowSwitch.checked
-                platformInverted: appWindow.platformInverted
                 onClicked: {
-                    timePicker.open();
+                    timePicker.show();
                 }
 
                 ButtonRow {
                     anchors {
                         right: parent.right
-                        rightMargin: platformStyle.graphicSizeTiny + 2 * platformStyle.paddingMedium
+                        rightMargin: 50
                         verticalCenter: parent.verticalCenter
                     }
                     width: parent.width * 3 / 5
                     Button {
                         id: modeDep
                         text: qsTr("Departure")
-                        platformInverted: appWindow.platformInverted
+                        onClicked: {
+                            fahrplanBackend.mode = FahrplanBackend.DepartureMode;
+                        }
                     }
                     Button {
                         id: modeArr
                         text: qsTr("Arrival")
-                        platformInverted: appWindow.platformInverted
+                        onClicked: {
+                            fahrplanBackend.mode = FahrplanBackend.ArrivalMode;
+                        }
                     }
                 }
             }
 
-
             SubTitleButton {
                 titleText: qsTr("Departure: Now")
                 iconVisible: false
-                platformInverted: appWindow.platformInverted
+                subTitleText: ""
+
                 Switch {
                     id: fromNowSwitch
-                    platformInverted: appWindow.platformInverted
-                    checked: fahrplanBackend.getSettingsValue("fromNow", false) == "true" ? true : false
                     anchors {
                         right: parent.right
-                        rightMargin: platformStyle.paddingMedium
+                        rightMargin: 10
                         verticalCenter: parent.verticalCenter
+                    }
+
+                    onCheckedChanged: {
+                        if (checked)
+                            fahrplanBackend.mode = FahrplanBackend.NowMode;
+                        else
+                            fahrplanBackend.mode = FahrplanBackend.DepartureMode;
                     }
                 }
             }
@@ -295,7 +320,6 @@ Page {
                 titleText: qsTr("Trains")
                 subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
                 width: parent.width
-                platformInverted: appWindow.platformInverted
                 onClicked: {
                     selectTrainrestrictionsDialog.open();
                 }
@@ -303,95 +327,47 @@ Page {
 
             Button {
                 id: timetableSearch
-                width: parent.width * 2 / 3
                 text: modeDep.checked || fromNowSwitch.checked ? qsTr("Show departures") : qsTr("Show arrivals")
                 anchors {
                     topMargin: 20
                     horizontalCenter: parent.horizontalCenter
                 }
-                platformInverted: appWindow.platformInverted
 
                 onClicked: {
-                    fahrplanBackend.storeSettingsValue("stationStation", stationButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("directionStation", directionButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
-
                     //Validation
-                    if (stationButton.subTitleText == qsTr("please select")) {
+                    if (currentButton.subTitleText == qsTr("please select")) {
                         banner.text = qsTr("Please select a Station");
-                        banner.open();
+                        banner.show();
                         return;
                     }
 
-                    var directionStation = directionButton.subTitleText;
-                    if (directionStation == qsTr("please select") || !fahrplanBackend.parser.supportsTimeTableDirection()) {
-                        directionStation = "";
-                    }
-
-                    if (fromNowSwitch.checked) {
-                        setToday();
-                    }
-                    var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked || fromNowSwitch.checked) {
-                        selMode = ParserAbstract.Departure;
-                        timetablePage.timetableTitleText = qsTr("Departures");
-                    } else if (modeArr.checked) {
-                        selMode = ParserAbstract.Arrival;
-                        timetablePage.timetableTitleText = qsTr("Arrivals")
-                    }
-
                     timetablePage.searchIndicatorVisible = true;
-                    timetablePage.selMode = selMode
-
                     pageStack.push(timetablePage);
 
-
-                    fahrplanBackend.parser.getTimeTableForStation(stationButton.subTitleText, directionStation, selectedDateTime, selectedDateTime, selMode,  selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.getTimeTable(selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
 
             Button {
                 id: startSearch
-                width: parent.width * 2 / 3
                 text: qsTr("Start search")
                 anchors {
                     topMargin: 20
                     horizontalCenter: parent.horizontalCenter
                 }
-                platformInverted: appWindow.platformInverted
 
                 onClicked: {
-
-                    fahrplanBackend.storeSettingsValue("viaStation", viaButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("departureStation", departureButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("arrivalStation", arrivalButton.subTitleText);
-                    fahrplanBackend.storeSettingsValue("fromNow", fromNowSwitch.checked)
-
                     //Validation
                     if (departureButton.subTitleText == qsTr("please select") || arrivalButton.subTitleText == qsTr("please select")) {
                         banner.text = qsTr("Please select a departure and arrival station.");
-                        banner.open();
+                        banner.show();
                         return;
                     }
 
-                    var viaStation = viaButton.subTitleText;
-                    if (viaStation == qsTr("please select") || !fahrplanBackend.parser.supportsVia()) {
-                        viaStation = "";
-                    }
-
-                    resultsPage.journeyStationsTitleText = viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subTitleText).arg(arrivalButton.subTitleText).arg(viaStation);
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
-                    if (fromNowSwitch.checked) {
-                        setToday();
-                    }
-                    var selMode = ParserAbstract.Arrival;
-                    if (modeDep.checked || fromNowSwitch.checked) {
-                        selMode = ParserAbstract.Departure;
-                    } else if (modeArr.checked) {
-                        selMode = ParserAbstract.Arrival;
-                    }
-                    fahrplanBackend.parser.searchJourney(departureButton.subTitleText, arrivalButton.subTitleText, viaStation, selectedDateTime, selectedDateTime, selMode, selectTrainrestrictionsDialog.selectedIndex);
+
+                    fahrplanBackend.searchJourney(selectTrainrestrictionsDialog.selectedIndex);
                 }
             }
         }
@@ -399,61 +375,12 @@ Page {
 
     ScrollDecorator {
         flickableItem: flickable
-        platformInverted: appWindow.platformInverted
     }
-
-    StationSelect {
-        id: departureStationSelect
-
-        onStationSelected: {
-            departureButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-    StationSelect {
-        id: arrivalStationSelect
-
-        onStationSelected: {
-            arrivalButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-    StationSelect {
-        id: viaStationSelect
-
-        onStationSelected: {
-            viaButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-    StationSelect {
-        id: stationStationSelect
-
-        onStationSelected: {
-            stationButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
-
-    StationSelect {
-        id: directionStationSelect
-
-        onStationSelected: {
-            directionButton.subTitleText = name;
-            pageStack.pop();
-        }
-    }
-
 
     SelectionDialog {
         id: selectBackendDialog
         titleText: qsTr("Select backend")
         model: parserBackendModel
-        platformInverted: appWindow.platformInverted
         onAccepted: {
             fahrplanBackend.setParser(selectBackendDialog.selectedIndex);
         }
@@ -467,7 +394,6 @@ Page {
         id: selectTrainrestrictionsDialog
         titleText: qsTr("Select train")
         model: trainrestrictionsModel
-        platformInverted: appWindow.platformInverted
         onAccepted: {
            trainrestrictionsButton.subTitleText = selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
         }
@@ -477,36 +403,47 @@ Page {
         id: trainrestrictionsModel
     }
 
-    JourneyResultsPage {
-        id: resultsPage
-    }
-
-    TimeTableResultsPage {
-        id: timetablePage
-    }
-
     DatePickerDialog {
         id: datePicker
+
+        function show()
+        {
+            year = fahrplanBackend.dateTime.getFullYear();
+            // JavaScript Date's month is 0 based while DatePicker's is 1 based.
+            month = fahrplanBackend.dateTime.getMonth() + 1;
+            day = fahrplanBackend.dateTime.getDate();
+            open();
+        }
+
         titleText: qsTr("Date")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
-        platformInverted: appWindow.platformInverted
+
         onAccepted: {
             // We need to re-assign to selectedDateTime to trigger bindings.
             // Editing selectedDateTime directly won't trigger bindings
             // reevaluation because its tiggered only when the property itself
             // changes, not when something inside the object it holds does.
-            var dateTime = selectedDateTime;
+            var dateTime = fahrplanBackend.dateTime;
             dateTime.setFullYear(datePicker.year);
             // JavaScript Date's month is 0 based while DatePicker's is 1 based.
             dateTime.setMonth(datePicker.month - 1);
             dateTime.setDate(datePicker.day);
-            selectedDateTime = dateTime;
+            fahrplanBackend.dateTime = dateTime;
         }
     }
 
     TimePickerDialog {
         id: timePicker
+
+        function show()
+        {
+            hour = fahrplanBackend.dateTime.getHours();
+            minute = fahrplanBackend.dateTime.getMinutes();
+            second = fahrplanBackend.dateTime.getSeconds();
+            open();
+        }
+
         titleText: qsTr("Time")
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
@@ -517,57 +454,50 @@ Page {
             else
                 return DateTime.TwelveHours;
         }
-        platformInverted: appWindow.platformInverted
+
         onAccepted: {
             // We need to re-assign to selectedDateTime to trigger bindings.
             // See explanation in datePicker::onAccepted.
-            var dateTime = selectedDateTime;
+            var dateTime = fahrplanBackend.dateTime;
             dateTime.setHours(timePicker.hour);
             dateTime.setMinutes(timePicker.minute);
             dateTime.setSeconds(timePicker.second);
-            selectedDateTime = dateTime;
+            fahrplanBackend.dateTime = dateTime;
         }
     }
 
     ToolBarLayout {
         id: mainToolbar
 
-        ToolButton {
-            id: exitIcon
-            iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-close")
-            platformInverted: appWindow.platformInverted
-            onClicked: {
-                Qt.quit();
-            }
-        }
         ButtonRow{
             ToolButton {
                 id: searchMode0Toggle
-                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-train")
-                platformInverted: appWindow.platformInverted
+                platformStyle: TabButtonStyle{}
+                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-train" + inverseSuffix + ".svg";
                 onClicked: {
                     searchmode = 0;
                     updateButtonVisibility();
                 }
+                flat: true
                 checkable: true
                 checked: true
             }
             ToolButton {
                 id: searchMode1Toggle
-                iconSource: Style.getIconFromQrc(platformInverted, "icon-m-toolbar-clock");
-                platformInverted: appWindow.platformInverted
+                platformStyle: TabButtonStyle{}
+                iconSource: "qrc:/src/gui/harmattan/icon/icon-m-toolbar-clock" + inverseSuffix + ".svg";
                 onClicked: {
                     searchmode = 1;
                     updateButtonVisibility();
                 }
+                flat: false
                 checkable: true
                 checked: false
             }
         }
-        ToolButton {
-            iconSource: "toolbar-settings"
-            platformInverted: appWindow.platformInverted
-            onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+        ToolIcon {
+            iconId: "toolbar-settings"
+            onClicked: pageStack.push(settingsPage);
         }
     }
 
@@ -581,31 +511,26 @@ Page {
             acceptButtonText: qsTr("Ok")
     }
 
+
     ContextMenu {
         id: timeTableSelectContextMenu
-        platformInverted: appWindow.platformInverted
-
         MenuLayout {
             MenuItem {
                 text: qsTr("Clear station")
-                platformInverted: appWindow.platformInverted
                 onClicked: {
-                    directionButton.subTitleText = qsTr("please select")
+                    fahrplanBackend.resetStation(FahrplanBackend.DirectionStation);
                 }
             }
         }
     }
 
     ContextMenu {
-        id: stationSelectContextMenu
         property SubTitleButton opener
-        platformInverted: appWindow.platformInverted
-
+        id: stationSelectContextMenu
         MenuLayout {
             MenuItem {
                 id: selectStationMenu
                 text: qsTr("Select station")
-                platformInverted: appWindow.platformInverted
                 onClicked: {
                     stationSelectContextMenu.opener.clicked();
                 }
@@ -613,38 +538,28 @@ Page {
             MenuItem {
                 id: switchWithDepartureStation
                 text: qsTr("Switch with Departure station")
-                platformInverted: appWindow.platformInverted
                 onClicked: {
-                    var oldVal = stationSelectContextMenu.opener.subTitleText
-                    stationSelectContextMenu.opener.subTitleText = departureButton.subTitleText
-                    departureButton.subTitleText = oldVal;
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.DepartureStation)
                 }
             }
             MenuItem {
                 id: switchWithArrivalStation
                 text: qsTr("Switch with Arrival station")
-                platformInverted: appWindow.platformInverted
                 onClicked: {
-                    var oldVal = stationSelectContextMenu.opener.subTitleText
-                    stationSelectContextMenu.opener.subTitleText = arrivalButton.subTitleText
-                    arrivalButton.subTitleText = oldVal;
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ArrivalStation)
                 }
             }
             MenuItem {
                 id: switchWithViaStation
                 text: qsTr("Switch with Via station")
-                platformInverted: appWindow.platformInverted
                 onClicked: {
-                    var oldVal = stationSelectContextMenu.opener.subTitleText
-                    stationSelectContextMenu.opener.subTitleText = viaButton.subTitleText
-                    viaButton.subTitleText = oldVal;
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ViaStation)
                 }
             }
             MenuItem {
                 text: qsTr("Clear station")
-                platformInverted: appWindow.platformInverted
                 onClicked: {
-                    stationSelectContextMenu.opener.subTitleText = qsTr("please select")
+                    stationSelectContextMenu.opener.reset();
                 }
             }
         }
@@ -680,34 +595,29 @@ Page {
         onParserJourneyResult: {
             if (result.count <= 0) {
                 banner.text = qsTr("No results found");
-                banner.open();
+                banner.show();
             }
         }
 
         onParserJourneyDetailsResult: {
             if (result.count <= 0) {
                 banner.text = qsTr("Error loading details");
-                banner.open();
+                banner.show();
             }
         }
 
         onParserErrorOccured: {
             banner.text = msg;
-            banner.open();
+            banner.show();
+        }
+
+        onModeChanged: {
+            updateModeCheckboxes();
         }
 
         onParserChanged: {
             console.log("Switching to " + name);
             currentParserName.text = fahrplanBackend.parserName;
-
-            if (startup) {
-                viaButton.subTitleText = fahrplanBackend.getSettingsValue("viaStation", qsTr("please select"));
-                departureButton.subTitleText = fahrplanBackend.getSettingsValue("departureStation", qsTr("please select"));
-                arrivalButton.subTitleText = fahrplanBackend.getSettingsValue("arrivalStation", qsTr("please select"));
-                stationButton.subTitleText = fahrplanBackend.getSettingsValue("stationStation", qsTr("please select"));
-                directionButton.subTitleText = fahrplanBackend.getSettingsValue("directionStation", qsTr("please select"));
-                startup = false;
-            }
 
             updateButtonVisibility();
 
@@ -734,7 +644,7 @@ Page {
                 });
             }
             selectTrainrestrictionsDialog.selectedIndex = (items.length > 0) ? 0 : -1;
-            if (selectTrainrestrictionsDialog.selectedIndex >= 0 &&  selectTrainrestrictionsDialog.model) {
+            if (selectTrainrestrictionsDialog.selectedIndex >= 0) {
                 var selObj = selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex)
                 if (selObj) {
                     trainrestrictionsButton.subTitleText = selObj.name
@@ -743,35 +653,36 @@ Page {
         }
     }
 
-    // Timer which enables exit icon after 1 second
-    Timer {
-        id: exitIconDelay
-        interval: 500
-        onTriggered: {
-            exitIcon.enabled = true
-            if (fahrplanBackend.getSettingsValue("firstStart", "true") == "true") {
-                firstStartDialog.open();
-                fahrplanBackend.storeSettingsValue("firstStart", "false");
-            }
-        }
+    StationSelectPage {
+        id: stationSelectPage
     }
 
-    // Disable exit icon when page deactivates and start
-    // the timer to enable it back when it activates.
+    JourneyResultsPage {
+        id: resultsPage
+    }
+
+    TimetablePage {
+        id: timetablePage
+    }
+
+    Component {
+        id: settingsPage
+        SettingsPage {}
+    }
+
     onStatusChanged: {
         switch (status) {
-        case PageStatus.Active:
-            exitIconDelay.start();
-            break;
-        case PageStatus.Deactivating:
-            exitIcon.enabled = false;
-            break;
-        default:
+            case PageStatus.Active:
+                if (fahrplanBackend.getSettingsValue("firstStart", "true") == "true") {
+                    firstStartDialog.open();
+                    fahrplanBackend.storeSettingsValue("firstStart", "false");
+                }
+                break;
         }
     }
 
     Component.onCompleted: {
-        appWindow.platformInverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
-        setToday();
+        updateModeCheckboxes();
+        theme.inverted = fahrplanBackend.getSettingsValue("invertedStyle", "false");
     }
 }

@@ -18,9 +18,9 @@
 ****************************************************************************/
 
 import QtQuick 1.1
-import com.nokia.meego 1.1
+import com.nokia.symbian 1.1
 import Fahrplan 1.0
-import "components"
+import "../components"
 
 Page {
     id: root
@@ -28,7 +28,7 @@ Page {
     Rectangle {
         id: header
 
-        height: appWindow.inPortrait ? UiConstants.HeaderDefaultHeightPortrait : UiConstants.HeaderDefaultHeightLandscape
+        height: appWindow.inPortrait ? privateStyle.tabBarHeightPortrait : privateStyle.tabBarHeightLandscape
         gradient: Gradient {
             GradientStop {
                 position: 0.00
@@ -47,11 +47,11 @@ Page {
         Label {
             text: qsTr("Settings")
             color: "white"
-            font: UiConstants.HeaderFont
+            font.pixelSize: privateStyle.statusBarHeight
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: UiConstants.DefaultMargin
+                leftMargin: platformStyle.paddingMedium
             }
         }
     }
@@ -59,7 +59,7 @@ Page {
     Column {
         anchors {
             top: header.bottom
-            topMargin: UiConstants.DefaultMargin
+            topMargin: platformStyle.paddingSmall
             left: parent.left
             right: parent.right
         }
@@ -67,6 +67,8 @@ Page {
         SwitchLabel {
             title: qsTr("GPS location support")
             subtitle: checked ? qsTr("Opted-in") : qsTr("Opted-out")
+            visible: appWindow.showStatusBar
+            platformInverted: appWindow.platformInverted
 
             onCheckedChanged: {
                 fahrplanBackend.storeSettingsValue("enableGps", checked);
@@ -77,19 +79,21 @@ Page {
         }
         SwitchLabel {
             title: qsTr("Inverted style")
-            subtitle: qsTr("Use dark color scheme")
+            subtitle: qsTr("Use light color scheme")
+            platformInverted: appWindow.platformInverted
 
             onCheckedChanged: {
-                theme.inverted = checked;
-                fahrplanBackend.storeSettingsValue("invertedStyle", theme.inverted);
+                appWindow.platformInverted = checked;
+                fahrplanBackend.storeSettingsValue("invertedStyle", appWindow.platformInverted);
             }
             Component.onCompleted: {
-                checked = theme.inverted;
+                checked = appWindow.platformInverted;
             }
         }
         SelectLabel {
             title: qsTr("Add journeys to calendar")
             subtitle: calendarManager.selectedCalendarName
+            platformInverted: appWindow.platformInverted
             onClicked: {
                 calendarsList.selectedIndex = calendarManager.selectedIndex;
                 calendarsList.open();
@@ -101,37 +105,49 @@ Page {
         id: aboutButton
 
         text: qsTr("About")
+        width: parent.width / 2
+        platformInverted: appWindow.platformInverted
         anchors {
             bottom: parent.bottom
-            bottomMargin: UiConstants.DefaultMargin
+            bottomMargin: platformStyle.paddingLarge
             horizontalCenter: parent.horizontalCenter
         }
 
-        onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
+        onClicked: pageStack.push(aboutPage);
     }
 
     SelectionDialog {
         id: calendarsList
 
         titleText: qsTr("Select a calendar")
+        selectedIndex: calendarManager.selectedIndex
+        platformInverted: appWindow.platformInverted
+
         model: calendarManager
+        delegate: MenuItem {
+            text: model.name
+            platformInverted: appWindow.platformInverted
 
-        onSelectedIndexChanged: {
-            calendarManager.selectedIndex = selectedIndex;
+            onClicked: {
+                calendarManager.selectedIndex = index;
+                calendarsList.accept();
+            }
         }
-    }
-
-    FahrplanBackend {
-        id: fahrplanBackend
     }
 
     CalendarManager {
         id: calendarManager
     }
 
+    Component {
+        id: aboutPage
+        AboutPage {}
+    }
+
     tools: ToolBarLayout {
-        ToolIcon {
-            iconId: "toolbar-back"
+        ToolButton {
+            iconSource: "toolbar-back"
+            platformInverted: appWindow.platformInverted
             onClicked: pageStack.pop();
         }
     }

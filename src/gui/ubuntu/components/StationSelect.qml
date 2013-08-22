@@ -30,22 +30,6 @@ Page {
 
     signal stationSelected ( string name )
 
-    function updateFavorites()
-    {
-        stationsFavoritesModel.clear();
-        var favorites = fahrplanBackend.favorites.getFavorites();
-        for (var i = 0; i < favorites.length; i++) {
-            stationsFavoritesModel.append({
-                "name": favorites[i],
-                "process": false,
-                "internal": false,
-                "isfavorite": true,
-                "showfavorite": true,
-                "miscinfo": ""
-            })
-        }
-    }
-
     Item {
         width:  stationSelect.width
         height: stationSelect.height
@@ -157,7 +141,7 @@ Page {
             text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
             color: "DarkGrey"
             fontSize: "large"
-            visible: (stationsFavoritesModel.count == 0 && listView.model == stationsFavoritesModel)
+            visible: (fahrplanBackend.favorites.count == 0 && listView.model == fahrplanBackend.favorites)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors {
@@ -178,7 +162,7 @@ Page {
             }
             height: parent.height
             width: parent.width
-            model: stationsFavoritesModel
+            model: fahrplanBackend.favorites
             delegate: ListItems.Standard {
                 id: delegateItem
                 text: name
@@ -214,29 +198,16 @@ Page {
             }
 
             clip: true
-            visible: (stationsFavoritesModel.count > 0 && listView.model == stationsFavoritesModel) || listView.model == stationsResultModel
+            visible: (fahrplanBackend.favorites.count > 0 && listView.model == fahrplanBackend.favorites) || listView.model == stationsResultModel
         }
     }
-
 
     ListModel {
         id: stationsResultModel
     }
 
-    ListModel {
-        id: stationsFavoritesModel
-    }
-
     FahrplanBackend {
         id: fahrplanBackend
-
-        Component.onCompleted: {
-            updateFavorites();
-        }
-
-        onParserChanged: {
-            updateFavorites();
-        }
 
         onParserStationsResult: {
             stationsResultModel.clear();
@@ -251,9 +222,6 @@ Page {
                     "miscinfo": item.miscInfo
                 });
             }
-        }
-        onFavoritesChanged: {
-            updateFavorites();
         }
     }
 

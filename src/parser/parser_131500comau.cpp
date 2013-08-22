@@ -74,7 +74,7 @@ void Parser131500ComAu::findStationsByCoordinates(qreal longitude, qreal latitud
 
 void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
 {
-    StationsResultList result;
+    StationsList result;
 
     QRegExp regexp = QRegExp("<select name=\"(.*)\" id=\"from\" size=\"6\" class=\"multiple\">(.*)</select>");
     regexp.setMinimal(true);
@@ -105,15 +105,15 @@ void Parser131500ComAu::parseStationsByName(QNetworkReply *networkReply)
     for (int i = 0; i < stationNames.count(); i++) {
         //Remove unneeded stuff from the result
         stationNames[i].replace(" (Location)", "");
-        StationsResultItem *item = new StationsResultItem();
-        item->setStationName(stationNames[i].trimmed());
-        result.appendItem(item);
+        Station item;
+        item.name = stationNames[i].trimmed();
+        result << item;
     }
 
-    emit stationsResult(&result);
+    emit stationsResult(result);
 }
 
-void Parser131500ComAu::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
+void Parser131500ComAu::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -127,7 +127,7 @@ void Parser131500ComAu::searchJourney(const QString &departureStation, const QSt
     }
 
     QString hourStr = "am";
-    int hour = time.toString("hh").toInt();
+    int hour = dateTime.toString("hh").toInt();
     if (hour > 12) {
         hour = hour - 12;
         hourStr = "pm";
@@ -135,13 +135,13 @@ void Parser131500ComAu::searchJourney(const QString &departureStation, const QSt
 
     //Request one. (Station selection and receiving an up to date cookie.)
     QString fullUrl = "http://www.131500.com.au/plan-your-trip/trip-planner?session=invalidate&itd_cmd=invalid&itd_includedMeans=checkbox&itd_inclMOT_7=1&itd_anyObjFilter_origin=2&itd_anyObjFilter_destination=2&x=37&y=12";
-    fullUrl.append("&itd_itdDate=" + date.toString("yyyyMMdd"));
+    fullUrl.append("&itd_itdDate=" + dateTime.toString("yyyyMMdd"));
     fullUrl.append("&itd_itdTimeHour=" + QString::number(hour));
-    fullUrl.append("&itd_itdTimeMinute=" + time.toString("mm"));
+    fullUrl.append("&itd_itdTimeMinute=" + dateTime.toString("mm"));
     fullUrl.append("&itd_itdTripDateTimeDepArr=" + modeString);
     fullUrl.append("&itd_itdTimeAMPM=" + hourStr);
-    fullUrl.append("&itd_name_origin=" + departureStation);
-    fullUrl.append("&itd_name_destination=" + arrivalStation);
+    fullUrl.append("&itd_name_origin=" + departureStation.name);
+    fullUrl.append("&itd_name_destination=" + arrivalStation.name);
 
     // itd_inclMOT_5 = bus
     // itd_inclMOT_1 = train

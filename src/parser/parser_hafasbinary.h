@@ -32,7 +32,7 @@ public:
     explicit ParserHafasBinary(QObject *parent = 0);
     static QString getName() { return "HafasBinary"; }
     QString name() { return "HafasBinary"; }
-    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions);
+    void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, Mode mode, int trainrestrictions);
     void searchJourneyEarlier();
     void searchJourneyLater();
 
@@ -46,6 +46,7 @@ protected:
     QDateTime toTime(quint16 time, QDate baseDate);
     QDateTime toTime(quint16 time);
     QString formatDuration(QDateTime durationTime);
+    QString errorString(int error) const;
 };
 
 #endif // PARSER_HAFASBINARY_H

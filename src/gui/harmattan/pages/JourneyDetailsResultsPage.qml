@@ -21,7 +21,7 @@ import Fahrplan 1.0
 import QtQuick 1.1
 import com.nokia.extras 1.1
 import com.nokia.meego 1.1
-import "components"
+import "../delegates"
 
 Page {
     id: searchDetailResultsPage
@@ -114,16 +114,17 @@ Page {
 
         ListView {
             id: listView
+
+            width: parent.width
+            height: (parent.height - titleBar.height) - 20
+            model: journeyDetailResultModel
+            clip: true
+            visible: !searchIndicator.visible
             anchors {
                 top: titleBar.bottom
                 topMargin: 10
             }
-            visible: !searchIndicator.visible
-            height: (parent.height - titleBar.height) - 20
-            width: parent.width
-            model: journeyDetailResultModel
-            delegate:  journeyDetailResultDelegate
-            clip: true
+            delegate: JourneyDetailsDelegate {}
         }
 
         ScrollDecorator {
@@ -131,196 +132,12 @@ Page {
         }
     }
 
-    Component {
-        id: journeyDetailResultDelegate
-
-        Item {
-            id: delegateItem
-            width: listView.width
-            height: isStation ? isTrain ? item_train.height + item_station.height : item_station.height : isTrain ? item_train.height : 0
-
-            Item {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-
-                width: parent.width
-                height: parent.height
-
-                Item {
-                     id: item_station
-
-                     visible: isStation
-                     height: visible ? lbl_station.height + 20 : 0
-
-                     width: parent.width
-
-                     Rectangle {
-                         anchors {
-                             fill: parent
-                         }
-                         color: theme.inverted ? "#111" : "White"
-                     }
-
-                     Rectangle {
-                         anchors {
-                             left: parent.left
-                             leftMargin: 81
-                             top: parent.top
-                             topMargin: (isStart) ? parent.height / 2 : 0
-                         }
-                         color: "#0d70c5"
-                         height: (isStart || isStop) ? parent.height / 2  : parent.height
-                         width: 8
-                     }
-
-                     Rectangle {
-                         anchors {
-                             left: parent.left
-                             leftMargin: 70
-                             verticalCenter: parent.verticalCenter
-                         }
-
-                         gradient: Gradient {
-                             GradientStop {
-                                 position: 0.00;
-                                 color: "#0d70c5";
-                             }
-                             GradientStop {
-                                 position: 0.38;
-                                 color: "#0d70c5";
-                             }
-                             GradientStop {
-                                 position: 0.39;
-                                 color: theme.inverted ? "#111" : "White"
-                             }
-                             GradientStop {
-                                 position: 0.50;
-                                 color: theme.inverted ? "#111" : "White"
-                             }
-                             GradientStop {
-                                 position: 0.61;
-                                 color: theme.inverted ? "#111" : "White"
-                             }
-                             GradientStop {
-                                 position: 0.62;
-                                 color: "#0d70c5";
-                             }
-                             GradientStop {
-                                 position: 1.0;
-                                 color: "#0d70c5";
-                             }
-                         }
-                         radius: 15
-                         height: 30
-                         width: 30
-                     }
-
-                     Label {
-                         anchors {
-                             left: parent.left
-                             leftMargin: 8
-                             top: parent.top
-                         }
-
-                         text: arrivalTime
-                         width: parent.width - 10
-                     }
-
-                     Label {
-
-                         anchors {
-                             left: parent.left
-                             leftMargin: 8
-                             bottom: parent.bottom
-                         }
-
-                         text: departureTime
-                         width: parent.width - 10
-                     }
-
-                     Item {
-                        id: lbl_station
-
-                        height: lbl_station_name.height + lbl_station_info.height
-                        width: (parent.width - 110)
-
-                        anchors {
-                            left: parent.left
-                            leftMargin: 110
-                            verticalCenter: parent.verticalCenter
-                        }
-
-                        Label {
-                            id: lbl_station_name
-                            text: stationName
-                            width: parent.width
-                        }
-
-                        Label {
-
-                            anchors {
-                                top: lbl_station_name.bottom
-                            }
-                            color: "DarkGrey"
-                            id: lbl_station_info
-                            text: stationInfo
-                            width: parent.width
-                        }
-                     }
-                }
-
-                Item {
-                    id: item_train
-
-                    anchors {
-                        top: item_station.bottom
-                    }
-
-                    visible: isTrain
-                    height: visible ? lbl_train.height + 30 : 0
-
-                    width: parent.width
-
-                    Rectangle {
-                        anchors {
-                            fill: parent
-                        }
-                        color: theme.inverted ? "#333" : "LightGrey"
-                    }
-
-                    Rectangle {
-                        anchors {
-                            left: parent.left
-                            leftMargin: 81
-                        }
-                        color: "#0d70c5"
-                        height: parent.height
-                        width: 8
-                    }
-
-                    Label {
-                        id: lbl_train
-                        anchors {
-                            left: parent.left
-                            leftMargin: 110
-                            verticalCenter: parent.verticalCenter
-                        }
-                        text: trainName
-                        font.bold: true
-                        width: (parent.width  - 110)
-                    }
-                }
-            }
-        }
-    }
-
     ListModel {
         id: journeyDetailResultModel
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         onAddCalendarEntryComplete: {
             if (success)
@@ -328,7 +145,7 @@ Page {
             else
                 banner.text = qsTr("Failed to add Journey to your calendar!");
             banner.show();
-            calendarIcon.enabled = true
+            calendarIcon.enabled = true;
         }
 
         onParserJourneyDetailsResult: {
@@ -427,14 +244,6 @@ Page {
                 pageStack.pop();
             }
         }
-    }
-
-    InfoBanner {
-            id: banner
-            objectName: "FahrplanCalendarInfoBanner"
-            text: ""
-            anchors.top: parent.top
-            anchors.topMargin: 10
     }
 
     ToolBarLayout {

@@ -49,7 +49,12 @@
 #endif
 
 #include "fahrplan.h"
+#include "parser/parser_abstract.h"
+#include "fahrplan_parser_thread.h"
 #include "fahrplan_calendar_manager.h"
+#include "models/stationsearchresults.h"
+#include "models/favorites.h"
+#include "models/timetable.h"
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 Q_DECL_EXPORT
@@ -71,19 +76,29 @@ int main(int argc, char *argv[])
 
     #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
         qDebug()<<"QML";
+        qRegisterMetaType<Station>();
+        qRegisterMetaType<StationsList>();
+        qRegisterMetaType<TimetableEntry>();
+        qRegisterMetaType<TimetableEntriesList>();
+        qRegisterMetaType<Fahrplan::StationType>();
+        qRegisterMetaType<Fahrplan::Mode>();
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanParserThread>("Fahrplan", 1, 0, "FahrplanParserThread");
-        qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
         qmlRegisterType<FahrplanCalendarManager>("Fahrplan", 1, 0, "CalendarManager");
-        qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
-        qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
+        qmlRegisterUncreatableType<StationSearchResults>("Fahrplan", 1, 0, "StationSearchResults"
+            , "StationSearchResults cannot be created from QML. "
+              "Access it through FahrplanBackend.stationSearchResults.");
+        qmlRegisterUncreatableType<Favorites>("Fahrplan", 1, 0, "Favorites"
+            , "Favorites cannot be created from QML. "
+              "Access it through FahrplanBackend.favorites.");
+        qmlRegisterUncreatableType<Timetable>("Fahrplan", 1, 0, "Timetable"
+            , "Timetable cannot be created from QML. "
+              "Access it through FahrplanBackend.timetable.");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
         qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
         qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
         qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
-        qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
-        qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
 
         #if defined(HAVE_DECLARATIVE_CACHE)
             QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();

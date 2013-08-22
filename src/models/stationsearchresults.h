@@ -17,24 +17,26 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.1
-import com.nokia.meego 1.1
-import com.nokia.extras 1.1
-import "pages"
+#ifndef STATIONSEARCHRESULTS_H
+#define STATIONSEARCHRESULTS_H
 
-PageStackWindow {
-    id: appWindow
+#include "stationslistmodel.h"
 
-    initialPage: mainPage
+class StationSearchResults: public StationsListModel
+{
+    Q_OBJECT
 
-    MainPage{ id: mainPage }
+public:
+    explicit StationSearchResults(Fahrplan *parent = 0);
 
-    InfoBanner {
-        id: banner
+    QVariant data(const QModelIndex &index, int role) const;
 
-        anchors {
-            top: parent.top
-            topMargin: 42
-        }
-    }
-}
+public slots:
+    void addToFavorites(int index);
+    void removeFromFavorites(int index);
+
+private slots:
+    void onCountChanged();
+};
+
+#endif // STATIONSEARCHRESULTS_H
