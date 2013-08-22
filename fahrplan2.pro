@@ -77,7 +77,8 @@ HEADERS += \
     src/models/stationslistmodel.h \
     src/models/favorites.h \
     src/models/stationsearchresults.h \
-    src/models/timetable.h
+    src/models/timetable.h \
+    src/models/trainrestrictions.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -99,7 +100,8 @@ SOURCES += src/main.cpp \
     src/models/stationslistmodel.cpp \
     src/models/favorites.cpp \
     src/models/stationsearchresults.cpp \
-    src/models/timetable.cpp
+    src/models/timetable.cpp \
+    src/models/trainrestrictions.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
@@ -249,6 +251,8 @@ win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!black
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
+
+    DEFINES += BUILD_FOR_DESKTOP
 }
 
 symbian|simulator {

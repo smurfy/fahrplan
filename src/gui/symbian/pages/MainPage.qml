@@ -338,12 +338,13 @@ Page {
             SubTitleButton {
                 id: trainrestrictionsButton
                 titleText: qsTr("Trains")
-                subTitleText: selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
+                subTitleText: fahrplanBackend.trainrestrictionName
                 width: parent.width
                 platformInverted: appWindow.platformInverted
                 onClicked: {
                     selectTrainrestrictionsDialog.open();
                 }
+                visible: selectTrainrestrictionsDialog.model.count > 0
             }
 
             Button {
@@ -367,7 +368,7 @@ Page {
                     timetablePage.searchIndicatorVisible = true;
                     pageStack.push(timetablePage);
 
-                    fahrplanBackend.getTimeTable(selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.getTimeTable();
                 }
             }
 
@@ -392,7 +393,7 @@ Page {
                     resultsPage.searchIndicatorVisible = true;
                     pageStack.push(resultsPage)
 
-                    fahrplanBackend.searchJourney(selectTrainrestrictionsDialog.selectedIndex);
+                    fahrplanBackend.searchJourney();
                 }
             }
         }
@@ -420,15 +421,12 @@ Page {
     SelectionDialog {
         id: selectTrainrestrictionsDialog
         titleText: qsTr("Select train")
-        model: trainrestrictionsModel
+        model: fahrplanBackend.trainrestrictions
         platformInverted: appWindow.platformInverted
+        selectedIndex: 0
         onAccepted: {
-           trainrestrictionsButton.subTitleText = selectTrainrestrictionsDialog.selectedIndex >= 0 ? selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex).name : "None"
+            fahrplanBackend.setTrainrestriction(selectTrainrestrictionsDialog.selectedIndex)
         }
-    }
-
-    ListModel {
-        id: trainrestrictionsModel
     }
 
     DatePickerDialog {
@@ -682,21 +680,7 @@ Page {
                 selectBackendDialog.selectedIndex = index;
             }
 
-            trainrestrictionsModel.clear();
-            items = fahrplanBackend.parser.getTrainRestrictions();
-            trainrestrictionsButton.visible = items.length > 1;
-            for (i = 0; i < items.length; i++) {
-                trainrestrictionsModel.append({
-                    "name" : items[i]
-                });
-            }
-            selectTrainrestrictionsDialog.selectedIndex = (items.length > 0) ? 0 : -1;
-            if (selectTrainrestrictionsDialog.selectedIndex >= 0 &&  selectTrainrestrictionsDialog.model) {
-                var selObj = selectTrainrestrictionsDialog.model.get(selectTrainrestrictionsDialog.selectedIndex)
-                if (selObj) {
-                    trainrestrictionsButton.subTitleText = selObj.name
-                }
-            }
+            selectTrainrestrictionsDialog.selectedIndex = 0;
         }
     }
 

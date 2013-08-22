@@ -26,12 +26,14 @@
 #include <QObject>
 #include <QSettings>
 #include <QStringList>
+#include <QStringListModel>
 
 class FahrplanBackendManager;
 class FahrplanParserThread;
 class StationSearchResults;
 class Timetable;
 class Favorites;
+class Trainrestrictions;
 class Fahrplan : public QObject
 {
     Q_OBJECT
@@ -43,11 +45,13 @@ class Fahrplan : public QObject
     Q_PROPERTY(StationSearchResults *stationSearchResults READ stationSearchResults CONSTANT)
     Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
     Q_PROPERTY(Timetable *timetable READ timetable CONSTANT)
+    Q_PROPERTY(Trainrestrictions *trainrestrictions READ trainrestrictions CONSTANT)
     Q_PROPERTY(QString departureStationName READ departureStationName NOTIFY departureStationChanged)
     Q_PROPERTY(QString viaStationName READ viaStationName NOTIFY viaStationChanged)
     Q_PROPERTY(QString arrivalStationName READ arrivalStationName NOTIFY arrivalStationChanged)
     Q_PROPERTY(QString currentStationName READ currentStationName NOTIFY currentStationChanged)
     Q_PROPERTY(QString directionStationName READ directionStationName NOTIFY directionStationChanged)
+    Q_PROPERTY(QString trainrestrictionName READ trainrestrictionName NOTIFY trainrestrictionChanged)
 
     Q_PROPERTY(Mode mode READ mode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(QDateTime dateTime READ dateTime WRITE setDateTime NOTIFY dateTimeChanged)
@@ -78,11 +82,13 @@ class Fahrplan : public QObject
 
         StationSearchResults *stationSearchResults() const;
         Timetable *timetable() const;
+        Trainrestrictions *trainrestrictions() const;
         QString departureStationName() const;
         QString viaStationName() const;
         QString arrivalStationName() const;
         QString currentStationName() const;
         QString directionStationName() const;
+        QString trainrestrictionName() const;
 
         Fahrplan::Mode mode() const;
         void setMode(Fahrplan::Mode mode);
@@ -99,9 +105,10 @@ class Fahrplan : public QObject
         void resetStation(Fahrplan::StationType type);
         void findStationsByName(const QString &stationName);
         void findStationsByCoordinates(qreal longitude, qreal latitude);
-        void getTimeTable(int trainrestrictions);
-        void searchJourney(int trainrestrictions);
+        void getTimeTable();
+        void searchJourney();
         void addJourneyDetailResultToCalendar(JourneyDetailResultList *result);
+        void setTrainrestriction(int index);
 
     signals:
         void departureStationChanged();
@@ -109,6 +116,7 @@ class Fahrplan : public QObject
         void arrivalStationChanged();
         void currentStationChanged();
         void directionStationChanged();
+        void trainrestrictionChanged();
 
         void modeChanged();
         void dateTimeChanged();
@@ -133,6 +141,7 @@ class Fahrplan : public QObject
         static StationSearchResults *m_stationSearchResults;
         static Favorites *m_favorites;
         static Timetable *m_timetable;
+        static Trainrestrictions *m_trainrestrictions;
         QSettings *settings;
 
         Station m_departureStation;
@@ -140,6 +149,7 @@ class Fahrplan : public QObject
         Station m_arrivalStation;
         Station m_currentStation;
         Station m_directionStation;
+        int m_trainrestriction;
 
         Mode m_mode;
         QDateTime m_dateTime;

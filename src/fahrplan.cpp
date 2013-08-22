@@ -24,6 +24,7 @@
 #include "models/favorites.h"
 #include "models/stationsearchresults.h"
 #include "models/timetable.h"
+#include "models/trainrestrictions.h"
 
 #include <QThread>
 
@@ -31,6 +32,7 @@ FahrplanBackendManager *Fahrplan::m_parser_manager = NULL;
 StationSearchResults *Fahrplan::m_stationSearchResults= NULL;
 Favorites *Fahrplan::m_favorites = NULL;
 Timetable *Fahrplan::m_timetable = NULL;
+Trainrestrictions *Fahrplan::m_trainrestrictions = NULL;
 
 Fahrplan::Fahrplan(QObject *parent)
     : QObject(parent)
@@ -39,6 +41,7 @@ Fahrplan::Fahrplan(QObject *parent)
     , m_arrivalStation(Station(false))
     , m_mode(DepartureMode)
     , m_dateTime(QDateTime::currentDateTime())
+    , m_trainrestriction(0)
 {
     settings = new QSettings("smurfy", "fahrplan2");
 
@@ -64,6 +67,10 @@ Fahrplan::Fahrplan(QObject *parent)
 
     if (!m_timetable) {
         m_timetable = new Timetable(this);
+    }
+
+    if (!m_trainrestrictions) {
+        m_trainrestrictions = new Trainrestrictions(this);
     }
 }
 
@@ -112,6 +119,12 @@ Timetable *Fahrplan::timetable() const
 {
     return m_timetable;
 }
+
+Trainrestrictions *Fahrplan::trainrestrictions() const
+{
+    return m_trainrestrictions;
+}
+
 
 QString Fahrplan::departureStationName() const
 {
@@ -238,7 +251,7 @@ void Fahrplan::findStationsByCoordinates(qreal longitude, qreal latitude)
     m_parser_manager->getParser()->findStationsByCoordinates(longitude, latitude);
 }
 
-void Fahrplan::searchJourney(int trainrestrictions)
+void Fahrplan::searchJourney()
 {
     ParserAbstract::Mode mode;
 
@@ -249,10 +262,10 @@ void Fahrplan::searchJourney(int trainrestrictions)
         mode = ParserAbstract::Mode(m_mode);
     }
 
-    m_parser_manager->getParser()->searchJourney(m_departureStation, m_viaStation, m_arrivalStation, m_dateTime, mode, trainrestrictions);
+    m_parser_manager->getParser()->searchJourney(m_departureStation, m_viaStation, m_arrivalStation, m_dateTime, mode, m_trainrestriction);
 }
 
-void Fahrplan::getTimeTable(int trainrestrictions)
+void Fahrplan::getTimeTable()
 {
     ParserAbstract::Mode mode;
 
@@ -263,7 +276,22 @@ void Fahrplan::getTimeTable(int trainrestrictions)
         mode = ParserAbstract::Mode(m_mode);
     }
 
-    m_parser_manager->getParser()->getTimeTableForStation(m_currentStation, m_directionStation, m_dateTime, mode, trainrestrictions);
+    m_parser_manager->getParser()->getTimeTableForStation(m_currentStation, m_directionStation, m_dateTime, mode, m_trainrestriction);
+}
+
+void Fahrplan::setTrainrestriction(int index)
+{
+    if (index < m_trainrestrictions->count()) {
+        m_trainrestriction = index;
+    } else {
+        m_trainrestriction = 0;
+    }
+    emit trainrestrictionChanged();
+}
+
+QString Fahrplan::trainrestrictionName() const
+{
+    return m_trainrestrictions->get(m_trainrestriction).toString();
 }
 
 void Fahrplan::onParserChanged(const QString &name, int index)
@@ -274,6 +302,13 @@ void Fahrplan::onParserChanged(const QString &name, int index)
     loadStations();
     if (m_favorites)
         m_favorites->reload();
+
+    if (m_trainrestrictions) {
+        QStringList list = parser()->getTrainRestrictions();
+        m_trainrestrictions->setStringList(list);
+        setTrainrestriction(0);
+    }
+
     emit parserChanged(name, index);
 }
 

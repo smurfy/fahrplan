@@ -30,7 +30,7 @@
 #   include <bb/pim/calendar/CalendarFolder>
 #   include <bb/pim/account/AccountService>
 #   include <bb/pim/account/Account>
-#else
+#elseif !defined(BUILD_FOR_DESKTOP)
 #   include <QOrganizerManager>
 #endif
 
@@ -179,7 +179,7 @@ void FahrplanCalendarManager::getCalendarsList()
             emit selectedIndexChanged();
         }
     }
-#else
+#elseif !defined(BUILD_FOR_DESKTOP)
     QString id = settings->value("CollectionId").toString();
     QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);
 
