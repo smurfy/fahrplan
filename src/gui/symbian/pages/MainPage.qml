@@ -391,6 +391,12 @@ Page {
                     }
 
                     resultsPage.searchIndicatorVisible = true;
+                    if (fahrplanBackend.viaStationName == qsTr("please select")) {
+                       resultsPage.journeyStations.text = qsTr("<b>%1</b> to <b>%2</b>").arg(fahrplanBackend.departureStationName).arg(fahrplanBackend.arrivalStationName);
+                    } else {
+                       resultsPage.journeyStations.text = qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(fahrplanBackend.departureStationName).arg(fahrplanBackend.arrivalStationName).arg(fahrplanBackend.viaStationName);
+                    }
+
                     pageStack.push(resultsPage)
 
                     fahrplanBackend.searchJourney();

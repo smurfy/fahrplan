@@ -26,6 +26,7 @@ import "../js/style.js" as Style
 Page {
     property alias searchResults: searchResults
     property alias searchIndicatorVisible: searchIndicator.visible
+	property alias journeyStations: journeyStations
 
     id: searchResultsPage
 
@@ -47,13 +48,6 @@ Page {
 
                 width: parent.width
                 font.pixelSize: privateStyle.statusBarHeight
-                text: {
-                    if (fahrplanBackend.viaStationName == qsTr("please select")) {
-                        return qsTr("<b>%1</b> to <b>%2</b>").arg(fahrplanBackend.departureStationName).arg(fahrplanBackend.arrivalStationName);
-                    } else {
-                        return qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(fahrplanBackend.departureStationName).arg(fahrplanBackend.arrivalStationName).arg(fahrplanBackend.viaStationName);
-                    }
-                }
                 wrapMode: Text.WordWrap
                 platformInverted: appWindow.platformInverted
                 anchors {
