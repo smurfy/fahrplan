@@ -33,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->getTimeTableForStation, SIGNAL(clicked()), this, SLOT(getTimeTableForStationClicked()));
     connect(ui->findStationsByName, SIGNAL(clicked()), this, SLOT(findStationsByNameClicked()));
     connect(ui->findStationsByCoordinates, SIGNAL(clicked()), this, SLOT(findStationsByCoordinatesClicked()));
-    connect(fahrplan, SIGNAL(parserStationsResult(StationsResultList*)), this, SLOT(stationsResult(StationsResultList*)));
-    connect(fahrplan, SIGNAL(parserTimeTableResult(TimeTableResultList*)), this, SLOT(timeTableResult(TimeTableResultList*)));
+    connect(fahrplan, SIGNAL(parserStationsResult()), this, SLOT(stationsResult()));
+    connect(fahrplan, SIGNAL(parserTimeTableResult()), this, SLOT(timeTableResult()));
 
     connect(ui->searchJourney, SIGNAL(clicked()), this, SLOT(searchJourneyClicked()));
     connect(ui->searchJourneyEarlier, SIGNAL(clicked()), this, SLOT(searchJourneyEarlierClicked()));
@@ -71,18 +71,15 @@ void MainWindow::parserChanged(const QString &name, int index)
 
     ui->parser->setCurrentIndex(index);
 
-    QStringList trainRestrictions = fahrplan->parser()->getTrainRestrictions();
     ui->trainRestrictions->setEnabled(false);
-    if (trainRestrictions.count() > 0)
+    if (fahrplan->trainrestrictions()->count() > 0)
     {
-        QStringListModel *trainrestrModel = new QStringListModel();
-        trainrestrModel->setStringList(trainRestrictions);
-        ui->trainRestrictions->setModel(trainrestrModel);
+        ui->trainRestrictions->setModel(fahrplan->trainrestrictions());
         ui->trainRestrictions->setEnabled(true);
         ui->trainRestrictions->setCurrentIndex(0);
     }
 
-    ui->viaStation->setEnabled(fahrplan->parser()->supportsVia());
+    //ui->viaStation->setEnabled(fahrplan->parser()->supportsVia());
     ui->getTimeTableForStation->setEnabled(fahrplan->parser()->supportsTimeTable());
 }
 
@@ -102,47 +99,48 @@ void MainWindow::findStationsByNameClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    fahrplan->parser()->findStationsByName(ui->stationName->text());
+    fahrplan->findStationsByName(ui->stationName->text());
 }
 
 void MainWindow::getTimeTableForStationClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    fahrplan->parser()->getTimeTableForStation(ui->stationName->text(), "", QDate::currentDate(), QTime::currentTime(), ParserAbstract::Departure, 0);
+    fahrplan->stationSearchResults()->selectStation(Fahrplan::CurrentStation, ui->stationIndex->value());
+    fahrplan->getTimeTable();
 }
 
 void MainWindow::findStationsByCoordinatesClicked()
 {
     ui->findStationResults->clear();
     ui->findStationResults->append("Searching...");
-    fahrplan->parser()->findStationsByCoordinates(11.558338, 48.140228);
+    fahrplan->findStationsByCoordinates(11.558338, 48.140228);
 }
 
-void MainWindow::timeTableResult(TimeTableResultList *result)
+void MainWindow::timeTableResult()
 {
     ui->findStationResults->clear();
-    for (int i=0; i < result->itemcount(); i++) {
-        TimeTableResultItem *item = result->getItem(i);
-        ui->findStationResults->append(item->stationName());
-        ui->findStationResults->append(item->time().toString(tr("hh:mm")));
-        ui->findStationResults->append(item->destinationName());
-        ui->findStationResults->append(item->trainType());
-        ui->findStationResults->append(item->platform());
+    for (int i=0; i < fahrplan->timetable()->count(); i++) {
+        QModelIndex index = fahrplan->timetable()->index(i, 0, QModelIndex());
+        ui->findStationResults->append(fahrplan->timetable()->data(index, Timetable::CurrentStation).toString());
+        ui->findStationResults->append(fahrplan->timetable()->data(index, Timetable::Time).toDateTime().toString(tr("hh:mm")));
+        ui->findStationResults->append(fahrplan->timetable()->data(index, Timetable::DestinationStation).toString());
+        ui->findStationResults->append(fahrplan->timetable()->data(index, Timetable::TrainType).toString());
+        ui->findStationResults->append(fahrplan->timetable()->data(index, Timetable::Platform).toString());
         ui->findStationResults->append("------------------------------");
     }
 
 }
 
-void MainWindow::stationsResult(StationsResultList *result)
+void MainWindow::stationsResult()
 {
     ui->findStationResults->clear();
-    for (int i=0; i < result->itemcount(); i++) {
-        StationsResultItem *item = result->getItem(i);
-        ui->findStationResults->append(item->stationName());
+    for (int i=0; i < fahrplan->stationSearchResults()->count(); i++) {
+        QModelIndex index = fahrplan->stationSearchResults()->index(i, 0, QModelIndex());
+        ui->findStationResults->append(QString::number(i) + " -> " + fahrplan->stationSearchResults()->data(index, StationSearchResults::Name).toString());
     }
 
-    if (result->itemcount() == 0) {
+    if (fahrplan->stationSearchResults()->count() == 0) {
         ui->findStationResults->append("No Results");
     }
 }
@@ -151,7 +149,11 @@ void MainWindow::searchJourneyClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
-    fahrplan->parser()->searchJourney(ui->departureStaion->text(), ui->arrivalStation->text(), ui->viaStation->text(), QDate::currentDate(), QTime::currentTime(), ParserAbstract::Departure, ui->trainRestrictions->currentIndex());
+    fahrplan->setDateTime(QDateTime::currentDateTime());
+    fahrplan->setMode(Fahrplan::DepartureMode);
+    fahrplan->stationSearchResults()->selectStation(Fahrplan::DepartureStation, 0);
+    fahrplan->stationSearchResults()->selectStation(Fahrplan::ArrivalStation, 10);
+    fahrplan->searchJourney();
 }
 
 void MainWindow::searchJourneyEarlierClicked()

@@ -22,8 +22,13 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
-#include <QStringListModel>
+#include <QStandardItem>
 #include "../../fahrplan.h"
+#include "../../fahrplan_parser_thread.h"
+#include "../../models/favorites.h"
+#include "../../models/stationsearchresults.h"
+#include "../../models/timetable.h"
+#include "../../models/trainrestrictions.h"
 
 namespace Ui {
     class MainWindow;
@@ -41,10 +46,10 @@ private slots:
     void getTimeTableForStationClicked();
     void findStationsByNameClicked();
     void findStationsByCoordinatesClicked();
-    void stationsResult(StationsResultList *result);
+    void stationsResult();
     void journeyResult(JourneyResultList *result);
     void journeyDetailResult(JourneyDetailResultList *result);
-    void timeTableResult(TimeTableResultList *result);
+    void timeTableResult();
     void searchJourneyClicked();
     void searchJourneyEarlierClicked();
     void searchJourneyLaterClicked();

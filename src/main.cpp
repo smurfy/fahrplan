@@ -75,14 +75,15 @@ int main(int argc, char *argv[])
 
     qDebug()<<"Startup";
 
+    qRegisterMetaType<Station>();
+    qRegisterMetaType<StationsList>();
+    qRegisterMetaType<TimetableEntry>();
+    qRegisterMetaType<TimetableEntriesList>();
+    qRegisterMetaType<Fahrplan::StationType>();
+    qRegisterMetaType<Fahrplan::Mode>();
+
     #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
         qDebug()<<"QML";
-        qRegisterMetaType<Station>();
-        qRegisterMetaType<StationsList>();
-        qRegisterMetaType<TimetableEntry>();
-        qRegisterMetaType<TimetableEntriesList>();
-        qRegisterMetaType<Fahrplan::StationType>();
-        qRegisterMetaType<Fahrplan::Mode>();
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanParserThread>("Fahrplan", 1, 0, "FahrplanParserThread");

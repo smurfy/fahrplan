@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QComboBox" name="parser"/>
     </item>
-    <item row="0" column="1" colspan="2">
+    <item row="0" column="1">
      <widget class="QLineEdit" name="stationName">
       <property name="text">
        <string>Zurich</string>
@@ -48,27 +48,6 @@
     </item>
     <item row="1" column="0" colspan="7">
      <widget class="QTextEdit" name="findStationResults"/>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QLineEdit" name="departureStaion">
-      <property name="text">
-       <string>Zurich</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2" colspan="2">
-     <widget class="QLineEdit" name="viaStation">
-      <property name="text">
-       <string>Göschenen</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="4">
-     <widget class="QLineEdit" name="arrivalStation">
-      <property name="text">
-       <string>Reckingen</string>
-      </property>
-     </widget>
     </item>
     <item row="2" column="5">
      <widget class="QComboBox" name="trainRestrictions"/>
@@ -116,6 +95,9 @@
        <string>cancelRequest</string>
       </property>
      </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QSpinBox" name="stationIndex"/>
     </item>
    </layout>
   </widget>
