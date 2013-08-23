@@ -234,7 +234,7 @@ void Fahrplan::swapStations(StationType type1, StationType type2)
     setStation(type2, tmp);
 }
 
-void Fahrplan::resetStation(Fahrplan::StationType type)
+void Fahrplan::resetStation(StationType type)
 {
     setStation(type, Station(false));
 }

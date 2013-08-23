@@ -101,8 +101,8 @@ class Fahrplan : public QObject
         void setParser(int index);
         void storeSettingsValue(const QString &key, const QString &value);
         QString getSettingsValue(const QString &key, const QString &defaultValue);
-        void swapStations(Fahrplan::StationType type1, Fahrplan::StationType type2);
-        void resetStation(Fahrplan::StationType type);
+        void swapStations(StationType type1, StationType type2);
+        void resetStation(StationType type);
         void findStationsByName(const QString &stationName);
         void findStationsByCoordinates(qreal longitude, qreal latitude);
         void getTimeTable();
