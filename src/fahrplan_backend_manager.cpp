@@ -56,7 +56,8 @@ void FahrplanBackendManager::setParser(int index)
     currentParserIndex = index;
 
     if (m_parser) {
-        delete m_parser;
+        // Parser object will be autodeleted after the thread quits.
+        m_parser->quit();
     }
 
     m_parser = new FahrplanParserThread();

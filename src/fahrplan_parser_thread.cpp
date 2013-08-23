@@ -162,5 +162,11 @@ void FahrplanParserThread::run()
     connect(m_parser, SIGNAL(timetableResult(TimetableEntriesList)), this, SIGNAL(timeTableResult(TimetableEntriesList)), Qt::QueuedConnection);
 
     m_ready = true;
+
+    // Autodelete after thread finishes.
+    connect(this, SIGNAL(finished()), SLOT(deleteLater()));
+
     exec();
+
+    delete m_parser;
 }
