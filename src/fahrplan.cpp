@@ -229,6 +229,8 @@ void Fahrplan::setStation(Fahrplan::StationType type, const Station &station)
 
 void Fahrplan::swapStations(StationType type1, StationType type2)
 {
+    if (type1 == type2)
+        return;
     Station tmp = getStation(type1);
     setStation(type1, getStation(type2));
     setStation(type2, tmp);
