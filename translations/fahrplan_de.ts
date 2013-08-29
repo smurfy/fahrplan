@@ -571,44 +571,33 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="79"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="58"/>
         <source>searchJourney</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="24"/>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="55"/>
         <source>Zurich</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="69"/>
-        <source>Reckingen</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="89"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="68"/>
         <source>searchJourneyEarlier</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="96"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="75"/>
         <source>searchJourneyLater</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="116"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="95"/>
         <source>cancelRequest</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="106"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="85"/>
         <source>getJourneyDetails</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="62"/>
-        <source>Göschenen</source>
         <translation></translation>
     </message>
     <message>
@@ -617,7 +606,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.cpp" line="127"/>
+        <location filename="../src/gui/desktop-test/mainwindow.cpp" line="126"/>
         <source>hh:mm</source>
         <translation>hh:mm</translation>
     </message>
@@ -738,7 +727,7 @@
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="650"/>
-        <source>Unknown error ocurred with the backend (error %1)</source>
+        <source>Unknown error ocurred with the backend (error %1).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1093,19 +1082,37 @@
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="91"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="94"/>
+        <source>Favorites star position (requires restart)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="92"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="95"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="92"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="95"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="103"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="106"/>
         <source>Add journeys to calendar</source>
         <translation>Reisen zu Kalender hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="103"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="107"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="115"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="119"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="89"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="116"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="122"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="128"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="134"/>
         <source>Select a calendar</source>
         <translation>Kalender wählen</translation>
     </message>
@@ -1123,14 +1130,14 @@
 <context>
     <name>StationDelegate</name>
     <message>
-        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="75"/>
-        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="84"/>
+        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="69"/>
+        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="83"/>
         <source>Removing &apos;%1&apos; from favorites</source>
         <translation>%1 von Favoriten entfernt</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="79"/>
-        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="88"/>
+        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="73"/>
+        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="87"/>
         <source>Adding &apos;%1&apos; to favorites</source>
         <translation>%1 zu Favoriten hinzugefügt</translation>
     </message>
@@ -1275,7 +1282,7 @@
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="53"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="60"/>
         <source>hh:mm</source>
-        <translation type="unfinished">hh:mm</translation>
+        <translation>hh:mm</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="59"/>
@@ -1302,13 +1309,13 @@
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Arrivals</source>
-        <translation type="unfinished">Ankünfte</translation>
+        <translation>Ankünfte</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Departures</source>
-        <translation type="unfinished">Abfahrten</translation>
+        <translation>Abfahrten</translation>
     </message>
 </context>
 <context>
