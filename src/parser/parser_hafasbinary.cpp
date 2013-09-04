@@ -647,6 +647,6 @@ QString ParserHafasBinary::errorString(int error) const
     case 9360:
         return tr("Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.");
     default:
-        return tr("Unknown error ocurred with the backend (error %1)").arg(error);
+        return tr("Unknown error ocurred with the backend (error %1).").arg(error);
     }
 }

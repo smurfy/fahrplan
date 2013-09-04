@@ -111,7 +111,7 @@
     <message>
         <location filename="../src/fahrplan_calendar_manager.cpp" line="233"/>
         <source>Personal</source>
-        <translation type="unfinished"></translation>
+        <translation>Особистий</translation>
     </message>
 </context>
 <context>
@@ -545,44 +545,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="79"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="58"/>
         <source>searchJourney</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="24"/>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="55"/>
         <source>Zurich</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="69"/>
-        <source>Reckingen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="89"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="68"/>
         <source>searchJourneyEarlier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="96"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="75"/>
         <source>searchJourneyLater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="116"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="95"/>
         <source>cancelRequest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="106"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="85"/>
         <source>getJourneyDetails</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="62"/>
-        <source>Göschenen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -591,7 +580,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.cpp" line="127"/>
+        <location filename="../src/gui/desktop-test/mainwindow.cpp" line="126"/>
         <source>hh:mm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -665,17 +654,17 @@
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="638"/>
         <source>Your session has expired. Please, perform the search again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Час вашої сессії вийшов. Будь-ласка, почніть пошук з початку.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="640"/>
         <source>One of the station names is too ambiguous.</source>
-        <translation type="unfinished"></translation>
+        <translation>Одна з назв зупинок занадто невизначена.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="642"/>
         <source>No connections have been found that correspond to your request.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не знайдено жодного з&apos;єднання, що відповідає вашому запиту.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="644"/>
@@ -685,17 +674,21 @@
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="646"/>
         <source>Unfortunately there was no route found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажаль, маршрут не знайдено.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="648"/>
         <source>Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.</source>
-        <translation type="unfinished"></translation>
+        <translation>На даний момент, нажаль, ваш запит не може бути оброблено. Можливо, вказана дата знаходиться поза межами існуючого розкладу.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="650"/>
+        <source>Unknown error ocurred with the backend (error %1).</source>
+        <translation>Під час запиту до постачальника послуг сталася невідома помилка (код %1).</translation>
+    </message>
+    <message>
         <source>Unknown error ocurred with the backend (error %1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Під час запиту до постачальника послуг сталася невідома помилка (код %1).</translation>
     </message>
     <message>
         <source>Sorry one station name is too ambiguous</source>
@@ -1066,19 +1059,37 @@
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="91"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="94"/>
+        <source>Favorites star position (requires restart)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="92"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="95"/>
+        <source>Left</source>
+        <translation>Ліворуч</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="92"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="95"/>
+        <source>Right</source>
+        <translation>Праворуч</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="103"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="106"/>
         <source>Add journeys to calendar</source>
         <translation>Додавати подорожі до календаря</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="103"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="107"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="115"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="119"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="89"/>
         <source>About</source>
         <translation>Про</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="116"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="122"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="128"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="134"/>
         <source>Select a calendar</source>
         <translation>Оберіть календар</translation>
     </message>
@@ -1096,14 +1107,14 @@
 <context>
     <name>StationDelegate</name>
     <message>
-        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="75"/>
-        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="84"/>
+        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="69"/>
+        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="83"/>
         <source>Removing &apos;%1&apos; from favorites</source>
         <translation>&apos;%1&apos; видалено з обраних</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="79"/>
-        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="88"/>
+        <location filename="../src/gui/harmattan/delegates/StationDelegate.qml" line="73"/>
+        <location filename="../src/gui/symbian/delegates/StationDelegate.qml" line="87"/>
         <source>Adding &apos;%1&apos; to favorites</source>
         <translation>&apos;%1&apos; додано до обраних</translation>
     </message>
@@ -1172,13 +1183,13 @@
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="142"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="144"/>
         <source>Click the star icon in the search results to add or remove a station as a favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть зірочку в результатах пошуку, щоб додати або видалити станцію до списку обраних</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="152"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="155"/>
         <source>Start typing station name into the search box to see a list stations</source>
-        <translation type="unfinished"></translation>
+        <translation>Почніть вводити назву зупинки, щоб побачити список доступних</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="193"/>
@@ -1240,25 +1251,25 @@
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="53"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="60"/>
         <source>hh:mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="59"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="67"/>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>від</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="59"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="67"/>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>до</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="73"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="85"/>
         <source>Pl. %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пл. %1</translation>
     </message>
 </context>
 <context>
@@ -1267,13 +1278,13 @@
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Arrivals</source>
-        <translation type="unfinished">Прибуття</translation>
+        <translation>Прибуття</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Departures</source>
-        <translation type="unfinished">Відправлення</translation>
+        <translation>Відправлення</translation>
     </message>
 </context>
 <context>
@@ -1283,7 +1294,7 @@
         <location filename="../src/models/trainrestrictions.cpp" line="44"/>
         <location filename="../src/models/trainrestrictions.cpp" line="52"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Відсутні</translation>
     </message>
 </context>
 <context>
