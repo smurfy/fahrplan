@@ -31,6 +31,8 @@ public:
     explicit Trainrestrictions(QObject *parent = 0);
     int count() const;
 
+    QHash<int, QByteArray> roleNames() const;
+
     void setStringList(const QStringList &strings);
     QVariant data(const QModelIndex &index, int role) const;
     Q_INVOKABLE int rowCount(const QModelIndex &parent) const;

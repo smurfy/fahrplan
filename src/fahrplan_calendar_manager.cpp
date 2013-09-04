@@ -38,10 +38,9 @@ FahrplanCalendarManager::FahrplanCalendarManager(QObject *parent)
     : QAbstractListModel(parent)
     , m_selectedIndex(0)
 {
-    QHash<int, QByteArray> roles;
-    roles.insert(Qt::UserRole, "name");
-    setRoleNames(roles);
-
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+    setRoleNames(roleNames());
+#endif
     settings = new QSettings("smurfy", "fahrplan2", this);
 
 #ifndef QT_NO_CONCURRENT
@@ -52,6 +51,13 @@ FahrplanCalendarManager::FahrplanCalendarManager(QObject *parent)
 
     // Change of slectedIndex always changes selectedCalendarName
     connect(this, SIGNAL(selectedIndexChanged()), SIGNAL(selectedCalendarNameChanged()));
+}
+
+QHash<int, QByteArray> FahrplanCalendarManager::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles.insert(Qt::UserRole, "name");
+    return roles;
 }
 
 int FahrplanCalendarManager::rowCount(const QModelIndex &parent) const

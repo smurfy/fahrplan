@@ -18,14 +18,20 @@
 ****************************************************************************/
 
 #include "trainrestrictions.h"
-#include <QtGui>
 
 Trainrestrictions::Trainrestrictions(QObject *parent)
     : QStringListModel(parent)
 {
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+    setRoleNames(roleNames());
+#endif
+}
+
+QHash<int, QByteArray> Trainrestrictions::roleNames() const
+{
     QHash<int, QByteArray> roles;
     roles.insert(Qt::DisplayRole, "name");
-    setRoleNames(roles);
+    return roles;
 }
 
 QVariant Trainrestrictions::get(int i) const

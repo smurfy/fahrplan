@@ -25,7 +25,7 @@ QML_IMPORT_PATH =
 
 
 contains(QT_VERSION, ^5\\..\\..*) {
-  QT += quick qml xmlpatterns network xml widgets
+  QT += quick qml xmlpatterns network xml widgets concurrent
   DEFINES += BUILD_FOR_QT5
 } else {
   QT += declarative xmlpatterns network xml
