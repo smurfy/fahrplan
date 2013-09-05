@@ -293,7 +293,7 @@ void Fahrplan::setTrainrestriction(int index)
 
 QString Fahrplan::trainrestrictionName() const
 {
-    return m_trainrestrictions->get(m_trainrestriction).toString();
+    return m_trainrestrictions->get(m_trainrestriction);
 }
 
 void Fahrplan::onParserChanged(const QString &name, int index)
