@@ -25,6 +25,8 @@ Trainrestrictions::Trainrestrictions(QObject *parent)
 #if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     setRoleNames(roleNames());
 #endif
+
+    connect(this, SIGNAL(modelReset()), this, SIGNAL(countChanged()));
 }
 
 QHash<int, QByteArray> Trainrestrictions::roleNames() const
@@ -34,47 +36,19 @@ QHash<int, QByteArray> Trainrestrictions::roleNames() const
     return roles;
 }
 
-QVariant Trainrestrictions::get(int i) const
+QString Trainrestrictions::get(int i) const
 {
-    if (i >= 0 && i < count()) {
-        return QVariant(stringList().at(i));
-    }
-    return QVariant(tr("None"));
+    return data(createIndex(i, 0)).toString();
 }
 
 QVariant Trainrestrictions::data(const QModelIndex &index, int role) const
 {
-    if (index.isValid()) {
-        return QStringListModel::data(index, role);
-    }
-    return QVariant(tr("None"));
-}
+    QVariant result = QStringListModel::data(index, role);
 
-QVariant Trainrestrictions::data(int index) const
-{
-    if (index >= 0 && index < count()) {
-        return stringList().at(index);
-    }
-    return QVariant(tr("None"));
-}
-
-int Trainrestrictions::columnCount(const QModelIndex & parent) const
-{
-    return 1;
-}
-
-int Trainrestrictions::rowCount(const QModelIndex &parent) const
-{
-    return stringList().count();
+    return result.isValid() ? result : QVariant(tr("None"));
 }
 
 int Trainrestrictions::count() const
 {
-    return stringList().count();
-}
-
-void Trainrestrictions::setStringList(const QStringList &strings)
-{
-    QStringListModel::setStringList(strings);
-    emit countChanged();
+    return rowCount();
 }
