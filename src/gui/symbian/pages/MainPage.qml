@@ -594,7 +594,7 @@ Page {
                 text: qsTr("Switch with Arrival station")
                 platformInverted: appWindow.platformInverted
                 onClicked: {
-                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ViaStation)
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ArrivalStation)
                 }
             }
             MenuItem {
@@ -602,7 +602,7 @@ Page {
                 text: qsTr("Switch with Via station")
                 platformInverted: appWindow.platformInverted
                 onClicked: {
-                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ArrivalStation)
+                    fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ViaStation)
                 }
             }
             MenuItem {
