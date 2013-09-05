@@ -93,6 +93,7 @@ Page {
         SwitchLabel {
             title: qsTr("Favorites star position (requires restart)")
             subtitle: checked ? qsTr("Left") : qsTr("Right")
+            platformInverted: appWindow.platformInverted
 
             onCheckedChanged: {
                 fahrplanBackend.storeSettingsValue("favStarIconPos", checked);
