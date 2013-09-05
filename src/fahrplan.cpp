@@ -39,9 +39,9 @@ Fahrplan::Fahrplan(QObject *parent)
     , m_departureStation(Station(false))
     , m_viaStation(Station(false))
     , m_arrivalStation(Station(false))
+    , m_trainrestriction(0)
     , m_mode(DepartureMode)
     , m_dateTime(QDateTime::currentDateTime())
-    , m_trainrestriction(0)
 {
     settings = new QSettings("smurfy", "fahrplan2");
 
@@ -293,7 +293,7 @@ void Fahrplan::setTrainrestriction(int index)
 
 QString Fahrplan::trainrestrictionName() const
 {
-    return m_trainrestrictions->get(m_trainrestriction).toString();
+    return m_trainrestrictions->get(m_trainrestriction);
 }
 
 void Fahrplan::onParserChanged(const QString &name, int index)

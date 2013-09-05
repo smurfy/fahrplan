@@ -29,17 +29,12 @@ public:
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 
     explicit Trainrestrictions(QObject *parent = 0);
-    int count() const;
 
     QHash<int, QByteArray> roleNames() const;
+    int count() const;
+    QString get(int i) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
-    void setStringList(const QStringList &strings);
-    QVariant data(const QModelIndex &index, int role) const;
-    Q_INVOKABLE int rowCount(const QModelIndex &parent) const;
-    Q_INVOKABLE int columnCount(const QModelIndex & parent = QModelIndex()) const;
-    Q_INVOKABLE QVariant get(int i) const;
-    Q_INVOKABLE QVariant data(int index) const;
-    
 signals:
     void countChanged();
 };
