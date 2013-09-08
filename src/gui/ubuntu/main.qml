@@ -19,11 +19,16 @@
 
 import QtQuick 2.0
 import Ubuntu.Components 0.1
+import Fahrplan 1.0
 
 MainView {
     id: appWindow
     width: units.gu(40)
     height: units.gu(71)
+
+    FahrplanBackend {
+        id: fahrplanBackend
+    }
 
     Tabs {
         onCurrentPageChanged: {
