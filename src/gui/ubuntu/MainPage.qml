@@ -420,7 +420,8 @@ Page {
 //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
 //        }
         ToolbarButton {
-            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/go-to.svg"
+            iconSource: "icons/info.svg"
+            text: qsTr("About")
             onTriggered: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
         }
     }
@@ -498,8 +499,7 @@ Page {
                     index = i;
                 }
             }
-
-            onParserChanged(fahrplanBackend.parserName, index)
+            backendParserChanged();
         }
         /*
            An error can occour here, if the result is returned quicker than
@@ -526,24 +526,26 @@ Page {
         }
 
         onParserChanged: {
+            backendParserChanged()
+        }
+    }
 
-            console.log("Switching to " + name);
-            currentParserName.text = fahrplanBackend.parserName;
+    function backendParserChanged() {
+        currentParserName.text = fahrplanBackend.parserName;
 
-            updateButtonVisibility();
+        updateButtonVisibility();
 
-            var items;
-            var i;
+        var items;
+        var i;
 
-            if (parserBackendModel.count == 0) {
-                items = fahrplanBackend.getParserList();
-                for (i = 0; i < items.length; i++) {
-                    parserBackendModel.append({
-                        "name" : items[i]
-                    });
-                }
-
+        if (parserBackendModel.count == 0) {
+            items = fahrplanBackend.getParserList();
+            for (i = 0; i < items.length; i++) {
+                parserBackendModel.append({
+                    "name" : items[i]
+                });
             }
+
         }
     }
 }

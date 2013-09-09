@@ -29,7 +29,6 @@ Page {
 
     id: searchResultsPage
 
-    tools: journeyResultsToolbar
     Item {
         id: searchResults
 
