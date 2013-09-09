@@ -27,6 +27,9 @@ Item {
 
     signal stationSelected()
 
+    LayoutMirroring.enabled: fahrplanBackend.getSettingsValue("favStarIconPos", false);
+    LayoutMirroring.childrenInherit: true
+
     width: ListView.view.width
     height: 30 + lbl_stationname.height
 
@@ -54,7 +57,11 @@ Item {
     Image {
         id: img_fav
         source: model.isFavorite ? "image://theme/icon-s-common-favorite-mark" + inverseSuffix : "image://theme/icon-s-common-favorite-unmark" + inverseSuffix
-        anchors.verticalCenter: parent.verticalCenter
+        anchors {
+            left: parent.left
+            leftMargin: 10
+            verticalCenter: parent.verticalCenter
+        }
     }
 
     MouseArea {
@@ -62,6 +69,8 @@ Item {
         anchors {
             top: background.top
             bottom: background.bottom
+            left: background.left
+            right: lbl_stationname.left
         }
 
         onClicked: {
@@ -80,39 +89,24 @@ Item {
     Label {
         id: lbl_stationname
         anchors {
+            left: img_fav.right
             leftMargin: 10
             rightMargin: 20
             right: lbl_miscinfo.left
             verticalCenter: parent.verticalCenter
         }
         text: model.name
+        horizontalAlignment: LayoutMirroring.enabled ? Text.AlignRight : Text.AlignLeft
     }
 
     Label {
         id: lbl_miscinfo
         anchors {
+            right: parent.right
             rightMargin: 10
             verticalCenter: parent.verticalCenter
         }
         text: model.miscInfo
         color: "DarkGrey";
-    }
-
-    Component.onCompleted: {
-        if (fahrplanBackend.getSettingsValue("favStarIconPos", "true") == "true") {
-            img_fav.anchors.left = root.left
-            img_fav.anchors.leftMargin = 10
-            lbl_stationname.anchors.left = img_fav.right
-            lbl_miscinfo.anchors.right = root.right
-            mouseArea_fav.anchors.left = background.left
-            mouseArea_fav.anchors.right = lbl_stationname.left
-        } else {
-            img_fav.anchors.right = root.right
-            img_fav.anchors.rightMargin = 10
-            lbl_stationname.anchors.left = root.left
-            lbl_miscinfo.anchors.right = img_fav.left
-            mouseArea_fav.anchors.left = lbl_miscinfo.right
-            mouseArea_fav.anchors.right = background.right
-        }
     }
 }
