@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="90"
+   height="90"
+   id="svg3140">
+  <defs
+     id="defs3142">
+    <clipPath
+       id="clipPath2998">
+      <path
+         d="M 4.5451866,22.141104 A 16,16 0 1 1 15.858896,33.454813 L 20,18 z"
+         transform="matrix(0.78567419,0.78567419,-0.78567419,0.78567419,20.390658,-9.8556221)"
+         id="path3000"
+         style="opacity:0.53153154;color:#000000;fill:#ff00ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata3145">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-962.36218)"
+     id="layer1">
+    <rect
+       width="90"
+       height="90"
+       x="0"
+       y="962.36218"
+       id="rect4198"
+       style="color:#000000;fill:none;stroke:none;stroke-width:7.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    <g
+       transform="translate(-60,548.00002)"
+       id="g4978">
+      <g
+         transform="matrix(-1.1111111,0,0,1.1111111,217.07643,-57.611595)"
+         id="g3800">
+        <rect
+           width="90"
+           height="90"
+           x="0"
+           y="1.7382814e-05"
+           transform="matrix(0.90000001,0,0,0.90000001,60.368786,424.77638)"
+           id="rect3049"
+           style="color:#000000;fill:none;stroke:none;stroke-width:6;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <text
+           x="-122.64159"
+           y="493.74518"
+           transform="scale(-1,1)"
+           id="text2991"
+           xml:space="preserve"
+           style="font-size:36px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;font-family:Sans"><tspan
+             x="-122.64159"
+             y="493.74518"
+             id="tspan2993"
+             style="font-size:86.40000153px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#808080;fill-opacity:1;font-family:Ubuntu Mono;-inkscape-font-specification:Ubuntu Mono Bold Italic">i</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
