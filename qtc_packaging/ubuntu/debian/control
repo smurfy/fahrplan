@@ -7,6 +7,8 @@ Build-Depends: debhelper (>= 9.0.0),
                qt5-qmake,
                qtbase5-dev,
                qtdeclarative5-dev,
+               libqt5versitorganizer5,
+               qtpim5-dev,
                libqt5xmlpatterns5-dev,
                libgles2-mesa-dev,
                zlib1g-dev,
@@ -16,7 +18,7 @@ Package: fahrplan2
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         qt-components-ubuntu,
+         qtdeclarative5-ubuntu-ui-toolkit-plugin,
          qtdeclarative5-qtlocation-plugin,
 Description: A Journey planner/Railway Time table for many train lines in europe and australia.
  Current supported backends are bahn.de (germany and europe), sbb.ch (swiss),

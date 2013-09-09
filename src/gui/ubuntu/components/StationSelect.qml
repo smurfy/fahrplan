@@ -80,8 +80,10 @@ Page {
 
             function findStationsByName()
             {
-                if (searchBox.text == "")
+                if (searchBox.text == "") {
+                    listView.model = fahrplanBackend.favorites
                     return;
+                }
 
                 indicator.running = true;
                 listView.model = fahrplanBackend.stationSearchResults
