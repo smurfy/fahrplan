@@ -117,10 +117,4 @@ Page {
             onLinkActivated : Qt.openUrlExternally(link);
         }
     }
-
-    FahrplanBackend {
-        id: fahrplanBackend
-
-        Component.onCompleted: print("aboutpage's parser", parser)
-    }
 }
