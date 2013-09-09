@@ -32,7 +32,7 @@ Page {
 
     property JourneyDetailResultList currentResult;
 
-    tools: journeyDetailResultsToolbar
+//    tools: journeyDetailResultsToolbar
     Item {
         id: searchResults
 
@@ -318,16 +318,18 @@ Page {
         id: journeyDetailResultModel
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         onAddCalendarEntryComplete: {
-            if (success)
+            // TODO: Make this work once the calendar is accessible on Ubuntu
+/*            if (success)
                 banner.text = qsTr("Journey has been added to your calendar.");
             else
                 banner.text = qsTr("Failed to add Journey to your calendar!");
             banner.show();
             calendarIcon.enabled = true
+*/
         }
 
         onParserJourneyDetailsResult: {

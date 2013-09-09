@@ -61,21 +61,24 @@ Page {
 
         ActivityIndicator {
             id: searchIndicator
-            anchors {
-                top: titleBar.bottom
-                topMargin: units.gu(5)
-                horizontalCenter: parent.horizontalCenter
-            }
+            anchors.centerIn: parent
             running: true
             visible: false
+        }
 
+        ListItems.Divider {
+            id: divider
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: titleBar.bottom
+            }
         }
 
         ListView {
             id: listView
             anchors {
-                top: titleBar.bottom
-                topMargin: units.gu(1)
+                top: divider.bottom
             }
             height: parent.height - titleBar.height - units.gu(2)
             width: parent.width
