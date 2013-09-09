@@ -47,7 +47,6 @@ CalendarThreadWrapper::~CalendarThreadWrapper()
 void CalendarThreadWrapper::addToCalendar()
 {
     const QString viaStation = m_result->viaStation();
-    QSettings settings("smurfy", "fahrplan2");
     QString calendarEntryTitle;
     QString calendarEntryDesc;
 

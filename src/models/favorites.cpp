@@ -25,7 +25,11 @@
 Favorites::Favorites(Fahrplan *parent)
     : StationsListModel(parent)
 {
+#ifdef BUILD_FOR_UBUNTU
+    m_settings = new QSettings("com.ubuntu.developer.mzanetti.fahrplan2", "fahrplan2", this);
+#else
     m_settings = new QSettings("smurfy", "fahrplan2", this);
+#endif
 }
 
 QVariant Favorites::data(const QModelIndex &index, int role) const
