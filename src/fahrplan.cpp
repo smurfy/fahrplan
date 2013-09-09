@@ -43,7 +43,11 @@ Fahrplan::Fahrplan(QObject *parent)
     , m_mode(DepartureMode)
     , m_dateTime(QDateTime::currentDateTime())
 {
+#ifdef BUILD_FOR_UBUNTU
+    settings = new QSettings("com.ubuntu.developer.mzanetti.fahrplan2", "fahrplan2");
+#else
     settings = new QSettings("smurfy", "fahrplan2");
+#endif
 
     setMode(static_cast<Mode>(settings->value("mode", DepartureMode).toInt()));
 
