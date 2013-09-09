@@ -24,7 +24,6 @@ import Ubuntu.Components.ListItems 0.1 as ListItems
 import "components"
 
 Page {
-    property alias timetableTitleText: timetableTitle.text
     property alias searchIndicatorVisible: searchIndicator.visible
 
     property int selMode : 0
@@ -46,7 +45,7 @@ Page {
 
             Label {
                 id: timetableTitle
-                text: ""
+                text: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
                 font.bold: true;
                 fontSize: "large"
                 anchors {
@@ -80,11 +79,10 @@ Page {
             }
             height: parent.height - titleBar.height - units.gu(2)
             width: parent.width
-            model: timetableResultModel
+            model: fahrplanBackend.timetable
             delegate:  timetableResultDelegate
             clip: true
 
-            visible: !searchIndicator.visible
         }
 
         //        ScrollDecorator {
@@ -126,28 +124,39 @@ Page {
 
                     Label {
                         id: lbl_time
-                        text: time
+                        text: Qt.formatTime(model.time, qsTr("hh:mm"))
                         font.bold: true
                         width: (parent.width  - units.gu(4)) / 4
                     }
 
                     Label {
                         id: lbl_destination
-                        text: destination
+                        text: "%1 <b>%2</b>".arg(fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("from") : qsTr("to")).arg(model.destinationStation)
                         width: ((parent.width  - units.gu(4)) / 4) * 3
                         elide: Text.ElideRight
                     }
 
                     Label {
                         id: lbl_type
-                        text: trainType
+                        text: model.trainType
                         font.bold: true
                         width: (parent.width  - units.gu(4)) / 4
                     }
 
                     Label {
                         id: lbl_station
-                        text: stationplatform
+                        text: {
+                            var platform;
+                            if (model.platform) {
+                                platform = qsTr("Pl. %1").arg(model.platform);
+                                if (model.currentStation) {
+                                    platform += " / " + model.currentStation;
+                                }
+                            } else {
+                                platform = model.currentStation;
+                            }
+                            return platform;
+                        }
                         width: ((parent.width  - units.gu(4)) / 4) * 3
                     }
 
@@ -179,59 +188,12 @@ Page {
         id: timetableResultModel
     }
 
-    //    InfoBanner{
-    //            id: banner
-    //            objectName: "fahrplanInfoBanner"
-    //            text: ""
-    //            anchors.top: parent.top
-    //            anchors.topMargin: 10
-    //    }
-
-    FahrplanBackend {
-        id: fahrplanBackend
-
-        onParserErrorOccured: {
-            banner.text = msg;
-            banner.show();
-        }
+    Connections {
+        target: fahrplanBackend
 
         onParserTimeTableResult: {
             console.log("Got results");
-            console.log(result.count);
-
-            searchIndicatorVisible = false;
-
-            timetableResultModel.clear();
-            for (var i = 0; i < result.count; i++) {
-                var item = result.getItem(i);
-
-                var stationplatform = item.stationName;
-
-                if (item.platform) {
-                    stationplatform = qsTr("Pl.") + " " + item.platform;
-                    if (item.stationName) {
-                        stationplatform += " / " + item.stationName;
-                    }
-                }
-
-                var dirlabel = "";
-                if (selMode == 1) {
-                    dirlabel = qsTr("to <b>%1</b>").arg(item.destinationName)
-                } else if (selMode == 0) {
-                    dirlabel = qsTr("from <b>%1</b>").arg(item.destinationName)
-                } else {
-                    dirlabel = "\u2013"
-                }
-
-                timetableResultModel.append({
-                                                "time": Qt.formatTime( item.time, qsTr("hh:mm")),
-                                                "trainType": item.trainType,
-                                                "destination": dirlabel,
-                                                "stationplatform": stationplatform,
-                                                "miscInfo": item.miscInfo,
-                                                "itemNum" : i
-                                            });
-            }
+            searchIndicator.running = false;
         }
     }
 

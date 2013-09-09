@@ -23,7 +23,6 @@ import Ubuntu.Components 0.1
 import "components"
 
 Page {
-    property alias fahrplanBackend: fahrplanBackend
     property alias searchResults: searchResults
     property alias journeyStationsTitleText: journeyStations.text
     property alias searchIndicatorVisible: searchIndicator.visible
@@ -303,8 +302,8 @@ Page {
         id: journeyResultModel
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
         onParserJourneyResult: {
             console.log("Got results");
             console.log(result.count);
