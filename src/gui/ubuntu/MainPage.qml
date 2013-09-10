@@ -161,8 +161,10 @@ Page {
                     text: qsTr("Departure Station")
                     subText: fahrplanBackend.departureStationName
 
+                    property int type: FahrplanBackend.DepartureStation
+
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DepartureStation})
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
                         pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
                                                                       })
@@ -180,8 +182,10 @@ Page {
                         right: parent.right
                     }
                     progression: true
+                    property int type: FahrplanBackend.ViaStation
+
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.ViaStation})
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
                         pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
                                                                       })
@@ -199,8 +203,10 @@ Page {
                         right: parent.right
                     }
                     progression: true
+                    property int type: FahrplanBackend.ArrivalStation
+
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.ArrivalStation})
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
                         pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
                                                                       })
@@ -361,6 +367,12 @@ Page {
                 model: parserBackendModel
                 delegate: ListItems.Standard {
                     text: modelData
+
+                    // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
+                    // ListItems don't know that they are sitting in a themed Popover where the color
+                    // needs to be inverted.
+                    __foregroundColor: Theme.palette.selected.backgroundText
+
                     onClicked: {
                         fahrplanBackend.setParser(index);
                         PopupUtils.close(selectBackendDialog)
@@ -388,6 +400,11 @@ Page {
                 model: fahrplanBackend.trainrestrictions
                 delegate: ListItems.Standard {
                     text: modelData
+                    // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
+                    // ListItems don't know that they are sitting in a themed Popover where the color
+                    // needs to be inverted.
+                    __foregroundColor: Theme.palette.selected.backgroundText
+
                     onClicked: {
                        fahrplanBackend.setTrainrestriction(index)
                        PopupUtils.close(selectTrainrestrictionsDialog)
@@ -438,25 +455,19 @@ Page {
                 delegate: ListItems.Standard {
                     text: modelData
                     onClicked: {
-                        print("ffffffffff", ListView.view.model.get(index).actionID, ListView.view.model.get(index).modelData)
                         switch(ListView.view.model.get(index).actionID) {
                         case 0:
-                            var oldVal = stationSelectPopover.opener.subText
-                            stationSelectPopover.opener.subText = departureButton.subText
-                            departureButton.subText = oldVal;
+                            print("ffffffffff", ListView.view.model.get(index).actionID, opener, opener.type)
+                            fahrplanBackend.swapStations(opener.type, FahrplanBackend.DepartureStation)
                             break;
                         case 1:
-                            var oldVal = stationSelectPopover.opener.subText
-                            stationSelectPopover.opener.subText = arrivalButton.subText
-                            arrivalButton.subText = oldVal;
+                            fahrplanBackend.swapStations(opener.type, FahrplanBackend.ArrivalStation)
                             break;
                         case 2:
-                            var oldVal = stationSelectPopover.opener.subText
-                            stationSelectPopover.opener.subText = viaButton.subText
-                            viaButton.subText = oldVal;
+                            fahrplanBackend.swapStations(opener.type, FahrplanBackend.ViaStation)
                             break;
                         case 3:
-                            stationSelectPopover.opener.subText = qsTr("please select")
+                            fahrplanBackend.resetStation(opener.type);
                             break;
                         }
                         PopupUtils.close(stationSelectPopover)
