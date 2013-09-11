@@ -41,12 +41,7 @@ FahrplanCalendarManager::FahrplanCalendarManager(QObject *parent)
 #if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     setRoleNames(roleNames());
 #endif
-#ifdef BUILD_FOR_UBUNTU
-    settings = new QSettings("com.ubuntu.developer.mzanetti.fahrplan2", "fahrplan2", this);
-#else
-    settings = new QSettings("smurfy", "fahrplan2", this);
-#endif
-
+    settings = new QSettings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2", this);
 #ifndef QT_NO_CONCURRENT
     m_watcher = new QFutureWatcher<void>(this);
     connect(m_watcher, SIGNAL(finished()), SLOT(getCalendarsListFinished()));

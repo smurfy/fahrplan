@@ -1,4 +1,4 @@
-VERSION = 2.0.13
+VERSION = 2.0.14
 
 MOC_DIR = tmp
 UI_DIR = tmp
@@ -6,10 +6,18 @@ OBJECTS_DIR = tmp
 RCC_DIR = tmp
 
 # Make the Version available in the C++ source too
+# Also setting QSettings Vendor name
 symbian {
     DEFINES += FAHRPLAN_VERSION=\"$$VERSION\"
-} else {
+    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\"smurfy\"
+}
+ubuntu {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
+    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"com.ubuntu.developer.mzanetti.fahrplan2\\\"
+}
+!ubuntu:!symbian {
+    DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
+    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"smurfy\\\"
 }
 
 #Fix for Harmattan

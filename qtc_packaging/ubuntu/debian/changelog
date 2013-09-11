@@ -1,3 +1,9 @@
+fahrplan2 (2.0.14) saucy; urgency=low
+  * Improved station selection
+  * Lefty support for station selection
+
+-- Michael Zanetti <michael_zanetti@gmx.net>  Wed, 11 Sep 2013 20:00:00 +0200
+
 fahrplan2 (2.0.13-ubuntu1) saucy; urgency=low
 
   * fix fullscreen issue

@@ -47,6 +47,7 @@ CalendarThreadWrapper::~CalendarThreadWrapper()
 void CalendarThreadWrapper::addToCalendar()
 {
     const QString viaStation = m_result->viaStation();
+    QSettings settings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
     QString calendarEntryTitle;
     QString calendarEntryDesc;
 
