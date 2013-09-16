@@ -56,8 +56,20 @@ public:
     bool operator ==(const Station &other) const;
     bool operator <(const Station &other) const;
 };
+
+
+struct StopStation : Station {
+    QDateTime departureDateTime;
+    QDateTime arrivalDateTime;
+
+public:
+    StopStation& operator=(const Station& station);
+};
+
+
 typedef QList<Station> StationsList;
 Q_DECLARE_METATYPE(Station)
+Q_DECLARE_METATYPE(StopStation)
 Q_DECLARE_METATYPE(StationsList)
 
 struct TimetableEntry
@@ -132,9 +144,9 @@ class JourneyResultList : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qreal count READ itemcount)
-    Q_PROPERTY(QString departureStation READ departureStation WRITE setDepartureStation)
-    Q_PROPERTY(QString viaStation READ viaStation WRITE setViaStation)
-    Q_PROPERTY(QString arrivalStation READ arrivalStation WRITE setArrivalStation)
+    Q_PROPERTY(Station departureStation READ departureStation WRITE setDepartureStation)
+    Q_PROPERTY(Station viaStation READ viaStation WRITE setViaStation)
+    Q_PROPERTY(Station arrivalStation READ arrivalStation WRITE setArrivalStation)
     Q_PROPERTY(QString timeInfo READ timeInfo WRITE setTimeInfo)
 
     public slots:
@@ -142,19 +154,19 @@ class JourneyResultList : public QObject
     public:
         void appendItem(JourneyResultItem *item);
         qreal itemcount();
-        QString departureStation() const;
-        void setDepartureStation(const QString &);
-        QString arrivalStation() const;
-        void setArrivalStation(const QString &);
-        QString viaStation() const;
-        void setViaStation(const QString &);
+        Station departureStation() const;
+        void setDepartureStation(const Station &);
+        Station arrivalStation() const;
+        void setArrivalStation(const Station &);
+        Station viaStation() const;
+        void setViaStation(const Station &);
         QString timeInfo() const;
         void setTimeInfo(const QString &);
     private:
         QList<JourneyResultItem*> m_items;
-        QString m_departureStation;
-        QString m_viaStation;
-        QString m_arrivalStation;
+        Station m_departureStation;
+        Station m_viaStation;
+        Station m_arrivalStation;
         QString m_timeInfo;
 };
 
@@ -162,12 +174,10 @@ class JourneyResultList : public QObject
 class JourneyDetailResultItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString departureStation READ departureStation WRITE setDepartureStation)
+    Q_PROPERTY(StopStation departureStation READ departureStation WRITE setDepartureStation)
     Q_PROPERTY(QString departureInfo READ departureInfo WRITE setDepartureInfo)
-    Q_PROPERTY(QDateTime departureDateTime READ departureDateTime WRITE setDepartureDateTime)
-    Q_PROPERTY(QString arrivalStation READ arrivalStation WRITE setArrivalStation)
+    Q_PROPERTY(StopStation arrivalStation READ arrivalStation WRITE setArrivalStation)
     Q_PROPERTY(QString arrivalInfo READ arrivalInfo WRITE setArrivalInfo)
-    Q_PROPERTY(QDateTime arrivalDateTime READ arrivalDateTime WRITE setArrivalDateTime)
     Q_PROPERTY(QString info READ info WRITE setInfo)
     Q_PROPERTY(QString train READ train WRITE setTrain)
 
@@ -175,18 +185,14 @@ class JourneyDetailResultItem : public QObject
     Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
     public:
-        QString departureStation() const;
-        void setDepartureStation(const QString &);
+        StopStation departureStation() const;
+        void setDepartureStation(const StopStation &);
         QString departureInfo() const;
         void setDepartureInfo(const QString &);
-        QDateTime departureDateTime() const;
-        void setDepartureDateTime(const QDateTime &);
-        QString arrivalStation() const;
-        void setArrivalStation(const QString &);
+        StopStation arrivalStation() const;
+        void setArrivalStation(const StopStation &);
         QString arrivalInfo() const;
         void setArrivalInfo(const QString &);
-        QDateTime arrivalDateTime() const;
-        void setArrivalDateTime(const QDateTime &);
         QString info() const;
         void setInfo(const QString &);
         QString train() const;
@@ -196,12 +202,10 @@ class JourneyDetailResultItem : public QObject
         QString internalData2() const;
         void setInternalData2(const QString &);
     private:
-        QString m_departureStation;
+        StopStation m_departureStation;
         QString m_departureInfo;
-        QDateTime m_departureDateTime;
-        QString m_arrivalStation;
+        StopStation m_arrivalStation;
         QString m_arrivalInfo;
-        QDateTime m_arrivalDateTime;
         QString m_info;
         QString m_train;
         QString m_internalData1;
@@ -215,11 +219,9 @@ class JourneyDetailResultList : public QObject
     Q_PROPERTY(qreal count READ itemcount)
     Q_PROPERTY(QString duration READ duration WRITE setDuration)
     Q_PROPERTY(QString info READ info WRITE setInfo)
-    Q_PROPERTY(QString departureStation READ departureStation WRITE setDepartureStation)
-    Q_PROPERTY(QDateTime departureDateTime READ departureDateTime WRITE setDepartureDateTime)
-    Q_PROPERTY(QString viaStation READ viaStation WRITE setViaStation)
-    Q_PROPERTY(QString arrivalStation READ arrivalStation WRITE setArrivalStation)
-    Q_PROPERTY(QDateTime arrivalDateTime READ arrivalDateTime WRITE setArrivalDateTime)
+    Q_PROPERTY(StopStation departureStation READ departureStation WRITE setDepartureStation)
+    Q_PROPERTY(StopStation viaStation READ viaStation WRITE setViaStation)
+    Q_PROPERTY(StopStation arrivalStation READ arrivalStation WRITE setArrivalStation)
 
     public slots:
         JourneyDetailResultItem *getItem(int);
@@ -228,16 +230,12 @@ class JourneyDetailResultList : public QObject
         qreal itemcount();
         QString id() const;
         void setId(const QString &);
-        QString departureStation() const;
-        void setDepartureStation(const QString &);
-        QDateTime departureDateTime() const;
-        void setDepartureDateTime(const QDateTime &);
-        QString viaStation() const;
-        void setViaStation(const QString &);
-        QString arrivalStation() const;
-        void setArrivalStation(const QString &);
-        QDateTime arrivalDateTime() const;
-        void setArrivalDateTime(const QDateTime &);
+        StopStation departureStation() const;
+        void setDepartureStation(const StopStation &);
+        StopStation viaStation() const;
+        void setViaStation(const StopStation &);
+        StopStation arrivalStation() const;
+        void setArrivalStation(const StopStation &);
         QString info() const;
         void setInfo(const QString &);
         QString duration() const;
@@ -245,11 +243,9 @@ class JourneyDetailResultList : public QObject
     private:
         QList<JourneyDetailResultItem*> m_items;
         QString m_id;
-        QString m_departureStation;
-        QDateTime m_departureDateTime;
-        QString m_viaStation;
-        QString m_arrivalStation;
-        QDateTime m_arrivalDateTime;
+        StopStation m_departureStation;
+        StopStation m_viaStation;
+        StopStation m_arrivalStation;
         QString m_info;
         QString m_duration;
 };

@@ -176,8 +176,8 @@ void MainWindow::journeyResult(JourneyResultList *result)
     ui->searchJourneyResults->clear();
     ui->journeyResultItemIds->clear();
 
-    ui->searchJourneyResults->append(result->departureStation());
-    ui->searchJourneyResults->append(result->arrivalStation());
+    ui->searchJourneyResults->append(result->departureStation().name);
+    ui->searchJourneyResults->append(result->arrivalStation().name);
     ui->searchJourneyResults->append(result->timeInfo());
 
     for (int i=0; i < result->itemcount(); i++) {
@@ -212,21 +212,21 @@ void MainWindow::getJourneyDetailsClicked()
 void MainWindow::journeyDetailResult(JourneyDetailResultList *result)
 {
     ui->getJourneyDetailsResults->clear();
-    ui->getJourneyDetailsResults->append(result->departureStation());
-    ui->getJourneyDetailsResults->append(result->departureDateTime().toString());
-    ui->getJourneyDetailsResults->append(result->arrivalStation());
-    ui->getJourneyDetailsResults->append(result->arrivalDateTime().toString());
+    ui->getJourneyDetailsResults->append(result->departureStation().name);
+    ui->getJourneyDetailsResults->append(result->departureStation().departureDateTime.toString());
+    ui->getJourneyDetailsResults->append(result->arrivalStation().name);
+    ui->getJourneyDetailsResults->append(result->arrivalStation().arrivalDateTime.toString());
     ui->getJourneyDetailsResults->append(result->duration());
     ui->getJourneyDetailsResults->append(result->info());
 
     for (int i=0; i < result->itemcount(); i++) {
         JourneyDetailResultItem *item = result->getItem(i);
         ui->getJourneyDetailsResults->append(">>-------------------------");
-        ui->getJourneyDetailsResults->append(item->departureStation());
-        ui->getJourneyDetailsResults->append(item->departureDateTime().toString());
+        ui->getJourneyDetailsResults->append(item->departureStation().name);
+        ui->getJourneyDetailsResults->append(item->departureStation().departureDateTime.toString());
         ui->getJourneyDetailsResults->append(item->departureInfo());
-        ui->getJourneyDetailsResults->append(item->arrivalStation());
-        ui->getJourneyDetailsResults->append(item->arrivalDateTime().toString());
+        ui->getJourneyDetailsResults->append(item->arrivalStation().name);
+        ui->getJourneyDetailsResults->append(item->arrivalStation().arrivalDateTime.toString());
         ui->getJourneyDetailsResults->append(item->arrivalInfo());
         ui->getJourneyDetailsResults->append(item->train());
         ui->getJourneyDetailsResults->append(item->info());

@@ -20,12 +20,16 @@
 #include "parser_hafasxml.h"
 
 #include <QBuffer>
+#include <QFile>
 #include <QNetworkReply>
 #include <QXmlStreamReader>
+#include <QtXml/QDomDocument>
 
 #if defined(BUILD_FOR_QT5)
   #include <QUrlQuery>
 #endif
+
+#define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
 
 ParserHafasXml::ParserHafasXml(QObject *parent) :
     ParserAbstract(parent)
@@ -564,181 +568,102 @@ QString ParserHafasXml::parseExternalIds(const QVariant &id) const
     return extId;
 }
 
+QDebug operator<<(QDebug dbg, const QDomNode& node)
+{
+  QString s;
+  QTextStream str(&s, QIODevice::WriteOnly);
+  node.save(str, 2);
+  dbg << qPrintable(s);
+  return dbg;
+}
+
 void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 {
     lastJourneyResultList = new JourneyResultList();
     journeyDetailInlineData.clear();
 
-    QBuffer readBuffer;
-    readBuffer.setData(networkReply->readAll());
-    readBuffer.open(QIODevice::ReadOnly);
+    QString xmlRawtext = networkReply->readAll();
 
-    QXmlQuery query;
-    query.bindVariable("path", &readBuffer);
-    query.setQuery("doc($path)/ResC/Err//@text/string()");
+    //TODO parse errors with dom
+    // query.setQuery("doc($path)/ResC/Err//@text/string()");
 
-    QStringList errorResult;
-    if (!query.evaluateTo(&errorResult))
-    {
-        qDebug() << "parserHafasXml::ErrorTest - Query Failed";
+    QDomDocument doc("result");
+    if (doc.setContent(xmlRawtext, false)) {
+        QDomNodeList nodeList = doc.elementsByTagName("Connection");
+
+        for (unsigned int i = 0; i < nodeList.length(); ++i) {
+            QDomNode node = nodeList.item(i);
+            QDomNode overviewNode = node.namedItem("Overview");
+
+            QDomNode depStation = overviewNode.namedItem("Departure").namedItem("BasicStop").namedItem("Station");
+            QDomNode arrStation = overviewNode.namedItem("Arrival").namedItem("BasicStop").namedItem("Station");
+
+            Station DepartureStation, ArrivalStation;
+            DepartureStation.name = getAttribute(depStation, "name");
+            DepartureStation.latitude = getAttribute(depStation, "y").toInt();
+            DepartureStation.longitude = getAttribute(depStation, "x").toInt();
+            DepartureStation.id = getAttribute(depStation, "externalId");
+
+            ArrivalStation.name = getAttribute(arrStation, "name");
+            ArrivalStation.latitude = getAttribute(arrStation, "y").toInt();
+            ArrivalStation.longitude = getAttribute(arrStation, "x").toInt();
+            ArrivalStation.id = getAttribute(arrStation, "externalId");
+
+            QDomNodeList products = overviewNode.namedItem("Products").childNodes();
+            QStringList productNames;
+            for (unsigned int j = 0; j < products.length(); ++j) {
+                if (products.item(j).nodeName() == "Product") {
+                    productNames << getAttribute(products.item(j), "cat").trimmed();
+                }
+            }
+
+            QDate date = QDate::fromString(overviewNode.namedItem("Date").toElement().text().trimmed(), "yyyyMMdd");
+            JourneyResultItem *item = new JourneyResultItem();
+            item->setDate(date);
+            item->setId(getAttribute(node, "id"));
+            item->setTransfers(overviewNode.namedItem("Transfers").toElement().text());
+            item->setDuration(cleanHafasDate(overviewNode.namedItem("Duration").namedItem("Time").toElement().text().trimmed()));
+            item->setMiscInfo("");
+            item->setTrainType(productNames.join(", ").trimmed());
+            item->setDepartureTime(cleanHafasDate(overviewNode.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Time").toElement().text().trimmed()));
+            item->setArrivalTime(cleanHafasDate(overviewNode.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Time").toElement().text().trimmed()));
+
+            bool hasInline = false;
+            QString internalData1 = getAttribute(overviewNode.namedItem("XMLHandle"), "url").trimmed();
+
+            if (internalData1.count() > 0 && internalData1.indexOf("extxml.exe")) {
+               hasInline = true;
+            }
+
+            if (internalData1.count() > 0) {
+               internalData1.remove(0, internalData1.indexOf("query.exe") + 9);
+               internalData1.prepend(baseUrl);
+               item->setInternalData1(internalData1);
+            } else {
+               hasInline = true;
+            }
+
+            if (hasInline)
+            {
+               journeyDetailRequestData.id = item->id();
+               journeyDetailRequestData.date = item->date();
+               journeyDetailRequestData.duration = item->duration();
+               JourneyDetailResultList *results = internalParseJourneyDetails(xmlRawtext.toAscii());
+               journeyDetailInlineData.append(results);
+            }
+
+            lastJourneyResultList->setDepartureStation(DepartureStation);
+            lastJourneyResultList->setArrivalStation(ArrivalStation);
+            lastJourneyResultList->setTimeInfo(date.toString());
+
+            lastJourneyResultList->appendItem(item);
+        }
     }
 
-    if (errorResult.count() > 0 ) {
-        emit errorOccured(errorResult.join("").trimmed());
-        qWarning()<<"ParserHafasXml::parseSearchJourneyPart2:"<<errorResult.join("");
-        return;
+    if (doc.elementsByTagName("ConResCtxt").count() > 0) {
+        hafasContext.seqNr = doc.elementsByTagName("ConResCtxt").item(0).toElement().text();
     }
 
-    //Query for station infos
-    query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection/@id/string()");
-
-    QStringList resultIds;
-    if (!query.evaluateTo(&resultIds))
-    {
-        qDebug() << "parserHafasXml::getJourneyData 2 - Query Failed";
-    }
-
-    if (resultIds.count() <= 0) {
-        emit journeyResult(lastJourneyResultList);
-        return;
-    }
-
-    for(int i = 0;i<resultIds.count(); i++) {
-        //qDebug()<<"Connection:"<<resultIds[i];
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Date/string()");
-        QStringList dateResult;
-        if (!query.evaluateTo(&dateResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 3 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Transfers/string()");
-        QStringList transfersResult;
-        if (!query.evaluateTo(&transfersResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 4 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Duration/Time/string()");
-        QStringList durationResult;
-        if (!query.evaluateTo(&durationResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 5 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Products/Product/@cat/string()");
-        QStringList trainsResult;
-        if (!query.evaluateTo(&trainsResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 6 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Departure/BasicStop/Station/@name/string()");
-        QStringList depResult;
-        if (!query.evaluateTo(&depResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 7 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Arrival/BasicStop/Station/@name/string()");
-        QStringList arrResult;
-        if (!query.evaluateTo(&arrResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 8 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Departure/BasicStop/Dep/Time/string()");
-        QStringList depTimeResult;
-        if (!query.evaluateTo(&depTimeResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 9 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Departure/BasicStop/Dep/Platform/Text/string()");
-        QStringList depPlatResult;
-        if (!query.evaluateTo(&depPlatResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 10 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Arrival/BasicStop/Arr/Time/string()");
-        QStringList arrTimeResult;
-        if (!query.evaluateTo(&arrTimeResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 11 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/Arrival/BasicStop/Arr/Platform/Text/string()");
-        QStringList arrPlatResult;
-        if (!query.evaluateTo(&arrPlatResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 12 - Query Failed";
-        }
-
-        query.setQuery("doc($path)/ResC/ConRes/ConnectionList/Connection[@id='" + resultIds[i] + "']/Overview/XMLHandle/@url/string()");
-        QStringList xmlHandleResult;
-        if (!query.evaluateTo(&xmlHandleResult))
-        {
-            qDebug() << "parserHafasXml::getJourneyData 13 - Query Failed";
-        }
-
-        QDate date = QDate::fromString(dateResult.join("").trimmed(), "yyyyMMdd");
-
-        for (int j = 0; j < trainsResult.count(); j++) {
-            trainsResult[j] = trainsResult[j].trimmed();
-        }
-
-        JourneyResultItem *item = new JourneyResultItem();
-        item->setDate(date);
-        item->setId(resultIds[i]);
-        item->setTransfers(transfersResult.join("").trimmed());
-        item->setDuration(cleanHafasDate(durationResult.join("").trimmed()));
-        item->setMiscInfo("");
-        item->setTrainType(trainsResult.join(", ").trimmed());
-        item->setDepartureTime(cleanHafasDate(depTimeResult.join("").trimmed()));
-        item->setArrivalTime(cleanHafasDate(arrTimeResult.join("").trimmed()));
-
-        bool hasInline = false;
-        QString internalData1 = xmlHandleResult.join("").trimmed();
-
-        if (internalData1.count() > 0 && internalData1.indexOf("extxml.exe")) {
-            hasInline = true;
-        }
-
-        if (internalData1.count() > 0) {
-            internalData1.remove(0, internalData1.indexOf("query.exe") + 9);
-            internalData1.prepend(baseUrl);
-            item->setInternalData1(internalData1);
-        } else {
-            hasInline = true;
-        }
-
-        if (hasInline){
-            journeyDetailRequestData.id = item->id();
-            journeyDetailRequestData.date = item->date();
-            journeyDetailRequestData.duration = item->duration();
-            QByteArray data = readBuffer.buffer();
-            JourneyDetailResultList *results = internalParseJourneyDetails(data);
-            journeyDetailInlineData.append(results);
-        }
-
-        lastJourneyResultList->setDepartureStation(depResult.join("").trimmed());
-        lastJourneyResultList->setArrivalStation(arrResult.join("").trimmed());
-        lastJourneyResultList->setTimeInfo(date.toString());
-
-        lastJourneyResultList->appendItem(item);
-    }
-
-    //Query for next and prev stuff
-    query.setQuery("doc($path)/ResC/ConRes/ConResCtxt/string()");
-    QStringList ConResCtxtResult;
-    if (!query.evaluateTo(&ConResCtxtResult))
-    {
-        qDebug() << "parserHafasXml::getJourneyData 14 - Query Failed";
-    }
-
-    hafasContext.seqNr = ConResCtxtResult.join("");
     emit journeyResult(lastJourneyResultList);
 }
 
@@ -849,230 +774,131 @@ void ParserHafasXml::getJourneyDetails(const QString &id)
 
 JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray data)
 {
-    qDebug() << ";;;;;;;;;;;;;;;" << data;
     JourneyDetailResultList *results = new JourneyDetailResultList();
 
-    QBuffer readBuffer;
-    readBuffer.setData(data);
-    readBuffer.open(QIODevice::ReadOnly);
+    QDomDocument doc("result");
+    if (doc.setContent(data, false)) {
+        QDomNodeList nodeList = doc.elementsByTagName("Connection");
+        for (unsigned int i = 0; i < nodeList.length(); ++i) {
+            QDomNode connection = nodeList.item(i);
+            if (getAttribute(connection, "id") == journeyDetailRequestData.id) {
+                QDomNodeList journeyList = connection.namedItem("ConSectionList").childNodes();
+                for (unsigned int j = 0; j < journeyList.length(); ++j) {
+                    QDomNode conSection = journeyList.item(j);
+                    conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Station");
+                    QDomNode depStation = conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Station");
+                    QDomNode arrStation = conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Station");
 
-    QXmlQuery query;
-    query.bindVariable("path", &readBuffer);
-    query.setQuery("doc($path)/ResC/Err//@text/string()");
+                    StopStation DepartureStation, ArrivalStation;
+                    DepartureStation.name = getAttribute(depStation, "name");
+                    if (DepartureStation.name.count() == 0) {
+                        DepartureStation.name = conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Location").namedItem("Station").namedItem("HafasName").toElement().text();
+                    }
+                    DepartureStation.latitude = getAttribute(depStation, "y").toInt();
+                    DepartureStation.longitude = getAttribute(depStation, "x").toInt();
+                    DepartureStation.id = getAttribute(depStation, "externalId");
+                    DepartureStation.departureDateTime = cleanHafasDateTime(conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Time").toElement().text().trimmed(), journeyDetailRequestData.date);
 
-    QStringList errorResult;
-    if (!query.evaluateTo(&errorResult))
-    {
-        qDebug() << "parserHafasXml::ErrorTest - Query Failed";
-        return results;
-    }
+                    ArrivalStation.name = getAttribute(arrStation, "name");
+                    if (ArrivalStation.name.count() == 0) {
+                        ArrivalStation.name = conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Location").namedItem("Station").namedItem("HafasName").toElement().text();
+                    }
+                    ArrivalStation.latitude = getAttribute(arrStation, "y").toInt();
+                    ArrivalStation.longitude = getAttribute(arrStation, "x").toInt();
+                    ArrivalStation.id = getAttribute(arrStation, "externalId");
+                    ArrivalStation.arrivalDateTime = cleanHafasDateTime(conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Time").toElement().text().trimmed(), journeyDetailRequestData.date);
 
-    if (errorResult.count() > 0 ) {
-        emit errorOccured(errorResult.join("").trimmed());
-        qWarning()<<"ParserHafasXml::internalParseJourneyDetails:"<<errorResult.join("");
-        return results;
-    }
+                    QString departurePlatform = conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Platform").toElement().text().trimmed();
+                    QString arrivalPlatform = conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Platform").toElement().text().trimmed();
 
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Station/@name/string()");
-    QStringList departureResults;
-    if (!query.evaluateTo(&departureResults))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 1 Failed";
-    }
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Station/@name/string()");
-    QStringList arrivalResults;
-    if (!query.evaluateTo(&arrivalResults))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 2 Failed";
-    }
+                    JourneyDetailResultItem *item = new JourneyDetailResultItem();
 
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Location/Station/HafasName/Text/string()");
-    QStringList departure2Results;
-    if (!query.evaluateTo(&departure2Results))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 1b Failed";
-    }
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Location/Station/HafasName/Text/string()");
-    QStringList arrival2Results;
-    if (!query.evaluateTo(&arrival2Results))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 2b Failed";
-    }
+                    item->setDepartureStation(DepartureStation);
+                    item->setArrivalStation(ArrivalStation);
 
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Dep/Time/string()");
-    QStringList depTimeResult;
-    if (!query.evaluateTo(&depTimeResult))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 3 Failed";
-    }
-
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Departure/BasicStop/Dep/Platform/Text/string()");
-    QStringList depPlatResult;
-    if (!query.evaluateTo(&depPlatResult))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 4 Failed";
-    }
-
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Arr/Time/string()");
-    QStringList arrTimeResult;
-    if (!query.evaluateTo(&arrTimeResult))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 5 Failed";
-    }
-
-    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection/Arrival/BasicStop/Arr/Platform/Text/string()");
-    QStringList arrPlatResult;
-    if (!query.evaluateTo(&arrPlatResult))
-    {
-        qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 6 Failed";
-    }
-
-    //It is possible, that the stationname is in two seperate fields
-    if (departureResults.count() == 0 && departure2Results.count() > 0)
-    {
-        departureResults = departure2Results;
-        arrivalResults = arrival2Results;
-    }
-
-    if (departureResults.count() == arrivalResults.count())
-    {
-        for(int i = 0; i < departureResults.count(); i++)
-        {
-            JourneyDetailResultItem *item = new JourneyDetailResultItem();
-
-            /*
-            qDebug()<<"   "<<"Journey "<<i;
-            qDebug()<<"     DepartureSt:"<<departureResults[i].trimmed();
-            qDebug()<<"     DepartureTime:"<<depTimeResult[i].trimmed();
-            qDebug()<<"     DeparturePlatform:"<<depPlatResult[i].trimmed();
-            qDebug()<<"     ArrivalSt:"<<arrivalResults[i].trimmed();
-            qDebug()<<"     ArrivalTime:"<<arrTimeResult[i].trimmed();
-            qDebug()<<"     ArrivalPlatform:"<<arrPlatResult[i].trimmed();
-            */
-
-            item->setDepartureDateTime(cleanHafasDateTime(depTimeResult[i].trimmed(), journeyDetailRequestData.date));
-            item->setArrivalDateTime(cleanHafasDateTime(arrTimeResult[i].trimmed(), journeyDetailRequestData.date));
-            item->setDepartureStation(departureResults[i].trimmed());
-            item->setArrivalStation(arrivalResults[i].trimmed());
-            if (depPlatResult[i].trimmed() != "")
-            {
-                item->setDepartureInfo(tr("Pl.") + " " + depPlatResult[i].trimmed());
-            }
-            if (arrPlatResult[i].trimmed() != "")
-            {
-                item->setArrivalInfo(tr("Pl.") + " " + arrPlatResult[i].trimmed());
-            }
-
-            //Check for train or if walking
-            query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Journey/JourneyAttributeList/JourneyAttribute/Attribute[@type='NAME']/AttributeVariant/Text/string()");
-            QStringList trainResult;
-            if (!query.evaluateTo(&trainResult))
-            {
-                qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 7 Failed";
-            }
-
-            if (trainResult.count() > 0)
-            {
-                //qDebug()<<"     Train:"<<trainResult.join("").trimmed();
-                item->setTrain(trainResult.join("").trimmed());
-            } else
-            {
-                query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Walk/Duration/Time/string()");
-                QStringList walkResult;
-                if (!query.evaluateTo(&walkResult))
-                {
-                   qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 8 Failed";
-                }
-
-                //Maybe its a transfer?
-                QStringList transferResult;
-                if (walkResult.count() == 0) {
-                    query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Transfer/Duration/Time/string()");
-
-                    if (!query.evaluateTo(&transferResult))
+                    if (departurePlatform.count() > 0)
                     {
-                       qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 8b Failed";
+                        item->setDepartureInfo(tr("Pl.") + " " + departurePlatform);
                     }
-                }
-
-                //Maybe its gisroute?
-                if (walkResult.count() == 0 && transferResult.count() == 0)
-                {
-                   query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/GisRoute/Duration/Time/string()");
-                   QStringList gisrouteResult;
-                   if (!query.evaluateTo(&gisrouteResult))
-                   {
-                       qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 9 Failed";
-                   }
-
-                   //Ok its a gisroute
-                   if (gisrouteResult.count() > 0)
-                   {
-                       query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/GisRoute/@type/string()");
-                       QStringList gisroutetypeResult;
-                       if (!query.evaluateTo(&gisroutetypeResult))
-                       {
-                           qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 10 Failed";
-                       }
-
-                       QString gisrouteType = gisroutetypeResult.join("").trimmed();
-                       int minutes = cleanHafasDate(gisrouteResult.join("").trimmed()).toInt();
-                       if (gisrouteType == "FOOT")
-                       {
-                           item->setInfo(tr("Walk for %n min", "", minutes));
-                       } else if (gisrouteType == "BIKE")
-                       {
-                           item->setInfo(tr("Use a Bike for %n min", "", minutes));
-                       } else if (gisrouteType == "CAR")
-                       {
-                           item->setInfo(tr("Use a car for %n min", "", minutes));
-                       } else if (gisrouteType == "TAXI")
-                       {
-                           item->setInfo(tr("Take a taxi for %n min", "", minutes));
-                       }
-                   }
-                } else {
-
-                    if (transferResult.count() > 0) {
-                        item->setInfo(tr("Transfer for %n min", "", cleanHafasDate(transferResult.join("").trimmed()).toInt()));
+                    if (arrivalPlatform.count() > 0)
+                    {
+                        item->setArrivalInfo(tr("Pl.") + " " + arrivalPlatform);
                     }
 
-                    if (walkResult.count() > 0) {
-                        item->setInfo(tr("Walk for %n min", "", cleanHafasDate(walkResult.join("").trimmed()).toInt()));
+                    QString trainType;
+                    QDomNodeList journeyAttributesList = conSection.namedItem("Journey").namedItem("JourneyAttributeList").childNodes();
+                    for (unsigned int k = 0; k < journeyAttributesList.length(); ++k) {
+                        QDomNode attributeNode = journeyAttributesList.item(k).namedItem("Attribute");
+                        if (getAttribute(attributeNode, "type") == "NAME") {
+                            trainType = attributeNode.namedItem("AttributeVariant").namedItem("Text").toElement().text().trimmed();
+                        }
                     }
-                }
+
+                    if (trainType.count() > 0) {
+                        item->setTrain(trainType);
+                    } else {
+                        QString walkTime = conSection.namedItem("Walk").namedItem("Duration").namedItem("Time").toElement().text();
+                        if (walkTime.count() > 0) {
+                            item->setInfo(tr("Walk for %n min", "", cleanHafasDate(walkTime.trimmed()).toInt()));
+                        } else {
+                            QString transferTime = conSection.namedItem("Transfer").namedItem("Duration").namedItem("Time").toElement().text();
+                            if (transferTime.count() > 0) {
+                                item->setInfo(tr("Transfer for %n min", "", cleanHafasDate(transferTime.trimmed()).toInt()));
+                            } else {
+                                QDomNode gisRoute = conSection.namedItem("GisRoute");
+                                if (gisRoute.nodeName() == "GisRoute") {
+                                    QString gisRouteTime = gisRoute.namedItem("Duration").namedItem("Time").toElement().text();
+                                    QString gisRouteType = getAttribute(gisRoute, "type").trimmed();
+                                    int minutes = cleanHafasDate(gisRouteTime).toInt();
+                                    if (gisRouteType == "FOOT")
+                                    {
+                                        item->setInfo(tr("Walk for %n min", "", minutes));
+                                    } else if (gisRouteType == "BIKE")
+                                    {
+                                        item->setInfo(tr("Use a Bike for %n min", "", minutes));
+                                    } else if (gisRouteType == "CAR")
+                                    {
+                                        item->setInfo(tr("Use a car for %n min", "", minutes));
+                                    } else if (gisRouteType == "TAXI")
+                                    {
+                                        item->setInfo(tr("Take a taxi for %n min", "", minutes));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    results->appendItem(item);
+                 }
+                 if (results->itemcount() > 0) {
+                    results->setDepartureStation(results->getItem(0)->departureStation());
+                    results->setArrivalStation(results->getItem(results->itemcount() - 1)->arrivalStation());
+
+                    for (int i=0; i < results->itemcount(); i++) {
+                        if (!results->getItem(i)->departureStation().departureDateTime.isNull()) {
+                            results->departureStation().departureDateTime = results->getItem(i)->departureStation().departureDateTime;
+                            break;
+                        }
+                    }
+
+                    for (int i=results->itemcount() -1; i >= 0; i--) {
+                        if (!results->getItem(i)->arrivalStation().arrivalDateTime.isNull()) {
+                            results->arrivalStation().arrivalDateTime = results->getItem(i)->arrivalStation().arrivalDateTime;
+                            break;
+                        }
+                    }
+
+                    results->setDuration(journeyDetailRequestData.duration);
+                    results->setId(journeyDetailRequestData.id);
+
+                    return results;
+                 } else {
+                    emit errorOccured(tr("Internal error occured, Error parsing details data"));
+                    return results;
+                 }
+
             }
-
-            results->appendItem(item);
-        }
-
-        if (results->itemcount() > 0) {
-            results->setDepartureStation(results->getItem(0)->departureStation());
-            results->setArrivalStation(results->getItem(results->itemcount() - 1)->arrivalStation());
-
-            for (int i=0; i < results->itemcount(); i++) {
-                if (!results->getItem(i)->departureDateTime().isNull()) {
-                    results->setDepartureDateTime(results->getItem(i)->departureDateTime());
-                    break;
-                }
-            }
-
-            for (int i=results->itemcount() -1; i >= 0; i--) {
-                if (!results->getItem(i)->arrivalDateTime().isNull()) {
-                    results->setArrivalDateTime(results->getItem(i)->arrivalDateTime());
-                    break;
-                }
-            }
-
-            results->setDuration(journeyDetailRequestData.duration);
-            results->setId(journeyDetailRequestData.id);
-        }
-
-       return results;
+         }
     }
-
-    emit errorOccured(tr("Internal error occured, Error parsing details data"));
-    return results;
 }
 
 void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)

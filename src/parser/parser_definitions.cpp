@@ -60,6 +60,11 @@ bool Station::operator <(const Station &other) const
     return name < other.name;
 }
 
+StopStation& StopStation::operator=(const Station& station)
+{
+    return (StopStation&)station;
+}
+
 
 //-------------- TimetableEntry
 
@@ -86,32 +91,32 @@ void JourneyResultList::appendItem(JourneyResultItem *item)
     m_items.append(item);
 }
 
-QString JourneyResultList::departureStation() const
+Station JourneyResultList::departureStation() const
 {
     return m_departureStation;
 }
 
-void JourneyResultList::setDepartureStation(const QString &departureStation)
+void JourneyResultList::setDepartureStation(const Station &departureStation)
 {
     m_departureStation = departureStation;
 }
 
-QString JourneyResultList::viaStation() const
+Station JourneyResultList::viaStation() const
 {
     return m_viaStation;
 }
 
-void JourneyResultList::setViaStation(const QString &viaStation)
+void JourneyResultList::setViaStation(const Station &viaStation)
 {
     m_viaStation = viaStation;
 }
 
-QString JourneyResultList::arrivalStation() const
+Station JourneyResultList::arrivalStation() const
 {
     return m_arrivalStation;
 }
 
-void JourneyResultList::setArrivalStation(const QString &arrivalStation)
+void JourneyResultList::setArrivalStation(const Station &arrivalStation)
 {
     m_arrivalStation = arrivalStation;
 }
@@ -255,54 +260,34 @@ void JourneyDetailResultList::appendItem(JourneyDetailResultItem *item)
     m_items.append(item);
 }
 
-QString JourneyDetailResultList::departureStation() const
+StopStation JourneyDetailResultList::departureStation() const
 {
     return m_departureStation;
 }
 
-void JourneyDetailResultList::setDepartureStation(const QString &departureStation)
+void JourneyDetailResultList::setDepartureStation(const StopStation &departureStation)
 {
     m_departureStation = departureStation;
 }
 
-QDateTime JourneyDetailResultList::departureDateTime() const
-{
-    return m_departureDateTime;
-}
-
-void JourneyDetailResultList::setDepartureDateTime(const QDateTime &departureDateTime)
-{
-    m_departureDateTime = departureDateTime;
-}
-
-QString JourneyDetailResultList::viaStation() const
+StopStation JourneyDetailResultList::viaStation() const
 {
     return m_viaStation;
 }
 
-void JourneyDetailResultList::setViaStation(const QString &viaStation)
+void JourneyDetailResultList::setViaStation(const StopStation &viaStation)
 {
     m_viaStation = viaStation;
 }
 
-QString JourneyDetailResultList::arrivalStation() const
+StopStation JourneyDetailResultList::arrivalStation() const
 {
     return m_arrivalStation;
 }
 
-void JourneyDetailResultList::setArrivalStation(const QString &arrivalStation)
+void JourneyDetailResultList::setArrivalStation(const StopStation &arrivalStation)
 {
     m_arrivalStation = arrivalStation;
-}
-
-QDateTime JourneyDetailResultList::arrivalDateTime() const
-{
-    return m_arrivalDateTime;
-}
-
-void JourneyDetailResultList::setArrivalDateTime(const QDateTime &arrivalDateTime)
-{
-    m_arrivalDateTime = arrivalDateTime;
 }
 
 QString JourneyDetailResultList::info() const
@@ -327,12 +312,12 @@ void JourneyDetailResultList::setDuration(const QString &duration)
 
 //------------- JourneyDetailResultItem
 
-QString JourneyDetailResultItem::departureStation() const
+StopStation JourneyDetailResultItem::departureStation() const
 {
     return m_departureStation;
 }
 
-void JourneyDetailResultItem::setDepartureStation(const QString &departureStation)
+void JourneyDetailResultItem::setDepartureStation(const StopStation &departureStation)
 {
     m_departureStation = departureStation;
 }
@@ -347,22 +332,12 @@ void JourneyDetailResultItem::setDepartureInfo(const QString &departureInfo)
     m_departureInfo = departureInfo;
 }
 
-QDateTime JourneyDetailResultItem::departureDateTime() const
-{
-    return m_departureDateTime;
-}
-
-void JourneyDetailResultItem::setDepartureDateTime(const QDateTime &departureDateTime)
-{
-    m_departureDateTime = departureDateTime;
-}
-
-QString JourneyDetailResultItem::arrivalStation() const
+StopStation JourneyDetailResultItem::arrivalStation() const
 {
     return m_arrivalStation;
 }
 
-void JourneyDetailResultItem::setArrivalStation(const QString &arrivalStation)
+void JourneyDetailResultItem::setArrivalStation(const StopStation &arrivalStation)
 {
     m_arrivalStation = arrivalStation;
 }
@@ -375,16 +350,6 @@ QString JourneyDetailResultItem::arrivalInfo() const
 void JourneyDetailResultItem::setArrivalInfo(const QString &arrivalInfo)
 {
     m_arrivalInfo = arrivalInfo;
-}
-
-QDateTime JourneyDetailResultItem::arrivalDateTime() const
-{
-    return m_arrivalDateTime;
-}
-
-void JourneyDetailResultItem::setArrivalDateTime(const QDateTime &arrivalDateTime)
-{
-    m_arrivalDateTime = arrivalDateTime;
 }
 
 QString JourneyDetailResultItem::info() const

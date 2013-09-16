@@ -46,15 +46,15 @@ CalendarThreadWrapper::~CalendarThreadWrapper()
 
 void CalendarThreadWrapper::addToCalendar()
 {
-    const QString viaStation = m_result->viaStation();
+    const QString viaStation = m_result->viaStation().name;
     QSettings settings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
     QString calendarEntryTitle;
     QString calendarEntryDesc;
 
     if (viaStation.isEmpty())
-        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation());
+        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation().name).arg(m_result->arrivalStation().name);
     else
-        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation);
+        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation().name).arg(m_result->arrivalStation().name).arg(viaStation);
 
     if (!m_result->info().isEmpty()) {
         calendarEntryDesc.append(m_result->info() + "\n");
@@ -63,7 +63,7 @@ void CalendarThreadWrapper::addToCalendar()
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
 
-        calendarEntryDesc.append(item->departureDateTime().date().toString("dd.MM.yyyy") + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
+        calendarEntryDesc.append(item->departureStation().departureDateTime.date().toString("dd.MM.yyyy") + " " + item->departureStation().departureDateTime.time().toString("HH:mm") + " " + item->departureStation().name);
         if (!item->departureInfo().isEmpty()) {
             calendarEntryDesc.append("/" + item->departureInfo().replace(tr("Pl."),"").trimmed());
         }
@@ -71,7 +71,7 @@ void CalendarThreadWrapper::addToCalendar()
         if (!item->train().isEmpty()) {
             calendarEntryDesc.append("--- " + item->train() + " ---\n");
         }
-        calendarEntryDesc.append(item->arrivalDateTime().date().toString("dd.MM.yyyy") + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
+        calendarEntryDesc.append(item->arrivalStation().arrivalDateTime.date().toString("dd.MM.yyyy") + " " + item->arrivalStation().arrivalDateTime.time().toString("HH:mm") + " " + item->arrivalStation().name);
         if (!item->arrivalInfo().isEmpty()) {
           calendarEntryDesc.append("/" + item->arrivalInfo().replace(tr("Pl."),"").trimmed());
         }
