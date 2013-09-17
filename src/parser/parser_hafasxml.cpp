@@ -223,11 +223,12 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
                 miscInfo.append(reasonDelay);
             }
 
-            item.currentStation = station;
-            item.destinationStation = dest;
+            item.currentStation.name = station;
+            item.destinationStation.name = dest;
             item.trainType = train;
             item.platform = xml.attributes().value("platform").toString().simplified();
-            item.time = QTime::fromString(xml.attributes().value("fpTime").toString(), "hh:mm");
+            item.currentStation.departureDateTime.setDate(QDate::currentDate());
+            item.currentStation.departureDateTime.setTime(QTime::fromString(xml.attributes().value("fpTime").toString(), "hh:mm"));
             item.miscInfo = miscInfo;
 
             result << item;
@@ -254,9 +255,9 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
             while (!xml.atEnd()) {
                 xml.readNext();
                 if (xml.isStartElement() && xml.name() == "Station") {
-                    item.currentStation = xml.attributes().value("name").toString().simplified();
-                    item.latitude = xml.attributes().value("y").toString().toInt();
-                    item.longitude = xml.attributes().value("x").toString().toInt();
+                    item.currentStation.name = xml.attributes().value("name").toString().simplified();
+                    item.currentStation.latitude = xml.attributes().value("y").toString().toInt();
+                    item.currentStation.longitude = xml.attributes().value("x").toString().toInt();
                 }
 
                 if (xml.isStartElement() && (xml.name() == "Dep" || xml.name() == "Arr" )) {
@@ -264,7 +265,8 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                         xml.readNext();
                         if (xml.isStartElement() && xml.name() == "Time") {
                             xml.readNext();
-                            item.time = QTime::fromString(xml.text().toString(), "hh:mm");
+                            item.currentStation.departureDateTime.setDate(QDate::currentDate());
+                            item.currentStation.departureDateTime.setTime(QTime::fromString(xml.text().toString(), "hh:mm"));
                         }
 
                         if (xml.isStartElement() && xml.name() == "Platform") {
@@ -295,7 +297,7 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                             xml.readNext();
 
                             if (currentAttributeType == "DIRECTION") {
-                                item.destinationStation = xml.text().toString().simplified();
+                                item.destinationStation.name = xml.text().toString().simplified();
                             }
                             if (currentAttributeType == "NAME") {
                                 item.trainType = xml.text().toString().simplified();
@@ -583,12 +585,17 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
     journeyDetailInlineData.clear();
 
     QString xmlRawtext = networkReply->readAll();
-
-    //TODO parse errors with dom
-    // query.setQuery("doc($path)/ResC/Err//@text/string()");
-
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
+
+        if (!doc.namedItem("ResC").namedItem("Err").isNull()) {
+            emit errorOccured(tr("Backend returns an error: ") + getAttribute(doc.namedItem("ResC").namedItem("Err"), "text").trimmed());
+            qWarning()<<"ParserHafasXml::parseSearchJourney:"<<getAttribute(doc.namedItem("ResC").namedItem("Err"), "text");
+            return;
+        }
+
+        //emit errorOccured(tr("Backend returns an error: ") + errorMsg);
+
         QDomNodeList nodeList = doc.elementsByTagName("Connection");
 
         for (unsigned int i = 0; i < nodeList.length(); ++i) {
@@ -778,6 +785,13 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
 
     QDomDocument doc("result");
     if (doc.setContent(data, false)) {
+
+        if (!doc.namedItem("ResC").namedItem("Err").isNull()) {
+            emit errorOccured(tr("Backend returns an error: ") + getAttribute(doc.namedItem("ResC").namedItem("Err"), "text").trimmed());
+            qWarning()<<"ParserHafasXml::internalParseJourneyDetails:"<<getAttribute(doc.namedItem("ResC").namedItem("Err"), "text");
+            return results;
+        }
+
         QDomNodeList nodeList = doc.elementsByTagName("Connection");
         for (unsigned int i = 0; i < nodeList.length(); ++i) {
             QDomNode connection = nodeList.item(i);
@@ -896,9 +910,12 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
                     return results;
                  }
 
-            }
+             }
          }
     }
+
+    emit errorOccured(tr("Internal error occured, Error parsing details data"));
+    return results;
 }
 
 void ParserHafasXml::parseJourneyDetails(QNetworkReply *networkReply)

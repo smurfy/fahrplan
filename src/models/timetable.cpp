@@ -60,23 +60,24 @@ QVariant Timetable::data(const QModelIndex &index, int role) const
         return QVariant();
 
     TimetableEntry item = m_list.at(index.row());
+
     switch (role) {
     case CurrentStation:
-        return item.currentStation;
+        return item.currentStation.name;
     case DestinationStation:
-        return item.destinationStation;
+        return item.destinationStation.name;
     case TrainType:
         return item.trainType;
     case Platform:
         return item.platform;
     case Time:
-        return item.time;
+        return item.currentStation.departureDateTime;
     case MiscInfo:
         return item.miscInfo;
     case Latitude:
-        return item.latitude;
+        return item.currentStation.latitude;
     case Longitude:
-        return item.longitude;
+        return item.currentStation.longitude;
     default:
         return QVariant();
     }

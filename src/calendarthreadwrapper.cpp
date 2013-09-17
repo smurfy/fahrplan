@@ -99,8 +99,8 @@ void CalendarThreadWrapper::addToCalendar()
     event.setAccountId(folder.first);
     event.setFolderId(folder.second);
     event.setSubject(calendarEntryTitle);
-    event.setStartTime(m_result->departureDateTime());
-    event.setEndTime(m_result->arrivalDateTime());
+    event.setStartTime(m_result->departureStation().departureDateTime);
+    event.setEndTime(m_result->arrivalStation().arrivalDateTime);
     event.setBody(calendarEntryDesc);
     event.setReminder(-1);
 
@@ -111,8 +111,8 @@ void CalendarThreadWrapper::addToCalendar()
     QOrganizerManager defaultManager;
     QOrganizerEvent event;
     event.setDisplayLabel(calendarEntryTitle);
-    event.setStartDateTime(m_result->departureDateTime());
-    event.setEndDateTime(m_result->arrivalDateTime());
+    event.setStartDateTime(m_result->departureStation().departureDateTime);
+    event.setEndDateTime(m_result->arrivalStation().arrivalDateTime);
     event.setDescription(calendarEntryDesc);
 
     QString id = settings.value("Calendar/CollectionId").toString();

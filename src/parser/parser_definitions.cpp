@@ -69,8 +69,6 @@ StopStation& StopStation::operator=(const Station& station)
 //-------------- TimetableEntry
 
 TimetableEntry::TimetableEntry()
-    : latitude(0)
-    , longitude(0)
 {}
 
 

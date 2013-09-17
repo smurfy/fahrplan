@@ -273,7 +273,7 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
             QDomNode node = nodeList.item(i);
             TimetableEntry item;
 
-            item.destinationStation = getAttribute(node, isArrival ? "origin" : "direction");
+            item.destinationStation.name = getAttribute(node, isArrival ? "origin" : "direction");
             item.platform = getAttribute(node, "track");
             const QString connectionName = i18nConnectionType(getAttribute(node, "name"));
             const QString fgColor = getAttribute(node, "fgColor");
@@ -283,7 +283,7 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
             else
                 item.trainType = connectionName;
             const QTime scheduledTime = QTime::fromString(getAttribute(node, "time"), QLatin1String("hh:mm"));
-            item.time = scheduledTime;
+            item.destinationStation.departureDateTime.setTime(scheduledTime);
             const QString realTimeStr = getAttribute(node, "rtTime");
             if (!realTimeStr.isEmpty()) {
                 const QTime realTimeTime = QTime::fromString(realTimeStr, QLatin1String("hh:mm"));

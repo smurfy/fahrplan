@@ -74,14 +74,11 @@ Q_DECLARE_METATYPE(StationsList)
 
 struct TimetableEntry
 {
-    QString currentStation;
-    QString destinationStation;
+    StopStation currentStation;
+    StopStation destinationStation;
     QString trainType;
     QString platform;
-    QTime time;
     QString miscInfo;
-    qreal latitude;
-    qreal longitude;
 
 public:
     TimetableEntry();
