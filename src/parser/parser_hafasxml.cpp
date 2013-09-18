@@ -178,7 +178,7 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
 
         if (xml.isStartElement() && (xml.name() == "Err")) {
             QString errorMsg = xml.attributes().value("text").toString().simplified();
-            emit errorOccured(tr("Backend returns an error: ") + errorMsg);
+            emit errorOccured(tr("Backend returns an error: %1").arg(xml.attributes().value("text").toString().simplified().trimmed()) );
             qWarning()<<"ParserHafasXml::parseTimeTableMode1: "<<errorMsg;
         }
 
@@ -589,12 +589,10 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
     if (doc.setContent(xmlRawtext, false)) {
 
         if (!doc.namedItem("ResC").namedItem("Err").isNull()) {
-            emit errorOccured(tr("Backend returns an error: ") + getAttribute(doc.namedItem("ResC").namedItem("Err"), "text").trimmed());
+            emit errorOccured(tr("Backend returns an error: %1").arg(getAttribute(doc.namedItem("ResC").namedItem("Err"), "text").trimmed()));
             qWarning()<<"ParserHafasXml::parseSearchJourney:"<<getAttribute(doc.namedItem("ResC").namedItem("Err"), "text");
             return;
         }
-
-        //emit errorOccured(tr("Backend returns an error: ") + errorMsg);
 
         QDomNodeList nodeList = doc.elementsByTagName("Connection");
 
@@ -784,7 +782,7 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
     if (doc.setContent(data, false)) {
 
         if (!doc.namedItem("ResC").namedItem("Err").isNull()) {
-            emit errorOccured(tr("Backend returns an error: ") + getAttribute(doc.namedItem("ResC").namedItem("Err"), "text").trimmed());
+            emit errorOccured(tr("Backend returns an error: %1").arg(getAttribute(doc.namedItem("ResC").namedItem("Err"), "text").trimmed()));
             qWarning()<<"ParserHafasXml::internalParseJourneyDetails:"<<getAttribute(doc.namedItem("ResC").namedItem("Err"), "text");
             return results;
         }
