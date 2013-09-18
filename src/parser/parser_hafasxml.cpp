@@ -605,16 +605,15 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
             QDomNode depStation = overviewNode.namedItem("Departure").namedItem("BasicStop").namedItem("Station");
             QDomNode arrStation = overviewNode.namedItem("Arrival").namedItem("BasicStop").namedItem("Station");
 
-            Station DepartureStation, ArrivalStation;
-            DepartureStation.name = getAttribute(depStation, "name");
-            DepartureStation.latitude = getAttribute(depStation, "y").toInt();
-            DepartureStation.longitude = getAttribute(depStation, "x").toInt();
-            DepartureStation.id = getAttribute(depStation, "externalId");
+            lastJourneyResultList->departureStation().name = getAttribute(depStation, "name");
+            lastJourneyResultList->departureStation().latitude = getAttribute(depStation, "y").toInt();
+            lastJourneyResultList->departureStation().longitude = getAttribute(depStation, "x").toInt();
+            lastJourneyResultList->departureStation().id = getAttribute(depStation, "externalId");
 
-            ArrivalStation.name = getAttribute(arrStation, "name");
-            ArrivalStation.latitude = getAttribute(arrStation, "y").toInt();
-            ArrivalStation.longitude = getAttribute(arrStation, "x").toInt();
-            ArrivalStation.id = getAttribute(arrStation, "externalId");
+            lastJourneyResultList->arrivalStation().name = getAttribute(arrStation, "name");
+            lastJourneyResultList->arrivalStation().latitude = getAttribute(arrStation, "y").toInt();
+            lastJourneyResultList->arrivalStation().longitude = getAttribute(arrStation, "x").toInt();
+            lastJourneyResultList->arrivalStation().id = getAttribute(arrStation, "externalId");
 
             QDomNodeList products = overviewNode.namedItem("Products").childNodes();
             QStringList productNames;
@@ -659,8 +658,6 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
                journeyDetailInlineData.append(results);
             }
 
-            lastJourneyResultList->setDepartureStation(DepartureStation);
-            lastJourneyResultList->setArrivalStation(ArrivalStation);
             lastJourneyResultList->setTimeInfo(date.toString());
 
             lastJourneyResultList->appendItem(item);
@@ -803,32 +800,28 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
                     QDomNode depStation = conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Station");
                     QDomNode arrStation = conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Station");
 
-                    StopStation DepartureStation, ArrivalStation;
-                    DepartureStation.name = getAttribute(depStation, "name");
-                    if (DepartureStation.name.count() == 0) {
-                        DepartureStation.name = conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Location").namedItem("Station").namedItem("HafasName").toElement().text();
-                    }
-                    DepartureStation.latitude = getAttribute(depStation, "y").toInt();
-                    DepartureStation.longitude = getAttribute(depStation, "x").toInt();
-                    DepartureStation.id = getAttribute(depStation, "externalId");
-                    DepartureStation.departureDateTime = cleanHafasDateTime(conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Time").toElement().text().trimmed(), journeyDetailRequestData.date);
+                    JourneyDetailResultItem *item = new JourneyDetailResultItem();
 
-                    ArrivalStation.name = getAttribute(arrStation, "name");
-                    if (ArrivalStation.name.count() == 0) {
-                        ArrivalStation.name = conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Location").namedItem("Station").namedItem("HafasName").toElement().text();
+                    item->departureStation().name = getAttribute(depStation, "name");
+                    if (item->departureStation().name.count() == 0) {
+                        item->departureStation().name = conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Location").namedItem("Station").namedItem("HafasName").toElement().text();
                     }
-                    ArrivalStation.latitude = getAttribute(arrStation, "y").toInt();
-                    ArrivalStation.longitude = getAttribute(arrStation, "x").toInt();
-                    ArrivalStation.id = getAttribute(arrStation, "externalId");
-                    ArrivalStation.arrivalDateTime = cleanHafasDateTime(conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Time").toElement().text().trimmed(), journeyDetailRequestData.date);
+                    item->departureStation().latitude = getAttribute(depStation, "y").toInt();
+                    item->departureStation().longitude = getAttribute(depStation, "x").toInt();
+                    item->departureStation().id = getAttribute(depStation, "externalId");
+                    item->departureStation().departureDateTime = cleanHafasDateTime(conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Time").toElement().text().trimmed(), journeyDetailRequestData.date);
+
+                    item->arrivalStation().name = getAttribute(arrStation, "name");
+                    if (item->arrivalStation().name.count() == 0) {
+                        item->arrivalStation().name = conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Location").namedItem("Station").namedItem("HafasName").toElement().text();
+                    }
+                    item->arrivalStation().latitude = getAttribute(arrStation, "y").toInt();
+                    item->arrivalStation().longitude = getAttribute(arrStation, "x").toInt();
+                    item->arrivalStation().id = getAttribute(arrStation, "externalId");
+                    item->arrivalStation().arrivalDateTime = cleanHafasDateTime(conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Time").toElement().text().trimmed(), journeyDetailRequestData.date);
 
                     QString departurePlatform = conSection.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Platform").toElement().text().trimmed();
                     QString arrivalPlatform = conSection.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Platform").toElement().text().trimmed();
-
-                    JourneyDetailResultItem *item = new JourneyDetailResultItem();
-
-                    item->setDepartureStation(DepartureStation);
-                    item->setArrivalStation(ArrivalStation);
 
                     if (departurePlatform.count() > 0)
                     {

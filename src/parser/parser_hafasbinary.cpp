@@ -227,12 +227,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         QString resDeparture = strings[resDeparturePtr];
         QString resArrival = strings[resArrivalPtr];
 
-        Station DepartureStation, ArrivalStation;
-        DepartureStation.name = resDeparture;
-        ArrivalStation.name = resArrival;
-
-        lastJourneyResultList->setDepartureStation(DepartureStation);
-        lastJourneyResultList->setArrivalStation(ArrivalStation);
+        lastJourneyResultList->departureStation().name = resDeparture;
+        lastJourneyResultList->arrivalStation().name = resArrival;
         lastJourneyResultList->setTimeInfo(journeyDate.toString());
 
         qDebug()<<resDeparture<<resArrival<<numConnections<<journeyDate;
@@ -417,15 +413,11 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 qDebug()<<type<<lineName<<plannedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<plannedArrival<<plannedArrivalPosition<<category;
 
-                StopStation plannedDepartureStation, plannedArrivalStation;
-                plannedDepartureStation.name = plannedDeparture;
-                plannedDepartureStation.departureDateTime = plannedDepartureTime;
-                plannedArrivalStation.name = plannedArrival;
-                plannedArrivalStation.arrivalDateTime = plannedArrivalTime;
-
-                inlineItem->setDepartureStation(plannedDepartureStation);
+                inlineItem->departureStation().name = plannedDeparture;
+                inlineItem->departureStation().departureDateTime = plannedDepartureTime;
+                inlineItem->arrivalStation().name = plannedArrival;
+                inlineItem->arrivalStation().arrivalDateTime = plannedArrivalTime;
                 inlineItem->setDepartureInfo(plannedDeparturePosition);
-                inlineItem->setArrivalStation(plannedArrivalStation);
                 inlineItem->setArrivalInfo(plannedArrivalPosition);
                 inlineItem->setTrain(lineName);
                 inlineResults->appendItem(inlineItem);

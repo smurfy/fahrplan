@@ -244,10 +244,10 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
         regexp.setMinimal(true);
         regexp.indexIn(headerResult[i].trimmed());
         if (regexp.cap(1) == "From:") {
-            lastJourneyResultList->setDepartureStation(regexp.cap(2).trimmed());
+            lastJourneyResultList->departureStation().name = regexp.cap(2).trimmed();
         }
         if (regexp.cap(1) == "To:") {
-            lastJourneyResultList->setArrivalStation(regexp.cap(2).trimmed());
+            lastJourneyResultList->arrivalStation().name = regexp.cap(2).trimmed();
         }
         if (regexp.cap(1) == "When:") {
             lastJourneyResultList->setTimeInfo(regexp.cap(2).trimmed());
@@ -428,12 +428,13 @@ JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *jou
                 journeydate.addDays(1);
             }
 
-            item->setDepartureStation(regexp2.cap(4).trimmed());
-            item->setArrivalStation(regexp2.cap(7).trimmed());
+            item->departureStation().name = regexp2.cap(4).trimmed();
+            item->departureStation().departureDateTime = fromDateTime;
+            item->arrivalStation().name = regexp2.cap(7).trimmed();
+            item->arrivalStation().arrivalDateTime = toDateTime;
+
             item->setTrain(regexp2.cap(1).trimmed());
             item->setInfo(regexp2.cap(8).trimmed());
-            item->setDepartureDateTime(fromDateTime);
-            item->setArrivalDateTime(toDateTime);
             results->appendItem(item);
         }
         if (regexp.cap(1) == "Walk to ") {
@@ -449,14 +450,14 @@ JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *jou
             qDebug()<<"WalkDist2:"<<regexp2.cap(3).trimmed();
             */
 
-            item->setDepartureStation("");
+            item->departureStation().name = "";
+
             if (results->itemcount() > 0) {
                 JourneyDetailResultItem *lastitem = results->getItem(results->itemcount() - 1);
                 item->setDepartureStation(lastitem->arrivalStation());
-                item->setDepartureDateTime(lastitem->arrivalDateTime());
-                item->setArrivalDateTime(lastitem->arrivalDateTime());
+                item->arrivalStation().arrivalDateTime = lastitem->arrivalStation().arrivalDateTime;
             }
-            item->setArrivalStation(regexp2.cap(1).trimmed());
+            item->arrivalStation().name = regexp2.cap(1).trimmed();
             // TODO: Might need translation
             item->setInfo("Walking " + regexp2.cap(2).trimmed() + " " + regexp2.cap(3).trimmed());
             //Don't add WalkTo infos as first item
@@ -475,15 +476,15 @@ JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *jou
         results->setArrivalStation(lastitem->arrivalStation());
 
         for (int i=0; i < results->itemcount(); i++) {
-            if (!results->getItem(i)->departureDateTime().isNull()) {
-                results->setDepartureDateTime(results->getItem(i)->departureDateTime());
+            if (!results->getItem(i)->departureStation().departureDateTime.isNull()) {
+                results->departureStation().departureDateTime = results->getItem(i)->departureStation().departureDateTime;
                 break;
             }
         }
 
         for (int i=results->itemcount() -1; i >= 0; i--) {
-            if (!results->getItem(i)->arrivalDateTime().isNull()) {
-                results->setArrivalDateTime(results->getItem(i)->arrivalDateTime());
+            if (!results->getItem(i)->arrivalStation().arrivalDateTime.isNull()) {
+                results->arrivalStation().arrivalDateTime = results->getItem(i)->arrivalStation().arrivalDateTime;
                 break;
             }
         }

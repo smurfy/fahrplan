@@ -151,11 +151,11 @@ class JourneyResultList : public QObject
     public:
         void appendItem(JourneyResultItem *item);
         qreal itemcount();
-        Station departureStation() const;
+        Station &departureStation();
         void setDepartureStation(const Station &);
-        Station arrivalStation() const;
+        Station &arrivalStation();
         void setArrivalStation(const Station &);
-        Station viaStation() const;
+        Station &viaStation();
         void setViaStation(const Station &);
         QString timeInfo() const;
         void setTimeInfo(const QString &);
@@ -182,11 +182,11 @@ class JourneyDetailResultItem : public QObject
     Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
     public:
-        StopStation departureStation() const;
+        StopStation &departureStation();
         void setDepartureStation(const StopStation &);
         QString departureInfo() const;
         void setDepartureInfo(const QString &);
-        StopStation arrivalStation() const;
+        StopStation &arrivalStation();
         void setArrivalStation(const StopStation &);
         QString arrivalInfo() const;
         void setArrivalInfo(const QString &);
@@ -227,11 +227,11 @@ class JourneyDetailResultList : public QObject
         qreal itemcount();
         QString id() const;
         void setId(const QString &);
-        StopStation departureStation() const;
+        StopStation &departureStation();
         void setDepartureStation(const StopStation &);
-        StopStation viaStation() const;
+        StopStation &viaStation();
         void setViaStation(const StopStation &);
-        StopStation arrivalStation() const;
+        StopStation &arrivalStation();
         void setArrivalStation(const StopStation &);
         QString info() const;
         void setInfo(const QString &);

@@ -60,7 +60,7 @@ bool Station::operator <(const Station &other) const
     return name < other.name;
 }
 
-StopStation& StopStation::operator=(const Station& station)
+StopStation &StopStation::operator=(const Station& station)
 {
     return (StopStation&)station;
 }
@@ -89,7 +89,7 @@ void JourneyResultList::appendItem(JourneyResultItem *item)
     m_items.append(item);
 }
 
-Station JourneyResultList::departureStation() const
+Station &JourneyResultList::departureStation()
 {
     return m_departureStation;
 }
@@ -99,7 +99,7 @@ void JourneyResultList::setDepartureStation(const Station &departureStation)
     m_departureStation = departureStation;
 }
 
-Station JourneyResultList::viaStation() const
+Station &JourneyResultList::viaStation()
 {
     return m_viaStation;
 }
@@ -109,7 +109,7 @@ void JourneyResultList::setViaStation(const Station &viaStation)
     m_viaStation = viaStation;
 }
 
-Station JourneyResultList::arrivalStation() const
+Station &JourneyResultList::arrivalStation()
 {
     return m_arrivalStation;
 }
@@ -258,7 +258,7 @@ void JourneyDetailResultList::appendItem(JourneyDetailResultItem *item)
     m_items.append(item);
 }
 
-StopStation JourneyDetailResultList::departureStation() const
+StopStation &JourneyDetailResultList::departureStation()
 {
     return m_departureStation;
 }
@@ -268,7 +268,7 @@ void JourneyDetailResultList::setDepartureStation(const StopStation &departureSt
     m_departureStation = departureStation;
 }
 
-StopStation JourneyDetailResultList::viaStation() const
+StopStation &JourneyDetailResultList::viaStation()
 {
     return m_viaStation;
 }
@@ -278,7 +278,7 @@ void JourneyDetailResultList::setViaStation(const StopStation &viaStation)
     m_viaStation = viaStation;
 }
 
-StopStation JourneyDetailResultList::arrivalStation() const
+StopStation &JourneyDetailResultList::arrivalStation()
 {
     return m_arrivalStation;
 }
@@ -310,7 +310,7 @@ void JourneyDetailResultList::setDuration(const QString &duration)
 
 //------------- JourneyDetailResultItem
 
-StopStation JourneyDetailResultItem::departureStation() const
+StopStation &JourneyDetailResultItem::departureStation()
 {
     return m_departureStation;
 }
@@ -330,7 +330,7 @@ void JourneyDetailResultItem::setDepartureInfo(const QString &departureInfo)
     m_departureInfo = departureInfo;
 }
 
-StopStation JourneyDetailResultItem::arrivalStation() const
+StopStation &JourneyDetailResultItem::arrivalStation()
 {
     return m_arrivalStation;
 }
