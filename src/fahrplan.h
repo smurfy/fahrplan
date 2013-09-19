@@ -34,6 +34,8 @@ class StationSearchResults;
 class Timetable;
 class Favorites;
 class Trainrestrictions;
+class JourneyResults;
+
 class Fahrplan : public QObject
 {
     Q_OBJECT
@@ -45,6 +47,7 @@ class Fahrplan : public QObject
     Q_PROPERTY(StationSearchResults *stationSearchResults READ stationSearchResults CONSTANT)
     Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
     Q_PROPERTY(Timetable *timetable READ timetable CONSTANT)
+    Q_PROPERTY(JourneyResults *journeyresults READ journeyresults CONSTANT)
     Q_PROPERTY(Trainrestrictions *trainrestrictions READ trainrestrictions CONSTANT)
     Q_PROPERTY(QString departureStationName READ departureStationName NOTIFY departureStationChanged)
     Q_PROPERTY(QString viaStationName READ viaStationName NOTIFY viaStationChanged)
@@ -82,6 +85,7 @@ class Fahrplan : public QObject
 
         StationSearchResults *stationSearchResults() const;
         Timetable *timetable() const;
+        JourneyResults *journeyresults() const;
         Trainrestrictions *trainrestrictions() const;
         QString departureStationName() const;
         QString viaStationName() const;
@@ -122,7 +126,7 @@ class Fahrplan : public QObject
         void dateTimeChanged();
 
         void parserStationsResult();
-        void parserJourneyResult(JourneyResultList *result);
+        void parserJourneyResult();
         void parserJourneyDetailsResult(JourneyDetailResultList *result);
         void parserTimeTableResult();
         void parserErrorOccured(const QString &msg);
@@ -134,6 +138,7 @@ class Fahrplan : public QObject
         void onParserChanged(const QString &name, int index);
         void onStationSearchResults(const StationsList &result);
         void onTimetableResult(const TimetableEntriesList &timetableEntries);
+        void onJourneyResult(JourneyResultHeader *result);
         void bindParserSignals();
 
     private:
@@ -142,6 +147,7 @@ class Fahrplan : public QObject
         static Favorites *m_favorites;
         static Timetable *m_timetable;
         static Trainrestrictions *m_trainrestrictions;
+        static JourneyResults *m_journeyresults;
         QSettings *settings;
 
         Station m_departureStation;

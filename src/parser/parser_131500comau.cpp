@@ -169,7 +169,7 @@ void Parser131500ComAu::searchJourney(const Station &departureStation, const Sta
 
 void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResultList = new JourneyResultList();
+    lastJourneyResult = new JourneyResultHeader();
 
     QBuffer *filebuffer = new QBuffer();
     filebuffer->setData(networkReply->readAll());
@@ -244,19 +244,19 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
         regexp.setMinimal(true);
         regexp.indexIn(headerResult[i].trimmed());
         if (regexp.cap(1) == "From:") {
-            lastJourneyResultList->departureStation().name = regexp.cap(2).trimmed();
+            lastJourneyResult->departureStation().name = regexp.cap(2).trimmed();
         }
         if (regexp.cap(1) == "To:") {
-            lastJourneyResultList->arrivalStation().name = regexp.cap(2).trimmed();
+            lastJourneyResult->arrivalStation().name = regexp.cap(2).trimmed();
         }
         if (regexp.cap(1) == "When:") {
-            lastJourneyResultList->setTimeInfo(regexp.cap(2).trimmed());
+            lastJourneyResult->setTimeInfo(regexp.cap(2).trimmed());
         }
     }
 
     QRegExp regexp2 = QRegExp("(.*), (\\d\\d) (.*) (\\d\\d\\d\\d)");
     regexp2.setMinimal(true);
-    regexp2.indexIn(lastJourneyResultList->timeInfo().trimmed());
+    regexp2.indexIn(lastJourneyResult->timeInfo().trimmed());
     QLocale enLocale = QLocale(QLocale::English, QLocale::UnitedStates);
     int month = 1;
     for (month = 1; month < 10; month++) {
@@ -344,10 +344,10 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
         item->setArrivalTime(QTime::fromString(arriveResult[i].trimmed(), "h:map").toString(tr("hh:mm")));
         item->setInternalData1(detailsResult[i]);
 
-        lastJourneyResultList->appendItem(item);
+        lastJourneyResult->appendItem(item);
     }
 
-    emit journeyResult(lastJourneyResultList);
+    emit journeyResult(lastJourneyResult);
 }
 
 void Parser131500ComAu::getJourneyDetails(const QString &id)
@@ -358,10 +358,10 @@ void Parser131500ComAu::getJourneyDetails(const QString &id)
 
     //Some hafasxml backend provide the detailsdata inline
     //if so our parser already stored them
-    if (lastJourneyResultList->itemcount() > 0 ) {
+    if (lastJourneyResult->items().count() > 0 ) {
 
-        for (int i = 0; i < lastJourneyResultList->itemcount(); i++) {
-            JourneyResultItem *item = lastJourneyResultList->getItem(i);
+        for (int i = 0; i < lastJourneyResult->items().count(); i++) {
+            JourneyResultItem *item = lastJourneyResult->items().at(i);
             if (item->id() == id) {
                 emit journeyDetailsResult(parseDetails(item));
                 return;

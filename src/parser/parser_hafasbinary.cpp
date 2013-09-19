@@ -42,7 +42,7 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
-    lastJourneyResultList = NULL;
+    lastJourneyResult = NULL;
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -77,7 +77,7 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
 void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResultList = new JourneyResultList();
+    lastJourneyResult = new JourneyResultHeader();
     journeyDetailInlineData.clear();
 
     QByteArray tmpBuffer = networkReply->readAll();
@@ -227,9 +227,9 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         QString resDeparture = strings[resDeparturePtr];
         QString resArrival = strings[resArrivalPtr];
 
-        lastJourneyResultList->departureStation().name = resDeparture;
-        lastJourneyResultList->arrivalStation().name = resArrival;
-        lastJourneyResultList->setTimeInfo(journeyDate.toString());
+        lastJourneyResult->departureStation().name = resDeparture;
+        lastJourneyResult->arrivalStation().name = resArrival;
+        lastJourneyResult->setTimeInfo(journeyDate.toString());
 
         qDebug()<<resDeparture<<resArrival<<numConnections<<journeyDate;
 
@@ -448,14 +448,14 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
         QList<JourneyResultItem*> journeyResultsByArrivalList = journeyResultsByArrivalMap.values();
         Q_FOREACH(JourneyResultItem *item, journeyResultsByArrivalList) {
-            lastJourneyResultList->appendItem(item);
+            lastJourneyResult->appendItem(item);
         }
 
         hafasContext.seqNr = QString::number(seqNr);
         hafasContext.ld = ld;
         hafasContext.ident = requestId;
 
-        emit journeyResult(lastJourneyResultList);
+        emit journeyResult(lastJourneyResult);
     } else {
         emit errorOccured(errorString(errorCode));
     }

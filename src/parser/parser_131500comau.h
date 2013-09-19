@@ -49,7 +49,7 @@ protected:
 //    void parseSearchLaterJourney(QNetworkReply *networkReply);
 //    void parseSearchEalierJourney(QNetworkReply *networkReply);
 private:
-    JourneyResultList *lastJourneyResultList;
+    JourneyResultHeader *lastJourneyResult;
     JourneyDetailResultList *parseDetails(JourneyResultItem *journeyitem);
 };
 

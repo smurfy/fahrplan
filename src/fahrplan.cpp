@@ -25,6 +25,7 @@
 #include "models/stationsearchresults.h"
 #include "models/timetable.h"
 #include "models/trainrestrictions.h"
+#include "models/journeyresults.h"
 
 #include <QThread>
 
@@ -33,6 +34,7 @@ StationSearchResults *Fahrplan::m_stationSearchResults= NULL;
 Favorites *Fahrplan::m_favorites = NULL;
 Timetable *Fahrplan::m_timetable = NULL;
 Trainrestrictions *Fahrplan::m_trainrestrictions = NULL;
+JourneyResults *Fahrplan::m_journeyresults = NULL;
 
 Fahrplan::Fahrplan(QObject *parent)
     : QObject(parent)
@@ -68,6 +70,10 @@ Fahrplan::Fahrplan(QObject *parent)
         m_timetable = new Timetable(this);
     }
 
+    if (!m_journeyresults) {
+        m_journeyresults = new JourneyResults(this);
+    }
+
     if (!m_trainrestrictions) {
         m_trainrestrictions = new Trainrestrictions(this);
     }
@@ -77,7 +83,7 @@ void Fahrplan::bindParserSignals()
 {
     if (m_parser_manager->getParser()) {
         connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsList)), this, SLOT(onStationSearchResults(StationsList)));
-        connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(parserJourneyResult(JourneyResultList*)));
+        connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultHeader*)), this, SLOT(onJourneyResult(JourneyResultHeader*)));
         connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
         connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
         connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimetableEntriesList)), this, SLOT(onTimetableResult(TimetableEntriesList)));
@@ -117,6 +123,11 @@ StationSearchResults *Fahrplan::stationSearchResults() const
 Timetable *Fahrplan::timetable() const
 {
     return m_timetable;
+}
+
+JourneyResults *Fahrplan::journeyresults() const
+{
+    return m_journeyresults;
 }
 
 Trainrestrictions *Fahrplan::trainrestrictions() const
@@ -325,6 +336,13 @@ void Fahrplan::onTimetableResult(const TimetableEntriesList &timetableEntries)
     m_timetable->setTimetableEntries(timetableEntries);
 
     emit parserTimeTableResult();
+}
+
+void Fahrplan::onJourneyResult(JourneyResultHeader *result)
+{
+    m_journeyresults->setJourneyResults(result);
+
+    emit parserJourneyResult();
 }
 
 QString Fahrplan::parserName()

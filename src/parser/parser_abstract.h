@@ -60,7 +60,7 @@ public slots:
 
 signals:
     void stationsResult(const StationsList &result);
-    void journeyResult(JourneyResultList *result);
+    void journeyResult(JourneyResultHeader *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
     void timetableResult(const TimetableEntriesList &timetableEntries);
     void errorOccured(QString msg);

@@ -91,7 +91,7 @@ class JourneyResultItem : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString id READ id WRITE setId)
-    //Q_PROPERTY(QDate date READ date WRITE setDate)
+    Q_PROPERTY(QDate date READ date WRITE setDate)
     Q_PROPERTY(QString departureTime READ departureTime WRITE setDepartureTime)
     Q_PROPERTY(QString arrivalTime READ arrivalTime WRITE setArrivalTime)
     Q_PROPERTY(QString trainType READ trainType WRITE setTrainType)
@@ -137,20 +137,20 @@ class JourneyResultItem : public QObject
         QString m_internalData2;
 };
 
-class JourneyResultList : public QObject
+typedef QList<JourneyResultItem*> JourneyResultList;
+Q_DECLARE_METATYPE(JourneyResultList)
+
+class JourneyResultHeader : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(qreal count READ itemcount)
     Q_PROPERTY(Station departureStation READ departureStation WRITE setDepartureStation)
     Q_PROPERTY(Station viaStation READ viaStation WRITE setViaStation)
     Q_PROPERTY(Station arrivalStation READ arrivalStation WRITE setArrivalStation)
     Q_PROPERTY(QString timeInfo READ timeInfo WRITE setTimeInfo)
+    Q_PROPERTY(JourneyResultList items READ items)
 
-    public slots:
-        JourneyResultItem *getItem(int);
     public:
         void appendItem(JourneyResultItem *item);
-        qreal itemcount();
         Station &departureStation();
         void setDepartureStation(const Station &);
         Station &arrivalStation();
@@ -159,14 +159,14 @@ class JourneyResultList : public QObject
         void setViaStation(const Station &);
         QString timeInfo() const;
         void setTimeInfo(const QString &);
+        JourneyResultList items();
     private:
-        QList<JourneyResultItem*> m_items;
+        JourneyResultList m_items;
         Station m_departureStation;
         Station m_viaStation;
         Station m_arrivalStation;
         QString m_timeInfo;
 };
-
 
 class JourneyDetailResultItem : public QObject
 {

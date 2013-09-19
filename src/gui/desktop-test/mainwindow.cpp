@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->searchJourney, SIGNAL(clicked()), this, SLOT(searchJourneyClicked()));
     connect(ui->searchJourneyEarlier, SIGNAL(clicked()), this, SLOT(searchJourneyEarlierClicked()));
     connect(ui->searchJourneyLater, SIGNAL(clicked()), this, SLOT(searchJourneyLaterClicked()));
-    connect(fahrplan, SIGNAL(parserJourneyResult(JourneyResultList*)), this, SLOT(journeyResult(JourneyResultList*)));
+    connect(fahrplan, SIGNAL(parserJourneyResult()), this, SLOT(journeyResult()));
 
     connect(ui->getJourneyDetails, SIGNAL(clicked()), this, SLOT(getJourneyDetailsClicked()));
     connect(fahrplan, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)), this, SLOT(journeyDetailResult(JourneyDetailResultList*)));
@@ -171,35 +171,34 @@ void MainWindow::searchJourneyLaterClicked()
 }
 
 
-void MainWindow::journeyResult(JourneyResultList *result)
+void MainWindow::journeyResult()
 {
     ui->searchJourneyResults->clear();
     ui->journeyResultItemIds->clear();
 
-    ui->searchJourneyResults->append(result->departureStation().name);
-    ui->searchJourneyResults->append(result->arrivalStation().name);
-    ui->searchJourneyResults->append(result->timeInfo());
+    ui->searchJourneyResults->append(fahrplan->journeyresults()->departureStation().name);
+    ui->searchJourneyResults->append(fahrplan->journeyresults()->arrivalStation().name);
+    ui->searchJourneyResults->append(fahrplan->journeyresults()->timeInfo());
 
-    for (int i=0; i < result->itemcount(); i++) {
-        JourneyResultItem *item = result->getItem(i);
+
+    for (int i=0; i < fahrplan->journeyresults()->count(); i++) {
+        QModelIndex index = fahrplan->journeyresults()->index(i, 0, QModelIndex());
         ui->searchJourneyResults->append(">>-------------------------");
-        ui->searchJourneyResults->append(item->id());
-        ui->searchJourneyResults->append(item->date().toString());
-        ui->searchJourneyResults->append(item->departureTime());
-        ui->searchJourneyResults->append(item->arrivalTime());
-        ui->searchJourneyResults->append(item->trainType());
-        ui->searchJourneyResults->append(item->duration());
-        ui->searchJourneyResults->append(item->transfers());
-        ui->searchJourneyResults->append(item->miscInfo());
-        ui->searchJourneyResults->append(item->internalData1());
-        ui->searchJourneyResults->append(item->internalData2());
-
-        ui->journeyResultItemIds->addItem(item->id());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::Id).toString());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::Date).toDate().toString());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::DepartureTime).toString());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::ArrivalTime).toString());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::TrainType).toString());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::Duration).toString());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::Transfers).toString());
+        ui->searchJourneyResults->append(fahrplan->journeyresults()->data(index, JourneyResults::MiscInfo).toString());
+        ui->journeyResultItemIds->addItem(fahrplan->journeyresults()->data(index, JourneyResults::Id).toString());
     }
 
-    if (result->itemcount() == 0) {
+    if (fahrplan->journeyresults()->count() == 0) {
         ui->searchJourneyResults->append("No Results");
     }
+
 }
 
 void MainWindow::getJourneyDetailsClicked()

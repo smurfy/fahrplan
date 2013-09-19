@@ -29,6 +29,7 @@
 #include "../../models/stationsearchresults.h"
 #include "../../models/timetable.h"
 #include "../../models/trainrestrictions.h"
+#include "../../models/journeyresults.h"
 
 namespace Ui {
     class MainWindow;
@@ -47,7 +48,7 @@ private slots:
     void findStationsByNameClicked();
     void findStationsByCoordinatesClicked();
     void stationsResult();
-    void journeyResult(JourneyResultList *result);
+    void journeyResult();
     void journeyDetailResult(JourneyDetailResultList *result);
     void timeTableResult();
     void searchJourneyClicked();

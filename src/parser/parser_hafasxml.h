@@ -92,7 +92,7 @@ protected:
     void parseJourneyDetails(QNetworkReply *networkReply);
     virtual QString getTrainRestrictionsCodes(int trainrestrictions);
 
-    JourneyResultList *lastJourneyResultList;
+    JourneyResultHeader *lastJourneyResult;
     QList<JourneyDetailResultList*> journeyDetailInlineData;
     StationsList internalParseStationsByName(const QString &data) const;
 

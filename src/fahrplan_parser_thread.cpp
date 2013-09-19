@@ -157,7 +157,7 @@ void FahrplanParserThread::run()
     //Connect parser responses with threads corresponding results
     connect(m_parser, SIGNAL(errorOccured(QString)), this, SIGNAL(errorOccured(QString)), Qt::QueuedConnection);
     connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), Qt::QueuedConnection);
-    connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(journeyResult(JourneyResultList*)), Qt::QueuedConnection);
+    connect(m_parser, SIGNAL(journeyResult(JourneyResultHeader*)), this, SIGNAL(journeyResult(JourneyResultHeader*)), Qt::QueuedConnection);
     connect(m_parser, SIGNAL(stationsResult(StationsList)), this, SIGNAL(stationsResult(StationsList)), Qt::QueuedConnection);
     connect(m_parser, SIGNAL(timetableResult(TimetableEntriesList)), this, SIGNAL(timeTableResult(TimetableEntriesList)), Qt::QueuedConnection);
 

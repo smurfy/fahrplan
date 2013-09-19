@@ -72,59 +72,54 @@ TimetableEntry::TimetableEntry()
 {}
 
 
-//------------- JourneyResultList
+//------------- JourneyResultHeader
 
-qreal JourneyResultList::itemcount()
+JourneyResultList JourneyResultHeader::items()
 {
-    return m_items.count();
+    return m_items;
 }
 
-JourneyResultItem *JourneyResultList::getItem(int index)
-{
-    return  m_items.at(index);
-}
-
-void JourneyResultList::appendItem(JourneyResultItem *item)
+void JourneyResultHeader::appendItem(JourneyResultItem *item)
 {
     m_items.append(item);
 }
 
-Station &JourneyResultList::departureStation()
+Station &JourneyResultHeader::departureStation()
 {
     return m_departureStation;
 }
 
-void JourneyResultList::setDepartureStation(const Station &departureStation)
+void JourneyResultHeader::setDepartureStation(const Station &departureStation)
 {
     m_departureStation = departureStation;
 }
 
-Station &JourneyResultList::viaStation()
+Station &JourneyResultHeader::viaStation()
 {
     return m_viaStation;
 }
 
-void JourneyResultList::setViaStation(const Station &viaStation)
+void JourneyResultHeader::setViaStation(const Station &viaStation)
 {
     m_viaStation = viaStation;
 }
 
-Station &JourneyResultList::arrivalStation()
+Station &JourneyResultHeader::arrivalStation()
 {
     return m_arrivalStation;
 }
 
-void JourneyResultList::setArrivalStation(const Station &arrivalStation)
+void JourneyResultHeader::setArrivalStation(const Station &arrivalStation)
 {
     m_arrivalStation = arrivalStation;
 }
 
-QString JourneyResultList::timeInfo() const
+QString JourneyResultHeader::timeInfo() const
 {
     return m_timeInfo;
 }
 
-void JourneyResultList::setTimeInfo(const QString &timeInfo)
+void JourneyResultHeader::setTimeInfo(const QString &timeInfo)
 {
     m_timeInfo = timeInfo;
 }
