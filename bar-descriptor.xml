@@ -6,7 +6,7 @@
     <authorId>gYAAgFEzqeGb8kgSIn13NIOmc_c</authorId>
     <name>Fahrplan</name>
     <versionNumber>2.0.14</versionNumber>
-    <buildId>0</buildId>
+    <buildId>1</buildId>
     <description>A Journey planner/Railway Time table for many train lines in Europe and Australia</description>
     <initialWindow>
         <systemChrome>none</systemChrome>
