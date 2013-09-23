@@ -31,6 +31,7 @@
 #include "parser/parser_xmlnri.h"
 #include "parser/parser_mobilebahnde.h"
 #include "parser/parser_131500comau.h"
+#include "parser/parser_ptvvicgovau.h"
 
 class FahrplanParserThread : public QThread
 {

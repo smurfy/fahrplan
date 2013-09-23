@@ -128,9 +128,12 @@ void FahrplanParserThread::run()
           m_parser = new Parser131500ComAu();
           break;
       case 5:
-          m_parser = new ParserXmlNri();
+          m_parser = new ParserPTVVicGovAu();
           break;
       case 6:
+          m_parser = new ParserXmlNri();
+          break;
+      case 7:
           m_parser = new ParserXmlVasttrafikSe();
           break;
     }
