@@ -35,6 +35,10 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(ParserXmlSbbCh::getName());
     result.append(Parser131500ComAu::getName());
     result.append(ParserPTVVicGovAu::getName());
+    result.append(ParserSydney::getName());
+    result.append(ParserSF::getName());
+    result.append(ParserLondon::getName());
+    result.append(ParserIreland::getName());
     result.append(ParserXmlNri::getName());
     result.append(ParserXmlVasttrafikSe::getName());
     return result;

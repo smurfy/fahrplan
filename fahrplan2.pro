@@ -88,7 +88,11 @@ HEADERS += \
     src/models/timetable.h \
     src/models/trainrestrictions.h \
     src/parser/parser_ptvvicgovau.h \
-    src/parser/parser_efa.h
+    src/parser/parser_efa.h \
+    src/parser/parser_london_efa.h \
+    src/parser/parser_ireland_efa.h \
+    src/parser/parser_sydney_efa.h \
+    src/parser/parser_sf_bay_efa.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -113,7 +117,11 @@ SOURCES += src/main.cpp \
     src/models/timetable.cpp \
     src/models/trainrestrictions.cpp \
     src/parser/parser_ptvvicgovau.cpp \
-    src/parser/parser_efa.cpp
+    src/parser/parser_efa.cpp \
+    src/parser/parser_london_efa.cpp \
+    src/parser/parser_ireland_efa.cpp \
+    src/parser/parser_sydney_efa.cpp \
+    src/parser/parser_sf_bay_efa.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {

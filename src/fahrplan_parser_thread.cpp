@@ -130,10 +130,22 @@ void FahrplanParserThread::run()
       case 5:
           m_parser = new ParserPTVVicGovAu();
           break;
-      case 6:
+    case 6:
+        m_parser = new ParserSydney();
+        break;
+    case 7:
+        m_parser = new ParserSF();
+        break;
+    case 8:
+        m_parser = new ParserLondon();
+        break;
+    case 9:
+        m_parser = new ParserIreland();
+        break;
+      case 10:
           m_parser = new ParserXmlNri();
           break;
-      case 7:
+      case 11:
           m_parser = new ParserXmlVasttrafikSe();
           break;
     }

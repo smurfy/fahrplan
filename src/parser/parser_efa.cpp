@@ -308,36 +308,56 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
     QDomDocument doc("result");
 
     if (doc.setContent(xmlRawtext, false)) {
-        QDomNodeList nodeList = doc.elementsByTagName("odvNameElem");
-        QDomNodeList modeNodeList = doc.elementsByTagName("itdStopModes");
-        //qDebug() << "nodeList.count() :" << nodeList.count()  << ", modeNodeList.count():" << modeNodeList.count();
 
-        QStringList idList;
+        QDomNode requestInfo = doc.elementsByTagName("itdRequest").item(0);
+        int version = getAttribute(requestInfo, "version").section(".",0,0).toInt();
+        qDebug() << "version:" << version;
+        if(version < 10) {
+            QDomNodeList nodeList = doc.elementsByTagName("odvNameElem");
+            QDomNodeList modeNodeList = doc.elementsByTagName("itdStopModes");
+            //qDebug() << "nodeList.count() :" << nodeList.count()  << ", modeNodeList.count():" << modeNodeList.count();
 
-        for (unsigned int i = 0; i < nodeList.length(); ++i) {
-            QDomNode node = nodeList.item(i);
-            Station item;
+            QStringList idList;
 
-            item.name = getAttribute(node, "objectName");
-            item.id = getAttribute(node, "id");
-            idList.append(item.id.toString());
-            item.latitude = getAttribute(node, "x").toDouble();
-            item.longitude = getAttribute(node, "y").toDouble();
-            //item.type = getAttribute(modeNode, "mode");
+            for (unsigned int i = 0; i < nodeList.length(); ++i) {
+                QDomNode node = nodeList.item(i);
+                Station item;
 
-            result << item;
+                item.name = getAttribute(node, "objectName");
+                item.id = getAttribute(node, "id");
+                idList.append(item.id.toString());
+                item.latitude = getAttribute(node, "x").toDouble();
+                item.longitude = getAttribute(node, "y").toDouble();
+                //item.type = getAttribute(modeNode, "mode");
+
+                result << item;
+            }
+
+            for (unsigned int i = 0; i < modeNodeList.length(); ++i) {
+                QDomNode modeNode = modeNodeList.item(i);
+                QString id = getAttribute(modeNode, "id");
+
+                int idIndex = idList.indexOf(id);
+                if(idIndex > -1)
+                    result[idIndex].type = getAttribute(modeNode, "mode");
+
+            }
         }
+        else {
+            qDebug() << "EFA 10 required";      // London and Ireland
+            QDomNodeList nodeList = doc.elementsByTagName("odvNameElem");
+            for (unsigned int i = 0; i < nodeList.length(); ++i) {
+                QDomNode node = nodeList.item(i);
+                Station item;
+                item.name = nodeList.at(i).toElement().text();
+                item.id = getAttribute(node, "stopID");
+                item.latitude = getAttribute(node, "x").toDouble();
+                item.longitude = getAttribute(node, "y").toDouble();
+                //item.type = getAttribute(modeNode, "mode");
 
-        for (unsigned int i = 0; i < modeNodeList.length(); ++i) {
-            QDomNode modeNode = modeNodeList.item(i);
-            QString id = getAttribute(modeNode, "id");
-
-            int idIndex = idList.indexOf(id);
-            if(idIndex > -1)
-                result[idIndex].type = getAttribute(modeNode, "mode");
-
+                result << item;
+            }
         }
-
     }
 
     emit stationsResult(result);
@@ -405,7 +425,14 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
      *  itOptionsActive=1 : enable individual transport options, possibly for preference quickest way (foot/bicycle)
      *  ptOptionsActive=1 : enable public transport options
      *  useProxFootSearch=1 : walk if its quicker
-     *  changeSpeed= WALKSPEED
+     *  changeSpeed = WALKSPEED      'slow'(200) || 'normal'(100) || 'fast'(50)
+     *  As an alternative to the alias-names, values between 25 and 400 can be entered.
+     *  The parameter value represents a kind of factor that modifies the default speed in the
+     *  configuration file of the Journey Planner engine.
+     *  The following formula is used: speed [km/h] = (100 * speed) / value of parameter
+     *  Note: To use this parameter, you must have the options for public transport
+     *  ptOptionsActive=1, the options for the individual transport itOptionsActive = 1 or
+     *  both, enabled
      *
      *  if accessibility == BARRIER_FREE
      *     imparedOptionsActive=1  && wheelchair=on && noSolidStairs=on
@@ -426,7 +453,7 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
      *  inclMOT_8=on    Cable Car and Finicular
      *  inclMOT_9=on    Ferry
      *  inclMOT_10=on   Telebus / arrange pickup
-     *  inclMOT_11=on   misc / other
+     *  inclMOT_11=on   misc / other / Replacement Buses
      *  lineRestriction=403     all but ice?    not sure how this works outside DE
      *
      *  useRealtime=1 : returns actual dep/arr time and schedule time, latenesss can be calculated
