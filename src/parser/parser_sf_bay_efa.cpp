@@ -18,9 +18,9 @@
 
 */
 
-/* Overview
- * This parser was written by Evan Sebire
- *
+/*  This parser was written by Evan Sebire
+ *  San Francisco area, uses EFAv9
+ *  Seems to have a ridiculous number of transit option, these were copied from website
  */
 
 

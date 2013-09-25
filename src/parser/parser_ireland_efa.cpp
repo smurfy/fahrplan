@@ -18,7 +18,7 @@
 
 */
 
-/* Overview
+/*
  * This parser was written by Evan Sebire
  *  Irish national journey planner including northern Ireland
  *  server uses EFAv10

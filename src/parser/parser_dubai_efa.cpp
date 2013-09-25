@@ -18,10 +18,8 @@
 
 */
 
-/* Overview
- * This parser was written by Evan Sebire
+/*  This parser was written by Evan Sebire
  *  Dubai uses EFAv9
- *
  */
 
 
@@ -50,6 +48,4 @@ QStringList ParserDubaiEFA::getTrainRestrictions()
     result.append(tr("Taxi"));
     return result;
 }
-
-
 
