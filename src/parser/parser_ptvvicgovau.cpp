@@ -41,6 +41,7 @@ ParserPTVVicGovAu::ParserPTVVicGovAu(QObject *parent) :
     ParserEFA(parent)
 {
     baseRestUrl = "http://jp.ptv.vic.gov.au/ptv/";
+
 }
 
 

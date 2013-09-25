@@ -101,6 +101,9 @@ QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsPTV;
 
 ParserEFA::ParserEFA(QObject *parent) :
     ParserAbstract(parent){
+
+    m_searchJourneyParameters.isValid = false;
+    m_timeTableForStationParameters.isValid = false;
 }
 
 bool ParserEFA::supportsGps()
@@ -174,7 +177,7 @@ void ParserEFA::findStationsByName(const QString &stationName)
 
 void ParserEFA::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
 {
-    qDebug() << "void ParserEFA::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)";
+    qDebug() << "void ParserEFA::getTimeTableForStation(" << currentStation.name << dateTime;
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
@@ -354,7 +357,13 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
         }
     }
 
-    emit stationsResult(result);
+    if (m_timeTableForStationParameters.isValid) {
+        getTimeTableForStation(m_timeTableForStationParameters.currentStation, m_timeTableForStationParameters.directionStation, m_timeTableForStationParameters.dateTime, m_timeTableForStationParameters.mode, m_timeTableForStationParameters.trainrestrictions);
+    } else if (m_searchJourneyParameters.isValid) {
+        searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.dateTime, m_searchJourneyParameters.mode, m_searchJourneyParameters.trainrestrictions);
+    } else {
+        emit stationsResult(result);
+    }
 }
 
 void ParserEFA::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
