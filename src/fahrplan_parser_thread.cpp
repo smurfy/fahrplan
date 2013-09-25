@@ -128,26 +128,29 @@ void FahrplanParserThread::run()
           m_parser = new Parser131500ComAu();
           break;
       case 5:
-          m_parser = new ParserPTVVicGovAu();
-          break;
-    case 6:
-        m_parser = new ParserSydney();
-        break;
-    case 7:
-        m_parser = new ParserSF();
-        break;
-    case 8:
-        m_parser = new ParserLondon();
-        break;
-    case 9:
-        m_parser = new ParserIreland();
-        break;
-      case 10:
           m_parser = new ParserXmlNri();
           break;
-      case 11:
+      case 6:
           m_parser = new ParserXmlVasttrafikSe();
           break;
+    case 7:
+        m_parser = new ParserPTVVicGovAu();
+        break;
+    case 8:
+      m_parser = new ParserSydneyEFA();
+      break;
+    case 9:
+      m_parser = new ParserSFBayEFA();
+      break;
+    case 10:
+      m_parser = new ParserLondonEFA();
+      break;
+    case 11:
+      m_parser = new ParserIrelandEFA();
+      break;
+    case 12:
+        m_parser = new ParserDubaiEFA();
+        break;
     }
 
     m_name = m_parser->name();

@@ -25,11 +25,11 @@
 #include <QXmlResultItems>
 #include "parser_efa.h"
 
-class ParserLondon : public ParserEFA
+class ParserLondonEFA : public ParserEFA
 {
     Q_OBJECT
 public:
-    explicit ParserLondon(QObject *parent = 0);
+    explicit ParserLondonEFA(QObject *parent = 0);
     static QString getName() { return "London"; }
     QString name() { return "London"; }
 

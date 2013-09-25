@@ -20,11 +20,6 @@
 
 /* Overview
  * This parser was written by Evan Sebire
- * Public transport Victoria (PTV) uses EFA to determine journey's, information regarding EFA can be found at the following links:
- *  main webpage from Mentz Datenverarbeitung GmbH(Munich, 02, DE), http://www.mentzdv.de/englisch/products/efa/
- *  good explaination of XML; http://data.linz.gv.at/katalog/linz_ag/linz_ag_linien/fahrplan/LINZ_LINIEN_Schnittstelle_EFA_V1.pdf
- *  documentation for the london deployment, https://code.google.com/p/openefa/
- *  http://patrickbrosi.de/?q=simpleefa#q=simpleefa
  *
  */
 
@@ -37,23 +32,53 @@
 #include <QNetworkReply>
 
 
-ParserSF::ParserSF(QObject *parent) :
+ParserSFBayEFA::ParserSFBayEFA(QObject *parent) :
     ParserEFA(parent)
 {
     baseRestUrl = "http://tripplanner.transit.511.org/mtc/";
 }
 
 
-QStringList ParserSF::getTrainRestrictions()
+QStringList ParserSFBayEFA::getTrainRestrictions()
 {
     QStringList result;
     result.append(tr("All"));
-    result.append(tr("Metro Train"));
-    result.append(tr("Metro Tram"));
-    result.append(tr("Metro Bus"));
-    result.append(tr("Regional Train"));
-    result.append(tr("Regional Coach"));
-    result.append(tr("Airport(SKYBUS)"));
+    result.append(tr("AC Transit (Local Service)"));
+    result.append(tr("AC Transit (Transbay Service)"));
+    result.append(tr("ACE"));
+    result.append(tr("AirBART"));
+    result.append(tr("American Canyon Transit"));
+    result.append(tr("Amtrak Capitol Cor. & Reg. Svc"));
+    result.append(tr("Angel Island - Tiburon Ferry"));
+    result.append(tr("BART"));
+    result.append(tr("Blue & Gold Fleet"));
+    result.append(tr("Caltrain"));
+    result.append(tr("County Connection"));
+    result.append(tr("Dumbarton Express"));
+    result.append(tr("Emery Go-Round"));
+    result.append(tr("Fairfield and Suisun Transit (FAST)"));
+    result.append(tr("Golden Gate Ferry"));
+    result.append(tr("Golden Gate Transit"));
+    result.append(tr("Hornblower Alcatraz Ferry"));
+    result.append(tr("Marin Transit"));
+    result.append(tr("Petaluma Transit"));
+    result.append(tr("Rio Vista Delta Breeze"));
+    result.append(tr("SamTrans"));
+    result.append(tr("San Francisco Muni"));
+    result.append(tr("Santa Clara VTA"));
+    result.append(tr("Santa Rosa CityBus"));
+    result.append(tr("SF Bay Ferry"));
+    result.append(tr("SolTrans"));
+    result.append(tr("Sonoma County Transit"));
+    result.append(tr("St Helena VINE"));
+    result.append(tr("Stanford Marguerite Shuttle"));
+    result.append(tr("Tri Delta Transit"));
+    result.append(tr("Union City Transit"));
+    result.append(tr("Vacaville City Transit"));
+    result.append(tr("VINE (Napa County)"));
+    result.append(tr("WestCAT"));
+    result.append(tr("WHEELS"));
+    result.append(tr("Yountville Shuttle"));
     return result;
 }
 

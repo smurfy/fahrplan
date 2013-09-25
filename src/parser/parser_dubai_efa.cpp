@@ -20,16 +20,12 @@
 
 /* Overview
  * This parser was written by Evan Sebire
- * Public transport Victoria (PTV) uses EFA to determine journey's, information regarding EFA can be found at the following links:
- *  main webpage from Mentz Datenverarbeitung GmbH(Munich, 02, DE), http://www.mentzdv.de/englisch/products/efa/
- *  good explaination of XML; http://data.linz.gv.at/katalog/linz_ag/linz_ag_linien/fahrplan/LINZ_LINIEN_Schnittstelle_EFA_V1.pdf
- *  documentation for the london deployment, https://code.google.com/p/openefa/
- *  http://patrickbrosi.de/?q=simpleefa#q=simpleefa
+ *  Dubai uses EFAv9
  *
  */
 
 
-#include "parser_sydney_efa.h"
+#include "parser_dubai_efa.h"
 
 #include <QBuffer>
 #include <QDomDocument>
@@ -37,21 +33,21 @@
 #include <QNetworkReply>
 
 
-ParserSydneyEFA::ParserSydneyEFA(QObject *parent) :
+ParserDubaiEFA::ParserDubaiEFA(QObject *parent) :
     ParserEFA(parent)
 {
-    baseRestUrl = "http://mobile.131500.com.au/TripPlanner/mobile/";
+    baseRestUrl = "http://wojhati.rta.ae/dub/";
 }
 
 
-QStringList ParserSydneyEFA::getTrainRestrictions()
+QStringList ParserDubaiEFA::getTrainRestrictions()
 {
     QStringList result;
-    result.append(tr("All, except School Buses"));
-    result.append(tr("Regular Buses"));
-    result.append(tr("Trains"));
-    result.append(tr("Ferries"));
-    result.append(tr("STA School Bus"));
+    result.append(tr("All"));
+    result.append(tr("Bus"));
+    result.append(tr("Water Bus"));
+    result.append(tr("Metro"));
+    result.append(tr("Taxi"));
     return result;
 }
 

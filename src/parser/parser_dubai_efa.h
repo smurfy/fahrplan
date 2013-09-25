@@ -18,20 +18,20 @@
 
 */
 
-#ifndef PARSER_SF_BAY_EFA_H
-#define PARSER_SF_BAY_EFA_H
+#ifndef PARSER_DUBAI_EFA_H
+#define PARSER_DUBAI_EFA_H
 
 #include <QObject>
 #include <QXmlResultItems>
 #include "parser_efa.h"
 
-class ParserSFBayEFA : public ParserEFA
+class ParserDubaiEFA : public ParserEFA
 {
     Q_OBJECT
 public:
-    explicit ParserSFBayEFA(QObject *parent = 0);
-    static QString getName() { return "SF Bay"; }
-    QString name() { return "SF Bay"; }
+    explicit ParserDubaiEFA(QObject *parent = 0);
+    static QString getName() { return "Dubai"; }
+    QString name() { return "Dubai"; }
 
 protected:
     QStringList getTrainRestrictions();
@@ -39,4 +39,4 @@ protected:
 };
 
 
-#endif // PARSER_SF_BAY_EFA_H
+#endif // PARSER_DUBAI_EFA_H

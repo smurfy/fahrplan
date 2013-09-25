@@ -20,10 +20,10 @@
 
 /* Overview
  * This parser was written by Evan Sebire
- * Public transport Victoria (PTV) uses EFA to determine journey's, information regarding EFA can be found at the following links:
+ * Public transport Victoria (PTV) uses EFA(v9) to determine journey's, information regarding EFA can be found at the following links:
  *  main webpage from Mentz Datenverarbeitung GmbH(Munich, 02, DE), http://www.mentzdv.de/englisch/products/efa/
  *  good explaination of XML; http://data.linz.gv.at/katalog/linz_ag/linz_ag_linien/fahrplan/LINZ_LINIEN_Schnittstelle_EFA_V1.pdf
- *  http://www.tfl.gov.uk/assets/downloads/businessandpartners/journey-planner-api-documentation.pdf.pdf
+ *  http://www.tfl.gov.uk/assets/downloads/businessandpartners/journey-planner-api-documentation.pdf.pdf    Still refers to EFAv9 not v10
  *  documentation for the london deployment, https://code.google.com/p/openefa/
  *  http://patrickbrosi.de/?q=simpleefa#q=simpleefa
  *
@@ -45,7 +45,7 @@
  *  England
  *  http://www.travelinemidlands.co.uk/wmtis/
  *  http://www.travelineeastmidlands.co.uk/em/
- *  London; http://journeyplanner.tfl.gov.uk/user/XSLT_TRIP_REQUEST2?language=en
+ *  London; http://journeyplanner.tfl.gov.uk/user/XSLT_TRIP_REQUEST2?language=en    EFA 10
  *
  *  German
  *  http://efa.naldo.de/naldo/
@@ -62,12 +62,17 @@
  *  http://efa.vag-freiburg.de/vagfr/
  *  http://mobil.efa.de/mobile3/    GVH
  *  Donau-Iller-Nahverkehrsverbund-GmbH;    http://www.ding.eu/fahrplaene/fahrplanauskunft.html
+ *  http://195.30.98.162:8081/vvv2/     Verkehrsverbund Vogtland (VVV), In West-Sachsen
+
  *
  *  Ireland
- *  http://www.journeyplanner.transportforireland.ie/nta/
+ *  http://www.journeyplanner.transportforireland.ie/nta/      EFA 10
  *
  *  Italian
- *  http://tpweb.atc.bo.it/atc2/    ATC
+ *  Bologna: http://tpweb.atc.bo.it/atc2/    ATC
+ *
+ *  Slovenia
+ *  Maribor: http://164.8.32.183/slo/
  *
  *  Swiss
  *  http://www.efa-bvb.ch/bvb/
@@ -77,19 +82,8 @@
  *  http://wojhati.rta.ae/dub/
  *
  *  US
- *  Chicago; http://www.transitchicago.com/     http://www.goroo.com/goroo/index.htm
+ *  Chicago; http://www.transitchicago.com/   Chicago Transit Authority, also known as CTA, can't find public access
  *  San Francisco, Bay area; http://tripplanner.transit.511.org/mtc/XSLT_TRIP_REQUEST2?language=en
-
- *
- *  http://164.8.32.183/slo/    Maribor
- *
- *
- *  http://195.30.98.162:8081/vvv2/     Verkehrsverbund Vogtland
- *  http://80.146.180.107/delfi/    VMV
-
- *  http://213.144.24.66/kvv2/  KVV
-
- *
  */
 
 

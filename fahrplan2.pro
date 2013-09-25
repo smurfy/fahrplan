@@ -92,7 +92,8 @@ HEADERS += \
     src/parser/parser_london_efa.h \
     src/parser/parser_ireland_efa.h \
     src/parser/parser_sydney_efa.h \
-    src/parser/parser_sf_bay_efa.h
+    src/parser/parser_sf_bay_efa.h \
+    src/parser/parser_dubai_efa.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -121,7 +122,8 @@ SOURCES += src/main.cpp \
     src/parser/parser_london_efa.cpp \
     src/parser/parser_ireland_efa.cpp \
     src/parser/parser_sydney_efa.cpp \
-    src/parser/parser_sf_bay_efa.cpp
+    src/parser/parser_sf_bay_efa.cpp \
+    src/parser/parser_dubai_efa.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {

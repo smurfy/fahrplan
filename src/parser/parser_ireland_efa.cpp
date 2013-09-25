@@ -20,12 +20,8 @@
 
 /* Overview
  * This parser was written by Evan Sebire
- * Public transport Victoria (PTV) uses EFA to determine journey's, information regarding EFA can be found at the following links:
- *  main webpage from Mentz Datenverarbeitung GmbH(Munich, 02, DE), http://www.mentzdv.de/englisch/products/efa/
- *  good explaination of XML; http://data.linz.gv.at/katalog/linz_ag/linz_ag_linien/fahrplan/LINZ_LINIEN_Schnittstelle_EFA_V1.pdf
- *  documentation for the london deployment, https://code.google.com/p/openefa/
- *  http://patrickbrosi.de/?q=simpleefa#q=simpleefa
- *
+ *  Irish national journey planner including northern Ireland
+ *  server uses EFAv10
  */
 
 
@@ -37,23 +33,22 @@
 #include <QNetworkReply>
 
 
-ParserIreland::ParserIreland(QObject *parent) :
+ParserIrelandEFA::ParserIrelandEFA(QObject *parent) :
     ParserEFA(parent)
 {
     baseRestUrl = "http://www.journeyplanner.transportforireland.ie/nta/";
 }
 
 
-QStringList ParserIreland::getTrainRestrictions()
+QStringList ParserIrelandEFA::getTrainRestrictions()
 {
     QStringList result;
     result.append(tr("All"));
-    result.append(tr("Metro Train"));
-    result.append(tr("Metro Tram"));
-    result.append(tr("Metro Bus"));
-    result.append(tr("Regional Train"));
-    result.append(tr("Regional Coach"));
-    result.append(tr("Airport(SKYBUS)"));
+    result.append(tr("Train"));
+    result.append(tr("Tram"));
+    result.append(tr("Bus"));
+    result.append(tr("Ferry"));
+    result.append(tr("Taxi"));
     return result;
 }
 
