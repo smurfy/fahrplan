@@ -19,16 +19,17 @@
 */
 
 /* Overview
- * This parser was written by Evan Sebire
- * Public transport Victoria (PTV) uses EFA(v9) to determine journey's, information regarding EFA can be found at the following links:
+ *  This parser was written by Evan Sebire
+ *  Should work with both EFAv9 and v10
+ *  Information regarding EFA can be found at the following links:
  *  main webpage from Mentz Datenverarbeitung GmbH(Munich, 02, DE), http://www.mentzdv.de/englisch/products/efa/
  *  good explaination of XML; http://data.linz.gv.at/katalog/linz_ag/linz_ag_linien/fahrplan/LINZ_LINIEN_Schnittstelle_EFA_V1.pdf
  *  http://www.tfl.gov.uk/assets/downloads/businessandpartners/journey-planner-api-documentation.pdf.pdf    Still refers to EFAv9 not v10
  *  documentation for the london deployment, https://code.google.com/p/openefa/
  *  http://patrickbrosi.de/?q=simpleefa#q=simpleefa
  *
- * Other transport providers that use EFA
  *
+ * Transport providers that use EFA
  *  Austria
  *  http://efa.vvt.at/vvtadr/   VVT
  *  http://efa.vor.at/wvb/
