@@ -29,28 +29,28 @@ class ParserEFA : public ParserAbstract
     Q_OBJECT
 public:
     explicit ParserEFA(QObject *parent = 0);
-    static QString getName() { return "ptv.vic.gov.au"; }
-    QString name() { return "ptv.vic.gov.au"; }
+    static QString getName() { return "EFA"; }
+    QString name() { return "EFA"; }
 public slots:
-    virtual void findStationsByName(const QString &stationName);
-    virtual void findStationsByCoordinates(double longitude, double latitude);
-    virtual void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
-    virtual void searchJourneyEarlier();
-    virtual void searchJourneyLater();
-    virtual void getJourneyDetails(const QString &id);
-    virtual void getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int);
-    virtual bool supportsGps();
-    virtual bool supportsVia();
-    virtual bool supportsTimeTable();
-    virtual bool supportsTimeTableDirection();
+    void findStationsByName(const QString &stationName);
+    void findStationsByCoordinates(qreal longitude, qreal latitude);
+    void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
+    void searchJourneyEarlier();
+    void searchJourneyLater();
+    void getJourneyDetails(const QString &id);
+    void getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int);
+    bool supportsGps();
+    bool supportsVia();
+    bool supportsTimeTable();
+    bool supportsTimeTableDirection();
     QStringList getTrainRestrictions();
 
 protected:
     QString baseRestUrl;
-    virtual void parseStationsByName(QNetworkReply *networkReply);
-    virtual void parseSearchJourney(QNetworkReply *networkReply);
-    virtual void parseStationsByCoordinates(QNetworkReply *networkReply);
-    virtual void parseTimeTable(QNetworkReply *networkReply);
+    void parseStationsByName(QNetworkReply *networkReply);
+    void parseSearchJourney(QNetworkReply *networkReply);
+    void parseStationsByCoordinates(QNetworkReply *networkReply);
+    void parseTimeTable(QNetworkReply *networkReply);
 
 
 private:

@@ -218,7 +218,7 @@ void ParserEFA::getTimeTableForStation(const Station &currentStation, const Stat
     sendHttpRequest(uri);
 }
 
-void ParserEFA::findStationsByCoordinates(qreal longitude, double latitude)
+void ParserEFA::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
     qDebug() << "ParserEFA::findStationsByCoordinates(longitude=" << longitude << ", latitude=" << latitude << ")";
 
