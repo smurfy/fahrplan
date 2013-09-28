@@ -1,22 +1,21 @@
-/*******************************************************************************
-
-    This file is a part of Fahrplan for maemo 2009-2012
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
-*/
+/****************************************************************************
+**
+**  This file is a part of Fahrplan.
+**
+**  This program is free software; you can redistribute it and/or modify
+**  it under the terms of the GNU General Public License as published by
+**  the Free Software Foundation; either version 2 of the License, or
+**  (at your option) any later version.
+**
+**  This program is distributed in the hope that it will be useful,
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+**  GNU General Public License for more details.
+**
+**  You should have received a copy of the GNU General Public License along
+**  with this program.  If not, see <http://www.gnu.org/licenses/>.
+**
+****************************************************************************/
 
 /* Overview
  *  This parser was written by Evan Sebire
@@ -46,9 +45,11 @@
  *  England
  *  http://www.travelinemidlands.co.uk/wmtis/
  *  http://www.travelineeastmidlands.co.uk/em/
+ *  http://www.travelinesw.com/swe/XSLT_REQUEST?  Southern England and midlands
  *  London; http://journeyplanner.tfl.gov.uk/user/XSLT_TRIP_REQUEST2?language=en    EFA 10
  *
  *  German
+ *  http://www.kvv.de/tunnelEfaDirect.php?action=XML_COORD_REQUEST  XML_GEOOBJECT_REQUEST   EFAv10
  *  http://efa.naldo.de/naldo/
  *  http://www2.vvs.de/vvs/
  *  http://efa.vvo-online.de:8080/dvb/
@@ -148,6 +149,7 @@ QStringList ParserEFA::getTrainRestrictions()
 void ParserEFA::findStationsByName(const QString &stationName)
 {
     // http://jp.ptv.vic.gov.au/ptv/XML_STOPFINDER_REQUEST?locationServerActive=1&outputFormat=XML&type_sf=any&name_sf=lilydale
+    //http://www.journeyplanner.transportforireland.ie/nta/XML_DM_REQUEST?language=en&type_sf=any&type_dm=any&coordOutputFormat=WGS84&name_dm=cork&name_sf=cork&itdDateDay=26&itDateYearMonth=201309&itdTimeHour=09&itdTimeMinute=48&itdTripDateTimeDepArr=dep&deleteAssignedStops_dm=1&useRealtime=1&mode=direct
 
     qDebug() << "ParserEFA::findStationsByName(" <<  stationName << ")";
     if (currentRequestState != FahrplanNS::noneRequest) {
@@ -168,6 +170,7 @@ void ParserEFA::findStationsByName(const QString &stationName)
     query.addQueryItem("outputFormat", "XML");
     query.addQueryItem("type_sf", "stop");  // could be any, poi or stop
     query.addQueryItem("coordOutputFormat","WGS84");
+    //<input name="locality_origin" id="locality_origin" value="Cork" type="hidden">
     query.addQueryItem("name_sf", stationName);
 #if defined(BUILD_FOR_QT5)
     uri.setQuery(query);
@@ -183,6 +186,8 @@ void ParserEFA::findStationsByName(const QString &stationName)
 void ParserEFA::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
 {
     qDebug() << "void ParserEFA::getTimeTableForStation(" << currentStation.name << dateTime;
+
+    // http://journeyplanner.tfl.gov.uk/user/XML_DM_REQUEST?language=en&sessionID=0&ptOptionsActive=&itdLPxx_tubeMap=&itdLPxx_request=&command=&lsShowTrainsExplicit=1&name_dm=1001180&nameState_dm=notidentified&place_dm=London&type_dm=stopID
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
@@ -196,10 +201,10 @@ void ParserEFA::getTimeTableForStation(const Station &currentStation, const Stat
 #else
     QUrl query;
 #endif
-    query.addQueryItem("language", "en");
-    query.addQueryItem("typeInfo_dm", "stopID");
+    //query.addQueryItem("typeInfo_dm", "stopID");                      typeInfo_dm and type_dm seem to have the same effect
+    query.addQueryItem("type_dm", "stopID");
+    query.addQueryItem("name_dm", currentStation.id.toString());  //    nameInfo_dm and name_dm seem to be the same
     query.addQueryItem("coordOutputFormat","WGS84");
-    query.addQueryItem("nameInfo_dm", currentStation.id.toString());
     query.addQueryItem("itdDateDay", dateTime.toString("dd"));
     query.addQueryItem("itdDateYearMonth", dateTime.toString("yyyyMM"));
     query.addQueryItem("itdTimeHour", dateTime.toString("hh"));
@@ -208,9 +213,14 @@ void ParserEFA::getTimeTableForStation(const Station &currentStation, const Stat
         query.addQueryItem("itdTripDateTimeDepArr", "dep");
     else
         query.addQueryItem("itdTripDateTimeDepArr", "arr");
-    query.addQueryItem("deleteAssignedStops_dm", "1");
-    query.addQueryItem("useRealtime", "1");
+    //query.addQueryItem("deleteAssignedStops_dm", "1");                not sure what this does
+    query.addQueryItem("useRealtime", "1");                         // probably best to display realtime not scheduled time
+    query.addQueryItem("depType", "STOPEVENTS");
+    //query.addQueryItem("nameState_dm", "notidentified");
+    //query.addQueryItem("lsShowTrainsExplicit", "1");
+    //query.addQueryItem("place_dm", "");
     query.addQueryItem("mode", "direct");
+
 #if defined(BUILD_FOR_QT5)
     uri.setQuery(query);
 #else
@@ -219,7 +229,7 @@ void ParserEFA::getTimeTableForStation(const Station &currentStation, const Stat
     sendHttpRequest(uri);
 }
 
-void ParserEFA::findStationsByCoordinates(qreal longitude, double latitude)
+void ParserEFA::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
     qDebug() << "ParserEFA::findStationsByCoordinates(longitude=" << longitude << ", latitude=" << latitude << ")";
 
@@ -303,6 +313,17 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
 
     if (doc.setContent(xmlRawtext, false)) {
 
+        //Check for error: <itdMessage type="error" module="BROKER" code="-2000">stop invalid</itdMessage>
+        QDomNodeList errorNodeList = doc.elementsByTagName("itdMessage");
+        for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+            QDomNode node = errorNodeList.item(i);
+            QString error = getAttribute(node, "type");
+            if(error == "error")
+            {
+                qDebug() << "Query Error:" << node.toElement().text();
+            }
+        }
+
         QDomNode requestInfo = doc.elementsByTagName("itdRequest").item(0);
         int version = getAttribute(requestInfo, "version").section(".",0,0).toInt();
         qDebug() << "version:" << version;
@@ -343,7 +364,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
             for(unsigned int i = 0; i < nodeList.length(); ++i) {
                 QDomNode node = nodeList.item(i);
                 Station item;
-                item.name = nodeList.at(i).toElement().text();
+                item.name = node.toElement().text();
                 item.id = getAttribute(node, "stopID");
                 item.latitude = getAttribute(node, "x").toDouble();
                 item.longitude = getAttribute(node, "y").toDouble();
@@ -816,6 +837,16 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
             }
 
             result << item;
+        }
+        //Check for error: <itdMessage type="error" module="BROKER" code="-4050">no serving lines found</itdMessage>
+        QDomNodeList errorNodeList = doc.elementsByTagName("itdMessage");
+        for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+            QDomNode node = errorNodeList.item(i);
+            QString error = getAttribute(node, "type");
+            if(error == "error")
+            {
+                qDebug() << "Query Error:" << node.toElement().text();      // no serving lines found means: This stop is not served.
+            }
         }
     }
 
