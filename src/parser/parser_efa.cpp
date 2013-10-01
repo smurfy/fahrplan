@@ -92,7 +92,6 @@
 #include "parser_efa.h"
 
 #include <QBuffer>
-#include <QDomDocument>
 #include <QFile>
 #include <QNetworkReply>
 #include <QtCore/QUrl>
@@ -295,9 +294,27 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
                 result << item;
             }
         }
+        checkForError(&doc);
     }
 
     emit stationsResult(result);
+}
+
+void ParserEFA::checkForError(QDomDocument *serverReplyDomDoc)
+{
+    QDomNodeList errorNodeList = serverReplyDomDoc->elementsByTagName("itdMessage");
+    for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+        QDomNode node = errorNodeList.item(i);
+        QString error = getAttribute(node, "type");
+        QString code = getAttribute(node, "code");
+        if(error == "error" && code.toInt() < 0) {
+            QString errorText = node.toElement().text();
+            if(errorText.length() < 1)
+                errorText = code;
+            qDebug() << "Server Query Error:" << errorText << code;
+            emit errorOccured(tr("Server Error: ") + errorText);
+        }
+    }
 }
 
 void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
@@ -373,6 +390,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
                 result << item;
             }
         }
+        checkForError(&doc);
     }
 
     if (m_timeTableForStationParameters.isValid) {
@@ -740,6 +758,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
             m_latestResultDeparture = departureDateTime.addSecs(60);
 
     }
+    checkForError(&doc);
 
     emit journeyResult(lastJourneyResultList);
 }
@@ -839,15 +858,7 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
             result << item;
         }
         //Check for error: <itdMessage type="error" module="BROKER" code="-4050">no serving lines found</itdMessage>
-        QDomNodeList errorNodeList = doc.elementsByTagName("itdMessage");
-        for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
-            QDomNode node = errorNodeList.item(i);
-            QString error = getAttribute(node, "type");
-            if(error == "error")
-            {
-                qDebug() << "Query Error:" << node.toElement().text();      // no serving lines found means: This stop is not served.
-            }
-        }
+        checkForError(&doc);
     }
 
     emit timetableResult(result);
@@ -913,7 +924,6 @@ JourneyDetailResultList * ParserEFA::parseDetails(JourneyResultItem *journeyitem
             item->setArrivalDateTime(toDateTime);
             results->appendItem(item);
         }
-
     }
 
     results->setDuration(journeyitem->duration());
