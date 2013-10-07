@@ -441,8 +441,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setDuration(formatDuration(durationTime));
                 item->setMiscInfo("");
                 item->setTrainType(lineNames.join(", ").trimmed());
-                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString(tr("hh:mm")));
-                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString(tr("hh:mm")));
+                const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
+                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime()
+                                       .time().toString(timeFormat));
+                item->setArrivalTime(inlineResults
+                                     ->getItem(inlineResults->itemcount() - 1)->arrivalDateTime()
+                                     .time().toString(timeFormat));
                 journeyResultsByArrivalMap.insert(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime(), item);
             }
         }

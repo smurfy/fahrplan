@@ -42,10 +42,11 @@ QString formatStation(const QDateTime dateTime, const QString &stationName, cons
     else
         station = CalendarThreadWrapper::tr("%1 / %2", "STATION / PLATFORM").arg(stationName, info);
 
-    // TODO: Don't force QLocale::ShortFormat, but make it configurable.
     return CalendarThreadWrapper::tr("%1 %2   %3", "DATE TIME   STATION").arg(
-               dateTime.toString("dd.MM.yyyy"),
-               dateTime.toString("HH:mm"),
+               // TODO: Don't force QLocale::ShortFormat for date, but make it configurable.
+               dateTime.toString(QLocale().dateFormat(QLocale::ShortFormat)),
+               // Always use short format for time, else you get something like "12:35:00 t".
+               dateTime.toString(QLocale().timeFormat(QLocale::ShortFormat)),
                station);
 }
 

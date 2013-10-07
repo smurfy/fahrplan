@@ -50,7 +50,7 @@ Rectangle {
 
         Label {
             id: lbl_time
-            text: Qt.formatTime(model.time, qsTr("hh:mm"))
+            text: Qt.formatTime(model.time, Qt.DefaultLocaleShortDate)
             font.bold: true
             width: (parent.width - 4 * UiConstants.ButtonSpacing) / 3
         }
