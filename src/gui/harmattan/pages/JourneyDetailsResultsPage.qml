@@ -124,7 +124,9 @@ Page {
                 top: titleBar.bottom
                 topMargin: 10
             }
-            delegate: JourneyDetailsDelegate {}
+            delegate: JourneyDetailsDelegate {
+                timeWidth: dummyTime.paintedWidth + 8
+            }
         }
 
         ScrollDecorator {
@@ -275,5 +277,10 @@ Page {
                 anchors.centerIn: parent
             }
         }
+    }
+
+    Label {
+        id: dummyTime
+        text: Qt.formatTime(new Date(0), Qt.DefaultLocaleShortDate)
     }
 }

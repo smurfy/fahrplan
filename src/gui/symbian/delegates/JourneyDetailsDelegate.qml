@@ -25,6 +25,7 @@ Item {
     id: delegateItem
 
     property ListView listView: ListView.view
+    property int timeWidth
 
     width: ListView.view.width
     height: model.isStation ? model.isTrain ? item_train.height + item_station.height : item_station.height : model.isTrain ? item_train.height : 0
@@ -50,7 +51,7 @@ Item {
              Item {
                  id: times
 
-                 width: childrenRect.width
+                 width: timeWidth ? timeWidth : childrenRect.width
                  height: parent.height
                  anchors {
                      left: parent.left
@@ -59,7 +60,7 @@ Item {
 
                  Label {
                      // This hack is needed to have correct padding for the line
-                     text: model.arrivalTime !== "" ? model.arrivalTime : " "
+                     text: model.arrivalTime
                      platformInverted: appWindow.platformInverted
                      anchors {
                          left: parent.left

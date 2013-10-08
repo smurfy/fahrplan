@@ -126,7 +126,9 @@ Page {
                 right: parent.right
                 bottom: parent.bottom
             }
-            delegate: JourneyDetailsDelegate {}
+            delegate: JourneyDetailsDelegate {
+                timeWidth: dummyTime.paintedWidth + platformStyle.paddingMedium
+            }
         }
 
         ScrollDecorator {
@@ -281,5 +283,10 @@ Page {
                 platformInverted: appWindow.platformInverted
             }
         }
+    }
+
+    Label {
+        id: dummyTime
+        text: Qt.formatTime(new Date(0), Qt.DefaultLocaleShortDate)
     }
 }
