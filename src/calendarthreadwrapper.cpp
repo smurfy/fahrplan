@@ -68,33 +68,47 @@ void CalendarThreadWrapper::addToCalendar()
     QString calendarEntryDesc;
 
     if (viaStation.isEmpty())
-        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation());
+        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation(),
+                                                m_result->arrivalStation());
     else
-        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation);
+        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation(),
+                                                       m_result->arrivalStation(),
+                                                       viaStation);
 
-    if (!m_result->info().isEmpty()) {
-        calendarEntryDesc.append(m_result->info() + "\n");
-    }
+    if (!m_result->info().isEmpty())
+        calendarEntryDesc.append(m_result->info()).append("\n");
 
+    const bool compactFormat = settings.value("compactCalendarEntries", false).toBool();
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
+
+        if (!compactFormat && !item->train().isEmpty())
+            calendarEntryDesc.append("--- ").append(item->train()).append(" ---\n");
 
         calendarEntryDesc.append(formatStation(item->departureDateTime(),
                                                item->departureStation(),
                                                item->departureInfo()));
         calendarEntryDesc.append("\n");
-        if (!item->train().isEmpty()) {
-            calendarEntryDesc.append("--- " + item->train() + " ---\n");
-        }
+
+        if (compactFormat && !item->train().isEmpty())
+            calendarEntryDesc.append("--- ").append(item->train()).append(" ---\n");
+
         calendarEntryDesc.append(formatStation(item->arrivalDateTime(),
                                                item->arrivalStation(),
                                                item->arrivalInfo()));
         calendarEntryDesc.append("\n");
+
         if (!item->info().isEmpty()) {
-            calendarEntryDesc.append(item->info() + "\n");
+            calendarEntryDesc.append(item->info()).append("\n");
         }
-        calendarEntryDesc.append("\n");
+
+        if (!compactFormat)
+            calendarEntryDesc.append("\n");
     }
+
+    if (!compactFormat)
+        calendarEntryDesc.append(
+            tr("-- \nAdded by Fahrplan. Please, check information again before travel."));
 
 #ifdef BUILD_FOR_BLACKBERRY
 
