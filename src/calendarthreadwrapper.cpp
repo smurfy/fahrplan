@@ -108,7 +108,7 @@ void CalendarThreadWrapper::addToCalendar()
 
     if (!compactFormat)
         calendarEntryDesc.append(
-            tr("-- \nAdded by Fahrplan. Please, check information again before travel."));
+            tr("-- \nAdded by Fahrplan. Please, re-check the information before your journey."));
 
 #ifdef BUILD_FOR_BLACKBERRY
 
