@@ -45,9 +45,11 @@
  *  England
  *  http://www.travelinemidlands.co.uk/wmtis/
  *  http://www.travelineeastmidlands.co.uk/em/
+ *  http://www.travelinesw.com/swe/XSLT_REQUEST?  Southern England and midlands
  *  London; http://journeyplanner.tfl.gov.uk/user/XSLT_TRIP_REQUEST2?language=en    EFA 10
  *
  *  German
+ *  http://www.kvv.de/tunnelEfaDirect.php?action=XML_COORD_REQUEST  XML_GEOOBJECT_REQUEST   EFAv10
  *  http://efa.naldo.de/naldo/
  *  http://www2.vvs.de/vvs/
  *  http://efa.vvo-online.de:8080/dvb/
@@ -90,7 +92,6 @@
 #include "parser_efa.h"
 
 #include <QBuffer>
-#include <QDomDocument>
 #include <QFile>
 #include <QNetworkReply>
 #include <QtCore/QUrl>
@@ -147,6 +148,7 @@ QStringList ParserEFA::getTrainRestrictions()
 void ParserEFA::findStationsByName(const QString &stationName)
 {
     // http://jp.ptv.vic.gov.au/ptv/XML_STOPFINDER_REQUEST?locationServerActive=1&outputFormat=XML&type_sf=any&name_sf=lilydale
+    //http://www.journeyplanner.transportforireland.ie/nta/XML_DM_REQUEST?language=en&type_sf=any&type_dm=any&coordOutputFormat=WGS84&name_dm=cork&name_sf=cork&itdDateDay=26&itDateYearMonth=201309&itdTimeHour=09&itdTimeMinute=48&itdTripDateTimeDepArr=dep&deleteAssignedStops_dm=1&useRealtime=1&mode=direct
 
     qDebug() << "ParserEFA::findStationsByName(" <<  stationName << ")";
     if (currentRequestState != FahrplanNS::noneRequest) {
@@ -167,6 +169,7 @@ void ParserEFA::findStationsByName(const QString &stationName)
     query.addQueryItem("outputFormat", "XML");
     query.addQueryItem("type_sf", "stop");  // could be any, poi or stop
     query.addQueryItem("coordOutputFormat","WGS84");
+    //<input name="locality_origin" id="locality_origin" value="Cork" type="hidden">
     query.addQueryItem("name_sf", stationName);
 #if defined(BUILD_FOR_QT5)
     uri.setQuery(query);
@@ -182,6 +185,8 @@ void ParserEFA::findStationsByName(const QString &stationName)
 void ParserEFA::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
 {
     qDebug() << "void ParserEFA::getTimeTableForStation(" << currentStation.name << dateTime;
+
+    // http://journeyplanner.tfl.gov.uk/user/XML_DM_REQUEST?language=en&sessionID=0&ptOptionsActive=&itdLPxx_tubeMap=&itdLPxx_request=&command=&lsShowTrainsExplicit=1&name_dm=1001180&nameState_dm=notidentified&place_dm=London&type_dm=stopID
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
@@ -195,10 +200,10 @@ void ParserEFA::getTimeTableForStation(const Station &currentStation, const Stat
 #else
     QUrl query;
 #endif
-    query.addQueryItem("language", "en");
-    query.addQueryItem("typeInfo_dm", "stopID");
+    //query.addQueryItem("typeInfo_dm", "stopID");                      typeInfo_dm and type_dm seem to have the same effect
+    query.addQueryItem("type_dm", "stopID");
+    query.addQueryItem("name_dm", currentStation.id.toString());  //    nameInfo_dm and name_dm seem to be the same
     query.addQueryItem("coordOutputFormat","WGS84");
-    query.addQueryItem("nameInfo_dm", currentStation.id.toString());
     query.addQueryItem("itdDateDay", dateTime.toString("dd"));
     query.addQueryItem("itdDateYearMonth", dateTime.toString("yyyyMM"));
     query.addQueryItem("itdTimeHour", dateTime.toString("hh"));
@@ -207,9 +212,14 @@ void ParserEFA::getTimeTableForStation(const Station &currentStation, const Stat
         query.addQueryItem("itdTripDateTimeDepArr", "dep");
     else
         query.addQueryItem("itdTripDateTimeDepArr", "arr");
-    query.addQueryItem("deleteAssignedStops_dm", "1");
-    query.addQueryItem("useRealtime", "1");
+    //query.addQueryItem("deleteAssignedStops_dm", "1");                not sure what this does
+    query.addQueryItem("useRealtime", "1");                         // probably best to display realtime not scheduled time
+    query.addQueryItem("depType", "STOPEVENTS");
+    //query.addQueryItem("nameState_dm", "notidentified");
+    //query.addQueryItem("lsShowTrainsExplicit", "1");
+    //query.addQueryItem("place_dm", "");
     query.addQueryItem("mode", "direct");
+
 #if defined(BUILD_FOR_QT5)
     uri.setQuery(query);
 #else
@@ -284,9 +294,27 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
                 result << item;
             }
         }
+        checkForError(&doc);
     }
 
     emit stationsResult(result);
+}
+
+void ParserEFA::checkForError(QDomDocument *serverReplyDomDoc)
+{
+    QDomNodeList errorNodeList = serverReplyDomDoc->elementsByTagName("itdMessage");
+    for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+        QDomNode node = errorNodeList.item(i);
+        QString error = getAttribute(node, "type");
+        QString code = getAttribute(node, "code");
+        if(error == "error" && code.toInt() < 0) {
+            QString errorText = node.toElement().text();
+            if(errorText.length() < 1)
+                errorText = code;
+            qDebug() << "Server Query Error:" << errorText << code;
+            emit errorOccured(tr("Server Error: ") + errorText);
+        }
+    }
 }
 
 void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
@@ -301,6 +329,17 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
     QDomDocument doc("result");
 
     if (doc.setContent(xmlRawtext, false)) {
+
+        //Check for error: <itdMessage type="error" module="BROKER" code="-2000">stop invalid</itdMessage>
+        QDomNodeList errorNodeList = doc.elementsByTagName("itdMessage");
+        for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+            QDomNode node = errorNodeList.item(i);
+            QString error = getAttribute(node, "type");
+            if(error == "error")
+            {
+                qDebug() << "Query Error:" << node.toElement().text();
+            }
+        }
 
         QDomNode requestInfo = doc.elementsByTagName("itdRequest").item(0);
         int version = getAttribute(requestInfo, "version").section(".",0,0).toInt();
@@ -342,7 +381,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
             for(unsigned int i = 0; i < nodeList.length(); ++i) {
                 QDomNode node = nodeList.item(i);
                 Station item;
-                item.name = nodeList.at(i).toElement().text();
+                item.name = node.toElement().text();
                 item.id = getAttribute(node, "stopID");
                 item.latitude = getAttribute(node, "x").toDouble();
                 item.longitude = getAttribute(node, "y").toDouble();
@@ -351,6 +390,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
                 result << item;
             }
         }
+        checkForError(&doc);
     }
 
     if (m_timeTableForStationParameters.isValid) {
@@ -718,6 +758,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
             m_latestResultDeparture = departureDateTime.addSecs(60);
 
     }
+    checkForError(&doc);
 
     emit journeyResult(lastJourneyResultList);
 }
@@ -816,6 +857,8 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
 
             result << item;
         }
+        //Check for error: <itdMessage type="error" module="BROKER" code="-4050">no serving lines found</itdMessage>
+        checkForError(&doc);
     }
 
     emit timetableResult(result);
@@ -881,7 +924,6 @@ JourneyDetailResultList * ParserEFA::parseDetails(JourneyResultItem *journeyitem
             item->setArrivalDateTime(toDateTime);
             results->appendItem(item);
         }
-
     }
 
     results->setDuration(journeyitem->duration());

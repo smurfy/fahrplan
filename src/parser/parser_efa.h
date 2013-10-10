@@ -20,6 +20,7 @@
 #ifndef PARSER_EFA_H
 #define PARSER_EFA_H
 
+#include <QDomDocument>
 #include <QObject>
 #include <QXmlResultItems>
 #include "parser_abstract.h"
@@ -43,6 +44,7 @@ public slots:
     bool supportsVia();
     bool supportsTimeTable();
     bool supportsTimeTableDirection();
+    void checkForError(QDomDocument *serverReplyDomDoc);
     QStringList getTrainRestrictions();
 
 protected:
