@@ -42,7 +42,8 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
-    lastJourneyResult = NULL;
+    JourneyResultHeader emptyResults;
+    lastJourneyResult = emptyResults;
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -77,7 +78,8 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
 void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResult = new JourneyResultHeader();
+    JourneyResultHeader emptyResults;
+    lastJourneyResult = emptyResults;
     journeyDetailInlineData.clear();
 
     QByteArray tmpBuffer = networkReply->readAll();
@@ -227,13 +229,13 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         QString resDeparture = strings[resDeparturePtr];
         QString resArrival = strings[resArrivalPtr];
 
-        lastJourneyResult->departureStation().name = resDeparture;
-        lastJourneyResult->arrivalStation().name = resArrival;
-        lastJourneyResult->setTimeInfo(journeyDate.toString());
+        lastJourneyResult.departureStation.name = resDeparture;
+        lastJourneyResult.arrivalStation.name = resArrival;
+        lastJourneyResult.timeInfo = journeyDate.toString();
 
         qDebug()<<resDeparture<<resArrival<<numConnections<<journeyDate;
 
-        QMultiMap<QDateTime, JourneyResultItem*> journeyResultsByArrivalMap;
+        QMultiMap<QDateTime, JourneyResultItem> journeyResultsByArrivalMap;
 
         for (int iConnection = 0; iConnection < numConnections; iConnection++) {
             hafasData.device()->seek(0x4a + iConnection * 12);
@@ -433,22 +435,21 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 lineNames.removeDuplicates();
 
-                JourneyResultItem *item = new JourneyResultItem();
-                item->setDate(journeyDate);
-                item->setId(connectionId);
-                item->setTransfers(QString::number(numChanges));
-                item->setDuration(formatDuration(durationTime));
-                item->setMiscInfo("");
-                item->setTrainType(lineNames.join(", ").trimmed());
-                item->setDepartureTime(inlineResults->getItem(0)->departureStation().departureDateTime.time().toString(tr("hh:mm")));
-                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalStation().arrivalDateTime.time().toString(tr("hh:mm")));
+                JourneyResultItem item;
+                item.id = connectionId;
+                item.transfers = QString::number(numChanges);
+                item.duration = formatDuration(durationTime);
+                item.miscInfo = "";
+                item.trainType = lineNames.join(", ").trimmed();
+                item.departureDateTime = inlineResults->getItem(0)->departureStation().departureDateTime;
+                item.arrivalDateTime = inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalStation().arrivalDateTime;
                 journeyResultsByArrivalMap.insert(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalStation().arrivalDateTime, item);
             }
         }
 
-        QList<JourneyResultItem*> journeyResultsByArrivalList = journeyResultsByArrivalMap.values();
-        Q_FOREACH(JourneyResultItem *item, journeyResultsByArrivalList) {
-            lastJourneyResult->appendItem(item);
+        QList<JourneyResultItem> journeyResultsByArrivalList = journeyResultsByArrivalMap.values();
+        Q_FOREACH(JourneyResultItem item, journeyResultsByArrivalList) {
+            lastJourneyResult.items << item;
         }
 
         hafasContext.seqNr = QString::number(seqNr);

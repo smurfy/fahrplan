@@ -69,13 +69,13 @@ Rectangle {
 
             Label {
                 id: lbl_departuretime
-                text: model.departureTime
+                text: Qt.formatTime(model.departureTime, qsTr("hh:mm"))
                 width: (parent.width - 3 * UiConstants.ButtonSpacing) / 4
             }
 
             Label {
                 id: lbl_arrivaltime
-                text: model.arrivalTime
+                text: Qt.formatTime(model.arrivalTime, qsTr("hh:mm"))
                 width: (parent.width - 3 * UiConstants.ButtonSpacing) / 4
             }
 

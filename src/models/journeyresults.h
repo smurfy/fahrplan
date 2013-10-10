@@ -57,7 +57,7 @@ public:
     const Station &viaStation() const;
     const QString timeInfo() const;
 
-    void setJourneyResults(JourneyResultHeader *list);
+    void setJourneyResults(JourneyResultHeader list);
 
 public slots:
     void clear();
@@ -66,7 +66,7 @@ signals:
     void countChanged();
 
 private:
-    JourneyResultHeader *m_list;
+    JourneyResultHeader m_list;
 };
 
 

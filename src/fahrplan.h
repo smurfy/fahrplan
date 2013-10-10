@@ -138,7 +138,7 @@ class Fahrplan : public QObject
         void onParserChanged(const QString &name, int index);
         void onStationSearchResults(const StationsList &result);
         void onTimetableResult(const TimetableEntriesList &timetableEntries);
-        void onJourneyResult(JourneyResultHeader *result);
+        void onJourneyResult(const JourneyResultHeader &result);
         void bindParserSignals();
 
     private:

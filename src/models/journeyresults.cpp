@@ -51,33 +51,33 @@ int JourneyResults::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return m_list->items().count();
+    return m_list.items.count();
 }
 
 QVariant JourneyResults::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || (index.row() < 0) || (index.row() >= m_list->items().count()))
+    if (!index.isValid() || (index.row() < 0) || (index.row() >= m_list.items.count()))
         return QVariant();
 
-    JourneyResultItem *item = m_list->items().at(index.row());
+    JourneyResultItem item = m_list.items.at(index.row());
 
     switch (role) {
     case Id:
-        return item->id();
+        return item.id;
     case Date:
-        return item->date();
+        return item.departureDateTime.date();
     case DepartureTime:
-        return item->departureTime();
+        return item.departureDateTime;
     case ArrivalTime:
-        return item->arrivalTime();
+        return item.arrivalDateTime;
     case TrainType:
-        return item->trainType();
+        return item.trainType;
     case Duration:
-        return item->duration();
+        return item.duration;
     case Transfers:
-        return item->transfers();
+        return item.transfers;
     case MiscInfo:
-        return item->miscInfo();
+        return item.miscInfo;
     default:
         return QVariant();
     }
@@ -85,25 +85,25 @@ QVariant JourneyResults::data(const QModelIndex &index, int role) const
 
 const Station &JourneyResults::departureStation() const
 {
-    return m_list->departureStation();
+    return m_list.departureStation;
 }
 
 const Station &JourneyResults::arrivalStation() const
 {
-    return m_list->arrivalStation();
+    return m_list.arrivalStation;
 }
 
 const Station &JourneyResults::viaStation() const
 {
-    return m_list->viaStation();
+    return m_list.viaStation;
 }
 
 const QString JourneyResults::timeInfo() const
 {
-    return m_list->timeInfo();
+    return m_list.timeInfo;
 }
 
-void JourneyResults::setJourneyResults(JourneyResultHeader *list)
+void JourneyResults::setJourneyResults(JourneyResultHeader list)
 {
     beginResetModel();
     m_list = list;

@@ -144,7 +144,7 @@ Page {
 
             width: parent.width
             height: (parent.height - titleBar.height - listHead.height) - 10
-            model: journeyResultModel
+            model: fahrplanBackend.journeyresults
             clip: true
             visible: !searchIndicator.visible
             anchors {
@@ -168,35 +168,19 @@ Page {
         }
     }
 
-    ListModel {
-        id: journeyResultModel
-    }
-
     Connections {
         target: fahrplanBackend
         onParserJourneyResult: {
             console.log("Got results");
-            console.log(result.count);
-
+            console.log(fahrplanBackend.journeyresults.count);
             searchIndicatorVisible = false;
+            console.log(fahrplanBackend.journeyresults.departureStation);
+            console.log(fahrplanBackend.journeyresults.departureStation.name);
 
-            journeyStations.text = result.viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation)
-
-            journeyDate.text = result.timeInfo;
-
-            journeyResultModel.clear();
-            for (var i = 0; i < result.count; i++) {
-                var item = result.getItem(i);
-                journeyResultModel.append({
-                    "id": item.id,
-                    "departureTime": item.departureTime,
-                    "arrivalTime": item.arrivalTime,
-                    "trainType": item.trainType,
-                    "duration": item.duration,
-                    "transfers": item.transfers,
-                    "miscInfo": item.miscInfo
-                });
-            }
+            journeyStations.text = fahrplanBackend.journeyresults.viaStation.length == 0 ?
+                        qsTr("<b>%1</b> to <b>%2</b>").arg(fahrplanBackend.journeyresults.departureStation.name).arg(fahrplanBackend.journeyresults.arrivalStation.name) :
+                        qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(fahrplanBackend.journeyresults.departureStation.name).arg(fahrplanBackend.journeyresults.arrivalStation.name).arg(fahrplanBackend.journeyresults.viaStation.name)
+            journeyDate.text = fahrplanBackend.journeyresults.timeInfo;
         }
     }
 

@@ -169,7 +169,8 @@ void Parser131500ComAu::searchJourney(const Station &departureStation, const Sta
 
 void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResult = new JourneyResultHeader();
+    JourneyResultHeader emptyResults;
+    lastJourneyResult = emptyResults;
 
     QBuffer *filebuffer = new QBuffer();
     filebuffer->setData(networkReply->readAll());
@@ -244,19 +245,19 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
         regexp.setMinimal(true);
         regexp.indexIn(headerResult[i].trimmed());
         if (regexp.cap(1) == "From:") {
-            lastJourneyResult->departureStation().name = regexp.cap(2).trimmed();
+            lastJourneyResult.departureStation.name = regexp.cap(2).trimmed();
         }
         if (regexp.cap(1) == "To:") {
-            lastJourneyResult->arrivalStation().name = regexp.cap(2).trimmed();
+            lastJourneyResult.arrivalStation.name = regexp.cap(2).trimmed();
         }
         if (regexp.cap(1) == "When:") {
-            lastJourneyResult->setTimeInfo(regexp.cap(2).trimmed());
+            lastJourneyResult.timeInfo = regexp.cap(2).trimmed();
         }
     }
 
     QRegExp regexp2 = QRegExp("(.*), (\\d\\d) (.*) (\\d\\d\\d\\d)");
     regexp2.setMinimal(true);
-    regexp2.indexIn(lastJourneyResult->timeInfo().trimmed());
+    regexp2.indexIn(lastJourneyResult.timeInfo.trimmed());
     QLocale enLocale = QLocale(QLocale::English, QLocale::UnitedStates);
     int month = 1;
     for (month = 1; month < 10; month++) {
@@ -334,17 +335,18 @@ void Parser131500ComAu::parseSearchJourney(QNetworkReply *networkReply)
             durationStr.sprintf("%02d:%02d", durationLst[0].toInt(), durationLst[1].toInt());
         }
 
-        JourneyResultItem *item = new JourneyResultItem();
-        item->setDate(journeydate);
-        item->setId(QString::number(i));
-        item->setTransfers(QString::number(changes));
-        item->setDuration(durationStr);
-        item->setTrainType(trains.join(", "));
-        item->setDepartureTime(QTime::fromString(departResult[i].trimmed(), "h:map").toString(tr("hh:mm")));
-        item->setArrivalTime(QTime::fromString(arriveResult[i].trimmed(), "h:map").toString(tr("hh:mm")));
-        item->setInternalData1(detailsResult[i]);
+        JourneyResultItem item;
+        item.id = QString::number(i);
+        item.transfers = QString::number(changes);
+        item.duration = durationStr;
+        item.trainType = trains.join(", ");
+        item.departureDateTime.setDate(journeydate);
+        item.departureDateTime.setTime(QTime::fromString(departResult[i].trimmed(), "h:map"));
+        item.arrivalDateTime.setDate(journeydate);
+        item.arrivalDateTime.setTime(QTime::fromString(arriveResult[i].trimmed(), "h:map"));
+        item.internalData1 = detailsResult[i];
 
-        lastJourneyResult->appendItem(item);
+        lastJourneyResult.items << item;
     }
 
     emit journeyResult(lastJourneyResult);
@@ -358,11 +360,11 @@ void Parser131500ComAu::getJourneyDetails(const QString &id)
 
     //Some hafasxml backend provide the detailsdata inline
     //if so our parser already stored them
-    if (lastJourneyResult->items().count() > 0 ) {
+    if (lastJourneyResult.items.count() > 0 ) {
 
-        for (int i = 0; i < lastJourneyResult->items().count(); i++) {
-            JourneyResultItem *item = lastJourneyResult->items().at(i);
-            if (item->id() == id) {
+        for (int i = 0; i < lastJourneyResult.items.count(); i++) {
+            JourneyResultItem item = lastJourneyResult.items.at(i);
+            if (item.id == id) {
                 emit journeyDetailsResult(parseDetails(item));
                 return;
             }
@@ -373,16 +375,16 @@ void Parser131500ComAu::getJourneyDetails(const QString &id)
     return;
 }
 
-JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *journeyitem)
+JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem journeyitem)
 {
-    QString element = journeyitem->internalData1();
+    QString element = journeyitem.internalData1;
     element.replace("am+", "am");
     element.replace("pm+", "pm");
 
     QStringList detailResults = element.split("<linesep>");
     JourneyDetailResultList *results = new JourneyDetailResultList();
 
-    QDate journeydate = journeyitem->date();
+    QDate journeydate = journeyitem.departureDateTime.date();
 
     for (int i = 0; i < detailResults.count(); i++) {
         JourneyDetailResultItem *item = new JourneyDetailResultItem();
@@ -468,7 +470,7 @@ JourneyDetailResultList * Parser131500ComAu::parseDetails(JourneyResultItem *jou
         }
     }
 
-    results->setDuration(journeyitem->duration());
+    results->setDuration(journeyitem.duration);
     if (results->itemcount() > 0) {
         JourneyDetailResultItem *lastitem = results->getItem(results->itemcount() - 1);
         JourneyDetailResultItem *firstitem = results->getItem(0);

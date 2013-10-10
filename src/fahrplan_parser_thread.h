@@ -51,7 +51,7 @@ signals:
 
     //Real ones
     void stationsResult(const StationsList &result);
-    void journeyResult(JourneyResultHeader *result);
+    void journeyResult(const JourneyResultHeader &result);
     void journeyDetailsResult(JourneyDetailResultList *result);
     void timeTableResult(const TimetableEntriesList &result);
     void errorOccured(QString msg);

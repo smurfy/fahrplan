@@ -65,7 +65,6 @@ StopStation &StopStation::operator=(const Station& station)
     return (StopStation&)station;
 }
 
-
 //-------------- TimetableEntry
 
 TimetableEntry::TimetableEntry()
@@ -74,156 +73,14 @@ TimetableEntry::TimetableEntry()
 
 //------------- JourneyResultHeader
 
-JourneyResultList JourneyResultHeader::items()
+JourneyResultHeader::JourneyResultHeader()
 {
-    return m_items;
-}
-
-void JourneyResultHeader::appendItem(JourneyResultItem *item)
-{
-    m_items.append(item);
-}
-
-Station &JourneyResultHeader::departureStation()
-{
-    return m_departureStation;
-}
-
-void JourneyResultHeader::setDepartureStation(const Station &departureStation)
-{
-    m_departureStation = departureStation;
-}
-
-Station &JourneyResultHeader::viaStation()
-{
-    return m_viaStation;
-}
-
-void JourneyResultHeader::setViaStation(const Station &viaStation)
-{
-    m_viaStation = viaStation;
-}
-
-Station &JourneyResultHeader::arrivalStation()
-{
-    return m_arrivalStation;
-}
-
-void JourneyResultHeader::setArrivalStation(const Station &arrivalStation)
-{
-    m_arrivalStation = arrivalStation;
-}
-
-QString JourneyResultHeader::timeInfo() const
-{
-    return m_timeInfo;
-}
-
-void JourneyResultHeader::setTimeInfo(const QString &timeInfo)
-{
-    m_timeInfo = timeInfo;
 }
 
 //------------- JourneyResultItem
 
-QString JourneyResultItem::id() const
+JourneyResultItem::JourneyResultItem()
 {
-    return m_id;
-}
-
-void JourneyResultItem::setId(const QString &id)
-{
-    m_id = id;
-}
-
-QDate JourneyResultItem::date() const
-{
-    return m_date;
-}
-
-void JourneyResultItem::setDate(const QDate &date)
-{
-    m_date = date;
-}
-
-QString JourneyResultItem::departureTime() const
-{
-    return m_departureTime;
-}
-
-void JourneyResultItem::setDepartureTime(const QString &departureTime)
-{
-    m_departureTime = departureTime;
-}
-
-QString JourneyResultItem::arrivalTime() const
-{
-    return m_arrivalTime;
-}
-
-void JourneyResultItem::setArrivalTime(const QString &arrivalTime)
-{
-    m_arrivalTime = arrivalTime;
-}
-
-QString JourneyResultItem::trainType() const
-{
-    return m_trainType;
-}
-
-void JourneyResultItem::setTrainType(const QString &trainType)
-{
-    m_trainType = trainType;
-}
-
-QString JourneyResultItem::duration() const
-{
-    return m_duration;
-}
-
-void JourneyResultItem::setDuration(const QString &duration)
-{
-    m_duration = duration;
-}
-
-QString JourneyResultItem::transfers() const
-{
-    return m_transfers;
-}
-
-void JourneyResultItem::setTransfers(const QString &transfers)
-{
-    m_transfers = transfers;
-}
-
-QString JourneyResultItem::miscInfo() const
-{
-    return m_miscInfo;
-}
-
-void JourneyResultItem::setMiscInfo(const QString &miscInfo)
-{
-    m_miscInfo = miscInfo;
-}
-
-QString JourneyResultItem::internalData1() const
-{
-    return m_internalData1;
-}
-
-void JourneyResultItem::setInternalData1(const QString &internalData1)
-{
-    m_internalData1 = internalData1;
-}
-
-QString JourneyResultItem::internalData2() const
-{
-    return m_internalData2;
-}
-
-void JourneyResultItem::setInternalData2(const QString &internalData2)
-{
-    m_internalData2 = internalData2;
 }
 
 //------------- JourneyDetailResultList

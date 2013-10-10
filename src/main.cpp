@@ -77,12 +77,15 @@ int main(int argc, char *argv[])
     qDebug()<<"Startup";
 
     qRegisterMetaType<Station>();
+    qRegisterMetaType<StopStation>();
     qRegisterMetaType<StationsList>();
     qRegisterMetaType<TimetableEntry>();
     qRegisterMetaType<TimetableEntriesList>();
     qRegisterMetaType<Fahrplan::StationType>();
     qRegisterMetaType<Fahrplan::Mode>();
     qRegisterMetaType<JourneyResultList>();
+    qRegisterMetaType<JourneyResultItem>();
+    qRegisterMetaType<JourneyResultHeader>();
 
     #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
         qDebug()<<"QML";
@@ -102,11 +105,9 @@ int main(int argc, char *argv[])
         qmlRegisterUncreatableType<Trainrestrictions>("Fahrplan", 1, 0, "Trainrestrictions"
             , "Trainrestrictions cannot be created from QML. "
               "Access it through FahrplanBackend.trainrestrictions.");
-        qmlRegisterUncreatableType<Timetable>("Fahrplan", 1, 0, "JourneyResults"
+        qmlRegisterUncreatableType<JourneyResults>("Fahrplan", 1, 0, "JourneyResults"
             , "JourneyResults cannot be created from QML. "
               "Access it through FahrplanBackend.journeyresults.");
-        qmlRegisterType<JourneyResultHeader>("Fahrplan", 1, 0, "JourneyResultHeader");
-        qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
         qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
         qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
 

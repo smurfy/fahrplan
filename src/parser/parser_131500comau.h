@@ -49,8 +49,8 @@ protected:
 //    void parseSearchLaterJourney(QNetworkReply *networkReply);
 //    void parseSearchEalierJourney(QNetworkReply *networkReply);
 private:
-    JourneyResultHeader *lastJourneyResult;
-    JourneyDetailResultList *parseDetails(JourneyResultItem *journeyitem);
+    JourneyResultHeader lastJourneyResult;
+    JourneyDetailResultList *parseDetails(JourneyResultItem journeyitem);
 };
 
 #endif // PARSER_131500COMAU_H

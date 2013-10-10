@@ -464,7 +464,8 @@ void ParserHafasXml::searchJourney(const Station &departureStation, const Statio
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
-    lastJourneyResult = NULL;
+    JourneyResultHeader emptyResult;
+    lastJourneyResult = emptyResult;
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -572,7 +573,8 @@ QString ParserHafasXml::parseExternalIds(const QVariant &id) const
 
 void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResult = new JourneyResultHeader();
+    JourneyResultHeader emptyResult;
+    lastJourneyResult = emptyResult;
     journeyDetailInlineData.clear();
 
     QString xmlRawtext = networkReply->readAll();
@@ -595,15 +597,15 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
             QDomNode depStation = overviewNode.namedItem("Departure").namedItem("BasicStop").namedItem("Station");
             QDomNode arrStation = overviewNode.namedItem("Arrival").namedItem("BasicStop").namedItem("Station");
 
-            lastJourneyResult->departureStation().name = getAttribute(depStation, "name");
-            lastJourneyResult->departureStation().latitude = getAttribute(depStation, "y").toInt();
-            lastJourneyResult->departureStation().longitude = getAttribute(depStation, "x").toInt();
-            lastJourneyResult->departureStation().id = getAttribute(depStation, "externalId");
+            lastJourneyResult.departureStation.name = getAttribute(depStation, "name");
+            lastJourneyResult.departureStation.latitude = getAttribute(depStation, "y").toInt();
+            lastJourneyResult.departureStation.longitude = getAttribute(depStation, "x").toInt();
+            lastJourneyResult.departureStation.id = getAttribute(depStation, "externalId");
 
-            lastJourneyResult->arrivalStation().name = getAttribute(arrStation, "name");
-            lastJourneyResult->arrivalStation().latitude = getAttribute(arrStation, "y").toInt();
-            lastJourneyResult->arrivalStation().longitude = getAttribute(arrStation, "x").toInt();
-            lastJourneyResult->arrivalStation().id = getAttribute(arrStation, "externalId");
+            lastJourneyResult.arrivalStation.name = getAttribute(arrStation, "name");
+            lastJourneyResult.arrivalStation.latitude = getAttribute(arrStation, "y").toInt();
+            lastJourneyResult.arrivalStation.longitude = getAttribute(arrStation, "x").toInt();
+            lastJourneyResult.arrivalStation.id = getAttribute(arrStation, "externalId");
 
             QDomNodeList products = overviewNode.namedItem("Products").childNodes();
             QStringList productNames;
@@ -614,15 +616,14 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
             }
 
             QDate date = QDate::fromString(overviewNode.namedItem("Date").toElement().text().trimmed(), "yyyyMMdd");
-            JourneyResultItem *item = new JourneyResultItem();
-            item->setDate(date);
-            item->setId(getAttribute(node, "id"));
-            item->setTransfers(overviewNode.namedItem("Transfers").toElement().text());
-            item->setDuration(cleanHafasDate(overviewNode.namedItem("Duration").namedItem("Time").toElement().text().trimmed()));
-            item->setMiscInfo("");
-            item->setTrainType(productNames.join(", ").trimmed());
-            item->setDepartureTime(cleanHafasDate(overviewNode.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Time").toElement().text().trimmed()));
-            item->setArrivalTime(cleanHafasDate(overviewNode.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Time").toElement().text().trimmed()));
+            JourneyResultItem item;
+            item.id = getAttribute(node, "id");
+            item.transfers = overviewNode.namedItem("Transfers").toElement().text();
+            item.duration = cleanHafasDate(overviewNode.namedItem("Duration").namedItem("Time").toElement().text().trimmed());
+            item.miscInfo = "";
+            item.trainType = productNames.join(", ").trimmed();
+            item.departureDateTime = cleanHafasDateTime(overviewNode.namedItem("Departure").namedItem("BasicStop").namedItem("Dep").namedItem("Time").toElement().text().trimmed(), date);
+            item.arrivalDateTime = cleanHafasDateTime(overviewNode.namedItem("Arrival").namedItem("BasicStop").namedItem("Arr").namedItem("Time").toElement().text().trimmed(), date);
 
             bool hasInline = false;
             QString internalData1 = getAttribute(overviewNode.namedItem("XMLHandle"), "url").trimmed();
@@ -634,23 +635,23 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
             if (internalData1.count() > 0) {
                internalData1.remove(0, internalData1.indexOf("query.exe") + 9);
                internalData1.prepend(baseUrl);
-               item->setInternalData1(internalData1);
+               item.internalData1 = internalData1;
             } else {
                hasInline = true;
             }
 
             if (hasInline)
             {
-               journeyDetailRequestData.id = item->id();
-               journeyDetailRequestData.date = item->date();
-               journeyDetailRequestData.duration = item->duration();
+               journeyDetailRequestData.id = item.id;
+               journeyDetailRequestData.date = item.departureDateTime.date();
+               journeyDetailRequestData.duration = item.duration;
                JourneyDetailResultList *results = internalParseJourneyDetails(xmlRawtext.toAscii());
                journeyDetailInlineData.append(results);
             }
 
-            lastJourneyResult->setTimeInfo(date.toString());
+            lastJourneyResult.timeInfo = date.toString();
 
-            lastJourneyResult->appendItem(item);
+            lastJourneyResult.items << item;
         }
     }
 
@@ -747,16 +748,16 @@ void ParserHafasXml::getJourneyDetails(const QString &id)
 
     //It seams we don't have the detailsdata internaly stored,
     //So we fetch them remotly.
-    if (lastJourneyResult) {
+    if (lastJourneyResult.items.count() > 0) {
 
-        for (int i = 0; i < lastJourneyResult->items().count(); i++) {
-            JourneyResultItem *item = lastJourneyResult->items().at(i);
-            if (item->id() == id) {
+        for (int i = 0; i < lastJourneyResult.items.count(); i++) {
+            JourneyResultItem item = lastJourneyResult.items.at(i);
+            if (item.id == id) {
                 currentRequestState = FahrplanNS::journeyDetailsRequest;
-                journeyDetailRequestData.id = item->id();
-                journeyDetailRequestData.date = item->date();
-                journeyDetailRequestData.duration = item->duration();
-                sendHttpRequest(item->internalData1(), "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>");
+                journeyDetailRequestData.id = item.id;
+                journeyDetailRequestData.date = item.departureDateTime.date();
+                journeyDetailRequestData.duration = item.duration;
+                sendHttpRequest(item.internalData1, "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>");
                 return;
             }
         }

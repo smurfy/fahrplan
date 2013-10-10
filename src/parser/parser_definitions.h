@@ -87,86 +87,39 @@ typedef QList<TimetableEntry> TimetableEntriesList;
 Q_DECLARE_METATYPE(TimetableEntry)
 Q_DECLARE_METATYPE(TimetableEntriesList)
 
-class JourneyResultItem : public QObject
+struct JourneyResultItem
 {
-    Q_OBJECT
-    Q_PROPERTY(QString id READ id WRITE setId)
-    Q_PROPERTY(QDate date READ date WRITE setDate)
-    Q_PROPERTY(QString departureTime READ departureTime WRITE setDepartureTime)
-    Q_PROPERTY(QString arrivalTime READ arrivalTime WRITE setArrivalTime)
-    Q_PROPERTY(QString trainType READ trainType WRITE setTrainType)
-    Q_PROPERTY(QString duration READ duration WRITE setDuration)
-    Q_PROPERTY(QString transfers READ transfers WRITE setTransfers)
-    Q_PROPERTY(QString miscInfo READ miscInfo WRITE setMiscInfo)
+    QString id;
+    QDateTime departureDateTime;
+    QDateTime arrivalDateTime;
+    QString trainType;
+    QString duration;
+    QString transfers;
+    QString miscInfo;
+    QString internalData1;
+    QString internalData2;
 
-    //Some Internal Data fields, primarly to store additional data per backend, like the details url
-    Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
-    Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
-
-    public:
-        QString id() const;
-        void setId(const QString &);
-        QDate date() const;
-        void setDate(const QDate &);
-        QString departureTime() const;
-        void setDepartureTime(const QString &);
-        QString arrivalTime() const;
-        void setArrivalTime(const QString &);
-        QString trainType() const;
-        void setTrainType(const QString &);
-        QString duration() const;
-        void setDuration(const QString &);
-        QString transfers() const;
-        void setTransfers(const QString &);
-        QString miscInfo() const;
-        void setMiscInfo(const QString &);
-        QString internalData1() const;
-        void setInternalData1(const QString &);
-        QString internalData2() const;
-        void setInternalData2(const QString &);
-    private:
-        QString m_id;
-        QDate m_date;
-        QString m_departureTime;
-        QString m_arrivalTime;
-        QString m_trainType;
-        QString m_duration;
-        QString m_transfers;
-        QString m_miscInfo;
-        QString m_internalData1;
-        QString m_internalData2;
+public:
+    JourneyResultItem();
 };
 
-typedef QList<JourneyResultItem*> JourneyResultList;
+typedef QList<JourneyResultItem> JourneyResultList;
+Q_DECLARE_METATYPE(JourneyResultItem)
 Q_DECLARE_METATYPE(JourneyResultList)
 
-class JourneyResultHeader : public QObject
+struct JourneyResultHeader
 {
-    Q_OBJECT
-    Q_PROPERTY(Station departureStation READ departureStation WRITE setDepartureStation)
-    Q_PROPERTY(Station viaStation READ viaStation WRITE setViaStation)
-    Q_PROPERTY(Station arrivalStation READ arrivalStation WRITE setArrivalStation)
-    Q_PROPERTY(QString timeInfo READ timeInfo WRITE setTimeInfo)
-    Q_PROPERTY(JourneyResultList items READ items)
+    Station departureStation;
+    Station arrivalStation;
+    Station viaStation;
+    QString timeInfo;
+    JourneyResultList items;
 
-    public:
-        void appendItem(JourneyResultItem *item);
-        Station &departureStation();
-        void setDepartureStation(const Station &);
-        Station &arrivalStation();
-        void setArrivalStation(const Station &);
-        Station &viaStation();
-        void setViaStation(const Station &);
-        QString timeInfo() const;
-        void setTimeInfo(const QString &);
-        JourneyResultList items();
-    private:
-        JourneyResultList m_items;
-        Station m_departureStation;
-        Station m_viaStation;
-        Station m_arrivalStation;
-        QString m_timeInfo;
+public:
+    JourneyResultHeader();
 };
+
+Q_DECLARE_METATYPE(JourneyResultHeader)
 
 class JourneyDetailResultItem : public QObject
 {

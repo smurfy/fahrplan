@@ -597,7 +597,7 @@ Page {
            the pagestack is popped so we use a timer here if the pagestack is busy.
          */
         onParserJourneyResult: {
-            if (result.count <= 0) {
+            if (fahrplanBackend.journeyresults.count <= 0) {
                 banner.text = qsTr("No results found");
                 banner.show();
             }

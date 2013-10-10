@@ -83,7 +83,7 @@ void Fahrplan::bindParserSignals()
 {
     if (m_parser_manager->getParser()) {
         connect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsList)), this, SLOT(onStationSearchResults(StationsList)));
-        connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultHeader*)), this, SLOT(onJourneyResult(JourneyResultHeader*)));
+        connect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultHeader)), this, SLOT(onJourneyResult(JourneyResultHeader)));
         connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
         connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
         connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimetableEntriesList)), this, SLOT(onTimetableResult(TimetableEntriesList)));
@@ -338,7 +338,7 @@ void Fahrplan::onTimetableResult(const TimetableEntriesList &timetableEntries)
     emit parserTimeTableResult();
 }
 
-void Fahrplan::onJourneyResult(JourneyResultHeader *result)
+void Fahrplan::onJourneyResult(const JourneyResultHeader &result)
 {
     m_journeyresults->setJourneyResults(result);
 
