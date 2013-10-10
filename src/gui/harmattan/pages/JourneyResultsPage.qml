@@ -174,12 +174,9 @@ Page {
             console.log("Got results");
             console.log(fahrplanBackend.journeyresults.count);
             searchIndicatorVisible = false;
-            console.log(fahrplanBackend.journeyresults.departureStation);
-            console.log(fahrplanBackend.journeyresults.departureStation.name);
-
-            journeyStations.text = fahrplanBackend.journeyresults.viaStation.length == 0 ?
-                        qsTr("<b>%1</b> to <b>%2</b>").arg(fahrplanBackend.journeyresults.departureStation.name).arg(fahrplanBackend.journeyresults.arrivalStation.name) :
-                        qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(fahrplanBackend.journeyresults.departureStation.name).arg(fahrplanBackend.journeyresults.arrivalStation.name).arg(fahrplanBackend.journeyresults.viaStation.name)
+            journeyStations.text = fahrplanBackend.journeyresults.viaStationName.length == 0 ?
+                        qsTr("<b>%1</b> to <b>%2</b>").arg(fahrplanBackend.journeyresults.departureStationName).arg(fahrplanBackend.journeyresults.arrivalStationName) :
+                        qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(fahrplanBackend.journeyresults.departureStationName).arg(fahrplanBackend.journeyresults.arrivalStationName).arg(fahrplanBackend.journeyresults.viaStationName)
             journeyDate.text = fahrplanBackend.journeyresults.timeInfo;
         }
     }

@@ -83,22 +83,22 @@ QVariant JourneyResults::data(const QModelIndex &index, int role) const
     }
 }
 
-const Station &JourneyResults::departureStation() const
+const QString &JourneyResults::departureStationName() const
 {
-    return m_list.departureStation;
+    return m_list.departureStation.name;
 }
 
-const Station &JourneyResults::arrivalStation() const
+const QString &JourneyResults::arrivalStationName() const
 {
-    return m_list.arrivalStation;
+    return m_list.arrivalStation.name;
 }
 
-const Station &JourneyResults::viaStation() const
+const QString &JourneyResults::viaStationName() const
 {
-    return m_list.viaStation;
+    return m_list.viaStation.name;
 }
 
-const QString JourneyResults::timeInfo() const
+const QString &JourneyResults::timeInfo() const
 {
     return m_list.timeInfo;
 }

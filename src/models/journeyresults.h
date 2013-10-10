@@ -28,9 +28,9 @@ class JourneyResults: public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-    Q_PROPERTY(Station departureStation READ departureStation)
-    Q_PROPERTY(Station viaStation READ viaStation)
-    Q_PROPERTY(Station arrivalStation READ arrivalStation)
+    Q_PROPERTY(QString departureStationName READ departureStationName)
+    Q_PROPERTY(QString viaStationName READ viaStationName)
+    Q_PROPERTY(QString arrivalStationName READ arrivalStationName)
     Q_PROPERTY(QString timeInfo READ timeInfo)
 
 public:
@@ -52,10 +52,10 @@ public:
     int count() const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Id) const;
-    const Station &departureStation() const;
-    const Station &arrivalStation() const;
-    const Station &viaStation() const;
-    const QString timeInfo() const;
+    const QString &departureStationName() const;
+    const QString &viaStationName() const;
+    const QString &arrivalStationName() const;
+    const QString &timeInfo() const;
 
     void setJourneyResults(JourneyResultHeader list);
 
