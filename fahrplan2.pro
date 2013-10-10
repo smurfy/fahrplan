@@ -62,7 +62,7 @@ RESOURCES += \
 
 INCLUDEPATH += src
 # Zlib todo for other systems ugly hack
-!unix: INCLUDEPATH += C:/QtSDK/QtSources/4.8.0/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib G:/SDK/QTMobile/QtSources/4.8.1/src/3rdparty/zlib
+!unix: INCLUDEPATH += C:/QtSDK/Nokia/QtSources/4.8.1/src/3rdparty/zlib C:/QtSDK/QtSources/4.8.1/src/3rdparty/zlib G:/SDK/QTMobile/QtSources/4.8.1/src/3rdparty/zlib
 unix:!symbian: LIBS += -lz
 
 HEADERS += \
