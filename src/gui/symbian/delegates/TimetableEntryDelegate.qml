@@ -57,7 +57,7 @@ Rectangle {
 
             Label {
                 id: lbl_time
-                text: Qt.formatTime(model.time, qsTr("hh:mm"))
+                text: Qt.formatTime(model.time, Qt.DefaultLocaleShortDate)
                 font.bold: true
                 width: (parent.width - grid.spacing) / 3
                 platformInverted: appWindow.platformInverted

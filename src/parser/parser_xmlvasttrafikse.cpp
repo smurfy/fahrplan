@@ -425,8 +425,9 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                 journeyEnd = journeyEnd.addDays(1);
 
             jritem->setDate(journeyStart.date());
-            jritem->setDepartureTime(journeyStart.time().toString(tr("hh:mm")));
-            jritem->setArrivalTime(journeyEnd.time().toString(tr("hh:mm")));
+            const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
+            jritem->setDepartureTime(journeyStart.time().toString(timeFormat));
+            jritem->setArrivalTime(journeyEnd.time().toString(timeFormat));
             int diffTime = journeyStart.secsTo(journeyEnd);
             if (diffTime < 0) diffTime += 86400;
             jritem->setDuration(tr("%1:%2").arg(diffTime / 3600).arg(QString::number(diffTime / 60 % 60), 2, '0'));

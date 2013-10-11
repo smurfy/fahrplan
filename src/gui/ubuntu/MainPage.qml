@@ -281,7 +281,7 @@ Page {
                 ListItems.Subtitled {
                     id: timePickerButton
                     text: qsTr("Time")
-                    subText: Qt.formatTime(fahrplanBackend.dateTime, qsTr("hh:mm"))
+                    subText: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
                     anchors {
                         left: parent.left
                         right: parent.right

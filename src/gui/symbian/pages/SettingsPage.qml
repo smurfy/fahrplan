@@ -78,6 +78,18 @@ Page {
             }
         }
         SwitchLabel {
+            title: qsTr("Compact calendar entries")
+            subtitle: qsTr("Use shorter text format in the calendar event description")
+            platformInverted: appWindow.platformInverted
+
+            onCheckedChanged: {
+                fahrplanBackend.storeSettingsValue("compactCalendarEntries", checked);
+            }
+            Component.onCompleted: {
+                checked = fahrplanBackend.getSettingsValue("compactCalendarEntries", false);
+            }
+        }
+        SwitchLabel {
             title: qsTr("Inverted style")
             subtitle: qsTr("Use light color scheme")
             platformInverted: appWindow.platformInverted

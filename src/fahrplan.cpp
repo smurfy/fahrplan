@@ -195,6 +195,12 @@ void Fahrplan::setDateTime(const QDateTime &dateTime)
     emit dateTimeChanged();
 }
 
+bool Fahrplan::timeFormat24h() const
+{
+    // A hacky way to detect whether locale uses 24 or 12 hour time format.
+    return !QLocale().timeFormat().contains("ap", Qt::CaseInsensitive);
+}
+
 void Fahrplan::setStation(Fahrplan::StationType type, const Station &station)
 {
     switch (type) {

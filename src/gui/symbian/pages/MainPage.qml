@@ -273,7 +273,7 @@ Page {
                 id: timePickerButton
 
                 titleText: qsTr("Time")
-                subTitleText: Qt.formatTime(fahrplanBackend.dateTime, qsTr("hh:mm"))
+                subTitleText: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
                 width: parent.width
                 visible: !fromNowSwitch.checked
                 platformInverted: appWindow.platformInverted
@@ -481,12 +481,7 @@ Page {
         acceptButtonText: qsTr("Ok")
         rejectButtonText: qsTr("Cancel")
         fields: DateTime.Hours | DateTime.Minutes
-        hourMode: {
-            if (qsTr("hh:mm").toLowerCase().indexOf("ap") < 0)
-                return DateTime.TwentyFourHours;
-            else
-                return DateTime.TwelveHours;
-        }
+        hourMode: fahrplanBackend.timeFormat24h() ? DateTime.TwentyFourHours : DateTime.TwelveHours
         platformInverted: appWindow.platformInverted
 
         onAccepted: {
