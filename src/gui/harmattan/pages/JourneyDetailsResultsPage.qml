@@ -125,7 +125,7 @@ Page {
                 topMargin: 10
             }
             delegate: JourneyDetailsDelegate {
-                timeWidth: dummyTime.paintedWidth + 8
+                timeWidth: dummyTime.paintedWidth + 10
             }
         }
 
@@ -282,5 +282,6 @@ Page {
     Label {
         id: dummyTime
         text: Qt.formatTime(new Date(0), Qt.DefaultLocaleShortDate)
+        visible: false
     }
 }
