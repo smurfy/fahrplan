@@ -24,6 +24,7 @@ Item {
     id: delegateItem
 
     property ListView listView: ListView.view
+    property int timeWidth
 
     width: ListView.view.width
     height: model.isStation ? model.isTrain ? item_train.height + item_station.height : item_station.height : model.isTrain ? item_train.height : 0
@@ -62,7 +63,7 @@ Item {
                  radius: 15
                  anchors {
                      left: parent.left
-                     leftMargin: 70
+                     leftMargin: timeWidth ? timeWidth : 70
                      verticalCenter: parent.verticalCenter
                  }
 

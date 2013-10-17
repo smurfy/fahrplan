@@ -34,6 +34,22 @@ using namespace bb::pim::calendar;
 QTM_USE_NAMESPACE
 #endif
 
+QString formatStation(const QDateTime dateTime, const QString &stationName, const QString &info = QString())
+{
+    QString station;
+    if (info.isEmpty())
+        station = stationName;
+    else
+        station = CalendarThreadWrapper::tr("%1 / %2", "STATION / PLATFORM").arg(stationName, info);
+
+    return CalendarThreadWrapper::tr("%1 %2   %3", "DATE TIME   STATION").arg(
+               // TODO: Don't force QLocale::ShortFormat for date, but make it configurable.
+               dateTime.toString(QLocale().dateFormat(QLocale::ShortFormat)),
+               // Always use short format for time, else you get something like "12:35:00 t".
+               dateTime.toString(QLocale().timeFormat(QLocale::ShortFormat)),
+               station);
+}
+
 CalendarThreadWrapper::CalendarThreadWrapper(JourneyDetailResultList *result, QObject *parent) :
     QObject(parent), m_result(result)
 {
@@ -52,34 +68,47 @@ void CalendarThreadWrapper::addToCalendar()
     QString calendarEntryDesc;
 
     if (viaStation.isEmpty())
-        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation());
+        calendarEntryTitle = tr("%1 to %2").arg(m_result->departureStation(),
+                                                m_result->arrivalStation());
     else
-        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation()).arg(m_result->arrivalStation()).arg(viaStation);
+        calendarEntryTitle = tr("%1 via %3 to %2").arg(m_result->departureStation(),
+                                                       m_result->arrivalStation(),
+                                                       viaStation);
 
-    if (!m_result->info().isEmpty()) {
-        calendarEntryDesc.append(m_result->info() + "\n");
-    }
+    if (!m_result->info().isEmpty())
+        calendarEntryDesc.append(m_result->info()).append("\n");
 
+    const bool compactFormat = settings.value("compactCalendarEntries", false).toBool();
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
 
-        calendarEntryDesc.append(item->departureDateTime().date().toString("dd.MM.yyyy") + " " + item->departureDateTime().time().toString("HH:mm") + " " + item->departureStation());
-        if (!item->departureInfo().isEmpty()) {
-            calendarEntryDesc.append("/" + item->departureInfo().replace(tr("Pl."),"").trimmed());
-        }
+        if (!compactFormat && !item->train().isEmpty())
+            calendarEntryDesc.append("--- ").append(item->train()).append(" ---\n");
+
+        calendarEntryDesc.append(formatStation(item->departureDateTime(),
+                                               item->departureStation(),
+                                               item->departureInfo()));
         calendarEntryDesc.append("\n");
-        if (!item->train().isEmpty()) {
-            calendarEntryDesc.append("--- " + item->train() + " ---\n");
-        }
-        calendarEntryDesc.append(item->arrivalDateTime().date().toString("dd.MM.yyyy") + " " + item->arrivalDateTime().time().toString("HH:mm") + " " + item->arrivalStation());
-        if (!item->arrivalInfo().isEmpty()) {
-          calendarEntryDesc.append("/" + item->arrivalInfo().replace(tr("Pl."),"").trimmed());
-        }
+
+        if (compactFormat && !item->train().isEmpty())
+            calendarEntryDesc.append("--- ").append(item->train()).append(" ---\n");
+
+        calendarEntryDesc.append(formatStation(item->arrivalDateTime(),
+                                               item->arrivalStation(),
+                                               item->arrivalInfo()));
         calendarEntryDesc.append("\n");
+
         if (!item->info().isEmpty()) {
-            calendarEntryDesc.append(item->info() + "\n");
+            calendarEntryDesc.append(item->info()).append("\n");
         }
+
+        if (!compactFormat)
+            calendarEntryDesc.append("\n");
     }
+
+    if (!compactFormat)
+        calendarEntryDesc.append(
+            tr("-- \nAdded by Fahrplan. Please, re-check the information before your journey."));
 
 #ifdef BUILD_FOR_BLACKBERRY
 

@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
     // Install translations
     QTranslator translator;
-    translator.load(QString("fahrplan_%1").arg(QLocale::system().name()), ":/translations");
+    translator.load(QString("fahrplan_%1").arg(QLocale().name()), ":/translations");
     app->installTranslator(&translator);
 
     qDebug()<<"Startup";

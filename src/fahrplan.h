@@ -96,6 +96,8 @@ class Fahrplan : public QObject
         QDateTime dateTime() const;
         void setDateTime(const QDateTime &dateTime);
 
+        Q_INVOKABLE bool timeFormat24h() const;
+
     public slots:
         QStringList getParserList();
         void setParser(int index);
