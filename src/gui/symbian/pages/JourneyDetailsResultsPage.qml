@@ -288,5 +288,6 @@ Page {
     Label {
         id: dummyTime
         text: Qt.formatTime(new Date(0), Qt.DefaultLocaleShortDate)
+        visible: false
     }
 }
