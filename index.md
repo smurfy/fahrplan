@@ -7,7 +7,7 @@ Fahrplan
 ========
 
 A journey planner and timetable application for a lot of train and
-public transport lines in Europe and Australia.
+public transport lines in Europe, USA and Australia.
 
 Supported Operating Systems/Devices:
 ------------------------------------
@@ -39,8 +39,7 @@ Currently Supported Providers:
 * rejseplanen.dk (Denmark) - supports via station and GPS location.
 * oebb.at (Austria) - supports via station and GPS location.
 * reiseinfo.no (Norway) - supports GPS location.
-* vasttrafik.se (western Sweden) - supports via station and GPS
-  location.
+* vasttrafik.se (western Sweden) - supports via station and GPS location.
 * ptv.vic.gov.au (Victoria, Australia)
 * Sydney (Australia)
 * SF Bay (SanFrancisco, USA)
