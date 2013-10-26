@@ -23,7 +23,7 @@ import Fahrplan 1.0
 import "../components"
 
 Page {
-    id: root
+    id: settingsPage
 
     Rectangle {
         id: header
@@ -56,81 +56,103 @@ Page {
         }
     }
 
-    Column {
+    Flickable {
+        id: flickable
+
+        width: settingsPage.width
+        height: settingsPage.height - header.height - 20
+        flickableDirection: Flickable.VerticalFlick
+        clip: true
+        contentWidth: settingsPage.width
+        contentHeight: settingsContainer.height
+
         anchors {
             top: header.bottom
-            topMargin: UiConstants.DefaultMargin
-            left: parent.left
-            right: parent.right
+            topMargin: 10
         }
 
-        SwitchLabel {
-            title: qsTr("GPS location support")
-            subtitle: checked ? qsTr("Opted-in") : qsTr("Opted-out")
+        Item {
+            id: settingsContainer
+            width: parent.width
+            height: settingsList.height + aboutButton.height + UiConstants.DefaultMargin
 
-            onCheckedChanged: {
-                fahrplanBackend.storeSettingsValue("enableGps", checked);
+            Column {
+                id: settingsList
+                anchors {
+                    left: parent.left
+                }
+                width: parent.width
+
+                SwitchLabel {
+                    title: qsTr("GPS location support")
+                    subtitle: checked ? qsTr("Opted-in") : qsTr("Opted-out")
+
+                    onCheckedChanged: {
+                        fahrplanBackend.storeSettingsValue("enableGps", checked);
+                    }
+                    Component.onCompleted: {
+                        checked = fahrplanBackend.getSettingsValue("enableGps", true);
+                    }
+                }
+                SwitchLabel {
+                    title: qsTr("Compact calendar entries")
+                    subtitle: qsTr("Use shorter text format in the calendar event description")
+
+                    onCheckedChanged: {
+                        fahrplanBackend.storeSettingsValue("compactCalendarEntries", checked);
+                    }
+                    Component.onCompleted: {
+                        checked = fahrplanBackend.getSettingsValue("compactCalendarEntries", false);
+                    }
+                }
+                SwitchLabel {
+                    title: qsTr("Inverted style")
+                    subtitle: qsTr("Use dark color scheme")
+
+                    onCheckedChanged: {
+                        theme.inverted = checked;
+                        fahrplanBackend.storeSettingsValue("invertedStyle", theme.inverted);
+                    }
+                    Component.onCompleted: {
+                        checked = theme.inverted;
+                    }
+                }
+                SwitchLabel {
+                    title: qsTr("Favorites star position (requires restart)")
+                    subtitle: checked ? qsTr("Right") : qsTr("Left")
+
+                    onCheckedChanged: {
+                        fahrplanBackend.storeSettingsValue("favStarIconPos", checked);
+                    }
+
+                    Component.onCompleted: {
+                        checked = fahrplanBackend.getSettingsValue("favStarIconPos", false);
+                    }
+                }
+                SelectLabel {
+                    title: qsTr("Add journeys to calendar")
+                    subtitle: calendarManager.selectedCalendarName
+                    onClicked: {
+                        calendarsList.selectedIndex = calendarManager.selectedIndex;
+                        calendarsList.open();
+                    }
+                }
             }
-            Component.onCompleted: {
-                checked = fahrplanBackend.getSettingsValue("enableGps", true);
+
+            Button {
+                id: aboutButton
+
+                text: qsTr("About")
+                anchors {
+                    top: settingsList.bottom
+                    topMargin: UiConstants.DefaultMargin
+                    horizontalCenter: parent.horizontalCenter
+                }
+
+                onClicked: pageStack.push(aboutPage);
+
             }
         }
-        SwitchLabel {
-            title: qsTr("Compact calendar entries")
-            subtitle: qsTr("Use shorter text format in the calendar event description")
-
-            onCheckedChanged: {
-                fahrplanBackend.storeSettingsValue("compactCalendarEntries", checked);
-            }
-            Component.onCompleted: {
-                checked = fahrplanBackend.getSettingsValue("compactCalendarEntries", false);
-            }
-        }
-        SwitchLabel {
-            title: qsTr("Inverted style")
-            subtitle: qsTr("Use dark color scheme")
-
-            onCheckedChanged: {
-                theme.inverted = checked;
-                fahrplanBackend.storeSettingsValue("invertedStyle", theme.inverted);
-            }
-            Component.onCompleted: {
-                checked = theme.inverted;
-            }
-        }
-        SwitchLabel {
-            title: qsTr("Favorites star position (requires restart)")
-            subtitle: checked ? qsTr("Right") : qsTr("Left")
-
-            onCheckedChanged: {
-                fahrplanBackend.storeSettingsValue("favStarIconPos", checked);
-            }
-
-            Component.onCompleted: {
-                checked = fahrplanBackend.getSettingsValue("favStarIconPos", false);
-            }
-        }
-        SelectLabel {
-            title: qsTr("Add journeys to calendar")
-            subtitle: calendarManager.selectedCalendarName
-            onClicked: {
-                calendarsList.selectedIndex = calendarManager.selectedIndex;
-                calendarsList.open();
-            }
-        }
-    }
-
-    Button {
-        id: aboutButton
-
-        text: qsTr("About")
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: UiConstants.DefaultMargin
-            horizontalCenter: parent.horizontalCenter
-        }
-
-        onClicked: pageStack.push(aboutPage);
     }
 
     SelectionDialog {
@@ -151,6 +173,10 @@ Page {
     Component {
         id: aboutPage
         AboutPage {}
+    }
+
+    ScrollDecorator {
+        flickableItem: flickable
     }
 
     tools: ToolBarLayout {
