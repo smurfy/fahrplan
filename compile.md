@@ -1,3 +1,8 @@
+---
+layout: default
+title: Compiling fahrplan from source
+---
+
 Compiling fahrplan from source
 ==============================
 

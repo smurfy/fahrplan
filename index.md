@@ -34,8 +34,7 @@ Currently Supported Providers:
 ------------------------------
 
 * bahn.de (Germany and Europe) - supports via station and GPS location.
-* sbb.ch (Switzerland) - support via station, timetable with direction
-  and GPS location.
+* sbb.ch (Switzerland) - support via station, timetable with direction and GPS location.
 * 131500.com.au (NSW, Australia) - only journey planing supported.
 * rejseplanen.dk (Denmark) - supports via station and GPS location.
 * oebb.at (Austria) - supports via station and GPS location.
