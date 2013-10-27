@@ -152,8 +152,8 @@ Page {
                 width: parent.width / 2
                 platformInverted: appWindow.platformInverted
                 anchors {
-                    bottom: parent.bottom
-                    bottomMargin: platformStyle.paddingLarge
+                    top: settingsList.bottom
+                    topMargin: platformStyle.paddingLarge
                     horizontalCenter: parent.horizontalCenter
                 }
 
