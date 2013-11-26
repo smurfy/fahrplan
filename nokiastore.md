@@ -13,7 +13,10 @@ as direct download and if necessary a documentation how to install them.
 
 Background
 ==========
-```
+
+I recently received the following mail, announcing the drop of support.
+
+
     Dear Nokia Developer,
 
     With the growing business opportunities available on the Asha and
@@ -39,4 +42,4 @@ Background
     Best regards,
 
     The Nokia Developer Team
-```
+
