@@ -1,0 +1,8 @@
+install:
+  - sudo apt-get update
+  - sudo apt-get install libqt4-dev qt4-qmake debhelper libqt4-dev libqmsystem2-dev libqtm-dev, aegis-builder applauncherd-dev pkg-config zlib1g-dev
+
+script:
+  - qmake -project
+  - qmake fahrplan2.pro
+  - make
