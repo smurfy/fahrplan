@@ -1,3 +1,6 @@
+BlackBerry World ChangeLog
+==========================
+
 2.0.15
 ------
 
@@ -23,6 +26,7 @@ Maintenance release that contains one small UI improvement: the number
 of items displayed in context menus and selection dialogs is now based
 on the screen height instead of hardcoded value (was 5 for portrait and
 3 for landscape orientation).
+
 
 2.0.14
 ------
