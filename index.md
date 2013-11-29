@@ -40,12 +40,12 @@ Currently Supported Providers:
 * oebb.at (Austria) - supports via station and GPS location.
 * reiseinfo.no (Norway) - supports GPS location.
 * vasttrafik.se (western Sweden) - supports via station and GPS location.
-* ptv.vic.gov.au (Victoria, Australia)
-* Sydney (Australia)
-* SF Bay (SanFrancisco, USA)
-* London (London, United Kingdom)
-* Ireland
-* Dubai
+* ptv.vic.gov.au (Victoria, Australia) - supports via station.
+* Sydney (Australia) - supports via station.
+* SF Bay (SanFrancisco, USA) - supports via station.
+* London (London, United Kingdom) - supports via station.
+* Ireland - supports via station.
+* Dubai - supports via station.
 
 Installation:
 -------------
