@@ -1,3 +1,21 @@
+2.0.15
+------
+
+New backends:
+- ptv.vic.gov.au (Victoria, Australia) - supports via station;
+- Sydney (Australia) - supports via station;
+- SF Bay (SanFrancisco, USA) - supports via station;
+- London (London, United Kingdom) - supports via station;
+- Ireland - supports via station;
+- Dubai - supports via station.
+
+New features and improvements:
+- date and time is now formatted based on the phone language;
+- it is now possible to switch between old and new (more compact, introduced
+  in 2.0.14) formats of description in calendar events.
+- few small UI improvements.
+
+
 2.0.14.1
 --------
 
