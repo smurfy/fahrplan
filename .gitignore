@@ -1,10 +1,11 @@
 /.make.cache
 /Makefile
 /bld.inf
-/fahrplan2*
 /debian/
+/fahrplan2*
 /moc/
 /obj/
 /rcc/
-/tmp/
 /run_on_ubuntu_touch.sh
+/tmp/
+/translations/*.qm
