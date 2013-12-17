@@ -371,3 +371,17 @@ symbian|simulator {
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
 qtcAddDeployment()
+
+# We need to generate translations before building.
+# Either way, translations_res.qrc won't compile.
+translations.name = Translations
+translations.input = TRANSLATIONS
+translations.output = $$_PRO_FILE_PWD_/translations/${QMAKE_FILE_BASE}.qm
+freebsd-* {
+    translations.commands = $$[QT_INSTALL_BINS]/lrelease-qt$${QT_MAJOR_VERSION} ${QMAKE_FILE_IN}
+} else {
+    translations.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN}
+}
+translations.CONFIG = no_link
+QMAKE_EXTRA_COMPILERS += translations
+PRE_TARGETDEPS += compiler_translations_make_all
