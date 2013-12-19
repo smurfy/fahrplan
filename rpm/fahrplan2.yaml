@@ -1,0 +1,26 @@
+Name: fahrplan2
+Summary: Public transportation application
+Version: 2.0.15
+Release: 1
+Group: Location/Location Adaptation
+License: GPL
+URL: http://fahrplan.smurfy.de
+Sources:
+- '%{name}-%{version}.tar.bz2'
+Description: |
+  A Journey planner/Railway Time table for many train lines in europe and australia.
+Configure: none
+Builder: qtc5
+PkgConfigBR:
+- sailfishapp >= 0.0.10
+- Qt5Core
+- Qt5Qml
+- Qt5Quick
+Requires:
+- sailfishsilica-qt5 >= 0.10.9
+Files:
+- '%{_bindir}'
+- '%{_datadir}/applications/%{name}_sailfishos.desktop'
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}_86.png'
+- /usr/bin
+PkgBR: []

@@ -25,13 +25,19 @@
     #include <QtGui/QApplication>
 #endif
 
-#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_SAILFISHOS)
+#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
 #elif defined(BUILD_FOR_UBUNTU)
     #include <QtQuick>
     #include <QtQml>
 #else
     #include "gui/desktop-test/mainwindow.h"
+#endif
+
+#if defined(BUILD_FOR_SAILFISHOS)
+    #include <sailfishapp.h>
+    #include <QtQuick>
+    #include <QtQml>
 #endif
 
 #if defined(HAVE_DECLARATIVE_CACHE)
@@ -82,6 +88,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Fahrplan::StationType>();
     qRegisterMetaType<Fahrplan::Mode>();
 
+    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU) || defined(BUILD_FOR_SAILFISHOS)
         qDebug()<<"QML";
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
@@ -137,10 +144,6 @@ int main(int argc, char *argv[])
         #elif defined(BUILD_FOR_SAILFISHOS)
             qDebug()<<"SailfishOs";
             view->setSource(QUrl("qrc:/src/gui/sailfishos/main.qml"));
-            view->setAttribute(Qt::WA_OpaquePaintEvent);
-            view->setAttribute(Qt::WA_NoSystemBackground);
-            view->viewport()->setAttribute(Qt::WA_OpaquePaintEvent);
-            view->viewport()->setAttribute(Qt::WA_NoSystemBackground);
 
             view->showFullScreen();
         #elif defined(BUILD_FOR_BLACKBERRY)

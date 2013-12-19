@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Name=Fahrplan
+Icon=/usr/share/icons/hicolor/86x86/apps/fahrplan2_86.png
+Exec=/usr/bin/fahrplan2
+

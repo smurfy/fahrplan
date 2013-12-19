@@ -81,11 +81,18 @@ symbian {
             QMAKE_EXTRA_TARGETS += first copydeploymentfolders
         }
     }
+
     ubuntu {
         installPrefix = /usr/
+    } else:exists("/usr/lib/qt5/qml/Sailfish/Silica/SilicaGridView.qml") {
+        installPrefix = /usr
     } else {
         installPrefix = /opt/$${TARGET}
     }
+
+    # temp fix for sailfish
+    installPrefix = /usr
+
     for(deploymentfolder, DEPLOYMENTFOLDERS) {
         item = item$${deploymentfolder}
         itemfiles = $${item}.files
@@ -116,6 +123,11 @@ symbian {
         desktopfile.path = /usr/share/applications
         icon.files = data/$${TARGET}-square.svg
         icon.path = /usr/share/icons/hicolor/scalable/apps
+    } else:exists("/usr/lib/qt5/qml/Sailfish/Silica/SilicaGridView.qml") {
+        desktopfile.files = data/$${TARGET}_sailfishos.desktop
+        desktopfile.path = /usr/share/applications
+        icon.files = data/$${TARGET}_86.png
+        icon.path = /usr/share/icons/hicolor/86x86/apps
     }
     target.path = $${installPrefix}/bin
     export(icon.files)

@@ -55,6 +55,7 @@ OTHER_FILES += \
     data/fahrplan2.svg \
     data/fahrplan2_64.png \
     data/fahrplan2_80.png \
+    data/fahrplan2_86.png \
     date/fahrplan2_150.png
 
 RESOURCES += \
@@ -271,8 +272,10 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-exists($$QMAKE_INCDIR_QT"/../sailfishsilicabackground/sailfishsilicabackground.h") {
+exists("/usr/lib/qt5/qml/Sailfish/Silica/SilicaGridView.qml"): {
    DEFINES += BUILD_FOR_SAILFISHOS
+
+   CONFIG += sailfishapp
 
    RESOURCES += sailfishos_res.qrc
 
@@ -280,7 +283,10 @@ exists($$QMAKE_INCDIR_QT"/../sailfishsilicabackground/sailfishsilicabackground.h
         src/gui/sailfishos/main.qml \
         src/gui/sailfishos/Cover.qml \
         src/gui/sailfishos/MainPage.qml \
-        src/gui/sailfishos/components/SubTitleButton.qml
+        src/gui/sailfishos/components/SubTitleButton.qml \
+        rpm/fahrplan2.yaml \
+        data/fahrplan2_sailfishos.desktop \
+        data/fahrplan2_86.png
 }
 
 win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {

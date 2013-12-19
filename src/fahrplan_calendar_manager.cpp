@@ -21,7 +21,11 @@
 
 #include <QSettings>
 #ifndef QT_NO_CONCURRENT
-#   include <QtConcurrentRun>
+    #if defined(BUILD_FOR_QT5)
+    #   include <QtConcurrent/QtConcurrentRun>
+    #else
+    #   include <QtConcurrentRun>
+    #endif
 #   include <QFutureWatcher>
 #endif
 
