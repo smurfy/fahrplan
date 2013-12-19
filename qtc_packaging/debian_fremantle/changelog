@@ -1,3 +1,20 @@
+fahrplan2 (2.0.15) unstable; urgency=low
+  * Added more backends
+  * Added more settings
+
+ -- smurfy <maemo@smurfy.de>  Tue, 26 Nov 2013 20:00:00 +0200
+
+fahrplan2 (2.0.14) unstable; urgency=low
+  * Improved station selection
+  * Lefty support for station selection
+
+ -- smurfy <maemo@smurfy.de>  Wed, 11 Sep 2013 20:00:00 +0200
+
+fahrplan2 (2.0.13-1) unstable; urgency=low
+  * Fix for calendar
+
+ -- smurfy <maemo@smurfy.de>  Tue, 28 May 2013 20:00:00 +0200
+ 
 fahrplan2 (2.0.13) unstable; urgency=low
   * Fixed sbb.ch
   * Added inverse display for N9

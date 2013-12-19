@@ -20,186 +20,54 @@
 #include "parser_definitions.h"
 
 
-//-------------- TimeTableResultItem
+//-------------- Station
 
-QString TimeTableResultItem::stationName() const
+Station::Station()
+    : valid(true)
+    , latitude(0)
+    , longitude(0)
+{}
+
+Station::Station(bool isValid)
+    : valid(isValid)
+    , latitude(0)
+    , longitude(0)
+{}
+
+bool Station::operator ==(const Station &other) const
 {
-    return m_stationName;
+    if (valid != other.valid)
+        return false;
+    if (id != other.id)
+        return false;
+    // Comparing ID should be enough, cause it's uniquie identifier
+    // of the station. Everything else is details.
+//    if (name != other.name)
+//        return false;
+//    if (type != other.type)
+//        return false;
+//    if (miscInfo != other.miscInfo)
+//        return false;
+//    if (qFuzzyCompare(latitude, other.latitude))
+//        return false;
+//    if (qFuzzyCompare(longitude, other.longitude))
+//        return false;
+    return true;
 }
 
-void TimeTableResultItem::setStationName(const QString &stationName)
+bool Station::operator <(const Station &other) const
 {
-    m_stationName = stationName;
-}
-
-QString TimeTableResultItem::trainType() const
-{
-    return m_trainType;
-}
-
-void TimeTableResultItem::setTrainType(const QString &trainType)
-{
-    m_trainType = trainType;
-}
-
-QString TimeTableResultItem::destinationName() const
-{
-    return m_destinationName;
-}
-
-void TimeTableResultItem::setDestinationName(const QString &destinationName)
-{
-    m_destinationName = destinationName;
-}
-
-QTime TimeTableResultItem::time() const
-{
-    return m_time;
-}
-
-void TimeTableResultItem::setTime(const QTime &time)
-{
-    m_time = time;
-}
-
-QString TimeTableResultItem::platform() const
-{
-    return m_platform;
-}
-
-void TimeTableResultItem::setPlatform(const QString &platform)
-{
-    m_platform = platform;
-}
-
-qreal TimeTableResultItem::longitude()
-{
-    return m_longitude;
-}
-
-void TimeTableResultItem::setLongitude(qreal longitude)
-{
-    m_longitude = longitude;
-}
-
-qreal TimeTableResultItem::latitude()
-{
-    return m_latitude;
-}
-
-void TimeTableResultItem::setLatitude(qreal latitude)
-{
-    m_latitude = latitude;
-}
-
-QString TimeTableResultItem::miscInfo() const
-{
-    return m_miscInfo;
-}
-
-void TimeTableResultItem::setMiscInfo(const QString &miscInfo)
-{
-    m_miscInfo = miscInfo;
-}
-
-//------------- TimeTableResultList
-
-qreal TimeTableResultList::itemcount()
-{
-    return m_items.count();
-}
-
-TimeTableResultItem *TimeTableResultList::getItem(int index)
-{
-    return  m_items.at(index);
-}
-
-void TimeTableResultList::appendItem(TimeTableResultItem *item)
-{
-    m_items.append(item);
+    return name < other.name;
 }
 
 
-//-------------- StationsResultItem
+//-------------- TimetableEntry
 
-QString StationsResultItem::stationName() const
-{
-    return m_stationName;
-}
+TimetableEntry::TimetableEntry()
+    : latitude(0)
+    , longitude(0)
+{}
 
-void StationsResultItem::setStationName(const QString &stationName)
-{
-    m_stationName = stationName;
-}
-
-QString StationsResultItem::stationType() const
-{
-    return m_stationType;
-}
-
-void StationsResultItem::setStationType(const QString &stationType)
-{
-    m_stationType = stationType;
-}
-
-
-QString StationsResultItem::stationId() const
-{
-    return m_stationId;
-}
-
-void StationsResultItem::setStationId(const QString &stationId)
-{
-    m_stationId = stationId;
-}
-
-
-QString StationsResultItem::miscInfo() const
-{
-    return m_miscInfo;
-}
-
-void StationsResultItem::setMiscInfo(const QString &miscInfo)
-{
-    m_miscInfo = miscInfo;
-}
-
-qreal StationsResultItem::longitude()
-{
-    return m_longitude;
-}
-
-void StationsResultItem::setLongitude(qreal longitude)
-{
-    m_longitude = longitude;
-}
-
-qreal StationsResultItem::latitude()
-{
-    return m_latitude;
-}
-
-void StationsResultItem::setLatitude(qreal latitude)
-{
-    m_latitude = latitude;
-}
-
-//------------- StationsResultList
-
-qreal StationsResultList::itemcount()
-{
-    return m_items.count();
-}
-
-StationsResultItem *StationsResultList::getItem(int index)
-{
-    return  m_items.at(index);
-}
-
-void StationsResultList::appendItem(StationsResultItem *item)
-{
-    m_items.append(item);
-}
 
 //------------- JourneyResultList
 

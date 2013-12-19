@@ -36,9 +36,9 @@ void FahrplanParserThread::init(int parserIndex)
 }
 
 
-void FahrplanParserThread::getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
+void FahrplanParserThread::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
-    emit requestGetTimeTableForStation(stationName, directionStationName, date, time, mode, trainrestrictions);
+    emit requestGetTimeTableForStation(currentStation, directionStation, dateTime, mode, trainrestrictions);
 }
 
 void FahrplanParserThread::findStationsByName(const QString &stationName)
@@ -51,9 +51,9 @@ void FahrplanParserThread::findStationsByCoordinates(qreal longitude, qreal lati
     emit requestFindStationsByCoordinates(longitude, latitude);
 }
 
-void FahrplanParserThread::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions)
+void FahrplanParserThread::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
-    emit requestSearchJourney(departureStation, arrivalStation, viaStation, date, time, mode, trainrestrictions);
+    emit requestSearchJourney(departureStation, viaStation, arrivalStation, dateTime, mode, trainrestrictions);
 }
 
 void FahrplanParserThread::searchJourneyLater()
@@ -78,6 +78,11 @@ void FahrplanParserThread::cancelRequest()
 
 QString FahrplanParserThread::name() {
     return m_name;
+}
+
+QString FahrplanParserThread::uid() const
+{
+    return m_uid;
 }
 
 bool FahrplanParserThread::supportsGps()
@@ -128,9 +133,28 @@ void FahrplanParserThread::run()
       case 6:
           m_parser = new ParserXmlVasttrafikSe();
           break;
+    case 7:
+        m_parser = new ParserPTVVicGovAu();
+        break;
+    case 8:
+      m_parser = new ParserSydneyEFA();
+      break;
+    case 9:
+      m_parser = new ParserSFBayEFA();
+      break;
+    case 10:
+      m_parser = new ParserLondonEFA();
+      break;
+    case 11:
+      m_parser = new ParserIrelandEFA();
+      break;
+    case 12:
+        m_parser = new ParserDubaiEFA();
+        break;
     }
 
     m_name = m_parser->name();
+    m_uid = m_parser->uid();
     m_trainrestrictions = m_parser->getTrainRestrictions();
     m_supports_gps = m_parser->supportsGps();
     m_supports_via = m_parser->supportsVia();
@@ -143,8 +167,8 @@ void FahrplanParserThread::run()
     connect(this, SIGNAL(requestFindStationsByName(QString)), m_parser, SLOT(findStationsByName(QString)), Qt::QueuedConnection);
     connect(this, SIGNAL(requestFindStationsByCoordinates(qreal,qreal)), m_parser, SLOT(findStationsByCoordinates(qreal,qreal)), Qt::QueuedConnection);
     connect(this, SIGNAL(requestGetJourneyDetails(QString)), m_parser, SLOT(getJourneyDetails(QString)), Qt::QueuedConnection);
-    connect(this, SIGNAL(requestGetTimeTableForStation(QString,QString,QDate,QTime,ParserAbstract::Mode,int)), m_parser, SLOT(getTimeTableForStation(QString,QString,QDate,QTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
-    connect(this, SIGNAL(requestSearchJourney(QString,QString,QString,QDate,QTime,ParserAbstract::Mode,int)), m_parser, SLOT(searchJourney(QString,QString,QString,QDate,QTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(requestGetTimeTableForStation(Station,Station,QDateTime,ParserAbstract::Mode,int)), m_parser, SLOT(getTimeTableForStation(Station,Station,QDateTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(requestSearchJourney(Station,Station,Station,QDateTime,ParserAbstract::Mode,int)), m_parser, SLOT(searchJourney(Station,Station,Station,QDateTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
     connect(this, SIGNAL(requestSearchJourneyEarlier()), m_parser, SLOT(searchJourneyEarlier()), Qt::QueuedConnection);
     connect(this, SIGNAL(requestSearchJourneyLater()), m_parser, SLOT(searchJourneyLater()), Qt::QueuedConnection);
 
@@ -152,9 +176,15 @@ void FahrplanParserThread::run()
     connect(m_parser, SIGNAL(errorOccured(QString)), this, SIGNAL(errorOccured(QString)), Qt::QueuedConnection);
     connect(m_parser, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), Qt::QueuedConnection);
     connect(m_parser, SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(journeyResult(JourneyResultList*)), Qt::QueuedConnection);
-    connect(m_parser, SIGNAL(stationsResult(StationsResultList*)), this, SIGNAL(stationsResult(StationsResultList*)), Qt::QueuedConnection);
-    connect(m_parser, SIGNAL(timeTableResult(TimeTableResultList*)), this, SIGNAL(timeTableResult(TimeTableResultList*)), Qt::QueuedConnection);
+    connect(m_parser, SIGNAL(stationsResult(StationsList)), this, SIGNAL(stationsResult(StationsList)), Qt::QueuedConnection);
+    connect(m_parser, SIGNAL(timetableResult(TimetableEntriesList)), this, SIGNAL(timeTableResult(TimetableEntriesList)), Qt::QueuedConnection);
 
     m_ready = true;
+
+    // Autodelete after thread finishes.
+    connect(this, SIGNAL(finished()), SLOT(deleteLater()));
+
     exec();
+
+    delete m_parser;
 }

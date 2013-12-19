@@ -28,26 +28,26 @@ class QNetworkAccessManager;
 class QNetworkReply;
 class QTimer;
 class QUrl;
-
 class ParserAbstract : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Mode)
 
 public:
-    enum Mode { Arrival = 0, Departure = 1 };
+    enum Mode { Departure = 0, Arrival = 1 };
 
     explicit ParserAbstract(QObject *parent = 0);
     ~ParserAbstract();
 
     static QString getName() { return "Abstract"; }
     virtual QString name() { return "Abstract"; }
+    virtual QString uid() { return metaObject()->className(); }
 
 public slots:
-    virtual void getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    virtual void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);
     virtual void findStationsByName(const QString &stationName);
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
-    virtual void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    virtual void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     virtual void searchJourneyLater();
     virtual void searchJourneyEarlier();
     virtual void getJourneyDetails(const QString &id);
@@ -59,10 +59,10 @@ public slots:
     void cancelRequest();
 
 signals:
-    void stationsResult(StationsResultList *result);
+    void stationsResult(const StationsList &result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
-    void timeTableResult(TimeTableResultList *result);
+    void timetableResult(const TimetableEntriesList &timetableEntries);
     void errorOccured(QString msg);
 
 protected slots:

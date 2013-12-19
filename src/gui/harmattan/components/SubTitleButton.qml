@@ -23,6 +23,7 @@ import com.nokia.meego 1.1
 Item {
     id: subTitleButton
 
+    property int type
     property alias titleText: title.text
     property alias iconVisible: icon.visible
     property alias subTitleText: subTitle.text
@@ -30,6 +31,7 @@ Item {
 
     signal clicked
     signal pressAndHold
+    signal reset
 
     height: title.height + subTitle.height + 20
     width: parent.width

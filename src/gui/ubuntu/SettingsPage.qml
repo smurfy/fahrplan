@@ -97,9 +97,4 @@ Page {
 
         onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
     }
-
-    FahrplanBackend {
-        id: fahrplanBackend
-        Component.onCompleted: print("settingspage's parser:", parser)
-    }
 }

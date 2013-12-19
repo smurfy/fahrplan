@@ -28,23 +28,9 @@ import ".."
 Page {
     id: stationSelect
 
-    signal stationSelected ( string name )
-
-    function updateFavorites()
-    {
-        stationsFavoritesModel.clear();
-        var favorites = fahrplanBackend.favorites.getFavorites();
-        for (var i = 0; i < favorites.length; i++) {
-            stationsFavoritesModel.append({
-                "name": favorites[i],
-                "process": false,
-                "internal": false,
-                "isfavorite": true,
-                "showfavorite": true,
-                "miscinfo": ""
-            })
-        }
-    }
+    signal stationSelected ()
+    property int type: FahrplanBackend.DepartureStation
+//    property QtObject fahrplanBackend
 
     Item {
         width:  stationSelect.width
@@ -94,20 +80,14 @@ Page {
 
             function findStationsByName()
             {
-                if (searchBox.text == "")
+                if (searchBox.text == "") {
+                    listView.model = fahrplanBackend.favorites
                     return;
+                }
 
-                stationsResultModel.clear();
-                stationsResultModel.append({
-                    "name": qsTr("Searching ..."),
-                    "process": true,
-                    "internal": true,
-                    "isfavorite": false,
-                    "showfavorite": false,
-                    "miscinfo": ""
-                })
-                listView.model = stationsResultModel
-                fahrplanBackend.parser.findStationsByName(searchBox.text);
+                indicator.running = true;
+                listView.model = fahrplanBackend.stationSearchResults
+                fahrplanBackend.findStationsByName(searchBox.text);
             }
 
             // Not using GPS on ubuntu yet
@@ -131,19 +111,9 @@ Page {
 //                width: visible ? units.gu(8) : 0
 
 //                onClicked: {
-//                    listView.model = stationsResultModel
+//                    listView.model = FahrplanBackend.stationSearchResults
 //                    favIcon.checked = false;
 //                    searchIcon.checked = true;
-
-//                    stationsResultModel.clear();
-//                    stationsResultModel.append({
-//                        "name": qsTr("Requesting GPS..."),
-//                        "process": true,
-//                        "internal": true,
-//                        "isfavorite": false,
-//                        "showfavorite": false,
-//                        "miscinfo": ""
-//                    })
 
 //                    positionSource.start();
 //                }
@@ -157,7 +127,7 @@ Page {
             text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
             color: "DarkGrey"
             fontSize: "large"
-            visible: (stationsFavoritesModel.count == 0 && listView.model == stationsFavoritesModel)
+            visible: (fahrplanBackend.favorites.count == 0 && listView.model == fahrplanBackend.favorites)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors {
@@ -178,16 +148,15 @@ Page {
             }
             height: parent.height
             width: parent.width
-            model: stationsFavoritesModel
+            model: fahrplanBackend.favorites
             delegate: ListItems.Standard {
                 id: delegateItem
                 text: name
-                icon: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-" + (isfavorite ? "selected.svg" : "unselected.svg")
+                icon: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-" + (model.isFavorite ? "selected.svg" : "unselected.svg")
 
                 onClicked: {
-                    if (!internal) {
-                        stationSelect.stationSelected(name)
-                    }
+                    listView.model.selectStation(stationSelect.type, model.index);
+                    stationSelect.stationSelected()
                 }
 
                 MouseArea {
@@ -200,90 +169,50 @@ Page {
                     width: height
 
                     onClicked: {
-                        if (showfavorite) {
-                            if (fahrplanBackend.favorites.isFavorite(name)) {
-                                fahrplanBackend.favorites.removeFavorite(name);
-                                delegateItem.icon = "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-unselected.svg"
-                            } else {
-                                fahrplanBackend.favorites.addFavorite(name);
-                                delegateItem.icon = "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-selected.svg"
-                            }
+                        if (model.isFavorite) {
+                            listView.model.removeFromFavorites(index);
+                            delegateItem.icon = "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-unselected.svg"
+                        } else {
+                            listView.model.addToFavorites(index);
+                            delegateItem.icon = "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-selected.svg"
                         }
                     }
                 }
             }
 
             clip: true
-            visible: (stationsFavoritesModel.count > 0 && listView.model == stationsFavoritesModel) || listView.model == stationsResultModel
         }
     }
 
-
-    ListModel {
-        id: stationsResultModel
+    ActivityIndicator {
+        id: indicator
+        anchors.centerIn: parent
+        running: false
+        visible: running
     }
 
-    ListModel {
-        id: stationsFavoritesModel
-    }
-
-    FahrplanBackend {
-        id: fahrplanBackend
-
-        Component.onCompleted: {
-            updateFavorites();
-        }
-
-        onParserChanged: {
-            updateFavorites();
-        }
+    Connections {
+        target: fahrplanBackend
 
         onParserStationsResult: {
-            stationsResultModel.clear();
-            for (var i = 0; i < result.count; i++) {
-                var item = result.getItem(i);
-                stationsResultModel.append({
-                    "name": item.stationName,
-                    "process": false,
-                    "internal": false,
-                    "isfavorite": fahrplanBackend.favorites.isFavorite(item.stationName),
-                    "showfavorite": true,
-                    "miscinfo": item.miscInfo
-                });
-            }
-        }
-        onFavoritesChanged: {
-            updateFavorites();
+            indicator.running = false;
         }
     }
 
-    PositionSource {
+    // Disabling for now as Ubuntu's AppArmor config currently prevents accessing GPS
+/*    PositionSource {
         id: positionSource
+        active: false
+
         onPositionChanged: {
             if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
-                stationsResultModel.clear();
-                stationsResultModel.append({
-                    "name": qsTr("Searching for stations..."),
-                    "process": true,
-                    "internal": true,
-                    "isfavorite": false,
-                    "showfavorite": false,
-                    "miscinfo": ""
-                })
                 positionSource.stop();
 
                 fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
             } else {
-                stationsResultModel.clear();
-                stationsResultModel.append({
-                    "name": qsTr("Waiting for GPS lock..."),
-                    "process": true,
-                    "internal": true,
-                    "isfavorite": false,
-                    "showfavorite": false,
-                    "miscinfo": ""
-                })
+                positionSource.active = true
             }
         }
     }
+    */
 }

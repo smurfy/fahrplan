@@ -34,7 +34,7 @@ ParserHafasBinary::ParserHafasBinary(QObject *parent) :
     // baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
 }
 
-void ParserHafasBinary::searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, Mode mode, int trainrestrictions)
+void ParserHafasBinary::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest) {
         return;
@@ -53,19 +53,16 @@ void ParserHafasBinary::searchJourney(const QString &departureStation, const QSt
     QUrl query;
 #endif
     query.addQueryItem("start", "Suchen");
-    query.addQueryItem("REQ0JourneyStopsS0A", "1");
-    query.addQueryItem("REQ0JourneyStopsS0G", departureStation);
-    query.addQueryItem("REQ0JourneyStopsZ0A", "1");
-    query.addQueryItem("REQ0JourneyStopsZ0G", arrivalStation);
+    query.addQueryItem("REQ0JourneyStopsS0ID", departureStation.id.toString());
+    query.addQueryItem("REQ0JourneyStopsZ0ID", arrivalStation.id.toString());
 
-    if (!viaStation.isEmpty()) {
-        query.addQueryItem("REQ0JourneyStops1.0A", "1");
-        query.addQueryItem("REQ0JourneyStops1.0G", viaStation);
+    if (viaStation.id.isValid()) {
+        query.addQueryItem("REQ0JourneyStops1.0ID", viaStation.id.toString());
     }
 
-    query.addQueryItem("REQ0JourneyDate", date.toString("dd.MM.yyyy"));
-    query.addQueryItem("REQ0JourneyTime", time.toString("hh:mm"));
-    query.addQueryItem("REQ0HafasSearchForw", QString::number(mode));
+    query.addQueryItem("REQ0JourneyDate", dateTime.toString("dd.MM.yyyy"));
+    query.addQueryItem("REQ0JourneyTime", dateTime.toString("hh:mm"));
+    query.addQueryItem("REQ0HafasSearchForw", mode == Arrival ? "0" : "1");
     query.addQueryItem("REQ0JourneyProduct_prod_list_1", trainrestr);
     query.addQueryItem("h2g-direct", "11");
 
@@ -444,8 +441,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setDuration(formatDuration(durationTime));
                 item->setMiscInfo("");
                 item->setTrainType(lineNames.join(", ").trimmed());
-                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString(tr("hh:mm")));
-                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString(tr("hh:mm")));
+                const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
+                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime()
+                                       .time().toString(timeFormat));
+                item->setArrivalTime(inlineResults
+                                     ->getItem(inlineResults->itemcount() - 1)->arrivalDateTime()
+                                     .time().toString(timeFormat));
                 journeyResultsByArrivalMap.insert(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime(), item);
             }
         }
@@ -460,10 +461,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         hafasContext.ident = requestId;
 
         emit journeyResult(lastJourneyResultList);
-    } else if (errorCode == 8) {
-        emit errorOccured(tr("Sorry one station name is too ambiguous"));
     } else {
-        emit errorOccured(tr("An error ocurred with the backend"));
+        emit errorOccured(errorString(errorCode));
     }
 }
 
@@ -634,3 +633,24 @@ QByteArray ParserHafasBinary::gzipDecompress(QByteArray compressData)
     return uncompressed;
 }
 
+QString ParserHafasBinary::errorString(int error) const
+{
+    // Some error code descriptions can be found here:
+    // http://code.google.com/p/public-transport-enabler/source/browse/enabler/src/de/schildbach/pte/AbstractHafasProvider.java
+    switch (error) {
+    case 1:
+        return tr("Your session has expired. Please, perform the search again.");
+    case 8:
+        return tr("One of the station names is too ambiguous.");
+    case 890:
+        return tr("No connections have been found that correspond to your request.");
+    case 899:
+        return tr("There was an unsuccessful or incomplete search due to a timetable change.");
+    case 9240:
+        return tr("Unfortunately there was no route found.");
+    case 9360:
+        return tr("Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.");
+    default:
+        return tr("Unknown error ocurred with the backend (error %1).").arg(error);
+    }
+}

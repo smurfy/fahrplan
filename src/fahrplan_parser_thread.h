@@ -31,38 +31,44 @@
 #include "parser/parser_xmlnri.h"
 #include "parser/parser_mobilebahnde.h"
 #include "parser/parser_131500comau.h"
+#include "parser/parser_ptvvicgovau.h"
+#include "parser/parser_sf_bay_efa.h"
+#include "parser/parser_sydney_efa.h"
+#include "parser/parser_london_efa.h"
+#include "parser/parser_ireland_efa.h"
+#include "parser/parser_dubai_efa.h"
 
 class FahrplanParserThread : public QThread
 {
     Q_OBJECT
 public:
     explicit FahrplanParserThread(QObject *parent = 0);
-    
+
 signals:
     //Internal
-    void requestGetTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void requestGetTimeTableForStation(const Station &stationName, const Station &directionStationName, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     void requestFindStationsByName(const QString &stationName);
     void requestFindStationsByCoordinates(qreal longitude, qreal latitude);
-    void requestSearchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void requestSearchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     void requestSearchJourneyLater();
     void requestSearchJourneyEarlier();
     void requestGetJourneyDetails(const QString &id);
     void requestCancelRequest();
 
     //Real ones
-    void stationsResult(StationsResultList *result);
+    void stationsResult(const StationsList &result);
     void journeyResult(JourneyResultList *result);
     void journeyDetailsResult(JourneyDetailResultList *result);
-    void timeTableResult(TimeTableResultList *result);
+    void timeTableResult(const TimetableEntriesList &result);
     void errorOccured(QString msg);
 
 public slots:
     void init(int parserIndex);
 
-    void getTimeTableForStation(const QString &stationName, const QString &directionStationName, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(const QString &departureStation, const QString &arrivalStation, const QString &viaStation, const QDate &date, const QTime &time, ParserAbstract::Mode mode, int trainrestrictions);
+    void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
@@ -73,6 +79,7 @@ public slots:
     bool supportsTimeTable();
     bool supportsTimeTableDirection();
     QString name();
+    QString uid() const;
     QStringList getTrainRestrictions();
 
 protected:
@@ -88,6 +95,7 @@ private:
   bool m_supports_timetable;
   bool m_supports_timetabledirection;
   QString m_name;
+  QString m_uid;
 };
 
 #endif // FAHRPLAN_PARSER_THREAD_H

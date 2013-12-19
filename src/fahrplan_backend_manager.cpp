@@ -36,6 +36,12 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(Parser131500ComAu::getName());
     result.append(ParserXmlNri::getName());
     result.append(ParserXmlVasttrafikSe::getName());
+    result.append(ParserPTVVicGovAu::getName());
+    result.append(ParserSydneyEFA::getName());
+    result.append(ParserSFBayEFA::getName());
+    result.append(ParserLondonEFA::getName());
+    result.append(ParserIrelandEFA::getName());
+    result.append(ParserDubaiEFA::getName());
     return result;
 }
 
@@ -56,7 +62,8 @@ void FahrplanBackendManager::setParser(int index)
     currentParserIndex = index;
 
     if (m_parser) {
-        delete m_parser;
+        // Parser object will be autodeleted after the thread quits.
+        m_parser->quit();
     }
 
     m_parser = new FahrplanParserThread();

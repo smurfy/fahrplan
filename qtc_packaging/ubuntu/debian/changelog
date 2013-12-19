@@ -1,0 +1,23 @@
+fahrplan2 (2.0.15) saucy; urgency=low
+  * Added more backends
+  * Added more settings
+
+ -- smurfy <maemo@smurfy.de>  Tue, 26 Nov 2013 20:00:00 +0200
+ 
+fahrplan2 (2.0.14) saucy; urgency=low
+  * Improved station selection
+  * Lefty support for station selection
+
+-- Michael Zanetti <michael_zanetti@gmx.net>  Wed, 11 Sep 2013 20:00:00 +0200
+
+fahrplan2 (2.0.13-ubuntu1) saucy; urgency=low
+
+  * fix fullscreen issue
+
+ -- Michael Zanetti <michael_zanetti@gmx.net>  Thu, 20 Jun 2013 23:27:26 +0200
+
+fahrplan2 (2.0.13) raring; urgency=low
+
+  * Initial release.
+
+ -- Michael Zanetti <michael_zanetti@gmx.net>  Thu, 30 May 2013 23:25:53 +0200

@@ -49,7 +49,13 @@
 #endif
 
 #include "fahrplan.h"
+#include "parser/parser_abstract.h"
+#include "fahrplan_parser_thread.h"
 #include "fahrplan_calendar_manager.h"
+#include "models/stationsearchresults.h"
+#include "models/favorites.h"
+#include "models/timetable.h"
+#include "models/trainrestrictions.h"
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 Q_DECL_EXPORT
@@ -64,26 +70,39 @@ int main(int argc, char *argv[])
 
     // Install translations
     QTranslator translator;
-    translator.load(QString("fahrplan_%1").arg(QLocale::system().name()), ":/translations");
+    translator.load(QString("fahrplan_%1").arg(QLocale().name()), ":/translations");
     app->installTranslator(&translator);
 
     qDebug()<<"Startup";
 
-    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU) || defined(BUILD_FOR_SAILFISHOS)
+    qRegisterMetaType<Station>();
+    qRegisterMetaType<StationsList>();
+    qRegisterMetaType<TimetableEntry>();
+    qRegisterMetaType<TimetableEntriesList>();
+    qRegisterMetaType<Fahrplan::StationType>();
+    qRegisterMetaType<Fahrplan::Mode>();
+
         qDebug()<<"QML";
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
         qmlRegisterType<FahrplanParserThread>("Fahrplan", 1, 0, "FahrplanParserThread");
-        qmlRegisterType<FahrplanFavoritesManager>("Fahrplan", 1, 0, "FahrplanFavoritesManager");
         qmlRegisterType<FahrplanCalendarManager>("Fahrplan", 1, 0, "CalendarManager");
-        qmlRegisterType<StationsResultList>("Fahrplan", 1, 0, "StationsResultList");
-        qmlRegisterType<StationsResultItem>("Fahrplan", 1, 0, "StationsResultItem");
+        qmlRegisterUncreatableType<StationSearchResults>("Fahrplan", 1, 0, "StationSearchResults"
+            , "StationSearchResults cannot be created from QML. "
+              "Access it through FahrplanBackend.stationSearchResults.");
+        qmlRegisterUncreatableType<Favorites>("Fahrplan", 1, 0, "Favorites"
+            , "Favorites cannot be created from QML. "
+              "Access it through FahrplanBackend.favorites.");
+        qmlRegisterUncreatableType<Timetable>("Fahrplan", 1, 0, "Timetable"
+            , "Timetable cannot be created from QML. "
+              "Access it through FahrplanBackend.timetable.");
+        qmlRegisterUncreatableType<Trainrestrictions>("Fahrplan", 1, 0, "Trainrestrictions"
+            , "Trainrestrictions cannot be created from QML. "
+              "Access it through FahrplanBackend.trainrestrictions.");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
         qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
         qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
         qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
-        qmlRegisterType<TimeTableResultList>("Fahrplan", 1, 0, "TimeTableResultList");
-        qmlRegisterType<TimeTableResultItem>("Fahrplan", 1, 0, "TimeTableResultItem");
 
         #if defined(HAVE_DECLARATIVE_CACHE)
             QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
@@ -132,7 +151,7 @@ int main(int argc, char *argv[])
             qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryPosition>("QtMobility.location", 1, 1, "Position", "Cant't create Position type");
             qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryCoordinate>("QtMobility.location", 1, 1, "Coordinate", "Cant't create Coordinate type");
 
-            QSettings *settings = new QSettings("smurfy", "fahrplan2");
+            QSettings *settings = new QSettings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
 
             // HACK: Don't show Nokia privacy dialog on BlackBerry
             settings->setValue("firstStart", "false");

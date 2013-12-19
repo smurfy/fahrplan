@@ -31,10 +31,9 @@ Page {
 
     property int searchmode : 0
     property bool startup : true
-    property variant selectedDateTime
 
     Component.onCompleted: {
-        setToday();
+        updateButtonVisibility()
     }
 
     function updateButtonVisibility()
@@ -61,10 +60,6 @@ Page {
             timetableSearch.visible = true;
             startSearch.visible = false;
         }
-    }
-
-    function setToday() {
-        selectedDateTime = new Date();
     }
 
     Column {
@@ -164,14 +159,14 @@ Page {
                     progression: true
 
                     text: qsTr("Departure Station")
-                    subText: qsTr("please select")
+                    subText: fahrplanBackend.departureStationName
+
+                    property int type: FahrplanBackend.DepartureStation
 
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml")
-                        pageStack.currentPage.stationSelected.connect(function(name) {
-                                                                          departureButton.subText = name;
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
+                        pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
-
                                                                       })
                     }
                     onPressAndHold: {
@@ -181,18 +176,18 @@ Page {
                 ListItems.Subtitled {
                     id: viaButton
                     text: qsTr("Via Station")
-                    subText: qsTr("please select")
+                    subText: fahrplanBackend.viaStationName
                     anchors {
                         left: parent.left
                         right: parent.right
                     }
                     progression: true
-                    onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml")
-                        pageStack.currentPage.stationSelected.connect(function(name) {
-                                                                          viaButton.subText = name;
-                                                                          pageStack.pop();
+                    property int type: FahrplanBackend.ViaStation
 
+                    onClicked: {
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
+                        pageStack.currentPage.stationSelected.connect(function() {
+                                                                          pageStack.pop();
                                                                       })
                     }
                     onPressAndHold: {
@@ -202,18 +197,18 @@ Page {
                 ListItems.Subtitled {
                     id: arrivalButton
                     text: qsTr("Arrival Station")
-                    subText: qsTr("please select")
+                    subText: fahrplanBackend.arrivalStationName
                     anchors {
                         left: parent.left
                         right: parent.right
                     }
                     progression: true
-                    onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml")
-                        pageStack.currentPage.stationSelected.connect(function(name) {
-                                                                          arrivalButton.subText = name;
-                                                                          pageStack.pop();
+                    property int type: FahrplanBackend.ArrivalStation
 
+                    onClicked: {
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
+                        pageStack.currentPage.stationSelected.connect(function() {
+                                                                          pageStack.pop();
                                                                       })
                     }
                     onPressAndHold: {
@@ -223,36 +218,32 @@ Page {
                 ListItems.Subtitled {
                     id: stationButton
                     text: qsTr("Station")
-                    subText: qsTr("please select")
+                    subText: fahrplanBackend.currentStationName
                     anchors {
                         left: parent.left
                         right: parent.right
                     }
                     progression: true
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml")
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation})
                         pageStack.currentPage.stationSelected.connect(function(name) {
-                                                                          stationButton.subText = name;
                                                                           pageStack.pop();
-
                                                                       })
                     }
                 }
                 ListItems.Subtitled {
                     id: directionButton
                     text: qsTr("Direction")
-                    subText: qsTr("please select")
+                    subText: fahrplanBackend.directionStationName
                     anchors {
                         left: parent.left
                         right: parent.right
                     }
                     progression: true
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml")
-                        pageStack.currentPage.stationSelected.connect(function(name) {
-                                                                          directionButton.subText = name;
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DirectionStation})
+                        pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
-
                                                                       })
                     }
                     onPressAndHold: {
@@ -269,18 +260,19 @@ Page {
                 ListItems.Subtitled {
                     id: datePickerButton
                     text: qsTr("Date")
-                    subText: Qt.formatDate(selectedDateTime)
+                    subText: Qt.formatDate(fahrplanBackend.dateTime)
                     anchors {
                         left: parent.left
                         right: parent.right
                     }
                     visible: timeModeSelector.selectedIndex !== 0
                     onClicked: {
+                        var selectedDateTime = fahrplanBackend.dateTime
                         var popupObj = PopupUtils.open(datePicker, datePickerButton, {day: selectedDateTime.getDate(), month: selectedDateTime.getMonth(), year: selectedDateTime.getFullYear()})
                         popupObj.accepted.connect(function(day, month, year) {
                                                       var newDate = selectedDateTime
                                                       newDate.setFullYear(year, month, day)
-                                                      selectedDateTime = newDate
+                                                      fahrplanBackend.dateTime = newDate
                                                   })
 
                     }
@@ -289,18 +281,19 @@ Page {
                 ListItems.Subtitled {
                     id: timePickerButton
                     text: qsTr("Time")
-                    subText: Qt.formatTime(selectedDateTime, qsTr("hh:mm"))
+                    subText: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
                     anchors {
                         left: parent.left
                         right: parent.right
                     }
                     visible: timeModeSelector.selectedIndex !== 0
                     onClicked: {
+                        var selectedDateTime = fahrplanBackend.dateTime;
                         var popupObj = PopupUtils.open(timePicker, timePickerButton, {hour: selectedDateTime.getHours(), minute: selectedDateTime.getMinutes()});
                         popupObj.accepted.connect(function(hour, minute) {
                                                       var newDate = selectedDateTime
                                                       newDate.setHours(hour, minute)
-                                                      selectedDateTime = newDate
+                                                      fahrplanBackend.dateTime = newDate;
                                                   })
                     }
                 }
@@ -309,7 +302,7 @@ Page {
                 ListItems.Subtitled {
                     id: trainrestrictionsButton
                     text: qsTr("Trains")
-                    subText: selectTrainrestrictionsComponent.selectedIndex >= 0 ? selectTrainrestrictionsComponent.model.get(selectTrainrestrictionsComponent.selectedIndex).name : "None"
+                    subText: fahrplanBackend.trainrestrictionName
                     width: parent.width
                     onClicked: {
                         PopupUtils.open(selectTrainrestrictionsComponent, trainrestrictionsButton);
@@ -331,29 +324,8 @@ Page {
                         }
 
                         onClicked: {
-                            fahrplanBackend.storeSettingsValue("stationStation", stationButton.subText);
-                            fahrplanBackend.storeSettingsValue("directionStation", directionButton.subText);
-                            fahrplanBackend.storeSettingsValue("fromNow", timeModeSelector.selectedIndex === 0)
-
-                            var directionStation = directionButton.subText;
-                            if (directionStation == qsTr("please select") || !fahrplanBackend.parser.supportsTimeTableDirection()) {
-                                directionStation = "";
-                            }
-                            if (timeModeSelector.selectedIndex === 0) {
-                                setToday();
-                            }
-                            var selMode = ParserAbstract.Arrival;
-                            var titleText;
-                            if (timeModeSelector.selectedIndex !== 2) {
-                                selMode = ParserAbstract.Departure;
-                                titleText = qsTr("Departures");
-                            } else {
-                                selMode = ParserAbstract.Arrival;
-                                titleText = qsTr("Arrivals")
-                            }
-
-                            pageStack.push("qrc:///src/gui/ubuntu/TimeTableResultsPage.qml", {timetableTitleText: titleText, searchIndicatorVisible: true, selMode: selMode});
-                            fahrplanBackend.parser.getTimeTableForStation(stationButton.subText, directionStation, selectedDateTime, selectedDateTime, selMode,  selectTrainrestrictionsComponent.selectedIndex);
+                            pageStack.push("qrc:///src/gui/ubuntu/TimeTableResultsPage.qml", {searchIndicatorVisible: true});
+                            fahrplanBackend.getTimeTable();
                         }
                     }
                     Button {
@@ -368,30 +340,15 @@ Page {
                         }
 
                         onClicked: {
-                            fahrplanBackend.storeSettingsValue("viaStation", viaButton.subText);
-                            fahrplanBackend.storeSettingsValue("departureStation", departureButton.subText);
-                            fahrplanBackend.storeSettingsValue("arrivalStation", arrivalButton.subText);
-                            fahrplanBackend.storeSettingsValue("fromNow", timeModeSelector.selectedIndex === 0)
-
-                            //Validation
-                            var viaStation = viaButton.subText;
-                            if (viaStation == qsTr("please select") || !fahrplanBackend.parser.supportsVia()) {
-                                viaStation = "";
-                            }
-
-                            var titleText = viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText).arg(viaStation);
-                            var searchVisible = true;
-                            pageStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {journeyStationsTitleText: titleText, searchIndicatorVisible: searchVisible })
-                            if (timeModeSelector.selectedIndex === 0) {
-                                setToday();
-                            }
-                            var selMode = ParserAbstract.Arrival;
-                            if (timeModeSelector.selectedIndex !== 2) {
-                                selMode = ParserAbstract.Departure;
+                            var titleText
+                            if (fahrplanBackend.viaStationName == qsTr("please select")) {
+                                titleText = qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText);
                             } else {
-                                selMode = ParserAbstract.Arrival;
+                                titleText = qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText).arg(viaButton.subText)
                             }
-                            fahrplanBackend.parser.searchJourney(departureButton.subText, arrivalButton.subText, viaStation, selectedDateTime, selectedDateTime, selMode, selectTrainrestrictionsComponent.selectedIndex);
+
+                            pageStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {journeyStationsTitleText: titleText, searchIndicatorVisible: true })
+                            fahrplanBackend.searchJourney();
                         }
                     }
                 }
@@ -410,6 +367,12 @@ Page {
                 model: parserBackendModel
                 delegate: ListItems.Standard {
                     text: modelData
+
+                    // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
+                    // ListItems don't know that they are sitting in a themed Popover where the color
+                    // needs to be inverted.
+                    __foregroundColor: Theme.palette.selected.backgroundText
+
                     onClicked: {
                         fahrplanBackend.setParser(index);
                         PopupUtils.close(selectBackendDialog)
@@ -434,20 +397,21 @@ Page {
             ListView {
                 width: parent.width
                 height: contentHeight
-                model: trainrestrictionsModel
+                model: fahrplanBackend.trainrestrictions
                 delegate: ListItems.Standard {
                     text: modelData
+                    // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
+                    // ListItems don't know that they are sitting in a themed Popover where the color
+                    // needs to be inverted.
+                    __foregroundColor: Theme.palette.selected.backgroundText
+
                     onClicked: {
-                       trainrestrictionsButton.subText = trainrestrictionsModel.get(index).name
+                       fahrplanBackend.setTrainrestriction(index)
                        PopupUtils.close(selectTrainrestrictionsDialog)
                     }
                 }
             }
         }
-    }
-
-    ListModel {
-        id: trainrestrictionsModel
     }
 
     Component {
@@ -464,7 +428,7 @@ Page {
         }
     }
 
-    ToolbarActions {
+    ToolbarItems {
         id: mainToolbar
 
         // Not using settings on ubuntu yet...
@@ -472,8 +436,9 @@ Page {
 //            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
 //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
 //        }
-        Action {
-            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/go-to.svg"
+        ToolbarButton {
+            iconSource: "icons/info.svg"
+            text: qsTr("About")
             onTriggered: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
         }
     }
@@ -490,25 +455,19 @@ Page {
                 delegate: ListItems.Standard {
                     text: modelData
                     onClicked: {
-                        print("ffffffffff", ListView.view.model.get(index).actionID, ListView.view.model.get(index).modelData)
                         switch(ListView.view.model.get(index).actionID) {
                         case 0:
-                            var oldVal = stationSelectPopover.opener.subText
-                            stationSelectPopover.opener.subText = departureButton.subText
-                            departureButton.subText = oldVal;
+                            print("ffffffffff", ListView.view.model.get(index).actionID, opener, opener.type)
+                            fahrplanBackend.swapStations(opener.type, FahrplanBackend.DepartureStation)
                             break;
                         case 1:
-                            var oldVal = stationSelectPopover.opener.subText
-                            stationSelectPopover.opener.subText = arrivalButton.subText
-                            arrivalButton.subText = oldVal;
+                            fahrplanBackend.swapStations(opener.type, FahrplanBackend.ArrivalStation)
                             break;
                         case 2:
-                            var oldVal = stationSelectPopover.opener.subText
-                            stationSelectPopover.opener.subText = viaButton.subText
-                            viaButton.subText = oldVal;
+                            fahrplanBackend.swapStations(opener.type, FahrplanBackend.ViaStation)
                             break;
                         case 3:
-                            stationSelectPopover.opener.subText = qsTr("please select")
+                            fahrplanBackend.resetStation(opener.type);
                             break;
                         }
                         PopupUtils.close(stationSelectPopover)
@@ -540,8 +499,8 @@ Page {
         PopupUtils.open(stationSelectContextMenu, opener, {"opener": opener});
     }
 
-    FahrplanBackend {
-        id: fahrplanBackend
+    Connections {
+        target: fahrplanBackend
 
         Component.onCompleted: {
             var items = fahrplanBackend.getParserList();
@@ -551,8 +510,7 @@ Page {
                     index = i;
                 }
             }
-
-            onParserChanged(fahrplanBackend.parserName, index)
+            backendParserChanged();
         }
         /*
            An error can occour here, if the result is returned quicker than
@@ -573,51 +531,32 @@ Page {
         }
 
         onParserErrorOccured: {
+            print("Parser error:", msg)
             banner.text = msg;
             banner.show();
         }
 
         onParserChanged: {
+            backendParserChanged()
+        }
+    }
 
-            console.log("Switching to " + name);
-            currentParserName.text = fahrplanBackend.parserName;
+    function backendParserChanged() {
+        currentParserName.text = fahrplanBackend.parserName;
 
-            if (startup) {
-                viaButton.subText = fahrplanBackend.getSettingsValue("viaStation", qsTr("please select"));
-                departureButton.subText = fahrplanBackend.getSettingsValue("departureStation", qsTr("please select"));
-                arrivalButton.subText = fahrplanBackend.getSettingsValue("arrivalStation", qsTr("please select"));
-                stationButton.subText = fahrplanBackend.getSettingsValue("stationStation", qsTr("please select"));
-                directionButton.subText = fahrplanBackend.getSettingsValue("directionStation", qsTr("please select"));
-                startup = false;
-            }
+        updateButtonVisibility();
 
+        var items;
+        var i;
 
-            updateButtonVisibility();
-
-            var items;
-            var i;
-
-            if (parserBackendModel.count == 0) {
-                items = fahrplanBackend.getParserList();
-                for (i = 0; i < items.length; i++) {
-                    parserBackendModel.append({
-                        "name" : items[i]
-                    });
-                }
-
-            }
-
-            trainrestrictionsModel.clear();
-            items = fahrplanBackend.parser.getTrainRestrictions();
-            trainrestrictionsButton.visible = items.length > 1;
+        if (parserBackendModel.count == 0) {
+            items = fahrplanBackend.getParserList();
             for (i = 0; i < items.length; i++) {
-                trainrestrictionsModel.append({
+                parserBackendModel.append({
                     "name" : items[i]
                 });
             }
-            if (items.length > 0) {
-                trainrestrictionsButton.subText = trainrestrictionsModel.get(0).name
-            }
+
         }
     }
 }
