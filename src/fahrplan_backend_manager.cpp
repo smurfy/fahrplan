@@ -33,7 +33,6 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(ParserXmlOebbAt::getName());
     result.append(ParserXmlRejseplanenDk::getName());
     result.append(ParserXmlSbbCh::getName());
-    result.append(Parser131500ComAu::getName());
     result.append(ParserXmlNri::getName());
     result.append(ParserXmlVasttrafikSe::getName());
     result.append(ParserPTVVicGovAu::getName());
@@ -42,6 +41,8 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(ParserLondonEFA::getName());
     result.append(ParserIrelandEFA::getName());
     result.append(ParserDubaiEFA::getName());
+    result.append(ParserSiri::getName());
+    result.append(ParserOTP::getName());
     return result;
 }
 
