@@ -111,49 +111,43 @@ void FahrplanParserThread::run()
     ParserAbstract *m_parser;
 
     switch (i_parser) {
-      default:
-      case 0:
-          m_parser = new ParserMobileBahnDe();
-          break;
-      case 1:
-          m_parser = new ParserXmlOebbAt();
-          break;
-      case 2:
-          m_parser = new ParserXmlRejseplanenDk();
-          break;
-      case 3:
-          m_parser = new ParserXmlSbbCh();
-          break;
-      case 4:
-          m_parser = new ParserXmlNri();
-          break;
-      case 5:
-          m_parser = new ParserXmlVasttrafikSe();
-          break;
-    case 6:
-        m_parser = new ParserPTVVicGovAu();
-        break;
-    case 7:
-      m_parser = new ParserSydneyEFA();
-      break;
-    case 8:
-      m_parser = new ParserSFBayEFA();
-      break;
-    case 9:
-      m_parser = new ParserLondonEFA();
-      break;
-    case 10:
-      m_parser = new ParserIrelandEFA();
-      break;
-    case 11:
-        m_parser = new ParserDubaiEFA();
-        break;
-    case 12:
-        m_parser = new ParserSiri();
-        break;
-    case 13:
-        m_parser = new ParserOTP();
-        break;
+        default:
+        case 0:
+            m_parser = new ParserMobileBahnDe();
+            break;
+        case 1:
+            m_parser = new ParserXmlOebbAt();
+            break;
+        case 2:
+            m_parser = new ParserXmlRejseplanenDk();
+            break;
+        case 3:
+            m_parser = new ParserXmlSbbCh();
+            break;
+        case 4:
+            m_parser = new ParserXmlNri();
+            break;
+        case 5:
+            m_parser = new ParserXmlVasttrafikSe();
+            break;
+        case 6:
+            m_parser = new ParserPTVVicGovAu();
+            break;
+        case 7:
+            m_parser = new ParserSydneyEFA();
+            break;
+        case 8:
+            m_parser = new ParserSFBayEFA();
+            break;
+        case 9:
+            m_parser = new ParserLondonEFA();
+            break;
+        case 10:
+            m_parser = new ParserIrelandEFA();
+            break;
+        case 11:
+            m_parser = new ParserDubaiEFA();
+            break;
     }
 
     m_name = m_parser->name();
