@@ -40,7 +40,7 @@
  *
  *  Australian
  *  Melbourne: http://jp.ptv.vic.gov.au/ptv/
- *  Sydney: http://mobile.131500.com.au/TripPlanner/mobile/
+ *  Sydney: http://mobile.131500.com.au/TripPlanner/mobile/     changed to v10 in Jan 2014
  *
  *  England
  *  http://www.travelinemidlands.co.uk/wmtis/
@@ -343,11 +343,11 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
 
         QDomNode requestInfo = doc.elementsByTagName("itdRequest").item(0);
         int version = getAttribute(requestInfo, "version").section(".",0,0).toInt();
-        qDebug() << "version:" << version;
+
+        qDebug() << "EFA version:" << version << ", complete version:" << getAttribute(requestInfo, "version");
         if(version < 10) {
             QDomNodeList nodeList = doc.elementsByTagName("odvNameElem");
             QDomNodeList modeNodeList = doc.elementsByTagName("itdStopModes");
-            //qDebug() << "nodeList.count() :" << nodeList.count()  << ", modeNodeList.count():" << modeNodeList.count();
 
             QStringList idList;
 
@@ -376,13 +376,15 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
             }
         }
         else {
-            qDebug() << "EFA 10 required";      // London and Ireland
+            // London, Ireland, Sydney
             QDomNodeList nodeList = doc.elementsByTagName("odvNameElem");
             for(unsigned int i = 0; i < nodeList.length(); ++i) {
                 QDomNode node = nodeList.item(i);
                 Station item;
                 item.name = node.toElement().text();
                 item.id = getAttribute(node, "stopID");
+                if(item.id.isNull())
+                    item.id = getAttribute(node, "id");
                 item.latitude = getAttribute(node, "x").toDouble();
                 item.longitude = getAttribute(node, "y").toDouble();
                 //item.type = getAttribute(modeNode, "mode");
@@ -719,8 +721,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
                     ++meansOfTransportCounter;
                 }
-                else
-                {
+                else  {
                     qDebug() << "ERROR - Array index issue";
                     qDebug() << "departureCounter:" << departureCounter << departureTimesList.size();
                     qDebug() << "counter used for platform:" << counter << platformNameList.size();
