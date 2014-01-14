@@ -30,7 +30,6 @@
 #include "parser/parser_xmlsbbch.h"
 #include "parser/parser_xmlnri.h"
 #include "parser/parser_mobilebahnde.h"
-#include "parser/parser_131500comau.h"
 #include "parser/parser_ptvvicgovau.h"
 #include "parser/parser_sf_bay_efa.h"
 #include "parser/parser_sydney_efa.h"
