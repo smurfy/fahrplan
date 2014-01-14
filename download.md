@@ -25,4 +25,4 @@ Changelog
 
 
 [1]: releases/fahrplan2_2.0.16_armel.deb
-[2]: releases/fahrplan2_2_0_16.installer.sis
+[2]: releases/fahrplan2_2.0.16.sis

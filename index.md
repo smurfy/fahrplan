@@ -31,7 +31,7 @@ Fahrplan Features:
 * Add journey to calendar.
 
 Download and install for your device:
---------------------------------------
+-------------------------------------
 
 * [BlackBerry 10][2]
 * [N9, N950, Symbian][3]
@@ -46,7 +46,7 @@ Currently supported Providers:
 * oebb.at (Austria) - supports via station and GPS location.
 * reiseinfo.no (Norway) - supports GPS location.
 * vasttrafik.se (western Sweden) - supports via station and GPS location.
-* "ptv.vic.gov.au" (Victoria, Australia) - supports via station.
+* ptv.vic.gov.au (Victoria, Australia) - supports via station.
 * Sydney (NSW, Sydney, Australia) - supports via station.
 * SF Bay (SanFrancisco, USA) - supports via station.
 * London (London, United Kingdom) - supports via station.
@@ -61,10 +61,9 @@ Please consult the [compiling documentation][1]
 Source:
 -------
 
-Source code for all versions is available at
-<http://github.com/smurfy/fahrplan>. For old no longer maintained code
-of fahrplan (used on the N900 only) visit:
-<https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan>
+Source code for all versions is available at <http://github.com/smurfy/fahrplan>.
+
+For old no longer maintained code of fahrplan (used on the N900 only) visit: <https://garage.maemo.org/plugins/scmsvn/viewcvs.php/?root=fahrplan>
 
 Copyright:
 ----------
@@ -81,7 +80,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 
 [1]: compile
 [2]: https://appworld.blackberry.com/webstore/content/28277436/?lang=en&countrycode=DE
