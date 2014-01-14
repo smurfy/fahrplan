@@ -738,7 +738,8 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         item->setId(QString::number(nodeCounter+1));
         item->setTransfers(QString::number(numberOfChanges));
         item->setDuration(duration);
-        item->setTrainType(meansOfTransportNameList.join(","));
+        meansOfTransportNameList.removeDuplicates();
+        item->setTrainType(meansOfTransportNameList.join(", ").trimmed());
         item->setDepartureTime(departureDateTime.toString("hh:mm"));
         item->setArrivalTime(arrivalDateTime.toString("hh:mm"));
 
