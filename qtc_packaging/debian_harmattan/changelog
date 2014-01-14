@@ -1,3 +1,8 @@
+fahrplan2 (2.0.16) unstable; urgency=low
+  * Removed defunc and duplicate sydney backend
+
+ -- smurfy <maemo@smurfy.de>  Tue, 14 Jan 2014 21:15:00 +0200
+
 fahrplan2 (2.0.15) unstable; urgency=low
   * Added more backends
   * Added more settings
