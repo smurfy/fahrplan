@@ -30,29 +30,28 @@ Fahrplan Features:
 * Add station to favorites for quick access in future.
 * Add journey to calendar.
 
-Currently Supported Providers:
+Download and install for your device:
+--------------------------------------
+
+* [BlackBerry 10][2]
+* [N9, N950, Symbian][3]
+* [Ubuntu Touch][4]
+
+Currently supported Providers:
 ------------------------------
 
 * bahn.de (Germany and Europe) - supports via station and GPS location.
 * sbb.ch (Switzerland) - support via station, timetable with direction and GPS location.
-* "131500.com.au" (NSW, Australia) - only journey planing supported.
 * rejseplanen.dk (Denmark) - supports via station and GPS location.
 * oebb.at (Austria) - supports via station and GPS location.
 * reiseinfo.no (Norway) - supports GPS location.
 * vasttrafik.se (western Sweden) - supports via station and GPS location.
 * ptv.vic.gov.au (Victoria, Australia) - supports via station.
-* Sydney (Australia) - supports via station.
+* Sydney (NSW, Sydney, Australia) - supports via station.
 * SF Bay (SanFrancisco, USA) - supports via station.
 * London (London, United Kingdom) - supports via station.
 * Ireland - supports via station.
 * Dubai - supports via station.
-
-Installation:
--------------
-
-To install Fahrplan on your N9, N950, Symbian, BlackBerry 10 or Ubuntu
-Touch phone, visit the corresponding application Store and search for
-fahrplan.
 
 Compiling:
 ----------
@@ -85,3 +84,6 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 [1]: compile
+[2]: https://appworld.blackberry.com/webstore/content/28277436/?lang=en&countrycode=DE
+[3]: download
+[4]: https://launchpad.net/~mzanetti/+archive/ppa

@@ -1,15 +1,13 @@
 ---
 layout: default
-title: Nokia Meego and symbian store transition
+title: Nokia N9 and symbian store transition
 ---
 
-Hi N9 and symbian users, 
+Dear N9 and symbian users, 
 
-Version 2.0.15 is the current latest version available in the Nokia store 
-and i'm not longer able to update fahrplan via the store.
+Version 2.0.15 is latest version available in the Nokia store and i'm not longer able to update fahrplan via the store.
 
-Once a newer version is available i will provide here the latest versions 
-as direct download and if necessary a documentation how to install them. 
+Visit the [download page][1] to download newer versions for your platform.
 
 Background
 ==========
@@ -43,3 +41,5 @@ I recently received the following mail, announcing the drop of support.
 
     The Nokia Developer Team
 
+
+[1]: download
