@@ -8,3 +8,7 @@ install:
 script:
   - qmake fahrplan2.pro
   - make
+  
+branches:
+  only:
+    - master
