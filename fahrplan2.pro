@@ -272,18 +272,19 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-exists("/usr/lib/qt5/qml/Sailfish/Silica/SilicaGridView.qml"): {
-   DEFINES += BUILD_FOR_SAILFISHOS
+exists("/usr/include/sailfishapp/sailfishapp.h"): {
+    DEFINES += BUILD_FOR_SAILFISHOS
 
-   CONFIG += sailfishapp
+    CONFIG += link_pkgconfig
+    PKGCONFIG += sailfishapp
+    INCLUDEPATH += /usr/include/sailfishapp
 
-   RESOURCES += sailfishos_res.qrc
+    RESOURCES += sailfishos_res.qrc
 
-   OTHER_FILES += \
+    OTHER_FILES += \
         src/gui/sailfishos/main.qml \
         src/gui/sailfishos/Cover.qml \
         src/gui/sailfishos/MainPage.qml \
-        src/gui/sailfishos/components/SubTitleButton.qml \
         rpm/fahrplan2.yaml \
         data/fahrplan2_sailfishos.desktop \
         data/fahrplan2_86.png

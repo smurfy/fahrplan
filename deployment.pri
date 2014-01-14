@@ -84,7 +84,7 @@ symbian {
 
     ubuntu {
         installPrefix = /usr/
-    } else:exists("/usr/lib/qt5/qml/Sailfish/Silica/SilicaGridView.qml") {
+    } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
         installPrefix = /usr
     } else {
         installPrefix = /opt/$${TARGET}
@@ -123,12 +123,13 @@ symbian {
         desktopfile.path = /usr/share/applications
         icon.files = data/$${TARGET}-square.svg
         icon.path = /usr/share/icons/hicolor/scalable/apps
-    } else:exists("/usr/lib/qt5/qml/Sailfish/Silica/SilicaGridView.qml") {
+    } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
         desktopfile.files = data/$${TARGET}_sailfishos.desktop
         desktopfile.path = /usr/share/applications
         icon.files = data/$${TARGET}_86.png
         icon.path = /usr/share/icons/hicolor/86x86/apps
     }
+
     target.path = $${installPrefix}/bin
     export(icon.files)
     export(icon.path)
