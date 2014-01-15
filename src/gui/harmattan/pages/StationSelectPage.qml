@@ -203,7 +203,7 @@ Page {
     onStatusChanged: {
         switch (status) {
             case PageStatus.Activating:
-                gpsButton.visible = fahrplanBackend.parser.supportsGps() && (fahrplanBackend.getSettingsValue("enableGps", "true") == "true");
+                gpsButton.visible = fahrplanBackend.parser.supportsGps();
                 break;
         }
     }

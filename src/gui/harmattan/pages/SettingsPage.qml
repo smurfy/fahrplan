@@ -84,17 +84,6 @@ Page {
                 width: parent.width
 
                 SwitchLabel {
-                    title: qsTr("GPS location support")
-                    subtitle: checked ? qsTr("Opted-in") : qsTr("Opted-out")
-
-                    onCheckedChanged: {
-                        fahrplanBackend.storeSettingsValue("enableGps", checked);
-                    }
-                    Component.onCompleted: {
-                        checked = fahrplanBackend.getSettingsValue("enableGps", true);
-                    }
-                }
-                SwitchLabel {
                     title: qsTr("Compact calendar entries")
                     subtitle: qsTr("Use shorter text format in the calendar event description")
 
