@@ -1,6 +1,13 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.16
+------
+
+- Defunct and duplicate Sydney backend (131500.com.au) was removed.
+- Translations update.
+
+
 2.0.15
 ------
 
