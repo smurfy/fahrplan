@@ -284,7 +284,8 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
     OTHER_FILES += \
         src/gui/sailfishos/main.qml \
         src/gui/sailfishos/Cover.qml \
-        src/gui/sailfishos/MainPage.qml \
+        src/gui/sailfishos/pages/MainPage.qml \
+        src/gui/sailfishos/pages/TimetablePage.qml \
         rpm/fahrplan2.yaml \
         data/fahrplan2_sailfishos.desktop \
         data/fahrplan2_86.png

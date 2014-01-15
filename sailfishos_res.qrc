@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>src/gui/sailfishos/Cover.qml</file>
         <file>src/gui/sailfishos/main.qml</file>
-        <file>src/gui/sailfishos/MainPage.qml</file>
+        <file>src/gui/sailfishos/pages/MainPage.qml</file>
+        <file>src/gui/sailfishos/pages/TimetablePage.qml</file>
     </qresource>
 </RCC>
