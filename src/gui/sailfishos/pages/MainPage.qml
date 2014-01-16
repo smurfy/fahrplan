@@ -58,7 +58,7 @@ Page {
                 label: qsTr("Departure Station")
                 value: fahrplanBackend.departureStationName
                 onClicked: {
-
+                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.DepartureStation, fahrplanBackend: fahrplanBackend})
                 }
             }
             ValueButton {
@@ -66,6 +66,7 @@ Page {
                 label: qsTr("Via Station")
                 value: fahrplanBackend.viaStationName
                 onClicked: {
+                      pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.ViaStation, fahrplanBackend: fahrplanBackend})
 
                 }
             }
@@ -74,6 +75,7 @@ Page {
                 label: qsTr("Arrival Station")
                 value: fahrplanBackend.arrivalStationName
                 onClicked: {
+                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.ArrivalStation, fahrplanBackend: fahrplanBackend})
 
                 }
             }
@@ -82,6 +84,7 @@ Page {
                 label: qsTr("Station")
                 value: fahrplanBackend.currentStationName
                 onClicked: {
+                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.CurrentStation, fahrplanBackend: fahrplanBackend})
 
                 }
             }
@@ -90,6 +93,7 @@ Page {
                 label: qsTr("Direction")
                 value: fahrplanBackend.directionStationName
                 onClicked: {
+                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.DirectionStation, fahrplanBackend: fahrplanBackend})
                 }
             }
             ComboBox {
@@ -156,7 +160,6 @@ Page {
                       }
                  }
             }
-
         }
     }
     function updateButtonVisibility()

@@ -4,5 +4,7 @@
         <file>src/gui/sailfishos/main.qml</file>
         <file>src/gui/sailfishos/pages/MainPage.qml</file>
         <file>src/gui/sailfishos/pages/TimetablePage.qml</file>
+        <file>src/gui/sailfishos/pages/StationSelectPage.qml</file>
+        <file>src/gui/sailfishos/delegates/StationDelegate.qml</file>
     </qresource>
 </RCC>

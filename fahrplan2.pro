@@ -143,7 +143,9 @@ translate_hack {
         src/gui/ubuntu/*.qml \
         src/gui/ubuntu/components/*.qml \
         src/gui/sailfishos/*.qml  \
-        src/gui/sailfishos/components/*.qml
+        src/gui/sailfishos/components/*.qml \
+        src/gui/sailfishos/delegates/*.qml \
+        src/gui/sailfishos/pages/*.qml
 }
 
 contains(MEEGO_EDITION,harmattan) {
@@ -286,6 +288,8 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/Cover.qml \
         src/gui/sailfishos/pages/MainPage.qml \
         src/gui/sailfishos/pages/TimetablePage.qml \
+        src/gui/sailfishos/pages/StationSelectPage.qml \
+        src/gui/sailfishos/delegates/StationDelegate.qml \
         rpm/fahrplan2.yaml \
         data/fahrplan2_sailfishos.desktop \
         data/fahrplan2_86.png
