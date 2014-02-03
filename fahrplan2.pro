@@ -292,6 +292,7 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/delegates/StationDelegate.qml \
         src/gui/sailfishos/delegates/JourneyDelegate.qml \
         src/gui/sailfishos/pages/JourneyResultsPage.qml \
+        src/gui/sailfishos/delegates/TimetableEntryDelegate.qml \
         rpm/fahrplan2.yaml \
         data/fahrplan2_sailfishos.desktop \
         data/fahrplan2_86.png
