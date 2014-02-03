@@ -56,7 +56,8 @@ OTHER_FILES += \
     data/fahrplan2_64.png \
     data/fahrplan2_80.png \
     data/fahrplan2_86.png \
-    date/fahrplan2_150.png
+    date/fahrplan2_150.png \
+    src/gui/about.js
 
 RESOURCES += \
     translations_res.qrc
@@ -293,6 +294,8 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/delegates/JourneyDelegate.qml \
         src/gui/sailfishos/pages/JourneyResultsPage.qml \
         src/gui/sailfishos/delegates/TimetableEntryDelegate.qml \
+        src/gui/sailfishos/pages/SettingsPage.qml \
+        src/gui/sailfishos/pages/AboutPage.qml \
         rpm/fahrplan2.yaml \
         data/fahrplan2_sailfishos.desktop \
         data/fahrplan2_86.png

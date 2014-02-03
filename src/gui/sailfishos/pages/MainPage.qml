@@ -49,9 +49,13 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Settings")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), {fahrplanBackend: fahrplanBackend})
+                }
             }
             MenuItem {
                 text: qsTr("Journey")
+                visible: searchmode === 1
                 onClicked: {
                     searchmode = 0;
                     updateButtonVisibility();
@@ -59,12 +63,14 @@ Page {
             }
             MenuItem {
                 text: qsTr("Time Table")
+                visible: searchmode === 0
                 onClicked: {
                     searchmode = 1;
                     updateButtonVisibility();
                 }
             }
             MenuItem {
+                id: currentBackend
                 text: fahrplanBackend.parserName
                 enabled: false
             }
@@ -239,7 +245,6 @@ Page {
         id: fahrplanBackend
         onParserChanged: {
             console.log("Switching to " + name);
-
             updateButtonVisibility();
         }
 

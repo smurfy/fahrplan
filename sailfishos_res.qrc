@@ -9,5 +9,8 @@
         <file>src/gui/sailfishos/pages/JourneyResultsPage.qml</file>
         <file>src/gui/sailfishos/delegates/JourneyDelegate.qml</file>
         <file>src/gui/sailfishos/delegates/TimetableEntryDelegate.qml</file>
+        <file>src/gui/sailfishos/pages/AboutPage.qml</file>
+        <file>src/gui/sailfishos/pages/SettingsPage.qml</file>
+        <file>src/gui/about.js</file>
     </qresource>
 </RCC>
