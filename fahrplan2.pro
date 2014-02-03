@@ -290,6 +290,8 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/pages/TimetablePage.qml \
         src/gui/sailfishos/pages/StationSelectPage.qml \
         src/gui/sailfishos/delegates/StationDelegate.qml \
+        src/gui/sailfishos/delegates/JourneyDelegate.qml \
+        src/gui/sailfishos/pages/JourneyResultsPage.qml \
         rpm/fahrplan2.yaml \
         data/fahrplan2_sailfishos.desktop \
         data/fahrplan2_86.png

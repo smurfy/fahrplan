@@ -6,5 +6,7 @@
         <file>src/gui/sailfishos/pages/TimetablePage.qml</file>
         <file>src/gui/sailfishos/pages/StationSelectPage.qml</file>
         <file>src/gui/sailfishos/delegates/StationDelegate.qml</file>
+        <file>src/gui/sailfishos/pages/JourneyResultsPage.qml</file>
+        <file>src/gui/sailfishos/delegates/JourneyDelegate.qml</file>
     </qresource>
 </RCC>

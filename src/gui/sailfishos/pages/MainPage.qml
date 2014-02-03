@@ -174,6 +174,7 @@ Page {
             arrivalButton.visible = true;
             currentButton.visible = false;
             directionButton.visible = false;
+            pageStack.pushAttached(journeyResultsPage, {})
         }
         if (searchmode == 1) {
             viaButton.visible = false;
@@ -211,6 +212,10 @@ Page {
         id: timetablePage
     }
 
+    JourneyResultsPage {
+        id: journeyResultsPage
+    }
+
     FahrplanBackend {
         id: fahrplanBackend
         onParserChanged: {
@@ -223,6 +228,14 @@ Page {
             updateModeCheckboxes();
         }
 
+    }
+
+    onStatusChanged: {
+        switch (status) {
+            case PageStatus.Active:
+                updateButtonVisibility();
+                break;
+        }
     }
 
     Component.onCompleted: {
