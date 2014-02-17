@@ -82,26 +82,45 @@ Page {
                 id: departureButton
                 label: qsTr("Departure Station")
                 value: fahrplanBackend.departureStationName
+                property int type: FahrplanBackend.DepartureStation
+                property bool menuOpen: stationSelectContextMenu.parent === departureButton
+                height: menuOpen ? stationSelectContextMenu.height + contentItem.height : contentItem.height
+
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.DepartureStation, fahrplanBackend: fahrplanBackend})
+                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: type, fahrplanBackend: fahrplanBackend})
+                }
+                onPressAndHold: {
+                    stationSelectContextMenu.openMenu(departureButton, FahrplanBackend.DepartureStation);
                 }
             }
             ValueButton {
                 id: viaButton
                 label: qsTr("Via Station")
                 value: fahrplanBackend.viaStationName
-                onClicked: {
-                      pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.ViaStation, fahrplanBackend: fahrplanBackend})
+                property int type: FahrplanBackend.ViaStation
+                property bool menuOpen: stationSelectContextMenu.parent === viaButton
+                height: menuOpen ? stationSelectContextMenu.height + contentItem.height : contentItem.height
 
+                onClicked: {
+                      pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: type, fahrplanBackend: fahrplanBackend})
+                }
+                onPressAndHold: {
+                    stationSelectContextMenu.openMenu(viaButton, FahrplanBackend.ViaStation);
                 }
             }
             ValueButton {
                 id: arrivalButton
                 label: qsTr("Arrival Station")
                 value: fahrplanBackend.arrivalStationName
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.ArrivalStation, fahrplanBackend: fahrplanBackend})
+                property int type: FahrplanBackend.ArrivalStation
+                property bool menuOpen: stationSelectContextMenu.parent === arrivalButton
+                height: menuOpen ? stationSelectContextMenu.height + contentItem.height : contentItem.height
 
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: type, fahrplanBackend: fahrplanBackend})
+                }
+                onPressAndHold: {
+                    stationSelectContextMenu.openMenu(arrivalButton);
                 }
             }
             ValueButton {
@@ -117,8 +136,14 @@ Page {
                 id: directionButton
                 label: qsTr("Direction")
                 value: fahrplanBackend.directionStationName
+                property bool menuOpen: timeTableSelectContextMenu.parent === directionButton
+                height: menuOpen ? timeTableSelectContextMenu.height + contentItem.height : contentItem.height
+
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("StationSelectPage.qml"), {type: FahrplanBackend.DirectionStation, fahrplanBackend: fahrplanBackend})
+                }
+                onPressAndHold: {
+                    timeTableSelectContextMenu.show(directionButton);
                 }
             }
             ComboBox {
@@ -240,6 +265,72 @@ Page {
     JourneyResultsPage {
         id: journeyResultsPage
     }
+
+    ContextMenu {
+        id: stationSelectContextMenu
+        property ValueButton opener
+
+        MenuItem {
+            id: switchWithDepartureStation
+            text: qsTr("Switch with Departure station")
+            onClicked: {
+                fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.DepartureStation)
+            }
+        }
+        MenuItem {
+            id: switchWithArrivalStation
+            text: qsTr("Switch with Arrival station")
+            onClicked: {
+                fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ArrivalStation)
+            }
+        }
+        MenuItem {
+            id: switchWithViaStation
+            text: qsTr("Switch with Via station")
+            onClicked: {
+                fahrplanBackend.swapStations(stationSelectContextMenu.opener.type, FahrplanBackend.ViaStation)
+            }
+        }
+        MenuItem {
+            text: qsTr("Clear station")
+            onClicked: {
+                fahrplanBackend.resetStation(stationSelectContextMenu.opener.type);
+            }
+        }
+
+        function openMenu(opener)
+        {
+            stationSelectContextMenu.opener = opener;
+            switchWithViaStation.visible = false;
+            switchWithDepartureStation.visible = false;
+            switchWithArrivalStation.visible = false;
+
+            if (opener != viaButton && fahrplanBackend.parser.supportsVia()) {
+                switchWithViaStation.visible = true;
+            }
+            if (opener != arrivalButton) {
+                switchWithArrivalStation.visible = true;
+            }
+            if (opener != departureButton) {
+                switchWithDepartureStation.visible = true;
+            }
+
+            stationSelectContextMenu.show(opener);
+        }
+    }
+
+    ContextMenu {
+        id: timeTableSelectContextMenu
+
+        MenuItem {
+            text: qsTr("Clear station")
+            onClicked: {
+                fahrplanBackend.resetStation(FahrplanBackend.DirectionStation);
+            }
+        }
+    }
+
+
 
     FahrplanBackend {
         id: fahrplanBackend
