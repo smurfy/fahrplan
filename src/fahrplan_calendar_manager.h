@@ -22,7 +22,7 @@
 
 #include <QAbstractListModel>
 
-#if !defined(BUILD_FOR_BLACKBERRY) && !defined(BUILD_FOR_SAILFISHOS)
+#if !defined(BUILD_FOR_BLACKBERRY) && !defined(BUILD_FOR_SAILFISHOS) && !defined(BUILD_FOR_DESKTOP)
 #   include <QOrganizerCollectionId>
 QTM_USE_NAMESPACE
 #endif
