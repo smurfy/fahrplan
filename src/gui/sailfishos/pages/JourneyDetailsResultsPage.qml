@@ -36,7 +36,7 @@ Page {
 
         PushUpMenu {
             id: pushUpMenu
-            visible: !indicator.visible
+            visible: indicator.visible === false
 
             MenuItem {
                 id: addToCalendar

@@ -33,7 +33,7 @@ Page {
         VerticalScrollDecorator {}
 
         PushUpMenu {
-            visible: !indicator.visible
+            visible: indicator.visible === false
 
             MenuItem {
                 text: qsTr("Earlier")
