@@ -35,7 +35,7 @@
 #   include <bb/pim/account/AccountService>
 #   include <bb/pim/account/Account>
 #elif defined(BUILD_FOR_SAILFISHOS)
-#else
+#elif !defined(BUILD_FOR_DESKTOP)
 #   include <QOrganizerManager>
 #endif
 
