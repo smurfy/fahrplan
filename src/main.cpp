@@ -68,7 +68,9 @@ Q_DECL_EXPORT
 #endif
 int main(int argc, char *argv[])
 {
-    #if defined(HAVE_DECLARATIVE_CACHE)
+    #if defined(BUILD_FOR_SAILFISHOS)
+        QGuiApplication* app = SailfishApp::application(argc, argv);
+    #elif defined(HAVE_DECLARATIVE_CACHE)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #else
         QApplication* app = new QApplication(argc, argv);
@@ -111,7 +113,9 @@ int main(int argc, char *argv[])
         qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
         qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
 
-        #if defined(HAVE_DECLARATIVE_CACHE)
+        #if defined(BUILD_FOR_SAILFISHOS)
+            QQuickView *view = SailfishApp::createView();
+        #elif defined(HAVE_DECLARATIVE_CACHE)
             QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
         #elif defined(BUILD_FOR_QT5)
             QQuickView *view = new QQuickView();
