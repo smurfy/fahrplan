@@ -12,5 +12,7 @@
         <file>src/gui/sailfishos/pages/AboutPage.qml</file>
         <file>src/gui/sailfishos/pages/SettingsPage.qml</file>
         <file>src/gui/about.js</file>
+        <file>src/gui/sailfishos/delegates/JourneyDetailsDelegate.qml</file>
+        <file>src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml</file>
     </qresource>
 </RCC>

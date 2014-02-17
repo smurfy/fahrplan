@@ -25,7 +25,9 @@ Item {
     id: root
     property ListView listView: ListView.view
     width: listView.width
-    height: contentItem.height
+    height: contentItem.height + Theme.paddingMedium
+
+    signal clicked()
 
     BackgroundItem {
         id: contentItem
@@ -84,7 +86,7 @@ Item {
         }
 
         onClicked: {
-            console.log("Mooo");
+            root.clicked();
         }
     }
 }

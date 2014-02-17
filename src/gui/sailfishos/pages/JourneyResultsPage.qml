@@ -62,6 +62,7 @@ Page {
                     id: journeyDate
                     width: parent.width
                     horizontalAlignment: Text.AlignRight
+                    color: Theme.secondaryColor
                     anchors {
                         top: parent.top
                         topMargin: 80
@@ -116,7 +117,10 @@ Page {
                 model: journeyResultModel
 
                 delegate: JourneyDelegate {
-
+                    onClicked: {
+                        pageStack.push(detailsResultsPage);
+                        fahrplanBackend.parser.getJourneyDetails(model.id);
+                    }
                 }
             }
         }
@@ -126,10 +130,12 @@ Page {
     onStatusChanged: {
         switch (status) {
             case PageStatus.Activating:
-                indicator.visible = true;
-                journeyDesc.title = qsTr("Searching...");
-                journeyDate.text = "";
-                fahrplanBackend.searchJourney();
+                if (pageStack.depth === 2) {
+                    indicator.visible = true;
+                    journeyDesc.title = qsTr("Searching...");
+                    journeyDate.text = "";
+                    fahrplanBackend.searchJourney();
+                }
                 break;
             case PageStatus.Deactivating:
                 fahrplanBackend.parser.cancelRequest();
@@ -174,5 +180,9 @@ Page {
                 });
             }
         }
+    }
+
+    JourneyDetailsResultsPage {
+        id: detailsResultsPage
     }
 }
