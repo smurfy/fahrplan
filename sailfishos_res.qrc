@@ -14,5 +14,6 @@
         <file>src/gui/about.js</file>
         <file>src/gui/sailfishos/delegates/JourneyDetailsDelegate.qml</file>
         <file>src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml</file>
+        <file>data/sailfishos/cover.png</file>
     </qresource>
 </RCC>
