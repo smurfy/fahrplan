@@ -33,7 +33,7 @@ QML_IMPORT_PATH =
 
 
 contains(QT_VERSION, ^5\\..\\..*) {
-  QT += quick qml xmlpatterns network xml widgets concurrent
+  QT += quick qml xmlpatterns network xml concurrent
   DEFINES += BUILD_FOR_QT5
 } else {
   QT += declarative xmlpatterns network xml
@@ -304,7 +304,10 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         data/sailfishos/harbour-fahrplan2.png
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h") {
+
+    QT += widgets
+
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui

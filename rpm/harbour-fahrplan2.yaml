@@ -12,7 +12,6 @@ Description: |
 Configure: none
 Builder: qtc5
 PkgConfigBR:
-- sailfishapp >= 0.0.10
 - Qt5Core
 - Qt5Qml
 - Qt5Quick
