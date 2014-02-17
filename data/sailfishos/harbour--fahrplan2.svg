@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="80"
+   height="80"
+   id="svg2985"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="harbour--fahrplan2.svg"
+   inkscape:export-filename="C:\Users\phil\Documents\fahrplan2\data\sailfishos\harbour-fahrplan2.png"
+   inkscape:export-xdpi="98.72039"
+   inkscape:export-ydpi="98.72039">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     id="namedview20"
+     showgrid="false"
+     inkscape:zoom="3.6375"
+     inkscape:cx="63.523312"
+     inkscape:cy="26.613941"
+     inkscape:window-x="3592"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2985" />
+  <metadata
+     id="metadata3050">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title></dc:title>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2987">
+    <linearGradient
+       x1="39.9995"
+       y1="5.1816001"
+       x2="39.9995"
+       y2="58.801899"
+       id="hicg_overlay_grad"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop2990"
+         style="stop-color:#009eff;stop-opacity:1"
+         offset="0" />
+      <stop
+         offset="0.69444442"
+         style="stop-color:#004f7f;stop-opacity:1;"
+         id="stop4023" />
+      <stop
+         id="stop2992"
+         style="stop-color:#000000;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+    <filter
+       color-interpolation-filters="sRGB"
+       id="hicg_drop_shadow">
+      <feOffset
+         id="feOffset2995"
+         dy="2"
+         dx="0"
+         in="SourceGraphic" />
+      <feGaussianBlur
+         id="feGaussianBlur2997"
+         stdDeviation="5" />
+      <feColorMatrix
+         id="feColorMatrix2999"
+         result="shadow"
+         values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.5 0"
+         type="matrix" />
+      <feBlend
+         in2="shadow"
+         mode="normal"
+         in="SourceGraphic"
+         id="feBlend3001" />
+    </filter>
+    <linearGradient
+       x1="39.9995"
+       y1="5.1816001"
+       x2="39.9995"
+       y2="58.801899"
+       id="linearGradient3828"
+       xlink:href="#hicg_overlay_grad"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#hicg_overlay_grad"
+       id="linearGradient3997"
+       x1="522.5"
+       y1="267.44775"
+       x2="656.34448"
+       y2="270.22324"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0753258,0,0,1.0753258,33.57604,-20.450652)" />
+  </defs>
+  <g
+     id="g3128"
+     transform="matrix(0.89145472,0,0,0.89145472,-529.73088,-198.13351)">
+    <path
+       style="fill:url(#linearGradient3997);fill-opacity:1.0"
+       d="m 595.4338,286.54507 c 0,-32.82489 1.7623,-39.40822 13.66074,-51.0316 23.83683,-23.28579 64.49718,-12.00582 72.89132,20.22147 5.53496,21.25009 -4.6088,42.27139 -25.00403,51.81684 -6.11838,2.86355 -6.39484,2.8899 -33.85839,3.22654 l -27.68964,0.3394 0,-24.57265 z"
+       id="path3130"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer"
+     style="display:inline" />
+  <path
+     d="m 27.93497,19.630689 c -2.844347,0 -5.122835,2.014645 -5.122835,4.529621 l 0,27.063055 c 0,2.514978 2.278488,4.548735 5.122835,4.548735 l 20.534562,0 c 2.844346,0 5.14445,-2.033757 5.14445,-4.548735 l 0,-27.063055 c 0,-2.514976 -2.300104,-4.529621 -5.14445,-4.529621 l -20.534562,0 z m 5.706446,1.681885 9.316208,0 c 1.264153,0 2.291224,0.543697 2.291224,1.242301 l 0,2.025907 c 0,0.698603 -1.027071,1.261414 -2.291224,1.261414 l -9.316208,0 c -1.264154,0 -2.291225,-0.562811 -2.291225,-1.261414 l 0,-2.025907 c 0,-0.698604 1.027071,-1.242301 2.291225,-1.242301 z m -6.052292,6.383518 20.64264,0 c 1.182886,0 2.139918,0.562809 2.139918,1.261413 l 0,8.734333 c 0,0.698605 -0.957032,1.261414 -2.139918,1.261414 l -20.64264,0 c -1.182886,0 -2.139918,-0.562809 -2.139918,-1.261414 l 0,-8.734333 c 0,-0.698604 0.957032,-1.261413 2.139918,-1.261413 z m -0.583614,19.035877 1.642766,0 c 0.967816,0 1.750842,0.518996 1.750842,1.165852 l 0,1.873009 c 0,0.646855 -0.783026,1.16585 -1.750842,1.16585 l -1.642766,0 c -0.967816,0 -1.750842,-0.518995 -1.750842,-1.16585 l 0,-1.873009 c 0,-0.646856 0.783026,-1.165852 1.750842,-1.165852 z m 20.167103,0 1.642765,0 c 0.967816,0 1.729226,0.518996 1.729226,1.165852 l 0,1.873009 c 0,0.646855 -0.76141,1.16585 -1.729226,1.16585 l -1.642765,0 c -0.967817,0 -1.750841,-0.518995 -1.750841,-1.16585 l 0,-1.873009 c 0,-0.646856 0.783024,-1.165852 1.750841,-1.165852 z"
+     id="rect163652"
+     style="fill:#ffffff;fill-opacity:1;stroke:none"
+     inkscape:connector-curvature="0" />
+  <text
+     x="16.80213"
+     y="91.535828"
+     transform="scale(1.4253896,0.70156257)"
+     id="text163672"
+     xml:space="preserve"
+     style="font-size:30.1831665px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+     sodipodi:linespacing="125%"><tspan
+       x="16.80213"
+       y="91.535828"
+       id="tspan163674"
+       style="font-weight:normal;fill:#ffffff;-inkscape-font-specification:Sans">A</tspan></text>
+</svg>
