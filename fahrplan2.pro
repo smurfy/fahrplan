@@ -55,7 +55,6 @@ OTHER_FILES += \
     data/fahrplan2.svg \
     data/fahrplan2_64.png \
     data/fahrplan2_80.png \
-    data/fahrplan2_86.png \
     date/fahrplan2_150.png \
     src/gui/about.js
 
@@ -276,6 +275,8 @@ blackberry {
 }
 
 exists("/usr/include/sailfishapp/sailfishapp.h"): {
+    TARGET = harbour-fahrplan2
+
     DEFINES += BUILD_FOR_SAILFISHOS
 
     CONFIG += link_pkgconfig
@@ -298,9 +299,9 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml \
         src/gui/sailfishos/pages/SettingsPage.qml \
         src/gui/sailfishos/pages/AboutPage.qml \
-        rpm/fahrplan2.yaml \
-        data/fahrplan2_sailfishos.desktop \
-        data/fahrplan2_86.png
+        rpm/harbour-fahrplan2.yaml \
+        data/sailfishos/harbour-fahrplan2.desktop \
+        data/sailfishos/harbour-fahrplan2.png
 }
 
 win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian {

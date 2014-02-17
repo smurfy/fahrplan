@@ -82,15 +82,6 @@ symbian {
         }
     }
 
-    ubuntu {
-        installPrefix = /usr/
-    } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
-        installPrefix = /usr
-    } else {
-        installPrefix = /opt/$${TARGET}
-    }
-
-    # temp fix for sailfish
     installPrefix = /usr
 
     for(deploymentfolder, DEPLOYMENTFOLDERS) {
@@ -124,9 +115,9 @@ symbian {
         icon.files = data/$${TARGET}-square.svg
         icon.path = /usr/share/icons/hicolor/scalable/apps
     } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
-        desktopfile.files = data/$${TARGET}_sailfishos.desktop
+        desktopfile.files = data/sailfishos/$${TARGET}.desktop
         desktopfile.path = /usr/share/applications
-        icon.files = data/$${TARGET}_86.png
+        icon.files = data/sailfishos/$${TARGET}.png
         icon.path = /usr/share/icons/hicolor/86x86/apps
     }
 

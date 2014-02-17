@@ -1,4 +1,4 @@
-Name: fahrplan2
+Name: harbour-fahrplan2
 Summary: Public transportation application
 Version: 2.0.15
 Release: 1
@@ -19,8 +19,7 @@ PkgConfigBR:
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
 Files:
-- /usr/bin
-- '%{_datadir}/icons/hicolor/86x86/apps/%{name}_86.png'
-- '%{_datadir}/applications/%{name}_sailfishos.desktop'
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
+- '%{_datadir}/applications/%{name}.desktop'
 - '%{_bindir}'
 PkgBR: []
