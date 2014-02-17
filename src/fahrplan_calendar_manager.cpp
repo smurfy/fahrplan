@@ -190,7 +190,8 @@ void FahrplanCalendarManager::getCalendarsList()
         }
     }
 #elif defined(BUILD_FOR_SAILFISHOS)
-#else
+
+#elif !defined(BUILD_FOR_DESKTOP)
     QString id = settings->value("CollectionId").toString();
     QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);
 
