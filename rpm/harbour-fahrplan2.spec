@@ -21,10 +21,12 @@ URL:        http://fahrplan.smurfy.de
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-fahrplan2.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
-BuildRequires:  pkgconfig(Qt5Quick)
-BuildRequires:  pkgconfig(Qt5Qml)
-BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Qml)
+BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  qt5-qtpositioning-devel
+BuildRequires:  qt5-qtdeclarative-import-positioning
 BuildRequires:  desktop-file-utils
 
 %description
@@ -63,8 +65,9 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-%{_datadir}/applications/%{name}.desktop
+/usr/bin
 %{_bindir}
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 # >> files
 # << files

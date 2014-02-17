@@ -19,7 +19,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-//import QtMobility.location 1.1
+import QtPositioning 5.0
 import Fahrplan 1.0
 import "../delegates"
 
@@ -131,15 +131,22 @@ Dialog {
     onStatusChanged: {
         switch (status) {
             case PageStatus.Activating:
-                gpsButton.visible = fahrplanBackend.parser.supportsGps() && (fahrplanBackend.getSettingsValue("enableGps", "true") === "true");
+                gpsButton.visible = fahrplanBackend.parser.supportsGps();
                 break;
         }
     }
 
-    /*
     PositionSource {
         id: positionSource
+        active: false
+
         onPositionChanged: {
+
+            //Only do something if active
+            if (positionSource.active === false) {
+                return;
+            }
+
             if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
                 console.log(qsTr("Searching for stations..."));
                 positionSource.stop();
@@ -149,5 +156,5 @@ Dialog {
                 console.log(qsTr("Waiting for GPS lock..."));
             }
         }
-    }*/
+    }
 }
