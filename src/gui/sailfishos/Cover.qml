@@ -21,6 +21,16 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    id: appCover
+
+    Image {
+           source: "../../../data/sailfishos/cover.png"
+           anchors.horizontalCenter: parent.horizontalCenter
+           width: parent.width
+           height: sourceSize.height * width / sourceSize.width
+           opacity: 0.1
+       }
+
     CoverPlaceholder {
         text: qsTr("Fahrplan")
     }
