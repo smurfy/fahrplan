@@ -500,17 +500,6 @@ Page {
         }
     }
 
-    QueryDialog {
-            id: firstStartDialog;
-            message: qsTr("Hello<br/>" +
-                "Sorry about this dialog, but the new Nokia store regulations require it.<br/><br/>" +
-                "Please read the Privacy Policy of fahrplan. (available on the about page)<br/><br/>" +
-                "If you want, you can also disable the gps features of fahrplan via the about menu."
-            )
-            acceptButtonText: qsTr("Ok")
-    }
-
-
     ContextMenu {
         id: timeTableSelectContextMenu
         MenuLayout {
@@ -653,17 +642,6 @@ Page {
     Component {
         id: settingsPage
         SettingsPage {}
-    }
-
-    onStatusChanged: {
-        switch (status) {
-            case PageStatus.Active:
-                if (fahrplanBackend.getSettingsValue("firstStart", "true") == "true") {
-                    firstStartDialog.open();
-                    fahrplanBackend.storeSettingsValue("firstStart", "false");
-                }
-                break;
-        }
     }
 
     Component.onCompleted: {

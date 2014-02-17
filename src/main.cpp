@@ -145,9 +145,6 @@ int main(int argc, char *argv[])
 
             QSettings *settings = new QSettings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
 
-            // HACK: Don't show Nokia privacy dialog on BlackBerry
-            settings->setValue("firstStart", "false");
-
             // Check if GPS Location permission is set
             // and geolocation services are enabled.
             int res = geolocation_request_events(0);
