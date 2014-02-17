@@ -138,7 +138,10 @@ Page {
                 }
                 break;
             case PageStatus.Deactivating:
-                fahrplanBackend.parser.cancelRequest();
+                if (pageStack.depth === 1) {
+                    indicator.visible = true;
+                    fahrplanBackend.parser.cancelRequest();
+                }
                 break;
         }
     }
