@@ -12,14 +12,14 @@ Description: |
 Configure: none
 Builder: qtc5
 PkgConfigBR:
-- Qt5Core
-- Qt5Qml
 - Qt5Quick
+- Qt5Qml
+- Qt5Core
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
 Files:
-- /usr/bin
-- '%{_bindir}'
-- '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
-PkgBR: [qt5-qtpositioning-devel, qt5-qtdeclarative-import-positioning]
+- '%{_datadir}/applications/%{name}.desktop'
+- '%{_bindir}'
+- /usr/bin
+PkgBR: [qt5-qtdeclarative-import-positioning, qt5-qtpositioning-devel]

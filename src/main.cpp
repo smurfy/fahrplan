@@ -19,25 +19,22 @@
 
 #include <QtCore/QTranslator>
 
-#if defined(BUILD_FOR_QT5)
-    #include <QtWidgets/QApplication>
-#else
-    #include <QtGui/QApplication>
-#endif
-
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
 #elif defined(BUILD_FOR_UBUNTU)
     #include <QtQuick>
     #include <QtQml>
-#else
-    #include "gui/desktop-test/mainwindow.h"
-#endif
-
-#if defined(BUILD_FOR_SAILFISHOS)
+#elif defined(BUILD_FOR_SAILFISHOS)
     #include <sailfishapp.h>
     #include <QtQuick>
     #include <QtQml>
+#else
+    #include "gui/desktop-test/mainwindow.h"
+    #if defined(BUILD_FOR_QT5)
+        #include <QtWidgets/QApplication>
+    #else
+        #include <QtGui/QApplication>
+    #endif
 #endif
 
 #if defined(HAVE_DECLARATIVE_CACHE)
