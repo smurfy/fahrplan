@@ -10,9 +10,9 @@ Supported Operating Systems/Devices:
   (a.k.a. S60 5th Edition) should also work but was never tested.
 * BlackBerry 10: BlackBerry Z10, Q10 and Q5.
 * Ubuntu Touch.
-For more information please consult:
 * Sailfish OS.
 
+For more information please consult:
 http://fahrplan.smurfy.de/
 
 [![Build Status](https://travis-ci.org/smurfy/fahrplan.png?branch=master)](https://travis-ci.org/smurfy/fahrplan)
