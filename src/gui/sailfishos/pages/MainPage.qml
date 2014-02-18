@@ -330,10 +330,9 @@ Page {
         }
     }
 
+    Connections {
+        target: fahrplanBackend
 
-
-    FahrplanBackend {
-        id: fahrplanBackend
         onParserChanged: {
             console.log("Switching to " + name);
             updateButtonVisibility();
@@ -342,7 +341,6 @@ Page {
         onModeChanged: {
             updateModeCheckboxes();
         }
-
     }
 
     onStatusChanged: {

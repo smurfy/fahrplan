@@ -19,6 +19,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Fahrplan 1.0
 
 CoverBackground {
     id: appCover
@@ -32,6 +33,11 @@ CoverBackground {
        }
 
     CoverPlaceholder {
-        text: qsTr("Fahrplan")
+        id: fahrplanTitle
+        text: qsTr("Fahrplan: ") + fahrplanBackend.parserName
+    }
+
+    Connections {
+        target: fahrplanBackend
     }
 }
