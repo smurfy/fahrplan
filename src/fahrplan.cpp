@@ -333,7 +333,7 @@ void Fahrplan::onTimetableResult(const TimetableEntriesList &timetableEntries)
     emit parserTimeTableResult();
 }
 
-QString Fahrplan::parserName()
+QString Fahrplan::parserName() const
 {
     return m_parser_manager->getParser()->name();
 }

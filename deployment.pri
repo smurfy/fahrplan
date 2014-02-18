@@ -81,11 +81,9 @@ symbian {
             QMAKE_EXTRA_TARGETS += first copydeploymentfolders
         }
     }
-    ubuntu {
-        installPrefix = /usr/
-    } else {
-        installPrefix = /opt/$${TARGET}
-    }
+
+    installPrefix = /usr
+
     for(deploymentfolder, DEPLOYMENTFOLDERS) {
         item = item$${deploymentfolder}
         itemfiles = $${item}.files
@@ -116,7 +114,13 @@ symbian {
         desktopfile.path = /usr/share/applications
         icon.files = data/$${TARGET}-square.svg
         icon.path = /usr/share/icons/hicolor/scalable/apps
+    } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
+        desktopfile.files = data/sailfishos/$${TARGET}.desktop
+        desktopfile.path = /usr/share/applications
+        icon.files = data/sailfishos/$${TARGET}.png
+        icon.path = /usr/share/icons/hicolor/86x86/apps
     }
+
     target.path = $${installPrefix}/bin
     export(icon.files)
     export(icon.path)

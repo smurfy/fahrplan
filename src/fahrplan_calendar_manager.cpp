@@ -21,7 +21,11 @@
 
 #include <QSettings>
 #ifndef QT_NO_CONCURRENT
-#   include <QtConcurrentRun>
+    #if defined(BUILD_FOR_QT5)
+    #   include <QtConcurrent/QtConcurrentRun>
+    #else
+    #   include <QtConcurrentRun>
+    #endif
 #   include <QFutureWatcher>
 #endif
 
@@ -30,6 +34,7 @@
 #   include <bb/pim/calendar/CalendarFolder>
 #   include <bb/pim/account/AccountService>
 #   include <bb/pim/account/Account>
+#elif defined(BUILD_FOR_SAILFISHOS)
 #elif !defined(BUILD_FOR_DESKTOP)
 #   include <QOrganizerManager>
 #endif
@@ -184,6 +189,8 @@ void FahrplanCalendarManager::getCalendarsList()
             emit selectedIndexChanged();
         }
     }
+#elif defined(BUILD_FOR_SAILFISHOS)
+
 #elif !defined(BUILD_FOR_DESKTOP)
     QString id = settings->value("CollectionId").toString();
     QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);

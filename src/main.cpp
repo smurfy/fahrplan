@@ -19,19 +19,22 @@
 
 #include <QtCore/QTranslator>
 
-#if defined(BUILD_FOR_QT5)
-    #include <QtWidgets/QApplication>
-#else
-    #include <QtGui/QApplication>
-#endif
-
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
 #elif defined(BUILD_FOR_UBUNTU)
     #include <QtQuick>
     #include <QtQml>
+#elif defined(BUILD_FOR_SAILFISHOS)
+    #include <sailfishapp.h>
+    #include <QtQuick>
+    #include <QtQml>
 #else
     #include "gui/desktop-test/mainwindow.h"
+    #if defined(BUILD_FOR_QT5)
+        #include <QtWidgets/QApplication>
+    #else
+        #include <QtGui/QApplication>
+    #endif
 #endif
 
 #if defined(HAVE_DECLARATIVE_CACHE)
@@ -62,7 +65,9 @@ Q_DECL_EXPORT
 #endif
 int main(int argc, char *argv[])
 {
-    #if defined(HAVE_DECLARATIVE_CACHE)
+    #if defined(BUILD_FOR_SAILFISHOS)
+        QGuiApplication* app = SailfishApp::application(argc, argv);
+    #elif defined(HAVE_DECLARATIVE_CACHE)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #else
         QApplication* app = new QApplication(argc, argv);
@@ -82,7 +87,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Fahrplan::StationType>();
     qRegisterMetaType<Fahrplan::Mode>();
 
-    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU)
+    #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_UBUNTU) || defined(BUILD_FOR_SAILFISHOS)
         qDebug()<<"QML";
         qmlRegisterType<Fahrplan>("Fahrplan", 1, 0, "FahrplanBackend");
         qmlRegisterType<ParserAbstract>("Fahrplan", 1, 0, "ParserAbstract");
@@ -105,7 +110,9 @@ int main(int argc, char *argv[])
         qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");
         qmlRegisterType<JourneyDetailResultItem>("Fahrplan", 1, 0, "JourneyDetailResultItem");
 
-        #if defined(HAVE_DECLARATIVE_CACHE)
+        #if defined(BUILD_FOR_SAILFISHOS)
+            QQuickView *view = SailfishApp::createView();
+        #elif defined(HAVE_DECLARATIVE_CACHE)
             QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
         #elif defined(BUILD_FOR_QT5)
             QQuickView *view = new QQuickView();
@@ -135,6 +142,11 @@ int main(int argc, char *argv[])
             } else {
                 view->show();
             }
+        #elif defined(BUILD_FOR_SAILFISHOS)
+            qDebug()<<"SailfishOs";
+            view->setSource(QUrl("qrc:/src/gui/sailfishos/main.qml"));
+
+            view->showFullScreen();
         #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 

@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/gui/sailfishos/Cover.qml</file>
+        <file>src/gui/sailfishos/main.qml</file>
+        <file>src/gui/sailfishos/pages/MainPage.qml</file>
+        <file>src/gui/sailfishos/pages/TimetablePage.qml</file>
+        <file>src/gui/sailfishos/pages/StationSelectPage.qml</file>
+        <file>src/gui/sailfishos/delegates/StationDelegate.qml</file>
+        <file>src/gui/sailfishos/pages/JourneyResultsPage.qml</file>
+        <file>src/gui/sailfishos/delegates/JourneyDelegate.qml</file>
+        <file>src/gui/sailfishos/delegates/TimetableEntryDelegate.qml</file>
+        <file>src/gui/sailfishos/pages/AboutPage.qml</file>
+        <file>src/gui/sailfishos/pages/SettingsPage.qml</file>
+        <file>src/gui/about.js</file>
+        <file>src/gui/sailfishos/delegates/JourneyDetailsDelegate.qml</file>
+        <file>src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml</file>
+        <file>data/sailfishos/cover.png</file>
+    </qresource>
+</RCC>

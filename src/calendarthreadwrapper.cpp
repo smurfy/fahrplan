@@ -152,6 +152,8 @@ void CalendarThreadWrapper::addToCalendar()
     }
 
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
+#else
+    emit addCalendarEntryComplete(false);
 #endif
 
     QThread::currentThread()->exit(0);

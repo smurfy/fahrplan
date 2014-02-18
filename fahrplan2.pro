@@ -33,7 +33,7 @@ QML_IMPORT_PATH =
 
 
 contains(QT_VERSION, ^5\\..\\..*) {
-  QT += quick qml xmlpatterns network xml widgets concurrent
+  QT += quick qml xmlpatterns network xml concurrent
   DEFINES += BUILD_FOR_QT5
 } else {
   QT += declarative xmlpatterns network xml
@@ -55,7 +55,8 @@ OTHER_FILES += \
     data/fahrplan2.svg \
     data/fahrplan2_64.png \
     data/fahrplan2_80.png \
-    date/fahrplan2_150.png
+    date/fahrplan2_150.png \
+    src/gui/about.js
 
 RESOURCES += \
     translations_res.qrc
@@ -138,7 +139,11 @@ translate_hack {
         src/gui/symbian/delegates/*.qml \
         src/gui/symbian/pages/*.qml \
         src/gui/ubuntu/*.qml \
-        src/gui/ubuntu/components/*.qml
+        src/gui/ubuntu/components/*.qml \
+        src/gui/sailfishos/*.qml  \
+        src/gui/sailfishos/components/*.qml \
+        src/gui/sailfishos/delegates/*.qml \
+        src/gui/sailfishos/pages/*.qml
 }
 
 contains(MEEGO_EDITION,harmattan) {
@@ -267,7 +272,40 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!blackberry {
+exists("/usr/include/sailfishapp/sailfishapp.h"): {
+    TARGET = harbour-fahrplan2
+
+    DEFINES += BUILD_FOR_SAILFISHOS
+
+    CONFIG += link_pkgconfig
+    PKGCONFIG += sailfishapp
+    INCLUDEPATH += /usr/include/sailfishapp
+
+    RESOURCES += sailfishos_res.qrc
+
+    OTHER_FILES += \
+        src/gui/sailfishos/main.qml \
+        src/gui/sailfishos/Cover.qml \
+        src/gui/sailfishos/pages/MainPage.qml \
+        src/gui/sailfishos/pages/TimetablePage.qml \
+        src/gui/sailfishos/pages/StationSelectPage.qml \
+        src/gui/sailfishos/delegates/StationDelegate.qml \
+        src/gui/sailfishos/delegates/JourneyDelegate.qml \
+        src/gui/sailfishos/delegates/JourneyDetailsDelegate.qml \
+        src/gui/sailfishos/pages/JourneyResultsPage.qml \
+        src/gui/sailfishos/delegates/TimetableEntryDelegate.qml \
+        src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml \
+        src/gui/sailfishos/pages/SettingsPage.qml \
+        src/gui/sailfishos/pages/AboutPage.qml \
+        rpm/harbour-fahrplan2.yaml \
+        data/sailfishos/harbour-fahrplan2.desktop \
+        data/sailfishos/harbour-fahrplan2.png
+}
+
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h") {
+
+    QT += widgets
+
     SOURCES += src/gui/desktop-test/mainwindow.cpp
     HEADERS += src/gui/desktop-test/mainwindow.h
     FORMS += src/gui/desktop-test/mainwindow.ui
