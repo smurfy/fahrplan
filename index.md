@@ -16,6 +16,7 @@ Supported Operating Systems/Devices:
   (a.k.a. S60 5th Edition) should also work but was never tested.
 * BlackBerry 10: BlackBerry Z10, Q10 and Q5.
 * Ubuntu Touch.
+* Sailfish OS
 
 Fahrplan Features:
 ------------------
@@ -36,6 +37,7 @@ Download and install for your device:
 * [BlackBerry 10][2]
 * [N9, N950, Symbian][3]
 * [Ubuntu Touch][4]
+* Sailfish OS - (soon in the store)
 
 Currently supported Providers:
 ------------------------------
