@@ -88,7 +88,14 @@ BlackBerry 10][4] wiki page for more information.
 Sailfish OS
 -----------
 
-[Not yet supported.][5]
+Install the [Sailfish OS SDK][5] to compile with the shipped QT Creator.
+
+Known Issue: The executeable is named after the .pro file, in the 
+our case fahrplan2. Because of Sailfish Harbour guidelines, the 
+executable needs to be called harbour-fahrplan2. The deploy script already
+names the file that way, but if you press the "Run" button in QT Creator
+it still tries to launch a fahrplan2 binary. The workaround is copy the original
+fahrplan2.pro to harbour-fahrplan2.pro during development.
 
 
 [1]: http://www.developer.nokia.com/info/sw.nokia.com/id/da8df288-e615-443d-be5c-00c8a72435f8/Qt_SDK.html
