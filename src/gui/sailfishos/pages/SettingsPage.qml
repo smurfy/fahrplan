@@ -64,6 +64,18 @@ Page {
                            }
                       }
                       Component.onCompleted: {
+                          var items;
+                          var i;
+
+                          if (parserBackendModel.count == 0) {
+                              items = fahrplanBackend.getParserList();
+                              for (i = 0; i < items.length; i++) {
+                                  parserBackendModel.append({
+                                      "name" : items[i]
+                                  });
+                              }
+                          }
+
                           currentBackend.currentIndex = fahrplanBackend.getSettingsValue("currentBackend", 0);
                       }
                 }
@@ -87,17 +99,4 @@ Page {
         id: parserBackendModel
     }
 
-    Component.onCompleted: {
-        var items;
-        var i;
-
-        if (parserBackendModel.count == 0) {
-            items = fahrplanBackend.getParserList();
-            for (i = 0; i < items.length; i++) {
-                parserBackendModel.append({
-                    "name" : items[i]
-                });
-            }
-        }
-    }
 }
