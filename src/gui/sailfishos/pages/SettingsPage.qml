@@ -40,6 +40,7 @@ Page {
                 title: qsTr("Settings")
             }
 
+            /*
             TextSwitch {
                 text: qsTr("Compact calendar entries")
                 description: qsTr("Use shorter text format in the calendar event description")
@@ -49,7 +50,7 @@ Page {
                 Component.onCompleted: {
                     checked = fahrplanBackend.getSettingsValue("compactCalendarEntries", false) === "true" ? true : false;
                 }
-            }
+            }*/
 
             ComboBox {
                 id: currentBackend
@@ -63,7 +64,7 @@ Page {
                            }
                       }
                       Component.onCompleted: {
-                           currentBackend.currentIndex = fahrplanBackend.getSettingsValue("currentBackend", 0);
+                          currentBackend.currentIndex = fahrplanBackend.getSettingsValue("currentBackend", 0);
                       }
                 }
                 onCurrentIndexChanged: {
