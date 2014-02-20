@@ -15,7 +15,11 @@ ubuntu {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"com.ubuntu.developer.mzanetti.fahrplan2\\\"
 }
-!ubuntu:!symbian {
+exists("/usr/include/sailfishapp/sailfishapp.h"): {
+    DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
+    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"harbour-fahrplan2\\\"
+}
+!ubuntu:!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"smurfy\\\"
 }
