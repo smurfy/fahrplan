@@ -175,10 +175,17 @@ Page {
                 label: qsTr("Date")
                 value: Qt.formatDate(fahrplanBackend.dateTime)
                 onClicked: {
-                    var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog")
+                    var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
+                        date: fahrplanBackend.dateTime
+                    })
 
                     dialog.accepted.connect(function() {
-                        value = dialog.dateText
+                        var dateTime = fahrplanBackend.dateTime;
+                        dateTime.setFullYear(dialog.year);
+                        // JavaScript Date's month is 0 based while DatePicker's is 1 based.
+                        dateTime.setMonth(dialog.month - 1);
+                        dateTime.setDate(dialog.day);
+                        fahrplanBackend.dateTime = dateTime;
                     })
                 }
             }
@@ -187,10 +194,18 @@ Page {
                 label: qsTr("Time")
                 value: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
                 onClicked: {
-                    var dialog = pageStack.push("Sailfish.Silica.TimePickerDialog")
+                    var dialog = pageStack.push("Sailfish.Silica.TimePickerDialog", {
+                        hour: Qt.formatDateTime ( fahrplanBackend.dateTime, "hh" ),
+                        minute: Qt.formatDateTime ( fahrplanBackend.dateTime, "mm" ),
+                        hourMode: fahrplanBackend.timeFormat24h() ? DateTime.TwentyFourHours : DateTime.TwelveHours
+                    })
 
                     dialog.accepted.connect(function() {
-                        value = dialog.timeText
+                        var dateTime = fahrplanBackend.dateTime;
+                        dateTime.setHours(dialog.hour);
+                        dateTime.setMinutes(dialog.minute);
+                        dateTime.setSeconds(0);
+                        fahrplanBackend.dateTime = dateTime;
                     })
                 }
             }
