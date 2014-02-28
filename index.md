@@ -37,7 +37,7 @@ Download and install for your device:
 * [BlackBerry 10][2]
 * [N9, N950, Symbian][3]
 * [Ubuntu Touch][4]
-* Sailfish OS - (soon in the store)
+* Sailfish OS - search in the store for "fahrplan"
 
 Currently supported Providers:
 ------------------------------
