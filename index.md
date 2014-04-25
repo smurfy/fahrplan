@@ -35,7 +35,8 @@ Download and install for your device:
 -------------------------------------
 
 * [BlackBerry 10][2]
-* [N9, N950, Symbian][3]
+* [N9, N950][5]
+* [Symbian][3]
 * [Ubuntu Touch][4]
 * Sailfish OS - search in the store for "fahrplan"
 
@@ -87,3 +88,4 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 [2]: https://appworld.blackberry.com/webstore/content/28277436/?lang=en&countrycode=DE
 [3]: download
 [4]: https://launchpad.net/~mzanetti/+archive/ppa
+[5]: https://openrepos.net/content/smurfy/fahrplan
