@@ -3,11 +3,13 @@ layout: default
 title: Download
 ---
 
-Fahrplan Download
-=================
+Fahrplan for Symbian download
+=============================
 
-* [2.0.16 for N9 and N950][1]
-* [2.0.16 for Symbian][2]
+[2.0.16 for Symbian][2]
+
+For all other supported systems please visit the [index][1] page.
+
 
 Changelog
 ---------
@@ -24,5 +26,5 @@ Changelog
         * Left hand support
 
 
-[1]: releases/fahrplan2_2.0.16_armel.deb
+[1]: index
 [2]: releases/fahrplan2_2.0.16.sis
