@@ -56,6 +56,7 @@ maemo5: CONFIG += mobility11
 
 TRANSLATIONS += \
     translations/fahrplan_de.ts \
+    translations/fahrplan_en.ts \
     translations/fahrplan_ru.ts \
     translations/fahrplan_uk.ts
 

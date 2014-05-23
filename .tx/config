@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[fahrplan.en]
+file_filter = translations/fahrplan_<lang>.ts
+source_file = translations/fahrplan_en.ts
+source_lang = en
+type = QT
+
