@@ -13,8 +13,7 @@ Supported Operating Systems/Devices:
 ------------------------------------
 * Meego Harmattan: Nokia N9 and N950.
 * Nokia's Symbian touch phones (Symbian^3, Anna and Belle).
-* BlackBerry 10 (not possible to input umlauts and accents on hardware
-  keyboard models).
+* BlackBerry 10[^1].
 * Ubuntu Touch.
 * Sailfish OS.
 
@@ -84,8 +83,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+---
+
+[^1]: It's not possible to input umlauts and accents on hardware
+      keyboard models currently, due to some technical limitations.
+      This issue will be resolved as soon as [#100][] is implemented.
+
 [1]: compile
 [2]: https://appworld.blackberry.com/webstore/content/28277436/?lang=en&countrycode=DE
 [3]: download
 [4]: https://launchpad.net/~mzanetti/+archive/ppa
 [5]: https://openrepos.net/content/smurfy/fahrplan
+[#100]: https://github.com/smurfy/fahrplan/issues/100
