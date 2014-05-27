@@ -35,7 +35,13 @@ QString ParserXmlRejseplanenDk::getTrainRestrictionsCodes(int trainrestrictions)
     if (trainrestrictions == 0) {
         trainrestr = "1111111111111111"; //ALL
     } else if (trainrestrictions == 1) {
-        trainrestr = "0111111111000000"; //All without ICE
+        trainrestr = "1011111111111111"; //All without ICE
+    } else if (trainrestrictions == 2) {
+        trainrestr = "1111100001111111"; //All without buses
+    } else if (trainrestrictions == 3) {
+        trainrestr = "0000111111000000"; //Only local transport
+    } else if (trainrestrictions == 4) {
+        trainrestr = "0000011111000000"; //Local transport without S-Bahn
     }
 
     return trainrestr;
@@ -46,6 +52,9 @@ QStringList ParserXmlRejseplanenDk::getTrainRestrictions()
     QStringList result;
     result.append(tr("All"));
     result.append(tr("All without ICE"));
+    result.append(tr("All without buses "));
+    result.append(tr("Only local transport"));
+    result.append(tr("Local transport without S-Bahn"));
     return result;
 }
 
