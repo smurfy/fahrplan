@@ -32,16 +32,20 @@ Page {
 
         VerticalScrollDecorator {}
 
-        PushUpMenu {
-            visible: indicator.visible === false
-
+        PullDownMenu {
+            enabled: (indicator.visible === false)
             MenuItem {
                 text: qsTr("Earlier")
+                enabled: (indicator.visible === false)
                 onClicked: {
                     indicator.visible = true;
                     fahrplanBackend.parser.searchJourneyEarlier();
                 }
             }
+        }
+
+        PushUpMenu {
+            enabled: (indicator.visible === false)
             MenuItem {
                 text: qsTr("Later")
                 onClicked: {
