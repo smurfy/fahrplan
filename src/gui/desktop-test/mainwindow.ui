@@ -49,9 +49,6 @@
     <item row="1" column="0" colspan="7">
      <widget class="QTextEdit" name="findStationResults"/>
     </item>
-    <item row="2" column="5">
-     <widget class="QComboBox" name="trainRestrictions"/>
-    </item>
     <item row="2" column="6">
      <widget class="QPushButton" name="searchJourney">
       <property name="text">
@@ -98,6 +95,9 @@
     </item>
     <item row="0" column="2">
      <widget class="QSpinBox" name="stationIndex"/>
+    </item>
+    <item row="2" column="4" colspan="2">
+     <widget class="QComboBox" name="trainRestrictions"/>
     </item>
    </layout>
   </widget>

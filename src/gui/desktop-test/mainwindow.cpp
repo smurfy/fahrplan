@@ -72,9 +72,15 @@ void MainWindow::parserChanged(const QString &name, int index)
     ui->parser->setCurrentIndex(index);
 
     ui->trainRestrictions->setEnabled(false);
+    qDebug()<<fahrplan->trainrestrictions()->count();
     if (fahrplan->trainrestrictions()->count() > 0)
     {
-        ui->trainRestrictions->setModel(fahrplan->trainrestrictions());
+        ui->trainRestrictions->clear();
+        for (int i=0; i < fahrplan->trainrestrictions()->count(); i++) {
+            QModelIndex index = fahrplan->trainrestrictions()->index(i, 0, QModelIndex());
+            ui->trainRestrictions->addItem(fahrplan->trainrestrictions()->data(index,Qt::DisplayRole).toString());
+        }
+
         ui->trainRestrictions->setEnabled(true);
         ui->trainRestrictions->setCurrentIndex(0);
     }
@@ -151,6 +157,7 @@ void MainWindow::searchJourneyClicked()
     ui->searchJourneyResults->append("Searching...");
     fahrplan->setDateTime(QDateTime::currentDateTime());
     fahrplan->setMode(Fahrplan::DepartureMode);
+    fahrplan->setTrainrestriction(ui->trainRestrictions->currentIndex());
     fahrplan->stationSearchResults()->selectStation(Fahrplan::DepartureStation, 0);
     fahrplan->stationSearchResults()->selectStation(Fahrplan::ArrivalStation, 10);
     fahrplan->searchJourney();
