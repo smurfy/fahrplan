@@ -5,6 +5,10 @@ UI_DIR = tmp
 OBJECTS_DIR = tmp
 RCC_DIR = tmp
 
+
+
+
+
 # Make the Version available in the C++ source too
 # Also setting QSettings Vendor name
 symbian {
@@ -97,7 +101,8 @@ HEADERS += \
     src/parser/parser_ireland_efa.h \
     src/parser/parser_sydney_efa.h \
     src/parser/parser_sf_bay_efa.h \
-    src/parser/parser_dubai_efa.h
+    src/parser/parser_dubai_efa.h \
+    src/parser/parser_ninetwo.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -126,7 +131,8 @@ SOURCES += src/main.cpp \
     src/parser/parser_ireland_efa.cpp \
     src/parser/parser_sydney_efa.cpp \
     src/parser/parser_sf_bay_efa.cpp \
-    src/parser/parser_dubai_efa.cpp
+    src/parser/parser_dubai_efa.cpp \
+    src/parser/parser_ninetwo.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
@@ -425,3 +431,4 @@ freebsd-* {
 translations.CONFIG = no_link
 QMAKE_EXTRA_COMPILERS += translations
 PRE_TARGETDEPS += compiler_translations_make_all
+
