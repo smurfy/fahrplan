@@ -2,14 +2,15 @@
 #define PARSER_NINETWO_H
 
 #include "parser_abstract.h"
-#include <QUrlQuery>
+#if defined(BUILD_FOR_QT5)
+    #include <QUrlQuery>
+#endif
 #include <QUrl>
 #include <QNetworkReply>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMap>
-
 class ParserNinetwo : public ParserAbstract
 {
     Q_OBJECT

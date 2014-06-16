@@ -11,7 +11,12 @@ void ParserNinetwo::getTimeTableForStation(const Station &currentStation, const 
 
     QUrl uri(QString(BASE_URL "/locations/%1/departure-times").arg(currentStation.id.toString()));
 
+#if defined(BUILD_FOR_QT5)
     QUrlQuery query;
+#else
+    QUrl query;
+#endif
+
     query.addQueryItem("lang", 	"en-GB");
     uri.setQuery(query);
 
@@ -29,7 +34,11 @@ void ParserNinetwo::findStationsByName(const QString &stationName)
     qDebug() << "FINDBYNAME";
     QUrl uri(BASE_URL "locations");
 
+#if defined(BUILD_FOR_QT5)
     QUrlQuery query;
+#else
+    QUrl query;
+#endif
     query.addQueryItem("lang", 	"en-GB");
     query.addQueryItem("q", stationName);
     uri.setQuery(query);
@@ -44,7 +53,11 @@ void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
 
     QUrl uri(BASE_URL "locations");
 
+#if defined(BUILD_FOR_QT5)
     QUrlQuery query;
+#else
+    QUrl query;
+#endif
     query.addQueryItem("lang", 	"en-GB");
     query.addQueryItem("latlong", QString("%1,%2").arg(latitude).arg(longitude));
     uri.setQuery(query);
@@ -62,7 +75,11 @@ void ParserNinetwo::searchJourney(const Station &departureStation,const Station 
     lastsearch.via=viaStation;
     QUrl uri(BASE_URL "journeys");
 
+#if defined(BUILD_FOR_QT5)
     QUrlQuery query;
+#else
+    QUrl query;
+#endif
     query.addQueryItem("lang", 	"en-GB");
     query.addQueryItem("before", "1");
     query.addQueryItem("from", departureStation.id.toString());
