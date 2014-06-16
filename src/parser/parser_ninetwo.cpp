@@ -6,8 +6,21 @@ ParserNinetwo::ParserNinetwo(QObject *parent):ParserAbstract(parent)
 {
 }
 
-void ParserNinetwo::getTimeTableForStation(Station &currentStation, Station &directionStation, QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions)
+void ParserNinetwo::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions)
 {
+
+    QUrl uri(QString(BASE_URL "/locations/%1/departure-times").arg(currentStation.id.toString()));
+
+    QUrlQuery query;
+    query.addQueryItem("lang", 	"en-GB");
+    uri.setQuery(query);
+
+    timetableRestrictions  =  trainrestrictions;
+    sendHttpRequest(uri);
+    currentRequestState=FahrplanNS::getTimeTableForStationRequest;
+    qDebug() << uri.url();
+
+
 
 }
 
@@ -43,6 +56,10 @@ void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
 
 void ParserNinetwo::searchJourney(const Station &departureStation,const Station &viaStation,const Station &arrivalStation,const QDateTime &dateTime,const ParserAbstract::Mode mode, int trainrestrictions)
 {
+    lastsearch.from=departureStation;
+    lastsearch.to=arrivalStation;
+    lastsearch.restrictions=trainrestrictions;
+    lastsearch.via=viaStation;
     QUrl uri(BASE_URL "journeys");
 
     QUrlQuery query;
@@ -54,11 +71,19 @@ void ParserNinetwo::searchJourney(const Station &departureStation,const Station 
     query.addQueryItem("to", arrivalStation.id.toString());
     query.addQueryItem("sequence", "1");
     query.addQueryItem("dateTime", dateTime.toString("yyyy-MM-ddTHHmm"));
-    query.addQueryItem("byFerry", "true");
-    query.addQueryItem("byBus", "true");
-    query.addQueryItem("byTram", "true");
-    query.addQueryItem("bySubway", "true");
-    query.addQueryItem("byTrain", "true");
+
+    switch(trainrestrictions){
+    default:
+    case all:
+        query.addQueryItem("byFerry", "true");
+    case noFerry:
+        query.addQueryItem("byBus", "true");
+        query.addQueryItem("byTram", "true");
+        query.addQueryItem("bySubway", "true");
+    case trainsOnly:
+        query.addQueryItem("byTrain", "true");
+    }
+    query.addQueryItem("searchtype", mode==Departure?"departure":"arrival");
 
     //TODO: make transport types work
     query.addQueryItem("after", "5");
@@ -73,10 +98,14 @@ void ParserNinetwo::searchJourney(const Station &departureStation,const Station 
 
 void ParserNinetwo::searchJourneyLater()
 {
+    searchJourney(lastsearch.from, lastsearch.via, lastsearch.to, lastsearch.lastOption, Departure , lastsearch.restrictions);
+
 }
 
 void ParserNinetwo::searchJourneyEarlier()
 {
+    QDateTime time = lastsearch.firstOption.addSecs(-30*60);
+    searchJourney(lastsearch.from, lastsearch.via, lastsearch.to,time, Departure, lastsearch.restrictions);
 }
 
 void ParserNinetwo::getJourneyDetails(const QString &id)
@@ -85,25 +114,13 @@ void ParserNinetwo::getJourneyDetails(const QString &id)
         emit journeyDetailsResult(cachedResults[id]);
 }
 
-bool ParserNinetwo::supportsGps()
-{
-    return true;
-}
 
-bool ParserNinetwo::supportsVia()
-{
-    return true;
-}
 
-bool ParserNinetwo::supportsTimeTable()
-{
-    return true;
-}
 
-bool ParserNinetwo::supportsTimeTableDirection()
-{
-    return false;
-}
+
+
+
+
 
 QStringList ParserNinetwo::getTrainRestrictions()
 {
@@ -116,6 +133,54 @@ QStringList ParserNinetwo::getTrainRestrictions()
 
 void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
 {
+    TimetableEntriesList result;
+    QByteArray allData = networkReply->readAll();
+    QJsonObject doc = QJsonDocument::fromJson(allData).object();
+    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+    QJsonArray tabs = doc["tabs"].toArray();
+    QString currentStation(doc["location"].toObject()["name"].toString());
+
+    for(int i=0; i<tabs.size(); i++){
+        QJsonObject tab= tabs[i].toObject();
+        QString type=tab["id"].toString();
+        QJsonArray departures = tab["departures"].toArray();
+        switch(timetableRestrictions){
+            case all:
+            default:
+            break;
+        case trainsOnly:
+            if(type!="train")
+                continue;
+            break;
+        case noFerry:
+            if(type=="ferry")//not sure if this ever happens
+                continue;
+            break;
+        }
+
+        for(int j=0; j<departures.size(); j++){
+            QJsonObject departure=departures[j].toObject();
+            TimetableEntry entry;
+            entry.currentStation=currentStation;
+            entry.destinationStation=departure["destinationName"].toString();
+            entry.time=QTime::fromString(departure["time"].toString(), "HH:mm");
+            QString via(departure["viaNames"].toString());
+            if(via!="" && !via.isNull())
+                via= tr("via ") + via;
+            QString remark(departure["remark"].toString());
+            if(departure["realtimeState"].toString()=="late"){//it is delayed
+                QString rtMessage(departure["realtimeText"].toString());
+                entry.miscInfo=QString(tr("(%1) %2 \n%3").arg(rtMessage, via, remark)).trimmed();
+            }
+            else
+                entry.miscInfo=QString("%1 %2").arg(via, remark).trimmed();
+
+            entry.platform=departure["platform"].toString();
+            entry.trainType = departure["mode"].toObject()["name"].toString();
+            result.append(entry);
+        }
+    }
+    emit timetableResult(result);
 
 }
 
@@ -124,7 +189,7 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
     qDebug() << "PARSING STATIONS";
     QByteArray allData = networkReply->readAll();
     QJsonObject doc = QJsonDocument::fromJson(allData).object();
-    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+  //  qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
     QJsonArray stations = doc["locations"].toArray();
 
     StationsList result;
@@ -161,12 +226,19 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
     QJsonArray journeys = doc["journeys"].toArray();
 
     JourneyResultList* result=new JourneyResultList;
+
+    QDateTime arrival;
+    QDateTime departure;
+
     for(int i=0; i<journeys.size(); i++){
         QJsonObject journey=journeys[i].toObject();
         parseJourneyOption(journey);
         JourneyResultItem* item = new JourneyResultItem;
-        QDateTime arrival  = QDateTime::fromString(journey["arrival"  ].toString(), "yyyy-MM-ddTHH:mm");
-        QDateTime departure= QDateTime::fromString(journey["departure"].toString(), "yyyy-MM-ddTHH:mm");
+        arrival  = QDateTime::fromString(journey["arrival"  ].toString(), "yyyy-MM-ddTHH:mm");
+        departure= QDateTime::fromString(journey["departure"].toString(), "yyyy-MM-ddTHH:mm");
+        if(!i)
+            lastsearch.firstOption=departure;
+
 
         item->setArrivalTime(departure.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
@@ -178,11 +250,13 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         result->appendItem(item);
 
     }
+    lastsearch.lastOption=departure;
     emit journeyResult(result);
 }
 
 void ParserNinetwo::parseSearchLaterJourney(QNetworkReply *networkReply)
 {
+
 }
 
 void ParserNinetwo::parseSearchEarlierJourney(QNetworkReply *networkReply)

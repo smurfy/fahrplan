@@ -13,6 +13,25 @@
 class ParserNinetwo : public ParserAbstract
 {
     Q_OBJECT
+    struct {
+        QDateTime firstOption;
+        QDateTime lastOption;
+        Station from;
+        Station via;
+        Station to;
+        int restrictions;
+        Mode mode;
+
+    } lastsearch;
+
+    typedef enum restrictions{
+        all=0,
+        trainsOnly=1,
+        noFerry=2
+    } restrictions;
+
+    int timetableRestrictions;
+
 public:
     ParserNinetwo(QObject* parent = 0);
 
@@ -21,17 +40,17 @@ public:
     QString name(){return "9292ov.nl";}
     static QString getName() { return "9292ov.nl"; }
 public slots:
-    void getTimeTableForStation(Station &currentStation, Station &directionStation, QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);
+    void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
     void searchJourney(const Station &departureStation,const Station &viaStation,const Station &arrivalStation,const QDateTime &dateTime,const ParserAbstract::Mode mode, int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
-    bool supportsGps();
-    bool supportsVia();
-    bool supportsTimeTable();
-    bool supportsTimeTableDirection();
+    bool supportsGps() { return true; }
+    bool supportsVia() { return true; }
+    bool supportsTimeTable() { return true; }
+    bool supportsTimeTableDirection() { return false; }
     QStringList getTrainRestrictions();
 
 protected:
