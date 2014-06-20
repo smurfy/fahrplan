@@ -1,6 +1,7 @@
 #include "parser_ninetwo.h"
-#include <QtCore/QUrl>
 
+#include <QtCore/QUrl>
+//for backwards compatibility with qt4
 #ifndef BUILD_FOR_QT5
 //for QUrl/QUrlQuery difference
 #define setQuery(q) setQueryItems(q.queryItems())
@@ -259,7 +260,7 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
             lastsearch.firstOption=departure;
 
 
-        item->setArrivalTime(departure.toString("HH:mm"));
+        item->setArrivalTime(arrival.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
 
         item->setTransfers(QString::number((int) journey["numberOfChanges"].toDouble()));
