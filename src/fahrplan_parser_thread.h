@@ -36,6 +36,7 @@
 #include "parser/parser_london_efa.h"
 #include "parser/parser_ireland_efa.h"
 #include "parser/parser_dubai_efa.h"
+#include "parser/parser_ninetwo.h"
 
 class FahrplanParserThread : public QThread
 {
