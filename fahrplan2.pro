@@ -102,8 +102,12 @@ HEADERS += \
     src/parser/parser_sydney_efa.h \
     src/parser/parser_sf_bay_efa.h \
     src/parser/parser_dubai_efa.h \
-    src/parser/parser_ninetwo.h \
-    src/Qt4Json.h
+    src/parser/parser_ninetwo.h
+
+!contains(QT_VERSION, ^5\\..\\..*) {
+    #qt4 json workaround because qt4 doesn't support json
+    HEADERS += src/Qt4Json.h
+}
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \

@@ -1,5 +1,5 @@
 #include "parser_ninetwo.h"
-#include <qtcore/qurl>
+#include <QtCore/QUrl>
 
 #ifndef BUILD_FOR_QT5
 //for QUrl/QUrlQuery difference
