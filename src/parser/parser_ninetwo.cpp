@@ -1,5 +1,12 @@
 #include "parser_ninetwo.h"
 
+#include <QtCore/QUrl>
+//for backwards compatibility with qt4
+#ifndef BUILD_FOR_QT5
+//for QUrl/QUrlQuery difference
+#define setQuery(q) setQueryItems(q.queryItems())
+#endif
+
 #define BASE_URL "https://api.9292.nl/0.1/"
 
 ParserNinetwo::ParserNinetwo(QObject *parent):ParserAbstract(parent)
@@ -23,7 +30,6 @@ void ParserNinetwo::getTimeTableForStation(const Station &currentStation, const 
     timetableRestrictions  =  trainrestrictions;
     sendHttpRequest(uri);
     currentRequestState=FahrplanNS::getTimeTableForStationRequest;
-    qDebug() << uri.url();
 
 
 
@@ -45,7 +51,6 @@ void ParserNinetwo::findStationsByName(const QString &stationName)
 
     sendHttpRequest(uri);
     currentRequestState=FahrplanNS::stationsByNameRequest;
-    qDebug() << uri.url();
 }
 
 void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
@@ -61,7 +66,6 @@ void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
     query.addQueryItem("lang", 	"en-GB");
     query.addQueryItem("latlong", QString("%1,%2").arg(latitude).arg(longitude));
     uri.setQuery(query);
-    qDebug() << uri.url();
 
     sendHttpRequest(uri);
     currentRequestState=FahrplanNS::stationsByCoordinatesRequest;
@@ -108,7 +112,6 @@ void ParserNinetwo::searchJourney(const Station &departureStation,const Station 
     uri.setQuery(query);
     sendHttpRequest(uri);
 
-    qDebug() << uri.url();
     currentRequestState=FahrplanNS::searchJourneyRequest;
 
 }
@@ -257,7 +260,7 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
             lastsearch.firstOption=departure;
 
 
-        item->setArrivalTime(departure.toString("HH:mm"));
+        item->setArrivalTime(arrival.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
 
         item->setTransfers(QString::number((int) journey["numberOfChanges"].toDouble()));
