@@ -90,6 +90,13 @@ Sailfish OS
 
 Install the [Sailfish OS SDK][5] to compile with the shipped QT Creator.
 
+You need to get QtPositioning manually installed in your emulator.
+
+* Set a password in emulator
+* Connect over ssh (127.0.0.1:2223)
+* Install qt5-qtdeclarative-import-positioning (pkcon install)
+* Install qt5-qtpositioning (pkcon install)
+
 Known Issue: The executeable is named after the .pro file, in the 
 our case fahrplan2. Because of Sailfish Harbour guidelines, the 
 executable needs to be called harbour-fahrplan2. The deploy script already
