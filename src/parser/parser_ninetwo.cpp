@@ -30,9 +30,6 @@ void ParserNinetwo::getTimeTableForStation(const Station &currentStation, const 
     timetableRestrictions  =  trainrestrictions;
     sendHttpRequest(uri);
     currentRequestState=FahrplanNS::getTimeTableForStationRequest;
-
-
-
 }
 
 void ParserNinetwo::findStationsByName(const QString &stationName)
@@ -134,18 +131,10 @@ void ParserNinetwo::getJourneyDetails(const QString &id)
         emit journeyDetailsResult(cachedResults[id]);
 }
 
-
-
-
-
-
-
-
-
 QStringList ParserNinetwo::getTrainRestrictions()
 {
  QStringList restrictions;
- restrictions << tr("All methods");
+ restrictions << tr("All");
  restrictions << tr("Only trains");
  restrictions << tr("not by ferry");
  return restrictions;
@@ -259,16 +248,39 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         if(!i)
             lastsearch.firstOption=departure;
 
-
         item->setArrivalTime(arrival.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
 
+        QJsonArray legs = journey["legs"].toArray();
+        QStringList trains;
+        for(int i=0; i<legs.size(); i++)
+        {
+            QJsonObject leg=legs[i].toObject();
+            QString typeName=leg["mode"].toObject()["name"].toString();
+            QString type=leg["mode"].toObject()["type"].toString();
+
+            if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
+                if (typeName.length() > 0) {
+                    trains.append(typeName);
+                }
+            }
+        }
+
+        trains.removeDuplicates();
+
+        item->setTrainType(trains.join(", ").trimmed());
         item->setTransfers(QString::number((int) journey["numberOfChanges"].toDouble()));
         int minutes = departure.secsTo(arrival)/60;
         item->setDuration(QString("%1:%2").arg(minutes/60).arg(minutes%60,2,10,QChar('0')));
         item->setId(journey["id"].toString());
         result->appendItem(item);
 
+        //Set result metadata based on first result
+        if (result->itemcount() == 1) {
+            result->setTimeInfo(arrival.date().toString());
+            result->setDepartureStation(cachedResults[item->id()]->departureStation());
+            result->setArrivalStation(cachedResults[item->id()]->arrivalStation());
+        }
     }
     lastsearch.lastOption=departure;
     emit journeyResult(result);
@@ -320,25 +332,38 @@ void ParserNinetwo::parseJourneyOption(QJsonObject object)
         resultItem->setArrivalStation(lastLocation["name"].toString());
         resultItem->setDepartureStation(firstLocation["name"].toString());
 
-    QDateTime stopDeparture  = QDateTime::fromString(firstStop["departure"  ].toString(), "yyyy-MM-ddTHH:mm");
-    QDateTime stopArrival  = QDateTime::fromString(lastStop["arrival"  ].toString(), "yyyy-MM-ddTHH:mm");
+        QDateTime stopDeparture  = QDateTime::fromString(firstStop["departure"].toString(), "yyyy-MM-ddTHH:mm");
+        QDateTime stopArrival  = QDateTime::fromString(lastStop["arrival"].toString(), "yyyy-MM-ddTHH:mm");
 
         resultItem->setDepartureDateTime(stopDeparture);
         resultItem->setArrivalDateTime(stopArrival);
 
         QString type=leg["mode"].toObject()["type"].toString();
+        QString typeName=leg["mode"].toObject()["name"].toString();
+
+        //Fallback if typeName is empty
+        if (typeName.length() == 0) {
+            typeName = type;
+        }
 
         if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
-            resultItem->setDepartureInfo("platform " + firstStop["platform"].toString());
-            resultItem->setArrivalInfo("platform " + lastStop  ["platform"].toString());
-            resultItem->setInfo(QString("%1 direction %2").arg(type).arg(leg["destination"].toString()));
+            if (firstStop["platform"].toString().length() > 0) {
+                resultItem->setDepartureInfo(tr("Pl.") + " " + firstStop["platform"].toString());
+            }
+            if (lastStop["platform"].toString() > 0) {
+                resultItem->setArrivalInfo(tr("Pl.") + " " + lastStop["platform"].toString());
+            }
+            resultItem->setTrain(tr("%1 to %2").arg(typeName).arg(leg["destination"].toString()));
         }
         else{
-            resultItem->setInfo(type);
+            resultItem->setTrain(type);
         }
 
         result->appendItem(resultItem);
     }
+
+    result->setDepartureStation(result->getItem(0)->departureStation());
+    result->setArrivalStation(result->getItem(result->itemcount() - 1)->arrivalStation());
 
     cachedResults.insert(id, result);
 }
