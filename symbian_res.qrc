@@ -31,5 +31,6 @@
         <file>src/gui/symbian/icon/icon-s-calendar-location-picker.svg</file>
         <file>src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.svg</file>
         <file>src/gui/symbian/js/style.js</file>
+        <file>src/gui/about.js</file>
     </qresource>
 </RCC>

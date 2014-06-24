@@ -25,5 +25,6 @@
         <file>src/gui/harmattan/icon/icon-m-toolbar-clock-inverse.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-train.svg</file>
         <file>src/gui/harmattan/icon/icon-m-toolbar-train-inverse.svg</file>
+        <file>src/gui/about.js</file>
     </qresource>
 </RCC>

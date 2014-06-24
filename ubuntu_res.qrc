@@ -13,5 +13,6 @@
         <file>src/gui/ubuntu/components/StationSelect.qml</file>
         <file>src/gui/ubuntu/icons/info.svg</file>
         <file alias="fahrplan2.svg">data/fahrplan2-square.svg</file>
+        <file>src/gui/about.js</file>
     </qresource>
 </RCC>
