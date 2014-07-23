@@ -7,6 +7,7 @@ Fahrplan for Symbian download
 =============================
 
 [2.0.18 for Symbian][3]
+
 [2.0.16 for Symbian][2]
 
 For all other supported systems please visit the [index][1] page.
