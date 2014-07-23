@@ -1,3 +1,9 @@
+fahrplan2 (2.0.18) saucy; urgency=low
+  * added 9292ov 
+  * sailfish gps fix and small ui changes
+
+ -- smurfy <maemo@smurfy.de>  Wed, 23 Jul 2014 19:00:00 +0200
+
 fahrplan2 (2.0.16) saucy; urgency=low
   * Removed defunc and duplicate sydney backend
 
