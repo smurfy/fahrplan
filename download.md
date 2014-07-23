@@ -6,6 +6,7 @@ title: Download
 Fahrplan for Symbian download
 =============================
 
+[2.0.18 for Symbian][3]
 [2.0.16 for Symbian][2]
 
 For all other supported systems please visit the [index][1] page.
@@ -13,6 +14,9 @@ For all other supported systems please visit the [index][1] page.
 
 Changelog
 ---------
+
+    2.0.18 - 2014-07-22
+        * Added 9292ov.nl backend
 
     2.0.16 - 2014-01-14
         * Removed defunc and duplicate sydney backend
@@ -28,3 +32,4 @@ Changelog
 
 [1]: index
 [2]: releases/fahrplan2_2.0.16.sis
+[3]: releases/fahrplan2_2.0.18.sis
