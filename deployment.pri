@@ -100,6 +100,7 @@ symbian {
         icon.files = data/$${TARGET}_64.png
         icon.path = /usr/share/icons
     } else:contains(MEEGO_EDITION,harmattan) {
+        installPrefix = /opt/$${TARGET}
         desktopfile.files = data/$${TARGET}_harmattan.desktop
         desktopfile.path = /usr/share/applications
         icon.files = data/$${TARGET}.svg
