@@ -54,6 +54,7 @@ Currently supported Providers:
 * London (London, United Kingdom) - supports via station.
 * Ireland - supports via station.
 * Dubai - supports via station.
+* 9292ov.nl (netherland) - supports via station and GPS location.
 
 Compiling:
 ----------
