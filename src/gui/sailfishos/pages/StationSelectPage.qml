@@ -73,7 +73,7 @@ Dialog {
 
                     onClicked: {
                         fahrplanBackend.stationSearchResults.clear();
-                        positionSource.start();
+                        positionSource.update();
                     }
                 }
             }
@@ -149,11 +149,10 @@ Dialog {
 
             if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
                 console.log(qsTr("Searching for stations..."));
-                positionSource.stop();
-
                 fahrplanBackend.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
             } else {
                 console.log(qsTr("Waiting for GPS lock..."));
+                positionSource.update();
             }
         }
     }
