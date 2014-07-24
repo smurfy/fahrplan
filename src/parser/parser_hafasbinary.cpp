@@ -57,7 +57,13 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
     query.addQueryItem("REQ0JourneyStopsZ0ID", arrivalStation.id.toString());
 
     if (viaStation.id.isValid()) {
-        query.addQueryItem("REQ0JourneyStops1.0ID", viaStation.id.toString());
+        //Convert the ID to it's parts
+        QStringList viaElements = viaStation.id.toString().split("@");
+        for (int i = 0; i <= viaElements.length() -1; i++) {
+            if (viaElements[i].split("=").length() == 2) {
+                query.addQueryItem("REQ0JourneyStops1.0" + viaElements[i].split("=")[0], viaElements[i].split("=")[1]);
+            }
+        }
     }
 
     query.addQueryItem("REQ0JourneyDate", dateTime.toString("dd.MM.yyyy"));
