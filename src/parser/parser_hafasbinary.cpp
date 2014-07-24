@@ -166,13 +166,16 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         qint16 seqNr;
         qint16 requestIdPtr;
         qint16 encodingPtr;
+        qint32 disruptionsPtr;
         qint32 connectionDetailsPtr;
         qint32 attrsOffset;
         qint16 ldPtr;
         hafasData >> seqNr;
         hafasData >> requestIdPtr;
         hafasData >> connectionDetailsPtr;
-        hafasData.device()->seek(hafasData.device()->pos() + 16);
+        hafasData.device()->seek(hafasData.device()->pos() + 4);
+        hafasData >> disruptionsPtr;
+        hafasData.device()->seek(hafasData.device()->pos() + 8);
         hafasData >> encodingPtr;
         hafasData >> ldPtr;
         hafasData >> attrsOffset;
@@ -196,7 +199,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         qDebug()<<"reqId:"<<requestId;
         qDebug()<<"encoding:"<<encoding;
         qDebug()<<"ld:"<<ld;
-        qDebug()<<connectionAttrsPtr;
+        qDebug()<<"Con:"<<connectionAttrsPtr;
+        qDebug()<<"Dis:"<<disruptionsPtr;
 
         hafasData.device()->seek(connectionDetailsPtr);
         quint16 connectionDetailsVersion;
@@ -417,14 +421,41 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     lineNames.append(category);
                 }
 
-                qDebug()<<type<<lineName<<plannedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<plannedArrival<<plannedArrivalPosition<<category;
+                hafasData.device()->seek(connectionDetailsPtr + connectionDetailsOffset + connectionDetailsPartOffset + iPart * connectionDetailsPartSize);
+
+                qint16 predictedDepartureTimeInt;
+                hafasData >> predictedDepartureTimeInt;
+                QDateTime predictedDepartureTime = toTime(predictedDepartureTimeInt, journeyDate.addDays(connectionDayOffset));
+                qint16 predictedArrivalTimeInt;
+                hafasData >> predictedArrivalTimeInt;
+                QDateTime predictedArrivalTime = toTime(predictedArrivalTimeInt, journeyDate.addDays(connectionDayOffset));
+
+                qDebug()<<type<<lineName<<plannedDepartureTime<<predictedDepartureTimeInt<<predictedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<predictedArrivalTimeInt<<predictedArrivalTime<<plannedArrival<<plannedArrivalPosition<<category;
 
                 inlineItem->setDepartureDateTime(plannedDepartureTime);
                 inlineItem->setDepartureStation(plannedDeparture);
                 inlineItem->setDepartureInfo(plannedDeparturePosition);
+
+                if (predictedDepartureTimeInt > -1) {
+                    int minutesTo = plannedDepartureTime.time().msecsTo(predictedDepartureTime.time()) / 60000;
+                    if (minutesTo > 0)
+                        inlineItem->setDepartureInfo(inlineItem->departureInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
+                    else
+                        inlineItem->setDepartureInfo(inlineItem->departureInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                }
+
                 inlineItem->setArrivalDateTime(plannedArrivalTime);
                 inlineItem->setArrivalStation(plannedArrival);
                 inlineItem->setArrivalInfo(plannedArrivalPosition);
+
+                if (predictedArrivalTimeInt > -1) {
+                    int minutesTo = plannedArrivalTime.time().msecsTo(predictedArrivalTime.time()) / 60000;
+                    if (minutesTo > 0)
+                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
+                    else
+                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                }
+
                 inlineItem->setTrain(lineName);
                 inlineResults->appendItem(inlineItem);
             }
