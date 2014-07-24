@@ -32,11 +32,11 @@ Item {
     BackgroundItem {
         id: contentItem
         width: parent.width
+        height: timingsLabels.height + trainTypeLabel.height + (miscInfoLabel.visible ? miscInfoLabel.height : 0)
 
         Column {
             id: labels
 
-            height: childrenRect.height
             anchors {
                 top: parent.top
                 left: parent.left
@@ -46,8 +46,9 @@ Item {
             }
 
             Row {
+                id: timingsLabels
+
                 width: parent.width
-                height: childrenRect.height
 
                 Label {
                     text: model.departureTime
@@ -73,16 +74,19 @@ Item {
             }
 
             Label {
+                id: trainTypeLabel
                 text: model.trainType
                 width: parent.width
             }
 
             Label {
+                id: miscInfoLabel
                 visible: model.miscInfo !== ""
                 text: model.miscInfo
                 width: parent.width
                 font.bold: true
             }
+
         }
 
         onClicked: {
