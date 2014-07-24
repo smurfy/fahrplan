@@ -6,16 +6,17 @@ title: Download
 Fahrplan for Symbian download
 =============================
 
-[2.0.18 for Symbian][3]
-
-[2.0.16 for Symbian][2]
+[2.0.19 for Symbian][2]
 
 For all other supported systems please visit the [index][1] page.
 
 
 Changelog
 ---------
-
+    2.0.19 - 2014-07-24
+        * fix bahn.de via stations
+        * added real-time delay info to details page for bahn.de
+        
     2.0.18 - 2014-07-22
         * Added 9292ov.nl backend
 
@@ -32,5 +33,4 @@ Changelog
 
 
 [1]: index
-[2]: releases/fahrplan2_2.0.16.sis
-[3]: releases/fahrplan2_2.0.18.sis
+[2]: releases/fahrplan2_2.0.19.sis
