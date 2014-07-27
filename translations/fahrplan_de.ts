@@ -4,9 +4,10 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="62"/>
-        <location filename="../src/gui/symbian/pages/AboutPage.qml" line="60"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="65"/>
+        <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="63"/>
+        <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="44"/>
+        <location filename="../src/gui/symbian/pages/AboutPage.qml" line="61"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="66"/>
         <source>About Fahrplan</source>
         <translation>Über Fahrplan</translation>
     </message>
@@ -39,25 +40,16 @@
         <location filename="../src/calendarthreadwrapper.cpp" line="111"/>
         <source>-- 
 Added by Fahrplan. Please, re-check the information before your journey.</source>
-        <translation type="unfinished">-- 
+        <translation>-- 
 Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen noch einmal vor der Reise.</translation>
     </message>
+</context>
+<context>
+    <name>Cover</name>
     <message>
-        <source>Pl.</source>
-        <translation type="obsolete">Gl.</translation>
-    </message>
-    <message>
-        <source>
-(added by fahrplan app, please recheck informations before travel.)</source>
-        <translation type="obsolete">(Von der Fahrplan App hinzugefügt, bitte überprüfen Sie diese Informationen noch einmal vor der Reise)</translation>
-    </message>
-    <message>
-        <source>Journey: %1 to %2</source>
-        <translation type="obsolete">Fahrt: %1 nach %2</translation>
-    </message>
-    <message>
-        <source>Journey: %1 via %3 to %2</source>
-        <translation type="obsolete">Fahrt: %1 über %3 nach %2</translation>
+        <location filename="../src/gui/sailfishos/Cover.qml" line="37"/>
+        <source>Fahrplan: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -98,34 +90,34 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 <context>
     <name>FahrplanCalendarManager</name>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="125"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="130"/>
         <source>&lt;loading calendars list...&gt;</source>
         <translation>&lt;Kalender Liste wird geladen...&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="128"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="133"/>
         <source>&lt;invalid calendar&gt;</source>
         <translation>&lt;ungültiger Kalender&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="130"/>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="145"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="135"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="150"/>
         <source>Default Calendar</source>
         <translation>Standard Kalender</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="176"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="181"/>
         <source>Local Calendar</source>
         <translation>Lokaler Kalender</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="179"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="184"/>
         <source>%1 (%2)</source>
         <comment>Calendar name (Account name)</comment>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="238"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="245"/>
         <source>Personal</source>
         <translation>Persönlich</translation>
     </message>
@@ -146,6 +138,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="341"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
@@ -153,27 +146,31 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="341"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; über &lt;b&gt;%3&lt;/b&gt; nach &lt;b&gt;%2&lt;/b</translation>
     </message>
     <message>
-        <source>%1 to %2</source>
-        <translation type="obsolete">%1 nach %2</translation>
-    </message>
-    <message>
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="170"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="174"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="173"/>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="352"/>
         <source>Dur.: %1</source>
         <translation>Dauer: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="129"/>
+        <source>Searching...</source>
+        <translation>Suche...</translation>
     </message>
 </context>
 <context>
     <name>JourneyResultsPage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="105"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="92"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="105"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="102"/>
         <source>Dep.</source>
@@ -181,6 +178,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="115"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="97"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="111"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="112"/>
         <source>Arr.</source>
@@ -188,6 +186,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="126"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="103"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="118"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="123"/>
         <source>Dur.</source>
@@ -195,6 +194,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="137"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="109"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="125"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="134"/>
         <source>Trans.</source>
@@ -216,6 +216,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="312"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
@@ -223,17 +224,15 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="312"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; über &lt;b&gt;%3&lt;/b&gt; nach &lt;b&gt;%2&lt;/b</translation>
     </message>
     <message>
-        <source> to </source>
-        <translation type="obsolete"> nach </translation>
-    </message>
-    <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="217"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="38"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="213"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="168"/>
         <source>Earlier</source>
@@ -241,31 +240,23 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="225"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="50"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="222"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="176"/>
         <source>Later</source>
         <translation>Später</translation>
     </message>
-</context>
-<context>
-    <name>LoadingPage</name>
     <message>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="139"/>
         <source>Searching...</source>
-        <translation type="obsolete">Suche ...</translation>
+        <translation>Suche...</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
-        <source>Opt-Out: gps location support</source>
-        <translation type="obsolete">GPS Standortbestimmung ausschalten</translation>
-    </message>
-    <message>
-        <source>Opt-In: gps location support</source>
-        <translation type="obsolete">GPS Standortbestimmung einschalten</translation>
-    </message>
-    <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="168"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="83"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="170"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="161"/>
         <source>Departure Station</source>
@@ -275,6 +266,9 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="339"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="362"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="369"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="30"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="31"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="34"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="362"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="387"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="394"/>
@@ -286,6 +280,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="187"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="98"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="190"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="178"/>
         <source>Via Station</source>
@@ -293,6 +288,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="206"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="113"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="210"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="199"/>
         <source>Arrival Station</source>
@@ -300,6 +296,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="225"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="128"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="230"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="220"/>
         <source>Station</source>
@@ -307,6 +304,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="238"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="137"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="244"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="236"/>
         <source>Direction</source>
@@ -315,6 +313,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="253"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="422"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="175"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="261"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="450"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="262"/>
@@ -324,6 +323,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="264"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="451"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="194"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="275"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="480"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="283"/>
@@ -332,6 +332,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="281"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="160"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="297"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
         <source>Departure</source>
@@ -339,6 +340,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="288"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="166"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="305"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
         <source>Arrival</source>
@@ -352,6 +354,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="320"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="214"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="340"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="304"/>
         <source>Trains</source>
@@ -376,14 +379,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="363"/>
         <source>Please select a Station</source>
         <translation>Bitte eine Station wählen</translation>
-    </message>
-    <message>
-        <source>Departures</source>
-        <translation type="obsolete">Abfahrten</translation>
-    </message>
-    <message>
-        <source>Arrivals</source>
-        <translation type="obsolete">Ankünfte</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="354"/>
@@ -413,10 +408,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation>&lt;b&gt;%1&lt;/b&gt; über &lt;b&gt;%3&lt;/b&gt; nach &lt;b&gt;%2&lt;/b</translation>
     </message>
     <message>
-        <source> to </source>
-        <translation type="obsolete"> nach </translation>
-    </message>
-    <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="389"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="415"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="362"/>
@@ -433,10 +424,8 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="423"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="452"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="510"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="451"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="481"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="547"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -449,64 +438,59 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="505"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="542"/>
-        <source>Hello&lt;br/&gt;Sorry about this dialog, but the new Nokia store regulations require it.&lt;br/&gt;&lt;br/&gt;Please read the Privacy Policy of fahrplan. (available on the about page)&lt;br/&gt;&lt;br/&gt;If you want, you can also disable the gps features of fahrplan via the about menu.</source>
-        <translation>Hallo&lt;br/&gt;Entschuldigung für diesen dialog, aber die neuen Nokia Store Bestimmung schreiben dies vor.&lt;br/&gt;&lt;br/&gt;Bitte die Datenschutzvereinbarung lesen. (über menü)&lt;br/&gt;&lt;br/&gt;GPS Standortbestimmung kann über das über menü deaktiviert werden.</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="518"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="559"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="556"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="604"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="507"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="548"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="310"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="341"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="546"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="594"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="497"/>
         <source>Clear station</source>
         <translation>Station entfernen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="532"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="573"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="521"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="563"/>
         <source>Select station</source>
         <translation>Station wählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="539"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="581"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="528"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="290"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="571"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="489"/>
         <source>Switch with Departure station</source>
         <translation>Mit Abfahrtsstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="546"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="589"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="535"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="297"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="579"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="492"/>
         <source>Switch with Arrival station</source>
         <translation>Mit Ankunftsstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="553"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="597"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="542"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="304"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="587"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="495"/>
         <source>Switch with Via station</source>
         <translation>Mit Zwischenstopstation tauschen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="596"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="643"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="585"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="633"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="521"/>
         <source>No results found</source>
         <translation>Keine Ergebnisse gefunden</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="603"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="650"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="592"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="640"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="528"/>
         <source>Error loading details</source>
         <translation>Fehler beim Laden der Details</translation>
-    </message>
-    <message>
-        <source>Toggle Inverted Style</source>
-        <translation type="obsolete">Wechsle zwischen invertierter Anzeige</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="441"/>
@@ -522,6 +506,33 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
         <source>Now</source>
         <translation>Jetzt</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="46"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="57"/>
+        <source>Journey</source>
+        <translation>Fahrt</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="46"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="65"/>
+        <source>Time Table</source>
+        <translation>Zeitplan</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="51"/>
+        <source>Settings</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="151"/>
+        <source>Mode</source>
+        <translation>Modus</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="154"/>
+        <source>Departure: now</source>
+        <translation>Aktuelle Abfahrten</translation>
     </message>
 </context>
 <context>
@@ -542,7 +553,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="58"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="55"/>
         <source>searchJourney</source>
         <translation></translation>
     </message>
@@ -552,22 +563,22 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="68"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="65"/>
         <source>searchJourneyEarlier</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="75"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="72"/>
         <source>searchJourneyLater</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="95"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="92"/>
         <source>cancelRequest</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="85"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="82"/>
         <source>getJourneyDetails</source>
         <translation></translation>
     </message>
@@ -575,48 +586,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="31"/>
         <source>getTimeTableForStation</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>hh:mm</source>
-        <translation type="obsolete">hh:mm</translation>
-    </message>
-</context>
-<context>
-    <name>Parser131500ComAu</name>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="44"/>
-        <source>All, except School Buses</source>
-        <translation>Alle außer Schulbusse</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="45"/>
-        <source>Regular Buses</source>
-        <translation>Reguläre Busse</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="46"/>
-        <source>Trains</source>
-        <translation>Züge</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="47"/>
-        <source>Ferries</source>
-        <translation>Fähren</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="48"/>
-        <source>STA School Bus</source>
-        <translation>STA Schulbus</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="72"/>
-        <source>Coordinates search not supported.</source>
-        <translation>Koordinatensuche wird nicht unterstützt.</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="375"/>
-        <source>Internal error occured: JourneyResultdata not present!</source>
-        <translation>Interner Fehler: Detail Daten nicht verfügbar!</translation>
     </message>
 </context>
 <context>
@@ -665,8 +634,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="139"/>
         <source>Metro Train</source>
-        <translatorcomment>Does &quot;Metro Train&quot; here mean &quot;Undeground Train&quot; (U-Bahn), or &quot;Metropolitan Train&quot; (kind of S-Bahn in Germany)?</translatorcomment>
-        <translation type="unfinished">U-Bahn</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="140"/>
@@ -699,20 +667,20 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation type="unfinished">Server Fehler: </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="525"/>
-        <location filename="../src/parser/parser_efa.cpp" line="794"/>
-        <location filename="../src/parser/parser_efa.cpp" line="809"/>
+        <location filename="../src/parser/parser_efa.cpp" line="527"/>
+        <location filename="../src/parser/parser_efa.cpp" line="796"/>
+        <location filename="../src/parser/parser_efa.cpp" line="811"/>
         <source>%1, %2</source>
         <comment>DATE, TIME</comment>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="850"/>
+        <location filename="../src/parser/parser_efa.cpp" line="852"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min Verspätung&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="854"/>
+        <location filename="../src/parser/parser_efa.cpp" line="856"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;pünktlich&lt;/span&gt;</translation>
     </message>
@@ -720,61 +688,65 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 <context>
     <name>ParserHafasBinary</name>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="87"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="108"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="93"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="114"/>
         <source>An error ocurred with the backend</source>
         <translation>Ein Fehler mit dem Backend ist aufgetreten.</translation>
     </message>
     <message>
-        <source>Sorry one station name is to ambiguous</source>
-        <translation type="obsolete">Ein Stationsname ist leider nicht eindeutig.</translation>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="442"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="454"/>
+        <source>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
+        <translation>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;%1 min Verspätung&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>Sorry one station name is too ambiguous</source>
-        <translation type="obsolete">Ein Stationsname ist leider nicht eindeutig</translation>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="444"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="456"/>
+        <source>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
+        <translation>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;pünktlich&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="483"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="520"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Interner Fehler: Später anzeigen nicht möglich</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="517"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="554"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Interner Fehler: Früher anzeigen nicht möglich</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="642"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="679"/>
         <source>Your session has expired. Please, perform the search again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="644"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="681"/>
         <source>One of the station names is too ambiguous.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="646"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="683"/>
         <source>No connections have been found that correspond to your request.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="648"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="685"/>
         <source>There was an unsuccessful or incomplete search due to a timetable change.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="650"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="687"/>
         <source>Unfortunately there was no route found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="652"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="689"/>
         <source>Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="654"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="691"/>
         <source>Unknown error ocurred with the backend (error %1).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -790,10 +762,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_hafasxml.cpp" line="209"/>
         <source>On-Time</source>
         <translation>Pünktlich</translation>
-    </message>
-    <message>
-        <source>Internal Error occured, missing station ids</source>
-        <translation type="obsolete">Interner Fehler: Fehlende Station Ids</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="446"/>
@@ -836,10 +804,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_hafasxml.cpp" line="963"/>
         <source>Pl.</source>
         <translation>Gl.</translation>
-    </message>
-    <message>
-        <source>Platform </source>
-        <translation type="obsolete">Plattform </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/parser/parser_hafasxml.cpp" line="1022"/>
@@ -1002,25 +966,45 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source>Local transport without S-Bahn</source>
         <translation>Nahverkehr ohne S-Bahn</translation>
     </message>
+</context>
+<context>
+    <name>ParserNinetwo</name>
     <message>
-        <source>Warning</source>
-        <translation type="obsolete">Warnung</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="156"/>
+        <source>All</source>
+        <translation>Alle</translation>
     </message>
     <message>
-        <source>On-Time</source>
-        <translation type="obsolete">Pünktlich</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="157"/>
+        <source>Only trains</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Internal error occured, going later is not possible</source>
-        <translation type="obsolete">Interner Fehler: Später anzeigen nicht möglich</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="158"/>
+        <source>not by ferry</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Internal error occured, going earlier is not possible</source>
-        <translation type="obsolete">Interner Fehler: Früher anzeigen nicht möglich</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="197"/>
+        <source>via </source>
+        <translation type="unfinished">über </translation>
     </message>
     <message>
-        <source>Internal error occured, requesting invalid details data.</source>
-        <translation type="obsolete">Internet Fehler: Fehlerhafte Details abgefragt.</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="201"/>
+        <source>(%1) %2 
+%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="370"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="373"/>
+        <source>Pl.</source>
+        <translation>Gl.</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="375"/>
+        <source>%1 to %2</source>
+        <translation>%1 nach %2</translation>
     </message>
 </context>
 <context>
@@ -1252,27 +1236,27 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 <context>
     <name>ParserSydneyEFA</name>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="44"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="45"/>
         <source>All, except School Buses</source>
         <translation>Alle außer Schulbusse</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="45"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="46"/>
         <source>Regular Buses</source>
         <translation>Reguläre Busse</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="46"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="47"/>
         <source>Trains</source>
         <translation>Züge</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="47"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="48"/>
         <source>Ferries</source>
         <translation>Fähren</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="48"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="49"/>
         <source>STA School Bus</source>
         <translation>STA Schulbus</translation>
     </message>
@@ -1306,14 +1290,29 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 <context>
     <name>ParserXmlRejseplanenDk</name>
     <message>
-        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="47"/>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="53"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="48"/>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="54"/>
         <source>All without ICE</source>
         <translation>Alle ohne ICE</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="55"/>
+        <source>All without buses </source>
+        <translation type="unfinished">Alle ohne Bus</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="56"/>
+        <source>Only local transport</source>
+        <translation>Nur Nahverkehr</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="57"/>
+        <source>Local transport without S-Bahn</source>
+        <translation>Nahverkehr ohne S-Bahn</translation>
     </message>
 </context>
 <context>
@@ -1331,18 +1330,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 </context>
 <context>
     <name>ParserXmlVasttrafikSe</name>
-    <message>
-        <source>Invalid departure station</source>
-        <translation type="obsolete">Fehlerhafte Abfahrtsstation</translation>
-    </message>
-    <message>
-        <source>Invalid via station</source>
-        <translation type="obsolete">Fehlerhafte Zwischenstation</translation>
-    </message>
-    <message>
-        <source>Invalid arrival station</source>
-        <translation type="obsolete">Fehlerhafte Ankunftsstation</translation>
-    </message>
     <message>
         <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="292"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
@@ -1427,6 +1414,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <name>SettingsPage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="48"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="40"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="48"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="49"/>
         <source>Settings</source>
@@ -1435,83 +1423,66 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="87"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="87"/>
-        <source>GPS location support</source>
-        <translation>GPS Standortbestimmung</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
-        <source>Opted-in</source>
-        <translation>Eingeschaltet</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
-        <source>Opted-out</source>
-        <translation>Ausgeschaltet</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="98"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="100"/>
         <source>Compact calendar entries</source>
         <translation type="unfinished">Kompakte Kalendereinträge</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="99"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="101"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
         <source>Use shorter text format in the calendar event description</source>
         <translation type="unfinished">Kürzeres Textformat in Kalendereinträgen benutzen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="109"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="112"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="98"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="99"/>
         <source>Inverted style</source>
         <translation>Invertierter Anzeige</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="110"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="99"/>
         <source>Use dark color scheme</source>
         <translation>Dunkles Farbschema benutzen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="121"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="125"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="110"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="112"/>
         <source>Favorites star position (requires restart)</source>
         <translation type="unfinished">Favoriten Sterne Position (Neustart erforderlich)</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="122"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="126"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="111"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="113"/>
         <source>Left</source>
-        <translation type="unfinished">Links</translation>
+        <translation>Links</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="111"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="113"/>
+        <source>Right</source>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="122"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="126"/>
-        <source>Right</source>
-        <translation type="unfinished">Rechts</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="133"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="138"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="125"/>
         <source>Add journeys to calendar</source>
         <translation>Reisen zu Kalender hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="145"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="151"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="134"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="90"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="138"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="89"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="161"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="168"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="150"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="155"/>
         <source>Select a calendar</source>
         <translation>Kalender wählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="113"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="100"/>
         <source>Use light color scheme</source>
         <translation>Helles Farbschema benutzen</translation>
     </message>
@@ -1519,6 +1490,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="72"/>
         <source>Enable GPS location support</source>
         <translation>GPS Standortbestimmung aktivieren</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="57"/>
+        <source>Backend</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1535,6 +1511,16 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source>Adding &apos;%1&apos; to favorites</source>
         <translation>%1 zu Favoriten hinzugefügt</translation>
     </message>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <source>Remove from favorites</source>
+        <translation>Von Favoriten entfernen</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <source>Add to favorites</source>
+        <translation>Zu Favoriten hinzufügen</translation>
+    </message>
 </context>
 <context>
     <name>StationSelect</name>
@@ -1544,33 +1530,9 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation>Suche nach Station ...</translation>
     </message>
     <message>
-        <source>Searching ...</source>
-        <translation type="obsolete">Suche ...</translation>
-    </message>
-    <message>
-        <source>Requesting GPS...</source>
-        <translation type="obsolete">Fordere GPS an ...</translation>
-    </message>
-    <message>
         <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="127"/>
         <source>Click the star icon on the search results to add or remove a station as a favorite</source>
         <translation>Um Stationen als Favorit zu speichern auf das Sternsymbol in den Suchergebnissen klicken</translation>
-    </message>
-    <message>
-        <source>Removing &apos;%1&apos; from favorites</source>
-        <translation type="obsolete">%1 von Favoriten entfernt</translation>
-    </message>
-    <message>
-        <source>Adding &apos;%1&apos; to favorites</source>
-        <translation type="obsolete">%1 zu Favoriten hinzugefügt</translation>
-    </message>
-    <message>
-        <source>Searching for stations...</source>
-        <translation type="obsolete">Suche nach Stationen ...</translation>
-    </message>
-    <message>
-        <source>Waiting for GPS lock...</source>
-        <translation type="obsolete">Warte auf GPS Daten ...</translation>
     </message>
 </context>
 <context>
@@ -1607,15 +1569,32 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="193"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="151"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="202"/>
         <source>Searching for stations...</source>
         <translation>Suche nach Stationen ...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="198"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="154"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="205"/>
         <source>Waiting for GPS lock...</source>
         <translation>Warte auf GPS Daten ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="52"/>
+        <source>Select station</source>
+        <translation>Station wählen</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="86"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="110"/>
+        <source>Favorites</source>
+        <translation>Favoriten</translation>
     </message>
 </context>
 <context>
@@ -1638,26 +1617,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 </context>
 <context>
     <name>TimeTableResultsPage</name>
-    <message>
-        <source>Pl.</source>
-        <translation type="obsolete">Gl.</translation>
-    </message>
-    <message>
-        <source>to &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="obsolete">nach &lt;b&gt;%1&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>from &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="obsolete">von &lt;b&gt;%1&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>to </source>
-        <translation type="obsolete">nach </translation>
-    </message>
-    <message>
-        <source>from </source>
-        <translation type="obsolete">von </translation>
-    </message>
     <message>
         <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="48"/>
         <source>Arrivals</source>
@@ -1687,23 +1646,22 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 <context>
     <name>TimetableEntryDelegate</name>
     <message>
-        <source>hh:mm</source>
-        <translation type="obsolete">hh:mm</translation>
-    </message>
-    <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="59"/>
+        <location filename="../src/gui/sailfishos/delegates/TimetableEntryDelegate.qml" line="53"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="67"/>
         <source>from</source>
         <translation>von</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="59"/>
+        <location filename="../src/gui/sailfishos/delegates/TimetableEntryDelegate.qml" line="53"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="67"/>
         <source>to</source>
         <translation>nach</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="73"/>
+        <location filename="../src/gui/sailfishos/delegates/TimetableEntryDelegate.qml" line="69"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="85"/>
         <source>Pl. %1</source>
         <translation>Gl. %1</translation>
@@ -1713,12 +1671,14 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <name>TimetablePage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="40"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Arrivals</source>
         <translation>Ankünfte</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="40"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Departures</source>
         <translation>Abfahrten</translation>
