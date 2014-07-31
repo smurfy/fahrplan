@@ -1,6 +1,20 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.19
+------
+
+- Real-time delay info is now displayed in journey details for bahn.de.
+- Bugfix: Via station was ignored in bahn.de backend.
+
+
+2.0.18
+------
+
+- New backend: 9292ov.nl.
+- More train selection options in rejseplanen.dk backend.
+
+
 2.0.16
 ------
 
