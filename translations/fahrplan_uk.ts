@@ -4,9 +4,10 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="62"/>
-        <location filename="../src/gui/symbian/pages/AboutPage.qml" line="60"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="65"/>
+        <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="63"/>
+        <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="44"/>
+        <location filename="../src/gui/symbian/pages/AboutPage.qml" line="61"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="66"/>
         <source>About Fahrplan</source>
         <translation>Про Fahrplan</translation>
     </message>
@@ -42,23 +43,13 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>-- 
 Додано програмою Fahrplan. Будь-ласка, перевірте інформацію перед поїздкою ще раз.</translation>
     </message>
+</context>
+<context>
+    <name>Cover</name>
     <message>
-        <source>Pl.</source>
-        <translation type="obsolete">Пл.</translation>
-    </message>
-    <message>
-        <source>
-(added by fahrplan app, please recheck informations before travel.)</source>
-        <translation type="obsolete">
-(додано програмою Fahrplan; будь-ласка, перевірте інформацію ще раз перед поїздкою)</translation>
-    </message>
-    <message>
-        <source>Journey: %1 to %2</source>
-        <translation type="obsolete">Подорож: від %1 до %2</translation>
-    </message>
-    <message>
-        <source>Journey: %1 via %3 to %2</source>
-        <translation type="obsolete">Подорож: від %1 до %2, через %3</translation>
+        <location filename="../src/gui/sailfishos/Cover.qml" line="37"/>
+        <source>Fahrplan: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -99,34 +90,34 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>FahrplanCalendarManager</name>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="125"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="130"/>
         <source>&lt;loading calendars list...&gt;</source>
         <translation>&lt;завантаження переліку календарів...&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="128"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="133"/>
         <source>&lt;invalid calendar&gt;</source>
         <translation>&lt;недійсний календар&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="130"/>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="145"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="135"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="150"/>
         <source>Default Calendar</source>
         <translation>Календар за промовчанням</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="176"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="181"/>
         <source>Local Calendar</source>
         <translation>Локальний</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="179"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="184"/>
         <source>%1 (%2)</source>
         <comment>Calendar name (Account name)</comment>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="238"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="245"/>
         <source>Personal</source>
         <translation>Особистий</translation>
     </message>
@@ -147,6 +138,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="341"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
@@ -154,6 +146,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="341"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
@@ -161,16 +154,23 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="170"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="174"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="173"/>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="352"/>
         <source>Dur.: %1</source>
         <translation>Трив.: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="129"/>
+        <source>Searching...</source>
+        <translation>Йде пошук...</translation>
     </message>
 </context>
 <context>
     <name>JourneyResultsPage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="105"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="92"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="105"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="102"/>
         <source>Dep.</source>
@@ -178,6 +178,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="115"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="97"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="111"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="112"/>
         <source>Arr.</source>
@@ -185,6 +186,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="126"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="103"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="118"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="123"/>
         <source>Dur.</source>
@@ -192,6 +194,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="137"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="109"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="125"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="134"/>
         <source>Trans.</source>
@@ -213,6 +216,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="312"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
@@ -220,6 +224,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="312"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
@@ -227,6 +232,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="217"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="38"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="213"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="168"/>
         <source>Earlier</source>
@@ -234,16 +240,23 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="225"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="50"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="222"/>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="176"/>
         <source>Later</source>
         <translation>Пізніше</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="139"/>
+        <source>Searching...</source>
+        <translation>Йде пошук...</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="168"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="83"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="170"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="161"/>
         <source>Departure Station</source>
@@ -253,6 +266,9 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="339"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="362"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="369"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="30"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="31"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="34"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="362"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="387"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="394"/>
@@ -264,6 +280,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="187"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="98"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="190"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="178"/>
         <source>Via Station</source>
@@ -271,6 +288,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="206"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="113"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="210"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="199"/>
         <source>Arrival Station</source>
@@ -278,6 +296,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="225"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="128"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="230"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="220"/>
         <source>Station</source>
@@ -285,6 +304,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="238"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="137"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="244"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="236"/>
         <source>Direction</source>
@@ -293,6 +313,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="253"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="422"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="175"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="261"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="450"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="262"/>
@@ -302,6 +323,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="264"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="451"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="194"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="275"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="480"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="283"/>
@@ -310,6 +332,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="281"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="160"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="297"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
         <source>Departure</source>
@@ -317,6 +340,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="288"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="166"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="305"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
         <source>Arrival</source>
@@ -330,6 +354,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="320"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="214"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="340"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="304"/>
         <source>Trains</source>
@@ -354,14 +379,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="363"/>
         <source>Please select a Station</source>
         <translation>Будь-ласка, оберіть станцію або зупинку</translation>
-    </message>
-    <message>
-        <source>Departures</source>
-        <translation type="obsolete">Відправлення</translation>
-    </message>
-    <message>
-        <source>Arrivals</source>
-        <translation type="obsolete">Прибуття</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="354"/>
@@ -407,10 +424,8 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="423"/>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="452"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="510"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="451"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="481"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="547"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -423,66 +438,61 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Скасувати</translation>
     </message>
     <message>
-        <source>Toggle Inverted Style</source>
-        <translation type="obsolete">Перемкнути інвертований стиль</translation>
-    </message>
-    <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="441"/>
         <source>About</source>
         <translation>Про</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="505"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="542"/>
-        <source>Hello&lt;br/&gt;Sorry about this dialog, but the new Nokia store regulations require it.&lt;br/&gt;&lt;br/&gt;Please read the Privacy Policy of fahrplan. (available on the about page)&lt;br/&gt;&lt;br/&gt;If you want, you can also disable the gps features of fahrplan via the about menu.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="518"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="559"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="556"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="604"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="507"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="548"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="310"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="341"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="546"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="594"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="497"/>
         <source>Clear station</source>
         <translation>Очистити станцію</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="532"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="573"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="521"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="563"/>
         <source>Select station</source>
         <translation>Оберіть станцію</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="539"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="581"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="528"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="290"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="571"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="489"/>
         <source>Switch with Departure station</source>
         <translation>Обміняти зі станцією відправлення</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="546"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="589"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="535"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="297"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="579"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="492"/>
         <source>Switch with Arrival station</source>
         <translation>Обміняти зі станцією прибуття</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="553"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="597"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="542"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="304"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="587"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="495"/>
         <source>Switch with Via station</source>
         <translation>Обміняти з проміжною станцією</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="596"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="643"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="585"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="633"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="521"/>
         <source>No results found</source>
         <translation>Нічого не знайдено</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="603"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="650"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="592"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="640"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="528"/>
         <source>Error loading details</source>
         <translation>Помилка завантаження деталей поїздки</translation>
@@ -496,6 +506,33 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
         <source>Now</source>
         <translation>Зараз</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="46"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="57"/>
+        <source>Journey</source>
+        <translation>Подорож</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="46"/>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="65"/>
+        <source>Time Table</source>
+        <translation>Розклад</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="51"/>
+        <source>Settings</source>
+        <translation>Налаштування</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="151"/>
+        <source>Mode</source>
+        <translation>Режим</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="154"/>
+        <source>Departure: now</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -516,7 +553,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="58"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="55"/>
         <source>searchJourney</source>
         <translation type="unfinished"></translation>
     </message>
@@ -526,22 +563,22 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="68"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="65"/>
         <source>searchJourneyEarlier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="75"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="72"/>
         <source>searchJourneyLater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="95"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="92"/>
         <source>cancelRequest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="85"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="82"/>
         <source>getJourneyDetails</source>
         <translation type="unfinished"></translation>
     </message>
@@ -549,44 +586,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="31"/>
         <source>getTimeTableForStation</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Parser131500ComAu</name>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="44"/>
-        <source>All, except School Buses</source>
-        <translation>Усі, окрім шкільних автобусів</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="45"/>
-        <source>Regular Buses</source>
-        <translation>Звичайні автобуси</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="46"/>
-        <source>Trains</source>
-        <translation>Поїзди</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="47"/>
-        <source>Ferries</source>
-        <translation>Пароми</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="48"/>
-        <source>STA School Bus</source>
-        <translation>Шкільний автобус STA</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="72"/>
-        <source>Coordinates search not supported.</source>
-        <translation>Пошук за координатами не підтримується.</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_131500comau.cpp" line="375"/>
-        <source>Internal error occured: JourneyResultdata not present!</source>
-        <translation>Сталася внутрішня помилка: відсутня JourneyResultdata!</translation>
     </message>
 </context>
 <context>
@@ -635,7 +634,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="139"/>
         <source>Metro Train</source>
-        <translation type="unfinished">Метро</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="140"/>
@@ -668,20 +667,20 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Помилка сервера: </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="525"/>
-        <location filename="../src/parser/parser_efa.cpp" line="794"/>
-        <location filename="../src/parser/parser_efa.cpp" line="809"/>
+        <location filename="../src/parser/parser_efa.cpp" line="527"/>
+        <location filename="../src/parser/parser_efa.cpp" line="796"/>
+        <location filename="../src/parser/parser_efa.cpp" line="811"/>
         <source>%1, %2</source>
         <comment>DATE, TIME</comment>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="850"/>
+        <location filename="../src/parser/parser_efa.cpp" line="852"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#b30;&quot;&gt;запізнення на %1 хв.&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="854"/>
+        <location filename="../src/parser/parser_efa.cpp" line="856"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;за розкладом&lt;/span&gt;</translation>
     </message>
@@ -689,61 +688,65 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserHafasBinary</name>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="87"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="108"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="93"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="114"/>
         <source>An error ocurred with the backend</source>
         <translation>Під час запиту до постачальника послуг трапилася помилка</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="642"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="442"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="454"/>
+        <source>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
+        <translation>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;запізнення на %1 хв.&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="444"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="456"/>
+        <source>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
+        <translation>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;за розкладом&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="679"/>
         <source>Your session has expired. Please, perform the search again.</source>
         <translation>Час вашої сессії вийшов. Будь-ласка, почніть пошук з початку.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="644"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="681"/>
         <source>One of the station names is too ambiguous.</source>
         <translation>Одна з назв зупинок занадто невизначена.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="646"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="683"/>
         <source>No connections have been found that correspond to your request.</source>
         <translation>Не знайдено жодного з&apos;єднання, що відповідає вашому запиту.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="648"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="685"/>
         <source>There was an unsuccessful or incomplete search due to a timetable change.</source>
         <translation>Стався неповний або невдалий пошук у зв&apos;язку зі зміною у розкладі.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="650"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="687"/>
         <source>Unfortunately there was no route found.</source>
         <translation>Нажаль, маршрут не знайдено.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="652"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="689"/>
         <source>Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.</source>
         <translation>На даний момент, нажаль, ваш запит не може бути оброблено. Можливо, вказана дата знаходиться поза межами існуючого розкладу.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="654"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="691"/>
         <source>Unknown error ocurred with the backend (error %1).</source>
         <translation>Під час запиту до постачальника послуг сталася невідома помилка (код %1).</translation>
     </message>
     <message>
-        <source>Unknown error ocurred with the backend (error %1)</source>
-        <translation type="obsolete">Під час запиту до постачальника послуг сталася невідома помилка (код %1).</translation>
-    </message>
-    <message>
-        <source>Sorry one station name is too ambiguous</source>
-        <translation type="obsolete">Нажаль, одна з назв зупинок занадто невизначена</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="483"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="520"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Сталася внутрішня помилка: поїздка пізніше неможлива</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="517"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="554"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Сталася внутрішня помилка: поїздка раніше неможлива</translation>
     </message>
@@ -759,10 +762,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/parser/parser_hafasxml.cpp" line="209"/>
         <source>On-Time</source>
         <translation>За розкладом</translation>
-    </message>
-    <message>
-        <source>Internal Error occured, missing station ids</source>
-        <translation type="obsolete">Сталася внутрішня помилка: відсутні ідентифікатори станцій</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="446"/>
@@ -805,10 +804,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/parser/parser_hafasxml.cpp" line="963"/>
         <source>Pl.</source>
         <translation>Пл.</translation>
-    </message>
-    <message>
-        <source>Platform </source>
-        <translation type="obsolete">Платформа</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/parser/parser_hafasxml.cpp" line="1022"/>
@@ -975,25 +970,45 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <source>Local transport without S-Bahn</source>
         <translation>Міський транспорт, окрім S-Bahn</translation>
     </message>
+</context>
+<context>
+    <name>ParserNinetwo</name>
     <message>
-        <source>Warning</source>
-        <translation type="obsolete">Увага</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="156"/>
+        <source>All</source>
+        <translation>Усі</translation>
     </message>
     <message>
-        <source>On-Time</source>
-        <translation type="obsolete">За розкладом</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="157"/>
+        <source>Only trains</source>
+        <translation>Тільки поїзди</translation>
     </message>
     <message>
-        <source>Internal error occured, going later is not possible</source>
-        <translation type="obsolete">Сталася внутрішня помилка: поїздка пізніше неможлива</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="158"/>
+        <source>not by ferry</source>
+        <translation>без паромів</translation>
     </message>
     <message>
-        <source>Internal error occured, going earlier is not possible</source>
-        <translation type="obsolete">Сталася внутрішня помилка: поїздка раніше неможлива</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="197"/>
+        <source>via </source>
+        <translation>через </translation>
     </message>
     <message>
-        <source>Internal error occured, requesting invalid details data.</source>
-        <translation type="obsolete">Сталася внутрішня помилка: запит недійсних деталей поїздки.</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="201"/>
+        <source>(%1) %2 
+%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="370"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="373"/>
+        <source>Pl.</source>
+        <translation>Пл.</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="375"/>
+        <source>%1 to %2</source>
+        <translation>від %1 до %2</translation>
     </message>
 </context>
 <context>
@@ -1225,27 +1240,27 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserSydneyEFA</name>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="44"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="45"/>
         <source>All, except School Buses</source>
         <translation>Усі, окрім шкільних автобусів</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="45"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="46"/>
         <source>Regular Buses</source>
         <translation>Звичайні автобуси</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="46"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="47"/>
         <source>Trains</source>
         <translation>Поїзди</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="47"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="48"/>
         <source>Ferries</source>
         <translation>Пароми</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_sydney_efa.cpp" line="48"/>
+        <location filename="../src/parser/parser_sydney_efa.cpp" line="49"/>
         <source>STA School Bus</source>
         <translation>Шкільний автобус STA</translation>
     </message>
@@ -1279,14 +1294,29 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserXmlRejseplanenDk</name>
     <message>
-        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="47"/>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="53"/>
         <source>All</source>
         <translation>Усі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="48"/>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="54"/>
         <source>All without ICE</source>
         <translation>Усі, окрім ICE</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="55"/>
+        <source>All without buses </source>
+        <translation>Усі, окрім автобусів</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="56"/>
+        <source>Only local transport</source>
+        <translation>Лише міський транспорт</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.cpp" line="57"/>
+        <source>Local transport without S-Bahn</source>
+        <translation>Міський транспорт, окрім S-Bahn</translation>
     </message>
 </context>
 <context>
@@ -1304,18 +1334,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 </context>
 <context>
     <name>ParserXmlVasttrafikSe</name>
-    <message>
-        <source>Invalid departure station</source>
-        <translation type="obsolete">Недійсна станція відправлення</translation>
-    </message>
-    <message>
-        <source>Invalid via station</source>
-        <translation type="obsolete">Недійсна проміжна станція</translation>
-    </message>
-    <message>
-        <source>Invalid arrival station</source>
-        <translation type="obsolete">Недійсна станція прибуття</translation>
-    </message>
     <message>
         <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="292"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
@@ -1399,6 +1417,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <name>SettingsPage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="48"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="40"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="48"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="49"/>
         <source>Settings</source>
@@ -1407,83 +1426,66 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="87"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="87"/>
-        <source>GPS location support</source>
-        <translation>Підтримка позиціювання GPS</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
-        <source>Opted-in</source>
-        <translation>Увімкнено</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
-        <source>Opted-out</source>
-        <translation>Вимкнено</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="98"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="100"/>
         <source>Compact calendar entries</source>
         <translation>Компактні записи у календарі</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="99"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="101"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
         <source>Use shorter text format in the calendar event description</source>
         <translation>Використовувати коротший формат тексту в записах у календарі</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="109"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="112"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="98"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="99"/>
         <source>Inverted style</source>
         <translation>Інвертований стиль</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="110"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="99"/>
         <source>Use dark color scheme</source>
         <translation>Використовувати темну схему кольорів</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="121"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="125"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="110"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="112"/>
         <source>Favorites star position (requires restart)</source>
         <translation>Позиція зірочки обраного (потребує перезапуску)</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="122"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="126"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="111"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="113"/>
         <source>Left</source>
         <translation>Ліворуч</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="122"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="126"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="111"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="113"/>
         <source>Right</source>
         <translation>Праворуч</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="133"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="138"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="122"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="125"/>
         <source>Add journeys to calendar</source>
         <translation>Додавати подорожі до календаря</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="145"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="151"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="134"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="90"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="138"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="89"/>
         <source>About</source>
         <translation>Про</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="161"/>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="168"/>
+        <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="150"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="155"/>
         <source>Select a calendar</source>
         <translation>Оберіть календар</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="113"/>
+        <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="100"/>
         <source>Use light color scheme</source>
         <translation>Використовувати світлу схему кольорів</translation>
     </message>
@@ -1491,6 +1493,11 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="72"/>
         <source>Enable GPS location support</source>
         <translation>Увімкнути підтримку позиціювання GPS</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="57"/>
+        <source>Backend</source>
+        <translation>Постачальник</translation>
     </message>
 </context>
 <context>
@@ -1507,6 +1514,16 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <source>Adding &apos;%1&apos; to favorites</source>
         <translation>&apos;%1&apos; додано до обраних</translation>
     </message>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <source>Remove from favorites</source>
+        <translation>Видалити з обраних</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <source>Add to favorites</source>
+        <translation>Додати до обраних</translation>
+    </message>
 </context>
 <context>
     <name>StationSelect</name>
@@ -1516,33 +1533,9 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Шукати станцію...</translation>
     </message>
     <message>
-        <source>Searching ...</source>
-        <translation type="obsolete">Йде пошук...</translation>
-    </message>
-    <message>
-        <source>Requesting GPS...</source>
-        <translation type="obsolete">Запит до GPS...</translation>
-    </message>
-    <message>
         <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="127"/>
         <source>Click the star icon on the search results to add or remove a station as a favorite</source>
         <translation>Натисніть зірочку в результатах пошуку, щоб додати або видалити станцію до списку обраних</translation>
-    </message>
-    <message>
-        <source>Removing &apos;%1&apos; from favorites</source>
-        <translation type="obsolete">&apos;%1&apos; видалено з обраних</translation>
-    </message>
-    <message>
-        <source>Adding &apos;%1&apos; to favorites</source>
-        <translation type="obsolete">&apos;%1&apos; додано до обраних</translation>
-    </message>
-    <message>
-        <source>Searching for stations...</source>
-        <translation type="obsolete">Йде пошук станцій та зупинок...</translation>
-    </message>
-    <message>
-        <source>Waiting for GPS lock...</source>
-        <translation type="obsolete">Очікування на позиціювання GPS...</translation>
     </message>
 </context>
 <context>
@@ -1579,15 +1572,32 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="193"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="151"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="202"/>
         <source>Searching for stations...</source>
         <translation>Йде пошук станцій та зупинок...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="198"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="154"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="205"/>
         <source>Waiting for GPS lock...</source>
         <translation>Очікування на позиціювання GPS...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="52"/>
+        <source>Select station</source>
+        <translation>Оберіть станцію</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="86"/>
+        <source>Search</source>
+        <translation>Пошук</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="110"/>
+        <source>Favorites</source>
+        <translation>Обрані</translation>
     </message>
 </context>
 <context>
@@ -1610,18 +1620,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 </context>
 <context>
     <name>TimeTableResultsPage</name>
-    <message>
-        <source>Pl.</source>
-        <translation type="obsolete">Пл.</translation>
-    </message>
-    <message>
-        <source>to &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="obsolete">до &lt;b&gt;%1&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>from &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="obsolete">від &lt;b&gt;%1&lt;/b&gt;</translation>
-    </message>
     <message>
         <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="48"/>
         <source>Arrivals</source>
@@ -1652,18 +1650,21 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <name>TimetableEntryDelegate</name>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="59"/>
+        <location filename="../src/gui/sailfishos/delegates/TimetableEntryDelegate.qml" line="53"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="67"/>
         <source>from</source>
         <translation>від</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="59"/>
+        <location filename="../src/gui/sailfishos/delegates/TimetableEntryDelegate.qml" line="53"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="67"/>
         <source>to</source>
         <translation>до</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/delegates/TimetableEntryDelegate.qml" line="73"/>
+        <location filename="../src/gui/sailfishos/delegates/TimetableEntryDelegate.qml" line="69"/>
         <location filename="../src/gui/symbian/delegates/TimetableEntryDelegate.qml" line="85"/>
         <source>Pl. %1</source>
         <translation>Пл. %1</translation>
@@ -1673,12 +1674,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <name>TimetablePage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="40"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Arrivals</source>
         <translation>Прибуття</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="40"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Departures</source>
         <translation>Відправлення</translation>
