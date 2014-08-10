@@ -23,6 +23,7 @@ import Ubuntu.Components 0.1
 import "components"
 
 Page {
+    title: qsTr("Result Details")
     id: searchDetailResultsPage
 
     property alias titleText: journeyStations.text

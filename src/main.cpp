@@ -22,6 +22,7 @@
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
 #elif defined(BUILD_FOR_UBUNTU)
+    #include <QApplication>
     #include <QtQuick>
     #include <QtQml>
 #elif defined(BUILD_FOR_SAILFISHOS)

@@ -61,7 +61,7 @@ setup_adb_forwarding() {
 install_dependencies() {
     exec_with_adb apt-get update
     exec_with_adb apt-get -y install openssh-server
-    exec_with_ssh $SUDO apt-get -y install build-essential rsync bzr ccache gdb ninja-build devscripts equivs
+    exec_with_ssh $SUDO apt-get -y install build-essential rsync bzr ccache gdb ninja-build devscripts equivs qttools5-dev-tools
 }
 
 sync_code() {
@@ -93,7 +93,8 @@ build_click_package() {
 }
 
 run() {
-    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR && ./fahrplan2 --desktop_file_hint=/home/phablet/$CODE_DIR/data/fahrplan2_ubuntu.desktop"
+#    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR && ./fahrplan2 --desktop_file_hint=/home/phablet/$CODE_DIR/data/fahrplan2_ubuntu.desktop"
+    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR && ./fahrplan2 --desktop_file_hint=/usr/share/applications/dialer-app.desktop"
 }
 
 set -- `getopt -n$0 -u -a --longoptions="setup,gdb,click,help" "sgch" "$@"`

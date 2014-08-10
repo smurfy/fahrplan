@@ -30,6 +30,7 @@ MainView {
         id: fahrplanBackend
     }
 
+    useDeprecatedToolbar: false
     Tabs {
         onCurrentPageChanged: {
             while (journeyPageStack.depth > 1) {
@@ -46,10 +47,9 @@ MainView {
                 id: journeyPageStack
                 Component.onCompleted: push(journeyPage)
                 MainPage {
+                    title: qsTr("Journey")
                     id: journeyPage
-
                 }
-
             }
         }
         Tab {
@@ -58,6 +58,7 @@ MainView {
                 id: timeTablePageStack
                 Component.onCompleted: push(timeTablePage)
                 MainPage {
+                    title: qsTr("Time table")
                     id: timeTablePage
                     searchmode: 1
                 }
