@@ -23,6 +23,7 @@ import Ubuntu.Components 0.1
 import "components"
 
 Page {
+    title: qsTr("Results")
     property alias searchResults: searchResults
     property alias journeyStationsTitleText: journeyStations.text
     property alias searchIndicatorVisible: searchIndicator.visible

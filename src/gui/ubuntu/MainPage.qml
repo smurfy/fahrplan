@@ -164,7 +164,7 @@ Page {
                     property int type: FahrplanBackend.DepartureStation
 
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
                         pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
                                                                       })
@@ -185,7 +185,7 @@ Page {
                     property int type: FahrplanBackend.ViaStation
 
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
                         pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
                                                                       })
@@ -206,7 +206,7 @@ Page {
                     property int type: FahrplanBackend.ArrivalStation
 
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type})
+                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
                         pageStack.currentPage.stationSelected.connect(function() {
                                                                           pageStack.pop();
                                                                       })
@@ -363,7 +363,8 @@ Page {
             id: selectBackendDialog
             ListView {
                 width: parent.width
-                height: contentHeight
+                height: units.gu(30)
+                clip: true
                 model: parserBackendModel
                 delegate: ListItems.Standard {
                     text: modelData
@@ -437,9 +438,11 @@ Page {
 //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
 //        }
         ToolbarButton {
-            iconSource: "icons/info.svg"
-            text: qsTr("About")
-            onTriggered: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
+            action: Action {
+                iconName: "info"
+                text: qsTr("About")
+                onTriggered: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
+            }
         }
     }
 

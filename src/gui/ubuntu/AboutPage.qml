@@ -24,6 +24,7 @@ import "../about.js" as About
 
 Page {
     id: aboutPage
+    title: qsTr("About Fahrplan")
 
     Flickable {
         id: flickable
@@ -55,24 +56,16 @@ Page {
                     radius: "medium"
                     image: Image {
                         source: "qrc:/fahrplan2.svg"
+                        height: parent.height
+                        width: height
                     }
                 }
 
-                Column {
+                Label {
                     id: titleColumn
+                    textFormat: Text.RichText
+                    text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
                     width: parent.width - x
-                    Label {
-                        id: aboutText
-                        text: qsTr("About Fahrplan")
-                        width: parent.width
-                        fontSize: "large"
-                    }
-
-                    Label {
-                        textFormat: Text.RichText
-                        text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
-                        width: parent.width
-                    }
                 }
             }
 

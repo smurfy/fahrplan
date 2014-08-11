@@ -24,6 +24,7 @@ import Ubuntu.Components.ListItems 0.1 as ListItems
 import "components"
 
 Page {
+    title: qsTr("Results")
     property alias searchIndicatorVisible: searchIndicator.visible
 
     property int selMode : 0
