@@ -410,7 +410,6 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                          hafasData >> tmpTxtPtr;
                          category = strings[tmpTxtPtr];
                         //lineCategory = strings.read(is);
-                         hafasData.device()->seek(hafasData.device()->pos() + 2);
                     } else if (key == "Operator") {
                         //lineOperator = strings.read(is);
                          hafasData.device()->seek(hafasData.device()->pos() + 2);
