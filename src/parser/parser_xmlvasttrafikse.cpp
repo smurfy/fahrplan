@@ -378,7 +378,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                 jdrItem->setArrivalDateTime(scheduledArrivalTime);
                 const QString direction = getAttribute(legNode, "direction");
                 if (!direction.isEmpty())
-                    jdrItem->setInfo(tr("to %1").arg(direction));
+                    jdrItem->setDirection(direction);
                 if (getAttribute(legNode, "type") == QLatin1String("WALK"))
                     jdrItem->setTrain(tr("Walk"));
                 else {
