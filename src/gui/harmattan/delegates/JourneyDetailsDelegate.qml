@@ -179,8 +179,19 @@ Item {
                 id: lbl_train
 
                 width: (parent.width  - 110)
-                text: model.trainName
-                font.bold: true
+                text: {
+                    var result;
+                    if (model.trainDirection.length > 0) {
+                        result = qsTr("%1 to %2").arg("<b>" + model.trainName + "</b>")
+                                                 .arg(model.trainDirection);
+                    } else {
+                        result = "<b>" + model.trainName + "</b>";
+                    }
+                    if (model.trainInfo)
+                        result += "<br /><i>" + model.trainInfo + "</i>";
+
+                    return result;
+                }
                 anchors {
                     left: parent.left
                     leftMargin: 110
