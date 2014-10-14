@@ -360,11 +360,25 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 qint16 departurePlatformPtr;
                 qint16 arrivalPlatformPtr;
                 qint16 partAttrIndex;
+                qint16 commentOffset;
                 hafasData >> type;
                 hafasData >> lineNamePtr;
                 hafasData >> departurePlatformPtr;
                 hafasData >> arrivalPlatformPtr;
                 hafasData >> partAttrIndex;
+                hafasData >> commentOffset;
+
+                qint16 commentNum;
+                QStringList comments;
+
+                hafasData.device()->seek(commentTablePtr + commentOffset);
+                hafasData >> commentNum;
+                while (commentNum > 0) {
+                    qint16 commentPtr;
+                    hafasData >> commentPtr;
+                    comments << strings.value(commentPtr);
+                    --commentNum;
+                }
 
                 QString lineName = strings[lineNamePtr];
                 QString plannedDeparturePosition = strings[departurePlatformPtr];
@@ -459,6 +473,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 inlineItem->setTrain(lineName);
                 inlineItem->setDirection(direction);
+                inlineItem->setInfo(comments.join(tr(", ")));
                 inlineResults->appendItem(inlineItem);
             }
 
