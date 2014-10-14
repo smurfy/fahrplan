@@ -170,6 +170,7 @@ class JourneyDetailResultItem : public QObject
     Q_PROPERTY(QDateTime arrivalDateTime READ arrivalDateTime WRITE setArrivalDateTime)
     Q_PROPERTY(QString info READ info WRITE setInfo)
     Q_PROPERTY(QString train READ train WRITE setTrain)
+    Q_PROPERTY(QString direction READ direction WRITE setDirection)
 
     //Some Internal Data fields, primarly to store additional data per backend, like the details url
     Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
@@ -191,6 +192,8 @@ class JourneyDetailResultItem : public QObject
         void setInfo(const QString &);
         QString train() const;
         void setTrain(const QString &);
+        QString direction() const;
+        void setDirection(const QString &);
         QString internalData1() const;
         void setInternalData1(const QString &);
         QString internalData2() const;
@@ -204,6 +207,7 @@ class JourneyDetailResultItem : public QObject
         QDateTime m_arrivalDateTime;
         QString m_info;
         QString m_train;
+        QString m_direction;
         QString m_internalData1;
         QString m_internalData2;
 };

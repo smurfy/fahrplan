@@ -389,6 +389,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 hafasData.device()->seek(attrsOffset + partAttrIndex * 4);
 
                 QString category = "";
+                QString direction = "";
 
                 while (true)
                 {
@@ -399,8 +400,9 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     if (key.isEmpty() || key == "---") {
                         break;
                     } else if (key == "Direction") {
-                        //directionStr = strings.read(is);
-                        hafasData.device()->seek(hafasData.device()->pos() + 2);
+                        hafasData >> tmpTxtPtr;
+                        if (strings.value(tmpTxtPtr) != "---")
+                            direction = strings.value(tmpTxtPtr);
                     } else if (key == "Class") {
                         //lineClass = Integer.parseInt(strings.read(is));
                         hafasData.device()->seek(hafasData.device()->pos() + 2);
@@ -457,6 +459,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 }
 
                 inlineItem->setTrain(lineName);
+                inlineItem->setDirection(direction);
                 inlineResults->appendItem(inlineItem);
             }
 
