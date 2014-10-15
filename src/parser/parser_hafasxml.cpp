@@ -975,6 +975,22 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
             {
                 //qDebug()<<"     Train:"<<trainResult.join("").trimmed();
                 item->setTrain(trainResult.join("").trimmed());
+
+                query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Journey/JourneyAttributeList/JourneyAttribute/Attribute[@type='DIRECTION']/AttributeVariant/Text/string()");
+                QStringList directionResult;
+                if (!query.evaluateTo(&directionResult))
+                {
+                    qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 7a Failed";
+                }
+                item->setDirection(directionResult.join("").trimmed());
+
+                query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Journey/JourneyAttributeList/JourneyAttribute/Attribute[not(@type) and string(@priority) and string(@code)]/AttributeVariant/Text/string()");
+                QStringList infoResult;
+                if (!query.evaluateTo(&infoResult))
+                {
+                    qDebug() << "parserHafasXml::parseJourneyDataDetails - Query 7b Failed";
+                }
+                item->setInfo(infoResult.join(tr(", ")).trimmed());
             } else
             {
                 query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Walk/Duration/Time/string()");
