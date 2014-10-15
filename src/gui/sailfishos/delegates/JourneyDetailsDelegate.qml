@@ -69,11 +69,11 @@ Item {
                          color: "transparent"
                      }
                      GradientStop {
-                         position: 0.61;
+                         position: 0.60;
                          color: "transparent"
                      }
                      GradientStop {
-                         position: 0.62;
+                         position: 0.61;
                          color: (model.isStop) ? "transparent" : Theme.highlightColor;
                      }
                      GradientStop {
@@ -204,7 +204,7 @@ Item {
             Label {
                 id: lbl_train
 
-                width: (parent.width  - 110)
+                wrapMode: Text.WordWrap
                 text: {
                     var result;
                     if (model.trainDirection.length > 0) {
@@ -221,6 +221,8 @@ Item {
                 anchors {
                     left: parent.left
                     leftMargin: 110
+                    right: parent.right
+                    rightMargin: Theme.paddingMedium
                     verticalCenter: parent.verticalCenter
                 }
             }
