@@ -984,7 +984,7 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(QByteArray 
                 }
                 item->setDirection(directionResult.join("").trimmed());
 
-                query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Journey/JourneyAttributeList/JourneyAttribute/Attribute[not(@type) and string(@priority) and string(@code)]/AttributeVariant/Text/string()");
+                query.setQuery("doc($path)/ResC/ConRes//Connection[@id='" + journeyDetailRequestData.id + "']/ConSectionList/ConSection[" + QString::number(i + 1) + "]/Journey/JourneyAttributeList/JourneyAttribute/Attribute[not(@type) and string(@priority) and string(@code)]/AttributeVariant/Text[text() != '.']/string()");
                 QStringList infoResult;
                 if (!query.evaluateTo(&infoResult))
                 {
