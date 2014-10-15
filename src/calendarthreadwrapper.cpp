@@ -82,28 +82,31 @@ void CalendarThreadWrapper::addToCalendar()
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
 
-        if (!compactFormat && !item->train().isEmpty())
-            calendarEntryDesc.append("--- ").append(item->train()).append(" ---\n");
+        const QString train = item->direction().isEmpty()
+                              ? item->train()
+                              : tr("%1 to %2").arg(item->train(), item->direction());
+
+        if (!compactFormat && !train.isEmpty())
+            calendarEntryDesc.append("--- ").append(train).append(" ---\n");
 
         calendarEntryDesc.append(formatStation(item->departureDateTime(),
                                                item->departureStation(),
                                                item->departureInfo()));
         calendarEntryDesc.append("\n");
 
-        if (compactFormat && !item->train().isEmpty())
-            calendarEntryDesc.append("--- ").append(item->train()).append(" ---\n");
+        if (compactFormat && !train.isEmpty())
+            calendarEntryDesc.append("--- ").append(train).append(" ---\n");
 
         calendarEntryDesc.append(formatStation(item->arrivalDateTime(),
                                                item->arrivalStation(),
                                                item->arrivalInfo()));
         calendarEntryDesc.append("\n");
 
-        if (!item->info().isEmpty()) {
-            calendarEntryDesc.append(item->info()).append("\n");
-        }
-
-        if (!compactFormat)
+        if (!compactFormat) {
+            if (!item->info().isEmpty())
+                calendarEntryDesc.append(item->info()).append("\n");
             calendarEntryDesc.append("\n");
+        }
     }
 
     if (!compactFormat)

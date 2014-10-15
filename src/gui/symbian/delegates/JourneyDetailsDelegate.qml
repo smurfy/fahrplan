@@ -206,8 +206,19 @@ Item {
             Label {
                 id: lbl_train
 
-                text: model.trainName
-                font.bold: true
+                text: {
+                    var result;
+                    if (model.trainDirection.length > 0) {
+                        result = qsTr("%1 to %2").arg("<b>" + model.trainName + "</b>")
+                                                 .arg(model.trainDirection);
+                    } else {
+                        result = "<b>" + model.trainName + "</b>";
+                    }
+                    if (model.trainInfo)
+                        result += "<br /><i>" + model.trainInfo + "</i>";
+
+                    return result;
+                }
                 wrapMode: Text.WordWrap
                 platformInverted: appWindow.platformInverted
                 anchors {

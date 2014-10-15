@@ -306,8 +306,19 @@ Page {
                             leftMargin: units.gu(11)
                             verticalCenter: parent.verticalCenter
                         }
-                        text: trainName
-                        font.bold: true
+                        text: {
+                            var result;
+                            if (model.trainDirection.length > 0) {
+                                result = qsTr("%1 to %2").arg("<b>" + model.trainName + "</b>")
+                                                         .arg(model.trainDirection);
+                            } else {
+                                result = "<b>" + model.trainName + "</b>";
+                            }
+                            if (model.trainInfo)
+                                result += "<br /><i>" + model.trainInfo + "</i>";
+
+                            return result;
+                        }
                         width: (parent.width  - units.gu(11))
                     }
                 }
@@ -370,7 +381,9 @@ Page {
                         journeyDetailResultModel.append({
                                                             "isStart" : true,
                                                             "isStop" : false,
-                                                            "trainName" : item.train + " " + item.info,
+                                                            "trainName" : item.train,
+                                                            "trainDirection" : item.direction,
+                                                            "trainInfo" : item.info,
                                                             "stationName" : item.departureStation,
                                                             "stationInfo" : item.departureInfo,
                                                             "arrivalTime" : "",
@@ -388,6 +401,8 @@ Page {
                                                             "isStart" : false,
                                                             "isStop" : isStop,
                                                             "trainName" : "",
+                                                            "trainDirection": "",
+                                                            "trainInfo" : "",
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" :  item.arrivalInfo,
                                                             "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, Qt.DefaultLocaleShortDate),
@@ -412,7 +427,9 @@ Page {
                         journeyDetailResultModel.append({
                                                             "isStart" : false,
                                                             "isStop" : false,
-                                                            "trainName" :  nextItem.train + " " + nextItem.info,
+                                                            "trainName" :  nextItem.train,
+                                                            "trainDirection" : nextItem.direction,
+                                                            "trainInfo" : nextItem.info,
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" : stationInfo,
                                                             "arrivalTime" : Qt.formatTime(item.arrivalDateTime, Qt.DefaultLocaleShortDate),

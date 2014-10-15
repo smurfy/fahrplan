@@ -407,6 +407,16 @@ void JourneyDetailResultItem::setTrain(const QString &train)
     m_train = train;
 }
 
+QString JourneyDetailResultItem::direction() const
+{
+    return m_direction;
+}
+
+void JourneyDetailResultItem::setDirection(const QString &direction)
+{
+    m_direction = direction;
+}
+
 QString JourneyDetailResultItem::internalData1() const
 {
     return m_internalData1;
