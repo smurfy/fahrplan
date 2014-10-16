@@ -22,12 +22,9 @@
 
 #include "parser_abstract.h"
 
-#if defined(BUILD_FOR_QT5)
-    #include <QUrlQuery>
-#endif
-#include <QNetworkReply>
 #include <QMap>
 
+class QNetworkReply;
 /**
  * @brief The ParserNinetwo class
  * Parser for the 9292ov.nl dutch public transport route planner backend.

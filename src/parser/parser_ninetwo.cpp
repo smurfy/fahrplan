@@ -20,6 +20,7 @@
 #include "parser_ninetwo.h"
 
 #include <QUrl>
+#include <QNetworkReply>
 #ifdef BUILD_FOR_QT5
 #   include <QUrlQuery>
 #   include <QJsonArray>
@@ -37,9 +38,12 @@ ParserNinetwo::ParserNinetwo(QObject *parent):ParserAbstract(parent)
 {
 }
 
-void ParserNinetwo::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions)
+void ParserNinetwo::getTimeTableForStation(const Station &currentStation,
+                                           const Station &,
+                                           const QDateTime &,
+                                           ParserAbstract::Mode,
+                                           int trainrestrictions)
 {
-
     QUrl uri(QString(BASE_URL "/locations/%1/departure-times").arg(currentStation.id.toString()));
 
 #if defined(BUILD_FOR_QT5)
@@ -92,7 +96,12 @@ void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
     currentRequestState=FahrplanNS::stationsByCoordinatesRequest;
 }
 
-void ParserNinetwo::searchJourney(const Station &departureStation,const Station &viaStation,const Station &arrivalStation,const QDateTime &dateTime,const ParserAbstract::Mode mode, int trainrestrictions)
+void ParserNinetwo::searchJourney(const Station &departureStation,
+                                  const Station &viaStation,
+                                  const Station &arrivalStation,
+                                  const QDateTime &dateTime,
+                                  const ParserAbstract::Mode mode,
+                                  int trainrestrictions)
 {
     lastsearch.from=departureStation;
     lastsearch.to=arrivalStation;
@@ -334,17 +343,17 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
     emit journeyResult(result);
 }
 
-void ParserNinetwo::parseSearchLaterJourney(QNetworkReply *networkReply)
+void ParserNinetwo::parseSearchLaterJourney(QNetworkReply *)
 {
 
 }
 
-void ParserNinetwo::parseSearchEarlierJourney(QNetworkReply *networkReply)
+void ParserNinetwo::parseSearchEarlierJourney(QNetworkReply *)
 {
 
 }
 
-void ParserNinetwo::parseJourneyDetails(QNetworkReply *networkReply)
+void ParserNinetwo::parseJourneyDetails(QNetworkReply *)
 {
     //should never happen
 }
