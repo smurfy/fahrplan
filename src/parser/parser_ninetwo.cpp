@@ -19,11 +19,16 @@
 
 #include "parser_ninetwo.h"
 
-#include <QtCore/QUrl>
-//for backwards compatibility with qt4
-#ifndef BUILD_FOR_QT5
-//for QUrl/QUrlQuery difference
-#define setQuery(q) setQueryItems(q.queryItems())
+#include <QUrl>
+#ifdef BUILD_FOR_QT5
+#   include <QUrlQuery>
+#   include <QJsonArray>
+#   include <QJsonDocument>
+#   include <QJsonObject>
+#else
+#   include <QScriptEngine>
+#   include <QScriptValue>
+#   define setQuery(q) setQueryItems(q.queryItems())
 #endif
 
 #define BASE_URL "https://api.9292.nl/0.1/"
@@ -163,15 +168,21 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
 {
     TimetableEntriesList result;
     QByteArray allData = networkReply->readAll();
-    QJsonObject doc = QJsonDocument::fromJson(allData).object();
     qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
-    QJsonArray tabs = doc["tabs"].toArray();
-    QString currentStation(doc["location"].toObject()["name"].toString());
 
-    for(int i=0; i<tabs.size(); i++){
-        QJsonObject tab= tabs[i].toObject();
+    QVariantMap doc = parseJson(allData);
+    if (doc.isEmpty()) {
+        emit errorOccured(tr("Cannot parse reply from the server"));
+        return;
+    }
+
+    QVariantList tabs = doc["tabs"].toList();
+    QString currentStation(doc["location"].toMap()["name"].toString());
+
+    for (int i = 0; i < tabs.count(); i++) {
+        QVariantMap tab = tabs[i].toMap();
         QString type=tab["id"].toString();
-        QJsonArray departures = tab["departures"].toArray();
+        QVariantList departures = tab["departures"].toList();
         switch(timetableRestrictions){
             case all:
             default:
@@ -186,8 +197,8 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
             break;
         }
 
-        for(int j=0; j<departures.size(); j++){
-            QJsonObject departure=departures[j].toObject();
+        for (int j = 0; j < departures.count(); j++) {
+            QVariantMap departure = departures[j].toMap();
             TimetableEntry entry;
             entry.currentStation=currentStation;
             entry.destinationStation=departure["destinationName"].toString();
@@ -204,7 +215,7 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
                 entry.miscInfo=QString("%1 %2").arg(via, remark).trimmed();
 
             entry.platform=departure["platform"].toString();
-            entry.trainType = departure["mode"].toObject()["name"].toString();
+            entry.trainType = departure["mode"].toMap()["name"].toString();
             result.append(entry);
         }
     }
@@ -216,17 +227,23 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
 {
     qDebug() << "PARSING STATIONS";
     QByteArray allData = networkReply->readAll();
-    QJsonObject doc = QJsonDocument::fromJson(allData).object();
-  //  qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
-    QJsonArray stations = doc["locations"].toArray();
+//    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+
+    QVariantMap doc = parseJson(allData);
+    if (doc.isEmpty()) {
+        emit errorOccured(tr("Cannot parse reply from the server"));
+        return;
+    }
+
+    QVariantList stations = doc["locations"].toList();
 
     StationsList result;
 
-    for(int i=0; i<stations.size(); i++){
-        QJsonObject station=stations[i].toObject();
+    for (int i = 0; i < stations.count(); i++) {
+        QVariantMap station = stations[i].toMap();
         Station s;
-        s.latitude=station["latLong"].toObject()["lat"].toDouble();
-        s.longitude=station["latLong"].toObject()["long"].toDouble();
+        s.latitude = station["latLong"].toMap()["lat"].toDouble();
+        s.longitude = station["latLong"].toMap()["long"].toDouble();
         //s.name=QString("[%1]%2").arg(station["type"].toString(), station["name"].toString());
         s.name=station["name"].toString();
         s.miscInfo=station["type"].toString();
@@ -234,7 +251,6 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
             s.name = s.name + " " + station["houseNr"].toString();
         s.id=station["id"].toString();
         result.append(s);
-
     }
 
     emit stationsResult(result);
@@ -249,17 +265,23 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
 {
     qDebug() << "PARSING JOURNEYS";
     QByteArray allData = networkReply->readAll();
-    QJsonObject doc = QJsonDocument::fromJson(allData).object();
     qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
-    QJsonArray journeys = doc["journeys"].toArray();
+
+    QVariantMap doc = parseJson(allData);
+    if (doc.isEmpty()) {
+        emit errorOccured(tr("Cannot parse reply from the server"));
+        return;
+    }
+
+    QVariantList journeys = doc["journeys"].toList();
 
     JourneyResultList* result=new JourneyResultList;
 
     QDateTime arrival;
     QDateTime departure;
 
-    for(int i=0; i<journeys.size(); i++){
-        QJsonObject journey=journeys[i].toObject();
+    for (int i = 0; i < journeys.count(); i++) {
+        QVariantMap journey = journeys[i].toMap();
         parseJourneyOption(journey);
         JourneyResultItem* item = new JourneyResultItem;
         arrival  = QDateTime::fromString(journey["arrival"  ].toString(), "yyyy-MM-ddTHH:mm");
@@ -270,13 +292,13 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         item->setArrivalTime(arrival.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
 
-        QJsonArray legs = journey["legs"].toArray();
+        QVariantList legs = journey["legs"].toList();
         QStringList trains;
-        for(int i=0; i<legs.size(); i++)
+        for (int i = 0; i < legs.count(); i++)
         {
-            QJsonObject leg=legs[i].toObject();
-            QString typeName=leg["mode"].toObject()["name"].toString();
-            QString type=leg["mode"].toObject()["type"].toString();
+            QVariantMap leg = legs[i].toMap();
+            QString typeName = leg["mode"].toMap()["name"].toString();
+            QString type = leg["mode"].toMap()["type"].toString();
 
             if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
                 if (typeName.length() > 0) {
@@ -320,11 +342,31 @@ void ParserNinetwo::parseJourneyDetails(QNetworkReply *networkReply)
     //should never happen
 }
 
-void ParserNinetwo::parseJourneyOption(QJsonObject object)
+QVariantMap ParserNinetwo::parseJson(const QByteArray &json) const
+{
+    QVariantMap doc;
+#ifdef BUILD_FOR_QT5
+    doc = QJsonDocument::fromJson(json).toVariant().toMap();
+#else
+    QString tmp(json);
+    // Validation of JSON according to RFC4627, section 6
+    if (tmp.replace(QRegExp("\"(\\\\.|[^\"\\\\])*\""), "")
+           .contains(QRegExp("[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]")))
+        return doc;
+
+    QScriptEngine *engine = new QScriptEngine();
+    doc = engine->evaluate("(" + json + ")").toVariant().toMap();
+    delete engine;
+#endif
+
+    return doc;
+}
+
+void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
 {
     JourneyDetailResultList* result = new JourneyDetailResultList;
     QString id=object["id"].toString();
-    QJsonArray legs = object["legs"].toArray();
+    QVariantList legs = object["legs"].toList();
 
     QDateTime arrival  = QDateTime::fromString(object["arrival"  ].toString(), "yyyy-MM-ddTHH:mm");
     QDateTime departure  = QDateTime::fromString(object["departure"  ].toString(), "yyyy-MM-ddTHH:mm");
@@ -335,17 +377,17 @@ void ParserNinetwo::parseJourneyOption(QJsonObject object)
     minutes=minutes%60;
     result->setDuration(QString("%1:%2").arg(hours).arg(minutes, 2, 10, QChar('0')));
     result->setId(id);
-    for(int i=0; i<legs.size(); i++)
+    for(int i = 0; i < legs.count(); i++)
     {
-        QJsonObject leg=legs[i].toObject();
+        QVariantMap leg = legs[i].toMap();
         JourneyDetailResultItem* resultItem = new JourneyDetailResultItem;
 
 
-        QJsonArray stops = leg["stops"].toArray();
-        QJsonObject firstStop = stops[0].toObject();
-        QJsonObject lastStop = stops[stops.size()-1].toObject();
-        QJsonObject firstLocation = firstStop["location"].toObject();
-        QJsonObject lastLocation = lastStop["location"].toObject();
+        QVariantList stops = leg["stops"].toList();
+        QVariantMap firstStop = stops[0].toMap();
+        QVariantMap lastStop = stops[stops.size()-1].toMap();
+        QVariantMap firstLocation = firstStop["location"].toMap();
+        QVariantMap lastLocation = lastStop["location"].toMap();
 
 
         resultItem->setArrivalStation(lastLocation["name"].toString());
@@ -357,8 +399,8 @@ void ParserNinetwo::parseJourneyOption(QJsonObject object)
         resultItem->setDepartureDateTime(stopDeparture);
         resultItem->setArrivalDateTime(stopArrival);
 
-        QString type=leg["mode"].toObject()["type"].toString();
-        QString typeName=leg["mode"].toObject()["name"].toString();
+        QString type = leg["mode"].toMap()["type"].toString();
+        QString typeName = leg["mode"].toMap()["name"].toString();
 
         //Fallback if typeName is empty
         if (typeName.length() == 0) {

@@ -21,21 +21,11 @@
 #define PARSER_NINETWO_H
 
 #include "parser_abstract.h"
+
 #if defined(BUILD_FOR_QT5)
     #include <QUrlQuery>
 #endif
 #include <QNetworkReply>
-
-// use native json if possible
-#if defined(BUILD_FOR_QT5)
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
-#else
-//otherwise load the workaround
-#include "Qt4Json.h"
-#endif
-
 #include <QMap>
 
 /**
@@ -95,8 +85,10 @@ protected:
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
     QMap<QString, JourneyDetailResultList*> cachedResults;
+
 private:
-    void parseJourneyOption(QJsonObject object);
+    QVariantMap parseJson(const QByteArray &data) const;
+    void parseJourneyOption(const QVariantMap &object);
 };
 
 #endif // PARSER_NINETWO_H
