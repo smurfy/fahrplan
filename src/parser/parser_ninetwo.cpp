@@ -152,7 +152,7 @@ void ParserNinetwo::searchJourneyEarlier()
 void ParserNinetwo::getJourneyDetails(const QString &id)
 {
     if(cachedResults.contains(id))
-        emit journeyDetailsResult(cachedResults[id]);
+        emit journeyDetailsResult(cachedResults.value(id));
 }
 
 QStringList ParserNinetwo::getTrainRestrictions()
@@ -176,13 +176,14 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
         return;
     }
 
-    QVariantList tabs = doc["tabs"].toList();
-    QString currentStation(doc["location"].toMap()["name"].toString());
+    QVariantList tabs = doc.value("tabs").toList();
+    QString currentStation(doc.value("location").toMap().value("name").toString());
 
-    for (int i = 0; i < tabs.count(); i++) {
-        QVariantMap tab = tabs[i].toMap();
-        QString type=tab["id"].toString();
-        QVariantList departures = tab["departures"].toList();
+    QVariantList::const_iterator i;
+    for (i = tabs.constBegin(); i != tabs.constEnd(); ++i) {
+        QVariantMap tab = i->toMap();
+        QString type = tab.value("id").toString();
+        QVariantList departures = tab.value("departures").toList();
         switch(timetableRestrictions){
             case all:
             default:
@@ -197,25 +198,26 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
             break;
         }
 
-        for (int j = 0; j < departures.count(); j++) {
-            QVariantMap departure = departures[j].toMap();
+        QVariantList::const_iterator j;
+        for (j = departures.constBegin(); j != departures.constEnd(); ++j) {
+            QVariantMap departure = j->toMap();
             TimetableEntry entry;
             entry.currentStation=currentStation;
-            entry.destinationStation=departure["destinationName"].toString();
-            entry.time=QTime::fromString(departure["time"].toString(), "HH:mm");
-            QString via(departure["viaNames"].toString());
-            if(via!="" && !via.isNull())
-                via= tr("via ") + via;
-            QString remark(departure["remark"].toString());
-            if(departure["realtimeState"].toString()=="late"){//it is delayed
-                QString rtMessage(departure["realtimeText"].toString());
+            entry.destinationStation = departure.value("destinationName").toString();
+            entry.time = QTime::fromString(departure.value("time").toString(), "HH:mm");
+            QString via(departure.value("viaNames").toString());
+            if (via != "" && !via.isNull())
+                via = tr("via %1");
+            QString remark(departure.value("remark").toString());
+            if (departure.value("realtimeState").toString() == "late") { //it is delayed
+                QString rtMessage(departure.value("realtimeText").toString());
                 entry.miscInfo=QString(tr("(%1) %2 \n%3").arg(rtMessage, via, remark)).trimmed();
             }
             else
                 entry.miscInfo=QString("%1 %2").arg(via, remark).trimmed();
 
-            entry.platform=departure["platform"].toString();
-            entry.trainType = departure["mode"].toMap()["name"].toString();
+            entry.platform = departure.value("platform").toString();
+            entry.trainType = departure.value("mode").toMap().value("name").toString();
             result.append(entry);
         }
     }
@@ -235,21 +237,22 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
         return;
     }
 
-    QVariantList stations = doc["locations"].toList();
+    QVariantList stations = doc.value("locations").toList();
 
     StationsList result;
 
-    for (int i = 0; i < stations.count(); i++) {
-        QVariantMap station = stations[i].toMap();
+    QVariantList::const_iterator i;
+    for (i = stations.constBegin(); i != stations.constEnd(); ++i) {
+        QVariantMap station = i->toMap();
         Station s;
-        s.latitude = station["latLong"].toMap()["lat"].toDouble();
-        s.longitude = station["latLong"].toMap()["long"].toDouble();
-        //s.name=QString("[%1]%2").arg(station["type"].toString(), station["name"].toString());
-        s.name=station["name"].toString();
-        s.miscInfo=station["type"].toString();
-        if(QString("address") == station["type"].toString())
-            s.name = s.name + " " + station["houseNr"].toString();
-        s.id=station["id"].toString();
+        s.latitude = station.value("latLong").toMap().value("lat").toDouble();
+        s.longitude = station.value("latLong").toMap().value("long").toDouble();
+        //s.name=QString("[%1]%2").arg(station.value("type").toString(), station.value("name").toString());
+        s.name = station.value("name").toString();
+        s.miscInfo = station.value("type").toString();
+        if (station.value("type").toString() == "address")
+            s.name = s.name + " " + station.value("houseNr").toString();
+        s.id = station.value("id").toString();
         result.append(s);
     }
 
@@ -273,32 +276,36 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         return;
     }
 
-    QVariantList journeys = doc["journeys"].toList();
+    QVariantList journeys = doc.value("journeys").toList();
 
     JourneyResultList* result=new JourneyResultList;
 
     QDateTime arrival;
     QDateTime departure;
 
-    for (int i = 0; i < journeys.count(); i++) {
-        QVariantMap journey = journeys[i].toMap();
+    QVariantList::const_iterator i;
+    for (i = journeys.constBegin(); i != journeys.constEnd(); ++i) {
+        QVariantMap journey = i->toMap();
         parseJourneyOption(journey);
         JourneyResultItem* item = new JourneyResultItem;
-        arrival  = QDateTime::fromString(journey["arrival"  ].toString(), "yyyy-MM-ddTHH:mm");
-        departure= QDateTime::fromString(journey["departure"].toString(), "yyyy-MM-ddTHH:mm");
-        if(!i)
+        arrival = QDateTime::fromString(journey.value("arrival").toString(), "yyyy-MM-ddTHH:mm");
+        departure = QDateTime::fromString(journey.value("departure").toString(),
+                                          "yyyy-MM-ddTHH:mm");
+        if (i == journeys.constBegin())
             lastsearch.firstOption=departure;
 
         item->setArrivalTime(arrival.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
 
-        QVariantList legs = journey["legs"].toList();
+        QVariantList legs = journey.value("legs").toList();
         QStringList trains;
-        for (int i = 0; i < legs.count(); i++)
+
+        QVariantList::const_iterator j;
+        for (j = legs.constBegin(); j != legs.constEnd(); ++j)
         {
-            QVariantMap leg = legs[i].toMap();
-            QString typeName = leg["mode"].toMap()["name"].toString();
-            QString type = leg["mode"].toMap()["type"].toString();
+            QVariantMap leg = j->toMap();
+            QString typeName = leg.value("mode").toMap().value("name").toString();
+            QString type = leg.value("mode").toMap().value("type").toString();
 
             if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
                 if (typeName.length() > 0) {
@@ -310,10 +317,10 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         trains.removeDuplicates();
 
         item->setTrainType(trains.join(", ").trimmed());
-        item->setTransfers(QString::number((int) journey["numberOfChanges"].toDouble()));
+        item->setTransfers(QString::number((int) journey.value("numberOfChanges").toDouble()));
         int minutes = departure.secsTo(arrival)/60;
         item->setDuration(QString("%1:%2").arg(minutes/60).arg(minutes%60,2,10,QChar('0')));
-        item->setId(journey["id"].toString());
+        item->setId(journey.value("id").toString());
         result->appendItem(item);
 
         //Set result metadata based on first result
@@ -365,11 +372,13 @@ QVariantMap ParserNinetwo::parseJson(const QByteArray &json) const
 void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
 {
     JourneyDetailResultList* result = new JourneyDetailResultList;
-    QString id=object["id"].toString();
-    QVariantList legs = object["legs"].toList();
+    QString id = object.value("id").toString();
+    QVariantList legs = object.value("legs").toList();
 
-    QDateTime arrival  = QDateTime::fromString(object["arrival"  ].toString(), "yyyy-MM-ddTHH:mm");
-    QDateTime departure  = QDateTime::fromString(object["departure"  ].toString(), "yyyy-MM-ddTHH:mm");
+    QDateTime arrival = QDateTime::fromString(object.value("arrival").toString(),
+                                              "yyyy-MM-ddTHH:mm");
+    QDateTime departure = QDateTime::fromString(object.value("departure").toString(),
+                                                "yyyy-MM-ddTHH:mm");
     result->setArrivalDateTime(arrival);
     result->setDepartureDateTime(departure);
     int minutes=departure.secsTo(arrival)/60;
@@ -379,28 +388,30 @@ void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
     result->setId(id);
     for(int i = 0; i < legs.count(); i++)
     {
-        QVariantMap leg = legs[i].toMap();
+        QVariantMap leg = legs.at(i).toMap();
         JourneyDetailResultItem* resultItem = new JourneyDetailResultItem;
 
 
-        QVariantList stops = leg["stops"].toList();
+        QVariantList stops = leg.value("stops").toList();
         QVariantMap firstStop = stops[0].toMap();
         QVariantMap lastStop = stops[stops.size()-1].toMap();
-        QVariantMap firstLocation = firstStop["location"].toMap();
-        QVariantMap lastLocation = lastStop["location"].toMap();
+        QVariantMap firstLocation = firstStop.value("location").toMap();
+        QVariantMap lastLocation = lastStop.value("location").toMap();
 
 
-        resultItem->setArrivalStation(lastLocation["name"].toString());
-        resultItem->setDepartureStation(firstLocation["name"].toString());
+        resultItem->setArrivalStation(lastLocation.value("name").toString());
+        resultItem->setDepartureStation(firstLocation.value("name").toString());
 
-        QDateTime stopDeparture  = QDateTime::fromString(firstStop["departure"].toString(), "yyyy-MM-ddTHH:mm");
-        QDateTime stopArrival  = QDateTime::fromString(lastStop["arrival"].toString(), "yyyy-MM-ddTHH:mm");
+        QDateTime stopDeparture = QDateTime::fromString(firstStop.value("departure").toString(),
+                                                        "yyyy-MM-ddTHH:mm");
+        QDateTime stopArrival = QDateTime::fromString(lastStop.value("arrival").toString(),
+                                                      "yyyy-MM-ddTHH:mm");
 
         resultItem->setDepartureDateTime(stopDeparture);
         resultItem->setArrivalDateTime(stopArrival);
 
-        QString type = leg["mode"].toMap()["type"].toString();
-        QString typeName = leg["mode"].toMap()["name"].toString();
+        QString type = leg.value("mode").toMap().value("type").toString();
+        QString typeName = leg.value("mode").toMap().value("name").toString();
 
         //Fallback if typeName is empty
         if (typeName.length() == 0) {
@@ -408,14 +419,15 @@ void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
         }
 
         if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
-            if (firstStop["platform"].toString().length() > 0) {
-                resultItem->setDepartureInfo(tr("Pl. %1").arg(firstStop["platform"].toString()));
+            if (firstStop.value("platform").toString().length() > 0) {
+                resultItem->setDepartureInfo(tr("Pl. %1")
+                                             .arg(firstStop.value("platform").toString()));
             }
-            if (lastStop["platform"].toString() > 0) {
-                resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop["platform"].toString()));
+            if (lastStop.value("platform").toString() > 0) {
+                resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop.value("platform").toString()));
             }
             resultItem->setTrain(typeName);
-            resultItem->setDirection(leg["destination"].toString());
+            resultItem->setDirection(leg.value("destination").toString());
         }
         else{
             resultItem->setTrain(type);
