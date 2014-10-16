@@ -713,6 +713,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
                     jdrItem->setArrivalInfo(platformNameList[counterNext]);
                     jdrItem->setArrivalDateTime(arrivalTimesList[arrivalCounter]);
                     jdrItem->setTrain(meansOfTransportNameList[meansOfTransportCounter]);
+                    jdrItem->setDirection(destinationList[meansOfTransportCounter]);
                     jdrItem->setInternalData1("NO setInternalData1");
                     jdrItem->setInternalData2("NO setInternalData2");
 
