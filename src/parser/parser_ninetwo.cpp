@@ -367,12 +367,13 @@ void ParserNinetwo::parseJourneyOption(QJsonObject object)
 
         if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
             if (firstStop["platform"].toString().length() > 0) {
-                resultItem->setDepartureInfo(tr("Pl.") + " " + firstStop["platform"].toString());
+                resultItem->setDepartureInfo(tr("Pl. %1").arg(firstStop["platform"].toString()));
             }
             if (lastStop["platform"].toString() > 0) {
-                resultItem->setArrivalInfo(tr("Pl.") + " " + lastStop["platform"].toString());
+                resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop["platform"].toString()));
             }
-            resultItem->setTrain(tr("%1 to %2").arg(typeName).arg(leg["destination"].toString()));
+            resultItem->setTrain(typeName);
+            resultItem->setDirection(leg["destination"].toString());
         }
         else{
             resultItem->setTrain(type);
