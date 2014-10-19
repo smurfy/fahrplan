@@ -551,7 +551,7 @@ inline bool ParserHafasXml::parseXml(QDomDocument &doc, const QByteArray &xml)
     QString error;
     if (!doc.setContent(xml, &error)) {
         emit errorOccured(tr("Error parsing reponse from the server: %1").arg(error));
-        return true;
+        return false;
     }
 
     const QDomNodeList errors = doc.elementsByTagName("Err");
