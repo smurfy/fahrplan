@@ -560,7 +560,7 @@ inline bool ParserHafasXml::parseXml(QDomDocument &doc, const QByteArray &xml)
         for (int i = 0; i < errors.count(); ++i)
             errorStrings << errors.at(i).toElement().attribute("text").trimmed();
 
-        emit errorOccured(errorStrings.join(" "));
+        emit errorOccured(tr("%1 replied: \"%2\"").arg(name(), errorStrings.join(" ")));
         return false;
     }
 
