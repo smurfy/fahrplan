@@ -22,8 +22,6 @@
 
 #include <QObject>
 #include <QtNetwork>
-#include <QtXmlPatterns/QXmlQuery>
-#include <QXmlResultItems>
 #include "parser_hafasbinary.h"
 
 /*

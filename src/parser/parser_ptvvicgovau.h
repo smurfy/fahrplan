@@ -21,7 +21,6 @@
 #define PARSER_PTVVICGOVAU_H
 
 #include <QObject>
-#include <QXmlResultItems>
 #include "parser_efa.h"
 
 class ParserPTVVicGovAu : public ParserEFA

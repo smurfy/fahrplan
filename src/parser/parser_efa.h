@@ -22,7 +22,6 @@
 
 #include <QDomDocument>
 #include <QObject>
-#include <QXmlResultItems>
 #include "parser_abstract.h"
 
 class ParserEFA : public ParserAbstract

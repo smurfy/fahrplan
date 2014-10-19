@@ -21,7 +21,6 @@
 #define PARSER_DUBAI_EFA_H
 
 #include <QObject>
-#include <QXmlResultItems>
 #include "parser_efa.h"
 
 class ParserDubaiEFA : public ParserEFA
