@@ -1,36 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>data/fahrplan2.svg</file>
-        <file>src/gui/symbian/main.qml</file>
-        <file>src/gui/symbian/components/SubTitleButton.qml</file>
-        <file>src/gui/symbian/components/TwoLineLabel.qml</file>
-        <file>src/gui/symbian/components/SwitchLabel.qml</file>
-        <file>src/gui/symbian/components/SelectLabel.qml</file>
-        <file>src/gui/symbian/components/BusyLabel.qml</file>
-        <file>src/gui/symbian/delegates/StationDelegate.qml</file>
-        <file>src/gui/symbian/delegates/JourneyDelegate.qml</file>
-        <file>src/gui/symbian/delegates/JourneyDetailsDelegate.qml</file>
-        <file>src/gui/symbian/delegates/TimetableEntryDelegate.qml</file>
-        <file>src/gui/symbian/pages/AboutPage.qml</file>
-        <file>src/gui/symbian/pages/JourneyDetailsResultsPage.qml</file>
-        <file>src/gui/symbian/pages/JourneyResultsPage.qml</file>
-        <file>src/gui/symbian/pages/MainPage.qml</file>
-        <file>src/gui/symbian/pages/SettingsPage.qml</file>
-        <file>src/gui/symbian/pages/StationSelectPage.qml</file>
-        <file>src/gui/symbian/pages/StationsListPage.qml</file>
-        <file>src/gui/symbian/pages/TimetablePage.qml</file>
-        <file>src/gui/symbian/icon/icon-m-blank.png</file>
-        <file>src/gui/symbian/icon/icon-m-content-calendar.svg</file>
-        <file>src/gui/symbian/icon/icon-m-content-calendar-inverse.svg</file>
-        <file>src/gui/symbian/icon/icon-m-toolbar-clock.svg</file>
-        <file>src/gui/symbian/icon/icon-m-toolbar-clock-inverse.svg</file>
-        <file>src/gui/symbian/icon/icon-m-toolbar-close.svg</file>
-        <file>src/gui/symbian/icon/icon-m-toolbar-close-inverse.svg</file>
-        <file>src/gui/symbian/icon/icon-m-toolbar-train.svg</file>
-        <file>src/gui/symbian/icon/icon-m-toolbar-train-inverse.svg</file>
-        <file>src/gui/symbian/icon/icon-s-calendar-location-picker.svg</file>
-        <file>src/gui/symbian/icon/icon-s-calendar-location-picker-inverse.svg</file>
-        <file>src/gui/symbian/js/style.js</file>
         <file>src/gui/about.js</file>
+        <file>src/gui/bb10/main.qml</file>
+        <file>src/gui/bb10/components/Title.qml</file>
+        <file>src/gui/bb10/pages/JourneyPage.qml</file>
+        <file>src/gui/bb10/pages/TimetablePage.qml</file>
+        <file>src/gui/bb10/icons/journey.png</file>
+        <file>src/gui/bb10/icons/timetable.png</file>
     </qresource>
 </RCC>

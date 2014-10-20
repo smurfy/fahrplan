@@ -38,7 +38,7 @@ class Fahrplan : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(FahrplanParserThread *parser READ parser)
+    Q_PROPERTY(FahrplanParserThread *parser READ parser NOTIFY parserChanged)
     Q_PROPERTY(QString parserName READ parserName NOTIFY parserChanged)
     Q_PROPERTY(QString version READ getVersion CONSTANT)
 

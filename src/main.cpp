@@ -19,7 +19,7 @@
 
 #include <QtCore/QTranslator>
 
-#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
+#if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
     #include <QtDeclarative>
 #elif defined(BUILD_FOR_UBUNTU)
     #include <QApplication>
@@ -29,6 +29,13 @@
     #include <sailfishapp.h>
     #include <QtQuick>
     #include <QtQml>
+#elif defined(BUILD_FOR_BLACKBERRY)
+#   include <bb/cascades/Application>
+#   include <bb/cascades/QmlDocument>
+#   include <bb/cascades/AbstractPane>
+#   include <bb/system/SystemToast>
+#   include <bb/platform/PlatformInfo>
+using namespace bb::cascades;
 #else
     #include "gui/desktop-test/mainwindow.h"
     #if defined(BUILD_FOR_QT5)
@@ -49,7 +56,6 @@
 #if defined(BUILD_FOR_BLACKBERRY)
     #include "blackberrypositionsource.h"
     #include <bps/geolocation.h>
-    #include <QGLWidget>
 #endif
 
 #include "fahrplan.h"
@@ -68,6 +74,8 @@ int main(int argc, char *argv[])
 {
     #if defined(BUILD_FOR_SAILFISHOS)
         QGuiApplication* app = SailfishApp::application(argc, argv);
+    #elif defined(BUILD_FOR_BLACKBERRY)
+        QScopedPointer<Application> app(new Application(argc, argv));
     #elif defined(HAVE_DECLARATIVE_CACHE)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #else
@@ -117,7 +125,7 @@ int main(int argc, char *argv[])
             QDeclarativeView* view = MDeclarativeCache::qDeclarativeView();
         #elif defined(BUILD_FOR_QT5)
             QQuickView *view = new QQuickView();
-        #else
+        #elif !defined(BUILD_FOR_BLACKBERRY)
             QDeclarativeView* view = new QDeclarativeView();
         #endif
 
@@ -151,6 +159,8 @@ int main(int argc, char *argv[])
         #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 
+            // Not exported to QML for some reason
+            qmlRegisterType<bb::system::SystemToast>("bb.system", 1, 3, "SystemToast");
             // QML wrapper around Qt Mobility Subset
             qmlRegisterType<QtMobilitySubset::BlackBerryPositionSource>("QtMobility.location", 1, 1, "PositionSource");
             qmlRegisterUncreatableType<QtMobilitySubset::BlackBerryPosition>("QtMobility.location", 1, 1, "Position", "Cant't create Position type");
@@ -167,18 +177,16 @@ int main(int argc, char *argv[])
 
             delete settings;
 
-            // Improves touch handling
-            QApplication::setStartDragDistance(42);
+            QSharedPointer<QmlDocument> qml(QmlDocument::create(QUrl("qrc:/src/gui/bb10/main.qml")));
 
-            QGLWidget *gl = new QGLWidget();
-            view->setViewport(gl);
-            view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-            view->setSource(QUrl("qrc:/src/gui/symbian/main.qml"));
+            const QStringList v = bb::platform::PlatformInfo().osVersion().split(".");
+            const int ver = v.count() >= 3 ? (v.at(0).toInt() << 16)
+                                             + (v.at(1).toInt() << 8)
+                                             + v.at(2).toInt()
+                                           : 0;
+            qml->documentContext()->setContextProperty("osVersion", ver);
 
-            // Hide Symbian-style status bar on BlackBerry
-            view->rootObject()->setProperty("showStatusBar", false);
-
-            view->showFullScreen();
+            app->setScene(qml->createRootObject<AbstractPane>());
         #endif
     #else
         qDebug()<<"Desktop";
