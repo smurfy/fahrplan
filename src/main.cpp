@@ -55,6 +55,7 @@ using namespace bb::cascades;
 
 #if defined(BUILD_FOR_BLACKBERRY)
     #include "bb10/languagechangelistener.h"
+    #include "bb10/repeater.h"
     #include "blackberrypositionsource.h"
     #include <bps/geolocation.h>
 #endif
@@ -164,6 +165,7 @@ int main(int argc, char *argv[])
         #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 
+            qmlRegisterType<Repeater>("Fahrplan", 1, 0, "Repeater");
             // Not exported to QML for some reason
             qmlRegisterType<bb::system::SystemToast>("bb.system", 1, 3, "SystemToast");
             // QML wrapper around Qt Mobility Subset

@@ -343,6 +343,11 @@ QStringList Fahrplan::getParserList()
     return m_parser_manager->getParserList();
 }
 
+int Fahrplan::parserIndex() const
+{
+    return m_parser_manager->parser();
+}
+
 void Fahrplan::setParser(int index)
 {
     settings->setValue("currentBackend", index);

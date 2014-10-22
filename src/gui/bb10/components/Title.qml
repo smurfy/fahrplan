@@ -18,6 +18,8 @@
 ****************************************************************************/
 
 import bb.cascades 1.3
+import QtQuick 1.0
+import Fahrplan 1.0
 
 TitleBar {
     kind: TitleBarKind.FreeForm
@@ -31,6 +33,31 @@ TitleBar {
                 verticalAlignment: VerticalAlignment.Center
                 textStyle {
                     base: SystemDefaults.TextStyles.TitleText
+                }
+            }
+        }
+        expandableArea {
+            content: ScrollView {
+                Container {
+                    RadioGroup {
+                        id: services
+
+                        selectedIndex: fahrplan.parserIndex
+
+                        onSelectedOptionChanged: {
+                            tbp.expandableArea.expanded = false;
+                            fahrplan.setParser(selectedIndex);
+                        }
+
+                        attachedObjects: [
+                            Repeater {
+                                model: fahrplan.getParserList()
+                                delegate: Option {
+                                    text: modelData
+                                }
+                            }
+                        ]
+                    }
                 }
             }
         }
