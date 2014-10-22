@@ -255,8 +255,10 @@ blackberry {
 
     HEADERS += \
         src/bb10completion.h \
+        src/bb10/languagechangelistener.h \
         src/blackberrypositionsource.h
     SOURCES += \
+        src/bb10/languagechangelistener.cpp \
         src/blackberrypositionsource.cpp
 
     LIBS += -lbbsystem -lbbplatform -lQtLocationSubset -lbbpim
