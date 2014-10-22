@@ -19,6 +19,7 @@
 
 import bb.cascades 1.3
 import bb.system 1.3
+import QtQuick 1.0
 import Fahrplan 1.0
 
 import "pages"
@@ -34,7 +35,9 @@ TabbedPane {
         title: qsTr("Journey")
         imageSource: Qt.resolvedUrl("icons/journey.png")
 
-        JourneyPage {}
+        NavigationPane {
+            JourneyPage {}
+        }
     }
 
     Tab {
@@ -44,10 +47,32 @@ TabbedPane {
         imageSource: Qt.resolvedUrl("icons/timetable.png")
         enabled: fahrplan.parser.supportsTimeTable()
 
-        TimetablePage {}
+        NavigationPane {
+            TimetablePage {}
+        }
+    }
+
+    Menu.definition: MenuDefinition {
+        id: menuDefinition
+
+        actions: [
+            ActionItem {
+                title: qsTr("About") + Retranslate.onLocaleOrLanguageChanged
+                imageSource: Qt.resolvedUrl("icons/ic_info.png");
+
+                onTriggered: {
+                    Application.menuEnabled = false;
+                    activePane.push(aboutPageDefinition.createObject());
+                }
+            }
+        ]
     }
 
     attachedObjects: [
+        ComponentDefinition {
+            id: aboutPageDefinition
+            AboutPage {}
+        },
         FahrplanBackend {
             id: fahrplan
 
@@ -66,6 +91,15 @@ TabbedPane {
         },
         SystemToast {
             id: toast
+        },
+        Connections {
+            target: appWindow.activePane
+
+            onPopTransitionEnded: {
+                // Destroy the popped Page once the back transition has ended.
+                page.destroy();
+                Application.menuEnabled = true;
+            }
         }
     ]
 }
