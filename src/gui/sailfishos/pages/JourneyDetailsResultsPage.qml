@@ -128,7 +128,7 @@ Page {
                 indicator.visible = true;
                 journeyStations.title = qsTr("Searching...");
                 lbljourneyDate.text = "";
-                lbljourneyDuration = "";
+                lbljourneyDuration.text = "";
                 break;
         }
     }
