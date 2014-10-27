@@ -20,9 +20,9 @@
 #ifndef PARSER_XMLOEBBAT_H
 #define PARSER_XMLOEBBAT_H
 
-#include "parser_hafasxml.h"
+#include "parser_hafasbinary.h"
 
-class ParserXmlOebbAt : public ParserHafasXml
+class ParserXmlOebbAt: public ParserHafasBinary
 {
     Q_OBJECT
 
