@@ -21,7 +21,6 @@
 #define PARSER_LONDON_EFA_H
 
 #include <QObject>
-#include <QXmlResultItems>
 #include "parser_efa.h"
 
 class ParserLondonEFA : public ParserEFA

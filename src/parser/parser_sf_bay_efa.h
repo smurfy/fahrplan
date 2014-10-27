@@ -21,7 +21,6 @@
 #define PARSER_SF_BAY_EFA_H
 
 #include <QObject>
-#include <QXmlResultItems>
 #include "parser_efa.h"
 
 class ParserSFBayEFA : public ParserEFA

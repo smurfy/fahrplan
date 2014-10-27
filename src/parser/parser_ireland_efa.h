@@ -21,7 +21,6 @@
 #define PARSER_IRELAND_EFA_H
 
 #include <QObject>
-#include <QXmlResultItems>
 #include "parser_efa.h"
 
 class ParserIrelandEFA : public ParserEFA

@@ -21,7 +21,6 @@
 #define PARSER_SYDNEY_EFA_H
 
 #include <QObject>
-#include <QXmlResultItems>
 #include "parser_efa.h"
 
 class ParserSydneyEFA : public ParserEFA
