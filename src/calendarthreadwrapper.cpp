@@ -37,11 +37,14 @@ QTM_USE_NAMESPACE
 QString formatStation(const QDateTime dateTime, const QString &stationName, const QString &info = QString())
 {
     QString station;
-    if (info.isEmpty())
+    if (info.isEmpty()) {
         station = stationName;
-    else
+    } else {
+        //: STATION / PLATFORM
         station = CalendarThreadWrapper::tr("%1 / %2", "STATION / PLATFORM").arg(stationName, info);
+    }
 
+    //: DATE TIME   STATION
     return CalendarThreadWrapper::tr("%1 %2   %3", "DATE TIME   STATION").arg(
                // TODO: Don't force QLocale::ShortFormat for date, but make it configurable.
                dateTime.toString(QLocale().dateFormat(QLocale::ShortFormat)),

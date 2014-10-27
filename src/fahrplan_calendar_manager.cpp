@@ -181,6 +181,8 @@ void FahrplanCalendarManager::getCalendarsList()
             account = tr("Local Calendar");
         else
             account = accservice.account(folder.accountId()).displayName();
+
+        //: Calendar name (Account name)
         m_calendars << CalendarInfo(tr("%1 (%2)", "Calendar name (Account name)")
                                     .arg(folder.name()).arg(account)
                                     , folder.accountId(), folder.id());

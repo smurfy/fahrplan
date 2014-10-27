@@ -317,6 +317,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
     journeyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
     journeyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
     journeyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
+    //: DATE, TIME
     journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.dateTime.date().toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.dateTime.time().toString(Qt::DefaultLocaleShortDate)));
 
     m_earliestArrival = m_latestResultDeparture = QDateTime();
@@ -351,6 +352,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                     if (i == 0) {
                         const QDate date = QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-MM-dd"));
                         journeyResultList->setDepartureStation(getAttribute(originNode, "name"));
+                        //: DATE, TIME
                         journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(date.toString(Qt::DefaultLocaleShortDate)).arg(time.toString(Qt::DefaultLocaleShortDate)));
                     }
                 }
@@ -471,6 +473,7 @@ void ParserXmlVasttrafikSe::searchJourneyLater()
         journeyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
         journeyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
         journeyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
+        //: DATE, TIME
         journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.dateTime.date().toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.dateTime.time().toString(Qt::DefaultLocaleShortDate)));
         emit journeyResult(journeyResultList);
     }
@@ -485,6 +488,7 @@ void ParserXmlVasttrafikSe::searchJourneyEarlier()
         journeyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
         journeyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
         journeyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
+        //: DATE, TIME
         journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.dateTime.date().toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.dateTime.time().toString(Qt::DefaultLocaleShortDate)));
         emit journeyResult(journeyResultList);
     }

@@ -182,8 +182,9 @@ Item {
                 text: {
                     var result;
                     if (model.trainDirection.length > 0) {
-                        result = qsTr("%1 to %2").arg("<b>" + model.trainName + "</b>")
-                                                 .arg(model.trainDirection);
+                        //: As in "%1 in direction %2"
+                        result = qsTr("%1 to %2", "Direction").arg("<b>" + model.trainName + "</b>")
+                                                              .arg(model.trainDirection);
                     } else {
                         result = "<b>" + model.trainName + "</b>";
                     }

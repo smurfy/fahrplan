@@ -887,6 +887,7 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(const QDomE
                 distance = transport.attribute("length").trimmed().toInt();
 
             QString type = transport.tagName() == "Walk" ? tr("Walk") : tr("Transfer");
+            //: %1 can be "Walk" or "Transfer"
             item->setTrain(tr("%1 for %2 min").arg(type, duration));
             if (distance > 0)
                 item->setInfo(tr("Distance %n meter(s)", "", distance));
@@ -906,8 +907,10 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(const QDomE
                 type = tr("Take taxi");
             else if (t == "CAR")
                 type = tr("Drive car");
-            if (!type.isEmpty())
+            if (!type.isEmpty()) {
+                //: %1 can be "Walk", "Use bike", "Take taxi", or "Drive car"
                 item->setTrain(tr("%1 for %2 min").arg(type, duration));
+            }
         }
 
         stop = section.firstChildElement("Arrival").firstChildElement("BasicStop");
