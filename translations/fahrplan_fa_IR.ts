@@ -26,7 +26,7 @@
         <source>%1 %2   %3</source>
         <comment>DATE TIME   STATION</comment>
         <extracomment>DATE TIME STATION</extracomment>
-        <translation>%1 %2 %3</translation>
+        <translation>%1 %2   %3</translation>
     </message>
     <message>
         <location filename="../src/calendarthreadwrapper.cpp" line="74"/>
