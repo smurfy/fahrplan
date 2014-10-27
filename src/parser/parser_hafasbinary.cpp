@@ -294,7 +294,6 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             qint16 connectionDetailsOffset;
             hafasData >> connectionDetailsOffset;
 
-            /*
             hafasData.device()->seek(connectionDetailsPtr + connectionDetailsOffset);
             qint16 realtimeStatus;
             qint16 delay;
@@ -302,7 +301,6 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             hafasData >> delay;
 
             qDebug()<<"RT"<<realtimeStatus<<delay;
-            */
 
             QString connectionId = "TMPC" + QString::number(iConnection);
             /*
@@ -493,7 +491,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 item->setId(connectionId);
                 item->setTransfers(QString::number(numChanges));
                 item->setDuration(formatDuration(durationTime));
-                item->setMiscInfo("");
+
+                if (realtimeStatus != 2) {
+                    item->setMiscInfo("");
+                } else {
+                    item->setMiscInfo(tr("<span style=\"color:#b30;\">train canceled</span>"));
+                }
                 item->setTrainType(lineNames.join(", ").trimmed());
                 const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
                 item->setDepartureTime(inlineResults->getItem(0)->departureDateTime()
