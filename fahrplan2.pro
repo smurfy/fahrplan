@@ -58,6 +58,8 @@ TRANSLATIONS += \
     translations/fahrplan_ar.ts \
     translations/fahrplan_de.ts \
     translations/fahrplan_en.ts \
+    translations/fahrplan_fa_IR.ts \
+    translations/fahrplan_nl_NL.ts \
     translations/fahrplan_ro_RO.ts \
     translations/fahrplan_ru.ts \
     translations/fahrplan_uk.ts
