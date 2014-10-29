@@ -2,11 +2,11 @@
     <qresource prefix="/">
         <file>data/fahrplan2_150.png</file>
         <file>src/gui/about.js</file>
+        <file>src/gui/bb10/js/style.js</file>
         <file>src/gui/bb10/main.qml</file>
         <file>src/gui/bb10/components/Title.qml</file>
         <file>src/gui/bb10/pages/AboutPage.qml</file>
-        <file>src/gui/bb10/pages/JourneyPage.qml</file>
-        <file>src/gui/bb10/pages/TimetablePage.qml</file>
+        <file>src/gui/bb10/pages/MainPage.qml</file>
         <file>src/gui/bb10/icons/ic_info.png</file>
         <file>src/gui/bb10/icons/journey.png</file>
         <file>src/gui/bb10/icons/timetable.png</file>

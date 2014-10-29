@@ -185,14 +185,6 @@ int main(int argc, char *argv[])
             delete settings;
 
             QSharedPointer<QmlDocument> qml(QmlDocument::create(QUrl("qrc:/src/gui/bb10/main.qml")));
-
-            const QStringList v = bb::platform::PlatformInfo().osVersion().split(".");
-            const int ver = v.count() >= 3 ? (v.at(0).toInt() << 16)
-                                             + (v.at(1).toInt() << 8)
-                                             + v.at(2).toInt()
-                                           : 0;
-            qml->documentContext()->setContextProperty("osVersion", ver);
-
             app->setScene(qml->createRootObject<AbstractPane>());
         #endif
     #else

@@ -20,22 +20,24 @@
 import bb.cascades 1.3
 import Fahrplan 1.0
 
+import "../js/style.js" as UI
 import "../../about.js" as About
 
 Page {
     id: root
 
-    property int padding: 20
+    actionBarVisibility: ChromeVisibility.Overlay
+    actionBarAutoHideBehavior: ActionBarAutoHideBehavior.HideOnScroll
 
     titleBar: TitleBar {
         title: qsTr("About Fahrplan") + Retranslate.onLocaleOrLanguageChanged
     }
     ScrollView {
         Container {
-            topPadding: padding
-            leftPadding: padding
-            bottomPadding: padding
-            rightPadding: padding
+            topPadding: ui.sdu(UI.paddingTop)
+            leftPadding: ui.sdu(UI.paddingLeft)
+            bottomPadding: layoutHandler.bottomOverlayHeight
+            rightPadding: ui.sdu(UI.paddingRight)
 
             Container {
                 layout: StackLayout { orientation: LayoutOrientation.LeftToRight }
@@ -51,7 +53,8 @@ Page {
                 }
 
                 Container {
-                    leftPadding: padding
+                    leftPadding: ui.sdu(UI.paddingLeft)
+
                     Label {
                         text: "Fahrplan"
                         topMargin: 0
@@ -82,4 +85,10 @@ Page {
             }
         }
     }
+
+    attachedObjects: [
+        PageLayoutUpdateHandler {
+            id: layoutHandler
+        }
+    ]
 }
