@@ -19,8 +19,10 @@
 
 import bb.cascades 1.3
 import QtQuick 1.0 as QtQuick
+import Fahrplan 1.0
 
 import "../components"
+import "../js/style.js" as UI
 
 Page {
     actionBarVisibility: ChromeVisibility.Overlay
@@ -50,8 +52,80 @@ Page {
             Container {
                 bottomPadding: layoutHandler.bottomOverlayHeight
 
-                Label {
-                    text: "TODO"
+                Container {
+                    id: journeyControlsContainer
+
+                    visible: modeSelector.selectedIndex == 0
+
+                    StationSelect {
+                        title: qsTr("Departure Station") + Retranslate.onLocaleOrLanguageChanged
+                        text: fahrplan.departureStationName
+                        stationType: FahrplanBackend.DepartureStation
+                    }
+                    StationSelect {
+                        title: qsTr("Via Station") + Retranslate.onLocaleOrLanguageChanged
+                        text: fahrplan.viaStationName
+                        stationType: FahrplanBackend.ViaStation
+                        visible: fahrplan.parser.supportsVia()
+                    }
+                    StationSelect {
+                        title: qsTr("Arrival Station") + Retranslate.onLocaleOrLanguageChanged
+                        text: fahrplan.arrivalStationName
+                        stationType: FahrplanBackend.ArrivalStation
+                    }
+                }
+                Container {
+                    id: timetableControlsContainer
+
+                    visible: modeSelector.selectedIndex == 1
+
+                    StationSelect {
+                        id: currentStation
+
+                        title: qsTr("Station") + Retranslate.onLocaleOrLanguageChanged
+                        text: fahrplan.currentStationName
+                        stationType: FahrplanBackend.CurrentStation
+
+                        contextActions: [
+                            ActionSet {
+                                title: parent.title
+
+                                ActionItem {
+                                    title: qsTr("Search") + Retranslate.onLocaleOrLanguageChanged
+                                    imageSource: Qt.resolvedUrl("../icons/ic_search.png")
+
+                                    onTriggered: {
+                                        currentStation.pushStationSelectPage();
+                                    }
+                                }
+                                ActionItem {
+                                    title: qsTr("Swap with Direction")
+                                           + Retranslate.onLocaleOrLanguageChanged
+                                    imageSource: Qt.resolvedUrl("../icons/swap.png")
+                                    enabled: fahrplan.parser.supportsTimeTableDirection()
+
+                                    onTriggered: {
+                                        fahrplan.swapStations(FahrplanBackend.CurrentStation,
+                                                              FahrplanBackend.DirectionStation);
+                                    }
+                                }
+                                ActionItem {
+                                    title: qsTr("Clear") + Retranslate.onLocaleOrLanguageChanged
+                                    imageSource: Qt.resolvedUrl("../icons/ic_clear.png")
+
+                                    onTriggered: {
+                                        fahrplan.resetStation(FahrplanBackend.CurrentStation);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                    StationSelect {
+                        title: qsTr("Direction") + Retranslate.onLocaleOrLanguageChanged
+                        text: fahrplan.directionStationName
+                        stationType: FahrplanBackend.DirectionStation
+                        visible: fahrplan.parser.supportsTimeTableDirection()
+                    }
                 }
             }
         }
@@ -70,6 +144,11 @@ Page {
     attachedObjects: [
         PageLayoutUpdateHandler {
             id: layoutHandler
+        },
+        ComponentDefinition {
+            id: stationSelectPageDefinition
+
+            StationSelectPage {}
         },
         QtQuick.Connections {
             target: fahrplan

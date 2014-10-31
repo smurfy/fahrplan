@@ -5,10 +5,18 @@
         <file>src/gui/bb10/js/style.js</file>
         <file>src/gui/bb10/main.qml</file>
         <file>src/gui/bb10/components/Title.qml</file>
+        <file>src/gui/bb10/components/StationSelect.qml</file>
+        <file>src/gui/bb10/delegates/StationDelegate.qml</file>
         <file>src/gui/bb10/pages/AboutPage.qml</file>
         <file>src/gui/bb10/pages/MainPage.qml</file>
+        <file>src/gui/bb10/pages/StationSelectPage.qml</file>
         <file>src/gui/bb10/icons/ic_info.png</file>
+        <file>src/gui/bb10/icons/ic_location.png</file>
+        <file>src/gui/bb10/icons/ic_next.png</file>
+        <file>src/gui/bb10/icons/ic_search.png</file>
         <file>src/gui/bb10/icons/journey.png</file>
+        <file>src/gui/bb10/icons/star_full.png</file>
+        <file>src/gui/bb10/icons/star_empty.png</file>
         <file>src/gui/bb10/icons/timetable.png</file>
     </qresource>
 </RCC>

@@ -270,6 +270,7 @@ blackberry {
         src/gui/about.js \
         src/gui/bb10/*.qml \
         src/gui/bb10/components/*.qml \
+        src/gui/bb10/delegates/*.qml \
         src/gui/bb10/pages/*.qml
 
     DEFINES += BUILD_FOR_BLACKBERRY

@@ -14,3 +14,6 @@ var spacingTop = 1;
 var spacingLeft = 1;
 var spacingRight = 1;
 var spacingBottom = 1;
+
+// Runtime state values
+var stationSelectPageSelectedTab = 0;
