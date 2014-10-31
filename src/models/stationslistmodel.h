@@ -25,6 +25,10 @@
 
 #include <QAbstractListModel>
 
+#ifdef Q_OS_BLACKBERRY
+namespace bb { namespace cascades { class DataModel; } }
+#endif
+
 class StationsListModel: public QAbstractListModel
 {
     Q_OBJECT
@@ -70,6 +74,14 @@ protected:
 
 private:
     StationsList m_list;
+
+#ifdef Q_OS_BLACKBERRY
+    Q_PROPERTY(bb::cascades::DataModel *dataModel READ dataModel CONSTANT)
+public:
+    bb::cascades::DataModel *dataModel() const;
+private:
+    bb::cascades::DataModel *m_dataModel;
+#endif
 };
 
 #endif // STATIONSLISTMODEL_H

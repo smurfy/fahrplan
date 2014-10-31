@@ -18,12 +18,22 @@
 ****************************************************************************/
 
 #include "stationslistmodel.h"
+#include "favorites.h"
+
+#ifdef Q_OS_BLACKBERRY
+#   include <bb/cascades/QListDataModel>
+#endif
 
 StationsListModel::StationsListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 #if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     setRoleNames(roleNames());
+#endif
+
+#ifdef Q_OS_BLACKBERRY
+    m_dataModel = new bb::cascades::QMapListDataModel;
+    m_dataModel->setParent(this);
 #endif
 }
 
@@ -84,6 +94,28 @@ void StationsListModel::setStationsList(const StationsList &list)
     beginResetModel();
     m_list = list;
     endResetModel();
+
+#ifdef Q_OS_BLACKBERRY
+    bb::cascades::QMapListDataModel *model
+            = dynamic_cast<bb::cascades::QMapListDataModel *>(m_dataModel);
+
+    QList<QVariantMap> listMap;
+    foreach (const Station &station, list) {
+        QVariantMap map;
+        map.insert("id", station.id);
+        map.insert("name", station.name);
+        map.insert("type", station.type);
+        map.insert("isFavorite", qobject_cast<Fahrplan *>(QObject::parent())->favorites()
+                                                                            ->isFavorite(station));
+        map.insert("miscInfo", station.miscInfo);
+        map.insert("latitude", station.latitude);
+        map.insert("longitude", station.longitude);
+        listMap << map;
+    }
+    model->clear();
+    model->append(listMap);
+#endif
+
     emit countChanged();
 }
 
@@ -92,6 +124,11 @@ void StationsListModel::clear()
     beginResetModel();
     m_list.clear();
     endResetModel();
+
+#ifdef Q_OS_BLACKBERRY
+    dynamic_cast<bb::cascades::QMapListDataModel *>(m_dataModel)->clear();
+#endif
+
     emit countChanged();
 }
 
@@ -132,5 +169,16 @@ void StationsListModel::removeAt(int index)
     m_list.removeAt(index);
     endRemoveRows();
 
+#ifdef Q_OS_BLACKBERRY
+    dynamic_cast<bb::cascades::QMapListDataModel *>(m_dataModel)->removeAt(index);
+#endif
+
     emit countChanged();
 }
+
+#ifdef Q_OS_BLACKBERRY
+bb::cascades::DataModel *StationsListModel::dataModel() const
+{
+    return m_dataModel;
+}
+#endif

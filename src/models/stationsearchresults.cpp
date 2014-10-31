@@ -22,6 +22,10 @@
 #include "fahrplan.h"
 #include "favorites.h"
 
+#ifdef Q_OS_BLACKBERRY
+#   include <bb/cascades/QListDataModel>
+#endif
+
 StationSearchResults::StationSearchResults(Fahrplan *parent)
     : StationsListModel(parent)
 {
@@ -50,6 +54,14 @@ void StationSearchResults::addToFavorites(int index)
     qobject_cast<Fahrplan *>(QObject::parent())->favorites()->addToFavorites(at(index));
     QModelIndex i = this->index(index, 0);
     emit dataChanged(i, i);
+
+#ifdef Q_OS_BLACKBERRY
+    bb::cascades::QMapListDataModel *model
+            = dynamic_cast<bb::cascades::QMapListDataModel *>(dataModel());
+    QVariantMap map = model->value(index);
+    map["isFavorite"] = true;
+    model->replace(index, map);
+#endif
 }
 
 void StationSearchResults::removeFromFavorites(int index)
@@ -60,9 +72,27 @@ void StationSearchResults::removeFromFavorites(int index)
     qobject_cast<Fahrplan *>(QObject::parent())->favorites()->removeFromFavorites(at(index));
     QModelIndex i = this->index(index, 0);
     emit dataChanged(i, i);
+
+#ifdef Q_OS_BLACKBERRY
+    bb::cascades::QMapListDataModel *model
+            = dynamic_cast<bb::cascades::QMapListDataModel *>(dataModel());
+    QVariantMap map = model->value(index);
+    map["isFavorite"] = false;
+    model->replace(index, map);
+#endif
 }
 
 void StationSearchResults::onCountChanged()
 {
     emit dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, 0));
+
+#ifdef Q_OS_BLACKBERRY
+    bb::cascades::QMapListDataModel *model
+            = dynamic_cast<bb::cascades::QMapListDataModel *>(dataModel());
+    for (int i = 0; i < count(); ++i) {
+        QVariantMap map = model->value(i);
+        map["isFavorite"] = data(createIndex(i, 0), IsFavorite).toBool();
+        model->replace(i, map);
+    }
+#endif
 }
