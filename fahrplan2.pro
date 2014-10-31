@@ -263,7 +263,7 @@ blackberry {
         src/bb10/repeater.cpp \
         src/blackberrypositionsource.cpp
 
-    LIBS += -lbbsystem -lbbplatform -lQtLocationSubset -lbbpim
+    LIBS += -lbbsystem -lQtLocationSubset -lbbpim
 
     OTHER_FILES += \
         bar-descriptor.xml \

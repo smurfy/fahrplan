@@ -5,5 +5,6 @@ free for use in non-commercial applications:
   - *timetable.png* (renamed from *icon_109.png*)
   - *star_full.png* (renamed from *icon_215.png*)
   - *star_empty.png* (renamed from *icon_216.png*)
+  - *swap.png* (renamed from *icon_019.png*)
 
 [Pixle]: http://subway.pixle.pl

@@ -98,6 +98,34 @@ Container {
         bottomMargin: 0
     }
 
+    contextActions: [
+        ActionSet {
+            title: ListItemData.name
+
+            ActionItem {
+                title: qsTr("Select this station") + Retranslate.onLocaleOrLanguageChanged
+                imageSource: Qt.resolvedUrl("../icons/ic_select.png")
+
+                onTriggered: {
+                    root.clicked();
+                }
+            }
+            ActionItem {
+                title: ListItemData.isFavorite ? qsTr("Remove from favorites")
+                                                 + Retranslate.onLocaleOrLanguageChanged
+                                               : qsTr("Add to favorites")
+                                                 + Retranslate.onLocaleOrLanguageChanged
+                imageSource: ListItemData.isFavorite
+                             ? Qt.resolvedUrl("../icons/star_empty.png")
+                             : Qt.resolvedUrl("../icons/star_full.png")
+
+                onTriggered: {
+                    toggleFavorite();
+                }
+            }
+        }
+    ]
+
     onTouch: {
         if (event.touchType === TouchType.Down)
             background = ui.palette.plain;

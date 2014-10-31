@@ -18,6 +18,7 @@
 ****************************************************************************/
 
 import bb.cascades 1.3
+import Fahrplan 1.0
 
 import "../js/style.js" as UI
 
@@ -27,6 +28,7 @@ Container {
     property alias title: titleLabel.text
     property alias text: textLabel.text
     property int stationType
+    property alias actionSet: actionSet
 
     function pushStationSelectPage()
     {
@@ -80,6 +82,31 @@ Container {
         topMargin: 0
         bottomMargin: 0
     }
+
+    contextActions: [
+        ActionSet {
+            id: actionSet
+
+            title: title
+
+            ActionItem {
+                title: qsTr("Search") + Retranslate.onLocaleOrLanguageChanged
+                imageSource: Qt.resolvedUrl("../icons/ic_search.png")
+
+                onTriggered: {
+                    pushStationSelectPage();
+                }
+            }
+            ActionItem {
+                title: qsTr("Clear") + Retranslate.onLocaleOrLanguageChanged
+                imageSource: Qt.resolvedUrl("../icons/ic_clear.png")
+
+                onTriggered: {
+                    fahrplan.resetStation(stationType);
+                }
+            }
+        }
+    ]
 
     gestureHandlers: [
         TapHandler {
