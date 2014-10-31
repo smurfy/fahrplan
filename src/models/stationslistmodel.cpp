@@ -79,14 +79,6 @@ QVariant StationsListModel::data(const QModelIndex &index, int role) const
     }
 }
 
-Station StationsListModel::getStation(int index) const
-{
-    if (index < 0 || index >= m_list.count())
-        return Station(false);
-
-    return m_list.at(index);
-}
-
 void StationsListModel::setStationsList(const StationsList &list)
 {
     beginResetModel();
@@ -109,4 +101,36 @@ void StationsListModel::selectStation(int type, int index)
         return;
 
     emit stationSelected(static_cast<Fahrplan::StationType>(type), m_list.at(index));
+}
+
+StationsList StationsListModel::stationsList() const
+{
+    return m_list;
+}
+
+bool StationsListModel::contains(const Station &station) const
+{
+    return m_list.contains(station);
+}
+
+int StationsListModel::indexOf(const Station &station) const
+{
+    return m_list.indexOf(station);
+}
+
+Station StationsListModel::at(int index) const
+{
+    if (index < 0 || index >= m_list.count())
+        return Station(false);
+    else
+        return m_list.at(index);
+}
+
+void StationsListModel::removeAt(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    m_list.removeAt(index);
+    endRemoveRows();
+
+    emit countChanged();
 }

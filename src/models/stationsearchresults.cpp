@@ -32,10 +32,10 @@ StationSearchResults::StationSearchResults(Fahrplan *parent)
 
 QVariant StationSearchResults::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || (index.row() < 0) || (index.row() >= m_list.count()))
+    if (!index.isValid() || (index.row() < 0) || (index.row() >= count()))
         return QVariant();
 
-    Station item = m_list.at(index.row());
+    Station item = at(index.row());
     if (role == IsFavorite)
         return qobject_cast<Fahrplan *>(QObject::parent())->favorites()->isFavorite(item);
     else
@@ -44,20 +44,20 @@ QVariant StationSearchResults::data(const QModelIndex &index, int role) const
 
 void StationSearchResults::addToFavorites(int index)
 {
-    if (index < 0 || index >= m_list.count())
+    if (index < 0 || index >= count())
         return;
 
-    qobject_cast<Fahrplan *>(QObject::parent())->favorites()->addToFavorites(m_list.at(index));
+    qobject_cast<Fahrplan *>(QObject::parent())->favorites()->addToFavorites(at(index));
     QModelIndex i = this->index(index, 0);
     emit dataChanged(i, i);
 }
 
 void StationSearchResults::removeFromFavorites(int index)
 {
-    if (index < 0 || index >= m_list.count())
+    if (index < 0 || index >= count())
         return;
 
-    qobject_cast<Fahrplan *>(QObject::parent())->favorites()->removeFromFavorites(m_list.at(index));
+    qobject_cast<Fahrplan *>(QObject::parent())->favorites()->removeFromFavorites(at(index));
     QModelIndex i = this->index(index, 0);
     emit dataChanged(i, i);
 }
