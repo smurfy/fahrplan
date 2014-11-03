@@ -6,13 +6,19 @@ title: Download
 Fahrplan for Symbian download
 =============================
 
-[2.0.19 for Symbian][2]
+[2.0.20 for Symbian][2]
 
 For all other supported systems please visit the [index][1] page.
 
 
 Changelog
 ---------
+    2.0.19 - 2014-11-03
+          * Added more translations and updated existing
+          * Added showing train direction for multiple backends
+          * Improved performance for sbb.ch, reiseinfo.no, rejseplanen.dk and 9292.nl backends
+          * Switched oebb.at to other backend protocol
+
     2.0.19 - 2014-07-24
         * fix bahn.de via stations
         * added real-time delay info to details page for bahn.de
@@ -33,4 +39,4 @@ Changelog
 
 
 [1]: index
-[2]: releases/fahrplan2_2.0.19.sis
+[2]: releases/fahrplan2_2.0.20.sis
