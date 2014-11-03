@@ -892,10 +892,10 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(const QDomE
             if (distance > 0)
                 item->setInfo(tr("Distance %n meter(s)", "", distance));
         } else if (transport.tagName() == "GisRoute") {
-            const int duration = cleanHafasDate(transport.firstChildElement("Duration")
+            const QString duration = cleanHafasDate(transport.firstChildElement("Duration")
                                                          .firstChildElement("Time")
                                                          .text()
-                                                         .trimmed()).toInt();
+                                                         .trimmed());
 
             QString type;
             const QString t = transport.attribute("type").trimmed();
