@@ -29,15 +29,21 @@
     <asset path="%SRC_DIR%/3rdparty/bb10-qt-components/imports">imports</asset>
     <asset path="%SRC_DIR%/data/fahrplan2_150.png">fahrplan2.png</asset>
     <asset path="%SRC_DIR%/data/splash_bb10_720.png">splash_720_720.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_768.png">splash_768_1280.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_1280.png">splash_1280_768.png</asset>
+    <asset path="%SRC_DIR%/data/splash_bb10_720_1280.png">splash_720_1280.png</asset>
+    <asset path="%SRC_DIR%/data/splash_bb10_768_1280.png">splash_768_1280.png</asset>
+    <asset path="%SRC_DIR%/data/splash_bb10_1280_720.png">splash_1280_720.png</asset>
+    <asset path="%SRC_DIR%/data/splash_bb10_1280_768.png">splash_1280_768.png</asset>
+    <asset path="%SRC_DIR%/data/splash_bb10_1440.png">splash_1440_1440.png</asset>
 
     <icon>
         <image>fahrplan2.png</image>
     </icon>
     <splashScreens>
         <image>splash_720_720.png</image>
+        <image>splash_720_1280.png</image>
         <image>splash_768_1280.png</image>
+        <image>splash_1280_720.png</image>
         <image>splash_1280_768.png</image>
+        <image>splash_1440_1440.png</image>
     </splashScreens>
 </qnx>
