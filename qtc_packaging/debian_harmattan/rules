@@ -18,7 +18,7 @@ configure-stamp:
 	dh_testdir
 	
 	#Uncomment this line for use without Qt Creator
-	qmake PREFIX=/usr $(DEB_SRCDIR)
+	#qmake PREFIX=/usr $(DEB_SRCDIR)
 
 	touch configure-stamp
 

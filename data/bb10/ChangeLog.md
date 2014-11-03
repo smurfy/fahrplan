@@ -1,6 +1,15 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.20
+------
+
+- Added more translations and updated existing
+- Added showing train direction for multiple backends
+- Improved performance for sbb.ch, reiseinfo.no, rejseplanen.dk and 9292.nl backends
+- Switched oebb.at to other backend protocol
+
+
 2.0.19
 ------
 

@@ -1,4 +1,4 @@
-VERSION = 2.0.19
+VERSION = 2.0.20
 
 MOC_DIR = tmp
 UI_DIR = tmp
