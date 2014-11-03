@@ -4,10 +4,23 @@ BlackBerry World ChangeLog
 2.0.20
 ------
 
-- Added more translations and updated existing
-- Added showing train direction for multiple backends
-- Improved performance for sbb.ch, reiseinfo.no, rejseplanen.dk and 9292.nl backends
-- Switched oebb.at to other backend protocol
+- New: Train direction is displayed in journey details for most
+  services.
+- New: If available, additional information about the train is displayed
+  in journey details for most services.
+- New: Duration of walk is shown for bahn.de.
+- New: Information about train cancellation is displayed for bahn.de and
+  öbb.at services.
+- Performance improvements for sbb.ch, reiseinfo.no, rejseplanen.dk and
+  9292ov.nl services.
+- öbb.at now uses new protocol which brings performance improvements and
+  uses less traffic.
+- Additional info about journey is no longer added to calendar entry if
+  compact format is selected in settings.
+- New translations: Romanian, Persian and Dutch.
+- Existing translations were updated.
+- You can now easily translate Fahrplan into your own language: see link
+  in the About page.
 
 
 2.0.19
