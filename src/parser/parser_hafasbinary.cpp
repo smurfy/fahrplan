@@ -511,7 +511,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 if (realtimeStatus != 2) {
                     item->setMiscInfo("");
                 } else {
-                    item->setMiscInfo(tr("<span style=\"color:#b30;\">train canceled</span>"));
+                    item->setMiscInfo(QString("<span style=\"color:#b30;\">%1</span>")
+                                      .arg(tr("Journey contains canceled trains!")));
                 }
                 item->setTrainType(lineNames.join(", ").trimmed());
                 const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
