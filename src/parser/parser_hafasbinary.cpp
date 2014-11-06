@@ -378,7 +378,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     --commentNum;
                 }
 
-                QString lineName = strings[lineNamePtr];
+                QStringList lines;
+                lines << strings[lineNamePtr];
                 QString plannedDeparturePosition = strings[departurePlatformPtr];
                 QString plannedArrivalPosition = strings[arrivalPlatformPtr];
 
@@ -429,10 +430,15 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     } else if (key == "Operator") {
                         //lineOperator = strings.read(is);
                          hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else if (key.startsWith("ParallelTrain")) {
+                        hafasData >> tmpTxtPtr;
+                        lines << strings.value(tmpTxtPtr);
                     } else {
                         hafasData.device()->seek(hafasData.device()->pos() + 2);
                     }
-                 }
+                }
+
+                QString lineName;
 
                 switch (type) {
                 case 1: // Walking
@@ -443,6 +449,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                                    .arg(formatDuration(toTime(duration.toInt())));
                     break;
                 case 2: // Transport
+                    //: Separator for trains list, if more than one provided
+                    lineName = lines.join(tr(" / ", "Alternative trains"));
                     if (!category.isEmpty())
                         lineNames.append(category);
                     break;
