@@ -368,6 +368,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 qint16 commentNum;
                 QStringList comments;
+                QStringList announcements;
 
                 hafasData.device()->seek(commentTablePtr + commentOffset);
                 hafasData >> commentNum;
@@ -430,6 +431,9 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     } else if (key == "Operator") {
                         //lineOperator = strings.read(is);
                          hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else if (key.startsWith("Announcement")) {
+                        hafasData >> tmpTxtPtr;
+                        announcements << strings.value(tmpTxtPtr);
                     } else if (key.startsWith("ParallelTrain")) {
                         hafasData >> tmpTxtPtr;
                         lines << strings.value(tmpTxtPtr);
@@ -529,6 +533,10 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 } else if (arrivalCanceled) {
                     info << QString("<span style=\"color:#b30;\"><b>%1</b></span>")
                             .arg(tr("Arrival stop canceled!"));
+                }
+                if (announcements.count() > 0) {
+                    info << QString("<span style=\"color:#b30;\">%1</span>")
+                            .arg(announcements.join("<br />"));
                 }
                 if (comments.count() > 0)
                     info << comments.join(tr(", "));
