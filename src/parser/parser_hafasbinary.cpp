@@ -467,10 +467,18 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 if (predictedDepartureTimeInt > -1) {
                     int minutesTo = plannedDepartureTime.time().msecsTo(predictedDepartureTime.time()) / 60000;
-                    if (minutesTo > 0)
-                        inlineItem->setDepartureInfo(inlineItem->departureInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
-                    else
-                        inlineItem->setDepartureInfo(inlineItem->departureInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                    if (minutesTo > 0) {
+                        inlineItem->setDepartureInfo(inlineItem->departureInfo()
+                                                     + QString("<br/><span style=\"color:#b30;\">%1"
+                                                               "</span>").arg(tr("%n min late",
+                                                                                 "",
+                                                                                 minutesTo)));
+                    } else {
+                        inlineItem->setDepartureInfo(inlineItem->departureInfo()
+                                                     + QString("<br/><span style=\"color:#093;"
+                                                               " font-weight: normal;\">%1</span>")
+                                                       .arg(tr("on time")));
+                    }
                 }
 
                 inlineItem->setArrivalDateTime(plannedArrivalTime);
@@ -479,10 +487,18 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 if (predictedArrivalTimeInt > -1) {
                     int minutesTo = plannedArrivalTime.time().msecsTo(predictedArrivalTime.time()) / 60000;
-                    if (minutesTo > 0)
-                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
-                    else
-                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                    if (minutesTo > 0) {
+                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo()
+                                                   + QString("<br/><span style=\"color:#b30;\">%1"
+                                                             "</span>").arg(tr("%n min late",
+                                                                               "",
+                                                                               minutesTo)));
+                    } else {
+                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo()
+                                                   + QString("<br/><span style=\"color:#093;"
+                                                             " font-weight: normal;\">%1</span>")
+                                                     .arg(tr("on time")));
+                    }
                 }
 
                 inlineItem->setTrain(lineName);
