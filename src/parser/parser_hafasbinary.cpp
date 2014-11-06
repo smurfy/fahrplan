@@ -461,6 +461,13 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 qDebug()<<type<<lineName<<plannedDepartureTime<<predictedDepartureTimeInt<<predictedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<predictedArrivalTimeInt<<predictedArrivalTime<<plannedArrival<<plannedArrivalPosition<<category;
 
+                hafasData.device()->seek(hafasData.device()->pos() + 4);
+                qint16 bits;
+                hafasData >> bits;
+                // In binary: 100000 - departure stop canceled, 010000 - arrival stop cancaled
+                bool departureCanceled = bits & 1 << 5;
+                bool arrivalCanceled = bits & 1 << 4;
+
                 inlineItem->setDepartureDateTime(plannedDepartureTime);
                 inlineItem->setDepartureStation(plannedDeparture);
                 inlineItem->setDepartureInfo(plannedDeparturePosition);
@@ -503,7 +510,22 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 inlineItem->setTrain(lineName);
                 inlineItem->setDirection(direction);
-                inlineItem->setInfo(comments.join(tr(", ")));
+
+                QStringList info;
+                if (departureCanceled && arrivalCanceled) {
+                    info << QString("<span style=\"color:#b30;\"><b>%1</b></span>")
+                            .arg(tr("Train canceled!"));
+                } else if (departureCanceled) {
+                    info << QString("<span style=\"color:#b30;\"><b>%1</b></span>")
+                            .arg(tr("Departure stop canceled!"));
+                } else if (arrivalCanceled) {
+                    info << QString("<span style=\"color:#b30;\"><b>%1</b></span>")
+                            .arg(tr("Arrival stop canceled!"));
+                }
+                if (comments.count() > 0)
+                    info << comments.join(tr(", "));
+                inlineItem->setInfo(info.join("<br />"));
+
                 inlineResults->appendItem(inlineItem);
             }
 
