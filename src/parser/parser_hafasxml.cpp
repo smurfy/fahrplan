@@ -211,6 +211,9 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
                     miscInfo = "";
                 } else if (txtDelay == "0") {
                     miscInfo = tr("On-Time");
+                } else if (txtDelay == "cancel") {
+                    miscInfo = QString("<span style=\"color:#b30;\">%1</span>")
+                               .arg(tr("Canceled!"));
                 } else {
                     miscInfo = txtDelay;
                 }
@@ -307,6 +310,20 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                         }
                     }
                 }
+
+                if (xml.isStartElement() && xml.name() == "JProg") {
+                    xml.readNextStartElement();
+                    if (xml.name() == "JStatus") {
+                        xml.readNext();
+                        const QString status = xml.text().toString();
+                        if (Q_LIKELY(status == "SCHEDULED"))
+                            item.miscInfo = tr("On-Time");
+                        else if (status.endsWith("FAILURE"))
+                            item.miscInfo = QString("<span style=\"color:#b30;\">%1</span>")
+                                            .arg(tr("Canceled!"));
+                    }
+                }
+
                 if (xml.isEndElement() && xml.name() == "STBJourney") {
                     result << item;
                     break;
