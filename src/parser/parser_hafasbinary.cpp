@@ -405,6 +405,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 QString category = "";
                 QString direction = "";
                 QString duration;
+                QString routingType;
 
                 while (true)
                 {
@@ -431,6 +432,9 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     } else if (key == "Operator") {
                         //lineOperator = strings.read(is);
                          hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else if (key == "GisRoutingType") {
+                        hafasData >> tmpTxtPtr;
+                        routingType = strings[tmpTxtPtr];
                     } else if (key.startsWith("Announcement")) {
                         hafasData >> tmpTxtPtr;
                         announcements << strings.value(tmpTxtPtr);
@@ -446,12 +450,30 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 switch (type) {
                 case 1: // Walking
-                    if (duration.isEmpty())
-                        lineName = tr("Walk");
-                    else
-                        lineName = tr("Walk for %1 min")
+                case 3: // Transfer
+                case 4: // Transfer
+                {
+                    QString routingTypeName = type == 1 ? tr("Walk") : tr("Transfer");
+                    if (Q_UNLIKELY(!routingType.isEmpty())) {
+                        if (routingType == "FOOT")
+                            routingTypeName = tr("Walk");
+                        else if (routingTypeName == "BIKE")
+                            routingTypeName = tr("Use bike");
+                        else if (routingTypeName == "CAR")
+                            routingTypeName = tr("Drive car");
+                        else
+                            qDebug() << "Unknown routing type" << routingType;
+                    }
+
+                    if (duration.isEmpty()) {
+                        lineName = routingTypeName;
+                    } else {
+                        lineName = tr("%1 for %2 min")
+                                   .arg(routingTypeName)
                                    .arg(formatDuration(toTime(duration.toInt())));
+                    }
                     break;
+                }
                 case 2: // Transport
                     //: Separator for trains list, if more than one provided
                     lineName = lines.join(tr(" / ", "Alternative trains"));
@@ -459,7 +481,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                         lineNames.append(category);
                     break;
                 default:
-                    ;
+                    qDebug() << "Unknown transportation type" << type;
                 }
 
                 hafasData.device()->seek(connectionDetailsPtr + connectionDetailsOffset + connectionDetailsPartOffset + iPart * connectionDetailsPartSize);
