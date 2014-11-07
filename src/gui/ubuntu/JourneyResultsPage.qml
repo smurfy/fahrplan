@@ -291,6 +291,7 @@ Page {
                     visible: (miscInfo == "") ? false : true
                     text: miscInfo
                     width: parent.width - units.gu(4)
+                    wrapMode: Text.WordWrap
                     font.bold: true
                 }
 
