@@ -56,6 +56,7 @@ private slots:
     void parserCurrentIndexChanged(int index);
     void cancelRequestClicked();
     void getJourneyDetailsClicked();
+    void selectStationClicked();
     void errorOccured(const QString &msg);
     void parserChanged(const QString &name, int index);
 

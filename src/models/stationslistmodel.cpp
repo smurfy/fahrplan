@@ -63,6 +63,7 @@ QVariant StationsListModel::data(const QModelIndex &index, int role) const
     case Id:
         return item.id;
     case Name:
+    case Qt::DisplayRole:
         return item.name;
     case Type:
         return item.type;
