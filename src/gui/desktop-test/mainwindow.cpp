@@ -224,7 +224,7 @@ void MainWindow::selectStationClicked()
 {
     if (ui->stationsList->currentIndex().isValid())
         fahrplan->stationSearchResults()
-                ->selectStation(ui->stationType->currentData().toInt(),
+                ->selectStation(ui->stationType->itemData(ui->stationType->currentIndex()).toInt(),
                                 ui->stationsList->currentIndex().row());
 }
 
