@@ -211,6 +211,9 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
                     miscInfo = "";
                 } else if (txtDelay == "0") {
                     miscInfo = tr("On-Time");
+                } else if (txtDelay == "cancel") {
+                    miscInfo = QString("<span style=\"color:#b30;\">%1</span>")
+                               .arg(tr("Canceled!"));
                 } else {
                     miscInfo = txtDelay;
                 }
@@ -228,7 +231,27 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
             item.trainType = train;
             item.platform = xml.attributes().value("platform").toString().simplified();
             item.time = QTime::fromString(xml.attributes().value("fpTime").toString(), "hh:mm");
-            item.miscInfo = miscInfo;
+
+            QStringList announcements;
+            while (!xml.atEnd()) {
+                xml.readNext();
+
+                if (xml.isStartElement() && xml.name() == "HIMMessage")
+                    announcements << xml.attributes().value("lead").toString();
+
+                if (xml.isEndElement() && xml.name() == "Journey")
+                   break;
+            }
+
+            QStringList info;
+            if (announcements.count() > 0)
+                info << QString("<span style=\"color:#b30;\">%1</span>")
+                        .arg(announcements.join("<br />").replace("\n", "<br />"));
+
+            if (!miscInfo.isEmpty())
+                info << miscInfo;
+
+            item.miscInfo = info.join("<br />");
 
             result << item;
         }
@@ -307,6 +330,39 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                         }
                     }
                 }
+
+                QStringList announcements;
+                if (xml.isStartElement() && xml.name() == "IList") {
+                    while (!xml.atEnd()) {
+                        xml.readNext();
+
+                        if (xml.isStartElement() && xml.name() == "I")
+                            announcements << xml.attributes().value("text").toString();
+
+                        if (xml.isEndElement() && xml.name() == "IList")
+                           break;
+                    }
+                }
+
+                QStringList info;
+                if (announcements.count() > 0)
+                    info << QString("<span style=\"color:#b30;\">%1</span>")
+                            .arg(announcements.join("<br />").replace("\n", "<br />"));
+
+                if (xml.isStartElement() && xml.name() == "JProg") {
+                    xml.readNextStartElement();
+                    if (xml.name() == "JStatus") {
+                        xml.readNext();
+                        const QString status = xml.text().toString();
+                        if (Q_LIKELY(status == "SCHEDULED"))
+                            info << tr("On-Time");
+                        else if (status.endsWith("FAILURE"))
+                            info << QString("<span style=\"color:#b30;\">%1</span>")
+                                            .arg(tr("Canceled!"));
+                    }
+                }
+                item.miscInfo = info.join("<br />");
+
                 if (xml.isEndElement() && xml.name() == "STBJourney") {
                     result << item;
                     break;
@@ -657,6 +713,15 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
                                                                                   .toElement()));
         }
 
+        const QDomNodeList announces = connections.at(i).firstChildElement("IList").childNodes();
+        if (announces.count() > 0) {
+            QStringList announcements;
+            for (int i = 0; i < announces.count(); ++i) {
+                announcements << announces.at(i).toElement().attribute("text");
+            }
+            item->setMiscInfo(QString("<span style=\"color:#b30;\">%1</span>")
+                              .arg(announcements.join("<br />").replace("\n", "<br />")));
+        }
 
         lastJourneyResultList->setTimeInfo(item->date().toString());
 

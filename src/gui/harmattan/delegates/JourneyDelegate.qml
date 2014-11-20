@@ -111,6 +111,7 @@ Rectangle {
 
             text: model.miscInfo
             visible: (model.miscInfo !== "")
+            wrapMode: Text.WordWrap
             font.bold: true
             anchors {
                 top: lbl_traintyp.bottom

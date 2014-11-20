@@ -84,6 +84,7 @@ Item {
                 visible: model.miscInfo !== ""
                 text: model.miscInfo
                 width: parent.width
+                wrapMode: Text.WordWrap
                 font.bold: true
             }
 

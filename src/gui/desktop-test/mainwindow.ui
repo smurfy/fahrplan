@@ -2,102 +2,156 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>676</width>
-    <height>650</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QComboBox" name="parser"/>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QComboBox" name="parser"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="stationName">
+        <property name="text">
+         <string>Zurich</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="getTimeTableForStation">
+        <property name="text">
+         <string>getTimeTableForStation</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="findStationsByName">
+        <property name="text">
+         <string>findStationsByName</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="findStationsByCoordinates">
+        <property name="text">
+         <string>findStationsByCoordinates</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="stationName">
-      <property name="text">
-       <string>Zurich</string>
-      </property>
-     </widget>
+    <item>
+     <widget class="QListView" name="stationsList"/>
     </item>
-    <item row="0" column="3" colspan="2">
-     <widget class="QPushButton" name="getTimeTableForStation">
-      <property name="text">
-       <string>getTimeTableForStation</string>
-      </property>
-     </widget>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QComboBox" name="stationType"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="selectStation">
+        <property name="text">
+         <string>selectStation</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QComboBox" name="trainRestrictions"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="searchJourney">
+        <property name="text">
+         <string>searchJourney</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="0" column="5">
-     <widget class="QPushButton" name="findStationsByName">
-      <property name="text">
-       <string>findStationsByName</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="6">
-     <widget class="QPushButton" name="findStationsByCoordinates">
-      <property name="text">
-       <string>findStationsByCoordinates</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="7">
-     <widget class="QTextEdit" name="findStationResults"/>
-    </item>
-    <item row="2" column="6">
-     <widget class="QPushButton" name="searchJourney">
-      <property name="text">
-       <string>searchJourney</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="7">
+    <item>
      <widget class="QTextEdit" name="searchJourneyResults"/>
     </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="QPushButton" name="searchJourneyEarlier">
-      <property name="text">
-       <string>searchJourneyEarlier</string>
-      </property>
-     </widget>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QPushButton" name="searchJourneyEarlier">
+        <property name="text">
+         <string>searchJourneyEarlier</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="searchJourneyLater">
+        <property name="text">
+         <string>searchJourneyLater</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QComboBox" name="journeyResultItemIds"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="getJourneyDetails">
+        <property name="text">
+         <string>getJourneyDetails</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="4" column="2" colspan="3">
-     <widget class="QPushButton" name="searchJourneyLater">
-      <property name="text">
-       <string>searchJourneyLater</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0" colspan="2">
-     <widget class="QComboBox" name="journeyResultItemIds"/>
-    </item>
-    <item row="5" column="2" colspan="2">
-     <widget class="QPushButton" name="getJourneyDetails">
-      <property name="text">
-       <string>getJourneyDetails</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0" colspan="7">
+    <item>
      <widget class="QTextEdit" name="getJourneyDetailsResults"/>
     </item>
-    <item row="7" column="6">
-     <widget class="QPushButton" name="cancelRequest">
-      <property name="text">
-       <string>cancelRequest</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QSpinBox" name="stationIndex"/>
-    </item>
-    <item row="2" column="4" colspan="2">
-     <widget class="QComboBox" name="trainRestrictions"/>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cancelRequest">
+        <property name="text">
+         <string>cancelRequest</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

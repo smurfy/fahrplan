@@ -368,6 +368,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 qint16 commentNum;
                 QStringList comments;
+                QStringList announcements;
 
                 hafasData.device()->seek(commentTablePtr + commentOffset);
                 hafasData >> commentNum;
@@ -378,7 +379,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     --commentNum;
                 }
 
-                QString lineName = strings[lineNamePtr];
+                QStringList lines;
+                lines << strings[lineNamePtr];
                 QString plannedDeparturePosition = strings[departurePlatformPtr];
                 QString plannedArrivalPosition = strings[arrivalPlatformPtr];
 
@@ -403,6 +405,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 QString category = "";
                 QString direction = "";
                 QString duration;
+                QString routingType;
 
                 while (true)
                 {
@@ -429,25 +432,56 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     } else if (key == "Operator") {
                         //lineOperator = strings.read(is);
                          hafasData.device()->seek(hafasData.device()->pos() + 2);
+                    } else if (key == "GisRoutingType") {
+                        hafasData >> tmpTxtPtr;
+                        routingType = strings[tmpTxtPtr];
+                    } else if (key.startsWith("Announcement")) {
+                        hafasData >> tmpTxtPtr;
+                        announcements << strings.value(tmpTxtPtr);
+                    } else if (key.startsWith("ParallelTrain")) {
+                        hafasData >> tmpTxtPtr;
+                        lines << strings.value(tmpTxtPtr);
                     } else {
                         hafasData.device()->seek(hafasData.device()->pos() + 2);
                     }
-                 }
+                }
+
+                QString lineName;
 
                 switch (type) {
                 case 1: // Walking
-                    if (duration.isEmpty())
-                        lineName = tr("Walk");
-                    else
-                        lineName = tr("Walk for %1 min")
+                case 3: // Transfer
+                case 4: // Transfer
+                {
+                    QString routingTypeName = type == 1 ? tr("Walk") : tr("Transfer");
+                    if (Q_UNLIKELY(!routingType.isEmpty())) {
+                        if (routingType == "FOOT")
+                            routingTypeName = tr("Walk");
+                        else if (routingTypeName == "BIKE")
+                            routingTypeName = tr("Use bike");
+                        else if (routingTypeName == "CAR")
+                            routingTypeName = tr("Drive car");
+                        else
+                            qDebug() << "Unknown routing type" << routingType;
+                    }
+
+                    if (duration.isEmpty()) {
+                        lineName = routingTypeName;
+                    } else {
+                        lineName = tr("%1 for %2 min")
+                                   .arg(routingTypeName)
                                    .arg(formatDuration(toTime(duration.toInt())));
+                    }
                     break;
+                }
                 case 2: // Transport
+                    //: Separator for trains list, if more than one provided
+                    lineName = lines.join(tr(" / ", "Alternative trains"));
                     if (!category.isEmpty())
                         lineNames.append(category);
                     break;
                 default:
-                    ;
+                    qDebug() << "Unknown transportation type" << type;
                 }
 
                 hafasData.device()->seek(connectionDetailsPtr + connectionDetailsOffset + connectionDetailsPartOffset + iPart * connectionDetailsPartSize);
@@ -461,16 +495,31 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 qDebug()<<type<<lineName<<plannedDepartureTime<<predictedDepartureTimeInt<<predictedDepartureTime<<plannedDeparture<<plannedDeparturePosition<<plannedArrivalTime<<predictedArrivalTimeInt<<predictedArrivalTime<<plannedArrival<<plannedArrivalPosition<<category;
 
+                hafasData.device()->seek(hafasData.device()->pos() + 4);
+                qint16 bits;
+                hafasData >> bits;
+                // In binary: 100000 - departure stop canceled, 010000 - arrival stop cancaled
+                bool departureCanceled = bits & 1 << 5;
+                bool arrivalCanceled = bits & 1 << 4;
+
                 inlineItem->setDepartureDateTime(plannedDepartureTime);
                 inlineItem->setDepartureStation(plannedDeparture);
                 inlineItem->setDepartureInfo(plannedDeparturePosition);
 
                 if (predictedDepartureTimeInt > -1) {
                     int minutesTo = plannedDepartureTime.time().msecsTo(predictedDepartureTime.time()) / 60000;
-                    if (minutesTo > 0)
-                        inlineItem->setDepartureInfo(inlineItem->departureInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
-                    else
-                        inlineItem->setDepartureInfo(inlineItem->departureInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                    if (minutesTo > 0) {
+                        inlineItem->setDepartureInfo(inlineItem->departureInfo()
+                                                     + QString("<br/><span style=\"color:#b30;\">%1"
+                                                               "</span>").arg(tr("%n min late",
+                                                                                 "",
+                                                                                 minutesTo)));
+                    } else {
+                        inlineItem->setDepartureInfo(inlineItem->departureInfo()
+                                                     + QString("<br/><span style=\"color:#093;"
+                                                               " font-weight: normal;\">%1</span>")
+                                                       .arg(tr("on time")));
+                    }
                 }
 
                 inlineItem->setArrivalDateTime(plannedArrivalTime);
@@ -479,15 +528,42 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 if (predictedArrivalTimeInt > -1) {
                     int minutesTo = plannedArrivalTime.time().msecsTo(predictedArrivalTime.time()) / 60000;
-                    if (minutesTo > 0)
-                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo() + tr("<br/><span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo));
-                    else
-                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo() + tr("<br/><span style=\"color:#093; font-weight: normal;\">on time</span>"));
+                    if (minutesTo > 0) {
+                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo()
+                                                   + QString("<br/><span style=\"color:#b30;\">%1"
+                                                             "</span>").arg(tr("%n min late",
+                                                                               "",
+                                                                               minutesTo)));
+                    } else {
+                        inlineItem->setArrivalInfo(inlineItem->arrivalInfo()
+                                                   + QString("<br/><span style=\"color:#093;"
+                                                             " font-weight: normal;\">%1</span>")
+                                                     .arg(tr("on time")));
+                    }
                 }
 
                 inlineItem->setTrain(lineName);
                 inlineItem->setDirection(direction);
-                inlineItem->setInfo(comments.join(tr(", ")));
+
+                QStringList info;
+                if (departureCanceled && arrivalCanceled) {
+                    info << QString("<span style=\"color:#b30;\"><b>%1</b></span>")
+                            .arg(tr("Train canceled!"));
+                } else if (departureCanceled) {
+                    info << QString("<span style=\"color:#b30;\"><b>%1</b></span>")
+                            .arg(tr("Departure stop canceled!"));
+                } else if (arrivalCanceled) {
+                    info << QString("<span style=\"color:#b30;\"><b>%1</b></span>")
+                            .arg(tr("Arrival stop canceled!"));
+                }
+                if (announcements.count() > 0) {
+                    info << QString("<span style=\"color:#b30;\">%1</span>")
+                            .arg(announcements.join("<br />"));
+                }
+                if (comments.count() > 0)
+                    info << comments.join(tr(", "));
+                inlineItem->setInfo(info.join("<br />"));
+
                 inlineResults->appendItem(inlineItem);
             }
 
@@ -511,7 +587,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 if (realtimeStatus != 2) {
                     item->setMiscInfo("");
                 } else {
-                    item->setMiscInfo(tr("<span style=\"color:#b30;\">train canceled</span>"));
+                    item->setMiscInfo(QString("<span style=\"color:#b30;\">%1</span>")
+                                      .arg(tr("Journey contains canceled trains!")));
                 }
                 item->setTrainType(lineNames.join(", ").trimmed());
                 const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
