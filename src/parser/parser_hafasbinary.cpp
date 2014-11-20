@@ -20,6 +20,7 @@
 #include "parser_hafasbinary.h"
 
 #include <QNetworkReply>
+#include <QTextCodec>
 
 #if defined(BUILD_FOR_QT5)
     #include <QUrlQuery>
@@ -153,7 +154,14 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         qint8 c;
         hafasData>>c;
         if (c == 0) {
-            strings.insert((num - tmpString.length()), QString::fromLatin1(tmpString.trimmed()));
+            QTextCodec::ConverterState state;
+            QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+            codec->toUnicode(tmpString.trimmed().constData(), tmpString.trimmed().size(), &state);
+            if (state.invalidChars > 0) {
+                strings.insert((num - tmpString.length()), QString::fromLatin1(tmpString.trimmed()));
+            } else {
+                strings.insert((num - tmpString.length()), tmpString.trimmed());
+            }
             tmpString.clear();
         } else {
             tmpString.append((char)c);
