@@ -454,7 +454,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 case 4: // Transfer
                 {
                     QString routingTypeName = type == 1 ? tr("Walk") : tr("Transfer");
-                    if (Q_UNLIKELY(!routingType.isEmpty())) {
+                    if (!routingType.isEmpty()) {
                         if (routingType == "FOOT")
                             routingTypeName = tr("Walk");
                         else if (routingTypeName == "BIKE")

@@ -354,7 +354,7 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                     if (xml.name() == "JStatus") {
                         xml.readNext();
                         const QString status = xml.text().toString();
-                        if (Q_LIKELY(status == "SCHEDULED"))
+                        if (status == "SCHEDULED")
                             info << tr("On-Time");
                         else if (status.endsWith("FAILURE"))
                             info << QString("<span style=\"color:#b30;\">%1</span>")
