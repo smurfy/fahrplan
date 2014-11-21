@@ -86,6 +86,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 {
     lastJourneyResultList = new JourneyResultList();
     journeyDetailInlineData.clear();
+    stringCache.clear();
 
     QByteArray tmpBuffer = networkReply->readAll();
 
@@ -146,28 +147,6 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
     qDebug()<<extensionHeaderPtr<<extensionHeaderLength;
     qDebug()<<errorCode;
 
-    //Read strings
-    hafasData.device()->seek(stringTablePtr);
-    QMap<int, QString> strings;
-    QByteArray tmpString;
-    for (int num = 0; num < (serviceDaysTablePtr - stringTablePtr); num++) {
-        qint8 c;
-        hafasData>>c;
-        if (c == 0) {
-            QTextCodec::ConverterState state;
-            QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-            codec->toUnicode(tmpString.trimmed().constData(), tmpString.trimmed().size(), &state);
-            if (state.invalidChars > 0) {
-                strings.insert((num - tmpString.length()), QString::fromLatin1(tmpString.trimmed()));
-            } else {
-                strings.insert((num - tmpString.length()), tmpString.trimmed());
-            }
-            tmpString.clear();
-        } else {
-            tmpString.append((char)c);
-        }
-    }
-
     //Looks ok, parsing
     if (errorCode == 0) {
         hafasData.device()->seek(extensionHeaderPtr + 0x8);
@@ -187,9 +166,14 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         hafasData >> encodingPtr;
         hafasData >> ldPtr;
         hafasData >> attrsOffset;
-        QString encoding = strings[encodingPtr];
-        QString requestId = strings[requestIdPtr];
-        QString ld = strings[ldPtr];
+
+        int i = buffer.indexOf(char(0), stringTablePtr + encodingPtr);
+        const QByteArray encoding = buffer.mid(stringTablePtr + encodingPtr,
+                                               i - (stringTablePtr + encodingPtr)).trimmed();
+        QTextCodec *codec = QTextCodec::codecForName(encoding);
+
+        QString requestId = getString(buffer, stringTablePtr + requestIdPtr, codec);
+        QString ld = getString(buffer, stringTablePtr + ldPtr, codec);
 
         qint32 connectionAttrsPtr;
         if (extensionHeaderLength >= 0x30) {
@@ -242,8 +226,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
         hafasData.device()->seek(hafasData.device()->pos() + 4 + 4);
         hafasData >> dateDays;
         QDate journeyDate = toDate(dateDays);
-        QString resDeparture = strings[resDeparturePtr];
-        QString resArrival = strings[resArrivalPtr];
+        QString resDeparture = getString(buffer, stringTablePtr + resDeparturePtr, codec);
+        QString resArrival = getString(buffer, stringTablePtr + resArrivalPtr, codec);
 
         lastJourneyResultList->setDepartureStation(resDeparture);
         lastJourneyResultList->setArrivalStation(resArrival);
@@ -276,7 +260,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             hafasData >> serviceTxtPtr;
             hafasData >> serviceBitBase;
             hafasData >> serviceBitLength;
-            QString serviceTxt = strings[serviceTxtPtr];
+            QString serviceTxt = getString(buffer, stringTablePtr + serviceTxtPtr, codec);
 
             int connectionDayOffset = serviceBitBase * 8;
             for (int i = 0; i < serviceBitLength; i++)
@@ -324,11 +308,11 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                     if (!strings.contains(keyPtr)) {
                         break;
                     }
-                    QString key = strings[keyPtr];
+                    QString key = getString(buffer, stringTablePtr + keyPtr, codec);
                     if (key == "ConnectionId") {
                         qint16 valuePtr;
                         hafasData >> valuePtr;
-                        connectionId = strings[valuePtr];
+                        connectionId = getString(buffer, stringTablePtr + valuePtr, codec);
                         break;
                     } else {
                         hafasData.device()->seek(hafasData.device()->pos() + 2);
@@ -383,14 +367,14 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 while (commentNum > 0) {
                     qint16 commentPtr;
                     hafasData >> commentPtr;
-                    comments << strings.value(commentPtr);
+                    comments << getString(buffer, stringTablePtr + commentPtr, codec);
                     --commentNum;
                 }
 
                 QStringList lines;
-                lines << strings[lineNamePtr];
-                QString plannedDeparturePosition = strings[departurePlatformPtr];
-                QString plannedArrivalPosition = strings[arrivalPlatformPtr];
+                lines << getString(buffer, stringTablePtr + lineNamePtr, codec);
+                QString plannedDeparturePosition = getString(buffer, stringTablePtr + departurePlatformPtr, codec);
+                QString plannedArrivalPosition = getString(buffer, stringTablePtr + arrivalPlatformPtr, codec);
 
                 if (plannedDeparturePosition == "---") {
                     plannedDeparturePosition = "";
@@ -405,8 +389,8 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 hafasData.device()->seek((plannedArrivalIdx * 14) + stationTablePtr);
                 hafasData >> plannedArrivalPtr;
 
-                QString plannedDeparture = strings[plannedDeparturePtr];
-                QString plannedArrival = strings[plannedArrivalPtr];
+                QString plannedDeparture = getString(buffer, stringTablePtr + plannedDeparturePtr, codec);
+                QString plannedArrival = getString(buffer, stringTablePtr + plannedArrivalPtr, codec);
 
                 hafasData.device()->seek(attrsOffset + partAttrIndex * 4);
 
@@ -419,36 +403,36 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 {
                     qint16 tmpTxtPtr;
                     hafasData >> tmpTxtPtr;
-                    QString key = strings[tmpTxtPtr];
+                    QString key = getString(buffer, stringTablePtr + tmpTxtPtr, codec);
 
                     if (key.isEmpty() || key == "---") {
                         break;
                     } else if (key == "Direction") {
                         hafasData >> tmpTxtPtr;
-                        if (strings.value(tmpTxtPtr) != "---")
-                            direction = strings.value(tmpTxtPtr);
+                        if (getString(buffer, stringTablePtr + tmpTxtPtr, codec) != "---")
+                            direction = getString(buffer, stringTablePtr + tmpTxtPtr, codec);
                     } else if (key == "Duration") {
                         hafasData >> tmpTxtPtr;
-                        duration = strings.value(tmpTxtPtr);
+                        duration = getString(buffer, stringTablePtr + tmpTxtPtr, codec);
                     } else if (key == "Class") {
                         //lineClass = Integer.parseInt(strings.read(is));
                         hafasData.device()->seek(hafasData.device()->pos() + 2);
                     } else if (key == "Category") {
                          hafasData >> tmpTxtPtr;
-                         category = strings[tmpTxtPtr];
+                         category = getString(buffer, stringTablePtr + tmpTxtPtr, codec);
                         //lineCategory = strings.read(is);
                     } else if (key == "Operator") {
                         //lineOperator = strings.read(is);
                          hafasData.device()->seek(hafasData.device()->pos() + 2);
                     } else if (key == "GisRoutingType") {
                         hafasData >> tmpTxtPtr;
-                        routingType = strings[tmpTxtPtr];
+                        routingType = getString(buffer, stringTablePtr + tmpTxtPtr, codec);
                     } else if (key.startsWith("Announcement")) {
                         hafasData >> tmpTxtPtr;
-                        announcements << strings.value(tmpTxtPtr);
+                        announcements << getString(buffer, stringTablePtr + tmpTxtPtr, codec);
                     } else if (key.startsWith("ParallelTrain")) {
                         hafasData >> tmpTxtPtr;
-                        lines << strings.value(tmpTxtPtr);
+                        lines << getString(buffer, stringTablePtr + tmpTxtPtr, codec);
                     } else {
                         hafasData.device()->seek(hafasData.device()->pos() + 2);
                     }
@@ -806,4 +790,38 @@ QString ParserHafasBinary::errorString(int error) const
     default:
         return tr("Unknown error ocurred with the backend (error %1).").arg(error);
     }
+}
+
+inline QString ParserHafasBinary::getString(const QByteArray &data,
+                                            int index,
+                                            QTextCodec *dataCodec) const
+{
+    if (stringCache.contains(index))
+        return stringCache.value(index);
+
+    // Static, so it's not called every time this function is called
+    static QTextCodec *utf8Codec = QTextCodec::codecForName("UTF-8");
+    // NOT static because we don't need to save state between calls
+    QTextCodec::ConverterState state;
+
+    int i = data.indexOf(char(0), index);
+    const QByteArray string = data.mid(index, i - index);
+
+    QString converted;
+
+    // Sometimes some strings are in UTF-8, while everything else is in encoding
+    // declared in the header. So first we try to decode the string as UTF-8...
+    if (utf8Codec)
+        converted = utf8Codec->toUnicode(string.constData(), string.size(), &state);
+
+    // ...and if we fail, we use declared encoding.
+    if (!utf8Codec || state.invalidChars > 0) {
+        if (dataCodec)
+            converted = dataCodec->toUnicode(string);
+        else
+            converted = QString::fromLatin1(string);
+    }
+
+    stringCache.insert(index, converted.trimmed());
+    return converted.trimmed();
 }

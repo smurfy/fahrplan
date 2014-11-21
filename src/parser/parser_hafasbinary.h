@@ -47,6 +47,10 @@ protected:
     QDateTime toTime(quint16 time);
     QString formatDuration(QDateTime durationTime);
     QString errorString(int error) const;
+
+private:
+    mutable QHash<int, QString> stringCache;
+    QString getString(const QByteArray &data, int index, QTextCodec *dataCodec) const;
 };
 
 #endif // PARSER_HAFASBINARY_H
