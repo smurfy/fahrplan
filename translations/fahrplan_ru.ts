@@ -52,7 +52,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/sailfishos/Cover.qml" line="37"/>
         <source>Fahrplan: </source>
-        <translation>Fahrplan: </translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -188,7 +188,7 @@ As in &quot;%1 in direction %2&quot;</extracomment>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="26"/>
         <source>Result Details</source>
-        <translation>Подробности результатов</translation>
+        <translation>Детали поездки</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="313"/>
@@ -250,7 +250,7 @@ As in &quot;%1 in direction %2&quot;</extracomment>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="313"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>от &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -258,7 +258,7 @@ As in &quot;%1 in direction %2&quot;</extracomment>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="313"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>от &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;, через &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
@@ -575,52 +575,57 @@ As in &quot;%1 in direction %2&quot;</extracomment>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="14"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="6"/>
         <source>MainWindow</source>
         <translation>Главное окно</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="24"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="18"/>
         <source>Zurich</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="31"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="25"/>
         <source>getTimeTableForStation</source>
         <translation>Получить расписание для станций</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="38"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="32"/>
         <source>findStationsByName</source>
         <translation>Найти станций по названиям</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="45"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="39"/>
         <source>findStationsByCoordinates</source>
         <translation>Найти станций по координатам</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="55"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="56"/>
+        <source>selectStation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="79"/>
         <source>searchJourney</source>
         <translation>Поиск маршрута</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="65"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="93"/>
         <source>searchJourneyEarlier</source>
         <translation>Поиск маршрута ранее</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="72"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="100"/>
         <source>searchJourneyLater</source>
         <translation>Поиск маршрута позднее</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="82"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="123"/>
         <source>getJourneyDetails</source>
         <translation>Получить детали маршрута</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="92"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="150"/>
         <source>cancelRequest</source>
         <translation>Отменить запрос</translation>
     </message>
@@ -730,85 +735,127 @@ DATE, TIME</extracomment>
 <context>
     <name>ParserHafasBinary</name>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="93"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="114"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="95"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="116"/>
         <source>An error ocurred with the backend</source>
         <translation>При запросе к поставщику услуг произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="440"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="448"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="451"/>
         <source>Walk</source>
         <translation>Пешком</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="442"/>
-        <source>Walk for %1 min</source>
-        <translation>Пешком %1 мин</translation>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="556"/>
+        <source>, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="448"/>
+        <source>Transfer</source>
+        <translation>Пересадка</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="453"/>
+        <source>Use bike</source>
+        <translation>Ехать велосипедом</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="455"/>
+        <source>Drive car</source>
+        <translation>Ехать машиной</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="463"/>
+        <source>%1 for %2 min</source>
+        <translation>%1 %2 мин</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="471"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="483"/>
-        <source>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
-        <translation>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;опоздание на %1 мин.&lt;/span&gt;</translation>
+        <source> / </source>
+        <comment>Alternative trains</comment>
+        <extracomment>Separator for trains list, if more than one provided</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="506"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="526"/>
+        <source>%n min late</source>
+        <translation>
+            <numerusform>опоздание на %n мин</numerusform>
+            <numerusform>опоздание на %n мин</numerusform>
+            <numerusform>опоздание на %n мин</numerusform>
+        </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="473"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="485"/>
-        <source>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
-        <translation>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;по расписанию&lt;/span&gt;</translation>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="513"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="533"/>
+        <source>on time</source>
+        <translation>по расписанию</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="490"/>
-        <source>, </source>
-        <translation>, </translation>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="543"/>
+        <source>Train canceled!</source>
+        <translation>Поезд отменён!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="514"/>
-        <source>&lt;span style=&quot;color:#b30;&quot;&gt;train canceled&lt;/span&gt;</source>
-        <translation>поезд отменён</translation>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="546"/>
+        <source>Departure stop canceled!</source>
+        <translation>Начальная остановка отменена!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="556"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="549"/>
+        <source>Arrival stop canceled!</source>
+        <translation>Конечная остановка отменена!</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="583"/>
+        <source>Journey contains canceled trains!</source>
+        <translation>Поездка содержит отменённые поезда!</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="625"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Произошла внутренняя ошибка: более поздняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="590"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="659"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Произошла внутренняя ошибка: более ранняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="715"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="779"/>
         <source>Your session has expired. Please, perform the search again.</source>
         <translation>Время вашей сессии истекло. Пожалуйста, начните поиск с начала.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="717"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="781"/>
         <source>One of the station names is too ambiguous.</source>
         <translation>Одно из названий остановок слишком неоднозначно.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="719"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="783"/>
         <source>No connections have been found that correspond to your request.</source>
         <translation>Не найдено ни одного соединения, которое отвечает вашему запросу.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="721"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="785"/>
         <source>There was an unsuccessful or incomplete search due to a timetable change.</source>
         <translation>Произошёл неполный или неудачный поиск в связи с изменениями а расписании.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="723"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="787"/>
         <source>Unfortunately there was no route found.</source>
         <translation>К сожалению, маршрут не найден.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="725"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="789"/>
         <source>Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.</source>
         <translation>К сожалению, в данный момент ваш запрос не может быть обработан. Возможно, указанная дата находится за пределами сущесвующего расписания.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="727"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="791"/>
         <source>Unknown error ocurred with the backend (error %1).</source>
         <translation>При запросе к поставщику услуг произошла неизвестная ошибка (код %1).</translation>
     </message>
@@ -822,81 +869,88 @@ DATE, TIME</extracomment>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="213"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="358"/>
         <source>On-Time</source>
         <translation>По расписанию</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="450"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="216"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="361"/>
+        <source>Canceled!</source>
+        <translation>Отменён!</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="506"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="451"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="507"/>
         <source>All without ICE</source>
         <translation>Все, кроме ICE</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="452"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="508"/>
         <source>Only local transport</source>
         <translation>Только общественный транспорт</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="453"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="509"/>
         <source>Local transport without S-Bahn</source>
         <translation>Общественный транспорт, кроме S-Bahn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="553"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="609"/>
         <source>Error parsing reponse from the server: %1</source>
         <translation>Ошибка разбора ответа сервера: %1</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="563"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="619"/>
         <source>%1 replied: &quot;%2&quot;</source>
         <translation>%1 ответил: %2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="640"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="876"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="696"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="941"/>
         <source>, </source>
-        <translation>, </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="677"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="742"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Произошла внутренняя ошибка: более поздняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="702"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="767"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Произошла внутренняя ошибка: более ранняя поездка невозможна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="753"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="774"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="818"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="839"/>
         <source>Internal error occured: JourneyResultdata not present!</source>
         <translation>Произошла внутренняя ошибка: отсутствует JourneyResultdata!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="812"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="939"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="877"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1004"/>
         <source>Pl. %1</source>
         <translation>Пл. %1</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="889"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="903"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="954"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="968"/>
         <source>Walk</source>
         <translation>Пешком</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="889"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="954"/>
         <source>Transfer</source>
         <translation>Пересадка</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="891"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="912"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="956"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="977"/>
         <source>%1 for %2 min</source>
         <extracomment>%1 can be &quot;Walk&quot; or &quot;Transfer&quot;
 ----------
@@ -904,7 +958,7 @@ DATE, TIME</extracomment>
         <translation>%1 %2 мин</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="893"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="958"/>
         <source>Distance %n meter(s)</source>
         <translation>
             <numerusform>Расстояние %n метр</numerusform>
@@ -913,22 +967,22 @@ DATE, TIME</extracomment>
         </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="905"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="970"/>
         <source>Use bike</source>
         <translation>Ехать велосипедом</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="907"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="972"/>
         <source>Take taxi</source>
         <translation>Ехать на такси</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="909"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="974"/>
         <source>Drive car</source>
         <translation>Ехать машиной</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1019"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1084"/>
         <source>d</source>
         <translation>дн</translation>
     </message>

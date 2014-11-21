@@ -138,7 +138,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 As in &quot;%1 in direction %2&quot;
 ----------
 As in &quot;%1 in direction %2&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>٪1 به ٪2</translation>
     </message>
 </context>
 <context>
@@ -187,14 +187,14 @@ As in &quot;%1 in direction %2&quot;</extracomment>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="26"/>
         <source>Result Details</source>
-        <translation type="unfinished"></translation>
+        <translation>نتیجه جزئیات</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="313"/>
         <source>%1 to %2</source>
         <comment>Direction</comment>
         <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>٪1 به ٪2</translation>
     </message>
 </context>
 <context>
@@ -249,7 +249,7 @@ As in &quot;%1 in direction %2&quot;</extracomment>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="313"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -257,7 +257,7 @@ As in &quot;%1 in direction %2&quot;</extracomment>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="313"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -285,7 +285,7 @@ As in &quot;%1 in direction %2&quot;</extracomment>
     <message>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="26"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>نتایج</translation>
     </message>
 </context>
 <context>
@@ -574,52 +574,57 @@ As in &quot;%1 in direction %2&quot;</extracomment>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="14"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="6"/>
         <source>MainWindow</source>
         <translation>پنجره اصلی</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="24"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="18"/>
         <source>Zurich</source>
         <translation>زوریخ</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="31"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="25"/>
         <source>getTimeTableForStation</source>
         <translation>دریافت جدول مدت زمان برای ایستگاه</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="38"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="32"/>
         <source>findStationsByName</source>
         <translation>پیدا کردن ایستگاه بر اساس نام</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="45"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="39"/>
         <source>findStationsByCoordinates</source>
         <translation>پیدا کردن ایستگاه بر اساس مختصات</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="55"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="56"/>
+        <source>selectStation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="79"/>
         <source>searchJourney</source>
         <translation>جستجو سفر</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="65"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="93"/>
         <source>searchJourneyEarlier</source>
         <translation>جستجو سفر قبلی</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="72"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="100"/>
         <source>searchJourneyLater</source>
         <translation>جستجو سفر بعدی</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="82"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="123"/>
         <source>getJourneyDetails</source>
         <translation>دریافت جزئیات سفر</translation>
     </message>
     <message>
-        <location filename="../src/gui/desktop-test/mainwindow.ui" line="92"/>
+        <location filename="../src/gui/desktop-test/mainwindow.ui" line="150"/>
         <source>cancelRequest</source>
         <translation>لغو درخواست</translation>
     </message>
@@ -718,96 +723,136 @@ DATE, TIME</extracomment>
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="856"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
-        <translation type="unfinished">&lt;span style=&quot;color:#b30;&quot;&gt;%1 دقیقه بعد&lt;/span&gt;</translation>
+        <translation>&lt;span style=&quot;color:#b30;&quot;&gt;%1 دقیقه گذشته&lt;/span&gt;</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="860"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
-        <translation type="unfinished">&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;در زمان&lt;/span&gt;</translation>
+        <translation>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;در زمان&lt;/span&gt;</translation>
     </message>
 </context>
 <context>
     <name>ParserHafasBinary</name>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="93"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="114"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="95"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="116"/>
         <source>An error ocurred with the backend</source>
         <translation>یک خطا در بخش مدیریت رخ داده است</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="440"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="448"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="451"/>
         <source>Walk</source>
-        <translation type="unfinished">پیاده روی</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="442"/>
-        <source>Walk for %1 min</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="471"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="483"/>
-        <source>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;%1 دقیقه بعد&lt;/span&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="473"/>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="485"/>
-        <source>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
-        <translation type="unfinished">&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;در زمان&lt;/span&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="490"/>
-        <source>, </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="514"/>
-        <source>&lt;span style=&quot;color:#b30;&quot;&gt;train canceled&lt;/span&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>پیاده روی</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="556"/>
+        <source>, </source>
+        <translation>،</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="448"/>
+        <source>Transfer</source>
+        <translation type="unfinished">انتقال</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="453"/>
+        <source>Use bike</source>
+        <translation type="unfinished">استفاده از دوچرخه</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="455"/>
+        <source>Drive car</source>
+        <translation type="unfinished">رانندگی ماشین</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="463"/>
+        <source>%1 for %2 min</source>
+        <translation type="unfinished">%1 برای %2 دقیقه</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="471"/>
+        <source> / </source>
+        <comment>Alternative trains</comment>
+        <extracomment>Separator for trains list, if more than one provided</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="506"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="526"/>
+        <source>%n min late</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="513"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="533"/>
+        <source>on time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="543"/>
+        <source>Train canceled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="546"/>
+        <source>Departure stop canceled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="549"/>
+        <source>Arrival stop canceled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="583"/>
+        <source>Journey contains canceled trains!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="625"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>خطای داخلی رخ داده است، جلو رفتن ممکن نیست</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="590"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="659"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>خطای داخلی رخ داده است، رفتن به عقب ممکن نیست</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="715"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="779"/>
         <source>Your session has expired. Please, perform the search again.</source>
         <translation>جلسه شما منقضی شده است. لطفا، دوباره جستجو کنید.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="717"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="781"/>
         <source>One of the station names is too ambiguous.</source>
         <translation>یکی از نام های ایستگاه بیش از حد مبهم است.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="719"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="783"/>
         <source>No connections have been found that correspond to your request.</source>
         <translation>بدون اتصالات یافت شده است که به درخواست شما مطابقت دارد.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="721"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="785"/>
         <source>There was an unsuccessful or incomplete search due to a timetable change.</source>
         <translation>یک جستجوی ناموفق یا ناقص با توجه به تغییر جدول زمانی وجود دارد.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="723"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="787"/>
         <source>Unfortunately there was no route found.</source>
         <translation>متاسفانه هیچ مسیری یافت نشد.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="725"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="789"/>
         <source>Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.</source>
         <translation>متاسفانه درخواست اتصال شما را نمی توان در حال حاضر پردازش کرد. ممکن است که تاریخ ها در داخل جدول زمانی دوره نیست.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="727"/>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="791"/>
         <source>Unknown error ocurred with the backend (error %1).</source>
         <translation>یک خطا در بخش مدیریت رخ داده است (خطای٪ 1).</translation>
     </message>
@@ -821,149 +866,118 @@ DATE, TIME</extracomment>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="213"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="358"/>
         <source>On-Time</source>
         <translation>در زمان</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="450"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="216"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="361"/>
+        <source>Canceled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="506"/>
         <source>All</source>
         <translation>همه</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="451"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="507"/>
         <source>All without ICE</source>
         <translation>همه بدون ICE</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="452"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="508"/>
         <source>Only local transport</source>
         <translation>فقط حمل و نقل محلی</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="453"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="509"/>
         <source>Local transport without S-Bahn</source>
         <translation>حمل و نقل محلی بدون S-Bahn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="553"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="609"/>
         <source>Error parsing reponse from the server: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="563"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="619"/>
         <source>%1 replied: &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="640"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="876"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="696"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="941"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>،</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="677"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="742"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>خطای داخلی رخ داده است، جلو رفتن ممکن نیست</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="702"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="767"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>خطای داخلی رخ داده است، رفتن به عقب ممکن نیست</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="753"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="774"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="818"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="839"/>
         <source>Internal error occured: JourneyResultdata not present!</source>
         <translation>خطای داخلی رخ داده است: ممکن است نتیجه داده های سفر وجود نداشته باشد!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="812"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="939"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="877"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1004"/>
         <source>Pl. %1</source>
-        <translation type="unfinished">Pl. %1</translation>
+        <translation>Pl. %1</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="889"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="903"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="954"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="968"/>
         <source>Walk</source>
-        <translation type="unfinished">پیاده روی</translation>
+        <translation>پیاده روی</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="889"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="954"/>
         <source>Transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>انتقال</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="891"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="912"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="956"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="977"/>
         <source>%1 for %2 min</source>
         <extracomment>%1 can be &quot;Walk&quot; or &quot;Transfer&quot;
 ----------
 %1 can be &quot;Walk&quot;, &quot;Use bike&quot;, &quot;Take taxi&quot;, or &quot;Drive car&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 برای %2 دقیقه</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="893"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="958"/>
         <source>Distance %n meter(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>فاصله٪ N متر(ی)</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="905"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="970"/>
         <source>Use bike</source>
-        <translation type="unfinished"></translation>
+        <translation>استفاده از دوچرخه</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="907"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="972"/>
         <source>Take taxi</source>
-        <translation type="unfinished"></translation>
+        <translation>تاکسی گرفتن</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="909"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="974"/>
         <source>Drive car</source>
-        <translation type="unfinished"></translation>
+        <translation>رانندگی ماشین</translation>
     </message>
     <message>
-        <source>Pl.</source>
-        <translation type="obsolete">Pl.</translation>
-    </message>
-    <message numerus="yes">
-        <source>Walk for %n min</source>
-        <translation type="obsolete">
-            <numerusform>پیاده روی برای ٪ دقیقه</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Use a Bike for %n min</source>
-        <translation type="obsolete">
-            <numerusform>استفاده از دوچرخه برای ٪ دقیقه</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Use a car for %n min</source>
-        <translation type="obsolete">
-            <numerusform>استفاده از خودرو برای ٪ دقیقه</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Take a taxi for %n min</source>
-        <translation type="obsolete">
-            <numerusform>گرفتن تاکسی برای ٪ دقیقه</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Transfer for %n min</source>
-        <translation type="obsolete">
-            <numerusform>انتقال برای ٪ دقیقه</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Internal error occured, Error parsing details data</source>
-        <translation type="obsolete">خطای داخلی رخ داده است، خطا در تجزیه جزئیات اطلاعات</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1019"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1084"/>
         <source>d</source>
         <translation>d</translation>
     </message>
@@ -1099,22 +1113,18 @@ DATE, TIME</extracomment>
         <location filename="../src/parser/parser_ninetwo.cpp" line="245"/>
         <location filename="../src/parser/parser_ninetwo.cpp" line="284"/>
         <source>Cannot parse reply from the server</source>
-        <translation type="unfinished"></translation>
+        <translation>پاسخ سرور را نمی توان تجزیه کرد</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="219"/>
         <source>via %1</source>
-        <translation type="unfinished"></translation>
+        <translation>از طریق٪ 1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="432"/>
         <location filename="../src/parser/parser_ninetwo.cpp" line="436"/>
         <source>Pl. %1</source>
-        <translation type="unfinished">Pl. %1</translation>
-    </message>
-    <message>
-        <source>via </source>
-        <translation type="obsolete">از طریق</translation>
+        <translation>Pl. %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="223"/>
@@ -1122,14 +1132,6 @@ DATE, TIME</extracomment>
 %3</source>
         <translation>(%1) %2
 %3</translation>
-    </message>
-    <message>
-        <source>Pl.</source>
-        <translation type="obsolete">Pl.</translation>
-    </message>
-    <message>
-        <source>%1 to %2</source>
-        <translation type="obsolete">٪1 تا ٪2</translation>
     </message>
 </context>
 <context>
@@ -1220,7 +1222,7 @@ DATE, TIME</extracomment>
     <message>
         <location filename="../src/parser/parser_sf_bay_efa.cpp" line="53"/>
         <source>Blue &amp; Gold Fleet</source>
-        <translation type="unfinished"></translation>
+        <translation>ناوگان طلایی و آبی</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_sf_bay_efa.cpp" line="54"/>
@@ -1265,12 +1267,12 @@ DATE, TIME</extracomment>
     <message>
         <location filename="../src/parser/parser_sf_bay_efa.cpp" line="62"/>
         <source>Marin Transit</source>
-        <translation type="unfinished"></translation>
+        <translation>حمل و نقل دریایی</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_sf_bay_efa.cpp" line="63"/>
         <source>Petaluma Transit</source>
-        <translation type="unfinished"></translation>
+        <translation>حمل و نقل پتالوما، کالیفرنیا</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_sf_bay_efa.cpp" line="64"/>
@@ -1487,10 +1489,6 @@ DATE, TIME</extracomment>
         <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="378"/>
         <source>Track %1</source>
         <translation>مسیر٪ 1</translation>
-    </message>
-    <message>
-        <source>to %1</source>
-        <translation type="obsolete">to %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="385"/>
@@ -1750,7 +1748,7 @@ DATE, TIME</extracomment>
     <message>
         <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="27"/>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>نتایج</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="49"/>
