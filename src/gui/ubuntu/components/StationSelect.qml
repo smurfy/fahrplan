@@ -18,9 +18,10 @@
 ****************************************************************************/
 
 import Fahrplan 1.0
-import QtQuick 2.0
+import QtQuick 2.3
 import QtLocation 5.0
-import Ubuntu.Components 0.1
+import QtPositioning 5.2
+import Ubuntu.Components 1.1
 import Ubuntu.Components.ListItems 0.1 as ListItems
 import "."
 import ".."
@@ -31,6 +32,18 @@ Page {
     signal stationSelected ()
     property int type: FahrplanBackend.DepartureStation
 //    property QtObject fahrplanBackend
+
+    property bool showFavorites: true
+
+    head.actions: [
+        Action {
+            iconName: stationSelect.showFavorites ? "starred" : "non-starred"
+            onTriggered: {
+                stationSelect.showFavorites = !stationSelect.showFavorites
+            }
+        }
+
+    ]
 
     Item {
         width:  stationSelect.width
@@ -51,12 +64,13 @@ Page {
                 anchors {
                     left: parent.left
                     leftMargin: units.gu(1)
-//                    right: gpsButton.left
-                    right: parent.right
+                    right: gpsButton.left
+                    //right: parent.right
                     rightMargin: units.gu(1)
                     top: parent.top
                     topMargin: units.gu(1)
                 }
+                inputMethodHints: Qt.ImhNoPredictiveText
 
                 onTextChanged: search.findStationsByName();
                 Keys.onReturnPressed: search.findStationsByName();
@@ -64,18 +78,20 @@ Page {
 
 
                 placeholderText: qsTr("Search for Station...")
-                Icon {
-                    id: searchButton
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    name: "find"
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            search.findStationsByName();
+                secondaryItem: [
+                    Icon {
+                        id: searchButton
+                        height: parent.height - units.gu(1)
+                        width: height
+                        name: "find"
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                search.findStationsByName();
+                            }
                         }
                     }
-                }
+                ]
             }
 
             function findStationsByName()
@@ -86,38 +102,27 @@ Page {
                 }
 
                 indicator.running = true;
-                listView.model = fahrplanBackend.stationSearchResults
+                stationSelect.showFavorites = false;
                 fahrplanBackend.findStationsByName(searchBox.text);
             }
 
-            // Not using GPS on ubuntu yet
-//            Button {
-//                id: gpsButton
-//                anchors {
-//                    right: parent.right
-//                    rightMargin: visible ? units.gu(1) : 0
-//                    top: parent.top
-//                    topMargin: units.gu(1)
-//                }
+            Button {
+                id: gpsButton
+                anchors {
+                    right: parent.right
+                    rightMargin: visible ? units.gu(1) : 0
+                    top: parent.top
+                    topMargin: units.gu(1)
+                }
+                iconName: "location"
+                width: visible ? height : 0
 
-//                Icon {
-//                    name: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/location.svg"
-//                    height: parent.height - units.gu(1)
-//                    width: height
-//                    anchors.centerIn: parent
-//                    z: 2
-//                }
-
-//                width: visible ? units.gu(8) : 0
-
-//                onClicked: {
-//                    listView.model = FahrplanBackend.stationSearchResults
-//                    favIcon.checked = false;
-//                    searchIcon.checked = true;
-
-//                    positionSource.start();
-//                }
-//            }
+                onClicked: {
+                    stationSelect.showFavorites = false;
+                    positionSource.start();
+                    indicator.running = true;
+                }
+            }
         }
 
         Label {
@@ -148,11 +153,11 @@ Page {
             }
             height: parent.height
             width: parent.width
-            model: fahrplanBackend.favorites
+            model: stationSelect.showFavorites ? fahrplanBackend.favorites : fahrplanBackend.stationSearchResults
             delegate: ListItems.Standard {
                 id: delegateItem
                 text: name
-                icon: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-" + (model.isFavorite ? "selected.svg" : "unselected.svg")
+                iconName: model.isFavorite ? "starred" : "non-starred"
 
                 onClicked: {
                     listView.model.selectStation(stationSelect.type, model.index);
@@ -171,10 +176,10 @@ Page {
                     onClicked: {
                         if (model.isFavorite) {
                             listView.model.removeFromFavorites(index);
-                            delegateItem.icon = "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-unselected.svg"
+                            delegateItem.iconName = "non-starred";
                         } else {
                             listView.model.addToFavorites(index);
-                            delegateItem.icon = "file:///usr/share/icons/ubuntu-mobile/actions/scalable/favorite-selected.svg"
+                            delegateItem.iconName = "starred";
                         }
                     }
                 }
@@ -199,20 +204,25 @@ Page {
         }
     }
 
-    // Disabling for now as Ubuntu's AppArmor config currently prevents accessing GPS
-/*    PositionSource {
+    PositionSource {
         id: positionSource
         active: false
 
         onPositionChanged: {
-            if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
-                positionSource.stop();
 
+            // For some reason the active property doesn't seem to work on Ubuntu currently.
+            // It'll keep on emitting position changes despite active being set to false...
+            // https://bugs.launchpad.net/location-service/+bug/1395313
+            if (!positionSource.active) {
+                return;
+            }
+
+            if (positionSource.position.latitudeValid && positionSource.position.longitudeValid) {
+                positionSource.active = false;
                 fahrplanBackend.parser.findStationsByCoordinates(positionSource.position.coordinate.longitude, positionSource.position.coordinate.latitude);
             } else {
                 positionSource.active = true
             }
         }
     }
-    */
 }
