@@ -1,6 +1,16 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.21
+------
+
+- Fix for bahn.de and öbb.at backend to have more later/earlier results
+- Fix for encoding problems with öbb.at
+- Show canceled trains / stops in journey details
+- Show alternative trains in journey details
+- Show realtime train information for sbb.ch timetable
+- Adding polish translation by maurycy
+
 2.0.20
 ------
 

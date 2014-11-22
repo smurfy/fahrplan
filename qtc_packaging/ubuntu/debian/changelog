@@ -1,3 +1,13 @@
+fahrplan2 (2.0.21) saucy; urgency=low
+  * Fix for bahn.de and öbb.at backend to have more later/earlier results
+  * Fix for encoding problems with öbb.at
+  * Show canceled trains / stops in journey details
+  * Show alternative trains in journey details
+  * Show realtime train information for sbb.ch timetable
+  * Adding polish translation by maurycy
+
+ -- smurfy <maemo@smurfy.de>  Sat, 22 Nov 2014 12:00:00 +0200
+
 fahrplan2 (2.0.20) saucy; urgency=low
   * Added more translations and updated existing
   * Added showing train direction for multiple backends
