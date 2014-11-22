@@ -4,12 +4,23 @@ BlackBerry World ChangeLog
 2.0.21
 ------
 
-- Fix for bahn.de and öbb.at backend to have more later/earlier results
-- Fix for encoding problems with öbb.at
-- Show canceled trains / stops in journey details
-- Show alternative trains in journey details
-- Show realtime train information for sbb.ch timetable
-- Adding polish translation by maurycy
+- New: Display of announcements for most services.
+- New: Display of canceled trains / stops in journey details for bahn.de
+  and öbb.at services.
+- New: Display of parallel / alternative trains for bahn.de and öbb.at
+  services.
+- New: Display of routing type (i.e., transfer, walk, bike, car; if
+  provided) for bahn.de and öbb.at services.
+- New: Display of realtime train information in timetable for sbb.ch
+  service.
+- New: Polish translation.
+- Fix: Empty entries in journey search results when using "Earlier" /
+  "Later" button.
+- Fix: Some stops were displayed with wrong encoding in öbb.at service.
+- Fix: "Walk for %2 min" message
+- Proper splash screens for BlackBerry devices with 1280x720 and
+  1440x1440.
+
 
 2.0.20
 ------
