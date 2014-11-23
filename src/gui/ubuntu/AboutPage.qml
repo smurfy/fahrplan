@@ -198,8 +198,13 @@ Page {
                     Repeater {
                         model: About.translators
                         delegate: Label {
-                            anchors.left: parent.left
-                            anchors.leftMargin:  units.gu(2)
+                            anchors {
+                                left: parent.left
+                                right: parent.right
+                                margins: units.gu(2)
+                            }
+
+                            wrapMode: Text.WordWrap
                             text: About.translators[index]
                         }
                     }

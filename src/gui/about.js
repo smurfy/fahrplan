@@ -52,4 +52,4 @@ var support = "<p>If fahrplan is not translated in your language, help us <a hre
 
 var maintainers = ["Philipp Andreas (smurfy)", "Michael Zanetti (mzanetti)", "Oleksii Serdiuk (leppa)"];
 var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "Nekhelesh Ramananthan (nik90)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog"];
-var translators = ["Philipp Andreas (smurfy)", "Florian Wittmann", "Oleksii Serdiuk (leppa)", "Alexey (lewa)", "LaurB (laurbb)", "Heimen Stoffels (Vistaus)", "Ali Adineh (ali6007205)", "maurycy"];
+var translators = ["German - Philipp Andreas (smurfy), Florian Wittmann", "Ukrainian - Oleksii Serdiuk (leppa)", "Russian - Oleksii Serdiuk (leppa), Alexey (lewa)", "Romanian - LaurB (laurbb)", "Dutch - Heimen Stoffels (Vistaus)", "Persian - Ali Adineh (ali6007205)", "Polish - maurycy"];
