@@ -24,64 +24,160 @@ import "../about.js" as About
 
 Page {
     id: aboutPage
-    title: qsTr("About Fahrplan")
 
-    Flickable {
-        id: flickable
-        anchors.fill: parent
-        flickableDirection: Flickable.VerticalFlick
-        clip: true
-        contentWidth: width
-        contentHeight: contentColumn.height + units.gu(2)
+    title: qsTr("About")
+    flickable: null
 
-        Column {
-            id: contentColumn
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.margins: units.gu(1)
-            height: childrenRect.height
-            spacing: units.gu(1)
+    head.sections.model: [qsTr("About"), qsTr("Credits"), qsTr("License")]
 
-            Row {
-                id: aboutContainer
-                width: parent.width
-                height: titleColumn.height
-                spacing: units.gu(1)
+    VisualItemModel {
+        id: tabs
+
+        Item {
+            width: tabView.width
+            height: tabView.height
+
+            Column {
+                spacing: units.gu(4)
+                anchors.centerIn: parent
+                width: parent.width > units.gu(50) ? units.gu(50) : parent.width
 
                 UbuntuShape {
-                    id: logoImg
-                    height: titleColumn.height
-                    width: height
+                    id: logo2
+
+                    width: parent.width / 2
+                    height: width
                     radius: "medium"
+                    anchors.horizontalCenter: parent.horizontalCenter
+
                     image: Image {
                         source: "qrc:/fahrplan2.svg"
-                        height: parent.height
-                        width: height
+                    }
+                }
+
+                Column {
+                    width: parent.width
+
+                    Label {
+                        width: parent.width
+                        fontSize: "x-large"
+                        font.weight: Font.DemiBold
+                        horizontalAlignment: Text.AlignHCenter
+                        text: "Fahrplan"
+                    }
+
+                    Label {
+                        width: parent.width
+                        horizontalAlignment: Text.AlignHCenter
+                        text: qsTr("Version %1").arg(fahrplanBackend.version)
+                    }
+                }
+
+                Column {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        margins: units.gu(2)
+                    }
+
+                    Label {
+                        width: parent.width
+                        wrapMode: Text.WordWrap
+                        horizontalAlignment: Text.AlignHCenter
+                        text: "(C) 2014 smurfy (maemo@smurfy.de)"
+                    }
+
+                    Label {
+                        fontSize: "small"
+                        width: parent.width
+                        wrapMode: Text.WordWrap
+                        horizontalAlignment: Text.AlignHCenter
+                        text: i18n.tr("Released under the terms of the GNU GPL v2 or higher")
                     }
                 }
 
                 Label {
-                    id: titleColumn
-                    textFormat: Text.RichText
-                    text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
-                    width: parent.width - x
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                    fontSize: "small"
+                    horizontalAlignment: Text.AlignHCenter
+                    text: i18n.tr("Source code available on ") + "<a href=\"https://github.com/smurfy/fahrplan\">github</a>"
+                    onLinkActivated: Qt.openUrlExternally(link)
                 }
-            }
-
-            Label{
-                id: moreText
-                text: About.aboutText
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                wrapMode: Text.WordWrap
-                width: parent.width
-                textFormat: Text.RichText
-
-                onLinkActivated : Qt.openUrlExternally(link);
             }
         }
+
+        Item {
+            width: tabView.width
+            height: tabView.height
+
+            Flickable {
+                clip: true
+                anchors.fill: parent
+                anchors.margins: units.gu(2)
+                flickableDirection: Flickable.VerticalFlick
+
+                contentWidth: width
+                contentHeight: creditText.height + units.gu(2)
+
+                Label{
+                    id: creditText
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.top
+                    }
+
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                    textFormat: Text.RichText
+                    onLinkActivated : Qt.openUrlExternally(link);
+                    text: About.aboutText.split("<p><b>License</b></p>")[0]
+                }
+            }
+        }
+
+        Item {
+            width: tabView.width
+            height: tabView.height
+
+            Flickable {
+                clip: true
+                anchors.fill: parent
+                anchors.margins: units.gu(2)
+                flickableDirection: Flickable.VerticalFlick
+
+                contentWidth: width
+                contentHeight: licenseText.height + units.gu(2)
+
+                Label{
+                    id: licenseText
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.top
+                    }
+
+                    wrapMode: Text.WordWrap
+                    width: parent.width
+                    textFormat: Text.RichText
+                    onLinkActivated : Qt.openUrlExternally(link)
+                    text: About.aboutText.split("<p><b>License</b></p>")[1]
+                }
+            }
+        }
+    }
+
+    ListView {
+        id: tabView
+        model: tabs
+        interactive: false
+        anchors.fill: parent
+        orientation: Qt.Horizontal
+        snapMode: ListView.SnapOneItem
+        currentIndex: aboutPage.head.sections.selectedIndex
+        highlightMoveDuration: UbuntuAnimation.SlowDuration
     }
 }
