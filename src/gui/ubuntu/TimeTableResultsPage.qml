@@ -24,41 +24,25 @@ import Ubuntu.Components.ListItems 0.1 as ListItems
 import "components"
 
 Page {
-    title: qsTr("Results")
-    property alias searchIndicatorVisible: searchIndicator.visible
-
-    property int selMode : 0
-
     id: searchResultsPage
 
-    tools: timetableResultsToolbar
+    property alias searchIndicatorVisible: searchIndicator.visible
+    property int selMode : 0
+
+    title: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
+
+    head.backAction: Action {
+        iconName: "back"
+        onTriggered: {
+            pageStack.pop()
+            fahrplanBackend.parser.cancelRequest();
+        }
+    }
+
     Item {
         id: searchResults
 
-        width:  parent.width
-        height: parent.height
-
-        Item {
-            id: titleBar
-
-            width: parent.width
-            height: units.gu(7)
-
-            Label {
-                id: timetableTitle
-                text: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
-                font.bold: true;
-                fontSize: "large"
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(1)
-                    right: parent.right
-                    rightMargin: units.gu(1)
-                    verticalCenter: parent.verticalCenter
-                }
-                width: parent.width
-            }
-        }
+        anchors.fill: parent
 
         ActivityIndicator {
             id: searchIndicator
@@ -67,31 +51,13 @@ Page {
             visible: false
         }
 
-        ListItems.Divider {
-            id: divider
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: titleBar.bottom
-            }
-        }
-
         ListView {
             id: listView
-            anchors {
-                top: divider.bottom
-            }
-            height: parent.height - titleBar.height - units.gu(2)
-            width: parent.width
+            clip: true
+            anchors.fill: parent
             model: fahrplanBackend.timetable
             delegate:  timetableResultDelegate
-            clip: true
-
         }
-
-        //        ScrollDecorator {
-        //            flickableItem: listView
-        //        }
     }
 
     Component {
@@ -102,7 +68,6 @@ Page {
             width: listView.width
             height: units.gu(4) + lbl_destination.height + (lbl_station.height > lbl_type.height ? lbl_station.height : lbl_type.height) + (lbl_miscinfo.visible ? lbl_miscinfo.height : 0)
             highlightWhenPressed: false
-
 
             Item {
                 anchors {
@@ -164,7 +129,6 @@ Page {
                         width: ((parent.width  - units.gu(4)) / 4) * 3
                     }
 
-
                     Label {
                         id: lbl_miscinfo_title
                         visible: (miscInfo == "") ? false : true
@@ -182,8 +146,6 @@ Page {
                         elide: Text.ElideRight
                     }
                 }
-
-
             }
         }
     }
@@ -200,17 +162,4 @@ Page {
             searchIndicator.running = false;
         }
     }
-
-    //    ToolBarLayout {
-    //        id: timetableResultsToolbar
-
-    //        ToolIcon {
-    //            id : backIcon;
-    //            iconId: "toolbar-back"
-    //            onClicked: {
-    //                pageStack.pop();
-    //                fahrplanBackend.parser.cancelRequest();
-    //            }
-    //        }
-    //    }
 }
