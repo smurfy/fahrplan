@@ -46,8 +46,8 @@ var license = "<p>This program is free software; you can redistribute it and/or 
         "<p>You should have received a copy of the GNU General Public License " +
         "along with this program. If not, see &lt;<a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>&gt;.</p>";
 
-var support = "<p>If fahrplan is not translated in your language, help us <a href=\"https://www.transifex.com/projects/p/fahrplan/\">Translate to your language</a></p>" +
-        "<p>If you like fahrplan, i would appreciate a donation. <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a></p>" +
+var support = "<p>If fahrplan is not translated in your language, help us <a href=\"https://www.transifex.com/projects/p/fahrplan/\">translate it to your language</a>.</p>" +
+        "<p>If you like fahrplan, I would appreciate a donation. <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a></p>" +
         "<p>If you encounter bugs or have feature requests visit the <a href=\"https://github.com/smurfy/fahrplan/issues\">Fahrplan issue tracker on GitHub</a></p>";
 
 var ubuntu_touch_maintainer = ["Michael Zanetti (mzanetti)", "leppa"];
