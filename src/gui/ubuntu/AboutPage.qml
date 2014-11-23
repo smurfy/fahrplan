@@ -169,12 +169,12 @@ Page {
                     }
 
                     Repeater {
-                        model: About.ubuntu_touch_maintainer
+                        model: About.maintainers
 
                         delegate: Label {
                             anchors.left: parent.left
                             anchors.leftMargin:  units.gu(2)
-                            text: About.ubuntu_touch_maintainer[index]
+                            text: About.maintainers[index]
                         }
                     }
 
