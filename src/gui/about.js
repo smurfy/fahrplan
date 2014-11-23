@@ -50,6 +50,6 @@ var support = "<p>If fahrplan is not translated in your language, help us <a hre
         "<p>If you like fahrplan, I would appreciate a donation. <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a></p>" +
         "<p>If you encounter bugs or have feature requests visit the <a href=\"https://github.com/smurfy/fahrplan/issues\">Fahrplan issue tracker on GitHub</a></p>";
 
-var maintainers = ["smurfy", "Michael Zanetti (mzanetti)", "leppa"];
-var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk", "NightShift79", "pirast", "mzanetti", "shentok", "evansebire", "unsanded", "Morpog"];
-var translators = ["smurfy", "Florian Wittmann", "Oleksii Serdiuk", "Oleksii Serdiuk", "Alexey (lewa)", "LaurB (laurbb)", "Heimen Stoffels (Vistaus)", "Ali Adineh (ali6007205)", "maurycy"];
+var maintainers = ["Philipp Andreas (smurfy)", "Michael Zanetti (mzanetti)", "Oleksii Serdiuk (leppa)"];
+var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog"];
+var translators = ["Philipp Andreas (smurfy)", "Florian Wittmann", "Oleksii Serdiuk (leppa)", "Oleksii Serdiuk", "Alexey (lewa)", "LaurB (laurbb)", "Heimen Stoffels (Vistaus)", "Ali Adineh (ali6007205)", "maurycy"];
