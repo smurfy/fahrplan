@@ -166,8 +166,8 @@ Page {
                     onClicked: {
                         pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
                         pageStack.currentPage.stationSelected.connect(function() {
-                                                                          pageStack.pop();
-                                                                      })
+                            pageStack.pop();
+                        })
                     }
                     onPressAndHold: {
                         openMenu(departureButton);
@@ -187,8 +187,8 @@ Page {
                     onClicked: {
                         pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
                         pageStack.currentPage.stationSelected.connect(function() {
-                                                                          pageStack.pop();
-                                                                      })
+                            pageStack.pop();
+                        })
                     }
                     onPressAndHold: {
                         openMenu(viaButton);
@@ -208,8 +208,8 @@ Page {
                     onClicked: {
                         pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
                         pageStack.currentPage.stationSelected.connect(function() {
-                                                                          pageStack.pop();
-                                                                      })
+                            pageStack.pop();
+                        })
                     }
                     onPressAndHold: {
                         openMenu(arrivalButton);
@@ -227,8 +227,8 @@ Page {
                     onClicked: {
                         pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation})
                         pageStack.currentPage.stationSelected.connect(function(name) {
-                                                                          pageStack.pop();
-                                                                      })
+                            pageStack.pop();
+                        })
                     }
                 }
                 ListItems.Subtitled {
@@ -243,8 +243,8 @@ Page {
                     onClicked: {
                         pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DirectionStation})
                         pageStack.currentPage.stationSelected.connect(function() {
-                                                                          pageStack.pop();
-                                                                      })
+                            pageStack.pop();
+                        })
                     }
                     onPressAndHold: {
                         timeTableSelectContextMenu.open();
@@ -270,10 +270,10 @@ Page {
                         var selectedDateTime = fahrplanBackend.dateTime
                         var popupObj = PopupUtils.open(datePicker, datePickerButton, {day: selectedDateTime.getDate(), month: selectedDateTime.getMonth(), year: selectedDateTime.getFullYear()})
                         popupObj.accepted.connect(function(day, month, year) {
-                                                      var newDate = selectedDateTime
-                                                      newDate.setFullYear(year, month, day)
-                                                      fahrplanBackend.dateTime = newDate
-                                                  })
+                            var newDate = selectedDateTime
+                            newDate.setFullYear(year, month, day)
+                            fahrplanBackend.dateTime = newDate
+                        })
 
                     }
                 }
@@ -291,10 +291,10 @@ Page {
                         var selectedDateTime = fahrplanBackend.dateTime;
                         var popupObj = PopupUtils.open(timePicker, timePickerButton, {hour: selectedDateTime.getHours(), minute: selectedDateTime.getMinutes()});
                         popupObj.accepted.connect(function(hour, minute) {
-                                                      var newDate = selectedDateTime
-                                                      newDate.setHours(hour, minute)
-                                                      fahrplanBackend.dateTime = newDate;
-                                                  })
+                            var newDate = selectedDateTime
+                            newDate.setHours(hour, minute)
+                            fahrplanBackend.dateTime = newDate;
+                        })
                     }
                 }
 
@@ -361,26 +361,34 @@ Page {
         Dialog {
             title: qsTr("Select backend")
             id: selectBackendDialog
-            ListView {
-                width: parent.width
-                height: units.gu(30)
-                clip: true
-                model: parserBackendModel
-                delegate: ListItems.Standard {
-                    text: modelData
+            contents: [
+                ListView {
+                    width: parent.width
+                    height: units.gu(30)
+                    clip: true
+                    model: parserBackendModel
+                    delegate: ListItems.Standard {
+                        text: modelData
 
-                    // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
-                    // ListItems don't know that they are sitting in a themed Popover where the color
-                    // needs to be inverted.
-                    __foregroundColor: Theme.palette.selected.backgroundText
+                        // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
+                        // ListItems don't know that they are sitting in a themed Popover where the color
+                        // needs to be inverted.
+                        __foregroundColor: Theme.palette.selected.backgroundText
 
-                    onClicked: {
-                        fahrplanBackend.setParser(index);
-                        PopupUtils.close(selectBackendDialog)
+                        onClicked: {
+                            fahrplanBackend.setParser(index);
+                            PopupUtils.close(selectBackendDialog)
+                        }
                     }
-                }
 
-            }
+                },
+
+                Button {
+                    text: "Close"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: PopupUtils.close(selectBackendDialog)
+                }
+            ]
 
         }
     }
@@ -407,8 +415,8 @@ Page {
                     __foregroundColor: Theme.palette.selected.backgroundText
 
                     onClicked: {
-                       fahrplanBackend.setTrainrestriction(index)
-                       PopupUtils.close(selectTrainrestrictionsDialog)
+                        fahrplanBackend.setTrainrestriction(index)
+                        PopupUtils.close(selectTrainrestrictionsDialog)
                     }
                 }
             }
@@ -556,8 +564,8 @@ Page {
             items = fahrplanBackend.getParserList();
             for (i = 0; i < items.length; i++) {
                 parserBackendModel.append({
-                    "name" : items[i]
-                });
+                                              "name" : items[i]
+                                          });
             }
 
         }
