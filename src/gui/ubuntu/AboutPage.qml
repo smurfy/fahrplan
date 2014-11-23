@@ -147,7 +147,6 @@ Page {
             Flickable {
                 clip: true
                 anchors.fill: parent
-                anchors.topMargin: units.gu(1)
                 flickableDirection: Flickable.VerticalFlick
 
                 contentWidth: width
@@ -156,43 +155,43 @@ Page {
                 Column {
                     id: creditsColumn
 
-                    spacing: units.gu(1)
+                    spacing: units.gu(0.5)
 
                     anchors {
                         left: parent.left
                         right: parent.right
                         top: parent.top
+                        margins: units.gu(2)
                     }
 
-                    ListItem.Header {
+                    Label {
                         text: "Maintainers"
+                        font.bold: true
                     }
 
                     Repeater {
                         model: About.maintainers
 
                         delegate: Label {
-                            anchors.left: parent.left
-                            anchors.leftMargin:  units.gu(2)
                             text: About.maintainers[index]
                         }
                     }
 
-                    ListItem.Header {
+                    Label {
                         text: "Code Contributors"
+                        font.bold: true
                     }
 
                     Repeater {
                         model: About.codeContributors
                         delegate: Label {
-                            anchors.left: parent.left
-                            anchors.leftMargin:  units.gu(2)
                             text: About.codeContributors[index]
                         }
                     }
 
-                    ListItem.Header {
+                    Label {
                         text: "Translators"
+                        font.bold: true
                     }
 
                     Repeater {
@@ -201,7 +200,6 @@ Page {
                             anchors {
                                 left: parent.left
                                 right: parent.right
-                                margins: units.gu(2)
                             }
 
                             wrapMode: Text.WordWrap
