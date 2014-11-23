@@ -19,6 +19,8 @@
 
 import QtQuick 2.3
 import Ubuntu.Components 1.1
+import Ubuntu.Components.Popups 1.0
+import Ubuntu.Components.ListItems 1.0 as ListItem
 import Fahrplan 1.0
 import "../about.js" as About
 
@@ -28,7 +30,34 @@ Page {
     title: qsTr("About")
     flickable: null
 
-    head.sections.model: [qsTr("About"), qsTr("Credits"), qsTr("License")]
+    head.sections.model: [qsTr("About"), qsTr("Credits"), qsTr("Support")]
+
+    Component {
+        id: dialog
+        Dialog {
+            id: dialogue
+            title: "Copyright"
+            Flickable {
+                height: units.gu(30)
+                clip: true
+                contentHeight: copyrightText.height
+
+                Label {
+                    id: copyrightText
+                    wrapMode: Text.WordWrap
+                    width: parent.width
+                    fontSize: "small"
+                    text: About.license
+                }
+            }
+
+            Button {
+                text: i18n.tr("Close")
+                onClicked: PopupUtils.close(dialogue)
+            }
+        }
+    }
+
 
     VisualItemModel {
         id: tabs
@@ -43,8 +72,6 @@ Page {
                 width: parent.width > units.gu(50) ? units.gu(50) : parent.width
 
                 UbuntuShape {
-                    id: logo2
-
                     width: parent.width / 2
                     height: width
                     radius: "medium"
@@ -104,6 +131,12 @@ Page {
                     text: i18n.tr("Source code available on ") + "<a href=\"https://github.com/smurfy/fahrplan\">github</a>"
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
+
+                Button {
+                    text: "See full copyright"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: PopupUtils.open(dialog)
+                }
             }
         }
 
@@ -114,14 +147,14 @@ Page {
             Flickable {
                 clip: true
                 anchors.fill: parent
-                anchors.margins: units.gu(2)
+                anchors.topMargin: units.gu(1)
                 flickableDirection: Flickable.VerticalFlick
 
                 contentWidth: width
-                contentHeight: creditText.height + units.gu(2)
+                contentHeight: creditsColumn.height + units.gu(2)
 
-                Label{
-                    id: creditText
+                Column {
+                    id: creditsColumn
 
                     anchors {
                         left: parent.left
@@ -129,11 +162,38 @@ Page {
                         top: parent.top
                     }
 
-                    width: parent.width
-                    wrapMode: Text.WordWrap
-                    textFormat: Text.RichText
-                    onLinkActivated : Qt.openUrlExternally(link);
-                    text: About.aboutText.split("<p><b>License</b></p>")[0]
+                    ListItem.Header {
+                        text: "Maintainers"
+                    }
+
+                    Repeater {
+                        model: About.ubuntu_touch_maintainer
+                        delegate: ListItem.Standard {
+                            text: About.ubuntu_touch_maintainer[index]
+                        }
+                    }
+
+                    ListItem.Header {
+                        text: "Code Contributors"
+                    }
+
+                    Repeater {
+                        model: About.codeContributors
+                        delegate: ListItem.Standard {
+                            text: About.codeContributors[index]
+                        }
+                    }
+
+                    ListItem.Header {
+                        text: "Translators"
+                    }
+
+                    Repeater {
+                        model: About.translators
+                        delegate: ListItem.Standard {
+                            text: About.translators[index]
+                        }
+                    }
                 }
             }
         }
@@ -149,10 +209,10 @@ Page {
                 flickableDirection: Flickable.VerticalFlick
 
                 contentWidth: width
-                contentHeight: licenseText.height + units.gu(2)
+                contentHeight: supportText.height + units.gu(2)
 
                 Label{
-                    id: licenseText
+                    id: supportText
 
                     anchors {
                         left: parent.left
@@ -164,7 +224,7 @@ Page {
                     width: parent.width
                     textFormat: Text.RichText
                     onLinkActivated : Qt.openUrlExternally(link)
-                    text: About.aboutText.split("<p><b>License</b></p>")[1]
+                    text: About.support
                 }
             }
         }
