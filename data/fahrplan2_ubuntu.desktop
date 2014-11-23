@@ -3,6 +3,7 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=Fahrplan
+Keywords=travel;train;tram;bus;journey;
 Exec=./fahrplan2
 Icon=fahrplan2-square.svg
 X-Ubuntu-Touch=true
