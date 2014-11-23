@@ -314,6 +314,7 @@ Page {
                     showDivider: false
                     Button {
                         id: timetableSearch
+                        color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
                         text: timeModeSelector.selectedIndex !== 2 ? qsTr("Show departures") : qsTr("Show arrivals")
                         enabled: stationButton.subText !== qsTr("please select")
                         anchors {
@@ -330,7 +331,8 @@ Page {
                     }
                     Button {
                         id: startSearch
-                        text: qsTr("Start search")
+                        text: qsTr("Plan my journey")
+                        color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
                         enabled: departureButton.subText !== qsTr("please select") && arrivalButton.subText !== qsTr("please select")
                         anchors {
                             left: parent.left
