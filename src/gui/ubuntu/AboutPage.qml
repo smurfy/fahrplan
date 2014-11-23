@@ -36,7 +36,7 @@ Page {
         id: dialog
         Dialog {
             id: dialogue
-            title: "Copyright"
+            title: qsTr("Copyright")
             Flickable {
                 height: units.gu(30)
                 clip: true
@@ -119,7 +119,7 @@ Page {
                         width: parent.width
                         wrapMode: Text.WordWrap
                         horizontalAlignment: Text.AlignHCenter
-                        text: i18n.tr("Released under the terms of the GNU GPL v2 or higher")
+                        text: qsTr("Released under the terms of the GNU GPL v2 or higher")
                     }
                 }
 
@@ -128,12 +128,12 @@ Page {
                     wrapMode: Text.WordWrap
                     fontSize: "small"
                     horizontalAlignment: Text.AlignHCenter
-                    text: i18n.tr("Source code available on ") + "<a href=\"https://github.com/smurfy/fahrplan\">github</a>"
+                    text: qsTr("Source code available on %1").arg("<a href=\"https://github.com/smurfy/fahrplan\">github</a>")
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
 
                 Button {
-                    text: "See full copyright"
+                    text: qsTr("See full copyright")
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: PopupUtils.open(dialog)
                 }
@@ -165,7 +165,7 @@ Page {
                     }
 
                     Label {
-                        text: "Maintainers"
+                        text: qsTr("Maintainers")
                         font.bold: true
                     }
 
@@ -178,7 +178,7 @@ Page {
                     }
 
                     Label {
-                        text: "Code Contributors"
+                        text: qsTr("Code Contributors")
                         font.bold: true
                     }
 
@@ -190,7 +190,7 @@ Page {
                     }
 
                     Label {
-                        text: "Translators"
+                        text: qsTr("Translators")
                         font.bold: true
                     }
 
