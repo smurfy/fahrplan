@@ -156,6 +156,8 @@ Page {
                 Column {
                     id: creditsColumn
 
+                    spacing: units.gu(1)
+
                     anchors {
                         left: parent.left
                         right: parent.right
@@ -168,7 +170,10 @@ Page {
 
                     Repeater {
                         model: About.ubuntu_touch_maintainer
-                        delegate: ListItem.Standard {
+
+                        delegate: Label {
+                            anchors.left: parent.left
+                            anchors.leftMargin:  units.gu(2)
                             text: About.ubuntu_touch_maintainer[index]
                         }
                     }
@@ -179,7 +184,9 @@ Page {
 
                     Repeater {
                         model: About.codeContributors
-                        delegate: ListItem.Standard {
+                        delegate: Label {
+                            anchors.left: parent.left
+                            anchors.leftMargin:  units.gu(2)
                             text: About.codeContributors[index]
                         }
                     }
@@ -190,7 +197,9 @@ Page {
 
                     Repeater {
                         model: About.translators
-                        delegate: ListItem.Standard {
+                        delegate: Label {
+                            anchors.left: parent.left
+                            anchors.leftMargin:  units.gu(2)
                             text: About.translators[index]
                         }
                     }
