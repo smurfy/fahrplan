@@ -111,7 +111,7 @@ Page {
                         width: parent.width
                         wrapMode: Text.WordWrap
                         horizontalAlignment: Text.AlignHCenter
-                        text: "(C) 2014 smurfy (maemo@smurfy.de)"
+                        text: About.copyright
                     }
 
                     Label {

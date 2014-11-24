@@ -35,6 +35,8 @@ var aboutText = "<p>This or prior versions uses code contribution by:<br><i>gri<
         "<p>You should have received a copy of the GNU General Public License " +
         "along with this program. If not, see &lt;<a href=\"http://www.gnu.org/licenses/\">http://www.gnu.org/licenses/</a>&gt;.</p>";
 
+var copyright = "(C) 2014 smurfy (maemo@smurfy.de)";
+
 var license = "<p>This program is free software; you can redistribute it and/or " +
         "modify it under the terms of the GNU General Public License " +
         "as published by the Free Software Foundation; either version 2 " +

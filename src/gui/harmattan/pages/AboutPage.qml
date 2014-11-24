@@ -34,81 +34,157 @@ Page {
         height: aboutPage.height - 40
         flickableDirection: Flickable.VerticalFlick
         clip: true
-        contentWidth: aboutPage.width - 60
-        contentHeight: aboutContainer.height + moreText.height + 60
+        contentWidth: aboutPage.width
+        contentHeight: aboutContainer.height
 
         anchors {
-            left: parent.left
-            leftMargin: 20
-            rightMargin: 20
-            right: parent.right
             top: parent.top
             topMargin: 20
         }
 
-        Item {
+        Column {
             width: parent.width
-
             id: aboutContainer
 
-            Image {
-                id: logoImg
-                source: "qrc:/data/fahrplan2.svg"
-            }
-
             LabelStyle { id: style }
+            spacing: 25
 
-            Text {
-                id: aboutText
+            Label {
                 text: qsTr("About Fahrplan")
                 color: style.textColor
                 anchors {
-                    left: logoImg.right
-                    leftMargin: 30
-                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
                 }
-
-                font {
-                    pointSize: 24
-                }
+                font.bold: true;
+                font.pixelSize: 32
             }
 
-            Text {
-                textFormat: Text.RichText
-                text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
-                color: theme.inverted ? "lightgrey" : "darkgrey"
+            Image {
+                source: "qrc:/data/fahrplan2.svg"
                 anchors {
-                    left: logoImg.right
-                    leftMargin: 30
-                    top: aboutText.bottom
-                }
-
-                font {
-                    pointSize: 14
+                    horizontalCenter: parent.horizontalCenter
                 }
             }
 
-            height: logoImg.height
-        }
-
-        Text {
-            id: moreText
-            color: style.textColor
-            text: About.aboutText
-            anchors {
-                top: aboutContainer.bottom
-                topMargin: 20
-                horizontalCenter: parent.horizontalCenter
-            }
-            wrapMode: Text.WordWrap
-            width: parent.width
-            textFormat: Text.RichText
-
-            font {
-                pointSize: 14
+            Label {
+                text: qsTr("Version") + " " + fahrplanBackend.version
+                color: style.textColor
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
             }
 
-            onLinkActivated : Qt.openUrlExternally(link);
+            Label {
+                text: About.copyright
+                color: style.textColor
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
+            }
+
+            Column {
+                width: parent.width - 20
+                anchors {
+                    leftMargin: 10
+                    rightMargin: 10
+                    left: parent.left
+                    right: parent.right
+                }
+
+                Label {
+                    text: qsTr("Maintainers")
+                    font.bold: true
+                }
+
+                Repeater {
+                    model: About.maintainers
+
+                    delegate: Label {
+                        text: About.maintainers[index]
+                    }
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("Code Contributors")
+                    font.bold: true
+                }
+
+                Repeater {
+                    model: About.codeContributors
+                    delegate: Label {
+                        text: About.codeContributors[index]
+                    }
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("Translators")
+                    font.bold: true
+                }
+
+                Repeater {
+                    model: About.translators
+                    delegate: Label {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+
+                        wrapMode: Text.WordWrap
+                        text: About.translators[index]
+                    }
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("Support")
+                    font.bold: true
+                }
+
+                Label {
+                    wrapMode: Text.WordWrap
+                    width: parent.width
+                    textFormat: Text.RichText
+                    onLinkActivated : Qt.openUrlExternally(link)
+                    text: About.support
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("License")
+                    font.bold: true
+                }
+
+                Label {
+                    wrapMode: Text.WordWrap
+                    width: parent.width
+                    textFormat: Text.RichText
+                    onLinkActivated : Qt.openUrlExternally(link)
+                    text: About.license
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+            }
         }
     }
 
