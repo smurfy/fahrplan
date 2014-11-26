@@ -379,12 +379,16 @@ symbian|simulator {
         # Use this UID for development purposes.
         TARGET.UID3 = 0xE4182966
 
-        # Smart Installer package's UID
+        # Smart Installer package UID (protected range)
         # This UID is from the protected range and therefore the package will
-        # fail to install if self-signed. By default qmake uses the unprotected
-        # range value if unprotected UID is defined for the application and
-        # 0x2002CCCF value if protected UID is given to the application
-        DEPLOYMENT.installer_header = 0x2002CCCF
+        # fail to install if self-signed. If you want to create Smart Installer
+        # package for self-signed executable, use UID from the unprotected range.
+        # See http://doc.qt.digia.com/smart-installer-1.1/smartinstaller-uids.html
+        #DEPLOYMENT.installer_header = 0x2002CCCF
+
+        # Smart Installer package UID (unprotected range)
+        # See the description above.
+        DEPLOYMENT.installer_header = 0xA000D7CE
 
         QMAKE_TARGET_COMPANY = smurfy <maemo@smurfy.de>
         QMAKE_TARGET_PRODUCT = Fahrplan
