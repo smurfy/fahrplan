@@ -7,7 +7,7 @@ Dear N9 and symbian users,
 
 Version 2.0.15 is latest version available in the Nokia store and i'm not longer able to update fahrplan via the store.
 
-Visit the [download page][1] to download newer versions for your symbian or [OpenRepos.net][2] for N9/N950.
+Visit the [opera symbian app store][1] to download newer versions for your symbian phone or [OpenRepos.net][2] for your N9/N950.
 
 Background
 ==========
@@ -42,5 +42,6 @@ I recently received the following mail, announcing the drop of support.
     The Nokia Developer Team
 
 
-[1]: download
+[1]: http://symbian.apps.opera.com/fahrplan.html
 [2]: https://openrepos.net/content/smurfy/fahrplan
+
