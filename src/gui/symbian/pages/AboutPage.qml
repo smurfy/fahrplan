@@ -31,15 +31,13 @@ Page {
         id: flickable
 
         flickableDirection: Flickable.VerticalFlick
-        contentWidth: aboutPage.width - 2 * platformStyle.paddingLarge
-        contentHeight: aboutContainer.height + moreText.height + 2 * platformStyle.paddingLarge
+        contentWidth: aboutPage.width
+        contentHeight: aboutContainer.height
 
         anchors {
             fill: parent
             topMargin: platformStyle.paddingLarge
-            leftMargin: platformStyle.paddingLarge
             bottomMargin: 0
-            rightMargin: platformStyle.paddingLarge / 3
         }
 
         Column {
@@ -72,7 +70,7 @@ Page {
             }
 
             Label {
-                text: qsTr("Version") + " " + fahrplanBackend.version
+                text: qsTr("Version %1").arg(fahrplanBackend.version)
                 color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
                 anchors {
                     horizontalCenter: parent.horizontalCenter
