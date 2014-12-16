@@ -1,6 +1,11 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.22
+------
+- Fix: bahn.de backend works again
+- New: Better About screen
+
 2.0.21
 ------
 

@@ -1,3 +1,9 @@
+fahrplan2 (2.0.22) saucy; urgency=low
+  * Fix for bahn.de
+  * Added new about screen
+
+ -- smurfy <maemo@smurfy.de>  Sat, 16 Dec 2014 19:00:00 +0200
+ 
 fahrplan2 (2.0.21) saucy; urgency=low
   * Fix for bahn.de and öbb.at backend to have more later/earlier results
   * Fix for encoding problems with öbb.at
