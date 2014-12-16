@@ -1,5 +1,8 @@
 BlackBerry World ChangeLog
 ==========================
+2.0.23
+------
+- Fix: bahn.de backend earlier/later
 
 2.0.22
 ------
