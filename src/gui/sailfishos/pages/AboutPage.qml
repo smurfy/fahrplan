@@ -40,39 +40,145 @@ Page {
 
             PageHeader {
                 id: header
-
                 title: qsTr("About Fahrplan")
-
-                Label {
-                    width: parent.width
-                    horizontalAlignment: Text.AlignRight
-                    anchors {
-                        top: parent.top
-                        topMargin: 80
-                        right: parent.right
-                        rightMargin: Theme.paddingMedium
-                    }
-                    font.pixelSize: Theme.fontSizeTiny
-                    textFormat: Text.RichText
-                    text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
-                }
             }
 
-            Label {
-                text: About.aboutText
-                wrapMode: Text.WordWrap
+            Column {
                 width: parent.width
-                textFormat: Text.RichText
+
                 anchors {
-                    top: header.bottom
-                    topMargin: Theme.paddingLarge
-                    leftMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingMedium
-                    left: parent.left
-                    right: parent.right
+                    top: parent.top
+                    topMargin: 120
                 }
 
-                onLinkActivated : Qt.openUrlExternally(link);
+                id: aboutContainer
+
+                spacing: 25
+
+                Image {
+                    source: "qrc:/data/sailfishos/harbour-fahrplan2.png"
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                }
+
+                Label {
+                    text: qsTr("Version") + " " + fahrplanBackend.version
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                }
+
+                Label {
+                    text: About.copyright
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                }
+
+                Column {
+                    width: parent.width - 20
+                    anchors {
+                        leftMargin: 10
+                        rightMargin: 10
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    Label {
+                        text: qsTr("Maintainers")
+                        font.bold: true
+                    }
+
+                    Repeater {
+                        model: About.maintainers
+
+                        delegate: Label {
+                            text: About.maintainers[index]
+                        }
+                    }
+
+                    Label {
+                        /* spacer */
+                        text: " "
+                    }
+
+                    Label {
+                        text: qsTr("Code Contributors")
+                        font.bold: true
+                    }
+
+                    Repeater {
+                        model: About.codeContributors
+                        delegate: Label {
+                            text: About.codeContributors[index]
+                        }
+                    }
+
+                    Label {
+                        /* spacer */
+                        text: " "
+                    }
+
+                    Label {
+                        text: qsTr("Translators")
+                        font.bold: true
+                    }
+
+                    Repeater {
+                        model: About.translators
+                        delegate: Label {
+                            anchors {
+                                left: parent.left
+                                right: parent.right
+                            }
+
+                            wrapMode: Text.WordWrap
+                            text: About.translators[index]
+                        }
+                    }
+
+                    Label {
+                        /* spacer */
+                        text: " "
+                    }
+
+                    Label {
+                        text: qsTr("Support")
+                        font.bold: true
+                    }
+
+                    Label {
+                        wrapMode: Text.WordWrap
+                        width: parent.width
+                        textFormat: Text.RichText
+                        onLinkActivated : Qt.openUrlExternally(link)
+                        text: About.support
+                    }
+
+                    Label {
+                        /* spacer */
+                        text: " "
+                    }
+
+                    Label {
+                        text: qsTr("License")
+                        font.bold: true
+                    }
+
+                    Label {
+                        wrapMode: Text.WordWrap
+                        width: parent.width
+                        textFormat: Text.RichText
+                        onLinkActivated : Qt.openUrlExternally(link)
+                        text: About.license
+                    }
+
+                    Label {
+                        /* spacer */
+                        text: " "
+                    }
+                }
             }
         }
     }

@@ -31,25 +31,37 @@ Page {
         id: flickable
 
         flickableDirection: Flickable.VerticalFlick
-        contentWidth: aboutPage.width - 2 * platformStyle.paddingLarge
-        contentHeight: aboutContainer.height + moreText.height + 2 * platformStyle.paddingLarge
+        contentWidth: aboutPage.width
+        contentHeight: aboutContainer.height
 
         anchors {
             fill: parent
             topMargin: platformStyle.paddingLarge
-            leftMargin: platformStyle.paddingLarge
             bottomMargin: 0
-            rightMargin: platformStyle.paddingLarge / 3
         }
 
-        Item {
+        Column {
             width: parent.width
-
             id: aboutContainer
 
+            spacing: platformStyle.paddingLarge
+
+            Label {
+                text: qsTr("About Fahrplan")
+                color: style.textColor
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
+                font.bold: true;
+                font.pixelSize: platformStyle.fontSizeLarge
+                platformInverted: appWindow.platformInverted
+            }
+
             Image {
-                id: logoImg
                 source: "qrc:/data/fahrplan2.svg"
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
 
                 sourceSize {
                     width: platformStyle.graphicSizeLarge
@@ -58,49 +70,134 @@ Page {
             }
 
             Label {
-                text: qsTr("About Fahrplan")
-                id: aboutText
+                text: qsTr("Version %1").arg(fahrplanBackend.version)
+                color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
                 anchors {
-                    left: logoImg.right
-                    leftMargin: platformStyle.paddingLarge
-                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
                 }
-
-                font.pixelSize: platformStyle.fontSizeLarge
-                platformInverted: appWindow.platformInverted
             }
 
             Label {
-                textFormat: Text.RichText
-                text: "by smurfy (maemo@smurfy.de)<br>Version: " + fahrplanBackend.version
-                color: platformInverted ? platformStyle.colorNormalMidInverted : platformStyle.colorNormalMid
+                text: About.copyright
+                color: style.textColor
                 anchors {
-                    left: logoImg.right
-                    leftMargin: platformStyle.paddingLarge
-                    top: aboutText.bottom
+                    horizontalCenter: parent.horizontalCenter
                 }
-
-                font.pixelSize: platformStyle.fontSizeSmall
                 platformInverted: appWindow.platformInverted
             }
 
-            height: logoImg.height
-        }
+            Column {
+                width: parent.width - (platformStyle.paddingLarge * 2)
+                anchors {
+                    leftMargin: platformStyle.paddingLarge
+                    rightMargin: platformStyle.paddingLarge
+                    left: parent.left
+                    right: parent.right
+                }
 
-        Label {
-            id: moreText
-            text: About.aboutText
-            anchors {
-                top: aboutContainer.bottom
-                topMargin: platformStyle.paddingLarge
-                horizontalCenter: parent.horizontalCenter
+                Label {
+                    text: qsTr("Maintainers")
+                    font.bold: true
+                    platformInverted: appWindow.platformInverted
+                }
+
+                Repeater {
+                    model: About.maintainers
+
+                    delegate: Label {
+                        text: About.maintainers[index]
+                        platformInverted: appWindow.platformInverted
+                    }
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("Code Contributors")
+                    font.bold: true
+                    platformInverted: appWindow.platformInverted
+                }
+
+                Repeater {
+                    model: About.codeContributors
+                    delegate: Label {
+                        text: About.codeContributors[index]
+                        platformInverted: appWindow.platformInverted
+                    }
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("Translators")
+                    font.bold: true
+                    platformInverted: appWindow.platformInverted
+                }
+
+                Repeater {
+                    model: About.translators
+                    delegate: Label {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+                        platformInverted: appWindow.platformInverted
+                        wrapMode: Text.WordWrap
+                        text: About.translators[index]
+                    }
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("Support")
+                    font.bold: true
+                    platformInverted: appWindow.platformInverted
+                }
+
+                Label {
+                    wrapMode: Text.WordWrap
+                    width: parent.width
+                    textFormat: Text.RichText
+                    onLinkActivated : Qt.openUrlExternally(link)
+                    text: About.support
+                    platformInverted: appWindow.platformInverted
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
+
+                Label {
+                    text: qsTr("License")
+                    font.bold: true
+                    platformInverted: appWindow.platformInverted
+                }
+
+                Label {
+                    wrapMode: Text.WordWrap
+                    width: parent.width
+                    textFormat: Text.RichText
+                    onLinkActivated : Qt.openUrlExternally(link)
+                    text: About.license
+                    platformInverted: appWindow.platformInverted
+                }
+
+                Label {
+                    /* spacer */
+                    text: " "
+                }
             }
-            wrapMode: Text.WordWrap
-            width: parent.width
-            textFormat: Text.RichText
-            platformInverted: appWindow.platformInverted
-
-            onLinkActivated : Qt.openUrlExternally(link);
         }
     }
 
