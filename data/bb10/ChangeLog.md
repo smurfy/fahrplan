@@ -1,13 +1,16 @@
 BlackBerry World ChangeLog
 ==========================
+
 2.0.23
 ------
-- Fix: bahn.de backend earlier/later
+- Fix: "Earlier" / "Later" was broken in bahn.de service
+
 
 2.0.22
 ------
-- Fix: bahn.de backend works again
-- New: Better About screen
+- Fix: bahn.de service works again
+- New: Improved About screen
+
 
 2.0.21
 ------
