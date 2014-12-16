@@ -72,6 +72,7 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
     query.addQueryItem("REQ0HafasSearchForw", mode == Arrival ? "0" : "1");
     query.addQueryItem("REQ0JourneyProduct_prod_list_1", trainrestr);
     query.addQueryItem("h2g-direct", "11");
+    query.addQueryItem("clientType", "ANDROID");
 
 #if defined(BUILD_FOR_QT5)
     uri.setQuery(query);
