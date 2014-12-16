@@ -643,6 +643,7 @@ void ParserHafasBinary::searchJourneyLater()
     query.addQueryItem("ident", hafasContext.ident);
     query.addQueryItem("REQ0HafasScrollDir", "1");
     query.addQueryItem("h2g-direct", "11");
+    query.addQueryItem("clientType", "ANDROID");
     if (!hafasContext.ld.isEmpty()) {
         query.addQueryItem("ld", hafasContext.ld);
     }
@@ -677,6 +678,7 @@ void ParserHafasBinary::searchJourneyEarlier()
     query.addQueryItem("ident", hafasContext.ident);
     query.addQueryItem("REQ0HafasScrollDir", "2");
     query.addQueryItem("h2g-direct", "11");
+    query.addQueryItem("clientType", "ANDROID");
     if (!hafasContext.ld.isEmpty()) {
         query.addQueryItem("ld", hafasContext.ld);
     }
