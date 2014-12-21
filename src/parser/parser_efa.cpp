@@ -845,12 +845,14 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
             QDomElement dateElement = dateTimeElement.firstChildElement("itdDate");
             QDomElement timeElement = dateTimeElement.firstChildElement("itdTime");
 
+            const QDate scheduledDate(getAttribute(dateElement, "year").toInt(), getAttribute(dateElement, "month").toInt(), getAttribute(dateElement, "day").toInt());
             const QTime scheduledTime(getAttribute(timeElement, "hour").toInt(), getAttribute(timeElement, "minute").toInt(), 0);
             item.time = scheduledTime;
             const QString realTimeStr = getAttribute(node, "countdown");    // In minutes from search time
             if (!realTimeStr.isEmpty()) {
-                const QTime realTimeTime = QTime::currentTime().addSecs(realTimeStr.toInt());
-                const int minutesTo = scheduledTime.msecsTo(realTimeTime) / 60000;
+                const QDateTime realTimeTime = QDateTime::currentDateTime().addSecs(60 * realTimeStr.toInt());
+                const QDateTime scheduledDateTime(scheduledDate, scheduledTime);
+                const int minutesTo = qRound(scheduledDateTime.secsTo(realTimeTime) / 60.);
                 if (minutesTo > 3) {
                     //qDebug() << "Running late";
                     item.miscInfo = tr("<span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo);
