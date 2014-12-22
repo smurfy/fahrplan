@@ -453,6 +453,8 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
     query.addQueryItem("calcNumberOfTrips","5");
     query.addQueryItem("language","en");
     query.addQueryItem("coordOutputFormat","WGS84");
+    query.addQueryItem("coordListOutputFormat","STRING");
+    query.addQueryItem("coordOutputFormatTail","0");
     query.addQueryItem("useProxFootSearch","1");
     query.addQueryItem("itOptionsActive","1");
     query.addQueryItem("ptOptionsActive","1");
