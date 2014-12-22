@@ -829,6 +829,10 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
     QDomDocument doc("result");
 
     if (doc.setContent(xmlRawtext, false)) {
+        QDomElement departureMonitorRequestElement = doc.firstChildElement("itdRequest").firstChildElement("itdDepartureMonitorRequest");
+        QDomElement referenceDateTimeElement = departureMonitorRequestElement.firstChildElement("itdDateTime");
+        const QDateTime referenceDateTime = parseItdDateTime(referenceDateTimeElement);
+
         QDomNodeList nodeList = doc.elementsByTagName("itdDeparture");
         if (nodeList.isEmpty()) {
             nodeList = doc.elementsByTagName("itdDateTime");
@@ -842,17 +846,13 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
             item.destinationStation = getAttribute(servingLineElement, "direction");
             item.trainType = getAttribute(servingLineElement, "motType");
             QDomElement dateTimeElement = node.firstChildElement("itdDateTime");
-            QDomElement dateElement = dateTimeElement.firstChildElement("itdDate");
-            QDomElement timeElement = dateTimeElement.firstChildElement("itdTime");
-
-            const QDate scheduledDate(getAttribute(dateElement, "year").toInt(), getAttribute(dateElement, "month").toInt(), getAttribute(dateElement, "day").toInt());
-            const QTime scheduledTime(getAttribute(timeElement, "hour").toInt(), getAttribute(timeElement, "minute").toInt(), 0);
-            item.time = scheduledTime;
+            const QDateTime scheduledDateTime = parseItdDateTime(dateTimeElement);
+            item.time = scheduledDateTime.time();
             const QString realTimeStr = getAttribute(node, "countdown");    // In minutes from search time
             if (!realTimeStr.isEmpty()) {
-                const QDateTime realTimeTime = QDateTime::currentDateTime().addSecs(60 * realTimeStr.toInt());
-                const QDateTime scheduledDateTime(scheduledDate, scheduledTime);
-                const int minutesTo = qRound(scheduledDateTime.secsTo(realTimeTime) / 60.);
+                const int realCountdown = realTimeStr.toInt();
+                const int scheduledCountdown = qRound(referenceDateTime.secsTo(scheduledDateTime) / 60.);
+                const int minutesTo = realCountdown - scheduledCountdown;
                 if (minutesTo > 3) {
                     //qDebug() << "Running late";
                     item.miscInfo = tr("<span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo);
@@ -959,3 +959,11 @@ JourneyDetailResultList * ParserEFA::parseDetails(JourneyResultItem *journeyitem
     return results;
 }
 
+QDateTime ParserEFA::parseItdDateTime(const QDomElement &element)
+{
+    QDomElement dateElement = element.firstChildElement("itdDate");
+    QDomElement timeElement = element.firstChildElement("itdTime");
+    const QDate date(getAttribute(dateElement, "year").toInt(), getAttribute(dateElement, "month").toInt(), getAttribute(dateElement, "day").toInt());
+    const QTime time(getAttribute(timeElement, "hour").toInt(), getAttribute(timeElement, "minute").toInt(), 0);
+    return QDateTime(date, time);
+}

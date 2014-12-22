@@ -52,7 +52,7 @@ protected:
     void parseSearchJourney(QNetworkReply *networkReply);
     void parseStationsByCoordinates(QNetworkReply *networkReply);
     void parseTimeTable(QNetworkReply *networkReply);
-
+    QDateTime parseItdDateTime(const QDomElement &element);
 
 private:
     JourneyResultList *lastJourneyResultList;
