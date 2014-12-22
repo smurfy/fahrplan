@@ -76,6 +76,7 @@ protected:
     FahrplanNS::curReqStates currentRequestState;
     QNetworkReply *lastRequest;
     QTimer *requestTimeout;
+    QByteArray acceptEncoding;
 
     virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseStationsByName(QNetworkReply *networkReply);

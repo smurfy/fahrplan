@@ -96,6 +96,9 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
     request.setRawHeader("User-Agent", userAgent.toAscii());
 #endif
     request.setRawHeader("Cache-Control", "no-cache");
+    if (!acceptEncoding.isEmpty()) {
+        request.setRawHeader("Accept-Encoding", acceptEncoding);
+    }
 
     if (data.isNull()) {
         lastRequest = NetworkManager->get(request);
