@@ -307,6 +307,9 @@ void ParserEFA::checkForError(QDomDocument *serverReplyDomDoc)
         QDomNode node = errorNodeList.item(i);
         QString error = getAttribute(node, "type");
         QString code = getAttribute(node, "code");
+        if (code == "-8011") {
+            continue;
+        }
         if(error == "error" && code.toInt() < 0) {
             QString errorText = node.toElement().text();
             if(errorText.length() < 1)
