@@ -29,6 +29,7 @@ ParserMunichEFA::ParserMunichEFA(QObject *parent) :
 {
     //baseRestUrl = "http://efa-alt.mvv-muenchen.de/mvv/";
     baseRestUrl = "http://efa.mvv-muenchen.de/mobile/";
+    acceptEncoding = "gzip";
 }
 
 QStringList ParserMunichEFA::getTrainRestrictions()

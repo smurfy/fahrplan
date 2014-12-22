@@ -99,6 +99,7 @@
     #include <QUrlQuery>
 #endif
 
+#include <zlib.h>
 
 QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsPTV;
 
@@ -269,7 +270,7 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
     qDebug() << "ParserEFA::parseStationsByCoordinates(networkReply.url()=" << networkReply->url().toString() << ")";
     StationsList result;
-    QTextStream ts(networkReply->readAll());
+    QTextStream ts(readNetworkReply(networkReply));
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
 
@@ -325,7 +326,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
     qDebug() << "ParserEFA::parseStationsByName(networkReply.url()=" << networkReply->url().toString() << ")";
 
     StationsList result;
-    QTextStream ts(networkReply->readAll());
+    QTextStream ts(readNetworkReply(networkReply));
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
 
@@ -534,25 +535,14 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
     m_earliestArrival = m_latestResultDeparture = QDateTime();
 
-    QBuffer *filebuffer = new QBuffer();
-    filebuffer->setData(networkReply->readAll());
-
-    QString element = QString(filebuffer->buffer());
-
-    QBuffer readBuffer;
-#if defined(BUILD_FOR_QT5)
-    readBuffer.setData(element.toLatin1());
-#else
-    readBuffer.setData(element.toAscii());
-#endif
-    readBuffer.open(QIODevice::ReadOnly);
+    QTextStream ts(readNetworkReply(networkReply));
 
     QDomDocument doc("mydocument");
     //(const QString & text, QString * errorMsg = 0, int * errorLine = 0, int * errorColumn = 0)
     QString errorMsg;
     int errorLine = 0;
     int errorColumn = 0;
-    doc.setContent(&readBuffer, &errorMsg, &errorLine, &errorColumn);
+    doc.setContent(ts.device(), &errorMsg, &errorLine, &errorColumn);
     //qDebug() << "errorMsg:" << errorMsg << ", errorLine:" << errorLine << ", errorColumn:" << errorColumn;
     QDomNodeList routeList = doc.elementsByTagName("itdRoute");
 
@@ -821,7 +811,7 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
     qDebug() << "ParserEFA::parseTimeTable(networkReply.url()=" << networkReply->url().toString() << ")";
 
     TimetableEntriesList result;
-    QTextStream ts(networkReply->readAll());
+    QTextStream ts(readNetworkReply(networkReply));
     ts.setCodec("UTF-8");
     const QString xmlRawtext = ts.readAll();
 
@@ -965,4 +955,59 @@ QDateTime ParserEFA::parseItdDateTime(const QDomElement &element)
     const QDate date(getAttribute(dateElement, "year").toInt(), getAttribute(dateElement, "month").toInt(), getAttribute(dateElement, "day").toInt());
     const QTime time(getAttribute(timeElement, "hour").toInt(), getAttribute(timeElement, "minute").toInt(), 0);
     return QDateTime(date, time);
+}
+
+QByteArray ParserEFA::readNetworkReply(QNetworkReply *networkReply)
+{
+    QByteArray data = networkReply->readAll();
+    QByteArray gzipHeader;
+    gzipHeader.resize(2);
+    gzipHeader[0] = 0x1F;
+    gzipHeader[1] = 0x8B;
+    if (data.startsWith(gzipHeader)) {
+        data = gzipDecompress(data);
+    }
+    return data;
+}
+
+QByteArray ParserEFA::gzipDecompress(QByteArray compressData)
+{
+    //decompress GZIP data
+
+    const int buffersize = 16384;
+    quint8 buffer[buffersize];
+
+    z_stream cmpr_stream;
+    cmpr_stream.next_in = (unsigned char *)compressData.data();
+    cmpr_stream.avail_in = compressData.size();
+
+    cmpr_stream.zalloc = Z_NULL;
+    cmpr_stream.zfree = Z_NULL;
+    cmpr_stream.opaque = Z_NULL;
+
+    // We get data in gzip format, and to parse it, according
+    // to the documentation, we need to add 16 to windowBits.
+    if (inflateInit2(&cmpr_stream, MAX_WBITS + 16) != Z_OK) {
+        qDebug() << "cmpr_stream error!";
+    }
+
+    QByteArray uncompressed;
+    do {
+        cmpr_stream.next_out = buffer;
+        cmpr_stream.avail_out = buffersize;
+
+        int status = inflate( &cmpr_stream, Z_SYNC_FLUSH );
+
+        if(status == Z_OK || status == Z_STREAM_END) {
+            uncompressed.append(QByteArray::fromRawData((char *)buffer, buffersize - cmpr_stream.avail_out));
+        } else {
+            inflateEnd(&cmpr_stream);
+        }
+
+        if(status == Z_STREAM_END) {
+            inflateEnd(&cmpr_stream);
+            break;
+        }
+    } while(cmpr_stream.avail_out == 0);
+    return uncompressed;
 }

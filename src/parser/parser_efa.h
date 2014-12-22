@@ -53,6 +53,8 @@ protected:
     void parseStationsByCoordinates(QNetworkReply *networkReply);
     void parseTimeTable(QNetworkReply *networkReply);
     QDateTime parseItdDateTime(const QDomElement &element);
+    QByteArray readNetworkReply(QNetworkReply *networkReply);
+    QByteArray gzipDecompress(QByteArray compressData);
 
 private:
     JourneyResultList *lastJourneyResultList;
