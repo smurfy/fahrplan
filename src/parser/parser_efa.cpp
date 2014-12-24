@@ -280,7 +280,7 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
         QDomNodeList nodeList = doc.elementsByTagName("itdOdvAssignedStop");
         QDomNodeList modeNodeList = doc.elementsByTagName("itdStopModes");
         if(nodeList.count() == modeNodeList.count()){
-            for (unsigned int i = 0; i < nodeList.length(); ++i) {
+            for (int i = 0; i < nodeList.size(); ++i) {
                 QDomNode node = nodeList.item(i);
                 QDomNode modeNode = modeNodeList.item(i);
                 Station item;
@@ -304,7 +304,7 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
 void ParserEFA::checkForError(QDomDocument *serverReplyDomDoc)
 {
     QDomNodeList errorNodeList = serverReplyDomDoc->elementsByTagName("itdMessage");
-    for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+    for(int i = 0; i < errorNodeList.size(); ++i) {
         QDomNode node = errorNodeList.item(i);
         QString error = getAttribute(node, "type");
         QString code = getAttribute(node, "code");
@@ -336,7 +336,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
 
         //Check for error: <itdMessage type="error" module="BROKER" code="-2000">stop invalid</itdMessage>
         QDomNodeList errorNodeList = doc.elementsByTagName("itdMessage");
-        for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+        for(int i = 0; i < errorNodeList.size(); ++i) {
             QDomNode node = errorNodeList.item(i);
             QString error = getAttribute(node, "type");
             if(error == "error")
@@ -355,7 +355,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
 
             QStringList idList;
 
-            for (unsigned int i = 0; i < nodeList.length(); ++i) {
+            for (int i = 0; i < nodeList.size(); ++i) {
                 QDomNode node = nodeList.item(i);
                 Station item;
 
@@ -369,7 +369,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
                 result << item;
             }
 
-            for(unsigned int i = 0; i < modeNodeList.length(); ++i) {
+            for(int i = 0; i < modeNodeList.size(); ++i) {
                 QDomNode modeNode = modeNodeList.item(i);
                 QString id = getAttribute(modeNode, "id");
 
@@ -382,7 +382,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
         else {
             // London, Ireland, Sydney
             QDomNodeList nodeList = doc.elementsByTagName("odvNameElem");
-            for(unsigned int i = 0; i < nodeList.length(); ++i) {
+            for(int i = 0; i < nodeList.size(); ++i) {
                 QDomNode node = nodeList.item(i);
                 Station item;
                 item.name = node.toElement().text();
@@ -758,7 +758,7 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
         if (nodeList.isEmpty()) {
             nodeList = doc.elementsByTagName("itdDateTime");
         }
-        for(unsigned int i = 0; i < nodeList.length(); ++i) {
+        for(int i = 0; i < nodeList.size(); ++i) {
             QDomNode node = nodeList.item(i);
             TimetableEntry item;
 
