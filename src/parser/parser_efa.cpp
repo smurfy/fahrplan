@@ -556,10 +556,6 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
         numberOfChanges = routeList.at(nodeCounter).toElement().attribute("changes").toInt();
         duration = routeList.at(nodeCounter).toElement().attribute("publicDuration");
-        QString method = routeList.at(nodeCounter).toElement().attribute("method");
-        QString distance = routeList.at(nodeCounter).toElement().attribute("distance");
-        QString individualDuration = routeList.at(nodeCounter).toElement().attribute("individualDuration");
-        //qDebug() << "method:" << method << ", distance:" << distance << ", individualDuration:" << individualDuration;
 
         QDateTime departureDateTime;
         QDateTime arrivalDateTime;
@@ -572,20 +568,19 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
         QDomNodeList partialRouteList = routeList.at(nodeCounter).firstChildElement("itdPartialRouteList").elementsByTagName("itdPoint");
         QDomNodeList meansOfTransportList = routeList.at(nodeCounter).firstChildElement("itdPartialRouteList").elementsByTagName("itdMeansOfTransport");
-        /* itdMeansOfTransport has attributes:  "network" "tC" "productName" "destination" "symbol" "motType" "spTr" "type" "name" "shortname" "destID" "TTB" "STT" "ROP"
-         */
-
+        // itdMeansOfTransport has attributes:  "network" "tC" "productName" "destination" "symbol" "motType" "spTr" "type" "name" "shortname" "destID" "TTB" "STT" "ROP"
         qDebug() << "partialRouteList size:" << partialRouteList.size() << ", meansOfTransportList:" << meansOfTransportList.size();
 
-        for(int meansOfTransportListCounter = 0 ; meansOfTransportListCounter < meansOfTransportList.size() ; ++meansOfTransportListCounter) {
-            QString productName = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("productName");
-            QString motType = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("motType");
-            QString destination = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("destination");
+        for (int i = 0; i < meansOfTransportList.size(); ++i) {
+            QDomElement meansOfTransportElememt = meansOfTransportList.at(i).toElement();
+            QString productName = meansOfTransportElememt.attribute("productName");
+            QString destination = meansOfTransportElememt.attribute("destination");
             destinationList.append(destination);
-            QString name = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("name");
+            QString name = meansOfTransportElememt.attribute("name");
             QString nameForList = name;
-            if(productName == "Fussweg")
+            if (productName == "Fussweg") {
                 nameForList = "Walk";
+            }
             meansOfTransportNameList.append(nameForList);
         }
 
@@ -599,7 +594,6 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
              *  "x" "y" "mapName" "x" "y" "mapName"
             */
             QString stationName = paritalRouteElement.attribute("name");
-            //QString placeID = paritalRouteElement.attribute("placeID");
             QString platformName = paritalRouteElement.attribute("platformName");
             if (partialRouteUsage == "departure" || partialRouteUsage == "arrival" ) {
                 QDomNodeList departureInformationList = paritalRouteNode.childNodes();
