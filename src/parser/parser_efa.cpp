@@ -561,9 +561,6 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         QString individualDuration = routeList.at(nodeCounter).toElement().attribute("individualDuration");
         //qDebug() << "method:" << method << ", distance:" << distance << ", individualDuration:" << individualDuration;
 
-        bool departureDateSet = false;
-        bool departureTimeSet = false;
-
         QDateTime departureDateTime;
         QDateTime arrivalDateTime;
         QList <QDateTime> departureTimesList;
@@ -592,97 +589,38 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
             meansOfTransportNameList.append(nameForList);
         }
 
-        for(int partialRouteListCounter = 0 ; partialRouteListCounter < partialRouteList.size() ; ++partialRouteListCounter){    //itdPoint has attributes and other node
-            QString partialRouteUsage = partialRouteList.at(partialRouteListCounter).toElement().attribute("usage");
-
+        for (int i = 0; i < partialRouteList.size(); ++i) {    //itdPoint has attributes and other node
+            QDomNode paritalRouteNode = partialRouteList.at(i);
+            QDomElement paritalRouteElement = paritalRouteNode.toElement();
+            QString partialRouteUsage = paritalRouteElement.attribute("usage");
             /* Each partialRouteList element has the following attributes: "platformName" "nameWO" "platform" "locality" "usage" "area" "name" "placeID" "stopID" "omc" "platformName"
              *  "nameWO" "platform" "locality" "usage" "area" "name" "placeID" "stopID" "omc"
              *  The following attributes are also present on partialRoutes if the arrival time is a real time
              *  "x" "y" "mapName" "x" "y" "mapName"
             */
-
-            QString stationName;
-            QString placeID;
-            QString platformName;
-
-            if(partialRouteUsage == "departure" || partialRouteUsage == "arrival" ){  // arrival
-                //qDebug() << "Found usage == departure";
-                QDomNodeList departureInformationList = partialRouteList.at(partialRouteListCounter).childNodes();
-
-                //qDebug() << "departureInformationList.size():" << departureInformationList.size();
-                for(int departureInformationListCounter = 0 ; departureInformationListCounter < departureInformationList.size() ; ++departureInformationListCounter)    // has 3 child nodes
-                {
-                    //qDebug() << "departureInformationList.at(departureInformationListCounter).toElement().tagName():" << departureInformationList.at(departureInformationListCounter).toElement().tagName();
-                    if(departureInformationList.at(departureInformationListCounter).toElement().tagName() == "itdDateTime")
-                     {
-                            /*<itdDate year="2013" month="8" day="31" weekday="7"/>
-                             *        <itdTime hour="17" minute="12"/>*/
-
-                        QDateTime lastDepartureDateTimeProcessed;
-                        QDateTime lastArrivalDateTimeProcessed;
-
-                        QDomNodeList departureDateInformationList = departureInformationList.at(departureInformationListCounter).toElement().elementsByTagName("itdDate");
-                        for(int departureDateInformationListCounter = 0 ; departureDateInformationListCounter < departureDateInformationList.size() ; ++departureDateInformationListCounter) {   // should have 1 node
-                            if(partialRouteUsage == "departure")  {
-                                QString departureYear = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("year");
-                                QString departureMonth = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("month");
-                                QString departureDay = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("day");
-                                lastDepartureDateTimeProcessed.setDate(QDate(departureYear.toInt(), departureMonth.toInt(), departureDay.toInt()));
-
-                                if(!departureDateSet) {
-                                    departureDateTime.setDate(QDate(departureYear.toInt(), departureMonth.toInt(), departureDay.toInt()));
-                                    departureDateSet = true;
-                                }
-                            }
-                            else {
-                                QString arrivalYear = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("year");
-                                QString arrivalMonth = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("month");
-                                QString arrivalDay = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("day");
-
-                                lastArrivalDateTimeProcessed.setDate(QDate(arrivalYear.toInt(), arrivalMonth.toInt(), arrivalDay.toInt()));
-                                arrivalDateTime = lastArrivalDateTimeProcessed;
-                            }
+            QString stationName = paritalRouteElement.attribute("name");
+            //QString placeID = paritalRouteElement.attribute("placeID");
+            QString platformName = paritalRouteElement.attribute("platformName");
+            if (partialRouteUsage == "departure" || partialRouteUsage == "arrival" ) {
+                QDomNodeList departureInformationList = paritalRouteNode.childNodes();
+                for (int k = 0; k < departureInformationList.size(); ++k) {
+                    QDomElement dateTimeElement = departureInformationList.at(k).toElement();
+                    if (dateTimeElement.tagName() == "itdDateTime") {
+                        QDateTime dateTime = parseItdDateTime(dateTimeElement);
+                        if (partialRouteUsage == "departure") {
+                            departureTimesList.append(dateTime);
+                        } else {
+                            arrivalTimesList.append(dateTime);
                         }
-
-                        QDomNodeList departureTimeInformationList = departureInformationList.at(departureInformationListCounter).toElement().elementsByTagName("itdTime");
-                        for(int departureTimeInformationListCounter = 0 ; departureTimeInformationListCounter < departureTimeInformationList.size() ; ++departureTimeInformationListCounter)    // should have 1 node
-                        {
-                            if(partialRouteUsage == "departure") {
-                                QString hour = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("hour");
-                                QString minute = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("minute");
-                                lastDepartureDateTimeProcessed.setTime(QTime::fromString(hour + ":" + minute,"hh:mm"));
-
-                                if(!departureTimeSet) {
-                                    departureDateTime.setTime(QTime::fromString(hour + ":" + minute,"hh:mm"));
-                                    qDebug() << "Departure time set:" << departureDateTime;
-                                    departureTimeSet = true;
-                                }
-
-                                departureTimesList.append(lastDepartureDateTimeProcessed);
-                            }
-                            else                            {
-                                QString arrivalHour = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("hour");
-                                QString arrivalMinute = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("minute");
-
-                                //qDebug() << "Trying to set arrival time to :" << arrivalHour + ":" + arrivalMinute;
-                                arrivalDateTime.setTime(QTime::fromString(arrivalHour + ":" + arrivalMinute,"hh:mm"));
-                                lastArrivalDateTimeProcessed.setTime(QTime::fromString(arrivalHour + ":" + arrivalMinute,"hh:mm"));
-
-                                arrivalTimesList.append(lastArrivalDateTimeProcessed);
-                            }
-                        }
-
-                        stationName = partialRouteList.at(partialRouteListCounter).toElement().attribute("name");
                         stationNameList.append(stationName);
-                        platformName = partialRouteList.at(partialRouteListCounter).toElement().attribute("platformName");
                         platformNameList.append(platformName);
-                        placeID = partialRouteList.at(partialRouteListCounter).toElement().attribute("placeID");
-                        //qDebug() << "Detail to Store: "
-                     }
+                    }
                 }
             }
         }
-
+        departureDateTime = departureTimesList.first();
+        qDebug() << "Departure time set:" << departureDateTime;
+        arrivalDateTime = arrivalTimesList.last();
 
         // Create a combined list for the detail view, combine departure, location and means of transport to a single item
         int departureCounter = 0;
