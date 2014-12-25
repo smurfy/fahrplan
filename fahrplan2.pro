@@ -110,6 +110,7 @@ HEADERS += \
     src/parser/parser_sf_bay_efa.h \
     src/parser/parser_dubai_efa.h \
     src/parser/parser_munich_efa.h \
+    src/parser/parser_salzburg_efa.h \
     src/parser/parser_ninetwo.h
 
 SOURCES += src/main.cpp \
@@ -141,6 +142,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_sf_bay_efa.cpp \
     src/parser/parser_dubai_efa.cpp \
     src/parser/parser_munich_efa.cpp \
+    src/parser/parser_salzburg_efa.cpp \
     src/parser/parser_ninetwo.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files

@@ -43,6 +43,7 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(ParserDubaiEFA::getName());
     result.append(ParserNinetwo::getName());
     result.append(ParserMunichEFA::getName());
+    result.append(ParserSalzburgEFA::getName());
     return result;
 }
 
