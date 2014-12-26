@@ -87,6 +87,7 @@ protected:
     virtual void parseJourneyDetails(QNetworkReply *networkReply);
     void sendHttpRequest(QUrl url, QByteArray data);
     void sendHttpRequest(QUrl url);
+    QByteArray gzipDecompress(QByteArray compressData);
 };
 
 #endif // PARSER_ABSTRACT_H

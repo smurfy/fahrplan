@@ -99,8 +99,6 @@
     #include <QUrlQuery>
 #endif
 
-#include <zlib.h>
-
 QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsPTV;
 
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
@@ -890,46 +888,4 @@ QByteArray ParserEFA::readNetworkReply(QNetworkReply *networkReply)
         data = gzipDecompress(data);
     }
     return data;
-}
-
-QByteArray ParserEFA::gzipDecompress(QByteArray compressData)
-{
-    //decompress GZIP data
-
-    const int buffersize = 16384;
-    quint8 buffer[buffersize];
-
-    z_stream cmpr_stream;
-    cmpr_stream.next_in = (unsigned char *)compressData.data();
-    cmpr_stream.avail_in = compressData.size();
-
-    cmpr_stream.zalloc = Z_NULL;
-    cmpr_stream.zfree = Z_NULL;
-    cmpr_stream.opaque = Z_NULL;
-
-    // We get data in gzip format, and to parse it, according
-    // to the documentation, we need to add 16 to windowBits.
-    if (inflateInit2(&cmpr_stream, MAX_WBITS + 16) != Z_OK) {
-        qDebug() << "cmpr_stream error!";
-    }
-
-    QByteArray uncompressed;
-    do {
-        cmpr_stream.next_out = buffer;
-        cmpr_stream.avail_out = buffersize;
-
-        int status = inflate( &cmpr_stream, Z_SYNC_FLUSH );
-
-        if(status == Z_OK || status == Z_STREAM_END) {
-            uncompressed.append(QByteArray::fromRawData((char *)buffer, buffersize - cmpr_stream.avail_out));
-        } else {
-            inflateEnd(&cmpr_stream);
-        }
-
-        if(status == Z_STREAM_END) {
-            inflateEnd(&cmpr_stream);
-            break;
-        }
-    } while(cmpr_stream.avail_out == 0);
-    return uncompressed;
 }
