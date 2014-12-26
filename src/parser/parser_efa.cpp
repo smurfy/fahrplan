@@ -594,13 +594,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
             QString nameForList = name;
             if(productName == "Fussweg")
                 nameForList = "Walk";
-            if(!meansOfTransportNameList.isEmpty()){
-                if(nameForList != meansOfTransportNameList.last())
-                    meansOfTransportNameList.append(nameForList);
-            }
-            else
-                meansOfTransportNameList.append(nameForList);
-
+            meansOfTransportNameList.append(nameForList);
         }
 
         for(int partialRouteListCounter = 0 ; partialRouteListCounter < partialRouteList.size() ; ++partialRouteListCounter){    //itdPoint has attributes and other node
