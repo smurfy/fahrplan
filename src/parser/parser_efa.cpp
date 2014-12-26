@@ -270,13 +270,10 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
     qDebug() << "ParserEFA::parseStationsByCoordinates(networkReply.url()=" << networkReply->url().toString() << ")";
     StationsList result;
-    QTextStream ts(readNetworkReply(networkReply));
-    ts.setCodec("UTF-8");
-    const QString xmlRawtext = ts.readAll();
 
     QDomDocument doc("result");
-
-    if (doc.setContent(xmlRawtext, false)) {
+    QByteArray data = readNetworkReply(networkReply);
+    if (doc.setContent(data, false)) {
         QDomNodeList nodeList = doc.elementsByTagName("itdOdvAssignedStop");
         QDomNodeList modeNodeList = doc.elementsByTagName("itdStopModes");
         if(nodeList.count() == modeNodeList.count()){
@@ -326,13 +323,10 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
     qDebug() << "ParserEFA::parseStationsByName(networkReply.url()=" << networkReply->url().toString() << ")";
 
     StationsList result;
-    QTextStream ts(readNetworkReply(networkReply));
-    ts.setCodec("UTF-8");
-    const QString xmlRawtext = ts.readAll();
-
     QDomDocument doc("result");
 
-    if (doc.setContent(xmlRawtext, false)) {
+    QByteArray data = readNetworkReply(networkReply);
+    if (doc.setContent(data, false)) {
 
         //Check for error: <itdMessage type="error" module="BROKER" code="-2000">stop invalid</itdMessage>
         QDomNodeList errorNodeList = doc.elementsByTagName("itdMessage");
@@ -535,14 +529,13 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
     m_earliestArrival = m_latestResultDeparture = QDateTime();
 
-    QTextStream ts(readNetworkReply(networkReply));
-
     QDomDocument doc("mydocument");
     //(const QString & text, QString * errorMsg = 0, int * errorLine = 0, int * errorColumn = 0)
     QString errorMsg;
     int errorLine = 0;
     int errorColumn = 0;
-    doc.setContent(ts.device(), &errorMsg, &errorLine, &errorColumn);
+    QByteArray data = readNetworkReply(networkReply);
+    doc.setContent(data, &errorMsg, &errorLine, &errorColumn);
     //qDebug() << "errorMsg:" << errorMsg << ", errorLine:" << errorLine << ", errorColumn:" << errorColumn;
     QDomNodeList routeList = doc.elementsByTagName("itdRoute");
 
@@ -743,13 +736,10 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
     qDebug() << "ParserEFA::parseTimeTable(networkReply.url()=" << networkReply->url().toString() << ")";
 
     TimetableEntriesList result;
-    QTextStream ts(readNetworkReply(networkReply));
-    ts.setCodec("UTF-8");
-    const QString xmlRawtext = ts.readAll();
-
     QDomDocument doc("result");
 
-    if (doc.setContent(xmlRawtext, false)) {
+    QByteArray data = readNetworkReply(networkReply);
+    if (doc.setContent(data, false)) {
         QDomElement departureMonitorRequestElement = doc.firstChildElement("itdRequest").firstChildElement("itdDepartureMonitorRequest");
         QDomElement referenceDateTimeElement = departureMonitorRequestElement.firstChildElement("itdDateTime");
         const QDateTime referenceDateTime = parseItdDateTime(referenceDateTimeElement);
