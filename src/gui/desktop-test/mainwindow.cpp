@@ -121,6 +121,7 @@ void MainWindow::getTimeTableForStationClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
+    fahrplan->setMode(Fahrplan::NowMode);
     fahrplan->getTimeTable();
 }
 
