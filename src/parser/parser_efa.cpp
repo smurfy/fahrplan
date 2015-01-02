@@ -529,152 +529,81 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
     m_earliestArrival = m_latestResultDeparture = QDateTime();
 
     QDomDocument doc("mydocument");
-    //(const QString & text, QString * errorMsg = 0, int * errorLine = 0, int * errorColumn = 0)
-    QString errorMsg;
-    int errorLine = 0;
-    int errorColumn = 0;
     QByteArray data = readNetworkReply(networkReply);
-    doc.setContent(data, &errorMsg, &errorLine, &errorColumn);
-    //qDebug() << "errorMsg:" << errorMsg << ", errorLine:" << errorLine << ", errorColumn:" << errorColumn;
-    QDomNodeList routeList = doc.elementsByTagName("itdRoute");
+    doc.setContent(data);
 
-    int numberOfChanges = 0;
-    QString duration;
-
-    for(int nodeCounter = 0 ; nodeCounter < routeList.size() ; ++nodeCounter)  {
-        /* Each node has the following attributes: "vehicleTime" "alternative" "method" "print" "individualDuration" "publicDuration" "active" "distance" "routeIndex" "cTime" "selected" "searchMode" "delete" "changes" */
-        JourneyResultItem *item = new JourneyResultItem();
+    QDomElement route = doc.firstChildElement("itdRequest").firstChildElement("itdTripRequest").firstChildElement("itdItinerary").firstChildElement("itdRouteList").firstChildElement("itdRoute");
+    for (; !route.isNull(); route = route.nextSiblingElement("itdRoute")) {
+        QStringList motNameList;
         JourneyDetailResultList *detailsList = new JourneyDetailResultList();
-
-        numberOfChanges = routeList.at(nodeCounter).toElement().attribute("changes").toInt();
-        duration = routeList.at(nodeCounter).toElement().attribute("publicDuration");
-
-        QDateTime departureDateTime;
-        QDateTime arrivalDateTime;
-        QList <QDateTime> departureTimesList;
-        QList <QDateTime> arrivalTimesList;
-        QStringList stationNameList;
-        QStringList platformNameList;
-        QStringList meansOfTransportNameList;
-        QStringList destinationList;
-
-        QDomNodeList partialRouteList = routeList.at(nodeCounter).firstChildElement("itdPartialRouteList").elementsByTagName("itdPoint");
-        QDomNodeList meansOfTransportList = routeList.at(nodeCounter).firstChildElement("itdPartialRouteList").elementsByTagName("itdMeansOfTransport");
-        // itdMeansOfTransport has attributes:  "network" "tC" "productName" "destination" "symbol" "motType" "spTr" "type" "name" "shortname" "destID" "TTB" "STT" "ROP"
-        qDebug() << "partialRouteList size:" << partialRouteList.size() << ", meansOfTransportList:" << meansOfTransportList.size();
-
-        for (int i = 0; i < meansOfTransportList.size(); ++i) {
-            QDomElement meansOfTransportElememt = meansOfTransportList.at(i).toElement();
-            QString productName = meansOfTransportElememt.attribute("productName");
-            QString destination = meansOfTransportElememt.attribute("destination");
-            destinationList.append(destination);
-            QString name = meansOfTransportElememt.attribute("name");
-            QString nameForList = name;
+        QDomElement partialRoute = route.firstChildElement("itdPartialRouteList").firstChildElement("itdPartialRoute");
+        for (; !partialRoute.isNull(); partialRoute = partialRoute.nextSiblingElement("itdPartialRoute")) {
+            QDomElement motElement = partialRoute.firstChildElement("itdMeansOfTransport");
+            QString motName = motElement.attribute("name");
+            QString productName = motElement.attribute("productName");
+            QString info;
             if (productName == "Fussweg") {
-                nameForList = "Walk";
+                motName = tr("Walk");
+            } else if (productName == "gesicherter Anschluss") {
+                motName = tr("Walk");
+                info = tr("Guaranteed connection");
             }
-            meansOfTransportNameList.append(nameForList);
-        }
-
-        for (int i = 0; i < partialRouteList.size(); ++i) {    //itdPoint has attributes and other node
-            QDomNode paritalRouteNode = partialRouteList.at(i);
-            QDomElement paritalRouteElement = paritalRouteNode.toElement();
-            QString partialRouteUsage = paritalRouteElement.attribute("usage");
-            /* Each partialRouteList element has the following attributes: "platformName" "nameWO" "platform" "locality" "usage" "area" "name" "placeID" "stopID" "omc" "platformName"
-             *  "nameWO" "platform" "locality" "usage" "area" "name" "placeID" "stopID" "omc"
-             *  The following attributes are also present on partialRoutes if the arrival time is a real time
-             *  "x" "y" "mapName" "x" "y" "mapName"
-            */
-            QString stationName = paritalRouteElement.attribute("name");
-            QString platformName = paritalRouteElement.attribute("platformName");
-            if (partialRouteUsage == "departure" || partialRouteUsage == "arrival" ) {
-                QDomNodeList departureInformationList = paritalRouteNode.childNodes();
-                for (int k = 0; k < departureInformationList.size(); ++k) {
-                    QDomElement dateTimeElement = departureInformationList.at(k).toElement();
-                    if (dateTimeElement.tagName() == "itdDateTime") {
-                        QDateTime dateTime = parseItdDateTime(dateTimeElement);
-                        if (partialRouteUsage == "departure") {
-                            departureTimesList.append(dateTime);
-                        } else {
-                            arrivalTimesList.append(dateTime);
-                        }
-                        stationNameList.append(stationName);
-                        platformNameList.append(platformName);
-                    }
+            motNameList.append(motName);
+            JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem();
+            jdrItem->setTrain(motName);
+            jdrItem->setInfo(info);
+            jdrItem->setDirection(motElement.attribute("destination"));
+            QDomElement stationElement = partialRoute.firstChildElement("itdPoint");
+            for (int k = 0; k < 2; k++) {
+                QString stationName = stationElement.attribute("name");
+                QString stationInfo = stationElement.attribute("platformName");
+                QDateTime dateTime = parseItdDateTime(stationElement.firstChildElement("itdDateTime"));
+                QString usage = stationElement.attribute("usage");
+                if (usage == "departure") {
+                    jdrItem->setDepartureStation(stationName);
+                    jdrItem->setDepartureInfo(stationInfo);
+                    jdrItem->setDepartureDateTime(dateTime);
+                } else {
+                    jdrItem->setArrivalStation(stationName);
+                    jdrItem->setArrivalInfo(stationInfo);
+                    jdrItem->setArrivalDateTime(dateTime);
                 }
+                stationElement = stationElement.nextSiblingElement("itdPoint");
             }
+            detailsList->appendItem(jdrItem);
         }
-        departureDateTime = departureTimesList.first();
-        qDebug() << "Departure time set:" << departureDateTime;
-        arrivalDateTime = arrivalTimesList.last();
+        QString changes = route.attribute("changes");
+        QString duration = route.attribute("publicDuration");
+        QString id = QString::number(cachedJourneyDetailsEfa.size());
+        QDateTime departureDateTime = detailsList->getItem(0)->departureDateTime();
+        QDateTime arrivalDateTime = detailsList->getItem(detailsList->itemcount() - 1)->arrivalDateTime();
 
-        // Create a combined list for the detail view, combine departure, location and means of transport to a single item
-        int departureCounter = 0;
-        int arrivalCounter = 0;
-        int meansOfTransportCounter = 0;
-        for(int counter = 0 ; counter < stationNameList.size() ; counter=counter+2) {
-            int counterNext = counter+1;
-            if(!departureTimesList[departureCounter].isNull() || !arrivalTimesList[arrivalCounter].isNull()){
-                if(departureCounter < departureTimesList.size() && counter < platformNameList.size() && meansOfTransportCounter < meansOfTransportNameList.size() && arrivalCounter < arrivalTimesList.size()) {
-                    //QString trip = departureTimesList[departureCounter] + "::" + stationNameList[counter] + "::" + platformNameList[counter] + "::" + meansOfTransportNameList[meansOfTransportCounter] + "::" + destinationList[meansOfTransportCounter] + "::" + arrivalTimesList[arrivalCounter] + "::" + stationNameList[counterNext] + "::" + platformNameList[counterNext];
-                    //tripList.append(trip);
-
-                    JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem();
-                    jdrItem->setDepartureStation(stationNameList[counter]);
-                    jdrItem->setDepartureInfo(platformNameList[counter]);
-                    jdrItem->setDepartureDateTime(departureTimesList[departureCounter]);
-                    jdrItem->setArrivalStation(stationNameList[counterNext]);
-                    jdrItem->setArrivalInfo(platformNameList[counterNext]);
-                    jdrItem->setArrivalDateTime(arrivalTimesList[arrivalCounter]);
-                    jdrItem->setTrain(meansOfTransportNameList[meansOfTransportCounter]);
-                    jdrItem->setDirection(destinationList[meansOfTransportCounter]);
-                    jdrItem->setInternalData1("NO setInternalData1");
-                    jdrItem->setInternalData2("NO setInternalData2");
-
-                    detailsList->appendItem(jdrItem);
-
-
-                    ++meansOfTransportCounter;
-                }
-                else  {
-                    qDebug() << "ERROR - Array index issue";
-                    qDebug() << "departureCounter:" << departureCounter << departureTimesList.size();
-                    qDebug() << "counter used for platform:" << counter << platformNameList.size();
-                    qDebug() << "meansOfTransportCounter:" << meansOfTransportCounter << meansOfTransportNameList.size();
-                    qDebug() << "arrivalCounter:" << arrivalCounter << arrivalTimesList.size();
-                }
-                //qDebug() << trip;
-            }
-            ++departureCounter;
-            ++arrivalCounter;
-        }
-
-        item->setDate(departureDateTime.date());
-        item->setId(QString::number(nodeCounter+1));
-        item->setTransfers(QString::number(numberOfChanges));
-        item->setDuration(duration);
-        meansOfTransportNameList.removeDuplicates();
-        item->setTrainType(meansOfTransportNameList.join(", ").trimmed());
-        item->setDepartureTime(departureDateTime.toString("hh:mm"));
-        item->setArrivalTime(arrivalDateTime.toString("hh:mm"));
-
-        lastJourneyResultList->appendItem(item);
-
-        detailsList->setId(QString::number(nodeCounter+1));
+        detailsList->setId(id);
         detailsList->setDepartureStation(lastJourneyResultList->departureStation());
         detailsList->setViaStation(lastJourneyResultList->viaStation());
         detailsList->setArrivalStation(lastJourneyResultList->arrivalStation());
-        detailsList->setDuration(item->duration());
+        detailsList->setDuration(duration);
         detailsList->setArrivalDateTime(arrivalDateTime);
         detailsList->setDepartureDateTime(departureDateTime);
-        cachedJourneyDetailsEfa[QString::number(nodeCounter+1)] = detailsList;
+        cachedJourneyDetailsEfa[id] = detailsList;
+
+        JourneyResultItem *item = new JourneyResultItem();
+        item->setDate(departureDateTime.date());
+        item->setId(id);
+        item->setTransfers(changes);
+        item->setDuration(duration);
+        motNameList.removeDuplicates();
+        item->setTrainType(motNameList.join(", ").trimmed());
+        item->setDepartureTime(departureDateTime.toString("hh:mm"));
+        item->setArrivalTime(arrivalDateTime.toString("hh:mm"));
+        lastJourneyResultList->appendItem(item);
 
         if (!m_earliestArrival.isValid() || arrivalDateTime < m_earliestArrival)
             m_earliestArrival = arrivalDateTime.addSecs(-60);
         if (!m_latestResultDeparture.isValid() || departureDateTime > m_latestResultDeparture)
             m_latestResultDeparture = departureDateTime.addSecs(60);
-
     }
+
     checkForError(&doc);
 
     emit journeyResult(lastJourneyResultList);
