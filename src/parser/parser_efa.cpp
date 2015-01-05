@@ -665,14 +665,9 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
         QDomElement referenceDateTimeElement = departureMonitorRequestElement.firstChildElement("itdDateTime");
         const QDateTime referenceDateTime = parseItdDateTime(referenceDateTimeElement);
 
-        QDomNodeList nodeList = doc.elementsByTagName("itdDeparture");
-        if (nodeList.isEmpty()) {
-            nodeList = doc.elementsByTagName("itdDateTime");
-        }
-        for (int i = 0; i < nodeList.size(); ++i) {
-            QDomElement departure = nodeList.item(i).toElement();
+        QDomElement departure = departureMonitorRequestElement.firstChildElement("itdDepartureList").firstChildElement("itdDeparture");
+        for (; !departure.isNull(); departure = departure.nextSiblingElement("itdDeparture")) {
             TimetableEntry item;
-
             item.platform = departure.attribute("platformName");
             QDomElement servingLineElement = departure.firstChildElement("itdServingLine");
             item.destinationStation = servingLineElement.attribute("direction");
@@ -693,7 +688,6 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
                     item.miscInfo = tr("<span style=\"color:#093; font-weight: normal;\">on time</span>");
                 }
             }
-
             result << item;
         }
         //Check for error: <itdMessage type="error" module="BROKER" code="-4050">no serving lines found</itdMessage>
