@@ -188,5 +188,7 @@ int main(int argc, char *argv[])
 
     qDebug()<<"Exec";
 
-    return app->exec();
+    int error = app->exec();
+    delete app;
+    return error;
 }
