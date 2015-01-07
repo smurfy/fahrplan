@@ -84,7 +84,6 @@ protected:
     QMap<QString, JourneyDetailResultList*> cachedResults;
 
 private:
-    QVariantMap parseJson(const QByteArray &data) const;
     void parseJourneyOption(const QVariantMap &object);
 };
 
