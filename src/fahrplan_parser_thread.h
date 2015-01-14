@@ -37,6 +37,7 @@
 #include "parser/parser_ireland_efa.h"
 #include "parser/parser_dubai_efa.h"
 #include "parser/parser_ninetwo.h"
+#include "parser/parser_resrobot.h"
 
 class FahrplanParserThread : public QThread
 {

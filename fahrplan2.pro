@@ -64,7 +64,9 @@ TRANSLATIONS += \
     translations/fahrplan_pl.ts \
     translations/fahrplan_ro_RO.ts \
     translations/fahrplan_ru.ts \
+    translations/fahrplan_sv.ts \
     translations/fahrplan_uk.ts
+CODECFORTR = UTF-8
 
 OTHER_FILES += \
     data/fahrplan2.svg \
@@ -109,7 +111,8 @@ HEADERS += \
     src/parser/parser_sydney_efa.h \
     src/parser/parser_sf_bay_efa.h \
     src/parser/parser_dubai_efa.h \
-    src/parser/parser_ninetwo.h
+    src/parser/parser_ninetwo.h \
+    src/parser/parser_resrobot.h
 
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
@@ -139,7 +142,8 @@ SOURCES += src/main.cpp \
     src/parser/parser_sydney_efa.cpp \
     src/parser/parser_sf_bay_efa.cpp \
     src/parser/parser_dubai_efa.cpp \
-    src/parser/parser_ninetwo.cpp
+    src/parser/parser_ninetwo.cpp \
+    src/parser/parser_resrobot.cpp
 
 # This hack is needed for lupdate to pick up texts from QML files
 translate_hack {
