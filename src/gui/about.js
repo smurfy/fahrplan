@@ -37,5 +37,5 @@ var support = "<p>If fahrplan is not translated in your language, help us <a hre
         "<p>If you encounter bugs or have feature requests visit the <a href=\"https://github.com/smurfy/fahrplan/issues\">Fahrplan issue tracker on GitHub</a></p>";
 
 var maintainers = ["Philipp Andreas (smurfy)", "Michael Zanetti (mzanetti)", "Oleksii Serdiuk (leppa)"];
-var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "Nekhelesh Ramananthan (nik90)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog"];
-var translators = ["German - Philipp Andreas (smurfy), Florian Wittmann", "Ukrainian - Oleksii Serdiuk (leppa)", "Russian - Oleksii Serdiuk (leppa), Alexey (lewa)", "Romanian - LaurB (laurbb)", "Dutch - Heimen Stoffels (Vistaus)", "Persian - Ali Adineh (ali6007205)", "Polish - maurycy"];
+var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "Nekhelesh Ramananthan (nik90)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog", "Erik Lundin"];
+var translators = ["German - Philipp Andreas (smurfy), Florian Wittmann", "Ukrainian - Oleksii Serdiuk (leppa)", "Russian - Oleksii Serdiuk (leppa), Alexey (lewa)", "Romanian - LaurB (laurbb)", "Dutch - Heimen Stoffels (Vistaus)", "Persian - Ali Adineh (ali6007205)", "Polish - maurycy", "Swedish - Erik Lundin"];
