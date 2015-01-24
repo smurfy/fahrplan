@@ -32,7 +32,6 @@ ParserResRobot::ParserResRobot(QObject *parent) :
         timetableBaseURL(QLatin1String("https://api.trafiklab.se/samtrafiken/resrobotstops/")),
         journeyBaseURL(QLatin1String("https://api.trafiklab.se/samtrafiken/resrobot/")),
         realtimeTimetableBaseURL(QLatin1String("https://api.trafiklab.se/samtrafiken/resrobotstopssuper/")),
-        realtimeJourneyBaseURL(QLatin1String("https://api.trafiklab.se/samtrafiken/resrobotsuper/")),
         timetableAPIVersion(QLatin1String("2.2")),
         journeyAPIVersion(QLatin1String("2.1")),
         nearbyRadius(1000),
@@ -262,11 +261,7 @@ void ParserResRobot::internalSearchJourney(const Station &departureStation, cons
     lastJourneySearch.restrictions = trainRestrictions;
     lastJourneySearch.mode = mode;
 
-    QUrl url;
-    if (realtime)
-        url = realtimeJourneyBaseURL + QLatin1String("Search.json");
-    else
-        url = journeyBaseURL + QLatin1String("Search.json");
+    QUrl url = journeyBaseURL + QLatin1String("Search.json");
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
 #else

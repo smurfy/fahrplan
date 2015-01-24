@@ -117,7 +117,6 @@ private:
     const QString timetableBaseURL;
     const QString journeyBaseURL;
     const QString realtimeTimetableBaseURL;
-    const QString realtimeJourneyBaseURL;
     const QString timetableAPIVersion;
     const QString journeyAPIVersion;
     const int nearbyRadius; // Define what is "nearby" in meters
