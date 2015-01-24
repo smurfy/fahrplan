@@ -23,17 +23,16 @@
     <permission>read_geolocation</permission>
     <permission>access_pimdomain_calendars</permission>
 
-    <asset path="fahrplan2" type="Qnx/Elf" entry="true">fahrplan2</asset>
+    <asset path="${BUILD_DIR}/fahrplan2" type="Qnx/Elf" entry="true">fahrplan2</asset>
 
-    <!-- These values will be replaced when deploying in Qt Creator -->
-    <asset path="%SRC_DIR%/3rdparty/bb10-qt-components/imports">imports</asset>
-    <asset path="%SRC_DIR%/data/fahrplan2_150.png">fahrplan2.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_720.png">splash_720_720.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_720_1280.png">splash_720_1280.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_768_1280.png">splash_768_1280.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_1280_720.png">splash_1280_720.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_1280_768.png">splash_1280_768.png</asset>
-    <asset path="%SRC_DIR%/data/splash_bb10_1440.png">splash_1440_1440.png</asset>
+    <asset path="3rdparty/bb10-qt-components/imports">imports</asset>
+    <asset path="data/fahrplan2_150.png">fahrplan2.png</asset>
+    <asset path="data/splash_bb10_720.png">splash_720_720.png</asset>
+    <asset path="data/splash_bb10_720_1280.png">splash_720_1280.png</asset>
+    <asset path="data/splash_bb10_768_1280.png">splash_768_1280.png</asset>
+    <asset path="data/splash_bb10_1280_720.png">splash_1280_720.png</asset>
+    <asset path="data/splash_bb10_1280_768.png">splash_1280_768.png</asset>
+    <asset path="data/splash_bb10_1440.png">splash_1440_1440.png</asset>
 
     <icon>
         <image>fahrplan2.png</image>
