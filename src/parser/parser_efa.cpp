@@ -99,7 +99,6 @@
     #include <QUrlQuery>
 #endif
 
-
 QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsPTV;
 
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
@@ -269,17 +268,14 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
     qDebug() << "ParserEFA::parseStationsByCoordinates(networkReply.url()=" << networkReply->url().toString() << ")";
     StationsList result;
-    QTextStream ts(networkReply->readAll());
-    ts.setCodec("UTF-8");
-    const QString xmlRawtext = ts.readAll();
 
     QDomDocument doc("result");
-
-    if (doc.setContent(xmlRawtext, false)) {
+    QByteArray data = readNetworkReply(networkReply);
+    if (doc.setContent(data, false)) {
         QDomNodeList nodeList = doc.elementsByTagName("itdOdvAssignedStop");
         QDomNodeList modeNodeList = doc.elementsByTagName("itdStopModes");
         if(nodeList.count() == modeNodeList.count()){
-            for (unsigned int i = 0; i < nodeList.length(); ++i) {
+            for (int i = 0; i < nodeList.size(); ++i) {
                 QDomNode node = nodeList.item(i);
                 QDomNode modeNode = modeNodeList.item(i);
                 Station item;
@@ -303,10 +299,13 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
 void ParserEFA::checkForError(QDomDocument *serverReplyDomDoc)
 {
     QDomNodeList errorNodeList = serverReplyDomDoc->elementsByTagName("itdMessage");
-    for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+    for(int i = 0; i < errorNodeList.size(); ++i) {
         QDomNode node = errorNodeList.item(i);
         QString error = getAttribute(node, "type");
         QString code = getAttribute(node, "code");
+        if (code == "-8011") {
+            continue;
+        }
         if(error == "error" && code.toInt() < 0) {
             QString errorText = node.toElement().text();
             if(errorText.length() < 1)
@@ -322,17 +321,14 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
     qDebug() << "ParserEFA::parseStationsByName(networkReply.url()=" << networkReply->url().toString() << ")";
 
     StationsList result;
-    QTextStream ts(networkReply->readAll());
-    ts.setCodec("UTF-8");
-    const QString xmlRawtext = ts.readAll();
-
     QDomDocument doc("result");
 
-    if (doc.setContent(xmlRawtext, false)) {
+    QByteArray data = readNetworkReply(networkReply);
+    if (doc.setContent(data, false)) {
 
         //Check for error: <itdMessage type="error" module="BROKER" code="-2000">stop invalid</itdMessage>
         QDomNodeList errorNodeList = doc.elementsByTagName("itdMessage");
-        for(unsigned int i = 0; i < errorNodeList.length(); ++i) {
+        for(int i = 0; i < errorNodeList.size(); ++i) {
             QDomNode node = errorNodeList.item(i);
             QString error = getAttribute(node, "type");
             if(error == "error")
@@ -351,7 +347,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
 
             QStringList idList;
 
-            for (unsigned int i = 0; i < nodeList.length(); ++i) {
+            for (int i = 0; i < nodeList.size(); ++i) {
                 QDomNode node = nodeList.item(i);
                 Station item;
 
@@ -365,7 +361,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
                 result << item;
             }
 
-            for(unsigned int i = 0; i < modeNodeList.length(); ++i) {
+            for(int i = 0; i < modeNodeList.size(); ++i) {
                 QDomNode modeNode = modeNodeList.item(i);
                 QString id = getAttribute(modeNode, "id");
 
@@ -378,7 +374,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
         else {
             // London, Ireland, Sydney
             QDomNodeList nodeList = doc.elementsByTagName("odvNameElem");
-            for(unsigned int i = 0; i < nodeList.length(); ++i) {
+            for(int i = 0; i < nodeList.size(); ++i) {
                 QDomNode node = nodeList.item(i);
                 Station item;
                 item.name = node.toElement().text();
@@ -450,6 +446,8 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
     query.addQueryItem("calcNumberOfTrips","5");
     query.addQueryItem("language","en");
     query.addQueryItem("coordOutputFormat","WGS84");
+    query.addQueryItem("coordListOutputFormat","STRING");
+    query.addQueryItem("coordOutputFormatTail","0");
     query.addQueryItem("useProxFootSearch","1");
     query.addQueryItem("itOptionsActive","1");
     query.addQueryItem("ptOptionsActive","1");
@@ -529,25 +527,13 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
     m_earliestArrival = m_latestResultDeparture = QDateTime();
 
-    QBuffer *filebuffer = new QBuffer();
-    filebuffer->setData(networkReply->readAll());
-
-    QString element = QString(filebuffer->buffer());
-
-    QBuffer readBuffer;
-#if defined(BUILD_FOR_QT5)
-    readBuffer.setData(element.toLatin1());
-#else
-    readBuffer.setData(element.toAscii());
-#endif
-    readBuffer.open(QIODevice::ReadOnly);
-
     QDomDocument doc("mydocument");
     //(const QString & text, QString * errorMsg = 0, int * errorLine = 0, int * errorColumn = 0)
     QString errorMsg;
     int errorLine = 0;
     int errorColumn = 0;
-    doc.setContent(&readBuffer, &errorMsg, &errorLine, &errorColumn);
+    QByteArray data = readNetworkReply(networkReply);
+    doc.setContent(data, &errorMsg, &errorLine, &errorColumn);
     //qDebug() << "errorMsg:" << errorMsg << ", errorLine:" << errorLine << ", errorColumn:" << errorColumn;
     QDomNodeList routeList = doc.elementsByTagName("itdRoute");
 
@@ -561,13 +547,6 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
         numberOfChanges = routeList.at(nodeCounter).toElement().attribute("changes").toInt();
         duration = routeList.at(nodeCounter).toElement().attribute("publicDuration");
-        QString method = routeList.at(nodeCounter).toElement().attribute("method");
-        QString distance = routeList.at(nodeCounter).toElement().attribute("distance");
-        QString individualDuration = routeList.at(nodeCounter).toElement().attribute("individualDuration");
-        //qDebug() << "method:" << method << ", distance:" << distance << ", individualDuration:" << individualDuration;
-
-        bool departureDateSet = false;
-        bool departureTimeSet = false;
 
         QDateTime departureDateTime;
         QDateTime arrivalDateTime;
@@ -580,120 +559,53 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
         QDomNodeList partialRouteList = routeList.at(nodeCounter).firstChildElement("itdPartialRouteList").elementsByTagName("itdPoint");
         QDomNodeList meansOfTransportList = routeList.at(nodeCounter).firstChildElement("itdPartialRouteList").elementsByTagName("itdMeansOfTransport");
-        /* itdMeansOfTransport has attributes:  "network" "tC" "productName" "destination" "symbol" "motType" "spTr" "type" "name" "shortname" "destID" "TTB" "STT" "ROP"
-         */
-
+        // itdMeansOfTransport has attributes:  "network" "tC" "productName" "destination" "symbol" "motType" "spTr" "type" "name" "shortname" "destID" "TTB" "STT" "ROP"
         qDebug() << "partialRouteList size:" << partialRouteList.size() << ", meansOfTransportList:" << meansOfTransportList.size();
 
-        for(int meansOfTransportListCounter = 0 ; meansOfTransportListCounter < meansOfTransportList.size() ; ++meansOfTransportListCounter) {
-            QString productName = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("productName");
-            QString motType = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("motType");
-            QString destination = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("destination");
+        for (int i = 0; i < meansOfTransportList.size(); ++i) {
+            QDomElement meansOfTransportElememt = meansOfTransportList.at(i).toElement();
+            QString productName = meansOfTransportElememt.attribute("productName");
+            QString destination = meansOfTransportElememt.attribute("destination");
             destinationList.append(destination);
-            QString name = meansOfTransportList.at(meansOfTransportListCounter).toElement().attribute("name");
+            QString name = meansOfTransportElememt.attribute("name");
             QString nameForList = name;
-            if(productName == "Fussweg")
+            if (productName == "Fussweg") {
                 nameForList = "Walk";
-            if(!meansOfTransportNameList.isEmpty()){
-                if(nameForList != meansOfTransportNameList.last())
-                    meansOfTransportNameList.append(nameForList);
             }
-            else
-                meansOfTransportNameList.append(nameForList);
-
+            meansOfTransportNameList.append(nameForList);
         }
 
-        for(int partialRouteListCounter = 0 ; partialRouteListCounter < partialRouteList.size() ; ++partialRouteListCounter){    //itdPoint has attributes and other node
-            QString partialRouteUsage = partialRouteList.at(partialRouteListCounter).toElement().attribute("usage");
-
+        for (int i = 0; i < partialRouteList.size(); ++i) {    //itdPoint has attributes and other node
+            QDomNode paritalRouteNode = partialRouteList.at(i);
+            QDomElement paritalRouteElement = paritalRouteNode.toElement();
+            QString partialRouteUsage = paritalRouteElement.attribute("usage");
             /* Each partialRouteList element has the following attributes: "platformName" "nameWO" "platform" "locality" "usage" "area" "name" "placeID" "stopID" "omc" "platformName"
              *  "nameWO" "platform" "locality" "usage" "area" "name" "placeID" "stopID" "omc"
              *  The following attributes are also present on partialRoutes if the arrival time is a real time
              *  "x" "y" "mapName" "x" "y" "mapName"
             */
-
-            QString stationName;
-            QString placeID;
-            QString platformName;
-
-            if(partialRouteUsage == "departure" || partialRouteUsage == "arrival" ){  // arrival
-                //qDebug() << "Found usage == departure";
-                QDomNodeList departureInformationList = partialRouteList.at(partialRouteListCounter).childNodes();
-
-                //qDebug() << "departureInformationList.size():" << departureInformationList.size();
-                for(int departureInformationListCounter = 0 ; departureInformationListCounter < departureInformationList.size() ; ++departureInformationListCounter)    // has 3 child nodes
-                {
-                    //qDebug() << "departureInformationList.at(departureInformationListCounter).toElement().tagName():" << departureInformationList.at(departureInformationListCounter).toElement().tagName();
-                    if(departureInformationList.at(departureInformationListCounter).toElement().tagName() == "itdDateTime")
-                     {
-                            /*<itdDate year="2013" month="8" day="31" weekday="7"/>
-                             *        <itdTime hour="17" minute="12"/>*/
-
-                        QDateTime lastDepartureDateTimeProcessed;
-                        QDateTime lastArrivalDateTimeProcessed;
-
-                        QDomNodeList departureDateInformationList = departureInformationList.at(departureInformationListCounter).toElement().elementsByTagName("itdDate");
-                        for(int departureDateInformationListCounter = 0 ; departureDateInformationListCounter < departureDateInformationList.size() ; ++departureDateInformationListCounter) {   // should have 1 node
-                            if(partialRouteUsage == "departure")  {
-                                QString departureYear = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("year");
-                                QString departureMonth = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("month");
-                                QString departureDay = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("day");
-                                lastDepartureDateTimeProcessed.setDate(QDate(departureYear.toInt(), departureMonth.toInt(), departureDay.toInt()));
-
-                                if(!departureDateSet) {
-                                    departureDateTime.setDate(QDate(departureYear.toInt(), departureMonth.toInt(), departureDay.toInt()));
-                                    departureDateSet = true;
-                                }
-                            }
-                            else {
-                                QString arrivalYear = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("year");
-                                QString arrivalMonth = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("month");
-                                QString arrivalDay = departureDateInformationList.at(departureDateInformationListCounter).toElement().attribute("day");
-
-                                lastArrivalDateTimeProcessed.setDate(QDate(arrivalYear.toInt(), arrivalMonth.toInt(), arrivalDay.toInt()));
-                                arrivalDateTime = lastArrivalDateTimeProcessed;
-                            }
+            QString stationName = paritalRouteElement.attribute("name");
+            QString platformName = paritalRouteElement.attribute("platformName");
+            if (partialRouteUsage == "departure" || partialRouteUsage == "arrival" ) {
+                QDomNodeList departureInformationList = paritalRouteNode.childNodes();
+                for (int k = 0; k < departureInformationList.size(); ++k) {
+                    QDomElement dateTimeElement = departureInformationList.at(k).toElement();
+                    if (dateTimeElement.tagName() == "itdDateTime") {
+                        QDateTime dateTime = parseItdDateTime(dateTimeElement);
+                        if (partialRouteUsage == "departure") {
+                            departureTimesList.append(dateTime);
+                        } else {
+                            arrivalTimesList.append(dateTime);
                         }
-
-                        QDomNodeList departureTimeInformationList = departureInformationList.at(departureInformationListCounter).toElement().elementsByTagName("itdTime");
-                        for(int departureTimeInformationListCounter = 0 ; departureTimeInformationListCounter < departureTimeInformationList.size() ; ++departureTimeInformationListCounter)    // should have 1 node
-                        {
-                            if(partialRouteUsage == "departure") {
-                                QString hour = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("hour");
-                                QString minute = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("minute");
-                                lastDepartureDateTimeProcessed.setTime(QTime::fromString(hour + ":" + minute,"hh:mm"));
-
-                                if(!departureTimeSet) {
-                                    departureDateTime.setTime(QTime::fromString(hour + ":" + minute,"hh:mm"));
-                                    qDebug() << "Departure time set:" << departureDateTime;
-                                    departureTimeSet = true;
-                                }
-
-                                departureTimesList.append(lastDepartureDateTimeProcessed);
-                            }
-                            else                            {
-                                QString arrivalHour = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("hour");
-                                QString arrivalMinute = departureTimeInformationList.at(departureTimeInformationListCounter).toElement().attribute("minute");
-
-                                //qDebug() << "Trying to set arrival time to :" << arrivalHour + ":" + arrivalMinute;
-                                arrivalDateTime.setTime(QTime::fromString(arrivalHour + ":" + arrivalMinute,"hh:mm"));
-                                lastArrivalDateTimeProcessed.setTime(QTime::fromString(arrivalHour + ":" + arrivalMinute,"hh:mm"));
-
-                                arrivalTimesList.append(lastArrivalDateTimeProcessed);
-                            }
-                        }
-
-                        stationName = partialRouteList.at(partialRouteListCounter).toElement().attribute("name");
                         stationNameList.append(stationName);
-                        platformName = partialRouteList.at(partialRouteListCounter).toElement().attribute("platformName");
                         platformNameList.append(platformName);
-                        placeID = partialRouteList.at(partialRouteListCounter).toElement().attribute("placeID");
-                        //qDebug() << "Detail to Store: "
-                     }
+                    }
                 }
             }
         }
-
+        departureDateTime = departureTimesList.first();
+        qDebug() << "Departure time set:" << departureDateTime;
+        arrivalDateTime = arrivalTimesList.last();
 
         // Create a combined list for the detail view, combine departure, location and means of transport to a single item
         int departureCounter = 0;
@@ -822,18 +734,19 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
     qDebug() << "ParserEFA::parseTimeTable(networkReply.url()=" << networkReply->url().toString() << ")";
 
     TimetableEntriesList result;
-    QTextStream ts(networkReply->readAll());
-    ts.setCodec("UTF-8");
-    const QString xmlRawtext = ts.readAll();
-
     QDomDocument doc("result");
 
-    if (doc.setContent(xmlRawtext, false)) {
+    QByteArray data = readNetworkReply(networkReply);
+    if (doc.setContent(data, false)) {
+        QDomElement departureMonitorRequestElement = doc.firstChildElement("itdRequest").firstChildElement("itdDepartureMonitorRequest");
+        QDomElement referenceDateTimeElement = departureMonitorRequestElement.firstChildElement("itdDateTime");
+        const QDateTime referenceDateTime = parseItdDateTime(referenceDateTimeElement);
+
         QDomNodeList nodeList = doc.elementsByTagName("itdDeparture");
         if (nodeList.isEmpty()) {
             nodeList = doc.elementsByTagName("itdDateTime");
         }
-        for(unsigned int i = 0; i < nodeList.length(); ++i) {
+        for(int i = 0; i < nodeList.size(); ++i) {
             QDomNode node = nodeList.item(i);
             TimetableEntry item;
 
@@ -842,15 +755,13 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
             item.destinationStation = getAttribute(servingLineElement, "direction");
             item.trainType = getAttribute(servingLineElement, "motType");
             QDomElement dateTimeElement = node.firstChildElement("itdDateTime");
-            QDomElement dateElement = dateTimeElement.firstChildElement("itdDate");
-            QDomElement timeElement = dateTimeElement.firstChildElement("itdTime");
-
-            const QTime scheduledTime(getAttribute(timeElement, "hour").toInt(), getAttribute(timeElement, "minute").toInt(), 0);
-            item.time = scheduledTime;
+            const QDateTime scheduledDateTime = parseItdDateTime(dateTimeElement);
+            item.time = scheduledDateTime.time();
             const QString realTimeStr = getAttribute(node, "countdown");    // In minutes from search time
             if (!realTimeStr.isEmpty()) {
-                const QTime realTimeTime = QTime::currentTime().addSecs(realTimeStr.toInt());
-                const int minutesTo = scheduledTime.msecsTo(realTimeTime) / 60000;
+                const int realCountdown = realTimeStr.toInt();
+                const int scheduledCountdown = qRound(referenceDateTime.secsTo(scheduledDateTime) / 60.);
+                const int minutesTo = realCountdown - scheduledCountdown;
                 if (minutesTo > 3) {
                     //qDebug() << "Running late";
                     item.miscInfo = tr("<span style=\"color:#b30;\">%1 min late</span>").arg(minutesTo);
@@ -957,3 +868,24 @@ JourneyDetailResultList * ParserEFA::parseDetails(JourneyResultItem *journeyitem
     return results;
 }
 
+QDateTime ParserEFA::parseItdDateTime(const QDomElement &element)
+{
+    QDomElement dateElement = element.firstChildElement("itdDate");
+    QDomElement timeElement = element.firstChildElement("itdTime");
+    const QDate date(getAttribute(dateElement, "year").toInt(), getAttribute(dateElement, "month").toInt(), getAttribute(dateElement, "day").toInt());
+    const QTime time(getAttribute(timeElement, "hour").toInt(), getAttribute(timeElement, "minute").toInt(), 0);
+    return QDateTime(date, time);
+}
+
+QByteArray ParserEFA::readNetworkReply(QNetworkReply *networkReply)
+{
+    QByteArray data = networkReply->readAll();
+    QByteArray gzipHeader;
+    gzipHeader.resize(2);
+    gzipHeader[0] = 0x1F;
+    gzipHeader[1] = 0x8B;
+    if (data.startsWith(gzipHeader)) {
+        data = gzipDecompress(data);
+    }
+    return data;
+}

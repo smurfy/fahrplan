@@ -151,6 +151,12 @@ void FahrplanParserThread::run()
         case 12:
             m_parser = new ParserNinetwo();
             break;
+        case 13:
+            m_parser = new ParserMunichEFA();
+            break;
+        case 14:
+            m_parser = new ParserSalzburgEFA();
+            break;
     }
 
     m_name = m_parser->name();

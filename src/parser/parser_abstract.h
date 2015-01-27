@@ -76,6 +76,7 @@ protected:
     FahrplanNS::curReqStates currentRequestState;
     QNetworkReply *lastRequest;
     QTimer *requestTimeout;
+    QByteArray acceptEncoding;
 
     virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseStationsByName(QNetworkReply *networkReply);
@@ -86,6 +87,7 @@ protected:
     virtual void parseJourneyDetails(QNetworkReply *networkReply);
     void sendHttpRequest(QUrl url, QByteArray data);
     void sendHttpRequest(QUrl url);
+    QByteArray gzipDecompress(QByteArray compressData);
 };
 
 #endif // PARSER_ABSTRACT_H

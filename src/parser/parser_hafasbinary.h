@@ -22,7 +22,6 @@
 
 #include <QObject>
 #include <QDataStream>
-#include <zlib.h>
 #include "parser_hafasxml.h"
 
 class ParserHafasBinary : public ParserHafasXml
@@ -41,7 +40,6 @@ protected:
     void parseSearchJourney(QNetworkReply *networkReply);
     void parseSearchLaterJourney(QNetworkReply *networkReply);
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
-    QByteArray gzipDecompress(QByteArray compressData);
     QDate toDate(quint16 date);
     QDateTime toTime(quint16 time, QDate baseDate);
     QDateTime toTime(quint16 time);

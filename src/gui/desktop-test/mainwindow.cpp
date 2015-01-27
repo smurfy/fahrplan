@@ -20,6 +20,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QScrollBar>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -121,6 +123,7 @@ void MainWindow::getTimeTableForStationClicked()
 {
     ui->searchJourneyResults->clear();
     ui->searchJourneyResults->append("Searching...");
+    fahrplan->setMode(Fahrplan::NowMode);
     fahrplan->getTimeTable();
 }
 
@@ -144,7 +147,8 @@ void MainWindow::timeTableResult()
         ui->searchJourneyResults->append(fahrplan->timetable()->data(index, Timetable::MiscInfo).toString());
         ui->searchJourneyResults->append("------------------------------");
     }
-
+    QScrollBar *scrollbar = ui->searchJourneyResults->verticalScrollBar();
+    scrollbar->setValue(scrollbar->minimum());
 }
 
 void MainWindow::stationsResult()
@@ -211,6 +215,8 @@ void MainWindow::journeyResult(JourneyResultList *result)
     if (result->itemcount() == 0) {
         ui->searchJourneyResults->append("No Results");
     }
+    QScrollBar *scrollbar = ui->searchJourneyResults->verticalScrollBar();
+    scrollbar->setValue(scrollbar->minimum());
 }
 
 void MainWindow::getJourneyDetailsClicked()
@@ -256,4 +262,6 @@ void MainWindow::journeyDetailResult(JourneyDetailResultList *result)
     if (result->itemcount() == 0) {
         ui->getJourneyDetailsResults->append("No Results");
     }
+    QScrollBar *scrollbar = ui->getJourneyDetailsResults->verticalScrollBar();
+    scrollbar->setValue(scrollbar->minimum());
 }
