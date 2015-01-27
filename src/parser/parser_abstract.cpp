@@ -26,6 +26,15 @@
 
 #include <zlib.h>
 
+#ifdef BUILD_FOR_QT5
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#else
+#include <QScriptEngine>
+#include <QScriptValue>
+#endif
+
 ParserAbstract::ParserAbstract(QObject *parent) :
     QObject(parent)
 {
@@ -111,6 +120,26 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
     requestTimeout->start(30000);
 
     connect(lastRequest, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(networkReplyDownloadProgress(qint64,qint64)));
+}
+
+QVariantMap ParserAbstract::parseJson(const QByteArray &json) const
+{
+    QVariantMap doc;
+#ifdef BUILD_FOR_QT5
+    doc = QJsonDocument::fromJson(json).toVariant().toMap();
+#else
+    QString tmp(json);
+    // Validation of JSON according to RFC4627, section 6
+    if (tmp.replace(QRegExp("\"(\\\\.|[^\"\\\\])*\""), "")
+           .contains(QRegExp("[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]")))
+        return doc;
+
+    QScriptEngine *engine = new QScriptEngine();
+    doc = engine->evaluate("(" + json + ")").toVariant().toMap();
+    delete engine;
+#endif
+
+    return doc;
 }
 
 void ParserAbstract::networkReplyDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)

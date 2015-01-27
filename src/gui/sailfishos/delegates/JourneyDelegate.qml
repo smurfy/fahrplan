@@ -25,7 +25,7 @@ Item {
     id: root
     property ListView listView: ListView.view
     width: listView.width
-    height: contentItem.height + Theme.paddingMedium
+    height: contentItem.height + Theme.paddingLarge
 
     signal clicked()
 

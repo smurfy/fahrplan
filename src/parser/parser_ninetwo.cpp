@@ -23,12 +23,7 @@
 #include <QNetworkReply>
 #ifdef BUILD_FOR_QT5
 #   include <QUrlQuery>
-#   include <QJsonArray>
-#   include <QJsonDocument>
-#   include <QJsonObject>
 #else
-#   include <QScriptEngine>
-#   include <QScriptValue>
 #   define setQuery(q) setQueryItems(q.queryItems())
 #endif
 
@@ -356,26 +351,6 @@ void ParserNinetwo::parseSearchEarlierJourney(QNetworkReply *)
 void ParserNinetwo::parseJourneyDetails(QNetworkReply *)
 {
     //should never happen
-}
-
-QVariantMap ParserNinetwo::parseJson(const QByteArray &json) const
-{
-    QVariantMap doc;
-#ifdef BUILD_FOR_QT5
-    doc = QJsonDocument::fromJson(json).toVariant().toMap();
-#else
-    QString tmp(json);
-    // Validation of JSON according to RFC4627, section 6
-    if (tmp.replace(QRegExp("\"(\\\\.|[^\"\\\\])*\""), "")
-           .contains(QRegExp("[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]")))
-        return doc;
-
-    QScriptEngine *engine = new QScriptEngine();
-    doc = engine->evaluate("(" + json + ")").toVariant().toMap();
-    delete engine;
-#endif
-
-    return doc;
 }
 
 void ParserNinetwo::parseJourneyOption(const QVariantMap &object)

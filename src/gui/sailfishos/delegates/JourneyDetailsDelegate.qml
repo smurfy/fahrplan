@@ -226,6 +226,7 @@ Item {
                     rightMargin: Theme.paddingMedium
                     verticalCenter: parent.verticalCenter
                 }
+                onLinkActivated : Qt.openUrlExternally(link)
             }
         }
     }
