@@ -74,9 +74,13 @@ int main(int argc, char *argv[])
         QApplication* app = new QApplication(argc, argv);
     #endif
 
+    QString localeName = QLocale().name();
+
+    qDebug() <<"Using "<<localeName<<" locale";
+
     // Install translations
     QTranslator translator;
-    translator.load(QString("fahrplan_%1").arg(QLocale().name()), ":/translations");
+    translator.load(QString("fahrplan_%1").arg(localeName), ":/translations");
     app->installTranslator(&translator);
 
     qDebug()<<"Startup";

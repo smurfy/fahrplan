@@ -167,7 +167,8 @@ translate_hack {
         src/gui/sailfishos/*.qml  \
         src/gui/sailfishos/components/*.qml \
         src/gui/sailfishos/delegates/*.qml \
-        src/gui/sailfishos/pages/*.qml
+        src/gui/sailfishos/pages/*.qml \
+        src/gui/about.js
 }
 
 contains(MEEGO_EDITION,harmattan) {
