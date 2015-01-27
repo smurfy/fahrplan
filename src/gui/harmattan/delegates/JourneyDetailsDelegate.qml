@@ -198,6 +198,7 @@ Item {
                     leftMargin: 110
                     verticalCenter: parent.verticalCenter
                 }
+                onLinkActivated : Qt.openUrlExternally(link)
             }
         }
     }

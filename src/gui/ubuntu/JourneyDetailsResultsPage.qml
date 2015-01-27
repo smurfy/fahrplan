@@ -322,6 +322,7 @@ Page {
                             return result;
                         }
                         width: (parent.width  - units.gu(11))
+                        onLinkActivated : Qt.openUrlExternally(link)
                     }
                 }
             }

@@ -229,6 +229,7 @@ Item {
                     rightMargin: platformStyle.paddingMedium
                     verticalCenter: parent.verticalCenter
                 }
+                onLinkActivated : Qt.openUrlExternally(link)
             }
         }
     }
