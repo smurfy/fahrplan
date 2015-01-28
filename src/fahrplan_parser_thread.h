@@ -33,7 +33,6 @@
 #include "parser/parser_ptvvicgovau.h"
 #include "parser/parser_sf_bay_efa.h"
 #include "parser/parser_sydney_efa.h"
-#include "parser/parser_london_efa.h"
 #include "parser/parser_ireland_efa.h"
 #include "parser/parser_dubai_efa.h"
 #include "parser/parser_ninetwo.h"
