@@ -111,10 +111,24 @@ symbian {
         export(splash.path)
         INSTALLS += splash
     } else:ubuntu {
+        installPrefix = /
         desktopfile.files = data/$${TARGET}_ubuntu.desktop
-        desktopfile.path = /usr/share/applications
+        desktopfile.path = /
         icon.files = data/$${TARGET}-square.svg
-        icon.path = /usr/share/icons/hicolor/scalable/apps
+        icon.path = /
+        # The following line is required for the Ubuntu SDK to generate a run config
+        UBUNTU_MANIFEST_FILE = $$PWD/qtc_packaging/ubuntu/manifest.json
+        export(UBUNTU_MANIFEST_FILE)
+        manifestfile.files = $${UBUNTU_MANIFEST_FILE}
+        manifestfile.CONFIG += no_check_exist
+        manifestfile.path = /
+        export(manifestfile.files)
+        export(manifestfile.path)
+        apparmor.files = qtc_packaging/ubuntu/fahrplan2.json
+        apparmor.path = /
+        export(apparmor.files)
+        export(apparmor.path)
+        INSTALLS += manifestfile apparmor
     } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
         desktopfile.files = data/sailfishos/$${TARGET}.desktop
         desktopfile.path = /usr/share/applications
