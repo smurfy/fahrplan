@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sv_SE">
+<TS version="2.0" language="sv_SE">
 <context>
     <name>AboutPage</name>
     <message>
@@ -856,7 +856,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <source>%n min late</source>
         <translation>
             <numerusform>%n min sent</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n min sent</numerusform>
         </translation>
     </message>
     <message>
@@ -1176,33 +1176,33 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="38"/>
         <source>All</source>
-        <translation type="unfinished">Alla</translation>
+        <translation>Alla</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="39"/>
         <source>S-Bahn</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Bahn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="40"/>
         <source>U-Bahn</source>
-        <translation type="unfinished"></translation>
+        <translation>U-Bahn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="41"/>
         <source>Tram</source>
-        <translation type="unfinished">Spårvagn</translation>
+        <translation>Spårvagn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="42"/>
         <source>Bus</source>
-        <translation type="unfinished">Buss</translation>
+        <translation>Buss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="48"/>
         <location filename="../src/parser/parser_munich_efa.cpp" line="53"/>
         <source>Munich (MVV)</source>
-        <translation type="unfinished"></translation>
+        <translation>München (MVV)</translation>
     </message>
 </context>
 <context>
@@ -1737,22 +1737,22 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="37"/>
         <source>All</source>
-        <translation type="unfinished">Alla</translation>
+        <translation>Alla</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="38"/>
         <source>S-Bahn</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Bahn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="39"/>
         <source>Bus</source>
-        <translation type="unfinished">Buss</translation>
+        <translation>Buss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="45"/>
         <source>Salzburg (SVV)</source>
-        <translation type="unfinished"></translation>
+        <translation>Salzburg (SVV)</translation>
     </message>
 </context>
 <context>
@@ -2214,7 +2214,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/about.js" line="35"/>
         <source>&lt;p&gt;If fahrplan is not translated in your language, help us &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;translate it to your language&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;If you like fahrplan, I would appreciate a donation. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Donate using PayPal&lt;/a&gt;&lt;/p&gt;&lt;p&gt;If you encounter bugs or have feature requests visit the &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;Fahrplan issue tracker on GitHub&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Om Fahrplan inte är översatt till ditt språk, hjälp oss att &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;översätta det till ditt språk&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Om du gillar Fahrplan skulle jag uppskatta ett bidrag. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Ge en gåva via PayPal&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Om du upptäcker buggar eller har förslag på nya funktioner, besök &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;Fahrplans ärendehantering på GitHub&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
