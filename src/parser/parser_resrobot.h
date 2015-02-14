@@ -61,7 +61,7 @@ class ParserResRobot : public ParserAbstract
 public:
     explicit ParserResRobot(QObject *parent = 0);
 
-    static QString getName() { return QString("ResRobot (%1)").arg(tr("Sweden")); }
+    static QString getName() { return QString("%1 (resrobot.se)").arg(tr("Sweden")); }
     virtual QString name() { return getName(); }
 
 public slots:

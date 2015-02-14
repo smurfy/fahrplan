@@ -28,8 +28,8 @@ class ParserXmlRejseplanenDk : public ParserHafasXml
 
 public:
     explicit ParserXmlRejseplanenDk(QObject *parent = 0);
-    static QString getName() { return "rejseplanen.dk"; }
-    QString name() { return "rejseplanen.dk"; }
+    static QString getName() { return QString("%1 (rejseplanen.dk)").arg(tr("Denmark")); }
+    virtual QString name() { return getName(); }
 
 protected:
     QStringList getTrainRestrictions();

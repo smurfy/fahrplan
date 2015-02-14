@@ -42,13 +42,3 @@ QStringList ParserMunichEFA::getTrainRestrictions()
     result.append(tr("Bus"));
     return result;
 }
-
-QString ParserMunichEFA::getName()
-{
-    return tr("Munich (MVV)");
-}
-
-QString ParserMunichEFA::name()
-{
-    return tr("Munich (MVV)");
-}

@@ -28,8 +28,8 @@ class ParserXmlOebbAt: public ParserHafasBinary
 
 public:
     explicit ParserXmlOebbAt(QObject *parent = 0);
-    static QString getName() { return QString::fromUtf8("öbb.at"); }
-    QString name() { return QString::fromUtf8("öbb.at"); }
+    static QString getName() { return QString("%1 (oebb.at)").arg(tr("Austria")); }
+    virtual QString name() { return getName(); }
 
 protected:
     QStringList getTrainRestrictions();

@@ -28,8 +28,8 @@ class ParserSydneyEFA : public ParserEFA
     Q_OBJECT
 public:
     explicit ParserSydneyEFA(QObject *parent = 0);
-    static QString getName() { return "Sydney"; }
-    QString name() { return "Sydney"; }
+    static QString getName() { return QString("%1, %2 (transportnsw.info)").arg(tr("Australia"), tr("Sydney")); }
+    virtual QString name() { return getName(); }
 
 protected:
     QStringList getTrainRestrictions();

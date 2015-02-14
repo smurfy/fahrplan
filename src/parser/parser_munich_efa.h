@@ -28,8 +28,8 @@ class ParserMunichEFA : public ParserEFA
     Q_OBJECT
 public:
     explicit ParserMunichEFA(QObject *parent = 0);
-    static QString getName();
-    QString name();
+    static QString getName() { return QString("%1, %2 (mvv-muenchen.de)").arg(tr("Germany"), tr("Munich")); }
+    virtual QString name() { return getName(); }
 
 protected:
     QStringList getTrainRestrictions();

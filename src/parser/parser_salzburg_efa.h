@@ -28,8 +28,9 @@ class ParserSalzburgEFA : public ParserEFA
     Q_OBJECT
 public:
     explicit ParserSalzburgEFA(QObject *parent = 0);
-    static QString getName();
-    QString name();
+    static QString getName() { return QString("%1, %2 (svv-info.at)").arg(tr("Austria"), tr("Salzburg")); }
+    virtual QString name() { return getName(); }
+
 
 protected:
     QStringList getTrainRestrictions();

@@ -57,8 +57,9 @@ public:
 
     // ParserAbstract interface
 public:
-    QString name(){return "9292ov.nl";}
-    static QString getName() { return "9292ov.nl"; }
+    static QString getName() { return QString("%1 / %2 (9292ov.nl)").arg(tr("Netherlands"), tr("Belgium")); }
+    virtual QString name() { return getName(); }
+
 public slots:
     void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);
     void findStationsByName(const QString &stationName);

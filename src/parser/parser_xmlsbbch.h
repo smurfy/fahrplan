@@ -28,8 +28,8 @@ class ParserXmlSbbCh : public ParserHafasXml
 
 public:
     explicit ParserXmlSbbCh(QObject *parent = 0);
-    static QString getName() { return "sbb.ch"; }
-    QString name() { return "sbb.ch"; }
+    static QString getName() { return QString("%1 (sbb.ch)").arg(tr("Switzerland")); }
+    virtual QString name() { return getName(); }
 
 protected:
     void parseStationsByName(QNetworkReply *networkReply);

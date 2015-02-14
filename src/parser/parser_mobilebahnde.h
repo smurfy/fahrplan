@@ -32,8 +32,8 @@ class ParserMobileBahnDe : public ParserHafasBinary
     Q_OBJECT
 public:
     explicit ParserMobileBahnDe(QObject *parent = 0);
-    static QString getName() { return "bahn.de"; }
-    QString name() { return "bahn.de"; }
+    static QString getName() { return QString("%1 (bahn.de)").arg(tr("Germany")); }
+    virtual QString name() { return getName(); }
 
 public slots:
     QStringList getTrainRestrictions();

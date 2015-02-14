@@ -28,12 +28,8 @@ class ParserXmlVasttrafikSe : public ParserAbstract
 
 public:
     explicit ParserXmlVasttrafikSe(QObject *parent = 0);
-    static QString getName() {
-        return "vasttrafik.se";
-    }
-    QString name() {
-        return "vasttrafik.se";
-    }
+    static QString getName() { return QString("%1 (vasttrafik.se)").arg(tr("Sweden")); }
+    virtual QString name() { return getName(); }
 
 public slots:
     virtual void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, Mode mode, int trainrestrictions);

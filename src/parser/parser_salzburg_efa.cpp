@@ -39,13 +39,3 @@ QStringList ParserSalzburgEFA::getTrainRestrictions()
     result.append(tr("Bus"));
     return result;
 }
-
-QString ParserSalzburgEFA::getName()
-{
-    return tr("Salzburg (SVV)");
-}
-
-QString ParserSalzburgEFA::name()
-{
-    return getName();
-}
