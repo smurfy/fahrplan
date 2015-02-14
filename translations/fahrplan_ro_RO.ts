@@ -746,6 +746,11 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <source>Taxi</source>
         <translation>Taxi</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_dubai_efa.h" line="31"/>
+        <source>Dubai</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParserEFA</name>
@@ -1096,58 +1101,53 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <source>Taxi</source>
         <translation>Taxi</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_ireland_efa.h" line="31"/>
+        <source>Ireland</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParserLondonEFA</name>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="44"/>
         <source>All</source>
-        <translation>Toate</translation>
+        <translation type="vanished">Toate</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="45"/>
         <source>Tube</source>
-        <translation>Țeavă</translation>
+        <translation type="vanished">Țeavă</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="46"/>
         <source>Rail</source>
-        <translation>Șină</translation>
+        <translation type="vanished">Șină</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="47"/>
         <source>Coach</source>
-        <translation>Antrenor</translation>
+        <translation type="vanished">Antrenor</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="48"/>
         <source>DLR</source>
-        <translation>DLR</translation>
+        <translation type="vanished">DLR</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="49"/>
         <source>Tram</source>
-        <translation>Tramvai</translation>
+        <translation type="vanished">Tramvai</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="50"/>
         <source>Bus</source>
-        <translation>Autobuz</translation>
+        <translation type="vanished">Autobuz</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="51"/>
         <source>River</source>
-        <translation>Râu</translation>
+        <translation type="vanished">Râu</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="52"/>
         <source>Emirates Air Line</source>
-        <translation>Liniile aeriene Emirate</translation>
+        <translation type="vanished">Liniile aeriene Emirate</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="53"/>
         <source>London Overground</source>
-        <translation>Londra deasupra pământului</translation>
+        <translation type="vanished">Londra deasupra pământului</translation>
     </message>
 </context>
 <context>
@@ -1171,6 +1171,11 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <location filename="../src/parser/parser_mobilebahnde.cpp" line="38"/>
         <source>Local transport without S-Bahn</source>
         <translation>Transport local cu S-Bahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_mobilebahnde.h" line="35"/>
+        <source>Germany</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1201,9 +1206,13 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <translation type="unfinished">Autobuz</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_munich_efa.cpp" line="48"/>
-        <location filename="../src/parser/parser_munich_efa.cpp" line="53"/>
-        <source>Munich (MVV)</source>
+        <location filename="../src/parser/parser_munich_efa.h" line="31"/>
+        <source>Germany</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_munich_efa.h" line="31"/>
+        <source>Munich</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1248,6 +1257,16 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
 %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <source>Netherlands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <source>Belgium</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParserPTVVicGovAu</name>
@@ -1285,6 +1304,16 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <location filename="../src/parser/parser_ptvvicgovau.cpp" line="52"/>
         <source>Airport(SKYBUS)</source>
         <translation>Aeroport</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ptvvicgovau.h" line="31"/>
+        <source>Australia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ptvvicgovau.h" line="31"/>
+        <source>Victoria</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1732,6 +1761,16 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <source>Yountville Shuttle</source>
         <translation>Yountville Shuttle</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_sf_bay_efa.h" line="31"/>
+        <source>USA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_sf_bay_efa.h" line="31"/>
+        <source>SF Bay</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParserSalzburgEFA</name>
@@ -1751,8 +1790,13 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <translation type="unfinished">Autobuz</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_salzburg_efa.cpp" line="45"/>
-        <source>Salzburg (SVV)</source>
+        <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
+        <source>Austria</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
+        <source>Salzburg</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1783,6 +1827,16 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <source>STA School Bus</source>
         <translation>Autobuz școlar STA</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_sydney_efa.h" line="31"/>
+        <source>Australia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_sydney_efa.h" line="31"/>
+        <source>Sydney</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParserXmlNri</name>
@@ -1790,6 +1844,11 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <location filename="../src/parser/parser_xmlnri.cpp" line="34"/>
         <source>All</source>
         <translation>Toate</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlnri.h" line="31"/>
+        <source>Norway</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1808,6 +1867,11 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <location filename="../src/parser/parser_xmloebbat.cpp" line="37"/>
         <source>Einfach-Raus-Ticket</source>
         <translation>Bilet Einfach-Raus</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmloebbat.h" line="31"/>
+        <source>Austria</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1837,6 +1901,11 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <source>Local transport without S-Bahn</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.h" line="31"/>
+        <source>Denmark</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParserXmlSbbCh</name>
@@ -1849,6 +1918,11 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <location filename="../src/parser/parser_xmlsbbch.cpp" line="59"/>
         <source>All without ICE</source>
         <translation>Toate fără ICE</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlsbbch.h" line="31"/>
+        <source>Switzerland</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1926,6 +2000,11 @@ Adăugat de Fahrplan. Vă rugăm, reverificați informația înainte de călăto
         <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="500"/>
         <source>Ferry</source>
         <translation>Bac</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlvasttrafikse.h" line="31"/>
+        <source>Sweden</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

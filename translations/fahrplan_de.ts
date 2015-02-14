@@ -746,6 +746,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source>Taxi</source>
         <translation>Taxi</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_dubai_efa.h" line="31"/>
+        <source>Dubai</source>
+        <translation>Dubai</translation>
+    </message>
 </context>
 <context>
     <name>ParserEFA</name>
@@ -1094,58 +1099,53 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source>Taxi</source>
         <translation>Taxi</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_ireland_efa.h" line="31"/>
+        <source>Ireland</source>
+        <translation>Irland</translation>
+    </message>
 </context>
 <context>
     <name>ParserLondonEFA</name>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="44"/>
         <source>All</source>
-        <translation>Alle</translation>
+        <translation type="vanished">Alle</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="45"/>
         <source>Tube</source>
-        <translation>U-Bahn</translation>
+        <translation type="vanished">U-Bahn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="46"/>
         <source>Rail</source>
-        <translation>Zug</translation>
+        <translation type="vanished">Zug</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="47"/>
         <source>Coach</source>
-        <translation>Bus (Coach)</translation>
+        <translation type="vanished">Bus (Coach)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="48"/>
         <source>DLR</source>
-        <translation>DLR</translation>
+        <translation type="vanished">DLR</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="49"/>
         <source>Tram</source>
-        <translation>Tram</translation>
+        <translation type="vanished">Tram</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="50"/>
         <source>Bus</source>
-        <translation>Bus</translation>
+        <translation type="vanished">Bus</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="51"/>
         <source>River</source>
-        <translation>Fluss</translation>
+        <translation type="vanished">Fluss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="52"/>
         <source>Emirates Air Line</source>
-        <translation>Emirates Air Line</translation>
+        <translation type="vanished">Emirates Air Line</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_london_efa.cpp" line="53"/>
         <source>London Overground</source>
-        <translation>London Overground</translation>
+        <translation type="vanished">London Overground</translation>
     </message>
 </context>
 <context>
@@ -1169,6 +1169,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_mobilebahnde.cpp" line="38"/>
         <source>Local transport without S-Bahn</source>
         <translation>Nahverkehr ohne S-Bahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_mobilebahnde.h" line="35"/>
+        <source>Germany</source>
+        <translation>Deutschland</translation>
     </message>
 </context>
 <context>
@@ -1199,10 +1204,14 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation type="unfinished">Bus</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_munich_efa.cpp" line="48"/>
-        <location filename="../src/parser/parser_munich_efa.cpp" line="53"/>
-        <source>Munich (MVV)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/parser/parser_munich_efa.h" line="31"/>
+        <source>Germany</source>
+        <translation>Deutschland</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_munich_efa.h" line="31"/>
+        <source>Munich</source>
+        <translation>München</translation>
     </message>
 </context>
 <context>
@@ -1246,6 +1255,16 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
 %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <source>Netherlands</source>
+        <translation>Niederlande</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <source>Belgium</source>
+        <translation>Belgien</translation>
+    </message>
 </context>
 <context>
     <name>ParserPTVVicGovAu</name>
@@ -1283,6 +1302,16 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_ptvvicgovau.cpp" line="52"/>
         <source>Airport(SKYBUS)</source>
         <translation>Flughafen (SKYBUS)</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ptvvicgovau.h" line="31"/>
+        <source>Australia</source>
+        <translation>Australien</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ptvvicgovau.h" line="31"/>
+        <source>Victoria</source>
+        <translation>Victoria</translation>
     </message>
 </context>
 <context>
@@ -1540,7 +1569,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_resrobot.h" line="64"/>
         <source>Sweden</source>
-        <translation type="unfinished"></translation>
+        <translation>Schweden</translation>
     </message>
 </context>
 <context>
@@ -1730,6 +1759,16 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source>Yountville Shuttle</source>
         <translation>Yountville Shuttle</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_sf_bay_efa.h" line="31"/>
+        <source>USA</source>
+        <translation>USA</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_sf_bay_efa.h" line="31"/>
+        <source>SF Bay</source>
+        <translation>SF Bay</translation>
+    </message>
 </context>
 <context>
     <name>ParserSalzburgEFA</name>
@@ -1749,9 +1788,14 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <translation type="unfinished">Bus</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_salzburg_efa.cpp" line="45"/>
-        <source>Salzburg (SVV)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
+        <source>Austria</source>
+        <translation>Österreich</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
+        <source>Salzburg</source>
+        <translation>Salzburg</translation>
     </message>
 </context>
 <context>
@@ -1781,6 +1825,16 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source>STA School Bus</source>
         <translation>STA Schulbus</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_sydney_efa.h" line="31"/>
+        <source>Australia</source>
+        <translation>Australien</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_sydney_efa.h" line="31"/>
+        <source>Sydney</source>
+        <translation>Sydney</translation>
+    </message>
 </context>
 <context>
     <name>ParserXmlNri</name>
@@ -1788,6 +1842,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_xmlnri.cpp" line="34"/>
         <source>All</source>
         <translation>Alle</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlnri.h" line="31"/>
+        <source>Norway</source>
+        <translation>Norwegen</translation>
     </message>
 </context>
 <context>
@@ -1806,6 +1865,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_xmloebbat.cpp" line="37"/>
         <source>Einfach-Raus-Ticket</source>
         <translation>Einfach-Raus-Ticket</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmloebbat.h" line="31"/>
+        <source>Austria</source>
+        <translation>Österreich</translation>
     </message>
 </context>
 <context>
@@ -1835,6 +1899,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source>Local transport without S-Bahn</source>
         <translation>Nahverkehr ohne S-Bahn</translation>
     </message>
+    <message>
+        <location filename="../src/parser/parser_xmlrejseplanendk.h" line="31"/>
+        <source>Denmark</source>
+        <translation>Dänemark</translation>
+    </message>
 </context>
 <context>
     <name>ParserXmlSbbCh</name>
@@ -1847,6 +1916,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_xmlsbbch.cpp" line="59"/>
         <source>All without ICE</source>
         <translation>Alle ohne ICE</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlsbbch.h" line="31"/>
+        <source>Switzerland</source>
+        <translation>Schweiz</translation>
     </message>
 </context>
 <context>
@@ -1924,6 +1998,11 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="500"/>
         <source>Ferry</source>
         <translation>Fähre</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_xmlvasttrafikse.h" line="31"/>
+        <source>Sweden</source>
+        <translation>Schweden</translation>
     </message>
 </context>
 <context>
