@@ -113,4 +113,4 @@ fahrplan2.pro to harbour-fahrplan2.pro during development.
 [2]: http://developer.ubuntu.com/get-started/
 [3]: https://developer.blackberry.com/native/download/
 [4]: http://qt-project.org/wiki/Qt-Creator-with-BlackBerry-10
-[5]: https://sailfishos.org/develop.html
+[5]: https://sailfishos.org/develop/
