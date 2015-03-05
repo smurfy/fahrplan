@@ -93,8 +93,14 @@ Install the [Sailfish OS SDK][5] to compile with the shipped QT Creator.
 You need to get QtPositioning manually installed in your emulator.
 
 * Set a password in emulator
-* Connect to the emulator via ssh(ssh nemo@127.0.0.1 -p 2223 -i ~/sailfishos/vmshare/ssh/private_keys/SailfishOS_Emulator/nemo)
-* Install qt5-qtdeclarative-import-positioning (pkcon install qt5-qtdeclarative-import-positioning)
+* Connect to the emulator via ssh
+
+    ssh nemo@127.0.0.1 -p 2223 -i ~/sailfishos/vmshare/ssh/private_keys/SailfishOS_Emulator/nemo
+    
+* Install qt5-qtdeclarative-import-positioning 
+
+    pkcon install qt5-qtdeclarative-import-positioning
+    
 
 Known Issue: The executeable is named after the .pro file, in the 
 our case fahrplan2. Because of Sailfish Harbour guidelines, the 
