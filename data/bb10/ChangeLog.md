@@ -1,6 +1,14 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.24
+------
+  - New: MVV backend (Germany, Munich)
+  * New: SVV backend (Austria, Salzburg)
+  * New: ResRobot backend (Sweden)
+  * Fix: Normalized backend names
+  * New: Updated translations and added swedish translation
+
 2.0.23
 ------
 - Fix: "Earlier" / "Later" was broken in bahn.de service

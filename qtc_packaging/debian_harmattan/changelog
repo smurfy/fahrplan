@@ -1,3 +1,12 @@
+fahrplan2 (2.0.24) unstable; urgency=low
+  * Added MVV backend (Germany, Munich)
+  * Added SVV backend (Austria, Salzburg)
+  * Added ResRobot backend (Sweden)
+  * Normalized backend names
+  * Updated translations and added swedish translation
+
+ -- smurfy <maemo@smurfy.de>  Thu, 5 Mar 2015 22:00:00 +0200
+ 
 fahrplan2 (2.0.23) unstable; urgency=low
   * Fix for bahn.de earlier/later
 
