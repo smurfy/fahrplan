@@ -14,7 +14,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="70"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="66"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="95"/>
@@ -22,7 +22,7 @@
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="99"/>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="168"/>
         <source>Maintainers</source>
-        <translation type="unfinished">Hauptentwickler</translation>
+        <translation>Hauptentwickler</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="113"/>
@@ -30,7 +30,7 @@
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="119"/>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="181"/>
         <source>Code Contributors</source>
-        <translation type="unfinished">Mitentwickler</translation>
+        <translation>Mitentwickler</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="130"/>
@@ -38,7 +38,7 @@
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="138"/>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="193"/>
         <source>Translators</source>
-        <translation type="unfinished">Übersetzer</translation>
+        <translation>Übersetzer</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="153"/>
@@ -46,36 +46,36 @@
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="162"/>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
         <source>Support</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="171"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="165"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="182"/>
         <source>License</source>
-        <translation type="unfinished">Lizenz</translation>
+        <translation>Lizenz</translation>
     </message>
     <message>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="73"/>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="99"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Version %1</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="30"/>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
         <source>About</source>
-        <translation type="unfinished">Über</translation>
+        <translation>Über</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
         <source>Credits</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoren</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="39"/>
         <source>Copyright</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="122"/>
@@ -133,7 +133,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/sailfishos/Cover.qml" line="37"/>
         <source>Fahrplan: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fahrplan:</translation>
     </message>
 </context>
 <context>
@@ -645,7 +645,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="334"/>
         <source>Plan my journey</source>
-        <translation type="unfinished"></translation>
+        <translation>Reise planen</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="453"/>
@@ -683,7 +683,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="56"/>
         <source>selectStation</source>
-        <translation type="unfinished"></translation>
+        <translation>selectStation</translation>
     </message>
     <message>
         <location filename="../src/gui/desktop-test/mainwindow.ui" line="79"/>
@@ -831,7 +831,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="557"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>,</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="449"/>
@@ -858,7 +858,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <source> / </source>
         <comment>Alternative trains</comment>
         <extracomment>Separator for trains list, if more than one provided</extracomment>
-        <translation type="unfinished"></translation>
+        <translation> / </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/parser/parser_hafasbinary.cpp" line="507"/>
@@ -883,12 +883,12 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="547"/>
         <source>Departure stop canceled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Abfahrtshalt entfällt!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="550"/>
         <source>Arrival stop canceled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ankunftshalt entfällt!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="584"/>
@@ -994,7 +994,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_hafasxml.cpp" line="696"/>
         <location filename="../src/parser/parser_hafasxml.cpp" line="941"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>,</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="742"/>
@@ -1106,49 +1106,6 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     </message>
 </context>
 <context>
-    <name>ParserLondonEFA</name>
-    <message>
-        <source>All</source>
-        <translation type="vanished">Alle</translation>
-    </message>
-    <message>
-        <source>Tube</source>
-        <translation type="vanished">U-Bahn</translation>
-    </message>
-    <message>
-        <source>Rail</source>
-        <translation type="vanished">Zug</translation>
-    </message>
-    <message>
-        <source>Coach</source>
-        <translation type="vanished">Bus (Coach)</translation>
-    </message>
-    <message>
-        <source>DLR</source>
-        <translation type="vanished">DLR</translation>
-    </message>
-    <message>
-        <source>Tram</source>
-        <translation type="vanished">Tram</translation>
-    </message>
-    <message>
-        <source>Bus</source>
-        <translation type="vanished">Bus</translation>
-    </message>
-    <message>
-        <source>River</source>
-        <translation type="vanished">Fluss</translation>
-    </message>
-    <message>
-        <source>Emirates Air Line</source>
-        <translation type="vanished">Emirates Air Line</translation>
-    </message>
-    <message>
-        <source>London Overground</source>
-        <translation type="vanished">London Overground</translation>
-    </message>
-</context>
-<context>
     <name>ParserMobileBahnDe</name>
     <message>
         <location filename="../src/parser/parser_mobilebahnde.cpp" line="35"/>
@@ -1181,27 +1138,27 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="38"/>
         <source>All</source>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="39"/>
         <source>S-Bahn</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Bahn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="40"/>
         <source>U-Bahn</source>
-        <translation type="unfinished"></translation>
+        <translation>U-Bahn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="41"/>
         <source>Tram</source>
-        <translation type="unfinished">Tram</translation>
+        <translation>Tram</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.cpp" line="42"/>
         <source>Bus</source>
-        <translation type="unfinished">Bus</translation>
+        <translation>Bus</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.h" line="31"/>
@@ -1253,7 +1210,8 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_ninetwo.cpp" line="218"/>
         <source>(%1) %2 
 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1) %2 
+%3</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.h" line="60"/>
@@ -1384,7 +1342,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="57"/>
         <source>Bus</source>
-        <translation type="unfinished">Bus</translation>
+        <translation>Bus</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
@@ -1421,12 +1379,12 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="65"/>
         <source>Ferry</source>
-        <translation type="unfinished">Fähre</translation>
+        <translation>Fähre</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="66"/>
         <source>Walk</source>
-        <translation type="unfinished">Fussweg</translation>
+        <translation>Fussweg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="67"/>
@@ -1486,7 +1444,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="78"/>
         <source>Tram</source>
-        <translation type="unfinished">Tram</translation>
+        <translation>Tram</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
@@ -1496,12 +1454,12 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
         <source>Metro</source>
-        <translation type="unfinished">Metro</translation>
+        <translation>Metro</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
         <source>Train</source>
-        <translation type="unfinished">Zug</translation>
+        <translation>Zug</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
@@ -1526,7 +1484,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="113"/>
         <source>All</source>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="114"/>
@@ -1544,7 +1502,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/parser/parser_resrobot.cpp" line="395"/>
         <location filename="../src/parser/parser_resrobot.cpp" line="422"/>
         <source>Cannot parse reply from the server</source>
-        <translation type="unfinished">Kann Antwort vom Server nicht verarbeiten</translation>
+        <translation>Kann Antwort vom Server nicht verarbeiten</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="338"/>
@@ -1554,12 +1512,12 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="509"/>
         <source>Arrivals</source>
-        <translation type="unfinished">Ankünfte</translation>
+        <translation>Ankünfte</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="511"/>
         <source>Departures</source>
-        <translation type="unfinished">Abfahrten</translation>
+        <translation>Abfahrten</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="512"/>
@@ -1775,17 +1733,17 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="37"/>
         <source>All</source>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="38"/>
         <source>S-Bahn</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Bahn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="39"/>
         <source>Bus</source>
-        <translation type="unfinished">Bus</translation>
+        <translation>Bus</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
@@ -2292,7 +2250,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/about.js" line="35"/>
         <source>&lt;p&gt;If fahrplan is not translated in your language, help us &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;translate it to your language&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;If you like fahrplan, I would appreciate a donation. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Donate using PayPal&lt;/a&gt;&lt;/p&gt;&lt;p&gt;If you encounter bugs or have feature requests visit the &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;Fahrplan issue tracker on GitHub&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;Sollte fahrplan noch nicht in Deine Sprache übersetzt sein, hilf uns &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;mit der Übersetzung.&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Dir gefällt fahrplan? Wie währe es mit einer kleinen Spende. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Über PayPal spenden&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wenn Du Fehler oder Verbesserungsvorschläge hast besuch doch den &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;fahrplan issue tracker auf GitHub&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Sollte fahrplan noch nicht in Deine Sprache übersetzt sein, hilf uns &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;mit der Übersetzung.&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Dir gefällt fahrplan? Wie währe es mit einer kleinen Spende. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Über PayPal spenden&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wenn Du Fehler oder Verbesserungsvorschläge hast besuch doch den &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;fahrplan issue tracker auf GitHub&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
