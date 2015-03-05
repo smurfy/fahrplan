@@ -42,19 +42,20 @@ Download and install for your device:
 Currently supported Providers:
 ------------------------------
 
-* bahn.de (Germany and Europe) - supports via station and GPS location.
-* sbb.ch (Switzerland) - support via station, timetable with direction and GPS location.
-* rejseplanen.dk (Denmark) - supports via station and GPS location.
-* oebb.at (Austria) - supports via station and GPS location.
-* reiseinfo.no (Norway) - supports GPS location.
-* vasttrafik.se (western Sweden) - supports via station and GPS location.
-* ptv.vic.gov.au (Victoria, Australia) - supports via station.
-* Sydney (NSW, Sydney, Australia) - supports via station.
-* SF Bay (SanFrancisco, USA) - supports via station.
-* London (London, United Kingdom) - supports via station.
-* Ireland - supports via station.
-* Dubai - supports via station.
-* 9292ov.nl (Netherlands) - supports via station and GPS location.
+* Germany (bahn.de) - supports via station and GPS location.
+* Germany, Munich (mvv-muenchen.de)
+* Austria (oebb.at) - supports via station and GPS location.
+* Austria, Salzburg (svv-info.at)* Denmark (rejseplanen.dk) - supports via station and GPS location.
+* Switzerland (sbb.ch) - support via station, timetable with direction and GPS location.
+* Norway (reiseinfo.no / nri) - supports GPS location.
+* Netherlands / Belgium (9292ov.nl) - supports via station and GPS location.
+* Sweden (vasttrafik.se) - supports via station and GPS location.
+* Sweden (resrobot.se)
+* Ireland (transportforireland.ie) - supports via station.
+* Australia, Victoria (ptv.vic.gov.au) - supports via station.
+* Australia, Sydney (transportnsw.info) - supports via station.
+* USA, SF Bay (511.org) - supports via station.
+* Dubai (rta.ae) - supports via station.
 
 Compiling:
 ----------
