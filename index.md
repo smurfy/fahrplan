@@ -45,7 +45,8 @@ Currently supported Providers:
 * Germany (bahn.de) - supports via station and GPS location.
 * Germany, Munich (mvv-muenchen.de)
 * Austria (oebb.at) - supports via station and GPS location.
-* Austria, Salzburg (svv-info.at)* Denmark (rejseplanen.dk) - supports via station and GPS location.
+* Austria, Salzburg (svv-info.at)
+* Denmark (rejseplanen.dk) - supports via station and GPS location.
 * Switzerland (sbb.ch) - support via station, timetable with direction and GPS location.
 * Norway (reiseinfo.no / nri) - supports GPS location.
 * Netherlands / Belgium (9292ov.nl) - supports via station and GPS location.
