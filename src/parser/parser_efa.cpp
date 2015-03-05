@@ -248,7 +248,7 @@ void ParserEFA::findStationsByCoordinates(qreal longitude, qreal latitude)
     QUrl query;
 #endif
     query.addQueryItem("type_origin", "coord");
-    query.addQueryItem("name_origin", QString("%1:%2:WGS84").arg(latitude, 2, 'f', 6).arg(longitude, 2, 'f', 6));
+    query.addQueryItem("name_origin", QString("%1:%2:WGS84").arg(longitude, 2, 'f', 6).arg(latitude, 2, 'f', 6));
     query.addQueryItem("coordListOutputFormat","STRING");
     query.addQueryItem("max","10");
     query.addQueryItem("inclFilter","1");
@@ -273,22 +273,19 @@ void ParserEFA::parseStationsByCoordinates(QNetworkReply *networkReply)
     QByteArray data = readNetworkReply(networkReply);
     if (doc.setContent(data, false)) {
         QDomNodeList nodeList = doc.elementsByTagName("itdOdvAssignedStop");
-        QDomNodeList modeNodeList = doc.elementsByTagName("itdStopModes");
-        if(nodeList.count() == modeNodeList.count()){
-            for (int i = 0; i < nodeList.size(); ++i) {
-                QDomNode node = nodeList.item(i);
-                QDomNode modeNode = modeNodeList.item(i);
-                Station item;
+        for (int i = 0; i < nodeList.size(); ++i) {
+            QDomNode node = nodeList.item(i);
+            Station item;
 
-                QString value = getAttribute(node, "value");
-                item.name=value.section(":",1,-1);
-                item.id=value.section(":",0,0);
-                item.type = getAttribute(modeNode, "mode");
-                item.latitude = getAttribute(node, "x").toDouble();
-                item.longitude = getAttribute(node, "y").toDouble();
+            QString value = getAttribute(node, "value");
+            item.name=value.section(":",1,-1);
+            item.id=value.section(":",0,0);
+            item.type = "STATION";
+            item.latitude = getAttribute(node, "x").toDouble();
+            item.longitude = getAttribute(node, "y").toDouble();
+            item.miscInfo = getAttribute(node, "distance") + "m";
 
-                result << item;
-            }
+            result << item;
         }
         checkForError(&doc);
     }
