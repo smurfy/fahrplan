@@ -25,7 +25,11 @@ MeeGo 1.2 Harmattan
 
 Can be compiled with Qt4 (>= 4.7.2).
 Requires Harmattan sysroot with MeeGo components.
-Use the [Nokia Qt SDK][1] and build for MeeGo.
+Use the Nokia Qt SDK and build for MeeGo.
+
+It seams the SDK is hard to get these days.
+Windows filename: QtSdk-offline-win-x86-v1_2_1.exe (SHA1 644b0d847b89de609c85a663be4511576490a013)
+If you still having problems locating the sdk feel free to contact me. 
 
 Symbian (Symbian^3, Anna and Belle)
 -----------------------------------
@@ -109,7 +113,6 @@ it still tries to launch a fahrplan2 binary. The workaround is copy the original
 fahrplan2.pro to harbour-fahrplan2.pro during development.
 
 
-[1]: http://www.developer.nokia.com/info/sw.nokia.com/id/da8df288-e615-443d-be5c-00c8a72435f8/Qt_SDK.html
 [2]: http://developer.ubuntu.com/get-started/
 [3]: https://developer.blackberry.com/native/download/
 [4]: http://qt-project.org/wiki/Qt-Creator-with-BlackBerry-10
