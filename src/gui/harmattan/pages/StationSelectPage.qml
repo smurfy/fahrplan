@@ -57,6 +57,7 @@ Page {
 
             TextField {
                 id: searchBox
+                inputMethodHints: Qt.ImhNoPredictiveText
                 anchors {
                     left: parent.left
                     leftMargin: 10
@@ -66,7 +67,7 @@ Page {
                     topMargin: 10
                 }
 
-                onTextChanged: search.findStationsByName();
+                onTextChanged: searchTimer.restart();
                 Keys.onReturnPressed: search.findStationsByName();
                 Keys.onEnterPressed: search.findStationsByName();
 
@@ -89,10 +90,21 @@ Page {
                 }
             }
 
+            Timer {
+                id: searchTimer
+                interval: 1000
+                onTriggered: {
+                    search.findStationsByName();
+                }
+            }
+
             function findStationsByName()
             {
                 if (searchBox.text == "")
                     return;
+
+                if (searchTimer.running)
+                    searchTimer.stop();
 
                 indicator.show(qsTr("Searching ..."));
                 tabs.currentTab = stationSearchResultsTab;
