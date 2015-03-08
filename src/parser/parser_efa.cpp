@@ -299,14 +299,18 @@ void ParserEFA::checkForError(QDomDocument *serverReplyDomDoc)
     for(int i = 0; i < errorNodeList.size(); ++i) {
         QDomNode node = errorNodeList.item(i);
         QString error = getAttribute(node, "type");
-        QString code = getAttribute(node, "code");
-        if (code == "-8011") {
+        int code = getAttribute(node, "code").toInt();
+        switch (code) {
+        case -8011: // (unknown error)
+        case -8012: // empty query
+        case -8020: // no results
             continue;
         }
-        if(error == "error" && code.toInt() < 0) {
+
+        if(error == "error" && code < 0) {
             QString errorText = node.toElement().text();
             if(errorText.length() < 1)
-                errorText = code;
+                errorText = QString::number(code);
             qDebug() << "Server Query Error:" << errorText << code;
             emit errorOccured(tr("Server Error: ") + errorText);
         }
