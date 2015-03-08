@@ -99,7 +99,7 @@
     #include <QUrlQuery>
 #endif
 
-QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsPTV;
+QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsEfa;
 
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
 
@@ -509,9 +509,9 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
     qDebug() << "ParserEFA::parseSearchJourney(QNetworkReply *networkReply)";
     lastJourneyResultList = new JourneyResultList();
 
-    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetailsPTV.begin(); it != cachedJourneyDetailsPTV.end();) {
+    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetailsEfa.begin(); it != cachedJourneyDetailsEfa.end();) {
         JourneyDetailResultList *jdrl = it.value();
-        it = cachedJourneyDetailsPTV.erase(it);
+        it = cachedJourneyDetailsEfa.erase(it);
         delete jdrl;
     }
 
@@ -663,7 +663,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         detailsList->setDuration(item->duration());
         detailsList->setArrivalDateTime(arrivalDateTime);
         detailsList->setDepartureDateTime(departureDateTime);
-        cachedJourneyDetailsPTV[QString::number(nodeCounter+1)] = detailsList;
+        cachedJourneyDetailsEfa[QString::number(nodeCounter+1)] = detailsList;
 
         if (!m_earliestArrival.isValid() || arrivalDateTime < m_earliestArrival)
             m_earliestArrival = arrivalDateTime.addSecs(-60);
@@ -684,7 +684,7 @@ void ParserEFA::getJourneyDetails(const QString &id)
     }
 
     qDebug() << "ParserEFA::getJourneyDetails - 1";
-    emit journeyDetailsResult(cachedJourneyDetailsPTV.value(id, NULL));
+    emit journeyDetailsResult(cachedJourneyDetailsEfa.value(id, NULL));
     return;
 }
 
@@ -776,93 +776,6 @@ void ParserEFA::parseTimeTable(QNetworkReply *networkReply)
     }
 
     emit timetableResult(result);
-}
-
-JourneyDetailResultList * ParserEFA::parseDetails(JourneyResultItem *journeyitem)
-{
-    qDebug() << "JourneyDetailResultList * ParserEFA::parseDetails(JourneyResultItem *journeyitem)";
-    QString element = journeyitem->internalData1();
-
-    QStringList detailResults = element.split("\n");
-    JourneyDetailResultList *results = new JourneyDetailResultList();
-
-    QDate journeydate = journeyitem->date();
-
-    // Each detailed item seperated by "::", departureTime::stationName::platformName::meansOfTransportName::destination::arrivalTime::stationName::platformName
-    qDebug() << "detailResults.count():" << detailResults.count();
-    for (int i = 0; i < detailResults.count(); i++) {
-        JourneyDetailResultItem *item = new JourneyDetailResultItem();
-
-        QDateTime fromDateTime = QDateTime::fromString(detailResults[i].section("::",0,0));
-        item->setDepartureStation(detailResults[i].section("::",1,1));
-        item->setArrivalInfo(detailResults[i].section("::",2,2));
-        item->setTrain(detailResults[i].section("::",3,3));
-        // detailResults[i].section("::",4,4) method of transport destination
-        QDateTime toDateTime = QDateTime::fromString(detailResults[i].section("::",5,5));
-        item->setArrivalStation(detailResults[i].section("::",6,6));
-        item->setDepartureInfo(detailResults[i].section("::",7,7));
-
-
-        if (detailResults[i].section("::",3,3) == "Walk") {
-            /*
-            qDebug()<<"***";
-            qDebug()<<"Station1:"<<regexp2.cap(1).trimmed();
-            qDebug()<<"WalkDist1:"<<regexp2.cap(2).trimmed();
-            qDebug()<<"WalkDist2:"<<regexp2.cap(3).trimmed();
-            */
-
-            item->setDepartureStation("");
-            if (results->itemcount() > 0) {
-                JourneyDetailResultItem *lastitem = results->getItem(results->itemcount() - 1);
-                item->setDepartureStation(lastitem->arrivalStation());
-                item->setDepartureDateTime(lastitem->arrivalDateTime());
-                item->setArrivalDateTime(lastitem->arrivalDateTime());
-            }
-            //item->setArrivalStation(regexp2.cap(1).trimmed());
-            // TODO: Might need translation
-           // item->setInfo("Walking " + regexp2.cap(2).trimmed() + " " + regexp2.cap(3).trimmed());
-            //Don't add WalkTo infos as first item
-            if (results->itemcount() > 0) {
-                results->appendItem(item);
-            }
-
-        }
-        else {
-
-            if (toDateTime.toTime_t() < fromDateTime.toTime_t()) {
-                toDateTime.addDays(1);
-                journeydate.addDays(1);
-            }
-
-            item->setDepartureDateTime(fromDateTime);
-            item->setArrivalDateTime(toDateTime);
-            results->appendItem(item);
-        }
-    }
-
-    results->setDuration(journeyitem->duration());
-    if (results->itemcount() > 0) {
-        JourneyDetailResultItem *lastitem = results->getItem(results->itemcount() - 1);
-        JourneyDetailResultItem *firstitem = results->getItem(0);
-        results->setDepartureStation(firstitem->departureStation());
-        results->setArrivalStation(lastitem->arrivalStation());
-
-        for (int i=0; i < results->itemcount(); i++) {
-            if (!results->getItem(i)->departureDateTime().isNull()) {
-                results->setDepartureDateTime(results->getItem(i)->departureDateTime());
-                break;
-            }
-        }
-
-        for (int i=results->itemcount() -1; i >= 0; i--) {
-            if (!results->getItem(i)->arrivalDateTime().isNull()) {
-                results->setArrivalDateTime(results->getItem(i)->arrivalDateTime());
-                break;
-            }
-        }
-    }
-
-    return results;
 }
 
 QDateTime ParserEFA::parseItdDateTime(const QDomElement &element)

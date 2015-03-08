@@ -57,7 +57,6 @@ protected:
 
 private:
     JourneyResultList *lastJourneyResultList;
-    JourneyDetailResultList *parseDetails(JourneyResultItem *journeyitem);
 
     struct {
         bool isValid;
