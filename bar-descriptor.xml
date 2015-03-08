@@ -26,7 +26,13 @@
     <asset path="${BUILD_DIR}/fahrplan2" type="Qnx/Elf" entry="true">fahrplan2</asset>
 
     <asset path="3rdparty/bb10-qt-components/imports">imports</asset>
-    <asset path="data/fahrplan2_150.png">fahrplan2.png</asset>
+    <!-- Icons -->
+    <asset path="data/bb10/fahrplan2_90.png">fahrplan2_90.png</asset>
+    <asset path="data/bb10/fahrplan2_96.png">fahrplan2_96.png</asset>
+    <asset path="data/bb10/fahrplan2_110.png">fahrplan2_110.png</asset>
+    <asset path="data/bb10/fahrplan2_144.png">fahrplan2_144.png</asset>
+    <asset path="data/bb10/fahrplan2_480.png">fahrplan2_480.png</asset>
+    <!-- Splash screens -->
     <asset path="data/splash_bb10_720.png">splash_720_720.png</asset>
     <asset path="data/splash_bb10_720_1280.png">splash_720_1280.png</asset>
     <asset path="data/splash_bb10_768_1280.png">splash_768_1280.png</asset>
@@ -35,7 +41,11 @@
     <asset path="data/splash_bb10_1440.png">splash_1440_1440.png</asset>
 
     <icon>
-        <image>fahrplan2.png</image>
+        <image>fahrplan2_90.png</image>
+        <image>fahrplan2_96.png</image>
+        <image>fahrplan2_110.png</image>
+        <image>fahrplan2_144.png</image>
+        <image>fahrplan2_480.png</image>
     </icon>
     <splashScreens>
         <image>splash_720_720.png</image>
