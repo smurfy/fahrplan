@@ -35,6 +35,8 @@ QTM_USE_NAMESPACE
 #elif defined(BUILD_FOR_SAILFISHOS)
 #   include <extendedcalendar.h>
 #   include <extendedstorage.h>
+#   include <kdatetime.h>
+#   include <ksystemtimezone.h>
 #endif
 
 QString formatStation(const QDateTime dateTime, const QString &stationName, const QString &info = QString())
@@ -164,13 +166,17 @@ void CalendarThreadWrapper::addToCalendar()
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
   #elif defined(BUILD_FOR_SAILFISHOS)
 
-    mKCal::ExtendedCalendar::Ptr cal = mKCal::ExtendedCalendar::Ptr ( new mKCal::ExtendedCalendar( QLatin1String( "UTC" ) ) );
-    mKCal::ExtendedStorage::Ptr storage = mKCal::ExtendedCalendar::defaultStorage( cal );
+    mKCal::ExtendedCalendar::Ptr calendar = mKCal::ExtendedCalendar::Ptr ( new mKCal::ExtendedCalendar( QLatin1String( "UTC" ) ) );
+    mKCal::ExtendedStorage::Ptr storage = mKCal::ExtendedCalendar::defaultStorage( calendar );
     if (storage->open()) {
-
-        // TODO create the event, but first find a way to access the privileged calendar
-        // /home/nemo/.local/share/system/privileged/Calendar/mkcal
-
+        mKCal::Notebook::Ptr notebook = storage->defaultNotebook();
+        KCalCore::Event::Ptr event = KCalCore::Event::Ptr( new KCalCore::Event() );
+        event->setSummary(calendarEntryTitle);
+        event->setDescription(calendarEntryDesc);
+        event->setDtStart( KDateTime(m_result->departureDateTime()) );
+        event->setDtEnd( KDateTime(m_result->arrivalDateTime()) );
+        calendar->addEvent( event, notebook->uid() );
+        storage->save();
         emit addCalendarEntryComplete(true);
     } else {
         emit addCalendarEntryComplete(false);

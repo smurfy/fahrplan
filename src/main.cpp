@@ -29,6 +29,8 @@
     #include <sailfishapp.h>
     #include <QtQuick>
     #include <QtQml>
+    #include <grp.h>
+    #include <pwd.h>
 #else
     #include "gui/desktop-test/mainwindow.h"
     #if defined(BUILD_FOR_QT5)
@@ -67,6 +69,10 @@ Q_DECL_EXPORT
 int main(int argc, char *argv[])
 {
     #if defined(BUILD_FOR_SAILFISHOS)
+        //To support calendar access
+        setuid(getpwnam("nemo")->pw_uid);
+        setgid(getgrnam("privileged")->gr_gid);
+
         QGuiApplication* app = SailfishApp::application(argc, argv);
     #elif defined(HAVE_DECLARATIVE_CACHE)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
