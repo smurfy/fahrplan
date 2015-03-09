@@ -41,6 +41,7 @@ class Fahrplan : public QObject
     Q_PROPERTY(FahrplanParserThread *parser READ parser)
     Q_PROPERTY(QString parserName READ parserName NOTIFY parserChanged)
     Q_PROPERTY(QString version READ getVersion CONSTANT)
+    Q_PROPERTY(bool supportsCalendar READ supportsCalendar CONSTANT)
 
     Q_PROPERTY(StationSearchResults *stationSearchResults READ stationSearchResults CONSTANT)
     Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
@@ -79,6 +80,7 @@ class Fahrplan : public QObject
         Favorites *favorites() const;
         QString parserName() const;
         QString getVersion();
+        bool supportsCalendar();
 
         StationSearchResults *stationSearchResults() const;
         Timetable *timetable() const;

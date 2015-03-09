@@ -32,7 +32,7 @@ using namespace bb::pim::calendar;
 #   include <QOrganizerManager>
 #   include <QOrganizerEvent>
 QTM_USE_NAMESPACE
-#elif defined(BUILD_FOR_SAILFISHOS)
+#elif defined(BUILD_FOR_SAILFISHOS) && defined(BUILD_FOR_OPENREPOS)
 #   include <extendedcalendar.h>
 #   include <extendedstorage.h>
 #   include <kdatetime.h>
@@ -164,7 +164,7 @@ void CalendarThreadWrapper::addToCalendar()
     }
 
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
-  #elif defined(BUILD_FOR_SAILFISHOS)
+  #elif defined(BUILD_FOR_SAILFISHOS) && defined(BUILD_FOR_OPENREPOS)
 
     mKCal::ExtendedCalendar::Ptr calendar = mKCal::ExtendedCalendar::Ptr ( new mKCal::ExtendedCalendar( QLatin1String( "UTC" ) ) );
     mKCal::ExtendedStorage::Ptr storage = mKCal::ExtendedCalendar::defaultStorage( calendar );

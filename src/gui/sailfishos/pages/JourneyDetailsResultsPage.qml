@@ -36,7 +36,7 @@ Page {
 
         PushUpMenu {
             id: pushUpMenu
-            visible: indicator.visible === false
+            visible: (indicator.visible === false) && (fahrplanBackend.supportsCalendar)
 
             MenuItem {
                 id: addToCalendar

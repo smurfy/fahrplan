@@ -273,7 +273,7 @@ Page {
             id : calendarIcon;
 
             iconSource: enabled ? Style.getIconFromQrc(platformInverted, "icon-m-content-calendar") : Style.getIconFromQrc(false, "icon-m-blank", ".png")
-            visible: !searchIndicator.visible
+            visible: (!searchIndicator.visible) && (fahrplanBackend.supportsCalendar)
             platformInverted: appWindow.platformInverted
 
             onClicked: {

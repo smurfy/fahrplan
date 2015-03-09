@@ -1,13 +1,12 @@
 VERSION = 2.0.24
 
+# Switch for jolla to separate harbour and openrepo version
+#DEFINES += BUILD_FOR_OPENREPOS
+
 MOC_DIR = tmp
 UI_DIR = tmp
 OBJECTS_DIR = tmp
 RCC_DIR = tmp
-
-
-
-
 
 # Make the Version available in the C++ source too
 # Also setting QSettings Vendor name

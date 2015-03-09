@@ -109,6 +109,15 @@ QString Fahrplan::getVersion()
     return FAHRPLAN_VERSION;
 }
 
+bool Fahrplan::supportsCalendar()
+{
+#if defined(BUILD_FOR_BLACKBERRY) || defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || (defined(BUILD_FOR_OPENREPOS) && defined(BUILD_FOR_SAILFISHOS))
+    return true;
+#else
+    return false;
+#endif
+}
+
 StationSearchResults *Fahrplan::stationSearchResults() const
 {
     return m_stationSearchResults;

@@ -70,8 +70,11 @@ int main(int argc, char *argv[])
 {
     #if defined(BUILD_FOR_SAILFISHOS)
         //To support calendar access
-        setuid(getpwnam("nemo")->pw_uid);
-        setgid(getgrnam("privileged")->gr_gid);
+        #if defined(BUILD_FOR_OPENREPOS)
+            qDebug()<<"openrepos.net build";
+            setuid(getpwnam("nemo")->pw_uid);
+            setgid(getgrnam("privileged")->gr_gid);
+        #endif
 
         QGuiApplication* app = SailfishApp::application(argc, argv);
     #elif defined(HAVE_DECLARATIVE_CACHE)

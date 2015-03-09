@@ -269,7 +269,7 @@ Page {
             id : calendarIcon
             iconSource: enabled ? "qrc:/src/gui/harmattan/icon/icon-m-content-calendar" + inverseSuffix + ".svg" : "image://theme/progress_78_01"
 
-            visible: !searchIndicator.visible
+            visible: (!searchIndicator.visible) && (fahrplanBackend.supportsCalendar)
 
             onClicked: {
                 calendarIcon.enabled = false
