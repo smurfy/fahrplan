@@ -34,7 +34,6 @@ Page {
 
         VerticalScrollDecorator {}
 
-        /*
         PushUpMenu {
             id: pushUpMenu
             visible: indicator.visible === false
@@ -48,7 +47,7 @@ Page {
                     pushUpMenu.busy = true;
                 }
             }
-        }*/
+        }
 
         Column {
             id: column
@@ -151,6 +150,7 @@ Page {
             addToCalendar.enabled = true;
             pushUpMenu.busy = false;
             console.log("Calendar success");
+            console.log(success);
         }
 
         onParserJourneyDetailsResult: {

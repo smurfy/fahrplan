@@ -32,6 +32,9 @@ using namespace bb::pim::calendar;
 #   include <QOrganizerManager>
 #   include <QOrganizerEvent>
 QTM_USE_NAMESPACE
+#elif defined(BUILD_FOR_SAILFISHOS)
+#   include <extendedcalendar.h>
+#   include <extendedstorage.h>
 #endif
 
 QString formatStation(const QDateTime dateTime, const QString &stationName, const QString &info = QString())
@@ -65,6 +68,7 @@ CalendarThreadWrapper::~CalendarThreadWrapper()
 
 void CalendarThreadWrapper::addToCalendar()
 {
+
     const QString viaStation = m_result->viaStation();
     QSettings settings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
     QString calendarEntryTitle;
@@ -158,6 +162,19 @@ void CalendarThreadWrapper::addToCalendar()
     }
 
     emit addCalendarEntryComplete(defaultManager.saveItem(&event));
+  #elif defined(BUILD_FOR_SAILFISHOS)
+
+    mKCal::ExtendedCalendar::Ptr cal = mKCal::ExtendedCalendar::Ptr ( new mKCal::ExtendedCalendar( QLatin1String( "UTC" ) ) );
+    mKCal::ExtendedStorage::Ptr storage = mKCal::ExtendedCalendar::defaultStorage( cal );
+    if (storage->open()) {
+
+        // TODO create the event, but first find a way to access the privileged calendar
+        // /home/nemo/.local/share/system/privileged/Calendar/mkcal
+
+        emit addCalendarEntryComplete(true);
+    } else {
+        emit addCalendarEntryComplete(false);
+    }
 #else
     emit addCalendarEntryComplete(false);
 #endif

@@ -301,8 +301,8 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
     DEFINES += BUILD_FOR_SAILFISHOS
 
     CONFIG += link_pkgconfig
-    PKGCONFIG += sailfishapp
-    INCLUDEPATH += /usr/include/sailfishapp
+    PKGCONFIG += sailfishapp libmkcal-qt5 libkcalcoren-qt5
+    INCLUDEPATH += /usr/include/sailfishapp /usr/include/mkcal-qt5 /usr/include/kcalcoren-qt5
 
     RESOURCES += sailfishos_res.qrc
 
