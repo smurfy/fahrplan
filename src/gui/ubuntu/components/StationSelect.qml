@@ -72,7 +72,7 @@ Page {
                 }
                 inputMethodHints: Qt.ImhNoPredictiveText
 
-                onTextChanged: search.findStationsByName();
+                onTextChanged: searchTimer.restart();
                 Keys.onReturnPressed: search.findStationsByName();
                 Keys.onEnterPressed: search.findStationsByName();
 
@@ -94,12 +94,23 @@ Page {
                 ]
             }
 
+            Timer {
+                id: searchTimer
+                interval: 500
+                onTriggered: {
+                    search.findStationsByName();
+                }
+            }
+
             function findStationsByName()
             {
                 if (searchBox.text == "") {
                     listView.model = fahrplanBackend.favorites
                     return;
                 }
+
+                if (searchTimer.running)
+                    searchTimer.stop();
 
                 indicator.running = true;
                 stationSelect.showFavorites = false;
