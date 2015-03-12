@@ -72,6 +72,10 @@ int main(int argc, char *argv[])
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #else
         QApplication* app = new QApplication(argc, argv);
+        #if defined(BUILD_FOR_DESKTOP)
+            QIcon icon(":/fahrplan2_64.png");
+            app->setWindowIcon(icon);
+        #endif
     #endif
 
     QString localeName = QLocale().name();
