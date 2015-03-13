@@ -40,7 +40,8 @@ public:
     ~ParserAbstract();
 
     static QString getName() { return "Abstract"; }
-    virtual QString name() { return "Abstract"; }
+    virtual QString name() { return getName(); }
+    virtual QString shortName() { return getName(); }
     virtual QString uid() { return metaObject()->className(); }
 
 public slots:

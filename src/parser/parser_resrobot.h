@@ -63,6 +63,7 @@ public:
 
     static QString getName() { return QString("%1 (resrobot.se)").arg(tr("Sweden")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "resrobot.se"; }
 
 public slots:
     virtual bool supportsGps();

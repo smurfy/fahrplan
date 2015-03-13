@@ -347,6 +347,11 @@ QString Fahrplan::parserName() const
     return m_parser_manager->getParser()->name();
 }
 
+QString Fahrplan::parserShortName() const
+{
+    return m_parser_manager->getParser()->shortName();
+}
+
 QStringList Fahrplan::getParserList()
 {
     return m_parser_manager->getParserList();

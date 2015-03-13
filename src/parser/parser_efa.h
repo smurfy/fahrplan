@@ -30,7 +30,9 @@ class ParserEFA : public ParserAbstract
 public:
     explicit ParserEFA(QObject *parent = 0);
     static QString getName() { return "EFA"; }
-    QString name() { return "EFA"; }
+    virtual QString name() { return getName(); }
+    virtual QString shortName() { return getName(); }
+
 public slots:
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);

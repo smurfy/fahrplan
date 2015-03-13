@@ -30,6 +30,7 @@ public:
     explicit ParserXmlOebbAt(QObject *parent = 0);
     static QString getName() { return QString("%1 (oebb.at)").arg(tr("Austria")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "oebb.at"; }
 
 protected:
     QStringList getTrainRestrictions();

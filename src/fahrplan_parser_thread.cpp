@@ -80,6 +80,10 @@ QString FahrplanParserThread::name() {
     return m_name;
 }
 
+QString FahrplanParserThread::shortName() {
+    return m_short_name;
+}
+
 QString FahrplanParserThread::uid() const
 {
     return m_uid;
@@ -160,6 +164,7 @@ void FahrplanParserThread::run()
     }
 
     m_name = m_parser->name();
+    m_short_name = m_parser->shortName();
     m_uid = m_parser->uid();
     m_trainrestrictions = m_parser->getTrainRestrictions();
     m_supports_gps = m_parser->supportsGps();

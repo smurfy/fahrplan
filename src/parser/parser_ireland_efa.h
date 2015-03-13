@@ -30,6 +30,7 @@ public:
     explicit ParserIrelandEFA(QObject *parent = 0);
     static QString getName() { return QString("%1 (transportforireland.ie)").arg(tr("Ireland")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "transportforireland.ie"; }
 
 protected:
     QStringList getTrainRestrictions();

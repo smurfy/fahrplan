@@ -30,7 +30,7 @@ public:
     explicit ParserSalzburgEFA(QObject *parent = 0);
     static QString getName() { return QString("%1, %2 (svv-info.at)").arg(tr("Austria"), tr("Salzburg")); }
     virtual QString name() { return getName(); }
-
+    virtual QString shortName() { return "svv-info.at"; }
 
 protected:
     QStringList getTrainRestrictions();

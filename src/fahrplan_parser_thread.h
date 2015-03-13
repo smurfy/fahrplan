@@ -81,6 +81,7 @@ public slots:
     bool supportsTimeTable();
     bool supportsTimeTableDirection();
     QString name();
+    QString shortName();
     QString uid() const;
     QStringList getTrainRestrictions();
 
@@ -97,6 +98,7 @@ private:
   bool m_supports_timetable;
   bool m_supports_timetabledirection;
   QString m_name;
+  QString m_short_name;
   QString m_uid;
 };
 

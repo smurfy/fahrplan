@@ -122,7 +122,7 @@ Page {
             font.pixelSize: privateStyle.statusBarHeight
             color: "White"
 
-            text: fahrplanBackend.parserName
+            text: fahrplanBackend.parserShortName
         }
 
         Image {

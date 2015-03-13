@@ -30,6 +30,7 @@ public:
     explicit ParserSydneyEFA(QObject *parent = 0);
     static QString getName() { return QString("%1, %2 (transportnsw.info)").arg(tr("Australia"), tr("Sydney")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "transportnsw.info"; }
 
 protected:
     QStringList getTrainRestrictions();

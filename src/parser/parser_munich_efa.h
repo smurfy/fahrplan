@@ -30,6 +30,7 @@ public:
     explicit ParserMunichEFA(QObject *parent = 0);
     static QString getName() { return QString("%1, %2 (mvv-muenchen.de)").arg(tr("Germany"), tr("Munich")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "mvv-muenchen.de"; }
 
 protected:
     QStringList getTrainRestrictions();

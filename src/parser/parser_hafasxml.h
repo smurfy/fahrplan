@@ -58,7 +58,8 @@ class ParserHafasXml : public ParserAbstract
 public:
     explicit ParserHafasXml(QObject *parent = 0);
     static QString getName() { return "HafasXML"; }
-    QString name() { return "HafasXML"; }
+    virtual QString name() { return getName(); }
+    virtual QString shortName() { return getName(); }
 
 public slots:
     void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);

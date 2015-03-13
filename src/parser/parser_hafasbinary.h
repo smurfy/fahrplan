@@ -29,8 +29,11 @@ class ParserHafasBinary : public ParserHafasXml
     Q_OBJECT
 public:
     explicit ParserHafasBinary(QObject *parent = 0);
+
     static QString getName() { return "HafasBinary"; }
-    QString name() { return "HafasBinary"; }
+    virtual QString name() { return getName(); }
+    virtual QString shortName() { return getName(); }
+
     void searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, Mode mode, int trainrestrictions);
     void searchJourneyEarlier();
     void searchJourneyLater();

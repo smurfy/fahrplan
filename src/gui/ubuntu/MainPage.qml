@@ -112,7 +112,7 @@ Page {
                 fontSize: "large"
                 color: "White"
 
-                text: fahrplanBackend.parserName
+                text: fahrplanBackend.parserShortName
             }
 
             Image {

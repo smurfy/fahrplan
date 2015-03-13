@@ -59,6 +59,7 @@ public:
 public:
     static QString getName() { return QString("%1 / %2 (9292ov.nl)").arg(tr("Netherlands"), tr("Belgium")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "9292ov.nl"; }
 
 public slots:
     void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);

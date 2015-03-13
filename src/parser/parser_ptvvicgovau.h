@@ -30,6 +30,7 @@ public:
     explicit ParserPTVVicGovAu(QObject *parent = 0);
     static QString getName() { return QString("%1, %2 (ptv.vic.gov.au)").arg(tr("Australia"), tr("Victoria")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "ptv.vic.gov.au"; }
 
 protected:
     QStringList getTrainRestrictions();

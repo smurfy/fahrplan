@@ -34,6 +34,7 @@ public:
     explicit ParserMobileBahnDe(QObject *parent = 0);
     static QString getName() { return QString("%1 (bahn.de)").arg(tr("Germany")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "bahn.de"; }
 
 public slots:
     QStringList getTrainRestrictions();

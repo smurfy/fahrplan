@@ -30,6 +30,7 @@ public:
     explicit ParserXmlRejseplanenDk(QObject *parent = 0);
     static QString getName() { return QString("%1 (rejseplanen.dk)").arg(tr("Denmark")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "rejseplanen.dk"; }
 
 protected:
     QStringList getTrainRestrictions();

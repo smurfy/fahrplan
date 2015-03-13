@@ -30,6 +30,7 @@ public:
     explicit ParserXmlSbbCh(QObject *parent = 0);
     static QString getName() { return QString("%1 (sbb.ch)").arg(tr("Switzerland")); }
     virtual QString name() { return getName(); }
+    virtual QString shortName() { return "sbb.ch"; }
 
 protected:
     void parseStationsByName(QNetworkReply *networkReply);

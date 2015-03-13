@@ -71,7 +71,7 @@ Page {
             }
             MenuItem {
                 id: currentBackend
-                text: fahrplanBackend.parserName
+                text: fahrplanBackend.parserShortName
                 enabled: false
             }
         }
