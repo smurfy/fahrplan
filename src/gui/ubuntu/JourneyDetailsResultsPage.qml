@@ -375,6 +375,17 @@ Page {
                         nextItem = result.getItem(i+1);
                     }
 
+                    /*
+                    console.log("-------------" + i);
+                    console.log(item.departureStation);
+                    console.log(item.train);
+                    console.log(item.arrivalStation);
+                    if (nextItem) {
+                        console.log(nextItem.departureStation);
+                        console.log(nextItem.train);
+                        console.log(nextItem.arrivalStation);
+                    }
+                    */
 
                     var isStart = (i == 0);
                     var isStop = (i == result.count -1);
@@ -390,16 +401,15 @@ Page {
                                                             "stationName" : item.departureStation,
                                                             "stationInfo" : item.departureInfo,
                                                             "arrivalTime" : "",
-                                                            "departureTime" : Qt.formatTime(item.departureDateTime, Qt.DefaultLocaleShortDate),
+                                                            "departureTime" : Qt.formatTime(item.departureDateTime, "hh:mm"),
                                                             "isStation" : true,
                                                             "isTrain" : true
 
                         });
                     }
 
-                    //Add arrival station, but only if its the last item or if the next departureStation differs
-                    //from arrival station
-                    if (isStop || (nextItem && nextItem.departureStation != item.arrivalStation)) {
+                    //Add arrival station
+                    if (isStop) {
                         journeyDetailResultModel.append({
                                                             "isStart" : false,
                                                             "isStop" : isStop,
@@ -408,7 +418,7 @@ Page {
                                                             "trainInfo" : "",
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" :  item.arrivalInfo,
-                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, Qt.DefaultLocaleShortDate),
+                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, "hh:mm"),
                                                             "departureTime" : "",
                                                             "isStation" : true,
                                                             "isTrain" : false
@@ -417,12 +427,15 @@ Page {
                     }
 
                     //Add one Station
-                    if ((nextItem && nextItem.departureStation == item.arrivalStation)) {
-
+                    if (nextItem) {
                         var stationInfo = item.arrivalInfo;
+                        var stationName = item.arrivalStation;
 
                         if (stationInfo.length > 0 && nextItem.departureInfo) {
                             stationInfo = stationInfo + " / ";
+                        }
+                        if (nextItem.departureStation != item.arrivalStation) {
+                            stationName += " / " + nextItem.departureStation;
                         }
 
                         stationInfo = stationInfo + nextItem.departureInfo;
@@ -433,10 +446,10 @@ Page {
                                                             "trainName" :  nextItem.train,
                                                             "trainDirection" : nextItem.direction,
                                                             "trainInfo" : nextItem.info,
-                                                            "stationName" : item.arrivalStation,
+                                                            "stationName" : stationName,
                                                             "stationInfo" : stationInfo,
-                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime, Qt.DefaultLocaleShortDate),
-                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime, Qt.DefaultLocaleShortDate),
+                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime, "hh:mm"),
+                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime, "hh:mm"),
                                                             "isStation" : true,
                                                             "isTrain" : true
 

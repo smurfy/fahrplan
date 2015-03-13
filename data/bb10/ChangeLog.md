@@ -3,11 +3,19 @@ BlackBerry World ChangeLog
 
 2.0.24
 ------
-  - New: MVV backend (Germany, Munich)
-  * New: SVV backend (Austria, Salzburg)
-  * New: ResRobot backend (Sweden)
-  * Fix: Normalized backend names
-  * New: Updated translations and added swedish translation
+
+New services:
+
+- MVV (Germany, Munich) - supports via station and GPS location.
+- SVV (Austria, Salzburg) - supports via station and GPS location.
+- ResRobot (Sweden) - supports GPS location.
+
+New features and improvements:
+
+- Service names now follow the same pattern.
+- Defunct London service was removed.
+- New: Swedish translation.
+
 
 2.0.23
 ------
