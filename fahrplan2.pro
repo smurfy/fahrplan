@@ -325,37 +325,13 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         data/sailfishos/harbour-fahrplan2.png
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h") {
+win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"):!ubuntu:!blackberry {
     QT += widgets
     DEFINES += BUILD_FOR_DESKTOP
     RESOURCES += desktop_res.qrc
-    equals (QML, true) {
-        RESOURCES += ubuntu_res.qrc
-        OTHER_FILES += \
-            src/gui/ubuntu/MainPage.qml \
-            src/gui/ubuntu/JourneyResultsPage.qml \
-            src/gui/ubuntu/JourneyDetailsResultsPage.qml \
-            src/gui/ubuntu/TimeTableResultsPage.qml \
-            src/gui/ubuntu/main.qml \
-            src/gui/ubuntu/components/Scroller.qml \
-            src/gui/ubuntu/components/StationSelect.qml \
-            src/gui/ubuntu/components/DatePicker.qml \
-            src/gui/ubuntu/components/TimePicker.qml \
-            src/gui/ubuntu/AboutPage.qml \
-            src/gui/ubuntu/SettingsPage.qml \
-            data/fahrplan2_ubuntu.desktop \
-            qtc_packaging/ubuntu/changelog \
-            qtc_packaging/ubuntu/compat \
-            qtc_packaging/ubuntu/control \
-            qtc_packaging/ubuntu/copyright \
-            qtc_packaging/ubuntu/rules \
-            qtc_packaging/ubuntu/source/format
-        DEFINES += BUILD_FOR_UBUNTU
-    } else {
-        SOURCES += src/gui/desktop-test/mainwindow.cpp
-        HEADERS += src/gui/desktop-test/mainwindow.h
-        FORMS += src/gui/desktop-test/mainwindow.ui
-    }
+    SOURCES += src/gui/desktop-test/mainwindow.cpp
+    HEADERS += src/gui/desktop-test/mainwindow.h
+    FORMS += src/gui/desktop-test/mainwindow.ui
 }
 
 symbian|simulator {
