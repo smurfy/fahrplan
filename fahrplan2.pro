@@ -1,7 +1,10 @@
+# Define Version
 VERSION = 2.0.24
 
 # Switch for jolla to separate harbour and openrepo version
-#DEFINES += BUILD_FOR_OPENREPOS
+openrepos {
+    DEFINES += BUILD_FOR_OPENREPOS
+}
 
 MOC_DIR = tmp
 UI_DIR = tmp
