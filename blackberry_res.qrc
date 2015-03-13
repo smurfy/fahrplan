@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>data/fahrplan2_150.png</file>
         <file>src/gui/about.js</file>
         <file>src/gui/bb10/js/style.js</file>
         <file>src/gui/bb10/main.qml</file>
@@ -23,5 +22,6 @@
         <file>src/gui/bb10/icons/star_empty.png</file>
         <file>src/gui/bb10/icons/swap.png</file>
         <file>src/gui/bb10/icons/timetable.png</file>
+        <file>data/bb10/fahrplan2_144.png</file>
     </qresource>
 </RCC>

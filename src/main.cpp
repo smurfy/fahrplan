@@ -214,6 +214,8 @@ int main(int argc, char *argv[])
     qDebug()<<"Exec";
 
     int error = app->exec();
-    delete app;
+    #ifndef BUILD_FOR_BLACKBERRY
+        delete app;
+    #endif
     return error;
 }

@@ -45,7 +45,7 @@ Page {
                 ImageView {
                     property int size: 150
 
-                    imageSource: "qrc:/data/fahrplan2_150.png"
+                    imageSource: "qrc:/data/bb10/fahrplan2_144.png"
                     minWidth: size
                     minHeight: size
                     maxWidth: size
