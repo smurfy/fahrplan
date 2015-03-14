@@ -55,6 +55,7 @@ maemo5:QT += maemo5
 !maemo5:!blackberry: CONFIG += mobility
 maemo5: CONFIG += mobility11
 !blackberry: MOBILITY += location organizer
+blackberry: CONFIG += cascades
 
 TRANSLATIONS += \
     translations/fahrplan_ar.ts \
@@ -264,37 +265,27 @@ maemo5 {
 blackberry {
     RESOURCES += blackberry_res.qrc
 
-    HEADERS += src/blackberrypositionsource.h
-    SOURCES += src/blackberrypositionsource.cpp
-    LIBS += -lQtLocationSubset -lbbpim
+    HEADERS += \
+        src/bb10completion.h \
+        src/bb10/languagechangelistener.h \
+        src/bb10/repeater.h \
+        src/blackberrypositionsource.h
+    SOURCES += \
+        src/bb10/languagechangelistener.cpp \
+        src/bb10/repeater.cpp \
+        src/blackberrypositionsource.cpp
+
+    LIBS += -lbbsystem -lQtLocationSubset -lbbpim
 
     OTHER_FILES += \
         bar-descriptor.xml \
-        src/gui/symbian/main.qml \
-        src/gui/symbian/components/SubTitleButton.qml \
-        src/gui/symbian/components/TwoLineLabel.qml \
-        src/gui/symbian/components/SwitchLabel.qml \
-        src/gui/symbian/components/SelectLabel.qml \
-        src/gui/symbian/components/BusyLabel.qml \
-        src/gui/symbian/delegates/StationDelegate.qml \
-        src/gui/symbian/delegates/JourneyDelegate.qml \
-        src/gui/symbian/delegates/JourneyDetailsDelegate.qml \
-        src/gui/symbian/delegates/TimetableEntryDelegate.qml \
-        src/gui/symbian/pages/AboutPage.qml \
-        src/gui/symbian/pages/JourneyDetailsResultsPage.qml \
-        src/gui/symbian/pages/JourneyResultsPage.qml \
-        src/gui/symbian/pages/MainPage.qml \
-        src/gui/symbian/pages/SettingsPage.qml \
-        src/gui/symbian/pages/StationSelectPage.qml \
-        src/gui/symbian/pages/StationsListPage.qml \
-        src/gui/symbian/pages/TimetablePage.qml \
-        src/gui/symbian/js/style.js \
-        src/gui/symbian/icon/*
+        src/gui/about.js \
+        src/gui/bb10/*.qml \
+        src/gui/bb10/components/*.qml \
+        src/gui/bb10/delegates/*.qml \
+        src/gui/bb10/pages/*.qml
 
     DEFINES += BUILD_FOR_BLACKBERRY
-
-    # For Qt Creator completion to work correctly
-    QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
 exists("/usr/include/sailfishapp/sailfishapp.h"): {

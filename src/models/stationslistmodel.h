@@ -25,6 +25,10 @@
 
 #include <QAbstractListModel>
 
+#ifdef Q_OS_BLACKBERRY
+namespace bb { namespace cascades { class DataModel; } }
+#endif
+
 class StationsListModel: public QAbstractListModel
 {
     Q_OBJECT
@@ -49,7 +53,6 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Name) const;
 
-    Station getStation(int index) const;
     void setStationsList(const StationsList &list);
 
 public slots:
@@ -62,7 +65,23 @@ signals:
     void stationSelected(Fahrplan::StationType type, const Station &station);
 
 protected:
+    StationsList stationsList() const;
+
+    bool contains(const Station &station) const;
+    int indexOf(const Station &station) const;
+    Station at(int index) const;
+    void removeAt(int index);
+
+private:
     StationsList m_list;
+
+#ifdef Q_OS_BLACKBERRY
+    Q_PROPERTY(bb::cascades::DataModel *dataModel READ dataModel CONSTANT)
+public:
+    bb::cascades::DataModel *dataModel() const;
+private:
+    bb::cascades::DataModel *m_dataModel;
+#endif
 };
 
 #endif // STATIONSLISTMODEL_H

@@ -25,7 +25,6 @@
 
     <asset path="${BUILD_DIR}/fahrplan2" type="Qnx/Elf" entry="true">fahrplan2</asset>
 
-    <asset path="3rdparty/bb10-qt-components/imports">imports</asset>
     <!-- Icons -->
     <asset path="data/bb10/fahrplan2_90.png">fahrplan2_90.png</asset>
     <asset path="data/bb10/fahrplan2_96.png">fahrplan2_96.png</asset>
