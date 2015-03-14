@@ -158,6 +158,8 @@ int main(int argc, char *argv[])
             view->setSource(QUrl("qrc:/src/gui/ubuntu/main.qml"));
             view->setResizeMode(QQuickView::SizeRootObjectToView);
             view->show();
+            QSettings settings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
+            view->setGeometry(settings.value("geometry", QRect(100, 100, 400, 600)).toRect());
         #elif defined(BUILD_FOR_SAILFISHOS)
             qDebug()<<"SailfishOs";
             view->setSource(QUrl("qrc:/src/gui/sailfishos/main.qml"));
@@ -204,6 +206,9 @@ int main(int argc, char *argv[])
     qDebug()<<"Exec";
 
     int error = app->exec();
+    #if defined(BUILD_FOR_UBUNTU)
+        settings.setValue("geometry", view->geometry());
+    #endif
     delete app;
     return error;
 }
