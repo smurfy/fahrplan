@@ -158,6 +158,10 @@ int main(int argc, char *argv[])
             if (QApplication::arguments().contains("--fullscreen")) {
                 view->showFullScreen();
             } else {
+                #if defined(BUILD_FOR_DESKTOP)
+                    QSettings settings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
+                    view->setGeometry(settings.value("geometry", QRect(100, 100, 400, 600)).toRect());
+                #endif
                 view->show();
             }
         #elif defined(BUILD_FOR_SAILFISHOS)
@@ -206,6 +210,10 @@ int main(int argc, char *argv[])
     qDebug()<<"Exec";
 
     int error = app->exec();
+    #if defined(BUILD_FOR_DESKTOP) && defined(BUILD_FOR_UBUNTU)
+        QSettings settings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
+        settings.setValue("geometry", view->geometry());
+    #endif
     delete app;
     return error;
 }
