@@ -22,7 +22,7 @@
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
     #include <QtDeclarative>
 #elif defined(BUILD_FOR_UBUNTU)
-    #include <QApplication>
+    #include <QGuiApplication>
     #include <QtQuick>
     #include <QtQml>
 #elif defined(BUILD_FOR_SAILFISHOS)
@@ -79,6 +79,8 @@ int main(int argc, char *argv[])
         QGuiApplication* app = SailfishApp::application(argc, argv);
     #elif defined(HAVE_DECLARATIVE_CACHE)
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
+    #elif defined(BUILD_FOR_UBUNTU)
+        QGuiApplication* app = new QGuiApplication(argc, argv);
     #else
         QApplication* app = new QApplication(argc, argv);
         #if defined(BUILD_FOR_DESKTOP)
@@ -155,11 +157,7 @@ int main(int argc, char *argv[])
             qDebug()<<"Ubuntu";
             view->setSource(QUrl("qrc:/src/gui/ubuntu/main.qml"));
             view->setResizeMode(QQuickView::SizeRootObjectToView);
-            if (QApplication::arguments().contains("--fullscreen")) {
-                view->showFullScreen();
-            } else {
-                view->show();
-            }
+            view->show();
         #elif defined(BUILD_FOR_SAILFISHOS)
             qDebug()<<"SailfishOs";
             view->setSource(QUrl("qrc:/src/gui/sailfishos/main.qml"));
