@@ -35,7 +35,7 @@
 #   include <bb/pim/account/AccountService>
 #   include <bb/pim/account/Account>
 #elif defined(BUILD_FOR_SAILFISHOS)
-#elif !defined(BUILD_FOR_DESKTOP)
+#elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU)
 #   include <QOrganizerManager>
 #endif
 
@@ -193,7 +193,7 @@ void FahrplanCalendarManager::getCalendarsList()
     }
 #elif defined(BUILD_FOR_SAILFISHOS)
 
-#elif !defined(BUILD_FOR_DESKTOP)
+#elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU)
     QString id = settings->value("CollectionId").toString();
     QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);
 
