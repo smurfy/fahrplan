@@ -105,7 +105,7 @@ Page {
             function findStationsByName()
             {
                 if (searchBox.text == "") {
-                    listView.model = fahrplanBackend.favorites
+                    stationSelect.showFavorites = true;
                     return;
                 }
 
