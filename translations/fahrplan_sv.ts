@@ -96,32 +96,32 @@
 <context>
     <name>CalendarThreadWrapper</name>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="44"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="49"/>
         <source>%1 / %2</source>
         <comment>STATION / PLATFORM</comment>
         <extracomment>STATION / PLATFORM</extracomment>
         <translation>%1 / %2</translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="48"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="53"/>
         <source>%1 %2   %3</source>
         <comment>DATE TIME   STATION</comment>
         <extracomment>DATE TIME STATION</extracomment>
         <translation>%1 %2   %3</translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="74"/>
-        <location filename="../src/calendarthreadwrapper.cpp" line="90"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="80"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="96"/>
         <source>%1 to %2</source>
         <translation>%1 till %2</translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="77"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="83"/>
         <source>%1 via %3 to %2</source>
         <translation>%1 via %3 till %2</translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="117"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="123"/>
         <source>-- 
 Added by Fahrplan. Please, re-check the information before your journey.</source>
         <translation>-- 
@@ -162,11 +162,11 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
 <context>
     <name>Fahrplan</name>
     <message>
-        <location filename="../src/fahrplan.cpp" line="133"/>
-        <location filename="../src/fahrplan.cpp" line="141"/>
-        <location filename="../src/fahrplan.cpp" line="149"/>
-        <location filename="../src/fahrplan.cpp" line="157"/>
-        <location filename="../src/fahrplan.cpp" line="165"/>
+        <location filename="../src/fahrplan.cpp" line="142"/>
+        <location filename="../src/fahrplan.cpp" line="150"/>
+        <location filename="../src/fahrplan.cpp" line="158"/>
+        <location filename="../src/fahrplan.cpp" line="166"/>
+        <location filename="../src/fahrplan.cpp" line="174"/>
         <source>please select</source>
         <translation>välj alternativ</translation>
     </message>
@@ -258,7 +258,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>Restid: %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="129"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="43"/>
+        <source>Add to calendar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="128"/>
         <source>Searching...</source>
         <translation>Söker...</translation>
     </message>
@@ -790,26 +795,26 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>Flygbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="314"/>
+        <location filename="../src/parser/parser_efa.cpp" line="315"/>
         <source>Server Error: </source>
         <translation>Serverfel: </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="526"/>
-        <location filename="../src/parser/parser_efa.cpp" line="711"/>
-        <location filename="../src/parser/parser_efa.cpp" line="727"/>
+        <location filename="../src/parser/parser_efa.cpp" line="527"/>
+        <location filename="../src/parser/parser_efa.cpp" line="712"/>
+        <location filename="../src/parser/parser_efa.cpp" line="728"/>
         <source>%1, %2</source>
         <comment>DATE, TIME</comment>
         <extracomment>DATE, TIME</extracomment>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="767"/>
+        <location filename="../src/parser/parser_efa.cpp" line="768"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min sen&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="771"/>
+        <location filename="../src/parser/parser_efa.cpp" line="772"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;i tid&lt;/span&gt;</translation>
     </message>
@@ -827,6 +832,11 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="452"/>
         <source>Walk</source>
         <translation>Gå</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="557"/>
+        <source>, </source>
+        <translation>, </translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="449"/>
@@ -884,11 +894,6 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="550"/>
         <source>Arrival stop canceled!</source>
         <translation>Ankomst inställd!</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_hafasbinary.cpp" line="557"/>
-        <source>, </source>
-        <translation>, </translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="584"/>
@@ -1106,49 +1111,6 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     </message>
 </context>
 <context>
-    <name>ParserLondonEFA</name>
-    <message>
-        <source>All</source>
-        <translation type="vanished">Alla</translation>
-    </message>
-    <message>
-        <source>Tube</source>
-        <translation type="vanished">Tunnelbana</translation>
-    </message>
-    <message>
-        <source>Rail</source>
-        <translation type="vanished">Järnväg</translation>
-    </message>
-    <message>
-        <source>Coach</source>
-        <translation type="vanished">Buss</translation>
-    </message>
-    <message>
-        <source>DLR</source>
-        <translation type="vanished">DLR</translation>
-    </message>
-    <message>
-        <source>Tram</source>
-        <translation type="vanished">Spårvagn</translation>
-    </message>
-    <message>
-        <source>Bus</source>
-        <translation type="vanished">Buss</translation>
-    </message>
-    <message>
-        <source>River</source>
-        <translation type="vanished">Flod</translation>
-    </message>
-    <message>
-        <source>Emirates Air Line</source>
-        <translation type="vanished">Emirates Air Line</translation>
-    </message>
-    <message>
-        <source>London Overground</source>
-        <translation type="vanished">London Overground</translation>
-    </message>
-</context>
-<context>
     <name>ParserMobileBahnDe</name>
     <message>
         <location filename="../src/parser/parser_mobilebahnde.cpp" line="35"/>
@@ -1204,10 +1166,6 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>Buss</translation>
     </message>
     <message>
-        <source>Munich (MVV)</source>
-        <translation type="vanished">München (MVV)</translation>
-    </message>
-    <message>
         <location filename="../src/parser/parser_munich_efa.h" line="31"/>
         <source>Germany</source>
         <translation type="unfinished"></translation>
@@ -1248,17 +1206,17 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>via %1</translation>
     </message>
     <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="407"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="411"/>
+        <source>Pl. %1</source>
+        <translation>Läge %1</translation>
+    </message>
+    <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="218"/>
         <source>(%1) %2 
 %3</source>
         <translation>(%1) %2 
 %3</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="407"/>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="411"/>
-        <source>Pl. %1</source>
-        <translation>Läge %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.h" line="60"/>
@@ -1322,34 +1280,14 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
 <context>
     <name>ParserResRobot</name>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="43"/>
-        <source>No animals</source>
-        <translation>Djur ej tillåtet</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="49"/>
-        <source>Food in first class</source>
-        <translation>Mat i första klass</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
-        <source>Metro</source>
-        <translation>Tunnelbana</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
-        <source>Train</source>
-        <translation>Tåg</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="57"/>
-        <source>Bus</source>
-        <translation>Buss</translation>
-    </message>
-    <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="42"/>
         <source>Bistro car</source>
         <translation>Bistrovagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="43"/>
+        <source>No animals</source>
+        <translation>Djur ej tillåtet</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="44"/>
@@ -1377,6 +1315,11 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>Internetuppkoppling</translation>
     </message>
     <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="49"/>
+        <source>Food in first class</source>
+        <translation>Mat i första klass</translation>
+    </message>
+    <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="50"/>
         <source>Mandatory seat reservation</source>
         <translation>Obligatorisk platsbokning</translation>
@@ -1400,6 +1343,11 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/parser/parser_resrobot.cpp" line="56"/>
         <source>Car</source>
         <translation>Bil</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="57"/>
+        <source>Bus</source>
+        <translation>Buss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
@@ -1507,6 +1455,16 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
         <source>City traffic</source>
         <translation>Stadstrafik</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
+        <source>Metro</source>
+        <translation>Tunnelbana</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
+        <source>Train</source>
+        <translation>Tåg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
@@ -1791,10 +1749,6 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/parser/parser_salzburg_efa.cpp" line="39"/>
         <source>Bus</source>
         <translation>Buss</translation>
-    </message>
-    <message>
-        <source>Salzburg (SVV)</source>
-        <translation type="vanished">Salzburg (SVV)</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
@@ -2134,7 +2088,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>Sök hållplats...</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="132"/>
+        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="143"/>
         <source>Click the star icon on the search results to add or remove a station as a favorite</source>
         <translation>Klicka på stjärnikonen i sökresultatet för att lägga till eller ta bort en hållplats som favorit</translation>
     </message>
@@ -2142,44 +2096,44 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
 <context>
     <name>StationSelectPage</name>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="76"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="77"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="64"/>
         <source>Search for Station...</source>
         <translation>Sök hållplats...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="97"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="109"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="83"/>
         <source>Searching ...</source>
         <translation>Söker...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="115"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="127"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="117"/>
         <source>Requesting GPS...</source>
         <translation>Hämtar GPS-position...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="142"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="154"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="144"/>
         <source>Click the star icon in the search results to add or remove a station as a favorite</source>
         <translation>Klicka på stjärnikonen i sökresultatet för att lägga till eller ta bort en hållplats som favorit</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="152"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="164"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="155"/>
         <source>Start typing station name into the search box to see a list stations</source>
         <translation>Börja skriva ett hållplatsnamn i sökrutan för att se en lista över hållplatser</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="193"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="205"/>
         <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="151"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="202"/>
         <source>Searching for stations...</source>
         <translation>Söker hållplatser...</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="198"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="210"/>
         <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="154"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="205"/>
         <source>Waiting for GPS lock...</source>
