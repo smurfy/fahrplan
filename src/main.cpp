@@ -81,11 +81,11 @@ int main(int argc, char *argv[])
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #elif defined(BUILD_FOR_UBUNTU)
         QGuiApplication* app = new QGuiApplication(argc, argv);
+        app->setWindowIcon(QIcon(":/fahrplan2.svg"));
     #else
         QApplication* app = new QApplication(argc, argv);
         #if defined(BUILD_FOR_DESKTOP)
-            QIcon icon(":/fahrplan2_64.png");
-            app->setWindowIcon(icon);
+            app->setWindowIcon(QIcon(":/fahrplan2_64.png"));
         #endif
     #endif
 
