@@ -68,7 +68,7 @@ TRANSLATIONS += \
     translations/fahrplan_ro_RO.ts \
     translations/fahrplan_ru.ts \
     translations/fahrplan_sl_SI.ts \
-    translations/fahrplan_sv.ts \
+    translations/fahrplan_sv_SE.ts \
     translations/fahrplan_tr.ts \
     translations/fahrplan_uk.ts \
     translations/fahrplan_zh.ts
