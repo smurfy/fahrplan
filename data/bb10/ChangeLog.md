@@ -1,6 +1,15 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.25
+------
+
+- Fix: Rendering of details page could get borked (occured with MVV, but possible with all backends)
+- Updated translations
+- Updated icons on most platforms
+- Display parser short name on main page
+
+
 2.0.24
 ------
 

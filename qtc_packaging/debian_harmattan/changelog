@@ -1,3 +1,11 @@
+fahrplan2 (2.0.25) unstable; urgency=low
+  * Fix: Rendering of details page could get borked (occured with MVV, but possible with all backends)
+  * Updated translations
+  * Updated icons on most platforms
+  * Display parser short name on main page
+
+ -- smurfy <maemo@smurfy.de>  Sat, 20 Mar 2015 22:00:00 +0200
+ 
 fahrplan2 (2.0.24) unstable; urgency=low
   * Added MVV backend (Germany, Munich)
   * Added SVV backend (Austria, Salzburg)
