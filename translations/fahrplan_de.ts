@@ -260,7 +260,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="43"/>
         <source>Add to calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu Kalender hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="128"/>

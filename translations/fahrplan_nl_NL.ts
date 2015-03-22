@@ -260,7 +260,7 @@ Toegevoegd door Fahrplan. Noot: controleer de informatie opnieuw vlak voordat u 
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="43"/>
         <source>Add to calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen aan agenda/kalender</translation>
     </message>
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="128"/>

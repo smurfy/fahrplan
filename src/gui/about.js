@@ -47,5 +47,6 @@ var translators = [
             "Persian - Ali Adineh (ali6007205)",
             "Polish - maurycy",
             "Swedish - Erik Lundin",
-            "Slovenian - Boštjan Štrumbelj (sponka), Matija Šuklje (hook)"
+            "Slovenian - Boštjan Štrumbelj (sponka), Matija Šuklje (hook)",
+            "Greek - Wasilis Mandratzis-Walz (beonex)"
         ];
