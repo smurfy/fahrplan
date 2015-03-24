@@ -4,10 +4,13 @@ BlackBerry World ChangeLog
 2.0.25
 ------
 
-- Fix: Rendering of details page could get borked (occured with MVV, but possible with all backends)
-- Updated translations
-- Updated icons on most platforms
-- Display parser short name on main page
+- Display parser short name on main page.
+- Icon refresh: now it's square, like most BlackBerry 10 icons.
+- New: Slovenian translation.
+- Fix: Rendering of details page could get borken (occured with MVV, but
+  possible with all backends).
+- Fix: Text not fully visible on 720x720 resolution devices. Also, all
+  context menu items should be displayed now without need to scroll.
 
 
 2.0.24
