@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>data/fahrplan2.svg</file>
+        <file alias="data/fahrplan2.png">data/fahrplan2_80.png</file>
         <file>src/gui/harmattan/main.qml</file>
         <file>src/gui/harmattan/components/SubTitleButton.qml</file>
         <file>src/gui/harmattan/components/TwoLineLabel.qml</file>

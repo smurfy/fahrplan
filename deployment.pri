@@ -103,8 +103,8 @@ symbian {
         installPrefix = /opt/$${TARGET}
         desktopfile.files = data/$${TARGET}_harmattan.desktop
         desktopfile.path = /usr/share/applications
-        icon.files = data/$${TARGET}.svg
-        icon.path = /usr/share/icons/hicolor/scalable/apps
+        icon.files = data/$${TARGET}_80.png
+        icon.path = /usr/share/icons/hicolor/80x80/apps
         splash.files = data/splash.jpg
         splash.path = $${installPrefix}/data
         export(splash.files)
