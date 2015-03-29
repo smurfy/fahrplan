@@ -60,7 +60,7 @@ Page {
             }
 
             Image {
-                source: "qrc:/data/fahrplan2.svg"
+                source: "qrc:/data/fahrplan2.png"
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                 }
