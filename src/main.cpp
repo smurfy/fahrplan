@@ -209,6 +209,13 @@ int main(int argc, char *argv[])
     #if defined(BUILD_FOR_UBUNTU)
         settings.setValue("geometry", view->geometry());
     #endif
+
+#ifndef Q_OS_BLACKBERRY
+    // For some reason, this causes a weird freeze of
+    // Fahrplan on BlackBerry 10 so that it can only
+    // be closed by restarting the phone.
     delete app;
+#endif
+
     return error;
 }

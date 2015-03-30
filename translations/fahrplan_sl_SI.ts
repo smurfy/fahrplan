@@ -260,7 +260,7 @@ Dodala aplikacija Fahrplan. Pred potovanjem prosimo preverite točnost informaci
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="43"/>
         <source>Add to calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj na koledar</translation>
     </message>
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="128"/>
@@ -900,27 +900,27 @@ Dodala aplikacija Fahrplan. Pred potovanjem prosimo preverite točnost informaci
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="584"/>
         <source>Journey contains canceled trains!</source>
-        <translation type="unfinished"></translation>
+        <translation>Potovanje vključuje odpovedane vlake!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="626"/>
         <source>Internal error occured, going later is not possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Prišlo je do notranje napake, kasnejši odhod ni možen!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="661"/>
         <source>Internal error occured, going earlier is not possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Prišlo je do notranje napake, zgodnejši odhod ni možen!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="740"/>
         <source>Your session has expired. Please, perform the search again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaša seja je potekla. Prosimo, znova zaženite iskanje.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="742"/>
         <source>One of the station names is too ambiguous.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eno od imen postaj je preveč splošno.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="744"/>
@@ -930,7 +930,7 @@ Dodala aplikacija Fahrplan. Pred potovanjem prosimo preverite točnost informaci
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="746"/>
         <source>There was an unsuccessful or incomplete search due to a timetable change.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuspešno ali nepopolno poizvedovanje zaradi sprememb urnika.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="748"/>
@@ -1023,7 +1023,7 @@ Dodala aplikacija Fahrplan. Pred potovanjem prosimo preverite točnost informaci
         <location filename="../src/parser/parser_hafasxml.cpp" line="877"/>
         <location filename="../src/parser/parser_hafasxml.cpp" line="1004"/>
         <source>Pl. %1</source>
-        <translation type="unfinished">Pl. %1</translation>
+        <translation>Pl. %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="954"/>
@@ -1213,7 +1213,7 @@ Dodala aplikacija Fahrplan. Pred potovanjem prosimo preverite točnost informaci
         <location filename="../src/parser/parser_ninetwo.cpp" line="407"/>
         <location filename="../src/parser/parser_ninetwo.cpp" line="411"/>
         <source>Pl. %1</source>
-        <translation type="unfinished">Pl. %1</translation>
+        <translation>Pl. %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="218"/>
@@ -1346,7 +1346,7 @@ Dodala aplikacija Fahrplan. Pred potovanjem prosimo preverite točnost informaci
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="56"/>
         <source>Car</source>
-        <translation type="unfinished"></translation>
+        <translation>Avto</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="57"/>
