@@ -307,8 +307,14 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
     DEFINES += BUILD_FOR_SAILFISHOS
 
     CONFIG += link_pkgconfig
-    PKGCONFIG += sailfishapp libmkcal-qt5 libkcalcoren-qt5
-    INCLUDEPATH += /usr/include/sailfishapp /usr/include/mkcal-qt5 /usr/include/kcalcoren-qt5
+    PKGCONFIG += sailfishapp
+    INCLUDEPATH += /usr/include/sailfishapp
+
+    # we need additional stuff for calendar support
+    openrepos {
+        PKGCONFIG += libmkcal-qt5 libkcalcoren-qt5
+        INCLUDEPATH += /usr/include/mkcal-qt5 /usr/include/kcalcoren-qt5
+    }
 
     RESOURCES += sailfishos_res.qrc
 
@@ -328,6 +334,7 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/pages/AboutPage.qml \
         rpm/harbour-fahrplan2.yaml \
         data/sailfishos/harbour-fahrplan2.desktop \
+        data/sailfishos/openrepos/harbour-fahrplan2.desktop \
         data/sailfishos/harbour-fahrplan2.png
 }
 
