@@ -96,32 +96,32 @@
 <context>
     <name>CalendarThreadWrapper</name>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="44"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="49"/>
         <source>%1 / %2</source>
         <comment>STATION / PLATFORM</comment>
         <extracomment>STATION / PLATFORM</extracomment>
         <translation>%1 / %2</translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="48"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="53"/>
         <source>%1 %2   %3</source>
         <comment>DATE TIME   STATION</comment>
         <extracomment>DATE TIME STATION</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="74"/>
-        <location filename="../src/calendarthreadwrapper.cpp" line="90"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="80"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="96"/>
         <source>%1 to %2</source>
         <translation>Z %1 do %2</translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="77"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="83"/>
         <source>%1 via %3 to %2</source>
         <translation>Z %1 do %2 przez %3</translation>
     </message>
     <message>
-        <location filename="../src/calendarthreadwrapper.cpp" line="117"/>
+        <location filename="../src/calendarthreadwrapper.cpp" line="123"/>
         <source>-- 
 Added by Fahrplan. Please, re-check the information before your journey.</source>
         <translation>-- 
@@ -162,11 +162,11 @@ Dodane przez Fahrplan. Prosimy zweryfikować informację przed rozpoczęciem pod
 <context>
     <name>Fahrplan</name>
     <message>
-        <location filename="../src/fahrplan.cpp" line="133"/>
-        <location filename="../src/fahrplan.cpp" line="141"/>
-        <location filename="../src/fahrplan.cpp" line="149"/>
-        <location filename="../src/fahrplan.cpp" line="157"/>
-        <location filename="../src/fahrplan.cpp" line="165"/>
+        <location filename="../src/fahrplan.cpp" line="142"/>
+        <location filename="../src/fahrplan.cpp" line="150"/>
+        <location filename="../src/fahrplan.cpp" line="158"/>
+        <location filename="../src/fahrplan.cpp" line="166"/>
+        <location filename="../src/fahrplan.cpp" line="174"/>
         <source>please select</source>
         <translation>proszę wybrać</translation>
     </message>
@@ -258,7 +258,12 @@ Dodane przez Fahrplan. Prosimy zweryfikować informację przed rozpoczęciem pod
         <translation>Czas: %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="129"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="43"/>
+        <source>Add to calendar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="128"/>
         <source>Searching...</source>
         <translation>Szukam...</translation>
     </message>
@@ -790,26 +795,26 @@ Dodane przez Fahrplan. Prosimy zweryfikować informację przed rozpoczęciem pod
         <translation>Lotnisko (SKYBUS)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="314"/>
+        <location filename="../src/parser/parser_efa.cpp" line="315"/>
         <source>Server Error: </source>
         <translation>Błąd serwera:</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="526"/>
-        <location filename="../src/parser/parser_efa.cpp" line="711"/>
-        <location filename="../src/parser/parser_efa.cpp" line="727"/>
+        <location filename="../src/parser/parser_efa.cpp" line="527"/>
+        <location filename="../src/parser/parser_efa.cpp" line="712"/>
+        <location filename="../src/parser/parser_efa.cpp" line="728"/>
         <source>%1, %2</source>
         <comment>DATE, TIME</comment>
         <extracomment>DATE, TIME</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="767"/>
+        <location filename="../src/parser/parser_efa.cpp" line="768"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#b30;&quot;&gt;%1 minut spóźnienia&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="771"/>
+        <location filename="../src/parser/parser_efa.cpp" line="772"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;na czas&lt;/span&gt;</translation>
     </message>
@@ -1105,17 +1110,6 @@ Dodane przez Fahrplan. Prosimy zweryfikować informację przed rozpoczęciem pod
         <location filename="../src/parser/parser_ireland_efa.h" line="31"/>
         <source>Ireland</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ParserLondonEFA</name>
-    <message>
-        <source>All</source>
-        <translation type="obsolete">Wszystkie</translation>
-    </message>
-    <message>
-        <source>Bus</source>
-        <translation type="obsolete">Autobus</translation>
     </message>
 </context>
 <context>
@@ -2095,7 +2089,7 @@ Dodane przez Fahrplan. Prosimy zweryfikować informację przed rozpoczęciem pod
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="132"/>
+        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="143"/>
         <source>Click the star icon on the search results to add or remove a station as a favorite</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2103,44 +2097,44 @@ Dodane przez Fahrplan. Prosimy zweryfikować informację przed rozpoczęciem pod
 <context>
     <name>StationSelectPage</name>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="76"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="77"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="64"/>
         <source>Search for Station...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="97"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="109"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="83"/>
         <source>Searching ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="115"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="127"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="117"/>
         <source>Requesting GPS...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="142"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="154"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="144"/>
         <source>Click the star icon in the search results to add or remove a station as a favorite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="152"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="164"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="155"/>
         <source>Start typing station name into the search box to see a list stations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="193"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="205"/>
         <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="151"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="202"/>
         <source>Searching for stations...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="198"/>
+        <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="210"/>
         <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="154"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="205"/>
         <source>Waiting for GPS lock...</source>

@@ -81,11 +81,11 @@ int main(int argc, char *argv[])
         QApplication* app = MDeclarativeCache::qApplication(argc, argv);
     #elif defined(BUILD_FOR_UBUNTU)
         QGuiApplication* app = new QGuiApplication(argc, argv);
+        app->setWindowIcon(QIcon(":/fahrplan2.svg"));
     #else
         QApplication* app = new QApplication(argc, argv);
         #if defined(BUILD_FOR_DESKTOP)
-            QIcon icon(":/fahrplan2_64.png");
-            app->setWindowIcon(icon);
+            app->setWindowIcon(QIcon(":/fahrplan2_64.png"));
         #endif
     #endif
 
@@ -158,6 +158,8 @@ int main(int argc, char *argv[])
             view->setSource(QUrl("qrc:/src/gui/ubuntu/main.qml"));
             view->setResizeMode(QQuickView::SizeRootObjectToView);
             view->show();
+            QSettings settings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
+            view->setGeometry(settings.value("geometry", QRect(100, 100, 400, 600)).toRect());
         #elif defined(BUILD_FOR_SAILFISHOS)
             qDebug()<<"SailfishOs";
             view->setSource(QUrl("qrc:/src/gui/sailfishos/main.qml"));
@@ -204,6 +206,16 @@ int main(int argc, char *argv[])
     qDebug()<<"Exec";
 
     int error = app->exec();
+    #if defined(BUILD_FOR_UBUNTU)
+        settings.setValue("geometry", view->geometry());
+    #endif
+
+#ifndef Q_OS_BLACKBERRY
+    // For some reason, this causes a weird freeze of
+    // Fahrplan on BlackBerry 10 so that it can only
+    // be closed by restarting the phone.
     delete app;
+#endif
+
     return error;
 }
