@@ -131,6 +131,10 @@ symbian {
         INSTALLS += manifestfile apparmor
     } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
         desktopfile.files = data/sailfishos/$${TARGET}.desktop
+        # Use different desktop file for openrepos
+        openrepos {
+            desktopfile.files = data/sailfishos/openrepos/$${TARGET}.desktop
+        }
         desktopfile.path = /usr/share/applications
         icon.files = data/sailfishos/$${TARGET}.png
         icon.path = /usr/share/icons/hicolor/86x86/apps

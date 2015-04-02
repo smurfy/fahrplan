@@ -255,6 +255,10 @@ Page {
                     id: timeModeSelector
                     text: qsTr("Date and time")
                     values: [qsTr("Now"), qsTr("Departure"), qsTr("Arrival")]
+                    selectedIndex: (fahrplanBackend.mode + 1) % 3
+                    onSelectedIndexChanged: {
+                        fahrplanBackend.mode = (timeModeSelector.selectedIndex + 2) % 3;
+                    }
                 }
 
                 ListItems.Subtitled {
