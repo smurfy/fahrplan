@@ -84,7 +84,9 @@ void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
     QUrl query;
 #endif
     query.addQueryItem("lang", 	"en-GB");
+    query.addQueryItem("type", "station,stop");
     query.addQueryItem("latlong", QString("%1,%2").arg(latitude).arg(longitude));
+    query.addQueryItem("includestation", "true");
     uri.setQuery(query);
 
     sendHttpRequest(uri);
