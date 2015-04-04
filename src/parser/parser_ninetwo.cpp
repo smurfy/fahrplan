@@ -223,7 +223,13 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
                 entry.miscInfo=QString("%1 %2").arg(via, remark).trimmed();
 
             entry.platform = departure.value("platform").toString();
-            entry.trainType = departure.value("mode").toMap().value("name").toString();
+
+            QString train = departure.value("mode").toMap().value("name").toString();
+            const QString service = departure.value("service").toString();
+            if (!service.isEmpty())
+                train.append(" ").append(service);
+            entry.trainType = train;
+
             result.append(entry);
         }
     }
@@ -309,14 +315,11 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         QVariantList::const_iterator j;
         for (j = legs.constBegin(); j != legs.constEnd(); ++j)
         {
-            QVariantMap leg = j->toMap();
-            QString typeName = leg.value("mode").toMap().value("name").toString();
-            QString type = leg.value("mode").toMap().value("type").toString();
-
-            if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
-                if (typeName.length() > 0) {
+            const QVariantMap mode = j->toMap().value("mode").toMap();
+            if (mode.value("type").toString() != "walk") {
+                const QString typeName = mode.value("name").toString();
+                if (!typeName.isEmpty())
                     trains.append(typeName);
-                }
             }
         }
 
@@ -397,27 +400,30 @@ void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
         resultItem->setArrivalDateTime(stopArrival);
 
         QString type = leg.value("mode").toMap().value("type").toString();
-        QString typeName = leg.value("mode").toMap().value("name").toString();
+        QString typeName;
+        if (type != "walk")
+            typeName = leg.value("mode").toMap().value("name").toString();
 
         //Fallback if typeName is empty
-        if (typeName.length() == 0) {
+        if (typeName.isEmpty() && !type.isEmpty()) {
             typeName = type;
+            typeName[0] = type.at(0).toUpper();
         }
 
-        if(type=="bus" || type=="tram" || type=="train" || type=="subway"){
-            if (firstStop.value("platform").toString().length() > 0) {
-                resultItem->setDepartureInfo(tr("Pl. %1")
-                                             .arg(firstStop.value("platform").toString()));
-            }
-            if (lastStop.value("platform").toString() > 0) {
-                resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop.value("platform").toString()));
-            }
-            resultItem->setTrain(typeName);
-            resultItem->setDirection(leg.value("destination").toString());
+        const QString service = leg.value("service").toString();
+        if (!service.isEmpty())
+            typeName.append(" ").append(service);
+
+        resultItem->setTrain(typeName);
+
+        if (!firstStop.value("platform").toString().isEmpty()) {
+            resultItem->setDepartureInfo(tr("Pl. %1")
+                                         .arg(firstStop.value("platform").toString()));
         }
-        else{
-            resultItem->setTrain(type);
+        if (!lastStop.value("platform").toString().isEmpty()) {
+            resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop.value("platform").toString()));
         }
+        resultItem->setDirection(leg.value("destination").toString());
 
         result->appendItem(resultItem);
     }
