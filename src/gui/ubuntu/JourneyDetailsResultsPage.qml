@@ -254,7 +254,8 @@ Page {
                         Label {
                             id: lbl_station_name
                             text: stationName
-                            width: parent.width
+                            width: parent.width - units.gu(1)
+                            wrapMode: Text.WordWrap
                         }
 
                         Label {
@@ -265,7 +266,8 @@ Page {
                             color: "DarkGrey"
                             id: lbl_station_info
                             text: stationInfo
-                            width: parent.width
+                            width: parent.width - units.gu(1)
+                            wrapMode: Text.WordWrap
                         }
                      }
                 }
@@ -321,7 +323,8 @@ Page {
 
                             return result;
                         }
-                        width: (parent.width  - units.gu(11))
+                        width: (parent.width  - units.gu(12))
+                        wrapMode: Text.WordWrap
                         onLinkActivated : Qt.openUrlExternally(link)
                     }
                 }
