@@ -379,7 +379,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="170"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="161"/>
         <source>Departure Station</source>
-        <translation>Von: Bahnhof, Adresse, ...</translation>
+        <translation>Von: Bahnhof, Haltestelle, ...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="187"/>
@@ -395,7 +395,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="210"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="199"/>
         <source>Arrival Station</source>
-        <translation>Nach: Bahnhof, Adresse, ...</translation>
+        <translation>Nach: Bahnhof, Haltestelle, ...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="225"/>
