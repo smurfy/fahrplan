@@ -85,12 +85,12 @@
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="131"/>
         <source>Source code available on %1</source>
-        <translation>Quellcode verfügbar in %1</translation>
+        <translation>Quellcode verfügbar auf %1</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="136"/>
         <source>See full copyright</source>
-        <translation>Siehe voller Urheberrechtsvermerk</translation>
+        <translation>Copyright</translation>
     </message>
 </context>
 <context>
@@ -379,7 +379,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="170"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="161"/>
         <source>Departure Station</source>
-        <translation>Abfahrtsstation</translation>
+        <translation>Von: Bahnhof, Adresse, ...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="187"/>
@@ -395,7 +395,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="210"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="199"/>
         <source>Arrival Station</source>
-        <translation>Ankunftsstation</translation>
+        <translation>Nach: Bahnhof, Adresse, ...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="225"/>
@@ -461,7 +461,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="340"/>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="304"/>
         <source>Trains</source>
-        <translation>Züge</translation>
+        <translation>Verbindungen</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="331"/>
@@ -650,12 +650,12 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="334"/>
         <source>Plan my journey</source>
-        <translation>Reise planen</translation>
+        <translation>Suchen</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="453"/>
         <source>About</source>
-        <translation>Über</translation>
+        <translation>Info</translation>
     </message>
 </context>
 <context>
@@ -2255,7 +2255,7 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
     <message>
         <location filename="../src/gui/about.js" line="35"/>
         <source>&lt;p&gt;If fahrplan is not translated in your language, help us &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;translate it to your language&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;If you like fahrplan, I would appreciate a donation. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Donate using PayPal&lt;/a&gt;&lt;/p&gt;&lt;p&gt;If you encounter bugs or have feature requests visit the &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;Fahrplan issue tracker on GitHub&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Sollte fahrplan noch nicht in Deine Sprache übersetzt sein, hilf uns &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;mit der Übersetzung.&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Dir gefällt fahrplan? Wie währe es mit einer kleinen Spende. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Über PayPal spenden&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wenn Du Fehler oder Verbesserungsvorschläge hast besuch doch den &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;fahrplan issue tracker auf GitHub&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Sollte fahrplan noch nicht in Deine Sprache übersetzt sein, hilf uns &lt;a href=&quot;https://www.transifex.com/projects/p/fahrplan/&quot;&gt;mit der Übersetzung&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Dir gefällt fahrplan? Wie währe es mit einer kleinen Spende. &lt;a href=&quot;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=DW3LGJ6VEKFVS&quot;&gt;Über PayPal spenden&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Wenn Du Fehler oder Verbesserungsvorschläge hast besuch doch den &lt;a href=&quot;https://github.com/smurfy/fahrplan/issues&quot;&gt;fahrplan issue tracker auf GitHub&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2264,13 +2264,13 @@ Von der Fahrplan App hinzugefügt. Bitte, überprüfen Sie diese Informationen n
         <location filename="../src/gui/ubuntu/main.qml" line="45"/>
         <location filename="../src/gui/ubuntu/main.qml" line="50"/>
         <source>Journey</source>
-        <translation>Fahrt</translation>
+        <translation>Reiseauskunft</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/main.qml" line="56"/>
         <location filename="../src/gui/ubuntu/main.qml" line="61"/>
         <source>Time table</source>
-        <translation>Zeitplan</translation>
+        <translation>Fahrplanauskunft</translation>
     </message>
 </context>
 </TS>
