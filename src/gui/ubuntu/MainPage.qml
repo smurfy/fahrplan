@@ -27,10 +27,22 @@ import Fahrplan 1.0
 Page {
     id: mainPage
 
-    tools: mainToolbar
-
     property int searchmode : 0
     property bool startup : true
+
+    head.actions: [
+        Action {
+            iconName: "info"
+            text: qsTr("About")
+            onTriggered: mainStack.push(Qt.resolvedUrl("AboutPage.qml"));
+        }
+
+        // Not using settings on ubuntu yet...
+//        Action {
+//            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
+//            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+//        }
+    ]
 
     Component.onCompleted: {
         updateButtonVisibility()
@@ -164,9 +176,9 @@ Page {
                     property int type: FahrplanBackend.DepartureStation
 
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                        pageStack.currentPage.stationSelected.connect(function() {
-                            pageStack.pop();
+                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                        mainStack.currentPage.stationSelected.connect(function() {
+                            mainStack.pop();
                         })
                     }
                     onPressAndHold: {
@@ -185,10 +197,11 @@ Page {
                     property int type: FahrplanBackend.ViaStation
 
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                        pageStack.currentPage.stationSelected.connect(function() {
-                            pageStack.pop();
+                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                        mainStack.currentPage.stationSelected.connect(function() {
+                            mainStack.pop();
                         })
+
                     }
                     onPressAndHold: {
                         openMenu(viaButton);
@@ -206,9 +219,9 @@ Page {
                     property int type: FahrplanBackend.ArrivalStation
 
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                        pageStack.currentPage.stationSelected.connect(function() {
-                            pageStack.pop();
+                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                        mainStack.currentPage.stationSelected.connect(function() {
+                            mainStack.pop();
                         })
                     }
                     onPressAndHold: {
@@ -225,9 +238,9 @@ Page {
                     }
                     progression: true
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation})
-                        pageStack.currentPage.stationSelected.connect(function(name) {
-                            pageStack.pop();
+                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation})
+                        mainStack.currentPage.stationSelected.connect(function() {
+                            mainStack.pop();
                         })
                     }
                 }
@@ -241,9 +254,9 @@ Page {
                     }
                     progression: true
                     onClicked: {
-                        pageStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DirectionStation})
-                        pageStack.currentPage.stationSelected.connect(function() {
-                            pageStack.pop();
+                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DirectionStation})
+                        mainStack.currentPage.stationSelected.connect(function() {
+                            mainStack.pop();
                         })
                     }
                     onPressAndHold: {
@@ -329,7 +342,7 @@ Page {
                         }
 
                         onClicked: {
-                            pageStack.push("qrc:///src/gui/ubuntu/TimeTableResultsPage.qml", {searchIndicatorVisible: true});
+                            mainStack.push("qrc:///src/gui/ubuntu/TimeTableResultsPage.qml", {searchIndicatorVisible: true});
                             fahrplanBackend.getTimeTable();
                         }
                     }
@@ -353,7 +366,7 @@ Page {
                                 titleText = qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText).arg(viaButton.subText)
                             }
 
-                            pageStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {journeyStationsTitleText: titleText, searchIndicatorVisible: true })
+                            mainStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {journeyStationsTitleText: titleText, searchIndicatorVisible: true })
                             fahrplanBackend.searchJourney();
                         }
                     }
@@ -440,23 +453,6 @@ Page {
         id: timePicker
         TimePicker {
 
-        }
-    }
-
-    ToolbarItems {
-        id: mainToolbar
-
-        // Not using settings on ubuntu yet...
-//        Action {
-//            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
-//            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
-//        }
-        ToolbarButton {
-            action: Action {
-                iconName: "info"
-                text: qsTr("About")
-                onTriggered: pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
-            }
         }
     }
 

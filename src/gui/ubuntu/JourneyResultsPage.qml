@@ -23,12 +23,13 @@ import Ubuntu.Components 1.1
 import "components"
 
 Page {
+    id: searchResultsPage
+
     title: qsTr("Results")
+
     property alias searchResults: searchResults
     property alias journeyStationsTitleText: journeyStations.text
     property alias searchIndicatorVisible: searchIndicator.visible
-
-    id: searchResultsPage
 
     Item {
         id: searchResults
@@ -210,7 +211,7 @@ Page {
                 onClicked: {
 
                     var component = Qt.createComponent("JourneyDetailsResultsPage.qml")
-                    pageStack.push(component,
+                    mainStack.push(component,
                                    {titleText: qsTr("Loading details"), subTitleText: qsTr("please wait..."), searchIndicatorVisible: true});
                     fahrplanBackend.parser.getJourneyDetails(id);
                 }
