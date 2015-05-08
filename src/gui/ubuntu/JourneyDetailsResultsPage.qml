@@ -23,8 +23,9 @@ import Ubuntu.Components 1.1
 import "components"
 
 Page {
-    title: qsTr("Result Details")
     id: searchDetailResultsPage
+
+    title: qsTr("Result Details")
 
     property alias titleText: journeyStations.text
     property alias subTitleText: lbljourneyDate.text
@@ -33,7 +34,6 @@ Page {
 
     property JourneyDetailResultList currentResult;
 
-//    tools: journeyDetailResultsToolbar
     Item {
         id: searchResults
 

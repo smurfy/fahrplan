@@ -27,10 +27,22 @@ import Fahrplan 1.0
 Page {
     id: mainPage
 
-    tools: mainToolbar
-
     property int searchmode : 0
     property bool startup : true
+
+    head.actions: [
+        Action {
+            iconName: "info"
+            text: qsTr("About")
+            onTriggered: mainStack.push(Qt.resolvedUrl("AboutPage.qml"));
+        }
+
+        // Not using settings on ubuntu yet...
+//        Action {
+//            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
+//            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+//        }
+    ]
 
     Component.onCompleted: {
         updateButtonVisibility()
@@ -441,23 +453,6 @@ Page {
         id: timePicker
         TimePicker {
 
-        }
-    }
-
-    ToolbarItems {
-        id: mainToolbar
-
-        // Not using settings on ubuntu yet...
-//        Action {
-//            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
-//            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
-//        }
-        ToolbarButton {
-            action: Action {
-                iconName: "info"
-                text: qsTr("About")
-                onTriggered: mainStack.push(Qt.resolvedUrl("AboutPage.qml"));
-            }
         }
     }
 
