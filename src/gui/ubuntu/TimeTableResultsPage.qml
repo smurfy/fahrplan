@@ -34,7 +34,7 @@ Page {
     head.backAction: Action {
         iconName: "back"
         onTriggered: {
-            pageStack.pop()
+            mainStack.pop()
             fahrplanBackend.parser.cancelRequest();
         }
     }

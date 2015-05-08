@@ -210,7 +210,7 @@ Page {
                 onClicked: {
 
                     var component = Qt.createComponent("JourneyDetailsResultsPage.qml")
-                    pageStack.push(component,
+                    mainStack.push(component,
                                    {titleText: qsTr("Loading details"), subTitleText: qsTr("please wait..."), searchIndicatorVisible: true});
                     fahrplanBackend.parser.getJourneyDetails(id);
                 }

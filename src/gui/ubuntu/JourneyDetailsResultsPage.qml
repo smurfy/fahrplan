@@ -462,7 +462,7 @@ Page {
                 }
                 searchIndicator.visible = false;
             } else {
-                pageStack.pop();
+                mainStack.pop();
             }
         }
     }

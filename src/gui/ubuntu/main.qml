@@ -23,41 +23,33 @@ import Fahrplan 1.0
 
 MainView {
     id: appWindow
-    width: units.gu(40)
-    height: units.gu(71)
+
+    width: units.gu(40); height: units.gu(71)
+    useDeprecatedToolbar: false
 
     FahrplanBackend {
         id: fahrplanBackend
     }
 
-    useDeprecatedToolbar: false
-    Tabs {
-        onCurrentPageChanged: {
-            while (journeyPageStack.depth > 1) {
-                journeyPageStack.pop()
-            }
-            while (timeTablePageStack.depth > 1) {
-                timeTablePageStack.pop()
-            }
-        }
+    PageStack {
+        id: mainStack
 
-        Tab {
-            title: qsTr("Journey")
-            page: PageStack {
-                id: journeyPageStack
-                Component.onCompleted: push(journeyPage)
-                MainPage {
+        Component.onCompleted: push(tabs)
+
+        Tabs {
+            id: tabs
+
+            Tab {
+                title: qsTr("Journey")
+                page: MainPage {
                     title: qsTr("Journey")
                     id: journeyPage
                 }
             }
-        }
-        Tab {
-            title: qsTr("Time table")
-            page: PageStack {
-                id: timeTablePageStack
-                Component.onCompleted: push(timeTablePage)
-                MainPage {
+
+            Tab {
+                title: qsTr("Time table")
+                page: MainPage {
                     title: qsTr("Time table")
                     id: timeTablePage
                     searchmode: 1
