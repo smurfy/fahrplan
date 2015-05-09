@@ -195,7 +195,7 @@ Page {
                 value: fahrplanBackend.currentStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation, title: text})
                     mainStack.currentPage.stationSelected.connect(function() {
                         mainStack.pop();
                     })
