@@ -17,12 +17,13 @@ ListItem.Base {
             id: _title
             Layout.fillWidth: true
             font.bold: true
-            elide: Text.ElideRight
         }
 
         Label {
             id: _value
-            elide: Text.ElideRight
+            elide: Text.ElideMiddle
+            horizontalAlignment: Text.AlignRight
+            Layout.maximumWidth: parent.width - _title.implicitWidth - _progression.width
         }
 
         Icon {
