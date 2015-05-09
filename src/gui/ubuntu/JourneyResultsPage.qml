@@ -151,19 +151,14 @@ Page {
 
         Item {
             id: delegateItem
-            width: listView.width
-            height: units.gu(2) + detailsColumn.height
 
-            Rectangle {
-                anchors.fill: parent
-                color: itemNum % 2 ? "#F5F5F5" : "#ECECEC"
-            }
+            width: listView.width
+            height: detailsColumn.height + units.gu(2)
 
             Rectangle {
                 id: background
                 anchors.fill: parent
-                color: "DarkGrey"
-                visible: mouseArea.pressed
+                color: mouseArea.pressed ? "DarkGrey" : itemNum % 2 ? "#F5F5F5" : "#ECECEC"
             }
 
             MouseArea {
@@ -252,38 +247,4 @@ Page {
             }
         }
     }
-
-
-
-    //    ToolBarLayout {
-    //        id: journeyResultsToolbar
-
-    //        ToolIcon {
-    //            id : backIcon;
-    //            iconId: "toolbar-back"
-    //            onClicked: {
-    //                pageStack.pop();
-    //                fahrplanBackend.parser.cancelRequest();
-    //            }
-    //        }
-
-    //        ToolButtonRow {
-    //            ToolButton {
-    //                text:qsTr("Earlier")
-    //                visible: !searchIndicatorVisible;
-    //                onClicked: {
-    //                    searchIndicatorVisible = true
-    //                    fahrplanBackend.parser.searchJourneyEarlier();
-    //                }
-    //            }
-    //            ToolButton {
-    //                text:qsTr("Later")
-    //                visible: !searchIndicatorVisible;
-    //                onClicked: {
-    //                    searchIndicatorVisible = true
-    //                    fahrplanBackend.parser.searchJourneyLater();
-    //                }
-    //            }
-    //        }
-    //    }
 }
