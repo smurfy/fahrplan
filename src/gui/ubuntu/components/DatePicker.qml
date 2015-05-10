@@ -23,8 +23,7 @@ import Ubuntu.Components.Popups 0.1
 
 Dialog {
     id: root
-    title: qsTr("Date")
-    height: units.gu(100)
+    title: qsTr("<b>Date</b>")
 
     // 1 - 31
     property int day: priv.now.getDate()

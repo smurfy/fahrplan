@@ -23,8 +23,7 @@ import Ubuntu.Components.Popups 0.1
 
 Dialog {
     id: root
-    title: qsTr("Time")
-    height: units.gu(100)
+    title: qsTr("<b>Time</b>")
 
     property alias hour: hourScroller.currentIndex
     property alias minute: minuteScroller.currentIndex

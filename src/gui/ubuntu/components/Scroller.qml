@@ -89,7 +89,7 @@ Item {
             id: label
             anchors.centerIn: parent
         }
-        ListItems.Divider {
+        ListItems.ThinDivider {
             anchors {
                 left: parent.left
                 bottom: parent.bottom
@@ -108,12 +108,14 @@ Item {
         preferredHighlightEnd: 0.5
         clip: true
 
-        delegate: ListItems.Standard {
+        delegate: ListItems.Base {
             width: parent.width
+            showDivider: false
             highlightWhenPressed: false
             Label {
                 anchors.centerIn: parent
                 text: modelData
+                color: index == currentIndex ? "White" : UbuntuColors.coolGrey
             }
             onClicked: listView.currentIndex = index
         }
@@ -137,7 +139,7 @@ Item {
                 }
             }
         }
-        ListItems.Divider {
+        ListItems.ThinDivider {
             anchors {
                 left: parent.left
                 bottom: parent.bottom
