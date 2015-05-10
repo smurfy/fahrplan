@@ -319,7 +319,7 @@ Page {
             console.log(result.count);
 
             if (result.count > 0) {
-                titleText = result.viaStation.length == 0 ? qsTr("<b>%1</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation);
+                titleText = result.viaStation.length == 0 ? "<b>%1</b> ↦ <b>%2</b>".arg(result.departureStation).arg(result.arrivalStation) : "<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>".arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation);
                 var departureDate = Qt.formatDate(result.departureDateTime);
                 var arrivalDate = Qt.formatDate(result.arrivalDateTime);
 

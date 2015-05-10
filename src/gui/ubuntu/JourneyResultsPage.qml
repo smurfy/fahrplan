@@ -229,7 +229,7 @@ Page {
 
             searchIndicatorVisible = false;
 
-            journeyStationsTitleText = result.viaStation.length == 0 ? qsTr("<b>%1</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation)
+            journeyStationsTitleText = result.viaStation.length == 0 ? "<b>%1</b> ↦ <b>%2</b>".arg(result.departureStation).arg(result.arrivalStation) : "<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>".arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation)
 
             journeryDateTitleText = result.timeInfo;
 
