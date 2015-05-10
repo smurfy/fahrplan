@@ -25,7 +25,7 @@ import "components"
 Page {
     id: searchResultsPage
 
-    title: qsTr("Results")
+    title: qsTr("Journey alternatives")
     flickable: null
 
     property alias searchResults: searchResults
@@ -89,6 +89,7 @@ Page {
                     Label {
                         id: journeyDate
                         color: "Grey"
+                        fontSize: "small"
                         text: journeryDateTitleText
                         width: parent.width
                         anchors { top: journeyStations.bottom }
@@ -210,6 +211,7 @@ Page {
                     text: miscInfo
                     fontSize: "small"
                     color: UbuntuColors.red
+                    font.italic: true
                 }
             }
         }
@@ -227,7 +229,7 @@ Page {
 
             searchIndicatorVisible = false;
 
-            journeyStationsTitleText = result.viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation)
+            journeyStationsTitleText = result.viaStation.length == 0 ? qsTr("<b>%1</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation)
 
             journeryDateTitleText = result.timeInfo;
 
