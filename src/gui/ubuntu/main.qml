@@ -43,7 +43,6 @@ MainView {
                 title: qsTr("Journey")
                 page: MainPage {
                     title: qsTr("Journey")
-                    id: journeyPage
                 }
             }
 
@@ -51,7 +50,6 @@ MainView {
                 title: qsTr("Time table")
                 page: MainPage {
                     title: qsTr("Time table")
-                    id: timeTablePage
                     searchmode: 1
                 }
             }
