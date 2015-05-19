@@ -16,5 +16,7 @@
         <file>src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml</file>
         <file>data/sailfishos/cover.png</file>
         <file>data/sailfishos/harbour-fahrplan2.png</file>
+        <file>src/gui/sailfishos/delegates/JourneyDetailsStationDelegate.qml</file>
+        <file>src/gui/sailfishos/delegates/JourneyDetailsTrainDelegate.qml</file>
     </qresource>
 </RCC>
