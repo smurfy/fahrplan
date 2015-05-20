@@ -95,6 +95,7 @@ class JourneyResultItem : public QObject
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
 
     public:
+        explicit JourneyResultItem(QObject * parent = 0);
         QString id() const;
         void setId(const QString &);
         QDate date() const;
@@ -176,6 +177,7 @@ class JourneyDetailResultItem : public QObject
     Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
     public:
+        explicit JourneyDetailResultItem(QObject * parent = 0);
         QString departureStation() const;
         void setDepartureStation(const QString &);
         QString departureInfo() const;

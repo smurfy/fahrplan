@@ -656,7 +656,7 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 
     const QDomNodeList connections = doc.elementsByTagName("Connection");
     for (int i = 0; i < connections.count(); ++i) {
-        JourneyResultItem *item = new JourneyResultItem();
+        JourneyResultItem *item = new JourneyResultItem(lastJourneyResultList);
         item->setId(connections.at(i).toElement().attribute("id").trimmed());
 
         QDomElement overview = connections.at(i).firstChildElement("Overview");
@@ -846,7 +846,7 @@ JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(const QDomE
 
     const QDomNodeList sections = connection.elementsByTagName("ConSection");
     for (int i = 0; i < sections.count(); ++i) {
-        JourneyDetailResultItem *item = new JourneyDetailResultItem();
+        JourneyDetailResultItem *item = new JourneyDetailResultItem(results);
 
         const QDomNode section = sections.at(i);
         QDomElement stop;

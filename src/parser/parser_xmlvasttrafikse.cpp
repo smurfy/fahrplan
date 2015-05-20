@@ -329,7 +329,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList tripNodeList = doc.elementsByTagName("Trip");
         for (unsigned int i = 0; i < tripNodeList.length(); ++i) {
-            JourneyResultItem *jritem = new JourneyResultItem();
+            JourneyResultItem *jritem = new JourneyResultItem(journeyResultList);
             JourneyDetailResultList *detailsList = new JourneyDetailResultList();
 
             /// Set default values for journey's start and end time
@@ -367,7 +367,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                     trainTypes.append(i18nConnectionType(getAttribute(legNode, "name")));
                 }
 
-                JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem();
+                JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem(detailsList);
                 jdrItem->setDepartureStation(getAttribute(originNode, "name"));
                 const QString depTrack = getAttribute(originNode, "track");
                 jdrItem->setDepartureInfo(depTrack.isEmpty() ? QChar(0x2014) : tr("Track %1").arg(depTrack));

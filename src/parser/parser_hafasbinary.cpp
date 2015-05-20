@@ -328,7 +328,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
             for (int iPart = 0; iPart < numParts; iPart++) {
 
-                JourneyDetailResultItem *inlineItem = new JourneyDetailResultItem();
+                JourneyDetailResultItem *inlineItem = new JourneyDetailResultItem(inlineResults);
 
                 hafasData.device()->seek(0x4a + partsOffset + iPart * 20);
 
@@ -571,7 +571,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 lineNames.removeDuplicates();
 
-                JourneyResultItem *item = new JourneyResultItem();
+                JourneyResultItem *item = new JourneyResultItem(lastJourneyResultList);
                 item->setDate(journeyDate);
                 item->setId(connectionId);
                 item->setTransfers(QString::number(numChanges));

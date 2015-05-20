@@ -542,7 +542,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
                 info = tr("Guaranteed connection");
             }
             motNameList.append(motName);
-            JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem();
+            JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem(detailsList);
             jdrItem->setTrain(motName);
             jdrItem->setInfo(info);
             jdrItem->setDirection(motElement.attribute("destination"));
@@ -580,7 +580,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         detailsList->setDepartureDateTime(departureDateTime);
         cachedJourneyDetailsEfa[id] = detailsList;
 
-        JourneyResultItem *item = new JourneyResultItem();
+        JourneyResultItem *item = new JourneyResultItem(lastJourneyResultList);
         item->setDate(departureDateTime.date());
         item->setId(id);
         item->setTransfers(changes);
