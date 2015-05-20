@@ -7,7 +7,6 @@
         <file>src/gui/ubuntu/AboutPage.qml</file>
         <file>src/gui/ubuntu/TimeTableResultsPage.qml</file>
         <file>src/gui/ubuntu/SettingsPage.qml</file>
-        <file>src/gui/ubuntu/components/Scroller.qml</file>
         <file>src/gui/ubuntu/components/DatePicker.qml</file>
         <file>src/gui/ubuntu/components/TimePicker.qml</file>
         <file>src/gui/ubuntu/components/StationSelect.qml</file>
