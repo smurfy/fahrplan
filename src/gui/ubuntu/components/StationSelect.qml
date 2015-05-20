@@ -22,7 +22,7 @@ import QtQuick 2.3
 import QtLocation 5.0
 import QtPositioning 5.2
 import Ubuntu.Components 1.1
-import Ubuntu.Components.ListItems 0.1 as ListItems
+import Ubuntu.Components.ListItems 1.0 as ListItems
 import "."
 import ".."
 
@@ -31,7 +31,7 @@ Page {
 
     signal stationSelected ()
     property int type: FahrplanBackend.DepartureStation
-//    property QtObject fahrplanBackend
+    //    property QtObject fahrplanBackend
 
     property bool showFavorites: true
 
@@ -41,161 +41,106 @@ Page {
             onTriggered: {
                 stationSelect.showFavorites = !stationSelect.showFavorites
             }
+        },
+
+        Action {
+            iconName: "location"
+            onTriggered: {
+                stationSelect.showFavorites = false;
+                positionSource.start();
+                indicator.running = true;
+            }
         }
     ]
 
-    Item {
-        width:  stationSelect.width
-        height: stationSelect.height
+    TextField {
+        id: search
 
-        Item {
-            id: search
+        anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
+        inputMethodHints: Qt.ImhNoPredictiveText
 
-            height: units.gu(7)
+        onTextChanged: searchTimer.restart();
+        Keys.onReturnPressed: search.findStationsByName();
+        Keys.onEnterPressed: search.findStationsByName();
 
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-
-            TextField {
-                id: searchBox
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(1)
-                    right: gpsButton.left
-                    //right: parent.right
-                    rightMargin: units.gu(1)
-                    top: parent.top
-                    topMargin: units.gu(1)
-                }
-                inputMethodHints: Qt.ImhNoPredictiveText
-
-                onTextChanged: searchTimer.restart();
-                Keys.onReturnPressed: search.findStationsByName();
-                Keys.onEnterPressed: search.findStationsByName();
-
-
-                placeholderText: qsTr("Search for Station...")
-                secondaryItem: [
-                    Icon {
-                        id: searchButton
-                        height: parent.height - units.gu(1)
-                        width: height
-                        name: "find"
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                search.findStationsByName();
-                            }
-                        }
-                    }
-                ]
-            }
-
-            Timer {
-                id: searchTimer
-                interval: 500
-                onTriggered: {
-                    search.findStationsByName();
-                }
-            }
-
-            function findStationsByName()
-            {
-                if (searchBox.text == "") {
-                    stationSelect.showFavorites = true;
-                    return;
-                }
-
-                if (searchTimer.running)
-                    searchTimer.stop();
-
-                indicator.running = true;
-                stationSelect.showFavorites = false;
-                fahrplanBackend.findStationsByName(searchBox.text);
-            }
-
-            Button {
-                id: gpsButton
-                anchors {
-                    right: parent.right
-                    rightMargin: visible ? units.gu(1) : 0
-                    top: parent.top
-                    topMargin: units.gu(1)
-                }
-                iconName: "location"
-                width: visible ? height : 0
-
-                onClicked: {
-                    stationSelect.showFavorites = false;
-                    positionSource.start();
-                    indicator.running = true;
-                }
+        placeholderText: qsTr("Search for Station...")
+        secondaryItem: Icon {
+            width: height
+            height: parent.height - units.gu(2)
+            name: "find"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: search.findStationsByName();
             }
         }
 
-        Label {
-            width: parent.width
-            wrapMode: Text.WordWrap
-            height: parent.height - search.top
-            text: qsTr("Click the star icon on the search results to add or remove a station as a favorite");
-            color: "DarkGrey"
-            fontSize: "large"
-            visible: (fahrplanBackend.favorites.count == 0 && listView.model == fahrplanBackend.favorites)
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            anchors {
-                top: search.bottom
-                left: parent.left
-                leftMargin: units.gu(2)
-                right: parent.right
-                rightMargin: units.gu(2)
-            }
+        Timer {
+            id: searchTimer
+            interval: 500
+            onTriggered: search.findStationsByName();
         }
 
-        ListView {
-            id: listView
-            anchors {
-                topMargin: units.gu(1)
-                top: search.bottom
-                bottomMargin: units.gu(1)
+        function findStationsByName()
+        {
+            if (search.text == "") {
+                stationSelect.showFavorites = true;
+                return;
             }
-            height: parent.height
-            width: parent.width
-            model: stationSelect.showFavorites ? fahrplanBackend.favorites : fahrplanBackend.stationSearchResults
-            delegate: ListItems.Standard {
-                id: delegateItem
-                text: name
-                iconName: model.isFavorite ? "starred" : "non-starred"
+
+            if (searchTimer.running)
+                searchTimer.stop();
+
+            indicator.running = true;
+            stationSelect.showFavorites = false;
+            fahrplanBackend.findStationsByName(search.text);
+        }
+    }
+
+    Label {
+        width: parent.width
+        wrapMode: Text.WordWrap
+        color: "DarkGrey"
+        fontSize: "large"
+        horizontalAlignment: Text.AlignHCenter
+        visible: fahrplanBackend.favorites.count == 0 && listView.model == fahrplanBackend.favorites
+        text: qsTr("Click the star icon on the search results to add or remove a station as a favorite")
+        anchors { top: search.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: units.gu(2) }
+    }
+
+    UbuntuListView {
+        id: listView
+
+        anchors { top: search.bottom; bottom: parent.bottom; margins: units.gu(1) }
+        clip: true
+        width: parent.width
+        model: stationSelect.showFavorites ? fahrplanBackend.favorites : fahrplanBackend.stationSearchResults
+
+        delegate: ListItems.Standard {
+            id: delegateItem
+
+            text: name
+            iconFrame: false
+            iconName: model.isFavorite ? "starred" : "non-starred"
+
+            onClicked: {
+                listView.model.selectStation(stationSelect.type, model.index);
+                stationSelect.stationSelected()
+            }
+
+            MouseArea {
+                anchors { top: parent.top; left: parent.left; leftMargin: units.gu(1); bottom: parent.bottom }
+                width: height
 
                 onClicked: {
-                    listView.model.selectStation(stationSelect.type, model.index);
-                    stationSelect.stationSelected()
-                }
-
-                MouseArea {
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        leftMargin: units.gu(1)
-                        bottom: parent.bottom
-                    }
-                    width: height
-
-                    onClicked: {
-                        if (model.isFavorite) {
-                            listView.model.removeFromFavorites(index);
-                            delegateItem.iconName = "non-starred";
-                        } else {
-                            listView.model.addToFavorites(index);
-                            delegateItem.iconName = "starred";
-                        }
+                    if (model.isFavorite) {
+                        listView.model.removeFromFavorites(index);
+                        delegateItem.iconName = "non-starred";
+                    } else {
+                        listView.model.addToFavorites(index);
+                        delegateItem.iconName = "starred";
                     }
                 }
             }
-
-            clip: true
         }
     }
 
