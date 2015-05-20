@@ -28,206 +28,32 @@ Item {
     property int timeWidth
 
     width: ListView.view.width
-    height: model.isStation ? model.isTrain ? item_train.height + item_station.height : item_station.height : model.isTrain ? item_train.height : 0
+    height: loader1.height + loader2.height
 
-    Item {
-        width: parent.width
-        height: parent.height
-
-        Item {
-             id: item_station
-
-             width: parent.width
-             height: visible ? lbl_station.height + 20 : 0
-             visible: model.isStation
-
-             Rectangle {
-                 width: 8
-                 height: parent.height
-                 anchors {
-                     left: parent.left
-                     leftMargin: 81
-                     top: parent.top
-                     topMargin: 0
-                 }
-
-                 gradient: Gradient {
-                     GradientStop {
-                         position: 0.00;
-                         color: (model.isStart) ? "transparent" : Theme.highlightColor;
-                     }
-                     GradientStop {
-                         position: 0.38;
-                         color: (model.isStart) ? "transparent" : Theme.highlightColor;
-                     }
-                     GradientStop {
-                         position: 0.39;
-                         color: "transparent"
-                     }
-                     GradientStop {
-                         position: 0.50;
-                         color: "transparent"
-                     }
-                     GradientStop {
-                         position: 0.60;
-                         color: "transparent"
-                     }
-                     GradientStop {
-                         position: 0.61;
-                         color: (model.isStop) ? "transparent" : Theme.highlightColor;
-                     }
-                     GradientStop {
-                         position: 1.0;
-                         color: (model.isStop) ? "transparent" : Theme.highlightColor;
-                     }
-                 }
-             }
-
-             Rectangle {
-                 width: 30
-                 height: 30
-                 radius: 15
-                 anchors {
-                     left: parent.left
-                     leftMargin: timeWidth ? timeWidth : 70
-                     verticalCenter: parent.verticalCenter
-                 }
-
-                 gradient: Gradient {
-                     GradientStop {
-                         position: 0.00;
-                         color: Theme.highlightColor;
-                     }
-                     GradientStop {
-                         position: 0.38;
-                         color: Theme.highlightColor;
-                     }
-                     GradientStop {
-                         position: 0.39;
-                         color: "transparent"
-                     }
-                     GradientStop {
-                         position: 0.50;
-                         color: "transparent"
-                     }
-                     GradientStop {
-                         position: 0.61;
-                         color: "transparent"
-                     }
-                     GradientStop {
-                         position: 0.62;
-                         color: Theme.highlightColor;
-                     }
-                     GradientStop {
-                         position: 1.0;
-                         color: Theme.highlightColor;
-                     }
-                 }
-             }
-
-             Label {
-                 text: model.arrivalTime
-                 width: parent.width - 10
-                 anchors {
-                     left: parent.left
-                     leftMargin: 8
-                     top: parent.top
-                 }
-             }
-
-             Label {
-                 text: model.departureTime
-                 width: parent.width - 10
-                 anchors {
-                     left: parent.left
-                     leftMargin: 8
-                     bottom: parent.bottom
-                 }
-             }
-
-             Item {
-                id: lbl_station
-
-                width: (parent.width - 110)
-                height: lbl_station_name.height + lbl_station_info.height
-                anchors {
-                    left: parent.left
-                    leftMargin: 110
-                    verticalCenter: parent.verticalCenter
-                }
-
-                Label {
-                    id: lbl_station_name
-
-                    text: model.stationName
-                    width: parent.width
-                }
-
-                Label {
-                    id: lbl_station_info
-
-                    text: model.stationInfo
-                    width: parent.width
-                    color: Theme.secondaryColor
-                    anchors {
-                        top: lbl_station_name.bottom
-                    }
-                }
-             }
+    Loader {
+        id: loader1
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
         }
 
-        Item {
-            id: item_train
-
-            width: parent.width
-            height: visible ? lbl_train.height + 30 : 0
-            visible: model.isTrain
-            anchors {
-                top: item_station.bottom
-            }
-
-            Rectangle {
-                color: Theme.secondaryHighlightColor
-                anchors.fill: parent
-            }
-
-            Rectangle {
-                width: 8
-                height: parent.height
-                color: Theme.highlightColor
-                anchors {
-                    left: parent.left
-                    leftMargin: 81
-                }
-            }
-
-            Label {
-                id: lbl_train
-
-                wrapMode: Text.WordWrap
-                text: {
-                    var result;
-                    if (model.trainDirection.length > 0) {
-                        //: As in "%1 in direction %2"
-                        result = qsTr("%1 to %2", "Direction").arg("<b>" + model.trainName + "</b>")
-                                                              .arg(model.trainDirection);
-                    } else {
-                        result = "<b>" + model.trainName + "</b>";
-                    }
-                    if (model.trainInfo)
-                        result += "<br /><i>" + model.trainInfo + "</i>";
-
-                    return result;
-                }
-                anchors {
-                    left: parent.left
-                    leftMargin: 110
-                    right: parent.right
-                    rightMargin: Theme.paddingMedium
-                    verticalCenter: parent.verticalCenter
-                }
-                onLinkActivated : Qt.openUrlExternally(link)
-            }
-        }
+        source: model.isStation ? "JourneyDetailsStationDelegate.qml" : ""
+        asynchronous: true
+        visible: status == Loader.Ready
     }
+
+    Loader {
+        id: loader2
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: loader1.bottom
+        }
+
+        source: model.isTrain ? "JourneyDetailsTrainDelegate.qml" : ""
+        asynchronous: true
+        visible: status == Loader.Ready
+    }
+
 }

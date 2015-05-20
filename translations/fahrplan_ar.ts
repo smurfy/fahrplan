@@ -210,8 +210,17 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <name>JourneyDetailsDelegate</name>
     <message>
         <location filename="../src/gui/harmattan/delegates/JourneyDetailsDelegate.qml" line="186"/>
-        <location filename="../src/gui/sailfishos/delegates/JourneyDetailsDelegate.qml" line="212"/>
         <location filename="../src/gui/symbian/delegates/JourneyDetailsDelegate.qml" line="213"/>
+        <source>%1 to %2</source>
+        <comment>Direction</comment>
+        <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>JourneyDetailsTrainDelegate</name>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/JourneyDetailsTrainDelegate.qml" line="60"/>
         <source>%1 to %2</source>
         <comment>Direction</comment>
         <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
