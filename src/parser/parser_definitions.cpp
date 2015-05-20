@@ -127,6 +127,10 @@ void JourneyResultList::setTimeInfo(const QString &timeInfo)
 }
 
 //------------- JourneyResultItem
+JourneyResultItem::JourneyResultItem(QObject *parent) : QObject(parent)
+{
+
+}
 
 QString JourneyResultItem::id() const
 {
@@ -326,6 +330,11 @@ void JourneyDetailResultList::setDuration(const QString &duration)
 }
 
 //------------- JourneyDetailResultItem
+
+JourneyDetailResultItem::JourneyDetailResultItem(QObject *parent) : QObject(parent)
+{
+
+}
 
 QString JourneyDetailResultItem::departureStation() const
 {
