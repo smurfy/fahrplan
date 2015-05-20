@@ -42,7 +42,6 @@ Page {
                 stationSelect.showFavorites = !stationSelect.showFavorites
             }
         }
-
     ]
 
     Item {
