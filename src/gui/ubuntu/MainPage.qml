@@ -273,6 +273,7 @@ Page {
 
             ListItems.Standard {
                 showDivider: false
+                height: units.gu(8)
                 Button {
                     id: timetableSearch
 
