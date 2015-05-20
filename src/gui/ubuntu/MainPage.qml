@@ -38,10 +38,10 @@ Page {
         }
 
         // Not using settings on ubuntu yet...
-//        Action {
-//            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
-//            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
-//        }
+        //        Action {
+        //            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
+        //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+        //        }
     ]
 
     Component.onCompleted: {
@@ -74,301 +74,237 @@ Page {
         }
     }
 
-    Column {
+    Flickable {
+        id: flickable
+
         anchors.fill: parent
-        Item {
-            id: titleBar
-            property color color: "#dd4814"
+        contentHeight: buttons.height
 
-            width: parent.width
-            height: units.gu(6)
-
-            Rectangle {
-                anchors.fill: parent
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.00;
-                        color: Qt.lighter(titleBar.color, 1.3);
-                    }
-                    GradientStop {
-                        position: 1.0;
-                        color: titleBar.color;
-                    }
-                }
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                color: titleBar.color
-                visible: mouseArea.pressed
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                enabled: parent.enabled
-                onClicked: {
-                    PopupUtils.open(selectBackendComponent, titleBar);
-                }
-            }
-
-            Label {
-                id: currentParserName
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    margins: units.gu(2)
-                    verticalCenter: parent.verticalCenter
-                }
-                font.bold: true;
-                fontSize: "large"
-                color: "White"
-
-                text: fahrplanBackend.parserShortName
-            }
-
-            Image {
-                id: icon
-
-                anchors {
-                    right: parent.right
-                    rightMargin: units.gu(1)
-                    verticalCenter: parent.verticalCenter
-                }
-                height: sourceSize.height
-                width: sourceSize.width
-                //source: "image://theme/meegotouch-combobox-indicator-inverted"
-            }
+        onMovementStarted: {
+            flickable.clip = true;
         }
 
-        Flickable {
-            id: flickable
-            anchors {
-                left: parent.left
-                right: parent.right
+        Column {
+            id: buttons
+
+            anchors { left: parent.left; right: parent.right }
+
+            Item {
+                id: titleBar
+
+                property color color: "#dd4814"
+
+                width: parent.width; height: units.gu(6)
+
+                Rectangle {
+                    anchors.fill: parent
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0.00;
+                            color: Qt.lighter(titleBar.color, 1.3);
+                        }
+                        GradientStop {
+                            position: 1.0;
+                            color: titleBar.color;
+                        }
+                    }
+                }
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: titleBar.color
+                    visible: mouseArea.pressed
+                }
+
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    enabled: parent.enabled
+                    onClicked: PopupUtils.open(selectBackendComponent, titleBar)
+                }
+
+                Label {
+                    id: currentParserName
+
+                    anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
+                    color: "White"
+                    font.bold: true;
+                    fontSize: "large"
+                    text: fahrplanBackend.parserShortName
+                }
             }
-            height: parent.height - y
 
-            onMovementStarted: {
-                flickable.clip = true;
+            CustomListItem {
+                id: departureButton
+
+                property int type: FahrplanBackend.DepartureStation
+
+                text: qsTr("From")
+                value: fahrplanBackend.departureStationName
+
+                onClicked: {
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.currentPage.stationSelected.connect(function() {
+                        mainStack.pop();
+                    })
+                }
+
+                onPressAndHold: openMenu(departureButton)
             }
 
-            Column {
-                id: buttons
+            CustomListItem {
+                id: viaButton
 
-                anchors {
-                    left: parent.left
-                    right: parent.right
+                property int type: FahrplanBackend.ViaStation
+
+                text: qsTr("Via")
+                value: fahrplanBackend.viaStationName
+
+                onClicked: {
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.currentPage.stationSelected.connect(function() {
+                        mainStack.pop();
+                    })
                 }
 
+                onPressAndHold: openMenu(viaButton)
+            }
 
-                ListItems.Subtitled {
-                    id: departureButton
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    progression: true
+            CustomListItem {
+                id: arrivalButton
 
-                    text: qsTr("Departure Station")
-                    subText: fahrplanBackend.departureStationName
+                property int type: FahrplanBackend.ArrivalStation
 
-                    property int type: FahrplanBackend.DepartureStation
+                text: qsTr("To")
+                value: fahrplanBackend.arrivalStationName
+
+                onClicked: {
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.currentPage.stationSelected.connect(function() {
+                        mainStack.pop();
+                    })
+                }
+
+                onPressAndHold: openMenu(arrivalButton)
+            }
+
+            CustomListItem {
+                id: stationButton
+
+                text: qsTr("Station")
+                value: fahrplanBackend.currentStationName
+
+                onClicked: {
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation, title: text})
+                    mainStack.currentPage.stationSelected.connect(function() {
+                        mainStack.pop();
+                    })
+                }
+            }
+
+            CustomListItem {
+                id: directionButton
+
+                text: qsTr("Direction")
+                value: fahrplanBackend.directionStationName
+
+                onClicked: {
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DirectionStation})
+                    mainStack.currentPage.stationSelected.connect(function() {
+                        mainStack.pop();
+                    })
+                }
+
+                onPressAndHold: timeTableSelectContextMenu.open()
+            }
+
+            ListItems.ValueSelector {
+                id: timeModeSelector
+                text: qsTr("<b>Date and time</b>")
+                values: [qsTr("Now"), qsTr("Departure"), qsTr("Arrival")]
+                selectedIndex: (fahrplanBackend.mode + 1) % 3
+                onSelectedIndexChanged: fahrplanBackend.mode = (timeModeSelector.selectedIndex + 2) % 3
+            }
+
+            CustomListItem {
+                id: datePickerButton
+
+                text: qsTr("Date")
+                value: Qt.formatDate(fahrplanBackend.dateTime)
+                visible: timeModeSelector.selectedIndex !== 0
+
+                onClicked: {
+                    var selectedDateTime = fahrplanBackend.dateTime
+                    var popupObj = PopupUtils.open(datePicker, datePickerButton, {day: selectedDateTime.getDate(), month: selectedDateTime.getMonth(), year: selectedDateTime.getFullYear()})
+                    popupObj.accepted.connect(function(day, month, year) {
+                        var newDate = selectedDateTime
+                        newDate.setFullYear(year, month, day)
+                        fahrplanBackend.dateTime = newDate
+                    })
+                }
+            }
+
+            CustomListItem {
+                id: timePickerButton
+
+                text: qsTr("Time")
+                value: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
+                visible: timeModeSelector.selectedIndex !== 0
+
+                onClicked: {
+                    var selectedDateTime = fahrplanBackend.dateTime;
+                    var popupObj = PopupUtils.open(timePicker, timePickerButton, {hour: selectedDateTime.getHours(), minute: selectedDateTime.getMinutes()});
+                    popupObj.accepted.connect(function(hour, minute) {
+                        var newDate = selectedDateTime
+                        newDate.setHours(hour, minute)
+                        fahrplanBackend.dateTime = newDate;
+                    })
+                }
+            }
+
+
+            CustomListItem {
+                id: trainrestrictionsButton
+                text: qsTr("Transport Options")
+                value: fahrplanBackend.trainrestrictionName
+                onClicked: PopupUtils.open(selectTrainrestrictionsComponent, trainrestrictionsButton)
+            }
+
+
+            ListItems.Standard {
+                showDivider: false
+                Button {
+                    id: timetableSearch
+
+                    anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
+                    color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
+                    enabled: stationButton.subText !== qsTr("please select")
+                    text: timeModeSelector.selectedIndex !== 2 ? qsTr("Show departures") : qsTr("Show arrivals")
 
                     onClicked: {
-                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                        mainStack.currentPage.stationSelected.connect(function() {
-                            mainStack.pop();
-                        })
-                    }
-                    onPressAndHold: {
-                        openMenu(departureButton);
+                        mainStack.push("qrc:///src/gui/ubuntu/TimeTableResultsPage.qml", {searchIndicatorVisible: true});
+                        fahrplanBackend.getTimeTable();
                     }
                 }
-                ListItems.Subtitled {
-                    id: viaButton
-                    text: qsTr("Via Station")
-                    subText: fahrplanBackend.viaStationName
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    progression: true
-                    property int type: FahrplanBackend.ViaStation
+
+                Button {
+                    id: startSearch
+
+                    anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
+                    color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
+                    enabled: departureButton.subText !== qsTr("please select") && arrivalButton.subText !== qsTr("please select")
+                    text: qsTr("Plan my journey")
 
                     onClicked: {
-                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                        mainStack.currentPage.stationSelected.connect(function() {
-                            mainStack.pop();
-                        })
-
-                    }
-                    onPressAndHold: {
-                        openMenu(viaButton);
-                    }
-                }
-                ListItems.Subtitled {
-                    id: arrivalButton
-                    text: qsTr("Arrival Station")
-                    subText: fahrplanBackend.arrivalStationName
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    progression: true
-                    property int type: FahrplanBackend.ArrivalStation
-
-                    onClicked: {
-                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                        mainStack.currentPage.stationSelected.connect(function() {
-                            mainStack.pop();
-                        })
-                    }
-                    onPressAndHold: {
-                        openMenu(arrivalButton);
-                    }
-                }
-                ListItems.Subtitled {
-                    id: stationButton
-                    text: qsTr("Station")
-                    subText: fahrplanBackend.currentStationName
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    progression: true
-                    onClicked: {
-                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation})
-                        mainStack.currentPage.stationSelected.connect(function() {
-                            mainStack.pop();
-                        })
-                    }
-                }
-                ListItems.Subtitled {
-                    id: directionButton
-                    text: qsTr("Direction")
-                    subText: fahrplanBackend.directionStationName
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    progression: true
-                    onClicked: {
-                        mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DirectionStation})
-                        mainStack.currentPage.stationSelected.connect(function() {
-                            mainStack.pop();
-                        })
-                    }
-                    onPressAndHold: {
-                        timeTableSelectContextMenu.open();
-                    }
-                }
-
-                ListItems.ValueSelector {
-                    id: timeModeSelector
-                    text: qsTr("Date and time")
-                    values: [qsTr("Now"), qsTr("Departure"), qsTr("Arrival")]
-                    selectedIndex: (fahrplanBackend.mode + 1) % 3
-                    onSelectedIndexChanged: {
-                        fahrplanBackend.mode = (timeModeSelector.selectedIndex + 2) % 3;
-                    }
-                }
-
-                ListItems.Subtitled {
-                    id: datePickerButton
-                    text: qsTr("Date")
-                    subText: Qt.formatDate(fahrplanBackend.dateTime)
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    visible: timeModeSelector.selectedIndex !== 0
-                    onClicked: {
-                        var selectedDateTime = fahrplanBackend.dateTime
-                        var popupObj = PopupUtils.open(datePicker, datePickerButton, {day: selectedDateTime.getDate(), month: selectedDateTime.getMonth(), year: selectedDateTime.getFullYear()})
-                        popupObj.accepted.connect(function(day, month, year) {
-                            var newDate = selectedDateTime
-                            newDate.setFullYear(year, month, day)
-                            fahrplanBackend.dateTime = newDate
-                        })
-
-                    }
-                }
-
-                ListItems.Subtitled {
-                    id: timePickerButton
-                    text: qsTr("Time")
-                    subText: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    visible: timeModeSelector.selectedIndex !== 0
-                    onClicked: {
-                        var selectedDateTime = fahrplanBackend.dateTime;
-                        var popupObj = PopupUtils.open(timePicker, timePickerButton, {hour: selectedDateTime.getHours(), minute: selectedDateTime.getMinutes()});
-                        popupObj.accepted.connect(function(hour, minute) {
-                            var newDate = selectedDateTime
-                            newDate.setHours(hour, minute)
-                            fahrplanBackend.dateTime = newDate;
-                        })
-                    }
-                }
-
-
-                ListItems.Subtitled {
-                    id: trainrestrictionsButton
-                    text: qsTr("Trains")
-                    subText: fahrplanBackend.trainrestrictionName
-                    width: parent.width
-                    onClicked: {
-                        PopupUtils.open(selectTrainrestrictionsComponent, trainrestrictionsButton);
-                    }
-                }
-
-
-                ListItems.Standard {
-                    showDivider: false
-                    Button {
-                        id: timetableSearch
-                        color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
-                        text: timeModeSelector.selectedIndex !== 2 ? qsTr("Show departures") : qsTr("Show arrivals")
-                        enabled: stationButton.subText !== qsTr("please select")
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            margins: units.gu(2)
-                            verticalCenter: parent.verticalCenter
+                        var titleText
+                        if (fahrplanBackend.viaStationName == qsTr("please select")) {
+                            titleText = qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText);
+                        } else {
+                            titleText = qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText).arg(viaButton.subText)
                         }
 
-                        onClicked: {
-                            mainStack.push("qrc:///src/gui/ubuntu/TimeTableResultsPage.qml", {searchIndicatorVisible: true});
-                            fahrplanBackend.getTimeTable();
-                        }
-                    }
-                    Button {
-                        id: startSearch
-                        text: qsTr("Plan my journey")
-                        color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
-                        enabled: departureButton.subText !== qsTr("please select") && arrivalButton.subText !== qsTr("please select")
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            margins: units.gu(2)
-                            verticalCenter: parent.verticalCenter
-                        }
-
-                        onClicked: {
-                            var titleText
-                            if (fahrplanBackend.viaStationName == qsTr("please select")) {
-                                titleText = qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText);
-                            } else {
-                                titleText = qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText).arg(viaButton.subText)
-                            }
-
-                            mainStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {journeyStationsTitleText: titleText, searchIndicatorVisible: true })
-                            fahrplanBackend.searchJourney();
-                        }
+                        mainStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {journeyStationsTitleText: titleText, searchIndicatorVisible: true })
+                        fahrplanBackend.searchJourney();
                     }
                 }
             }
@@ -444,16 +380,12 @@ Page {
 
     Component {
         id: datePicker
-        DatePicker {
-
-        }
+        DatePicker {}
     }
 
     Component {
         id: timePicker
-        TimePicker {
-
-        }
+        TimePicker {}
     }
 
     Component {

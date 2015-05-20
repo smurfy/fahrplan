@@ -79,7 +79,8 @@ OTHER_FILES += \
     data/fahrplan2_64.png \
     data/fahrplan2_80.png \
     date/fahrplan2_150.png \
-    src/gui/about.js
+    src/gui/about.js \
+    src/gui/ubuntu/components/CustomListItem.qml
 
 RESOURCES += \
     translations_res.qrc
