@@ -19,74 +19,48 @@
 
 import QtQuick 2.3
 import Ubuntu.Components 1.1
-import Ubuntu.Components.Popups 0.1
+import Ubuntu.Components.Popups 1.0
+import Ubuntu.Components.Pickers 1.0
 
 Dialog {
     id: root
+
     title: qsTr("<b>Time</b>")
 
-    property alias hour: hourScroller.currentIndex
-    property alias minute: minuteScroller.currentIndex
+    property alias time: timePicker.date
 
     signal accepted(int hours, int minutes)
     signal rejected()
 
-    QtObject {
-        id: priv
-
-        property date now: new Date()
-    }
-
     contents: [
-        Row {
-            height: units.gu(24)
-            Scroller {
-                id: hourScroller
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                }
-                width: parent.width / 2
-                labelText: qsTr("Hour")
-                min: 00
-                max: 23
-                currentIndex: priv.now.getHours()
-            }
-            Scroller {
-                id: minuteScroller
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                }
-                width: parent.width / 2
-                labelText: qsTr("Minute")
-
-                min: 00
-                max: 59
-                currentIndex: priv.now.getMinutes()
-            }
+        DatePicker {
+            id: timePicker
+            mode: "Hours|Minutes"
         },
+
         Row {
             spacing: units.gu(1)
             Button {
-                text: "Cancel"
+                text: qsTr("Cancel")
+                color: UbuntuColors.lightGrey
+                width: (parent.width - parent.spacing) / 2
+
                 onClicked: {
                     root.rejected()
                     PopupUtils.close(root)
                 }
-                width: (parent.width - parent.spacing) / 2
             }
+
             Button {
-                text: "OK"
-                color: "#dd4814"
+                text: qsTr("Ok")
+                color: UbuntuColors.green
+                width: (parent.width - parent.spacing) / 2
 
                 onClicked: {
-                    root.accepted(root.hour, root.minute)
+                    root.accepted(timePicker.hours, timePicker.minutes)
                     PopupUtils.close(root)
                 }
-                width: (parent.width - parent.spacing) / 2
             }
         }
-
     ]
 }
