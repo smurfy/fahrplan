@@ -235,7 +235,7 @@ Page {
 
                 onClicked: {
                     var selectedDateTime = fahrplanBackend.dateTime
-                    var popupObj = PopupUtils.open(datePicker, datePickerButton, {day: selectedDateTime.getDate(), month: selectedDateTime.getMonth(), year: selectedDateTime.getFullYear()})
+                    var popupObj = PopupUtils.open(datePicker, datePickerButton, {date: selectedDateTime})
                     popupObj.accepted.connect(function(day, month, year) {
                         var newDate = selectedDateTime
                         newDate.setFullYear(year, month, day)
@@ -253,7 +253,7 @@ Page {
 
                 onClicked: {
                     var selectedDateTime = fahrplanBackend.dateTime;
-                    var popupObj = PopupUtils.open(timePicker, timePickerButton, {hour: selectedDateTime.getHours(), minute: selectedDateTime.getMinutes()});
+                    var popupObj = PopupUtils.open(timePicker, timePickerButton, {time: selectedDateTime});
                     popupObj.accepted.connect(function(hour, minute) {
                         var newDate = selectedDateTime
                         newDate.setHours(hour, minute)

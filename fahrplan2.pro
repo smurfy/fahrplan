@@ -224,7 +224,6 @@ ubuntu: {
         src/gui/ubuntu/JourneyDetailsResultsPage.qml \
         src/gui/ubuntu/TimeTableResultsPage.qml \
         src/gui/ubuntu/main.qml \
-        src/gui/ubuntu/components/Scroller.qml \
         src/gui/ubuntu/components/StationSelect.qml \
         src/gui/ubuntu/components/DatePicker.qml \
         src/gui/ubuntu/components/TimePicker.qml \
