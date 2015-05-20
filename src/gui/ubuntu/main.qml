@@ -26,6 +26,7 @@ MainView {
 
     width: units.gu(40); height: units.gu(71)
     useDeprecatedToolbar: false
+    anchorToKeyboard: true
 
     FahrplanBackend {
         id: fahrplanBackend
