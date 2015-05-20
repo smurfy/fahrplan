@@ -333,12 +333,11 @@ Page {
                 },
 
                 Button {
-                    text: "Close"
+                    text: qsTr("Close")
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: PopupUtils.close(selectBackendDialog)
                 }
             ]
-
         }
     }
 
