@@ -26,11 +26,32 @@
 #else
 #   define setQuery(q) setQueryItems(q.queryItems())
 #endif
+#include <qmath.h>
 
 #define BASE_URL "https://api.9292.nl/0.1/"
 
+inline qreal deg2rad(qreal deg)
+{
+    return deg * 3.141592653589793238463 / 180;
+}
+
+inline int distance(qreal lat1, qreal lon1, qreal lat2, qreal lon2)
+{
+    const qreal sdLat = qSin(deg2rad(lat2 - lat1) / 2);
+    const qreal sdLon = qSin(deg2rad(lon2 - lon1) / 2);
+    const qreal cLat1 = qCos(deg2rad(lat1));
+    const qreal cLat2 = qCos(deg2rad(lat2));
+    const qreal a = sdLat * sdLat + sdLon * sdLon * cLat1 * cLat2;
+    const qreal c = 2 * qAtan2(qSqrt(a), qSqrt(1 - a));
+
+    // 6371 km - Earth radius.
+    // We return distance in meters, thus * 1000.
+    return qRound(6371.0 * c * 1000);
+}
+
 ParserNinetwo::ParserNinetwo(QObject *parent):ParserAbstract(parent)
 {
+    lastCoordinates.isValid = false;
 }
 
 void ParserNinetwo::getTimeTableForStation(const Station &currentStation,
@@ -89,8 +110,12 @@ void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
     query.addQueryItem("includestation", "true");
     uri.setQuery(query);
 
+    lastCoordinates.isValid = true;
+    lastCoordinates.latitude = latitude;
+    lastCoordinates.longitude = longitude;
+    currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
+
     sendHttpRequest(uri);
-    currentRequestState=FahrplanNS::stationsByCoordinatesRequest;
 }
 
 void ParserNinetwo::searchJourney(const Station &departureStation,
@@ -166,7 +191,7 @@ QStringList ParserNinetwo::getTrainRestrictions()
  QStringList restrictions;
  restrictions << tr("All");
  restrictions << tr("Only trains");
- restrictions << tr("not by ferry");
+ restrictions << tr("All, except ferry");
  return restrictions;
 }
 
@@ -212,15 +237,21 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
             entry.destinationStation = departure.value("destinationName").toString();
             entry.time = QTime::fromString(departure.value("time").toString(), "HH:mm");
             QString via(departure.value("viaNames").toString());
-            if (via != "" && !via.isNull())
-                via = tr("via %1");
-            QString remark(departure.value("remark").toString());
-            if (departure.value("realtimeState").toString() == "late") { //it is delayed
-                QString rtMessage(departure.value("realtimeText").toString());
-                entry.miscInfo=QString(tr("(%1) %2 \n%3").arg(rtMessage, via, remark)).trimmed();
+            if (!via.isEmpty())
+                entry.destinationStation = tr("%1 via %2").arg(entry.destinationStation, via);
+            QStringList info;
+            const QString rtStatus = departure.value("realtimeState").toString();
+            if (rtStatus == "ontime") {
+                info << tr("On-Time");
+            } else if (rtStatus == "late") {
+                const QString rtMessage = departure.value("realtimeText").toString().trimmed();
+                if (!rtMessage.isEmpty())
+                    info << QString("<span style=\"color:#b30;\">%1</span>").arg(rtMessage);
             }
-            else
-                entry.miscInfo=QString("%1 %2").arg(via, remark).trimmed();
+            const QString remark = departure.value("remark").toString();
+            if (!remark.isEmpty())
+                info << remark;
+            entry.miscInfo = info.join("<br />");
 
             entry.platform = departure.value("platform").toString();
 
@@ -257,11 +288,24 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
     for (i = stations.constBegin(); i != stations.constEnd(); ++i) {
         QVariantMap station = i->toMap();
         Station s;
-        s.latitude = station.value("latLong").toMap().value("lat").toDouble();
-        s.longitude = station.value("latLong").toMap().value("long").toDouble();
+        bool okLat, okLon;
+        double lat = station.value("latLong").toMap().value("lat").toDouble(&okLat);
+        double lon = station.value("latLong").toMap().value("long").toDouble(&okLon);
         //s.name=QString("[%1]%2").arg(station.value("type").toString(), station.value("name").toString());
         s.name = station.value("name").toString();
         s.miscInfo = station.value("type").toString();
+        if (okLat && okLon) {
+            s.latitude = lat;
+            s.longitude = lon;
+            if (lastCoordinates.isValid) {
+                if (!s.miscInfo.isEmpty())
+                    s.miscInfo.prepend(", ");
+                //: Distance in meters
+                s.miscInfo.prepend(tr("%n m", "",
+                                      distance(lastCoordinates.latitude, lastCoordinates.longitude,
+                                               s.latitude, s.longitude)));
+            }
+        }
         if (station.value("type").toString() == "address")
             s.name = s.name + " " + station.value("houseNr").toString();
         s.id = station.value("id").toString();
@@ -274,6 +318,8 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
 void ParserNinetwo::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
     parseStationsByName(networkReply);
+
+    lastCoordinates.isValid = false;
 }
 
 void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
@@ -414,7 +460,12 @@ void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
         if (!service.isEmpty())
             typeName.append(" ").append(service);
 
-        resultItem->setTrain(typeName);
+        if (type == "walk") {
+            const QString duration = leg.value("duration").toString();
+            resultItem->setTrain(tr("%1 for %2 min").arg(typeName, duration));
+        } else {
+            resultItem->setTrain(typeName);
+        }
 
         if (!firstStop.value("platform").toString().isEmpty()) {
             resultItem->setDepartureInfo(tr("Pl. %1")
@@ -424,6 +475,13 @@ void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
             resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop.value("platform").toString()));
         }
         resultItem->setDirection(leg.value("destination").toString());
+
+        QStringList attributes;
+        const QVariantList attrs = leg.value("attributes").toList();
+        foreach (const QVariant &attr, attrs) {
+            attributes << attr.toMap().value("title").toString();
+        }
+        resultItem->setInfo(attributes.join(tr(", ")));
 
         result->appendItem(resultItem);
     }
