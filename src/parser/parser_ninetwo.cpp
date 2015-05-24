@@ -345,7 +345,7 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
     for (i = journeys.constBegin(); i != journeys.constEnd(); ++i) {
         QVariantMap journey = i->toMap();
         parseJourneyOption(journey);
-        JourneyResultItem* item = new JourneyResultItem;
+        JourneyResultItem* item = new JourneyResultItem(result);
         arrival = QDateTime::fromString(journey.value("arrival").toString(), "yyyy-MM-ddTHH:mm");
         departure = QDateTime::fromString(journey.value("departure").toString(),
                                           "yyyy-MM-ddTHH:mm");
@@ -424,7 +424,7 @@ void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
     for(int i = 0; i < legs.count(); i++)
     {
         QVariantMap leg = legs.at(i).toMap();
-        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem;
+        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem(result);
 
 
         QVariantList stops = leg.value("stops").toList();
