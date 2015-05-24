@@ -8,3 +8,4 @@ Exec=./bin/fahrplan2
 Icon=fahrplan2-square.svg
 X-Ubuntu-Touch=true
 X-Ubuntu-StageHint=SideStage
+X-Ubuntu-Splash-Color=#F5F5F5

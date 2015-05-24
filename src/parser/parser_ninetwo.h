@@ -44,6 +44,12 @@ class ParserNinetwo : public ParserAbstract
 
     } lastsearch;
 
+    struct {
+        bool isValid;
+        qreal latitude;
+        qreal longitude;
+    } lastCoordinates;
+
     typedef enum restrictions{
         all=0,
         trainsOnly=1,
