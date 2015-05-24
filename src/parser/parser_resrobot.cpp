@@ -537,7 +537,11 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
     foreach (QVariant segmentData, segments)
     {
         QVariantMap segment = segmentData.toMap();
+<<<<<<< HEAD
         JourneyDetailResultItem* resultItem = new JourneyDetailResultItem;//FIXME will leak in QML
+=======
+        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem(results);
+>>>>>>> added missed parents
 
         // Departure
         QVariantMap departure = segment.value("departure").toMap();
