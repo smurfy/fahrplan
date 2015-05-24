@@ -479,7 +479,7 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         else if (arrDayDiff < 0)
             arrTime += QString::number(arrDayDiff);
 
-        JourneyResultItem* journey = new JourneyResultItem;
+        JourneyResultItem* journey = new JourneyResultItem(result);
         journey->setId(journeyID);
         journey->setDate(segments.first()->departureDateTime().date());
         journey->setDepartureTime(depTime);
@@ -523,7 +523,7 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
     foreach (QVariant segmentData, segments)
     {
         QVariantMap segment = segmentData.toMap();
-        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem;
+        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem(results);
 
         // Departure
         QVariantMap departure = segment.value("departure").toMap();
