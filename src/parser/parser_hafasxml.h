@@ -57,6 +57,7 @@ class ParserHafasXml : public ParserAbstract
     Q_OBJECT
 public:
     explicit ParserHafasXml(QObject *parent = 0);
+    virtual ~ParserHafasXml();
     static QString getName() { return "HafasXML"; }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return getName(); }
@@ -90,6 +91,7 @@ protected:
     void parseSearchLaterJourney(QNetworkReply *networkReply);
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
+    void cleanupJourney();
     virtual QString getTrainRestrictionsCodes(int trainrestrictions);
 
     JourneyResultList *lastJourneyResultList;
