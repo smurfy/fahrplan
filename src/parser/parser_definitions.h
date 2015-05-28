@@ -141,6 +141,8 @@ class JourneyResultList : public QObject
     public slots:
         JourneyResultItem *getItem(int);
     public:
+        explicit JourneyResultList(QObject * parent = 0);
+        virtual ~JourneyResultList();
         void appendItem(JourneyResultItem *item);
         qreal itemcount();
         QString departureStation() const;
@@ -230,6 +232,8 @@ class JourneyDetailResultList : public QObject
     public slots:
         JourneyDetailResultItem *getItem(int);
     public:
+        explicit JourneyDetailResultList(QObject * parent = 0);
+        virtual ~JourneyDetailResultList();
         void appendItem(JourneyDetailResultItem *item);
         qreal itemcount();
         QString id() const;
