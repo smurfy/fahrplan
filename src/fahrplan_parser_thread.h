@@ -89,7 +89,7 @@ protected:
   void run();
 
 private:
-  bool m_ready;
+  volatile bool m_ready;
   int  i_parser;
 
   QStringList m_trainrestrictions;
