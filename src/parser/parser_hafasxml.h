@@ -92,6 +92,7 @@ protected:
     void parseSearchLaterJourney(QNetworkReply *networkReply);
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
+    void cleanupJourney();
     virtual QString getTrainRestrictionsCodes(int trainrestrictions);
 
     JourneyResultList *lastJourneyResultList;
