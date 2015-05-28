@@ -48,6 +48,26 @@ ParserHafasXml::ParserHafasXml(QObject *parent) :
      hafasHeader.ver = "1.1";
 
      STTableMode = 0;
+
+     lastJourneyResultList = NULL;
+}
+
+ParserHafasXml::~ParserHafasXml()
+{
+    cleanupJourney();
+}
+
+void ParserHafasXml::cleanupJourney()
+{
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
+
+    if (!journeyDetailInlineData.isEmpty()) {
+        qDeleteAll(journeyDetailInlineData);
+        journeyDetailInlineData.clear();
+    }
 }
 
 bool ParserHafasXml::supportsGps()
@@ -518,7 +538,8 @@ void ParserHafasXml::searchJourney(const Station &departureStation, const Statio
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
-    lastJourneyResultList = NULL;
+
+    cleanupJourney();
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -648,7 +669,6 @@ QString ParserHafasXml::parseExternalIds(const QVariant &id) const
 void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 {
     lastJourneyResultList = new JourneyResultList();
-    journeyDetailInlineData.clear();
 
     QDomDocument doc;
     if (!parseXml(doc, networkReply->readAll()))

@@ -43,7 +43,8 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
-    lastJourneyResultList = NULL;
+
+    cleanupJourney();
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -85,8 +86,8 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
 void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResultList = new JourneyResultList();
-    journeyDetailInlineData.clear();
+    lastJourneyResultList = new JourneyResultList(this);
+
     stringCache.clear();
 
     QByteArray tmpBuffer = networkReply->readAll();
@@ -324,7 +325,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             qDebug()<<"conId"<<connectionId;
             QStringList lineNames;
 
-            JourneyDetailResultList *inlineResults = new JourneyDetailResultList();
+            JourneyDetailResultList *inlineResults = new JourneyDetailResultList(this);
 
             for (int iPart = 0; iPart < numParts; iPart++) {
 
