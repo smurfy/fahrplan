@@ -44,7 +44,7 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
 
-    cleanupJourney();
+    clearJourney();
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
