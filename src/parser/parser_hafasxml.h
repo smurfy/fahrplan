@@ -75,6 +75,7 @@ public slots:
     bool supportsTimeTable();
     bool supportsTimeTableDirection();
     QStringList getTrainRestrictions();
+    virtual void clearJourney();
 
 protected:
     QString baseXmlUrl;
@@ -91,7 +92,6 @@ protected:
     void parseSearchLaterJourney(QNetworkReply *networkReply);
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
-    void cleanupJourney();
     virtual QString getTrainRestrictionsCodes(int trainrestrictions);
 
     JourneyResultList *lastJourneyResultList;
