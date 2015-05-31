@@ -54,6 +54,25 @@ ParserNinetwo::ParserNinetwo(QObject *parent):ParserAbstract(parent)
     lastCoordinates.isValid = false;
 }
 
+ParserNinetwo::~ParserNinetwo()
+{
+    clearJourney();
+}
+
+void ParserNinetwo::clearJourney()
+{
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
+
+    for (QMap<QString, JourneyDetailResultList *>::Iterator it = cachedResults.begin(); it != cachedResults.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedResults.erase(it);
+        delete jdrl;
+    }
+}
+
 void ParserNinetwo::getTimeTableForStation(const Station &currentStation,
                                            const Station &,
                                            const QDateTime &,
@@ -336,7 +355,9 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
 
     QVariantList journeys = doc.value("journeys").toList();
 
-    JourneyResultList* result=new JourneyResultList;
+    clearJourney();
+
+    lastJourneyResultList = new JourneyResultList(this);
 
     QDateTime arrival;
     QDateTime departure;
@@ -345,7 +366,7 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
     for (i = journeys.constBegin(); i != journeys.constEnd(); ++i) {
         QVariantMap journey = i->toMap();
         parseJourneyOption(journey);
-        JourneyResultItem* item = new JourneyResultItem(result);
+        JourneyResultItem* item = new JourneyResultItem(lastJourneyResultList);
         arrival = QDateTime::fromString(journey.value("arrival").toString(), "yyyy-MM-ddTHH:mm");
         departure = QDateTime::fromString(journey.value("departure").toString(),
                                           "yyyy-MM-ddTHH:mm");
@@ -376,17 +397,17 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         int minutes = departure.secsTo(arrival)/60;
         item->setDuration(QString("%1:%2").arg(minutes/60).arg(minutes%60,2,10,QChar('0')));
         item->setId(journey.value("id").toString());
-        result->appendItem(item);
+        lastJourneyResultList ->appendItem(item);
 
         //Set result metadata based on first result
-        if (result->itemcount() == 1) {
-            result->setTimeInfo(arrival.date().toString());
-            result->setDepartureStation(cachedResults[item->id()]->departureStation());
-            result->setArrivalStation(cachedResults[item->id()]->arrivalStation());
+        if (lastJourneyResultList ->itemcount() == 1) {
+            lastJourneyResultList ->setTimeInfo(arrival.date().toString());
+            lastJourneyResultList ->setDepartureStation(cachedResults[item->id()]->departureStation());
+            lastJourneyResultList ->setArrivalStation(cachedResults[item->id()]->arrivalStation());
         }
     }
     lastsearch.lastOption=departure;
-    emit journeyResult(result);
+    emit journeyResult(lastJourneyResultList );
 }
 
 void ParserNinetwo::parseSearchLaterJourney(QNetworkReply *)
@@ -406,7 +427,7 @@ void ParserNinetwo::parseJourneyDetails(QNetworkReply *)
 
 void ParserNinetwo::parseJourneyOption(const QVariantMap &object)
 {
-    JourneyDetailResultList* result = new JourneyDetailResultList;
+    JourneyDetailResultList* result = new JourneyDetailResultList(this);
     QString id = object.value("id").toString();
     QVariantList legs = object.value("legs").toList();
 
