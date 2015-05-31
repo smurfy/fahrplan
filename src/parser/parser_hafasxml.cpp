@@ -54,10 +54,10 @@ ParserHafasXml::ParserHafasXml(QObject *parent) :
 
 ParserHafasXml::~ParserHafasXml()
 {
-    cleanupJourney();
+    clearJourney();
 }
 
-void ParserHafasXml::cleanupJourney()
+void ParserHafasXml::clearJourney()
 {
     if (lastJourneyResultList) {
         delete lastJourneyResultList;
@@ -539,7 +539,7 @@ void ParserHafasXml::searchJourney(const Station &departureStation, const Statio
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
 
-    cleanupJourney();
+    clearJourney();
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
