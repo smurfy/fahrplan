@@ -29,6 +29,7 @@ class ParserEFA : public ParserAbstract
     Q_OBJECT
 public:
     explicit ParserEFA(QObject *parent = 0);
+    virtual ~ParserEFA();
     static QString getName() { return "EFA"; }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return getName(); }
@@ -47,6 +48,7 @@ public slots:
     bool supportsTimeTableDirection();
     void checkForError(QDomDocument *serverReplyDomDoc);
     QStringList getTrainRestrictions();
+    virtual void clearJourney();
 
 protected:
     QString baseRestUrl;
