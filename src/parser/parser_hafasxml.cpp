@@ -539,11 +539,7 @@ void ParserHafasXml::searchJourney(const Station &departureStation, const Statio
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
 
-<<<<<<< HEAD
     clearJourney();
-=======
-    cleanupJourney();
->>>>>>> fixing leaks
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
