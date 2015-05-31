@@ -18,11 +18,11 @@
 ****************************************************************************/
 
 import Fahrplan 1.0
-import QtQuick 2.3
+import QtQuick 2.4
 import QtLocation 5.0
 import QtPositioning 5.2
 import QtQuick.Layouts 1.1
-import Ubuntu.Components 1.1
+import Ubuntu.Components 1.2
 import Ubuntu.Components.ListItems 1.0 as ListItems
 import "."
 import ".."
@@ -161,6 +161,7 @@ Page {
             onClicked: {
                 listView.model.selectStation(stationSelect.type, model.index);
                 stationSelect.stationSelected()
+                mainStack.pop()
             }
         }
     }
