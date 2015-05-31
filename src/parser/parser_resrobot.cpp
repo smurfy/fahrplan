@@ -87,6 +87,19 @@ ParserResRobot::ParserResRobot(QObject *parent) :
     transportModeStrings[QString::fromUtf8("Övriga tåg")] = tr("Other train");
 }
 
+ParserResRobot::~ParserResRobot()
+{
+    clearJourney();
+}
+
+void ParserResRobot::clearJourney()
+{
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
+}
+
 bool ParserResRobot::supportsGps()
 {
     return true;
@@ -430,7 +443,8 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
 
     cachedResults.clear();
 
-    JourneyResultList *journeyList = new JourneyResultList();
+    clearJourney();
+    lastJourneyResultList = new JourneyResultList(this);
 
     int journeyCounter = 0;
     foreach (QVariant journeyData, journeyListData) {
@@ -454,7 +468,7 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         if (transportModes.count() == 0 && segments.count() == 1)
             transportModes.append(segments.first()->train());
 
-        JourneyDetailResultList* journeyDetails = new JourneyDetailResultList;
+        JourneyDetailResultList* journeyDetails = new JourneyDetailResultList(this);
         foreach (JourneyDetailResultItem* segment, segments)
             journeyDetails->appendItem(segment);
         journeyDetails->setId(journeyID);
@@ -479,7 +493,7 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         else if (arrDayDiff < 0)
             arrTime += QString::number(arrDayDiff);
 
-        JourneyResultItem* journey = new JourneyResultItem(journeyList);
+        JourneyResultItem* journey = new JourneyResultItem(lastJourneyResultList);
         journey->setId(journeyID);
         journey->setDate(segments.first()->departureDateTime().date());
         journey->setDepartureTime(depTime);
@@ -487,7 +501,7 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         journey->setTrainType(transportModes.join(", "));
         journey->setDuration(duration);
         journey->setTransfers(QString::number(transportModes.count()-1));
-        journeyList->appendItem(journey);
+        lastJourneyResultList->appendItem(journey);
 
         if (journeyCounter == 0) {
             if (lastJourneySearch.mode == Departure)
@@ -502,16 +516,16 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
 
         ++journeyCounter;
     }
-    journeyList->setDepartureStation(lastJourneySearch.from.name);
-    journeyList->setArrivalStation(lastJourneySearch.to.name);
+    lastJourneyResultList->setDepartureStation(lastJourneySearch.from.name);
+    lastJourneyResultList->setArrivalStation(lastJourneySearch.to.name);
     QString modeString;
     if (lastJourneySearch.mode == Arrival)
         modeString = tr("Arrivals");
     else
         modeString = tr("Departures");
-    journeyList->setTimeInfo(modeString + " " + lastJourneySearch.dateTime.toString(tr("ddd MMM d, HH:mm")));
+    lastJourneyResultList->setTimeInfo(modeString + " " + lastJourneySearch.dateTime.toString(tr("ddd MMM d, HH:mm")));
 
-    emit journeyResult(journeyList);
+    emit journeyResult(lastJourneyResultList);
 }
 
 // Parse info about one journey option. Store detailed info about segments for later use.
