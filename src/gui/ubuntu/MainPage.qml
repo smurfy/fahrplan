@@ -256,8 +256,8 @@ Page {
             }
 
 
-            ListItems.Standard {
-                showDivider: false
+            ListItem {
+                divider.visible: false
                 height: units.gu(8)
                 Button {
                     id: timetableSearch
@@ -300,7 +300,7 @@ Page {
     Component {
         id: selectBackendComponent
         Dialog {
-            title: qsTr("Select backend")
+            title: qsTr("<b>Select backend</b>")
             id: selectBackendDialog
             contents: [
                 ListView {
@@ -335,7 +335,7 @@ Page {
 
         Dialog {
             id: selectTrainrestrictionsDialog
-            title: qsTr("Select train")
+            title: qsTr("<b>Select transport mode</b>")
             ListView {
                 width: parent.width
                 height: contentHeight

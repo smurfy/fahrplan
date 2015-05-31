@@ -23,7 +23,6 @@ import QtLocation 5.0
 import QtPositioning 5.2
 import QtQuick.Layouts 1.1
 import Ubuntu.Components 1.2
-import Ubuntu.Components.ListItems 1.0 as ListItems
 import "."
 import ".."
 
@@ -116,7 +115,7 @@ Page {
         width: parent.width
         model: stationSelect.showFavorites ? fahrplanBackend.favorites : fahrplanBackend.stationSearchResults
 
-        delegate: ListItems.Empty {
+        delegate: ListItem {
             id: delegateItem
 
             RowLayout {
