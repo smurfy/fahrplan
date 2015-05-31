@@ -22,7 +22,7 @@ ListItem {
             id: _value
             elide: Text.ElideMiddle
             horizontalAlignment: Text.AlignRight
-            Layout.maximumWidth: parent.width - _title.implicitWidth - _progression.width
+            Layout.maximumWidth: parent.width - _title.implicitWidth - _progression.width - units.gu(2)
         }
 
         Icon {
