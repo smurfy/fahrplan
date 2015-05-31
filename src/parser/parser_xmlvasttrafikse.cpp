@@ -57,6 +57,12 @@ void ParserXmlVasttrafikSe::clearJourney()
         delete lastJourneyResultList;
         lastJourneyResultList = NULL;
     }
+
+    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetails.begin(); it != cachedJourneyDetails.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedJourneyDetails.erase(it);
+        delete jdrl;
+    }
 }
 
 void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
@@ -319,12 +325,6 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 
     clearJourney();
     lastJourneyResultList = new JourneyResultList(this);
-
-    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetails.begin(); it != cachedJourneyDetails.end();) {
-        JourneyDetailResultList *jdrl = it.value();
-        it = cachedJourneyDetails.erase(it);
-        delete jdrl;
-    }
 
     /// Use fallback values for empty results (i.e. no connections found)
     lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
