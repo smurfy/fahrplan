@@ -108,6 +108,19 @@ ParserEFA::ParserEFA(QObject *parent) :
     m_timeTableForStationParameters.isValid = false;
 }
 
+ParserEFA::~ParserEFA()
+{
+    clearJourney();
+}
+
+void ParserEFA::clearJourney()
+{
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
+}
+
 bool ParserEFA::supportsGps()
 {
     return true;
@@ -504,6 +517,8 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
 void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 {
     qDebug() << "ParserEFA::parseSearchJourney(QNetworkReply *networkReply)";
+    clearJourney();
+
     lastJourneyResultList = new JourneyResultList();
 
     for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetailsEfa.begin(); it != cachedJourneyDetailsEfa.end();) {
