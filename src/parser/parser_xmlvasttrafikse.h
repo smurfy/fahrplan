@@ -28,6 +28,7 @@ class ParserXmlVasttrafikSe : public ParserAbstract
 
 public:
     explicit ParserXmlVasttrafikSe(QObject *parent = 0);
+    virtual ~ParserXmlVasttrafikSe();
     static QString getName() { return QString("%1 (vasttrafik.se)").arg(tr("Sweden")); }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return "vasttrafik.se"; }
@@ -46,12 +47,15 @@ public slots:
     virtual bool supportsTimeTableDirection();
 //     virtual QStringList getTrainRestrictions();
 //     void cancelRequest();
+    virtual void clearJourney();
 
 protected:
     virtual void parseStationsByName(QNetworkReply *networkReply);
     virtual void parseStationsByCoordinates(QNetworkReply *networkReply);
     virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseSearchJourney(QNetworkReply *networkReply);
+
+    JourneyResultList *lastJourneyResultList;
 
 private:
     static const qlonglong TRIP_RTDATA_NONE;
