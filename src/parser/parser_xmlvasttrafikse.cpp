@@ -325,6 +325,15 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 
     clearJourney();
     lastJourneyResultList = new JourneyResultList(this);
+<<<<<<< HEAD
+=======
+
+    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetails.begin(); it != cachedJourneyDetails.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedJourneyDetails.erase(it);
+        delete jdrl;
+    }
+>>>>>>> fixing ParserXmlVasttrafikSe memory leaks
 
     /// Use fallback values for empty results (i.e. no connections found)
     lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
