@@ -17,15 +17,14 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.3
-import Ubuntu.Components 1.1
+import QtQuick 2.4
+import Ubuntu.Components 1.2
 import Fahrplan 1.0
 
 MainView {
     id: appWindow
 
     width: units.gu(40); height: units.gu(71)
-    useDeprecatedToolbar: false
     anchorToKeyboard: true
 
     FahrplanBackend {

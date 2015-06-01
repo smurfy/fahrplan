@@ -17,8 +17,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.3
-import Ubuntu.Components 1.1
+import QtQuick 2.4
+import Ubuntu.Components 1.2
 import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.ListItems 1.0 as ListItems
 import "components"
@@ -144,9 +144,6 @@ Page {
 
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                    mainStack.currentPage.stationSelected.connect(function() {
-                        mainStack.pop();
-                    })
                 }
 
                 onPressAndHold: openMenu(departureButton)
@@ -162,9 +159,6 @@ Page {
 
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                    mainStack.currentPage.stationSelected.connect(function() {
-                        mainStack.pop();
-                    })
                 }
 
                 onPressAndHold: openMenu(viaButton)
@@ -180,9 +174,6 @@ Page {
 
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
-                    mainStack.currentPage.stationSelected.connect(function() {
-                        mainStack.pop();
-                    })
                 }
 
                 onPressAndHold: openMenu(arrivalButton)
@@ -196,9 +187,6 @@ Page {
 
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation, title: text})
-                    mainStack.currentPage.stationSelected.connect(function() {
-                        mainStack.pop();
-                    })
                 }
             }
 
@@ -210,9 +198,6 @@ Page {
 
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.DirectionStation})
-                    mainStack.currentPage.stationSelected.connect(function() {
-                        mainStack.pop();
-                    })
                 }
 
                 onPressAndHold: timeTableSelectContextMenu.open()
@@ -271,8 +256,8 @@ Page {
             }
 
 
-            ListItems.Standard {
-                showDivider: false
+            ListItem {
+                divider.visible: false
                 height: units.gu(8)
                 Button {
                     id: timetableSearch
@@ -315,7 +300,7 @@ Page {
     Component {
         id: selectBackendComponent
         Dialog {
-            title: qsTr("Select backend")
+            title: qsTr("<b>Select backend</b>")
             id: selectBackendDialog
             contents: [
                 ListView {
@@ -350,7 +335,7 @@ Page {
 
         Dialog {
             id: selectTrainrestrictionsDialog
-            title: qsTr("Select train")
+            title: qsTr("<b>Select transport mode</b>")
             ListView {
                 width: parent.width
                 height: contentHeight
