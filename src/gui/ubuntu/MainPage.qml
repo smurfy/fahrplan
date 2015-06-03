@@ -264,7 +264,7 @@ Page {
 
                     anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
                     color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
-                    enabled: stationButton.subText !== qsTr("please select")
+                    enabled: stationButton.value !== qsTr("please select")
                     text: timeModeSelector.selectedIndex !== 2 ? qsTr("Show departures") : qsTr("Show arrivals")
 
                     onClicked: {
@@ -278,18 +278,11 @@ Page {
 
                     anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
                     color: enabled ? UbuntuColors.green : UbuntuColors.warmGrey
-                    enabled: departureButton.subText !== qsTr("please select") && arrivalButton.subText !== qsTr("please select")
+                    enabled: departureButton.value !== qsTr("please select") && arrivalButton.value !== qsTr("please select")
                     text: qsTr("Plan my journey")
 
                     onClicked: {
-                        var titleText
-                        if (fahrplanBackend.viaStationName == qsTr("please select")) {
-                            titleText = qsTr("<b>%1</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText);
-                        } else {
-                            titleText = qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(departureButton.subText).arg(arrivalButton.subText).arg(viaButton.subText)
-                        }
-
-                        mainStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {journeyStationsTitleText: titleText, searchIndicatorVisible: true })
+                        mainStack.push("qrc:///src/gui/ubuntu/JourneyResultsPage.qml", {searchIndicatorVisible: true })
                         fahrplanBackend.searchJourney();
                     }
                 }
