@@ -1,6 +1,6 @@
 {
     "description": "A journey planner for public transportation.",
-    "framework": "ubuntu-sdk-14.10",
+    "framework": "ubuntu-sdk-15.04",
     "architecture": "armhf",
     "hooks": {
         "fahrplan2": {
@@ -11,5 +11,5 @@
     "maintainer": "Michael Zanetti <michael_zanetti@gmx.net>",
     "name": "com.ubuntu.developer.mzanetti.fahrplan2",
     "title": "Fahrplan",
-    "version": "2.0.25.0"
+    "version": "2.0.25.1"
 }
