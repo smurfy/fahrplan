@@ -39,7 +39,7 @@
 #   include <extendedstorage.h>
 #   include <kdatetime.h>
 #   include <ksystemtimezone.h>
-#elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU)
+#elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU) && !defined(BUILD_FOR_SAILFISHOS)
 #   include <QOrganizerManager>
 #endif
 
@@ -218,7 +218,7 @@ void FahrplanCalendarManager::getCalendarsList()
           }
       }
   }
-#elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU)
+#elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU) && !defined(BUILD_FOR_SAILFISHOS)
     QString id = settings->value("CollectionId").toString();
     QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);
 
