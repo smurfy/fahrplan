@@ -169,15 +169,25 @@ void CalendarThreadWrapper::addToCalendar()
     mKCal::ExtendedCalendar::Ptr calendar = mKCal::ExtendedCalendar::Ptr ( new mKCal::ExtendedCalendar( QLatin1String( "UTC" ) ) );
     mKCal::ExtendedStorage::Ptr storage = mKCal::ExtendedCalendar::defaultStorage( calendar );
     if (storage->open()) {
-        mKCal::Notebook::Ptr notebook = storage->defaultNotebook();
-        KCalCore::Event::Ptr event = KCalCore::Event::Ptr( new KCalCore::Event() );
-        event->setSummary(calendarEntryTitle);
-        event->setDescription(calendarEntryDesc);
-        event->setDtStart( KDateTime(m_result->departureDateTime()) );
-        event->setDtEnd( KDateTime(m_result->arrivalDateTime()) );
-        calendar->addEvent( event, notebook->uid() );
-        storage->save();
-        emit addCalendarEntryComplete(true);
+        QString uid = settings.value("Calendar/notebookUID").toString();
+        mKCal::Notebook::Ptr notebook = storage->notebook(uid);
+
+        if (!notebook) {
+            notebook = storage->defaultNotebook();
+        }
+
+        if (notebook) {
+            KCalCore::Event::Ptr event = KCalCore::Event::Ptr( new KCalCore::Event() );
+            event->setSummary(calendarEntryTitle);
+            event->setDescription(calendarEntryDesc);
+            event->setDtStart( KDateTime(m_result->departureDateTime()) );
+            event->setDtEnd( KDateTime(m_result->arrivalDateTime()) );
+            calendar->addEvent( event, notebook->uid() );
+            storage->save();
+            emit addCalendarEntryComplete(true);
+        } else {
+            emit addCalendarEntryComplete(false);
+        }
     } else {
         emit addCalendarEntryComplete(false);
     }

@@ -36,6 +36,11 @@ struct CalendarInfo
 
     CalendarInfo(const QString &name, int accountId = -1, int folderId = -1)
         : name(name), accountId(accountId), folderId(folderId) {}
+#elif defined(BUILD_FOR_SAILFISHOS) && defined(BUILD_FOR_OPENREPOS)
+    QString notebookUID;
+
+    CalendarInfo(const QString &name, const QString &notebookUID = QString())
+        : name(name), notebookUID(notebookUID) {}
 #else
     QString collectionId;
 

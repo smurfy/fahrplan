@@ -34,7 +34,11 @@
 #   include <bb/pim/calendar/CalendarFolder>
 #   include <bb/pim/account/AccountService>
 #   include <bb/pim/account/Account>
-#elif defined(BUILD_FOR_SAILFISHOS)
+#elif defined(BUILD_FOR_SAILFISHOS) && defined(BUILD_FOR_OPENREPOS)
+#   include <extendedcalendar.h>
+#   include <extendedstorage.h>
+#   include <kdatetime.h>
+#   include <ksystemtimezone.h>
 #elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU)
 #   include <QOrganizerManager>
 #endif
@@ -109,6 +113,8 @@ void FahrplanCalendarManager::setSelectedIndex(int index)
 #ifdef BUILD_FOR_BLACKBERRY
         settings->setValue("AccountId", m_calendars.at(index).accountId);
         settings->setValue("FolderId", m_calendars.at(index).folderId);
+#elif defined(BUILD_FOR_SAILFISHOS) && defined(BUILD_FOR_OPENREPOS)
+        settings->setValue("notebookUID", m_calendars.at(index).notebookUID);
 #else
         settings->setValue("CollectionId", m_calendars.at(index).collectionId);
 #endif
@@ -116,6 +122,8 @@ void FahrplanCalendarManager::setSelectedIndex(int index)
 #ifdef BUILD_FOR_BLACKBERRY
         settings->remove("AccountId");
         settings->remove("FolderId");
+#elif defined(BUILD_FOR_SAILFISHOS) && defined(BUILD_FOR_OPENREPOS)
+        settings->remove("notebookUID");
 #else
         settings->remove("CollectionId");
 #endif
@@ -191,8 +199,25 @@ void FahrplanCalendarManager::getCalendarsList()
             emit selectedIndexChanged();
         }
     }
-#elif defined(BUILD_FOR_SAILFISHOS)
+#elif defined(BUILD_FOR_SAILFISHOS) && defined(BUILD_FOR_OPENREPOS)
+  QString uid = settings->value("notebookUID").toString();
 
+  mKCal::ExtendedCalendar::Ptr calendar = mKCal::ExtendedCalendar::Ptr ( new mKCal::ExtendedCalendar( QLatin1String( "UTC" ) ) );
+  mKCal::ExtendedStorage::Ptr storage = mKCal::ExtendedCalendar::defaultStorage( calendar );
+  if (storage->open()) {
+      mKCal::Notebook::List notebooks = storage->notebooks();
+      qDebug()<<notebooks.count();
+      for (int ii = 0; ii < notebooks.count(); ++ii) {
+          if (!notebooks.at(ii)->isReadOnly()) {
+              m_calendars << CalendarInfo(normalizeCalendarName(notebooks.at(ii)->name()), notebooks.at(ii)->uid());
+
+              if (notebooks.at(ii)->uid() == uid) {
+                  m_selectedIndex = m_calendars.count() - 1;
+                  emit selectedIndexChanged();
+              }
+          }
+      }
+  }
 #elif !defined(BUILD_FOR_DESKTOP) && !defined(BUILD_FOR_UBUNTU)
     QString id = settings->value("CollectionId").toString();
     QOrganizerCollectionId collectionId = QOrganizerCollectionId::fromString(id);
@@ -234,8 +259,10 @@ void FahrplanCalendarManager::getCalendarsList()
             continue;
 
         m_calendars << CalendarInfo(normalizeCalendarName(collection.metaData(QOrganizerCollection::KeyName).toString()), collection.id().toString());
-        if (collection.id() == collectionId)
+        if (collection.id() == collectionId) {
             m_selectedIndex = m_calendars.count() - 1;
+            emit selectedIndexChanged();
+        }
     }
 #endif
     settings->endGroup();

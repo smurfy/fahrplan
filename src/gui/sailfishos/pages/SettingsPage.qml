@@ -40,8 +40,8 @@ Page {
                 title: qsTr("Settings")
             }
 
-            /*
             TextSwitch {
+                visible: fahrplanBackend.supportsCalendar
                 text: qsTr("Compact calendar entries")
                 description: qsTr("Use shorter text format in the calendar event description")
                 onCheckedChanged: {
@@ -50,7 +50,25 @@ Page {
                 Component.onCompleted: {
                     checked = fahrplanBackend.getSettingsValue("compactCalendarEntries", false) === "true" ? true : false;
                 }
-            }*/
+            }
+
+            ComboBox {
+                visible: fahrplanBackend.supportsCalendar
+                label: qsTr("Add journeys to calendar")
+                value: calendarManager.selectedCalendarName
+                menu: ContextMenu {
+                      Repeater {
+                           model: calendarManager
+                           MenuItem {
+                               text: model.name
+                           }
+                      }
+                }
+                onCurrentIndexChanged: {
+                    calendarManager.selectedIndex = currentIndex;
+                }
+
+            }
 
             ComboBox {
                 id: currentBackend
@@ -95,8 +113,16 @@ Page {
         }
     }
 
+    CalendarManager {
+        id: calendarManager
+    }
+
     ListModel {
         id: parserBackendModel
     }
 
+    onStatusChanged: {
+        if (status === PageStatus.Activating)
+            calendarManager.reload();
+    }
 }
