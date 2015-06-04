@@ -64,13 +64,20 @@ Item {
         }
     }
 
+    RemorsePopup {
+        id: remorse
+    }
+
     ContextMenu {
         id: contextMenu
         MenuItem {
             text: model.isFavorite ? qsTr("Remove from favorites") : qsTr("Add to favorites")
             onClicked: {
                 if (model.isFavorite) {
-                    listView.model.removeFromFavorites(model.index);
+                    remorse.execute(qsTr("Removing favorite..."), function() {
+                        listView.model.removeFromFavorites(model.index);
+                    });
+
                 } else {
                     listView.model.addToFavorites(model.index);
                 }
