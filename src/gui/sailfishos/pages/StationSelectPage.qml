@@ -104,10 +104,19 @@ Dialog {
 
             Column {
                 width: parent.width
-                visible: (fahrplanBackend.favorites.count > 0)
 
                 SectionHeader {
                     text: qsTr("Favorites")
+                }
+
+                Label {
+                    id: lbl_no_favorites
+                    width: parent.width - Theme.paddingLarge
+                    visible: (fahrplanBackend.favorites.count === 0)
+                    horizontalAlignment: Text.AlignHCenter
+                    color: Theme.highlightColor
+                    wrapMode: Text.WordWrap
+                    text: qsTr("Click and hold in the search results to add or remove a station as a favorite")
                 }
 
                 ListView {
