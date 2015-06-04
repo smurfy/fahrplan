@@ -33,10 +33,10 @@ Page {
         VerticalScrollDecorator {}
 
         PullDownMenu {
-            enabled: (indicator.visible === false)
+            enabled: listView.visible
             MenuItem {
                 text: qsTr("Earlier")
-                enabled: (indicator.visible === false)
+                enabled: listView.visible
                 onClicked: {
                     indicator.visible = true;
                     fahrplanBackend.parser.searchJourneyEarlier();
@@ -45,7 +45,7 @@ Page {
         }
 
         PushUpMenu {
-            enabled: (indicator.visible === false)
+            enabled: listView.visible
             MenuItem {
                 text: qsTr("Later")
                 onClicked: {
@@ -79,7 +79,7 @@ Page {
             Row {
                 id: listHead
                 width: parent.width
-                visible: !indicator.visible
+                visible: listView.visible
 
                 anchors {
                     leftMargin: Theme.paddingMedium
@@ -116,7 +116,7 @@ Page {
                 width: parent.width
                 height: contentHeight
                 interactive: false
-                visible: !indicator.visible
+                visible: !indicator.visible && !errorMsg.visible
 
                 model: journeyResultModel
 
@@ -130,12 +130,30 @@ Page {
         }
     }
 
+    Label {
+        id: errorMsg
+        anchors {
+            centerIn: parent
+            left: parent.left
+            right: parent.right
+            leftMargin: Theme.paddingMedium
+            rightMargin: Theme.paddingMedium
+        }
+        horizontalAlignment: Text.AlignHCenter
+        visible: false
+        width: parent.width
+        color: Theme.highlightColor
+        font.family: Theme.fontFamilyHeading
+        wrapMode: Text.WordWrap
+    }
+
 
     onStatusChanged: {
         switch (status) {
             case PageStatus.Activating:
                 if (pageStack.depth === 2) {
                     indicator.visible = true;
+                    errorMsg.visible = false;
                     journeyDesc.title = qsTr("Searching...");
                     journeyDate.text = "";
                     fahrplanBackend.searchJourney();
@@ -144,6 +162,7 @@ Page {
             case PageStatus.Deactivating:
                 if (pageStack.depth === 1) {
                     indicator.visible = true;
+                    errorMsg.visible = false;
                     fahrplanBackend.parser.cancelRequest();
                 }
                 break;
@@ -186,6 +205,15 @@ Page {
                     "miscInfo": item.miscInfo
                 });
             }
+        }
+
+        onParserErrorOccured: {
+            console.log("Got error")
+            console.log(msg)
+            errorMsg.visible = true;
+            indicator.visible = false;
+            journeyDesc.title = qsTr("Error");
+            errorMsg.text = msg;
         }
     }
 
