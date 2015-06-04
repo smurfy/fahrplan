@@ -748,6 +748,8 @@ QString ParserHafasBinary::errorString(int error) const
         return tr("Unfortunately there was no route found.");
     case 9360:
         return tr("Unfortunately your connection request can currently not be processed. It might be that entered date is not inside the timetable period.");
+    case 9380:
+        return tr("Dep./Arr./Intermed. or equivalent station defined more than once.");
     default:
         return tr("Unknown error ocurred with the backend (error %1).").arg(error);
     }
