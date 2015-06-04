@@ -100,10 +100,18 @@ Connect to the emulator via ssh using the generated key, you probably need to al
 
     ssh nemo@127.0.0.1 -p 2223 -i ~/sailfishos/vmshare/ssh/private_keys/SailfishOS_Emulator/nemo
     
-Install qt5-qtdeclarative-import-positioning package
+Install qt5-qtdeclarative-import-positioning package on the emulator
 
     pkcon install qt5-qtdeclarative-import-positioning
     
+Compile with Calendar Support (openrepos)
+
+Install the following packages on your mer sdk via QT Creators SailfishOS tab.
+
+    kcalcore-qt5 kcalcore-qt5-devel mkcal-qt5 mkcal-qt5-devel
+    
+Create a new build config (copy the release) with an additional argument ```"CONFIG+=openrepos"``` for the qmake build step.
+You now should do a clean and then recompile. Always do a clean after switching from release to release-openrepos.
 
 Known Issue: The executeable is named after the .pro file, in the 
 our case fahrplan2. Because of Sailfish Harbour guidelines, the 
