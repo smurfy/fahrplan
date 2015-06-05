@@ -21,7 +21,6 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import Ubuntu.Components 1.2
 import Fahrplan 1.0
-import "components"
 
 Page {
     id: searchDetailResultsPage
@@ -93,7 +92,6 @@ Page {
 
         anchors.fill: parent
         anchors.topMargin: units.gu(1)
-        clip: true
         delegate:  journeyDetailResultDelegate
         model: journeyDetailResultModel
         visible: !searchIndicator.visible
