@@ -131,13 +131,13 @@ Page {
                      Rectangle {
                          anchors {
                              left: parent.left
-                             leftMargin: units.gu(8)
+                             leftMargin: units.gu(7.75)
                              top: parent.top
                              topMargin: (isStart) ? parent.height / 2 : 0
                          }
                          color: "#0d70c5"
                          height: (isStart || isStop) ? parent.height / 2  : parent.height
-                         width: units.gu(1)
+                         width: units.gu(0.5)
                      }
 
                      Rectangle {
@@ -177,9 +177,9 @@ Page {
                                  color: "#0d70c5";
                              }
                          }
-                         radius: units.gu(1.5)
-                         height: units.gu(3)
-                         width: units.gu(3)
+                         radius: units.gu(1)
+                         height: units.gu(2)
+                         width: units.gu(2)
                      }
 
                      Label {
@@ -255,11 +255,11 @@ Page {
                     Rectangle {
                         anchors {
                             left: parent.left
-                            leftMargin: units.gu(8)
+                            leftMargin: units.gu(7.75)
                         }
                         color: "#0d70c5"
                         height: parent.height
-                        width: units.gu(1)
+                        width: units.gu(0.5)
                     }
 
                     Label {
