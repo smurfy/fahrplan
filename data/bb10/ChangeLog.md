@@ -1,6 +1,15 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.26
+------
+- Improved 9292ov.nl backend
+- Ubuntu: Various GUI improvements
+- Improved EFA Backend
+- SailfishOS: Added calendar settings
+- SailfishOS: Added display of error messages if search fails
+- Improved HafasBinary Backend (added error message)
+
 2.0.25
 ------
 

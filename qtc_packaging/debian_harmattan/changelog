@@ -1,3 +1,13 @@
+fahrplan2 (2.0.26) unstable; urgency=low
+  * Improved 9292ov.nl backend
+  * Ubuntu: Various GUI improvements
+  * Improved EFA Backend
+  * SailfishOS: Added calendar settings
+  * SailfishOS: Added display of error messages if search fails
+  * Improved HafasBinary Backend (added error message)
+
+ -- smurfy <maemo@smurfy.de>  Thu, 11 June 2015 20:00:00 +0200
+ 
 fahrplan2 (2.0.25) unstable; urgency=low
   * Fix: Rendering of details page could get borked (occured with MVV, but possible with all backends)
   * Updated translations
