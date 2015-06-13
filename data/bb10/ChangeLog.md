@@ -3,12 +3,15 @@ BlackBerry World ChangeLog
 
 2.0.26
 ------
-- Improved 9292ov.nl backend
-- Ubuntu: Various GUI improvements
-- Improved EFA Backend
-- SailfishOS: Added calendar settings
-- SailfishOS: Added display of error messages if search fails
-- Improved HafasBinary Backend (added error message)
+
+- Improvements to EFA (Dubai, Ireland, Munich, Victoria, Salzburg, SF
+  Bay, and Sydney) service.
+- Improvements to Hafas Binary (bahn.de, and OBB) service.
+- 9292ov.nl: Display train number in journey details and timetable,
+  attributes in journey details, distance to a station when searching by
+  coordinates, and walking duration.
+- New: Greek translation.
+
 
 2.0.25
 ------
