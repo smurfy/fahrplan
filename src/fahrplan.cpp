@@ -43,12 +43,12 @@ Fahrplan::Fahrplan(QObject *parent)
     , m_mode(DepartureMode)
     , m_dateTime(QDateTime::currentDateTime())
 {
-    settings = new QSettings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
+    settings = new QSettings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2", this);
     setMode(static_cast<Mode>(settings->value("mode", DepartureMode).toInt()));
 
     if (!m_parser_manager) {
         int currentBackend = settings->value("currentBackend", 0).toInt();
-        m_parser_manager = new FahrplanBackendManager(currentBackend);
+        m_parser_manager = new FahrplanBackendManager(currentBackend, this);
     }
     connect(m_parser_manager, SIGNAL(parserChanged(const QString &, int)), this, SLOT(onParserChanged(const QString &, int)));
 
@@ -73,6 +73,41 @@ Fahrplan::Fahrplan(QObject *parent)
     }
 }
 
+Fahrplan::~Fahrplan()
+{
+    qDebug() << this;
+
+    if (m_trainrestrictions) {
+        delete m_trainrestrictions;
+    }
+
+    if (m_timetable) {
+        delete m_timetable;
+    }
+
+    if (m_stationSearchResults) {
+        disconnect(m_stationSearchResults, SIGNAL(stationSelected(Fahrplan::StationType,Station)),
+                   this, SLOT(setStation(Fahrplan::StationType,Station)));
+        delete m_stationSearchResults;
+    }
+
+    if (m_favorites) {
+        disconnect(m_favorites, SIGNAL(stationSelected(Fahrplan::StationType,Station)),
+                   this, SLOT(setStation(Fahrplan::StationType,Station)));
+        delete m_favorites;
+    }
+
+    if (m_parser_manager) {
+        unbindParserSignals();
+        disconnect(m_parser_manager, SIGNAL(parserChanged(const QString &, int)), this, SLOT(onParserChanged(const QString &, int)));
+        delete m_parser_manager;
+    }
+
+    if (settings) {
+        delete settings;
+    }
+}
+
 void Fahrplan::bindParserSignals()
 {
     if (m_parser_manager->getParser()) {
@@ -81,6 +116,17 @@ void Fahrplan::bindParserSignals()
         connect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
         connect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
         connect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimetableEntriesList)), this, SLOT(onTimetableResult(TimetableEntriesList)));
+    }
+}
+
+void Fahrplan::unbindParserSignals()
+{
+    if (m_parser_manager->getParser()) {
+        disconnect(m_parser_manager->getParser(), SIGNAL(stationsResult(StationsList)), this, SLOT(onStationSearchResults(StationsList)));
+        disconnect(m_parser_manager->getParser(), SIGNAL(journeyResult(JourneyResultList*)), this, SIGNAL(parserJourneyResult(JourneyResultList*)));
+        disconnect(m_parser_manager->getParser(), SIGNAL(errorOccured(QString)), this, SIGNAL(parserErrorOccured(QString)));
+        disconnect(m_parser_manager->getParser(), SIGNAL(journeyDetailsResult(JourneyDetailResultList*)), this, SIGNAL(parserJourneyDetailsResult(JourneyDetailResultList*)));
+        disconnect(m_parser_manager->getParser(), SIGNAL(timeTableResult(TimetableEntriesList)), this, SLOT(onTimetableResult(TimetableEntriesList)));
     }
 }
 
