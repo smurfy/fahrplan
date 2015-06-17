@@ -40,11 +40,7 @@ Page {
 
     ActivityIndicator {
         id: searchIndicator
-        anchors {
-            top: parent.top
-            topMargin: units.gu(10)
-            horizontalCenter: parent.horizontalCenter
-        }
+        anchors.centerIn: parent
         running: true
         visible: false
     }
