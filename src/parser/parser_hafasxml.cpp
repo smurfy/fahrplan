@@ -860,7 +860,7 @@ void ParserHafasXml::getJourneyDetails(const QString &id)
 
 JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(const QDomElement &connection)
 {
-    JourneyDetailResultList *results = new JourneyDetailResultList();
+    JourneyDetailResultList *results = new JourneyDetailResultList(this);
 
     const QDomNodeList sections = connection.elementsByTagName("ConSection");
     for (int i = 0; i < sections.count(); ++i) {

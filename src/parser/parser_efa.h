@@ -61,6 +61,7 @@ protected:
 
 private:
     JourneyResultList *lastJourneyResultList;
+    QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsEfa;
 
     struct {
         bool isValid;

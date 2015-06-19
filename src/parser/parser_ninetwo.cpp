@@ -353,6 +353,18 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         return;
     }
 
+    if (doc.contains("error")) {
+        QString error = doc.value("error").toString();
+        QString message;
+        if (error == "NoJourneys") {
+            message = tr("No connections have been found that correspond to your request.");
+        } else {
+            message = tr("Unknown error ocurred with the backend (error %1).").arg(error);
+        }
+        emit errorOccured(message);
+        return;
+    }
+
     QVariantList journeys = doc.value("journeys").toList();
 
     clearJourney();
@@ -370,9 +382,11 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
         arrival = QDateTime::fromString(journey.value("arrival").toString(), "yyyy-MM-ddTHH:mm");
         departure = QDateTime::fromString(journey.value("departure").toString(),
                                           "yyyy-MM-ddTHH:mm");
-        if (i == journeys.constBegin())
-            lastsearch.firstOption=departure;
+        if (i == journeys.constBegin()) {
+            lastsearch.firstOption = departure;
+        }
 
+        item->setDate(departure.date());
         item->setArrivalTime(arrival.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
 

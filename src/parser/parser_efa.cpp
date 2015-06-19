@@ -99,7 +99,7 @@
     #include <QUrlQuery>
 #endif
 
-QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsEfa;
+//QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsEfa;
 
 ParserEFA::ParserEFA(QObject *parent) :
     ParserAbstract(parent), lastJourneyResultList(NULL)
@@ -116,6 +116,12 @@ ParserEFA::~ParserEFA()
 
 void ParserEFA::clearJourney()
 {
+    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetailsEfa.begin(); it != cachedJourneyDetailsEfa.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedJourneyDetailsEfa.erase(it);
+        delete jdrl;
+    }
+
     if (lastJourneyResultList) {
         delete lastJourneyResultList;
         lastJourneyResultList = NULL;
@@ -522,12 +528,6 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 
     lastJourneyResultList = new JourneyResultList(this);
 
-    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetailsEfa.begin(); it != cachedJourneyDetailsEfa.end();) {
-        JourneyDetailResultList *jdrl = it.value();
-        it = cachedJourneyDetailsEfa.erase(it);
-        delete jdrl;
-    }
-
     /// Use fallback values for empty results (i.e. no connections found)
     lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
     lastJourneyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
@@ -544,7 +544,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
     QDomElement route = doc.firstChildElement("itdRequest").firstChildElement("itdTripRequest").firstChildElement("itdItinerary").firstChildElement("itdRouteList").firstChildElement("itdRoute");
     for (; !route.isNull(); route = route.nextSiblingElement("itdRoute")) {
         QStringList motNameList;
-        JourneyDetailResultList *detailsList = new JourneyDetailResultList();
+        JourneyDetailResultList *detailsList = new JourneyDetailResultList(this);
         QDomElement partialRoute = route.firstChildElement("itdPartialRouteList").firstChildElement("itdPartialRoute");
         for (; !partialRoute.isNull(); partialRoute = partialRoute.nextSiblingElement("itdPartialRoute")) {
             QDomElement motElement = partialRoute.firstChildElement("itdMeansOfTransport");
@@ -594,7 +594,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         detailsList->setDuration(duration);
         detailsList->setArrivalDateTime(arrivalDateTime);
         detailsList->setDepartureDateTime(departureDateTime);
-        cachedJourneyDetailsEfa[id] = detailsList;
+        cachedJourneyDetailsEfa.insert(id, detailsList);
 
         JourneyResultItem *item = new JourneyResultItem(lastJourneyResultList);
         item->setDate(departureDateTime.date());
@@ -607,10 +607,13 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         item->setArrivalTime(arrivalDateTime.toString("hh:mm"));
         lastJourneyResultList->appendItem(item);
 
-        if (!m_earliestArrival.isValid() || arrivalDateTime < m_earliestArrival)
+        if (!m_earliestArrival.isValid() || arrivalDateTime < m_earliestArrival) {
             m_earliestArrival = arrivalDateTime.addSecs(-60);
-        if (!m_latestResultDeparture.isValid() || departureDateTime > m_latestResultDeparture)
+        }
+
+        if (!m_latestResultDeparture.isValid() || departureDateTime > m_latestResultDeparture) {
             m_latestResultDeparture = departureDateTime.addSecs(60);
+        }
     }
 
     checkForError(&doc);

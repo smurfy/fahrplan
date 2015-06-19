@@ -127,7 +127,7 @@ private:
     const int nearbyRadius; // Define what is "nearby" in meters
     const int timetableSpan; // Minutes (valid values: 30 or 120)
     bool realtime;
-    QMap<QString, JourneyDetailResultList*> cachedResults;
+    QHash<QString, JourneyDetailResultList*> cachedResults;
     // Keep track of the number of "earlier"/"later" searches we did without getting any new results
     int numberOfUnsuccessfulEarlierSearches;
     int numberOfUnsuccessfulLaterSearches;
