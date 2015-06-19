@@ -483,7 +483,7 @@ void ParserXmlVasttrafikSe::searchJourneyLater()
         searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_latestResultDeparture, Departure, 0);
     else {
         clearJourney();
-        lastJourneyResultList = new JourneyResultList();
+        lastJourneyResultList = new JourneyResultList(this);
         lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
         lastJourneyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
         lastJourneyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
@@ -499,7 +499,7 @@ void ParserXmlVasttrafikSe::searchJourneyEarlier()
         searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.arrivalStation, m_searchJourneyParameters.viaStation, m_earliestArrival, Arrival, 0);
     else {
         clearJourney();
-        lastJourneyResultList = new JourneyResultList();
+        lastJourneyResultList = new JourneyResultList(this);
         lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
         lastJourneyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
         lastJourneyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);

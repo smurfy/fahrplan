@@ -668,7 +668,7 @@ QString ParserHafasXml::parseExternalIds(const QVariant &id) const
 
 void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResultList = new JourneyResultList();
+    lastJourneyResultList = new JourneyResultList(this);
 
     QDomDocument doc;
     if (!parseXml(doc, networkReply->readAll()))
