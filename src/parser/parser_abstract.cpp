@@ -36,7 +36,7 @@
 #endif
 
 ParserAbstract::ParserAbstract(QObject *parent) :
-    QObject(parent)
+    QObject(parent), lastRequest(NULL)
 {
     NetworkManager = new QNetworkAccessManager(this);
     connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));

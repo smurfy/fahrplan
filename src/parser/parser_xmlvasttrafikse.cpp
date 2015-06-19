@@ -40,7 +40,7 @@ QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
 
 ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
-    : ParserAbstract(parent), apiKey(QLatin1String("47c5abaf-49d6-4c23-a1bd-b2e2766c4de7")), baseRestUrl(QLatin1String("http://api.vasttrafik.se/bin/rest.exe/v1/"))
+    : ParserAbstract(parent), lastJourneyResultList(NULL), apiKey(QLatin1String("47c5abaf-49d6-4c23-a1bd-b2e2766c4de7")), baseRestUrl(QLatin1String("http://api.vasttrafik.se/bin/rest.exe/v1/"))
 {
     m_searchJourneyParameters.isValid = false;
     m_timeTableForStationParameters.isValid = false;

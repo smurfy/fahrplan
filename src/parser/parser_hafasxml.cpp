@@ -32,7 +32,7 @@
 // http://stefanwehrmeyer.com/projects/vbbxsd/
 
 ParserHafasXml::ParserHafasXml(QObject *parent) :
-    ParserAbstract(parent)
+    ParserAbstract(parent), lastJourneyResultList(NULL)
 {
      //baseUrl = "http://fahrplan.oebb.at/bin/query.exe"; //OEB (fully operational/no RT) //no xmlhandle, detaildate already present!
      //baseUrl = "http://hafas.bene-system.com/bin/query.exe"; //hafas dev?? system? / no gps
@@ -48,8 +48,6 @@ ParserHafasXml::ParserHafasXml(QObject *parent) :
      hafasHeader.ver = "1.1";
 
      STTableMode = 0;
-
-     lastJourneyResultList = NULL;
 }
 
 ParserHafasXml::~ParserHafasXml()

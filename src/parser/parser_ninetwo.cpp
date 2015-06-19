@@ -49,7 +49,7 @@ inline int distance(qreal lat1, qreal lon1, qreal lat2, qreal lon2)
     return qRound(6371.0 * c * 1000);
 }
 
-ParserNinetwo::ParserNinetwo(QObject *parent):ParserAbstract(parent)
+ParserNinetwo::ParserNinetwo(QObject *parent):ParserAbstract(parent), lastJourneyResultList(NULL)
 {
     lastCoordinates.isValid = false;
 }

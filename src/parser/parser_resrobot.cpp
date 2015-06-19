@@ -27,6 +27,7 @@
 
 ParserResRobot::ParserResRobot(QObject *parent) :
         ParserAbstract(parent),
+        lastJourneyResultList(NULL),
         timetableAPIKey(QLatin1String("en9A5GyxZLB98ZYjX8rkSNyHkurGb81G")),
         journeyAPIKey(QLatin1String("gcyYB9moXYXOTY2dAb06k7GAAOiZVXZr")),
         timetableBaseURL(QLatin1String("https://api.trafiklab.se/samtrafiken/resrobotstops/")),

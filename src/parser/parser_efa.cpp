@@ -102,7 +102,8 @@
 QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsEfa;
 
 ParserEFA::ParserEFA(QObject *parent) :
-    ParserAbstract(parent){
+    ParserAbstract(parent), lastJourneyResultList(NULL)
+{
 
     m_searchJourneyParameters.isValid = false;
     m_timeTableForStationParameters.isValid = false;
