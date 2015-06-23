@@ -634,6 +634,8 @@ void ParserHafasBinary::searchJourneyLater()
 
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
 
+    clearJourney();
+
     QUrl uri = baseBinaryUrl;
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
@@ -668,6 +670,8 @@ void ParserHafasBinary::searchJourneyEarlier()
     }
 
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
+
+    clearJourney();
 
     QUrl uri = baseBinaryUrl;
 #if defined(BUILD_FOR_QT5)

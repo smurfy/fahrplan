@@ -422,6 +422,8 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
         return;
     currentRequestState = FahrplanNS::searchJourneyRequest;
 
+    clearJourney();
+
     m_searchJourneyParameters.isValid = false;
     m_searchJourneyParameters.departureStation = departureStation;
     m_searchJourneyParameters.arrivalStation = arrivalStation;
@@ -524,7 +526,6 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
 void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 {
     qDebug() << "ParserEFA::parseSearchJourney(QNetworkReply *networkReply)";
-    clearJourney();
 
     lastJourneyResultList = new JourneyResultList(this);
 

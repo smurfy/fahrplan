@@ -160,6 +160,8 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
         return;
     currentRequestState = FahrplanNS::searchJourneyRequest;
 
+    clearJourney();
+
     m_searchJourneyParameters.isValid = false;
     m_searchJourneyParameters.departureStation = departureStation;
     m_searchJourneyParameters.arrivalStation = arrivalStation;
@@ -323,7 +325,6 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 {
     qDebug() << "ParserXmlVasttrafikSe::parseSearchJourney(networkReply.url()=" << networkReply->url().toString() << ")";
 
-    clearJourney();
     lastJourneyResultList = new JourneyResultList(this);
 
     /// Use fallback values for empty results (i.e. no connections found)

@@ -767,6 +767,8 @@ void ParserHafasXml::searchJourneyLater()
 
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
 
+    clearJourney();
+
     QByteArray postData = "";
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
     postData.append("<ConScrReq scrDir=\"F\" nrCons=\"5\">");
@@ -791,6 +793,8 @@ void ParserHafasXml::searchJourneyEarlier()
     }
 
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
+
+    clearJourney();
 
     QByteArray postData = "";
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");

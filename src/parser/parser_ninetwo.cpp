@@ -185,6 +185,8 @@ void ParserNinetwo::searchJourney(const Station &departureStation,
 
     currentRequestState=FahrplanNS::searchJourneyRequest;
 
+    clearJourney();
+
 }
 
 void ParserNinetwo::searchJourneyLater()

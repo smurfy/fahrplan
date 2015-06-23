@@ -246,6 +246,9 @@ void ParserResRobot::searchJourney(const Station &departureStation, const Statio
     }
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
+
+    clearJourney();
+
     numberOfUnsuccessfulEarlierSearches = 0;
     numberOfUnsuccessfulLaterSearches = 0;
     internalSearchJourney(departureStation, viaStation, arrivalStation, dateTime, mode, trainRestrictions);
@@ -263,6 +266,7 @@ void ParserResRobot::searchJourneyLater()
     }
 
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
+    clearJourney();
     internalSearchJourney(lastJourneySearch.from, lastJourneySearch.via, lastJourneySearch.to,
                           time, lastJourneySearch.mode, lastJourneySearch.restrictions);
 }
@@ -280,6 +284,7 @@ void ParserResRobot::searchJourneyEarlier()
     }
 
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
+    clearJourney();
     internalSearchJourney(lastJourneySearch.from, lastJourneySearch.via, lastJourneySearch.to,
                           time, lastJourneySearch.mode, lastJourneySearch.restrictions);
 }
@@ -472,7 +477,6 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         journeyListData = ensureList(timetableResult.value("ttitem"));
     }
 
-    clearJourney();
     lastJourneyResultList = new JourneyResultList(this);
 
     int journeyCounter = 0;
