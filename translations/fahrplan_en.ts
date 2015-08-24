@@ -20,7 +20,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="95"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="89"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="99"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="168"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="167"/>
         <source>Maintainers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,7 +28,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="113"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="107"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="119"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="181"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="180"/>
         <source>Code Contributors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36,7 +36,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="130"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="124"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="138"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="193"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="192"/>
         <source>Translators</source>
         <translation type="unfinished"></translation>
     </message>
@@ -44,7 +44,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="153"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="147"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="162"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="32"/>
         <source>Support</source>
         <translation type="unfinished"></translation>
     </message>
@@ -57,38 +57,38 @@
     </message>
     <message>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="73"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="99"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="98"/>
         <source>Version %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="30"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="29"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="32"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="32"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="39"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="38"/>
         <source>Copyright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="122"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="121"/>
         <source>Released under the terms of the GNU GPL v2 or higher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="131"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="130"/>
         <source>Source code available on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="136"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="135"/>
         <source>See full copyright</source>
         <translation type="unfinished"></translation>
     </message>
@@ -138,23 +138,18 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>DatePicker</name>
     <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="26"/>
-        <source>Date</source>
+        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="28"/>
+        <source>&lt;b&gt;Date&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="73"/>
-        <source>Day</source>
+        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="44"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="89"/>
-        <source>Month</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="114"/>
-        <source>Year</source>
+        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="55"/>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -173,35 +168,35 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>FahrplanCalendarManager</name>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="130"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="138"/>
         <source>&lt;loading calendars list...&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="133"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="141"/>
         <source>&lt;invalid calendar&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="135"/>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="150"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="143"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="158"/>
         <source>Default Calendar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="181"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="189"/>
         <source>Local Calendar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="186"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="194"/>
         <source>%1 (%2)</source>
         <comment>Calendar name (Account name)</comment>
         <extracomment>Calendar name (Account name)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="247"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="274"/>
         <source>Personal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -211,16 +206,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/delegates/JourneyDetailsDelegate.qml" line="186"/>
         <location filename="../src/gui/symbian/delegates/JourneyDetailsDelegate.qml" line="213"/>
-        <source>%1 to %2</source>
-        <comment>Direction</comment>
-        <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>JourneyDetailsTrainDelegate</name>
-    <message>
-        <location filename="../src/gui/sailfishos/delegates/JourneyDetailsTrainDelegate.qml" line="60"/>
         <source>%1 to %2</source>
         <comment>Direction</comment>
         <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
@@ -245,7 +230,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="356"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -253,7 +237,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="356"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -261,7 +244,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="170"/>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="174"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="173"/>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="367"/>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="333"/>
         <source>Dur.: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -276,12 +259,32 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="26"/>
-        <source>Result Details</source>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="29"/>
+        <source>Journey advice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="313"/>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="278"/>
+        <source>%1 to %2</source>
+        <comment>Direction</comment>
+        <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="322"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="322"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>JourneyDetailsTrainDelegate</name>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/JourneyDetailsTrainDelegate.qml" line="60"/>
         <source>%1 to %2</source>
         <comment>Direction</comment>
         <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
@@ -294,7 +297,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="105"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="92"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="105"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="103"/>
         <source>Dep.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -302,7 +304,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="115"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="97"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="111"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="113"/>
         <source>Arr.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -310,7 +311,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="126"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="103"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="118"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="124"/>
         <source>Dur.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,37 +318,34 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="137"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="109"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="125"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="135"/>
         <source>Trans.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="156"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="147"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="214"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="171"/>
         <source>Loading details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="157"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="148"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="214"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="171"/>
         <source>please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
-        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="191"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
-        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="191"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -356,7 +353,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="217"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="38"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="213"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="169"/>
         <source>Earlier</source>
         <translation type="unfinished"></translation>
     </message>
@@ -364,18 +360,47 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="225"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="50"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="222"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="177"/>
         <source>Later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="139"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="157"/>
         <source>Searching...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="26"/>
-        <source>Results</source>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="215"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="28"/>
+        <source>Journey alternatives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="107"/>
+        <source>↥ View earlier options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="130"/>
+        <source>↧ View later options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="194"/>
+        <source>Duration: %1 | Transfer: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="232"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="232"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -385,7 +410,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="168"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="83"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="170"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="161"/>
         <source>Departure Station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -393,7 +417,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="187"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="98"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="190"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="178"/>
         <source>Via Station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -401,7 +424,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="206"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="113"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="210"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="199"/>
         <source>Arrival Station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -409,7 +431,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="225"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="128"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="230"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="220"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="185"/>
         <source>Station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -417,7 +439,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="238"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="137"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="244"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="236"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="196"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -427,7 +449,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="175"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="261"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="450"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="262"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="217"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -437,7 +459,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="194"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="275"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="480"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="283"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="235"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -445,7 +467,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="281"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="160"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="297"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="209"/>
         <source>Departure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,7 +475,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="288"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="166"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="305"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="209"/>
         <source>Arrival</source>
         <translation type="unfinished"></translation>
     </message>
@@ -467,21 +489,20 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="320"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="214"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="340"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="304"/>
         <source>Trains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="331"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="353"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="318"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="268"/>
         <source>Show departures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="331"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="353"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="318"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="268"/>
         <source>Show arrivals</source>
         <translation type="unfinished"></translation>
     </message>
@@ -495,9 +516,8 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="362"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="387"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="394"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="319"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="336"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="346"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="267"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="281"/>
         <source>please select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -522,28 +542,24 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="370"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="395"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="347"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="372"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="397"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="349"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="389"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="415"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="364"/>
         <source>Select backend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="402"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="429"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="407"/>
         <source>Select train</source>
         <translation type="unfinished"></translation>
     </message>
@@ -570,7 +586,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="341"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="546"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="594"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="510"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="413"/>
         <source>Clear station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -584,7 +600,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="528"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="290"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="571"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="502"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="405"/>
         <source>Switch with Departure station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -592,7 +608,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="535"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="297"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="579"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="505"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="408"/>
         <source>Switch with Arrival station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -600,21 +616,21 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="542"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="304"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="587"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="508"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="411"/>
         <source>Switch with Via station</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="585"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="633"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="534"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="437"/>
         <source>No results found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="592"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="640"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="541"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="444"/>
         <source>Error loading details</source>
         <translation type="unfinished"></translation>
     </message>
@@ -646,22 +662,57 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="256"/>
-        <source>Date and time</source>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="142"/>
+        <source>From</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="157"/>
+        <source>Via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="172"/>
+        <source>To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="208"/>
+        <source>&lt;b&gt;Date and time&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="209"/>
         <source>Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="334"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="253"/>
+        <source>Transport Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="282"/>
         <source>Plan my journey</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="453"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="296"/>
+        <source>&lt;b&gt;Select backend&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="314"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="331"/>
+        <source>&lt;b&gt;Select transport mode&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="36"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -768,61 +819,72 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserEFA</name>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="137"/>
+        <location filename="../src/parser/parser_efa.cpp" line="135"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="138"/>
+        <location filename="../src/parser/parser_efa.cpp" line="136"/>
         <source>Metro Train</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="139"/>
+        <location filename="../src/parser/parser_efa.cpp" line="137"/>
         <source>Metro Tram</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="140"/>
+        <location filename="../src/parser/parser_efa.cpp" line="138"/>
         <source>Metro Bus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="141"/>
+        <location filename="../src/parser/parser_efa.cpp" line="139"/>
         <source>Regional Train</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="142"/>
+        <location filename="../src/parser/parser_efa.cpp" line="140"/>
         <source>Regional Coach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="143"/>
+        <location filename="../src/parser/parser_efa.cpp" line="141"/>
         <source>Airport(SKYBUS)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="315"/>
+        <location filename="../src/parser/parser_efa.cpp" line="313"/>
         <source>Server Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="527"/>
-        <location filename="../src/parser/parser_efa.cpp" line="712"/>
-        <location filename="../src/parser/parser_efa.cpp" line="728"/>
+        <location filename="../src/parser/parser_efa.cpp" line="520"/>
+        <location filename="../src/parser/parser_efa.cpp" line="634"/>
+        <location filename="../src/parser/parser_efa.cpp" line="650"/>
         <source>%1, %2</source>
         <comment>DATE, TIME</comment>
         <extracomment>DATE, TIME</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="768"/>
+        <location filename="../src/parser/parser_efa.cpp" line="539"/>
+        <location filename="../src/parser/parser_efa.cpp" line="541"/>
+        <source>Walk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_efa.cpp" line="542"/>
+        <source>Guaranteed connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_efa.cpp" line="685"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="772"/>
+        <location filename="../src/parser/parser_efa.cpp" line="688"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -950,6 +1012,11 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="752"/>
+        <source>Dep./Arr./Intermed. or equivalent station defined more than once.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="754"/>
         <source>Unknown error ocurred with the backend (error %1).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1187,51 +1254,69 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserNinetwo</name>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="165"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="192"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="166"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="193"/>
         <source>Only trains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="167"/>
-        <source>not by ferry</source>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="194"/>
+        <source>All, except ferry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="179"/>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="240"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="241"/>
+        <source>%1 via %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="245"/>
+        <source>On-Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/parser/parser_ninetwo.cpp" line="304"/>
+        <source>%n m</source>
+        <extracomment>Distance in meters</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="465"/>
+        <source>%1 for %2 min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="484"/>
+        <source>, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="206"/>
         <location filename="../src/parser/parser_ninetwo.cpp" line="279"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="333"/>
         <source>Cannot parse reply from the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="214"/>
-        <source>via %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="407"/>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="411"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="471"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="475"/>
         <source>Pl. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="218"/>
-        <source>(%1) %2 
-%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <location filename="../src/parser/parser_ninetwo.h" line="66"/>
         <source>Netherlands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <location filename="../src/parser/parser_ninetwo.h" line="66"/>
         <source>Belgium</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1987,12 +2072,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="87"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="45"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="87"/>
         <source>Compact calendar entries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="46"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
         <source>Use shorter text format in the calendar event description</source>
         <translation type="unfinished"></translation>
@@ -2028,13 +2115,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="122"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="57"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="125"/>
         <source>Add journeys to calendar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="134"/>
-        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="90"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="108"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="138"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="89"/>
         <source>About</source>
@@ -2047,7 +2135,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="57"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="75"/>
         <source>Backend</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2077,25 +2165,30 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="74"/>
         <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="74"/>
         <source>Add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="77"/>
+        <source>Removing favorite...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StationSelect</name>
     <message>
-        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="80"/>
+        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="66"/>
         <source>Search for Station...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="143"/>
+        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="106"/>
         <source>Click the star icon on the search results to add or remove a station as a favorite</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2134,14 +2227,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="205"/>
-        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="151"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="160"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="202"/>
         <source>Searching for stations...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="210"/>
-        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="154"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="163"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="205"/>
         <source>Waiting for GPS lock...</source>
         <translation type="unfinished"></translation>
@@ -2157,26 +2250,31 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="110"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="109"/>
         <source>Favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="119"/>
+        <source>Click and hold in the search results to add or remove a station as a favorite</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TimePicker</name>
     <message>
-        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="26"/>
-        <source>Time</source>
+        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="28"/>
+        <source>&lt;b&gt;Time&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="51"/>
-        <source>Hour</source>
+        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="44"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="63"/>
-        <source>Minute</source>
+        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="55"/>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2193,17 +2291,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="103"/>
-        <source>from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="103"/>
-        <source>to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="120"/>
+        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="118"/>
         <source>Pl. %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2268,14 +2356,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/gui/ubuntu/main.qml" line="45"/>
-        <location filename="../src/gui/ubuntu/main.qml" line="50"/>
+        <location filename="../src/gui/ubuntu/main.qml" line="47"/>
+        <location filename="../src/gui/ubuntu/main.qml" line="49"/>
         <source>Journey</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/gui/ubuntu/main.qml" line="54"/>
         <location filename="../src/gui/ubuntu/main.qml" line="56"/>
-        <location filename="../src/gui/ubuntu/main.qml" line="61"/>
         <source>Time table</source>
         <translation type="unfinished"></translation>
     </message>
