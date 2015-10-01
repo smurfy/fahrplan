@@ -35,14 +35,14 @@ Page {
         id: dialog
         Dialog {
             id: dialogue
-            title: qsTr("Copyright")
+            title: qsTr("License")
             Flickable {
                 height: units.gu(30)
                 clip: true
-                contentHeight: copyrightText.height
+                contentHeight: licenseText.height
 
                 Label {
-                    id: copyrightText
+                    id: licenseText
                     wrapMode: Text.WordWrap
                     width: parent.width
                     fontSize: "small"
@@ -132,7 +132,7 @@ Page {
                 }
 
                 Button {
-                    text: qsTr("See full copyright")
+                    text: qsTr("View License Terms")
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: PopupUtils.open(dialog)
                 }
