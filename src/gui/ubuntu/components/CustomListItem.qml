@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import Ubuntu.Components 1.2
+import Ubuntu.Components 1.3
 
 ListItem {
     id: customListItem
@@ -28,8 +28,8 @@ ListItem {
         Icon {
             id: _progression
             name: "go-next"
-            width: units.gu(2)
-            height: width
+            Layout.preferredWidth: units.gu(2)
+            Layout.preferredHeight: units.gu(2)
         }
     }
 }

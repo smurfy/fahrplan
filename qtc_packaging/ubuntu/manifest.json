@@ -1,6 +1,6 @@
 {
     "description": "A journey planner for public transportation.",
-    "framework": "ubuntu-sdk-15.04",
+    "framework": "ubuntu-sdk-15.04.1",
     "architecture": "armhf",
     "hooks": {
         "fahrplan2": {
