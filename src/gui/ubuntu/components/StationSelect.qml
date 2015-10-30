@@ -22,7 +22,7 @@ import QtQuick 2.4
 import QtLocation 5.0
 import QtPositioning 5.2
 import QtQuick.Layouts 1.1
-import Ubuntu.Components 1.2
+import Ubuntu.Components 1.3
 import "."
 import ".."
 
@@ -126,8 +126,8 @@ Page {
                 Icon {
                     id: favoriteIcon
                     name: model.isFavorite ? "starred" : "non-starred"
-                    width: units.gu(4)
-                    height: width
+                    Layout.preferredHeight: units.gu(4)
+                    Layout.preferredWidth: height
 
                     MouseArea {
                         anchors.fill: parent
