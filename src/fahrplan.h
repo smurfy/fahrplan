@@ -77,6 +77,7 @@ class Fahrplan : public QObject
         };
 
         explicit Fahrplan(QObject *parent = 0);
+        virtual ~Fahrplan();
         FahrplanParserThread *parser();
         Favorites *favorites() const;
         QString parserName() const;
@@ -141,6 +142,7 @@ class Fahrplan : public QObject
         void onStationSearchResults(const StationsList &result);
         void onTimetableResult(const TimetableEntriesList &timetableEntries);
         void bindParserSignals();
+        void unbindParserSignals();
 
     private:
         static FahrplanBackendManager *m_parser_manager;

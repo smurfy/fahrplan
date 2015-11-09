@@ -27,6 +27,7 @@
 
 ParserResRobot::ParserResRobot(QObject *parent) :
         ParserAbstract(parent),
+        lastJourneyResultList(NULL),
         timetableAPIKey(QLatin1String("en9A5GyxZLB98ZYjX8rkSNyHkurGb81G")),
         journeyAPIKey(QLatin1String("gcyYB9moXYXOTY2dAb06k7GAAOiZVXZr")),
         timetableBaseURL(QLatin1String("https://api.trafiklab.se/samtrafiken/resrobotstops/")),
@@ -87,6 +88,25 @@ ParserResRobot::ParserResRobot(QObject *parent) :
     transportModeStrings[QString::fromUtf8("Övriga tåg")] = tr("Other train");
 }
 
+ParserResRobot::~ParserResRobot()
+{
+    clearJourney();
+}
+
+void ParserResRobot::clearJourney()
+{
+    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedResults.begin(); it != cachedResults.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedResults.erase(it);
+        delete jdrl;
+    }
+
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
+}
+
 bool ParserResRobot::supportsGps()
 {
     return true;
@@ -119,10 +139,14 @@ QStringList ParserResRobot::getTrainRestrictions()
 void ParserResRobot::findStationsByName(const QString &stationName)
 {
     lastStationSearch = stationName;
-    if (stationName.length() < 2)
+    if (stationName.length() < 2) {
         return;
-    if (currentRequestState != FahrplanNS::noneRequest)
+    }
+
+    if (currentRequestState != FahrplanNS::noneRequest) {
         return;
+    }
+
     currentRequestState = FahrplanNS::stationsByNameRequest;
 
     QUrl url(journeyBaseURL + QLatin1String("FindLocation.json"));
@@ -145,8 +169,10 @@ void ParserResRobot::findStationsByName(const QString &stationName)
 
 void ParserResRobot::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
-    if (currentRequestState != FahrplanNS::noneRequest)
+    if (currentRequestState != FahrplanNS::noneRequest) {
         return;
+    }
+
     currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
 
     QUrl url(journeyBaseURL + QLatin1String("StationsInZone.json"));
@@ -180,15 +206,19 @@ void ParserResRobot::getTimeTableForStation(const Station &currentStation,
     Q_UNUSED(mode)
     Q_UNUSED(trainrestrictions)
 
-    if (currentRequestState != FahrplanNS::noneRequest)
+    if (currentRequestState != FahrplanNS::noneRequest) {
         return;
+    }
+
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
 
     QUrl url;
-    if (realtime)
+    if (realtime) {
         url = realtimeTimetableBaseURL + QLatin1String("GetDepartures.json");
-    else
+    } else {
         url = timetableBaseURL + QLatin1String("GetDepartures.json");
+    }
+
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
 #else
@@ -211,9 +241,14 @@ void ParserResRobot::searchJourney(const Station &departureStation, const Statio
                                    const Station &arrivalStation, const QDateTime &dateTime,
                                    ParserAbstract::Mode mode, int trainRestrictions)
 {
-    if (currentRequestState != FahrplanNS::noneRequest)
+    if (currentRequestState != FahrplanNS::noneRequest) {
         return;
+    }
+
     currentRequestState = FahrplanNS::searchJourneyRequest;
+
+    clearJourney();
+
     numberOfUnsuccessfulEarlierSearches = 0;
     numberOfUnsuccessfulLaterSearches = 0;
     internalSearchJourney(departureStation, viaStation, arrivalStation, dateTime, mode, trainRestrictions);
@@ -224,11 +259,14 @@ void ParserResRobot::searchJourneyLater()
     // If the last "later" search didn't give any new results, try searching one
     // hour later than last time, otherwise search on the time of the last result option.
     QDateTime time;
-    if (lastJourneySearch.mode == Departure)
+    if (lastJourneySearch.mode == Departure) {
         time = lastJourneySearch.lastOption.addSecs(numberOfUnsuccessfulLaterSearches * 3600);
-    else
+    } else {
         time = lastJourneySearch.lastOption.addSecs(numberOfUnsuccessfulLaterSearches * 3600 + 3600);
+    }
+
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
+    clearJourney();
     internalSearchJourney(lastJourneySearch.from, lastJourneySearch.via, lastJourneySearch.to,
                           time, lastJourneySearch.mode, lastJourneySearch.restrictions);
 }
@@ -239,11 +277,14 @@ void ParserResRobot::searchJourneyEarlier()
     // hour earlier than last time, otherwise search on the time of the first result
     // option minus one hour.
     QDateTime time;
-    if (lastJourneySearch.mode == Departure)
+    if (lastJourneySearch.mode == Departure) {
         time = lastJourneySearch.firstOption.addSecs(numberOfUnsuccessfulEarlierSearches * -3600 - 3600);
-    else
+    } else {
         time = lastJourneySearch.firstOption.addSecs(numberOfUnsuccessfulEarlierSearches * -3600);
+    }
+
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
+    clearJourney();
     internalSearchJourney(lastJourneySearch.from, lastJourneySearch.via, lastJourneySearch.to,
                           time, lastJourneySearch.mode, lastJourneySearch.restrictions);
 }
@@ -274,20 +315,25 @@ void ParserResRobot::internalSearchJourney(const Station &departureStation, cons
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
     query.addQueryItem("coordSys", "WGS84");
-    if (mode == Arrival)
+
+    if (mode == Arrival) {
         query.addQueryItem("arrival", "true");
+    }
+
     QString transportModeCode;
     switch (trainRestrictions) {
-    default:
-    case ALL_TRANSPORT_MODES:
-        transportModeCode = "F";
-        break;
-    case TRAIN_PUB_TRANS_NOT_EXP_BUS:
-        transportModeCode = "T";
-        break;
-    case EXP_BUS_PUB_TRANS_NOT_TRAIN:
-        transportModeCode = "B";
-        break;
+        case TRAIN_PUB_TRANS_NOT_EXP_BUS:
+            transportModeCode = "T";
+            break;
+
+        case EXP_BUS_PUB_TRANS_NOT_TRAIN:
+            transportModeCode = "B";
+            break;
+
+        case ALL_TRANSPORT_MODES:
+        default:
+            transportModeCode = "F";
+            break;
     }
     query.addQueryItem("searchType", transportModeCode);
 
@@ -312,8 +358,9 @@ void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
 
     QVariantMap departuresResult= doc.value("getdeparturesresult").toMap();
     QVariantList timetableData;
-    if (departuresResult.contains("departuresegment"))
+    if (departuresResult.contains("departuresegment")) {
         timetableData = ensureList(departuresResult.value("departuresegment"));
+    }
 
     TimetableEntriesList timetable;
     foreach (QVariant timetableEntryData, timetableData) {
@@ -334,8 +381,9 @@ void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
         QVariantMap realtimeInfo = entry.value("realtime").toMap();
         bool hasDeviationInfo;
         int deviation = realtimeInfo.value("departuretimedeviation").toInt(&hasDeviationInfo);
-        if (hasDeviationInfo && deviation != 0)
+        if (hasDeviationInfo && deviation != 0) {
             resultItem.miscInfo = tr("New time: ") + resultItem.time.addSecs(deviation * 60).toString("HH:mm");
+        }
 
         // Means of transportation
         QVariantMap mot = entry.value("segmentid").toMap().value("mot").toMap();
@@ -425,12 +473,11 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
 
     QVariantMap timetableResult = doc.value("timetableresult").toMap();
     QVariantList journeyListData;
-    if (timetableResult.contains("ttitem"))
+    if (timetableResult.contains("ttitem")) {
         journeyListData = ensureList(timetableResult.value("ttitem"));
+    }
 
-    cachedResults.clear();
-
-    JourneyResultList *journeyList = new JourneyResultList();
+    lastJourneyResultList = new JourneyResultList(this);
 
     int journeyCounter = 0;
     foreach (QVariant journeyData, journeyListData) {
@@ -444,19 +491,16 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         minutes = minutes % 60;
         QString duration = QString("%1:%2").arg(hours).arg(minutes, 2, 10, QChar('0'));
 
-        // Compile list of transport modes used
-        QStringList transportModes;
-        foreach (JourneyDetailResultItem* segment, segments) {
-            if (segment->internalData1() != "WALK")
-                transportModes.append(segment->train());
-        }
-        // When the distance is short, an option with only "walk" can be present
-        if (transportModes.count() == 0 && segments.count() == 1)
-            transportModes.append(segments.first()->train());
+        JourneyDetailResultList* journeyDetails = new JourneyDetailResultList(this);
 
-        JourneyDetailResultList* journeyDetails = new JourneyDetailResultList;
-        foreach (JourneyDetailResultItem* segment, segments)
+        QStringList transportModes; // Compile list of transport modes used
+        foreach (JourneyDetailResultItem* segment, segments) {
+            if (segment->internalData1() != "WALK") {
+                transportModes.append(segment->train());
+            }
             journeyDetails->appendItem(segment);
+        }
+
         journeyDetails->setId(journeyID);
         journeyDetails->setDepartureStation(segments.first()->departureStation());
         journeyDetails->setDepartureDateTime(segments.first()->departureDateTime());
@@ -465,13 +509,20 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         journeyDetails->setDuration(duration);
         cachedResults.insert(journeyID, journeyDetails);
 
+        // When the distance is short, an option with only "walk" can be present
+        if (transportModes.isEmpty() && segments.count() == 1) {
+            transportModes.append(segments.first()->train());
+        }
+
         // Indicate in the departure/arrival times if they are another day (e.g. "14:37+1")
         int depDayDiff = lastJourneySearch.dateTime.date().daysTo(journeyDetails->departureDateTime().date());
         QString depTime = journeyDetails->departureDateTime().toString("HH:mm");
-        if (depDayDiff > 0)
+        if (depDayDiff > 0) {
             depTime += "+" + QString::number(depDayDiff);
-        else if (depDayDiff < 0)
+        } else if (depDayDiff < 0) {
             depTime += QString::number(depDayDiff);
+        }
+
         int arrDayDiff = lastJourneySearch.dateTime.date().daysTo(journeyDetails->arrivalDateTime().date());
         QString arrTime = journeyDetails->arrivalDateTime().toString("HH:mm");
         if (arrDayDiff > 0)
@@ -479,7 +530,7 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         else if (arrDayDiff < 0)
             arrTime += QString::number(arrDayDiff);
 
-        JourneyResultItem* journey = new JourneyResultItem;
+        JourneyResultItem* journey = new JourneyResultItem(lastJourneyResultList);
         journey->setId(journeyID);
         journey->setDate(segments.first()->departureDateTime().date());
         journey->setDepartureTime(depTime);
@@ -487,31 +538,37 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         journey->setTrainType(transportModes.join(", "));
         journey->setDuration(duration);
         journey->setTransfers(QString::number(transportModes.count()-1));
-        journeyList->appendItem(journey);
+        lastJourneyResultList->appendItem(journey);
 
         if (journeyCounter == 0) {
-            if (lastJourneySearch.mode == Departure)
+            if (lastJourneySearch.mode == Departure) {
                 lastJourneySearch.firstOption = journeyDetails->departureDateTime();
-            else
+            } else {
                 lastJourneySearch.firstOption = journeyDetails->arrivalDateTime();
+            }
         }
-        if (lastJourneySearch.mode == Departure)
+
+        if (lastJourneySearch.mode == Departure) {
             lastJourneySearch.lastOption = journeyDetails->departureDateTime();
-        else
+        } else {
             lastJourneySearch.lastOption = journeyDetails->arrivalDateTime();
+        }
 
         ++journeyCounter;
     }
-    journeyList->setDepartureStation(lastJourneySearch.from.name);
-    journeyList->setArrivalStation(lastJourneySearch.to.name);
-    QString modeString;
-    if (lastJourneySearch.mode == Arrival)
-        modeString = tr("Arrivals");
-    else
-        modeString = tr("Departures");
-    journeyList->setTimeInfo(modeString + " " + lastJourneySearch.dateTime.toString(tr("ddd MMM d, HH:mm")));
+    lastJourneyResultList->setDepartureStation(lastJourneySearch.from.name);
+    lastJourneyResultList->setArrivalStation(lastJourneySearch.to.name);
 
-    emit journeyResult(journeyList);
+    QString modeString;
+    if (lastJourneySearch.mode == Arrival) {
+        modeString = tr("Arrivals");
+    } else {
+        modeString = tr("Departures");
+    }
+
+    lastJourneyResultList->setTimeInfo(modeString + " " + lastJourneySearch.dateTime.toString(tr("ddd MMM d, HH:mm")));
+
+    emit journeyResult(lastJourneyResultList);
 }
 
 // Parse info about one journey option. Store detailed info about segments for later use.
@@ -520,10 +577,9 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
     QList<JourneyDetailResultItem*> results;
 
     QVariantList segments = ensureList(journeyData.value("segment"));
-    foreach (QVariant segmentData, segments)
-    {
+    foreach (QVariant segmentData, segments) {
         QVariantMap segment = segmentData.toMap();
-        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem;
+        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem(this);
 
         // Departure
         QVariantMap departure = segment.value("departure").toMap();
@@ -550,35 +606,47 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
         QString type = mot.value("@type").toString();
         QString motName = translateTransportMode(mot.value("#text").toString());
         QString distance;
+
         if (type == "G" || type == "GL") { // Walk or long walk
             distance = segment.value("segmentid").toMap().value("distance").toString();
             resultItem->setInternalData1("WALK");
         }
+
         QVariantMap carrier = segment.value("segmentid").toMap().value("carrier").toMap();
         QString carrierInfo;
         if (carrier.size() > 0) {
             QString carrierNumber = carrier.value("number").toString();
-            if (!carrierNumber.isEmpty())
+            if (!carrierNumber.isEmpty()) {
                 motName += " " + carrierNumber;
+            }
             QString carrierName = carrier.value("name").toString();
             QString carrierURL = carrier.value("url").toString();
             if (!carrierName.isEmpty()) {
-                if (carrierURL.isEmpty())
+                if (carrierURL.isEmpty()) {
                     carrierInfo = carrierName;
-                else
+                } else {
                     carrierInfo = "<a href=\"" + carrierURL + "\">" + carrierName + "</a>";
+                }
             }
         }
         resultItem->setTrain(motName);
 
-        if (!distance.isEmpty())
+        if (distance.isEmpty()) {
+            QStringList infoList;
+
+            if (!carrierInfo.isEmpty()) {
+                infoList << carrierInfo;
+            }
+
+            if (!info.isEmpty()) {
+                infoList << info.join(", ");
+            }
+
+            resultItem->setInfo(infoList.join("<br/>"));
+        } else {
             resultItem->setInfo(distance + " m");
-        else if (!carrierInfo.isEmpty() && !info.isEmpty())
-            resultItem->setInfo(carrierInfo + "<br/>" + info.join(", "));
-        else if (!carrierInfo.isEmpty())
-            resultItem->setInfo(carrierInfo);
-        else if (!info.isEmpty())
-            resultItem->setInfo(info.join(", "));
+        }
+
         resultItem->setDirection(segment.value("direction").toString());
 
         results.append(resultItem);
@@ -588,8 +656,9 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
 
 void ParserResRobot::getJourneyDetails(const QString &id)
 {
-    if (cachedResults.contains(id))
+    if (cachedResults.contains(id)) {
         emit journeyDetailsResult(cachedResults.value(id));
+    }
 }
 
 void ParserResRobot::parseSearchLaterJourney(QNetworkReply *networkReply)
@@ -597,12 +666,16 @@ void ParserResRobot::parseSearchLaterJourney(QNetworkReply *networkReply)
     QDateTime oldFirstOption = lastJourneySearch.firstOption;
     QDateTime oldLastOption = lastJourneySearch.lastOption;
     parseSearchJourney(networkReply);
-    if (oldFirstOption != lastJourneySearch.firstOption)
+
+    if (oldFirstOption != lastJourneySearch.firstOption) {
         numberOfUnsuccessfulEarlierSearches = 0;
-    if (oldLastOption != lastJourneySearch.lastOption)
-        numberOfUnsuccessfulLaterSearches = 0;
-    else
+    }
+
+    if (oldLastOption == lastJourneySearch.lastOption) {
         ++numberOfUnsuccessfulLaterSearches;
+    } else {
+        numberOfUnsuccessfulLaterSearches = 0;
+    }
 }
 
 void ParserResRobot::parseSearchEarlierJourney(QNetworkReply *networkReply)
@@ -610,12 +683,16 @@ void ParserResRobot::parseSearchEarlierJourney(QNetworkReply *networkReply)
     QDateTime oldFirstOption = lastJourneySearch.firstOption;
     QDateTime oldLastOption = lastJourneySearch.lastOption;
     parseSearchJourney(networkReply);
-    if (oldFirstOption != lastJourneySearch.firstOption)
-        numberOfUnsuccessfulEarlierSearches = 0;
-    else
+
+    if (oldFirstOption == lastJourneySearch.firstOption) {
         ++numberOfUnsuccessfulEarlierSearches;
-    if (oldLastOption != lastJourneySearch.lastOption)
+    } else {
+        numberOfUnsuccessfulEarlierSearches = 0;
+    }
+
+    if (oldLastOption != lastJourneySearch.lastOption) {
         numberOfUnsuccessfulLaterSearches = 0;
+    }
 }
 
 void ParserResRobot::parseJourneyDetails(QNetworkReply *networkReply)

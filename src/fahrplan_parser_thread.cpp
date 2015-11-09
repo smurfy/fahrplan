@@ -76,6 +76,11 @@ void FahrplanParserThread::cancelRequest()
     emit requestCancelRequest();
 }
 
+void FahrplanParserThread::clearJourney()
+{
+    emit requestClearJourney();
+}
+
 QString FahrplanParserThread::name() {
     return m_name;
 }
@@ -182,6 +187,7 @@ void FahrplanParserThread::run()
     connect(this, SIGNAL(requestSearchJourney(Station,Station,Station,QDateTime,ParserAbstract::Mode,int)), m_parser, SLOT(searchJourney(Station,Station,Station,QDateTime,ParserAbstract::Mode,int)), Qt::QueuedConnection);
     connect(this, SIGNAL(requestSearchJourneyEarlier()), m_parser, SLOT(searchJourneyEarlier()), Qt::QueuedConnection);
     connect(this, SIGNAL(requestSearchJourneyLater()), m_parser, SLOT(searchJourneyLater()), Qt::QueuedConnection);
+    connect(this, SIGNAL(requestClearJourney()), m_parser, SLOT(clearJourney()), Qt::QueuedConnection);
 
     //Connect parser responses with threads corresponding results
     connect(m_parser, SIGNAL(errorOccured(QString)), this, SIGNAL(errorOccured(QString)), Qt::QueuedConnection);

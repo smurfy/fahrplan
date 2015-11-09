@@ -36,14 +36,14 @@
 #endif
 
 ParserAbstract::ParserAbstract(QObject *parent) :
-    QObject(parent)
+    QObject(parent), lastRequest(NULL)
 {
     NetworkManager = new QNetworkAccessManager(this);
     connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));
 
     currentRequestState = FahrplanNS::noneRequest;
 
-    requestTimeout = new QTimer();
+    requestTimeout = new QTimer(this);
 
     connect(requestTimeout, SIGNAL(timeout()), this, SLOT(networkReplyTimedOut()));
 
@@ -52,8 +52,14 @@ ParserAbstract::ParserAbstract(QObject *parent) :
 
 ParserAbstract::~ParserAbstract()
 {
+    clearJourney();
     delete requestTimeout;
     delete NetworkManager;
+}
+
+void ParserAbstract::clearJourney()
+{
+
 }
 
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)

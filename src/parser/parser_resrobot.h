@@ -60,6 +60,7 @@ class ParserResRobot : public ParserAbstract
     Q_OBJECT
 public:
     explicit ParserResRobot(QObject *parent = 0);
+    virtual ~ParserResRobot();
 
     static QString getName() { return QString("%1 (resrobot.se)").arg(tr("Sweden")); }
     virtual QString name() { return getName(); }
@@ -84,6 +85,7 @@ public slots:
     virtual void searchJourneyLater();
     virtual void searchJourneyEarlier();
     virtual void getJourneyDetails(const QString &id);
+    virtual void clearJourney();
 
 protected:
     virtual void parseTimeTable(QNetworkReply *networkReply);
@@ -93,6 +95,8 @@ protected:
     virtual void parseSearchLaterJourney(QNetworkReply *networkReply);
     virtual void parseSearchEarlierJourney(QNetworkReply *networkReply);
     virtual void parseJourneyDetails(QNetworkReply *networkReply);
+
+    JourneyResultList *lastJourneyResultList;
 
 private:
     enum transportModePreset {
@@ -123,7 +127,7 @@ private:
     const int nearbyRadius; // Define what is "nearby" in meters
     const int timetableSpan; // Minutes (valid values: 30 or 120)
     bool realtime;
-    QMap<QString, JourneyDetailResultList*> cachedResults;
+    QHash<QString, JourneyDetailResultList*> cachedResults;
     // Keep track of the number of "earlier"/"later" searches we did without getting any new results
     int numberOfUnsuccessfulEarlierSearches;
     int numberOfUnsuccessfulLaterSearches;
