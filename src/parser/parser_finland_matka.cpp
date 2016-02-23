@@ -18,7 +18,9 @@
 ****************************************************************************/
 
 #include <QUrl>
-#include <QUrlQuery>
+#ifdef BUILD_FOR_QT5
+    #include <QUrlQuery>
+#endif
 #include <QDomDocument>
 #include <QLocale>
 #include <QRegExp>
