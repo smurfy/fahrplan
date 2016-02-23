@@ -44,6 +44,7 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(ParserMunichEFA::getName());
     result.append(ParserSalzburgEFA::getName());
     result.append(ParserResRobot::getName());
+    result.append(ParserFinlandMatka::getName());
     return result;
 }
 

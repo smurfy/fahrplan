@@ -39,6 +39,7 @@
 #include "parser/parser_munich_efa.h"
 #include "parser/parser_salzburg_efa.h"
 #include "parser/parser_resrobot.h"
+#include "parser/parser_finland_matka.h"
 
 class FahrplanParserThread : public QThread
 {
