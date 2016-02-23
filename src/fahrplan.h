@@ -163,7 +163,7 @@ class Fahrplan : public QObject
         Station getStation(StationType type) const;
         void loadStations();
         void saveStationToSettings(const QString &key, const Station &station);
-        Station loadStationFromSettigns(const QString &key);
+        Station loadStationFromSettings(const QString &key);
 };
 Q_DECLARE_METATYPE(Fahrplan::StationType)
 Q_DECLARE_METATYPE(Fahrplan::Mode)

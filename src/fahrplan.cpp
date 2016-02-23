@@ -398,11 +398,11 @@ Station Fahrplan::getStation(StationType type) const
 
 void Fahrplan::loadStations()
 {
-    setStation(DepartureStation, loadStationFromSettigns("departureStation"));
-    setStation(ViaStation, loadStationFromSettigns("viaStation"));
-    setStation(ArrivalStation, loadStationFromSettigns("arrivalStation"));
-    setStation(CurrentStation, loadStationFromSettigns("currentStation"));
-    setStation(DirectionStation, loadStationFromSettigns("directionStation"));
+    setStation(DepartureStation, loadStationFromSettings("departureStation"));
+    setStation(ViaStation, loadStationFromSettings("viaStation"));
+    setStation(ArrivalStation, loadStationFromSettings("arrivalStation"));
+    setStation(CurrentStation, loadStationFromSettings("currentStation"));
+    setStation(DirectionStation, loadStationFromSettings("directionStation"));
 }
 
 void Fahrplan::saveStationToSettings(const QString &key, const Station &station)
@@ -427,7 +427,7 @@ void Fahrplan::saveStationToSettings(const QString &key, const Station &station)
     settings->endGroup(); // Parser UID
 }
 
-Station Fahrplan::loadStationFromSettigns(const QString &key)
+Station Fahrplan::loadStationFromSettings(const QString &key)
 {
     Station station(false);
 
