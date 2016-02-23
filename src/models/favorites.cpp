@@ -35,8 +35,6 @@ QVariant Favorites::data(const QModelIndex &index, int role) const
 
     if (role == IsFavorite)
         return true;
-    else if (role == MiscInfo)
-        return "";
     else
         return StationsListModel::data(index, role);
 }
