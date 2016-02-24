@@ -237,6 +237,7 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
         }
     }
 
+    /** FIXME is this dead code, as ...isValid was never set to true before the changes for API v2
     if (m_timeTableForStationParameters.isValid) {
         getTimeTableForStation(m_timeTableForStationParameters.currentStation, m_timeTableForStationParameters.directionStation, m_timeTableForStationParameters.dateTime, m_timeTableForStationParameters.mode, m_timeTableForStationParameters.trainrestrictions);
     } else if (m_searchJourneyParameters.isValid) {
@@ -244,6 +245,8 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     } else {
         emit stationsResult(result);
     }
+    */
+    emit stationsResult(result);
 }
 
 void ParserXmlVasttrafikSe::parseStationsByCoordinates(QNetworkReply *networkReply)
