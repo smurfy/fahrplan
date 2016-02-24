@@ -96,7 +96,7 @@ void ParserAbstract::cancelRequest()
     }
 }
 
-void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
+void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data, const QList<QPair<QByteArray,QByteArray> > &additionalHeaders)
 {
     QNetworkRequest request;
     request.setUrl(url);
@@ -107,6 +107,8 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data)
     request.setRawHeader("User-Agent", userAgent.toAscii());
 #endif
     request.setRawHeader("Cache-Control", "no-cache");
+    for (QList<QPair<QByteArray,QByteArray> >::ConstIterator it = additionalHeaders.constBegin(); it != additionalHeaders.constEnd(); ++it)
+        request.setRawHeader(it->first, it->second);
     if (!acceptEncoding.isEmpty()) {
         request.setRawHeader("Accept-Encoding", acceptEncoding);
     }
