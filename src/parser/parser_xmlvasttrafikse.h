@@ -28,6 +28,8 @@ class ParserXmlVasttrafikSe : public ParserAbstract
 
 public:
     explicit ParserXmlVasttrafikSe(QObject *parent = 0);
+    ~ParserXmlVasttrafikSe();
+
     static QString getName() { return QString("%1 (vasttrafik.se)").arg(tr("Sweden")); }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return "vasttrafik.se"; }
@@ -89,10 +91,18 @@ private:
 
     const QString apiKey;
     const QString baseRestUrl;
+    QNetworkAccessManager *m_nam;
+    QDateTime m_accessTokenExpiration;
+    QString m_accessToken, m_deviceId;
 
     QDateTime m_earliestArrival, m_latestResultDeparture;
 
     inline QString i18nConnectionType(const QString &swedishText) const;
+
+    void requestNewAccessToken();
+
+private slots:
+    void accessTokenRequestFinished();
 };
 
 #endif // PARSER_XMLVASTTRAFIKSE_H

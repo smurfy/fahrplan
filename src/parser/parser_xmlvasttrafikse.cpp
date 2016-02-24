@@ -20,6 +20,7 @@
 #include "parser_xmlvasttrafikse.h"
 
 #include <QDebug>
+#include <QCoreApplication>
 
 #include <QtCore/QUrl>
 #include <QtNetwork/QNetworkReply>
@@ -42,12 +43,18 @@ QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
 ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
     : ParserAbstract(parent), apiKey(QLatin1String("47c5abaf-49d6-4c23-a1bd-b2e2766c4de7")), baseRestUrl(QLatin1String("http://api.vasttrafik.se/bin/rest.exe/v1/"))
 {
+    m_nam = new QNetworkAccessManager(this);
     m_searchJourneyParameters.isValid = false;
     m_timeTableForStationParameters.isValid = false;
     m_stationByNameParameters.isValid = false;
     m_stationByCoordinatesParameters.isValid = false;
+    m_accessTokenExpiration = QDateTime(QDate(2000, 1, 1)); ///< by default, access token expired a long time ago
+    m_deviceId = QCoreApplication::instance()->applicationName() + QLatin1String("-") + QString::number(qrand(), 16) + QLatin1String("-") + QString::number(QCoreApplication::instance()->applicationPid(), 10);
 }
 
+ParserXmlVasttrafikSe::~ParserXmlVasttrafikSe() {
+    delete m_nam;
+}
 
 void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
 {
@@ -504,3 +511,54 @@ QString ParserXmlVasttrafikSe::i18nConnectionType(const QString &swedishText) co
     QString internalCopy = swedishText;
     return internalCopy.replace(QLatin1String("Buss"), tr("Bus")).replace(QLatin1String("Expbuss"), tr("Exp Bus")).replace(QLatin1String("EXPRESS"), QLatin1String("EXPR")).replace(QString::fromUtf8("Spårvagn"), tr("Tram")).replace(QString::fromUtf8("Färja"), tr("Ferry"));
 }
+
+void ParserXmlVasttrafikSe::requestNewAccessToken() {
+    qDebug() << "Requesting new access token for device" << m_deviceId;
+    QNetworkRequest request(QUrl(QLatin1String("https://api.vasttrafik.se/token")));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    request.setRawHeader("Authorization", "Basic SWlUU1dmY0dYdVFId2FqMXYyYktCTXZvOFNNYTpyN0pvMHJDNHBTbEhUUHlDZm1DNUxwMmVWd29h");
+    QByteArray postData("grant_type=client_credentials&scope=device_");
+#if defined(BUILD_FOR_QT5)
+    postData.append(m_deviceId.toLatin1());
+#else
+    postData.append(m_deviceId.toAscii());
+#endif
+    QNetworkReply *reply = m_nam->post(request, postData);
+    connect(reply, SIGNAL(finished()), this, SLOT(accessTokenRequestFinished()));
+}
+
+void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
+     static const QRegExp accessTokenRE(QLatin1String("\"access_token\":\"([0-9a-f]+)"));
+     static const QRegExp expiresInRE(QLatin1String("\"expires_in\":([1-9][0-9]*)"));
+
+     QNetworkReply *reply = static_cast<QNetworkReply *>(sender());
+     const QString rawText = QString::fromUtf8(reply->readAll().constData());
+     bool ok = false;
+     if (reply->error() == QNetworkReply::NoError && accessTokenRE.indexIn(rawText) > 0 && expiresInRE.indexIn(rawText) > 0) {
+         m_accessToken = accessTokenRE.cap(1);
+         int expireIn = expiresInRE.cap(1).toInt(&ok);
+         if (ok) {
+             m_accessTokenExpiration = QDateTime::currentDateTime().addSecs(expireIn - 5);
+             qDebug() << "Got an access token" << m_accessToken << "to expire in" << expireIn << "sec";
+
+             if (currentRequestState == FahrplanNS::stationsByNameRequest && m_stationByNameParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in findStationsByName(..) work
+                 findStationsByName(m_stationByNameParameters.stationName);
+             } else if (currentRequestState == FahrplanNS::stationsByCoordinatesRequest && m_stationByCoordinatesParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in findStationsByCoordinates(..) work
+                 findStationsByCoordinates(m_stationByCoordinatesParameters.longitude, m_stationByCoordinatesParameters.latitude);
+             } else if (currentRequestState == FahrplanNS::getTimeTableForStationRequest && m_timeTableForStationParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in getTimeTableForStation(..) work
+                 getTimeTableForStation(m_timeTableForStationParameters.currentStation, m_timeTableForStationParameters.directionStation, m_timeTableForStationParameters.dateTime, m_timeTableForStationParameters.mode, m_timeTableForStationParameters.trainrestrictions);
+             } else if (currentRequestState == FahrplanNS::searchJourneyRequest && m_searchJourneyParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in searchJourney(..) work
+                 searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.arrivalStation,m_searchJourneyParameters.dateTime, m_searchJourneyParameters.mode, m_searchJourneyParameters.trainrestrictions);
+             }
+         }
+     }
+
+     if (!ok) {
+         qWarning() << "Failed to extract access token from this data:" << rawText;
+         m_accessTokenExpiration.setDate(QDate(2000, 1, 1));
+     }
+ }
