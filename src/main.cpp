@@ -17,6 +17,8 @@
 **
 ****************************************************************************/
 
+#include <ctime>
+
 #include <QtCore/QTranslator>
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN) || defined(BUILD_FOR_BLACKBERRY)
@@ -68,6 +70,8 @@ Q_DECL_EXPORT
 #endif
 int main(int argc, char *argv[])
 {
+    qsrand(time(NULL));
+
     #if defined(BUILD_FOR_SAILFISHOS)
         //To support calendar access
         #if defined(BUILD_FOR_OPENREPOS)
