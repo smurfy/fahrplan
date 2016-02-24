@@ -56,13 +56,26 @@ ParserXmlVasttrafikSe::~ParserXmlVasttrafikSe() {
     delete m_nam;
 }
 
-void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
+void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
 
-    m_timeTableForStationParameters.isValid = false;
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_timeTableForStationParameters.currentStation = currentStation;
+        m_timeTableForStationParameters.directionStation = directionStation;
+        m_timeTableForStationParameters.dateTime = dateTime;
+        m_timeTableForStationParameters.mode = mode;
+        m_timeTableForStationParameters.trainrestrictions = trainrestrictions;
+        m_timeTableForStationParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_timeTableForStationParameters.isValid = false;
+    }
 
     QUrl uri(baseRestUrl + (mode == Departure ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
 
@@ -99,6 +112,17 @@ void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
         return;
     currentRequestState = FahrplanNS::stationsByNameRequest;
 
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_stationByNameParameters.stationName = stationName;
+        m_stationByNameParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_stationByNameParameters.isValid = false;
+    }
+
     QUrl uri(baseRestUrl + QLatin1String("location.name"));
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
@@ -123,6 +147,18 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
+
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_stationByCoordinatesParameters.longitude = longitude;
+        m_stationByCoordinatesParameters.latitude = latitude;
+        m_stationByCoordinatesParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_stationByCoordinatesParameters.isValid = false;
+    }
 
     QUrl uri(baseRestUrl + QLatin1String("location.nearbystops"));
 #if defined(BUILD_FOR_QT5)
@@ -151,13 +187,22 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
         return;
     currentRequestState = FahrplanNS::searchJourneyRequest;
 
-    m_searchJourneyParameters.isValid = false;
     m_searchJourneyParameters.departureStation = departureStation;
     m_searchJourneyParameters.arrivalStation = arrivalStation;
     m_searchJourneyParameters.viaStation = viaStation;
     m_searchJourneyParameters.dateTime = dateTime;
     m_searchJourneyParameters.mode = mode;
     m_searchJourneyParameters.trainrestrictions = trainrestrictions;
+
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_searchJourneyParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_searchJourneyParameters.isValid = false;
+    }
 
     QUrl uri(baseRestUrl + QLatin1String("trip"));
 #if defined(BUILD_FOR_QT5)
