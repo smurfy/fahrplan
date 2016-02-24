@@ -77,6 +77,16 @@ private:
         int trainrestrictions;
     } m_timeTableForStationParameters;
 
+    struct {
+        bool isValid;
+        QString stationName;
+    } m_stationByNameParameters;
+
+    struct {
+        bool isValid;
+        qreal longitude, latitude;
+    } m_stationByCoordinatesParameters;
+
     const QString apiKey;
     const QString baseRestUrl;
 

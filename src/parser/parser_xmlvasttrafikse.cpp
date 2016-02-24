@@ -44,6 +44,8 @@ ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
 {
     m_searchJourneyParameters.isValid = false;
     m_timeTableForStationParameters.isValid = false;
+    m_stationByNameParameters.isValid = false;
+    m_stationByCoordinatesParameters.isValid = false;
 }
 
 
