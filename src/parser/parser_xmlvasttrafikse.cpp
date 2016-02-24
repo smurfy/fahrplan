@@ -40,8 +40,10 @@ QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
 
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
 
+const QString ParserXmlVasttrafikSe::baseRestUrl = QLatin1String("https://api.vasttrafik.se/bin/rest.exe/v2/");
+
 ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
-    : ParserAbstract(parent), apiKey(QLatin1String("47c5abaf-49d6-4c23-a1bd-b2e2766c4de7")), baseRestUrl(QLatin1String("http://api.vasttrafik.se/bin/rest.exe/v1/"))
+    : ParserAbstract(parent)
 {
     m_nam = new QNetworkAccessManager(this);
     m_searchJourneyParameters.isValid = false;
@@ -84,7 +86,6 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
@@ -101,7 +102,8 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
@@ -129,7 +131,6 @@ void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("input", stationName);
 #if defined(BUILD_FOR_QT5)
@@ -137,7 +138,8 @@ void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal latitude)
@@ -166,7 +168,6 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("originCoordLat", QString::number(latitude));
     query.addQueryItem("originCoordLong", QString::number(longitude));
@@ -176,7 +177,8 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
@@ -210,7 +212,6 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
@@ -233,7 +234,8 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::getJourneyDetails(const QString &id)
@@ -555,6 +557,17 @@ QString ParserXmlVasttrafikSe::i18nConnectionType(const QString &swedishText) co
 {
     QString internalCopy = swedishText;
     return internalCopy.replace(QLatin1String("Buss"), tr("Bus")).replace(QLatin1String("Expbuss"), tr("Exp Bus")).replace(QLatin1String("EXPRESS"), QLatin1String("EXPR")).replace(QString::fromUtf8("Spårvagn"), tr("Tram")).replace(QString::fromUtf8("Färja"), tr("Ferry"));
+}
+
+void ParserXmlVasttrafikSe::sendHttpRequestWithBearer(const QUrl &uri) {
+    QList<QPair<QByteArray,QByteArray> > additionalHeaders;
+#if defined(BUILD_FOR_QT5)
+    additionalHeaders.append(QPair<QByteArray,QByteArray>("Authorization", QString(QLatin1String("Bearer ")).append(m_accessToken).toLatin1()));
+#else
+    additionalHeaders.append(QPair<QByteArray,QByteArray>("Authorization", QString(QLatin1String("Bearer ")).append(m_accessToken).toAscii()));
+#endif
+
+    sendHttpRequest(uri, NULL, additionalHeaders);
 }
 
 void ParserXmlVasttrafikSe::requestNewAccessToken() {

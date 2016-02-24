@@ -55,6 +55,8 @@ protected:
     virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseSearchJourney(QNetworkReply *networkReply);
 
+    void sendHttpRequestWithBearer(const QUrl &uri);
+
 private:
     static const qlonglong TRIP_RTDATA_NONE;
     static const qlonglong TRIP_RTDATA_ONTIME;
@@ -89,8 +91,7 @@ private:
         qreal longitude, latitude;
     } m_stationByCoordinatesParameters;
 
-    const QString apiKey;
-    const QString baseRestUrl;
+    static const QString baseRestUrl;
     QNetworkAccessManager *m_nam;
     QDateTime m_accessTokenExpiration;
     QString m_accessToken, m_deviceId;
