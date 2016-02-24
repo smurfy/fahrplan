@@ -224,7 +224,7 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList locationList = doc.elementsByTagName("StopLocation");
-        for (unsigned int i = 0; i < locationList.length(); ++i) {
+        for (int i = 0; i < locationList.length(); ++i) {
             QDomNode locationNode = locationList.item(i);
 
             Station item;
@@ -269,7 +269,7 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
             nodeList = doc.elementsByTagName("Arrival");
             isArrival = true;
         }
-        for (unsigned int i = 0; i < nodeList.length(); ++i) {
+        for (int i = 0; i < nodeList.length(); ++i) {
             QDomNode node = nodeList.item(i);
             TimetableEntry item;
 
@@ -328,7 +328,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList tripNodeList = doc.elementsByTagName("Trip");
-        for (unsigned int i = 0; i < tripNodeList.length(); ++i) {
+        for (int i = 0; i < tripNodeList.length(); ++i) {
             JourneyResultItem *jritem = new JourneyResultItem();
             JourneyDetailResultList *detailsList = new JourneyDetailResultList();
 
@@ -340,7 +340,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
             int numStops = 0;
             QStringList trainTypes;
             int tripRtStatus = TRIP_RTDATA_NONE;
-            for (unsigned int j = 0; j < legNodeList.length(); ++j) {
+            for (int j = 0; j < legNodeList.length(); ++j) {
                 QDomNode legNode = legNodeList.item(j);
                 QDomNode originNode = legNode.namedItem("Origin");
                 QDomNode destinationNode = legNode.namedItem("Destination");
