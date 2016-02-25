@@ -41,6 +41,7 @@ QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
 
 const QString ParserXmlVasttrafikSe::baseRestUrl = QLatin1String("https://api.vasttrafik.se/bin/rest.exe/v2/");
+const char *ParserXmlVasttrafikSe::consumerCredentials = "ZHhONXJGdUpOZ1NfQjltc29zZlRuYTBwelpjYTpPMDVsNEhTNGdieU5KdGY4a29MRmdCZ1g0WUFh";
 
 ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
     : ParserAbstract(parent)
@@ -574,7 +575,9 @@ void ParserXmlVasttrafikSe::requestNewAccessToken() {
     qDebug() << "Requesting new access token for device" << m_deviceId;
     QNetworkRequest request(QUrl(QLatin1String("https://api.vasttrafik.se/token")));
     request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
-    request.setRawHeader("Authorization", "Basic SWlUU1dmY0dYdVFId2FqMXYyYktCTXZvOFNNYTpyN0pvMHJDNHBTbEhUUHlDZm1DNUxwMmVWd29h");
+    QByteArray authorizationData("Basic ");
+    authorizationData.append(consumerCredentials);
+    request.setRawHeader("Authorization", authorizationData);
     QByteArray postData("grant_type=client_credentials&scope=device_");
 #if defined(BUILD_FOR_QT5)
     postData.append(m_deviceId.toLatin1());

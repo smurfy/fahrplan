@@ -92,6 +92,7 @@ private:
     } m_stationByCoordinatesParameters;
 
     static const QString baseRestUrl;
+    static const char *consumerCredentials;
     QNetworkAccessManager *m_nam;
     QDateTime m_accessTokenExpiration;
     QString m_accessToken, m_deviceId;
