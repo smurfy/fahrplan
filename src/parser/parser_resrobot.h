@@ -24,35 +24,23 @@
 
 #include <QVariantMap>
 #include <QHash>
+#ifdef BUILD_FOR_QT5
+    #include <QUrlQuery>
+#endif
 
 /*
  * Some info on this API:
  *   * ResRobot enables searching for public transport connections in all of Sweden.
- *   * This backend actually uses two API's: "ResRobot Sök Resa" and "ResRobot Stolptidtabeller".
- *   * The super versions of the API should contain realtime info in the responses, but is expected
- *     to be slower.
+ *   * This backend actually uses two API's: "ResRobot - Reseplanerare" and "ResRobot - Stolptidtabeller 2".
  *   * Results are in XML or JSON.
  *   * ResRobot web frontend: http://resrobot.se/
- *   * More API info: https://www.trafiklab.se/api/resrobot-sok-resa
+ *   * More API info: https://www.trafiklab.se/api/resrobot-reseplanerare
+ *                    https://www.trafiklab.se/api/resrobot-stolptidtabeller-2
  *   * Backend project: https://www.trafiklab.se/projekt/fahrplan
  *   * Report API issues at https://kundo.se/org/trafiklabse/
  *
  * Issues and limitations:
- *   * JSON results can be strange sometimes. If a variable that normally contains a list only has
- *     one item, the variable itself holds the value of that item. The workaround in this class is
- *     to call a function with potential list variables and wrap the content in a list if it isn't
- *     a list already.
- *   * Via stations in search queries are not supported.
- *   * Timetable searching is limited to departures, and it is not possible to specify a time
- *     (the search is always "now").
- *   * Searching for station names returns a lot of noise - places with names very
- *     unlikely to be what the user wants. This is mitigated with extra filtering.
- *   * Documentation of realtime info is bad, and realtime data have so far only been spotted in
- *     timetable results.
- *   * There is no public documentation for the remark codes.
  *   * The transport mode codes aren't reliable. The API can return stuff that isn't documented.
- *   * Sometimes realtime info is missing due to timeout when the server is fetching the info from
- *     the external source.
  */
 
 class ParserResRobot : public ParserAbstract
@@ -75,7 +63,7 @@ public slots:
     virtual void findStationsByCoordinates(qreal longitude, qreal latitude);
     virtual void getTimeTableForStation(const Station &currentStation,
                                         const Station &directionStation,
-                                        const QDateTime &datetime,
+                                        const QDateTime &dateTime,
                                         ParserAbstract::Mode mode,
                                         int trainrestrictions);
     virtual void searchJourney(const Station &departureStation, const Station &viaStation,
@@ -95,10 +83,21 @@ protected:
     virtual void parseJourneyDetails(QNetworkReply *networkReply);
 
 private:
-    enum transportModePreset {
+    enum TransportModePreset {
         ALL_TRANSPORT_MODES,
         TRAIN_PUB_TRANS_NOT_EXP_BUS,
         EXP_BUS_PUB_TRANS_NOT_TRAIN
+    };
+
+    enum Product {
+        HIGH_SPEED_TRAIN = 2, // Snabbtåg, Expresståg, Arlanda Express
+        REGIONAL_TRAIN = 4,   // Regionaltåg, InterCitytåg
+        EXPRESS_BUS = 8,      // Expressbuss, Flygbussar
+        LOCAL_TRAIN = 16,     // Lokaltåg, Pågatåg, Öresundståg
+        SUBWAY = 32,          // Tunnelbana
+        TRAM = 64,            // Spårvagn
+        BUS = 128,            // Buss
+        FERRY = 256           // Färja, Utrikes Färja
     };
 
     struct {
@@ -113,30 +112,27 @@ private:
     } lastJourneySearch;
 
     QString lastStationSearch;
+    QString searchEarlierReference;
+    QString searchLaterReference;
+    Mode timetableSearchMode;
     const QString timetableAPIKey;
     const QString journeyAPIKey;
-    const QString timetableBaseURL;
-    const QString journeyBaseURL;
-    const QString realtimeTimetableBaseURL;
+    const QString baseURL;
     const QString timetableAPIVersion;
     const QString journeyAPIVersion;
-    const int nearbyRadius; // Define what is "nearby" in meters
-    const int timetableSpan; // Minutes (valid values: 30 or 120)
-    bool realtime;
     QMap<QString, JourneyDetailResultList*> cachedResults;
-    // Keep track of the number of "earlier"/"later" searches we did without getting any new results
-    int numberOfUnsuccessfulEarlierSearches;
-    int numberOfUnsuccessfulLaterSearches;
-    QHash<QString, QString> remarkStrings;
+    QHash<QString, QString> hafasAttributes;
     QHash<QString, QString> transportModeStrings;
 
-    virtual void internalSearchJourney(const Station &departureStation, const Station &viaStation,
-                                       const Station &arrivalStation, const QDateTime &dateTime,
-                                       ParserAbstract::Mode mode, int trainrestrictions);
+#if defined(BUILD_FOR_QT5)
+    virtual void doSearchJourney(QUrlQuery query);
+#else
+    virtual void doSearchJourney(QUrl query);
+#endif
     QList<JourneyDetailResultItem*> parseJourneySegments(const QVariantMap &journeyData);
-    QVariantList ensureList(const QVariant &variable);
-    QString translateRemark(const QString& original);
+    QString hafasAttribute(const QString& original);
     QString translateTransportMode(QString original);
+    QString formatRestrictions(int restriction);
 };
 
 #endif // PARSER_RESROBOT_H

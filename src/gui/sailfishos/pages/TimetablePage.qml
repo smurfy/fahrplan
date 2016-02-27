@@ -37,7 +37,7 @@ Page {
             width: parent.width
 
             PageHeader {
-                title: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
+                id: timetableDesc
             }
 
             ListView {
@@ -45,7 +45,7 @@ Page {
                 width: parent.width
                 height: contentHeight
                 interactive: false
-                visible: !indicator.visible
+                visible: !indicator.visible && !errorMsg.visible
 
                 model:  fahrplanBackend.timetable
 
@@ -56,14 +56,33 @@ Page {
         }
     }
 
+    Label {
+        id: errorMsg
+        anchors {
+            centerIn: parent
+            left: parent.left
+            right: parent.right
+            leftMargin: Theme.paddingMedium
+            rightMargin: Theme.paddingMedium
+        }
+        horizontalAlignment: Text.AlignHCenter
+        visible: false
+        width: parent.width
+        color: Theme.highlightColor
+        font.family: Theme.fontFamilyHeading
+        wrapMode: Text.WordWrap
+    }
 
     onStatusChanged: {
         switch (status) {
             case PageStatus.Activating:
                 indicator.visible = true;
+                errorMsg.visible = false;
+                timetableDesc.title = qsTr("Searching...");
                 fahrplanBackend.getTimeTable();
                 break;
             case PageStatus.Deactivating:
+                errorMsg.visible = false;
                 fahrplanBackend.parser.cancelRequest();
                 break;
         }
@@ -82,6 +101,17 @@ Page {
 
         onParserTimeTableResult: {
             indicator.visible = false;
+            errorMsg.visible = false;
+            timetableDesc.title = fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
+        }
+
+        onParserErrorOccured: {
+            console.log("Got error")
+            console.log(msg)
+            errorMsg.visible = true;
+            indicator.visible = false;
+            timetableDesc.title = qsTr("Error");
+            errorMsg.text = msg;
         }
     }
 }

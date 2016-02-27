@@ -161,6 +161,9 @@ void FahrplanParserThread::run()
         case 14:
             m_parser = new ParserResRobot();
             break;
+        case 15:
+            m_parser = new ParserFinlandMatka();
+            break;
     }
 
     m_name = m_parser->name();

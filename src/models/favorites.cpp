@@ -35,8 +35,6 @@ QVariant Favorites::data(const QModelIndex &index, int role) const
 
     if (role == IsFavorite)
         return true;
-    else if (role == MiscInfo)
-        return "";
     else
         return StationsListModel::data(index, role);
 }
@@ -104,6 +102,10 @@ void Favorites::loadFavorites()
         Station station;
         station.id = m_settings->value("id");
         station.name = m_settings->value("name").toString();
+        station.type = m_settings->value("type").toString();
+        station.miscInfo = m_settings->value("miscInfo").toString();
+        station.latitude = m_settings->value("latitude").toFloat();
+        station.longitude = m_settings->value("longitude").toFloat();
         m_list << station;
     }
     m_settings->endArray();
@@ -122,6 +124,10 @@ void Favorites::saveToSettings()
         m_settings->setArrayIndex(k);
         m_settings->setValue("id", m_list.at(k).id);
         m_settings->setValue("name", m_list.at(k).name);
+        m_settings->setValue("type", m_list.at(k).type);
+        m_settings->setValue("miscInfo", m_list.at(k).miscInfo);
+        m_settings->setValue("latitude", m_list.at(k).latitude);
+        m_settings->setValue("longitude", m_list.at(k).longitude);
     }
     m_settings->endArray();
 }

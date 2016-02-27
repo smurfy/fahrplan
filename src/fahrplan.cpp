@@ -398,11 +398,11 @@ Station Fahrplan::getStation(StationType type) const
 
 void Fahrplan::loadStations()
 {
-    setStation(DepartureStation, loadStationFromSettigns("departureStation"));
-    setStation(ViaStation, loadStationFromSettigns("viaStation"));
-    setStation(ArrivalStation, loadStationFromSettigns("arrivalStation"));
-    setStation(CurrentStation, loadStationFromSettigns("currentStation"));
-    setStation(DirectionStation, loadStationFromSettigns("directionStation"));
+    setStation(DepartureStation, loadStationFromSettings("departureStation"));
+    setStation(ViaStation, loadStationFromSettings("viaStation"));
+    setStation(ArrivalStation, loadStationFromSettings("arrivalStation"));
+    setStation(CurrentStation, loadStationFromSettings("currentStation"));
+    setStation(DirectionStation, loadStationFromSettings("directionStation"));
 }
 
 void Fahrplan::saveStationToSettings(const QString &key, const Station &station)
@@ -418,12 +418,16 @@ void Fahrplan::saveStationToSettings(const QString &key, const Station &station)
     settings->beginGroup(key);
     settings->setValue("id", station.id);
     settings->setValue("name", station.name);
+    settings->setValue("type", station.type);
+    settings->setValue("miscInfo", station.miscInfo);
+    settings->setValue("latitude", station.latitude);
+    settings->setValue("longitude", station.longitude);
     settings->endGroup(); // key
 
     settings->endGroup(); // Parser UID
 }
 
-Station Fahrplan::loadStationFromSettigns(const QString &key)
+Station Fahrplan::loadStationFromSettings(const QString &key)
 {
     Station station(false);
 
@@ -435,6 +439,10 @@ Station Fahrplan::loadStationFromSettigns(const QString &key)
         station.name = settings->value("name").toString();
         if (!station.name.isEmpty())
             station.valid = true;
+        station.type = settings->value("type").toString();
+        station.miscInfo = settings->value("miscInfo").toString();
+        station.latitude = settings->value("latitude").toFloat();
+        station.longitude = settings->value("longitude").toFloat();
     }
 
     settings->endGroup(); // key
