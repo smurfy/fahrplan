@@ -28,6 +28,8 @@ class ParserXmlVasttrafikSe : public ParserAbstract
 
 public:
     explicit ParserXmlVasttrafikSe(QObject *parent = 0);
+    ~ParserXmlVasttrafikSe();
+
     static QString getName() { return QString("%1 (vasttrafik.se)").arg(tr("Sweden")); }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return "vasttrafik.se"; }
@@ -53,6 +55,8 @@ protected:
     virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseSearchJourney(QNetworkReply *networkReply);
 
+    void sendHttpRequestWithBearer(const QUrl &uri);
+
 private:
     static const qlonglong TRIP_RTDATA_NONE;
     static const qlonglong TRIP_RTDATA_ONTIME;
@@ -77,12 +81,30 @@ private:
         int trainrestrictions;
     } m_timeTableForStationParameters;
 
-    const QString apiKey;
-    const QString baseRestUrl;
+    struct {
+        bool isValid;
+        QString stationName;
+    } m_stationByNameParameters;
+
+    struct {
+        bool isValid;
+        qreal longitude, latitude;
+    } m_stationByCoordinatesParameters;
+
+    static const QString baseRestUrl;
+    static const char *consumerCredentials;
+    QNetworkAccessManager *m_nam;
+    QDateTime m_accessTokenExpiration;
+    QString m_accessToken, m_deviceId;
 
     QDateTime m_earliestArrival, m_latestResultDeparture;
 
     inline QString i18nConnectionType(const QString &swedishText) const;
+
+    void requestNewAccessToken();
+
+private slots:
+    void accessTokenRequestFinished();
 };
 
 #endif // PARSER_XMLVASTTRAFIKSE_H

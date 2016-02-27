@@ -20,6 +20,7 @@
 #include "parser_xmlvasttrafikse.h"
 
 #include <QDebug>
+#include <QCoreApplication>
 
 #include <QtCore/QUrl>
 #include <QtNetwork/QNetworkReply>
@@ -39,21 +40,45 @@ QHash<QString, JourneyDetailResultList *> cachedJourneyDetails;
 
 #define getAttribute(node, key) (node.attributes().namedItem(key).toAttr().value())
 
+const QString ParserXmlVasttrafikSe::baseRestUrl = QLatin1String("https://api.vasttrafik.se/bin/rest.exe/v2/");
+const char *ParserXmlVasttrafikSe::consumerCredentials = "ZHhONXJGdUpOZ1NfQjltc29zZlRuYTBwelpjYTpPMDVsNEhTNGdieU5KdGY4a29MRmdCZ1g0WUFh";
+
 ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
-    : ParserAbstract(parent), apiKey(QLatin1String("47c5abaf-49d6-4c23-a1bd-b2e2766c4de7")), baseRestUrl(QLatin1String("http://api.vasttrafik.se/bin/rest.exe/v1/"))
+    : ParserAbstract(parent)
 {
+    m_nam = new QNetworkAccessManager(this);
     m_searchJourneyParameters.isValid = false;
     m_timeTableForStationParameters.isValid = false;
+    m_stationByNameParameters.isValid = false;
+    m_stationByCoordinatesParameters.isValid = false;
+    m_accessTokenExpiration = QDateTime(QDate(2000, 1, 1)); ///< by default, access token expired a long time ago
+    m_deviceId = QCoreApplication::instance()->applicationName() + QLatin1String("-") + QString::number(qrand(), 16) + QLatin1String("-") + QString::number(QCoreApplication::instance()->applicationPid(), 10);
 }
 
+ParserXmlVasttrafikSe::~ParserXmlVasttrafikSe() {
+    delete m_nam;
+}
 
-void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
+void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, Mode mode, int trainrestrictions)
 {
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::getTimeTableForStationRequest;
 
-    m_timeTableForStationParameters.isValid = false;
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_timeTableForStationParameters.currentStation = currentStation;
+        m_timeTableForStationParameters.directionStation = directionStation;
+        m_timeTableForStationParameters.dateTime = dateTime;
+        m_timeTableForStationParameters.mode = mode;
+        m_timeTableForStationParameters.trainrestrictions = trainrestrictions;
+        m_timeTableForStationParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_timeTableForStationParameters.isValid = false;
+    }
 
     QUrl uri(baseRestUrl + (mode == Departure ? QLatin1String("departureBoard") : QLatin1String("arrivalBoard")));
 
@@ -62,7 +87,6 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
@@ -79,16 +103,26 @@ void ParserXmlVasttrafikSe::getTimeTableForStation(const Station &currentStation
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
 {
-    qDebug() << "ParserXmlVasttrafikSe::findStationsByName(stationName" << stationName << ")";
-
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::stationsByNameRequest;
+
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_stationByNameParameters.stationName = stationName;
+        m_stationByNameParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_stationByNameParameters.isValid = false;
+    }
 
     QUrl uri(baseRestUrl + QLatin1String("location.name"));
 #if defined(BUILD_FOR_QT5)
@@ -96,7 +130,6 @@ void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("input", stationName);
 #if defined(BUILD_FOR_QT5)
@@ -104,16 +137,27 @@ void ParserXmlVasttrafikSe::findStationsByName(const QString &stationName)
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
-    qDebug() << "ParserXmlVasttrafikSe::findStationsByCoordinates(longitude=" << longitude << ", latitude=" << latitude << ")";
-
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
+
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_stationByCoordinatesParameters.longitude = longitude;
+        m_stationByCoordinatesParameters.latitude = latitude;
+        m_stationByCoordinatesParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_stationByCoordinatesParameters.isValid = false;
+    }
 
     QUrl uri(baseRestUrl + QLatin1String("location.nearbystops"));
 #if defined(BUILD_FOR_QT5)
@@ -121,7 +165,6 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("originCoordLat", QString::number(latitude));
     query.addQueryItem("originCoordLong", QString::number(longitude));
@@ -131,18 +174,16 @@ void ParserXmlVasttrafikSe::findStationsByCoordinates(qreal longitude, qreal lat
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const Station &viaStation, const Station &arrivalStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
-    qDebug() << "ParserXmlVasttrafikSe::searchJourney(departureStation=" << departureStation.name << ", arrivalStation=" << arrivalStation.name << ", viaStation=" << viaStation.name << ", dateTime=" << dateTime.toString() << ", mode=" << mode << ", trainrestrictions=" << trainrestrictions << ")";
-
     if (currentRequestState != FahrplanNS::noneRequest)
         return;
     currentRequestState = FahrplanNS::searchJourneyRequest;
 
-    m_searchJourneyParameters.isValid = false;
     m_searchJourneyParameters.departureStation = departureStation;
     m_searchJourneyParameters.arrivalStation = arrivalStation;
     m_searchJourneyParameters.viaStation = viaStation;
@@ -150,13 +191,22 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
     m_searchJourneyParameters.mode = mode;
     m_searchJourneyParameters.trainrestrictions = trainrestrictions;
 
+    if (m_accessTokenExpiration < QDateTime::currentDateTime()) {
+        qDebug() << "Need to request new access token";
+        m_searchJourneyParameters.isValid = true;
+        requestNewAccessToken();
+        return;
+    } else {
+        qDebug() << "Access token is good for another" << QDateTime::currentDateTime().secsTo(m_accessTokenExpiration) << "sec";
+        m_searchJourneyParameters.isValid = false;
+    }
+
     QUrl uri(baseRestUrl + QLatin1String("trip"));
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
 #else
     QUrl query;
 #endif
-    query.addQueryItem("authKey", apiKey);
     query.addQueryItem("format", "xml");
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
@@ -179,7 +229,8 @@ void ParserXmlVasttrafikSe::searchJourney(const Station &departureStation, const
 #else
     uri.setQueryItems(query.queryItems());
 #endif
-    sendHttpRequest(uri);
+
+    sendHttpRequestWithBearer(uri);
 }
 
 void ParserXmlVasttrafikSe::getJourneyDetails(const QString &id)
@@ -214,8 +265,6 @@ bool ParserXmlVasttrafikSe::supportsTimeTableDirection()
 
 void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
 {
-    qDebug() << "ParserXmlVasttrafikSe::parseStationsByName(networkReply.url()=" << networkReply->url().toString() << ")";
-
     StationsList result;
     QTextStream ts(networkReply->readAll());
     ts.setCodec("UTF-8");
@@ -224,7 +273,7 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList locationList = doc.elementsByTagName("StopLocation");
-        for (unsigned int i = 0; i < locationList.length(); ++i) {
+        for (int i = 0; i < locationList.length(); ++i) {
             QDomNode locationNode = locationList.item(i);
 
             Station item;
@@ -237,6 +286,7 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
         }
     }
 
+    /** FIXME is this dead code, as ...isValid was never set to true before the changes for API v2
     if (m_timeTableForStationParameters.isValid) {
         getTimeTableForStation(m_timeTableForStationParameters.currentStation, m_timeTableForStationParameters.directionStation, m_timeTableForStationParameters.dateTime, m_timeTableForStationParameters.mode, m_timeTableForStationParameters.trainrestrictions);
     } else if (m_searchJourneyParameters.isValid) {
@@ -244,18 +294,17 @@ void ParserXmlVasttrafikSe::parseStationsByName(QNetworkReply *networkReply)
     } else {
         emit stationsResult(result);
     }
+    */
+    emit stationsResult(result);
 }
 
 void ParserXmlVasttrafikSe::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
-    qDebug() << "ParserXmlVasttrafikSe::parseStationsByCoordinates(networkReply.url()=" << networkReply->url().toString() << ")";
     parseStationsByName(networkReply);
 }
 
 void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
 {
-    qDebug() << "ParserXmlVasttrafikSe::parseTimeTable(networkReply.url()=" << networkReply->url().toString() << ")";
-
     TimetableEntriesList result;
     QTextStream ts(networkReply->readAll());
     ts.setCodec("UTF-8");
@@ -269,7 +318,7 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
             nodeList = doc.elementsByTagName("Arrival");
             isArrival = true;
         }
-        for (unsigned int i = 0; i < nodeList.length(); ++i) {
+        for (int i = 0; i < nodeList.length(); ++i) {
             QDomNode node = nodeList.item(i);
             TimetableEntry item;
 
@@ -303,8 +352,6 @@ void ParserXmlVasttrafikSe::parseTimeTable(QNetworkReply *networkReply)
 
 void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
 {
-    qDebug() << "ParserXmlVasttrafikSe::parseSearchJourney(networkReply.url()=" << networkReply->url().toString() << ")";
-
     JourneyResultList *journeyResultList = new JourneyResultList();
 
     for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetails.begin(); it != cachedJourneyDetails.end();) {
@@ -328,7 +375,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
     QDomDocument doc("result");
     if (doc.setContent(xmlRawtext, false)) {
         QDomNodeList tripNodeList = doc.elementsByTagName("Trip");
-        for (unsigned int i = 0; i < tripNodeList.length(); ++i) {
+        for (int i = 0; i < tripNodeList.length(); ++i) {
             JourneyResultItem *jritem = new JourneyResultItem();
             JourneyDetailResultList *detailsList = new JourneyDetailResultList();
 
@@ -340,7 +387,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
             int numStops = 0;
             QStringList trainTypes;
             int tripRtStatus = TRIP_RTDATA_NONE;
-            for (unsigned int j = 0; j < legNodeList.length(); ++j) {
+            for (int j = 0; j < legNodeList.length(); ++j) {
                 QDomNode legNode = legNodeList.item(j);
                 QDomNode originNode = legNode.namedItem("Origin");
                 QDomNode destinationNode = legNode.namedItem("Destination");
@@ -499,3 +546,67 @@ QString ParserXmlVasttrafikSe::i18nConnectionType(const QString &swedishText) co
     QString internalCopy = swedishText;
     return internalCopy.replace(QLatin1String("Buss"), tr("Bus")).replace(QLatin1String("Expbuss"), tr("Exp Bus")).replace(QLatin1String("EXPRESS"), QLatin1String("EXPR")).replace(QString::fromUtf8("Spårvagn"), tr("Tram")).replace(QString::fromUtf8("Färja"), tr("Ferry"));
 }
+
+void ParserXmlVasttrafikSe::sendHttpRequestWithBearer(const QUrl &uri) {
+    QList<QPair<QByteArray,QByteArray> > additionalHeaders;
+#if defined(BUILD_FOR_QT5)
+    additionalHeaders.append(QPair<QByteArray,QByteArray>("Authorization", QString(QLatin1String("Bearer ")).append(m_accessToken).toLatin1()));
+#else
+    additionalHeaders.append(QPair<QByteArray,QByteArray>("Authorization", QString(QLatin1String("Bearer ")).append(m_accessToken).toAscii()));
+#endif
+
+    sendHttpRequest(uri, NULL, additionalHeaders);
+}
+
+void ParserXmlVasttrafikSe::requestNewAccessToken() {
+    qDebug() << "Requesting new access token for device" << m_deviceId;
+    QNetworkRequest request(QUrl(QLatin1String("https://api.vasttrafik.se/token")));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
+    QByteArray authorizationData("Basic ");
+    authorizationData.append(consumerCredentials);
+    request.setRawHeader("Authorization", authorizationData);
+    QByteArray postData("grant_type=client_credentials&scope=device_");
+#if defined(BUILD_FOR_QT5)
+    postData.append(m_deviceId.toLatin1());
+#else
+    postData.append(m_deviceId.toAscii());
+#endif
+    QNetworkReply *reply = m_nam->post(request, postData);
+    connect(reply, SIGNAL(finished()), this, SLOT(accessTokenRequestFinished()));
+}
+
+void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
+     static const QRegExp accessTokenRE(QLatin1String("\"access_token\":\"([0-9a-f]+)"));
+     static const QRegExp expiresInRE(QLatin1String("\"expires_in\":([1-9][0-9]*)"));
+
+     QNetworkReply *reply = static_cast<QNetworkReply *>(sender());
+     const QString rawText = QString::fromUtf8(reply->readAll().constData());
+     bool ok = false;
+     if (reply->error() == QNetworkReply::NoError && accessTokenRE.indexIn(rawText) > 0 && expiresInRE.indexIn(rawText) > 0) {
+         m_accessToken = accessTokenRE.cap(1);
+         int expireIn = expiresInRE.cap(1).toInt(&ok);
+         if (ok) {
+             m_accessTokenExpiration = QDateTime::currentDateTime().addSecs(expireIn - 5);
+             qDebug() << "Got access token" << m_accessToken << "which expires in" << expireIn << "sec";
+
+             if (currentRequestState == FahrplanNS::stationsByNameRequest && m_stationByNameParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in findStationsByName(..) work
+                 findStationsByName(m_stationByNameParameters.stationName);
+             } else if (currentRequestState == FahrplanNS::stationsByCoordinatesRequest && m_stationByCoordinatesParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in findStationsByCoordinates(..) work
+                 findStationsByCoordinates(m_stationByCoordinatesParameters.longitude, m_stationByCoordinatesParameters.latitude);
+             } else if (currentRequestState == FahrplanNS::getTimeTableForStationRequest && m_timeTableForStationParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in getTimeTableForStation(..) work
+                 getTimeTableForStation(m_timeTableForStationParameters.currentStation, m_timeTableForStationParameters.directionStation, m_timeTableForStationParameters.dateTime, m_timeTableForStationParameters.mode, m_timeTableForStationParameters.trainrestrictions);
+             } else if (currentRequestState == FahrplanNS::searchJourneyRequest && m_searchJourneyParameters.isValid) {
+                 currentRequestState = FahrplanNS::noneRequest; ///< to make a check in searchJourney(..) work
+                 searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.arrivalStation,m_searchJourneyParameters.dateTime, m_searchJourneyParameters.mode, m_searchJourneyParameters.trainrestrictions);
+             }
+         }
+     }
+
+     if (!ok) {
+         qWarning() << "Failed to extract access token from this data:" << rawText;
+         m_accessTokenExpiration.setDate(QDate(2000, 1, 1));
+     }
+ }
