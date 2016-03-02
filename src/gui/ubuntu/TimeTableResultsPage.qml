@@ -91,7 +91,7 @@ Page {
                         Label {
                             id: lbl_type
                             text: model.trainType
-                            fontSize: "x-small"
+                            textSize: Label.XSmall
                         }
                     }
 
@@ -125,7 +125,7 @@ Page {
                                 return platform;
                             }
                             width: parent.width
-                            fontSize: "x-small"
+                            textSize: Label.XSmall
                             visible: text !== ""
                         }
                     }
@@ -136,7 +136,7 @@ Page {
                     visible: miscInfo !== ""
                     text: miscInfo
                     width: parent.width
-                    fontSize: "small"
+                    textSize: Label.Small
                     elide: Text.ElideRight
                     wrapMode: Text.WordWrap
                     maximumLineCount: 2

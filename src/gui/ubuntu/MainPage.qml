@@ -129,7 +129,7 @@ Page {
                     anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
                     color: "White"
                     font.bold: true;
-                    fontSize: "large"
+                    textSize: Label.Large
                     elide: Text.ElideRight
                     text: fahrplanBackend.parserShortName
                 }
@@ -144,7 +144,7 @@ Page {
                 value: fahrplanBackend.departureStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
 
                 onPressAndHold: openMenu(departureButton)
@@ -159,7 +159,7 @@ Page {
                 value: fahrplanBackend.viaStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
 
                 onPressAndHold: openMenu(viaButton)
@@ -174,7 +174,7 @@ Page {
                 value: fahrplanBackend.arrivalStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
 
                 onPressAndHold: openMenu(arrivalButton)
