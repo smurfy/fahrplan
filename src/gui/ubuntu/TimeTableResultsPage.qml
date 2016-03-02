@@ -29,13 +29,15 @@ Page {
     property alias searchIndicatorVisible: searchIndicator.visible
     property int selMode : 0
 
-    title: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
-
-    head.backAction: Action {
-        iconName: "back"
-        onTriggered: {
-            mainStack.pop()
-            fahrplanBackend.parser.cancelRequest();
+    header: PageHeader {
+        title: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
+        flickable: listView
+        leadingActionBar.actions: Action {
+            iconName: "back"
+            onTriggered: {
+                mainStack.pop()
+                fahrplanBackend.parser.cancelRequest();
+            }
         }
     }
 

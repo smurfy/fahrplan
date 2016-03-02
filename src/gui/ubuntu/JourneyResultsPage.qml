@@ -24,19 +24,21 @@ import Ubuntu.Components 1.3
 Page {
     id: searchResultsPage
 
-    title: qsTr("Journey alternatives")
+    header: PageHeader {
+        title: qsTr("Journey alternatives")
+        flickable: listView
+        leadingActionBar.actions: Action {
+            iconName: "back"
+            onTriggered: {
+                mainStack.pop();
+                fahrplanBackend.parser.cancelRequest();
+            }
+        }
+    }
 
     property string journeyStationsTitleText
     property string journeryDateTitleText
     property alias searchIndicatorVisible: searchIndicator.visible
-
-    head.backAction: Action {
-        iconName: "back"
-        onTriggered: {
-            mainStack.pop();
-            fahrplanBackend.parser.cancelRequest();
-        }
-    }
 
     ActivityIndicator {
         id: searchIndicator

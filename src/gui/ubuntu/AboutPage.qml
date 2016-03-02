@@ -26,10 +26,15 @@ import "../about.js" as About
 Page {
     id: aboutPage
 
-    title: qsTr("About")
-    flickable: null
-
-    head.sections.model: [qsTr("About"), qsTr("Credits"), qsTr("Support")]
+    header: PageHeader {
+        title: qsTr("About")
+        flickable: tabView
+        extension: Sections {
+            id: aboutPageSections
+            anchors { left: parent.left; leftMargin: units.gu(2); bottom: parent.bottom }
+            model: [qsTr("About"), qsTr("Credits"), qsTr("Support")]
+        }
+    }
 
     Component {
         id: dialog
@@ -248,7 +253,7 @@ Page {
         anchors.fill: parent
         orientation: Qt.Horizontal
         snapMode: ListView.SnapOneItem
-        currentIndex: aboutPage.head.sections.selectedIndex
+        currentIndex: aboutPageSections.selectedIndex
         highlightMoveDuration: UbuntuAnimation.SlowDuration
     }
 }

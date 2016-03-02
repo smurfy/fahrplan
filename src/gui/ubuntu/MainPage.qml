@@ -30,19 +30,36 @@ Page {
     property int searchmode : 0
     property bool startup : true
 
-    head.actions: [
-        Action {
+    header: PageHeader {
+        title: tabs.selectedTabIndex === 0 ? qsTr("Journey") : qsTr("Time table")
+        flickable: flickable
+
+        leadingActionBar.actions: [
+            Action {
+                text: qsTr("Journey")
+                onTriggered: tabs.selectedTabIndex = 0
+            },
+
+            Action {
+                text: qsTr("Time table")
+                onTriggered: tabs.selectedTabIndex = 1
+            }
+        ]
+
+        leadingActionBar.numberOfSlots: 0
+
+        trailingActionBar.actions: Action {
             iconName: "info"
             text: qsTr("About")
             onTriggered: mainStack.push(Qt.resolvedUrl("AboutPage.qml"));
         }
+    }
 
-        // Not using settings on ubuntu yet...
-        //        Action {
-        //            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
-        //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
-        //        }
-    ]
+    // Not using settings on ubuntu yet...
+    //        Action {
+    //            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
+    //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+    //        }
 
     Component.onCompleted: {
         updateButtonVisibility()
