@@ -100,7 +100,7 @@ Page {
         width: parent.width
         wrapMode: Text.WordWrap
         color: "DarkGrey"
-        fontSize: "large"
+        textSize: Label.Large
         horizontalAlignment: Text.AlignHCenter
         visible: fahrplanBackend.favorites.count == 0 && listView.model == fahrplanBackend.favorites
         text: qsTr("Click the star icon on the search results to add or remove a station as a favorite")

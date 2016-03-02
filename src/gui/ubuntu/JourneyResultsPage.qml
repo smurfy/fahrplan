@@ -66,7 +66,7 @@ Page {
                 Label {
                     id: journeyStations
                     text: journeyStationsTitleText
-                    fontSize: "large"
+                    textSize: Label.Large
                     wrapMode: Text.WordWrap
                     width: parent.width
                     anchors { top: parent.top; topMargin: units.gu(1) }
@@ -75,7 +75,7 @@ Page {
                 Label {
                     id: journeyDate
                     color: "Grey"
-                    fontSize: "small"
+                    textSize: Label.Small
                     text: journeryDateTitleText
                     width: parent.width
                     anchors { top: journeyStations.bottom }
@@ -160,7 +160,7 @@ Page {
                 visible: (miscInfo == "") ? false : true
                 height: visible ? implicitHeight : 0
                 text: miscInfo
-                fontSize: "small"
+                textSize: Label.Small
                 color: UbuntuColors.red
                 font.italic: true
                 anchors {

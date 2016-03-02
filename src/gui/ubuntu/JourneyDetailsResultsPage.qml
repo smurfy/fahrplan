@@ -56,7 +56,7 @@ Page {
             Label {
                 id: journeyStations
                 text: titleText
-                fontSize: "large"
+                textSize: Label.Large
                 width: parent.width
                 wrapMode: Text.WordWrap
                 maximumLineCount: 2
@@ -72,7 +72,7 @@ Page {
                     Layout.fillWidth: true
                     color: "Grey"
                     text: subTitleText
-                    fontSize: "small"
+                    textSize: Label.Small
                 }
 
                 Label {
@@ -80,7 +80,7 @@ Page {
                     color: "Grey"
                     horizontalAlignment: Text.AlignRight
                     text: subTitleText2
-                    fontSize: "small"
+                    textSize: Label.Small
                 }
             }
 
