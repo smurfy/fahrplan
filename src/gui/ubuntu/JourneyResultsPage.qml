@@ -135,69 +135,48 @@ Page {
     Component {
         id: journeyResultDelegate
 
-        Item {
+        ListItem {
             id: delegateItem
 
-            width: listView.width
-            height: detailsColumn.height + units.gu(2)
+            height: detailsLayout.height + lbl_miscInfo.height - units.gu(1)
+            divider.visible: false
+            color: itemNum % 2 ? "#F5F5F5" : "#ECECEC"
+            highlightColor: "DarkGrey"
 
-            Rectangle {
-                id: background
-                anchors.fill: parent
-                color: mouseArea.pressed ? "DarkGrey" : itemNum % 2 ? "#F5F5F5" : "#ECECEC"
+            ListItemLayout {
+                id: detailsLayout
+
+                title.text: departureTime + " ↦ " + arrivalTime
+                title.font.bold: true
+                subtitle.text: qsTr("Duration: %1 | Transfer: %2").arg(duration).arg(transfers)
+                summary.text: trainType
+                padding.top: units.gu(1)
             }
 
-            MouseArea {
-                id: mouseArea
-                anchors.fill: background
-                onClicked: {
-                    var component = Qt.createComponent("JourneyDetailsResultsPage.qml")
-                    mainStack.push(component,
-                                   {titleText: qsTr("Loading details"), subTitleText: qsTr("please wait..."), searchIndicatorVisible: true});
-                    fahrplanBackend.parser.getJourneyDetails(id);
+            Label {
+                id: lbl_miscInfo
+                width: parent.width
+                wrapMode: Text.WordWrap
+                visible: (miscInfo == "") ? false : true
+                height: visible ? implicitHeight : 0
+                text: miscInfo
+                fontSize: "small"
+                color: UbuntuColors.red
+                font.italic: true
+                anchors {
+                    left: detailsLayout.left
+                    right: detailsLayout.right
+                    margins: units.gu(2)
+                    top: detailsLayout.bottom
+                    topMargin: units.gu(-2)
                 }
             }
 
-            Column {
-                id: detailsColumn
-
-                anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
-
-                Label {
-                    id: lbl_time
-                    width: parent.width
-                    font.bold: true
-                    text: departureTime + " ↦ " + arrivalTime
-                }
-
-                Label {
-                    id: lbl_detail
-                    width: parent.width
-                    elide: Text.ElideRight
-                    fontSize: "x-small"
-                    color: "Grey"
-                    text: qsTr("Duration: %1 | Transfer: %2").arg(duration).arg(transfers)
-                }
-
-                Label {
-                    id: lbl_trainType
-                    width: parent.width
-                    elide: Text.ElideRight
-                    fontSize: "x-small"
-                    color: "Grey"
-                    text: trainType
-                }
-
-                Label {
-                    id: lbl_miscInfo
-                    width: parent.width
-                    wrapMode: Text.WordWrap
-                    visible: (miscInfo == "") ? false : true
-                    text: miscInfo
-                    fontSize: "small"
-                    color: UbuntuColors.red
-                    font.italic: true
-                }
+            onClicked: {
+                var component = Qt.createComponent("JourneyDetailsResultsPage.qml")
+                mainStack.push(component,
+                               {titleText: qsTr("Loading details"), subTitleText: qsTr("please wait..."), searchIndicatorVisible: true});
+                fahrplanBackend.parser.getJourneyDetails(id);
             }
         }
     }
