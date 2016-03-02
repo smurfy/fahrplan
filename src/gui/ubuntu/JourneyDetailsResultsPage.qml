@@ -25,7 +25,10 @@ import Fahrplan 1.0
 Page {
     id: searchDetailResultsPage
 
-    title: qsTr("Journey advice")
+    header: PageHeader {
+        title: qsTr("Journey advice")
+        flickable: listView
+    }
 
     property string titleText
     property string subTitleText
