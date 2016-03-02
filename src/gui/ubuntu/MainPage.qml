@@ -140,7 +140,7 @@ Page {
 
                 property int type: FahrplanBackend.DepartureStation
 
-                text: qsTr("From")
+                title.text: qsTr("From")
                 value: fahrplanBackend.departureStationName
 
                 onClicked: {
@@ -155,7 +155,7 @@ Page {
 
                 property int type: FahrplanBackend.ViaStation
 
-                text: qsTr("Via")
+                title.text: qsTr("Via")
                 value: fahrplanBackend.viaStationName
 
                 onClicked: {
@@ -170,7 +170,7 @@ Page {
 
                 property int type: FahrplanBackend.ArrivalStation
 
-                text: qsTr("To")
+                title.text: qsTr("To")
                 value: fahrplanBackend.arrivalStationName
 
                 onClicked: {
@@ -183,7 +183,7 @@ Page {
             CustomListItem {
                 id: stationButton
 
-                text: qsTr("Station")
+                title.text: qsTr("Station")
                 value: fahrplanBackend.currentStationName
 
                 onClicked: {
@@ -194,7 +194,7 @@ Page {
             CustomListItem {
                 id: directionButton
 
-                text: qsTr("Direction")
+                title.text: qsTr("Direction")
                 value: fahrplanBackend.directionStationName
 
                 onClicked: {
@@ -215,7 +215,7 @@ Page {
             CustomListItem {
                 id: datePickerButton
 
-                text: qsTr("Date")
+                title.text: qsTr("Date")
                 value: Qt.formatDate(fahrplanBackend.dateTime)
                 visible: timeModeSelector.selectedIndex !== 0
 
@@ -233,7 +233,7 @@ Page {
             CustomListItem {
                 id: timePickerButton
 
-                text: qsTr("Time")
+                title.text: qsTr("Time")
                 value: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
                 visible: timeModeSelector.selectedIndex !== 0
 
@@ -251,7 +251,7 @@ Page {
 
             CustomListItem {
                 id: trainrestrictionsButton
-                text: qsTr("Transport Options")
+                title.text: qsTr("Transport Options")
                 value: fahrplanBackend.trainrestrictionName
                 onClicked: PopupUtils.open(selectTrainrestrictionsComponent, trainrestrictionsButton)
             }
