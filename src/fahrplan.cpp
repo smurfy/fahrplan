@@ -25,6 +25,7 @@
 #include "models/stationsearchresults.h"
 #include "models/timetable.h"
 #include "models/trainrestrictions.h"
+#include "models/backends.h"
 
 #include <QThread>
 
@@ -33,6 +34,7 @@ StationSearchResults *Fahrplan::m_stationSearchResults= NULL;
 Favorites *Fahrplan::m_favorites = NULL;
 Timetable *Fahrplan::m_timetable = NULL;
 Trainrestrictions *Fahrplan::m_trainrestrictions = NULL;
+Backends *Fahrplan::m_backends = NULL;
 
 Fahrplan::Fahrplan(QObject *parent)
     : QObject(parent)
@@ -70,6 +72,11 @@ Fahrplan::Fahrplan(QObject *parent)
 
     if (!m_trainrestrictions) {
         m_trainrestrictions = new Trainrestrictions(this);
+    }
+
+    if (!m_backends) {
+        m_backends = new Backends(this);
+        m_backends->setBackendParserList(m_parser_manager->getParserList());
     }
 }
 
@@ -126,6 +133,12 @@ StationSearchResults *Fahrplan::stationSearchResults() const
 Timetable *Fahrplan::timetable() const
 {
     return m_timetable;
+}
+
+
+Backends *Fahrplan::backends() const
+{
+    return m_backends;
 }
 
 Trainrestrictions *Fahrplan::trainrestrictions() const
@@ -352,13 +365,9 @@ QString Fahrplan::parserShortName() const
     return m_parser_manager->getParser()->shortName();
 }
 
-QStringList Fahrplan::getParserList()
-{
-    return m_parser_manager->getParserList();
-}
-
 void Fahrplan::setParser(int index)
 {
+    qDebug()<<"Set parser:"<<index;
     settings->setValue("currentBackend", index);
     m_parser_manager->setParser(index);
 }

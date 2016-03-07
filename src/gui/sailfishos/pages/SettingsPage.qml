@@ -76,29 +76,17 @@ Page {
                 value: fahrplanBackend.parserName
                 menu: ContextMenu {
                       Repeater {
-                           model: parserBackendModel
+                           model: fahrplanBackend.backends
                            MenuItem {
                                text: model.name
                            }
                       }
                       Component.onCompleted: {
-                          var items;
-                          var i;
-
-                          if (parserBackendModel.count == 0) {
-                              items = fahrplanBackend.getParserList();
-                              for (i = 0; i < items.length; i++) {
-                                  parserBackendModel.append({
-                                      "name" : items[i]
-                                  });
-                              }
-                          }
-
-                          currentBackend.currentIndex = fahrplanBackend.getSettingsValue("currentBackend", 0);
+                          currentBackend.currentIndex = fahrplanBackend.backends.getItemIndexForParserId(fahrplanBackend.getSettingsValue("currentBackend", 0));
                       }
                 }
                 onCurrentIndexChanged: {
-                    fahrplanBackend.setParser(currentIndex)
+                    fahrplanBackend.setParser(fahrplanBackend.backends.getParserIdForItemIndex(currentIndex))
                 }
 
             }
@@ -115,10 +103,6 @@ Page {
 
     CalendarManager {
         id: calendarManager
-    }
-
-    ListModel {
-        id: parserBackendModel
     }
 
     onStatusChanged: {

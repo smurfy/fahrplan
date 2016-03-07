@@ -21,6 +21,7 @@
 #define FAHRPLAN_BACKEND_MANAGER_H
 
 #include "fahrplan_parser_thread.h"
+#include "models/backends.h"
 
 class FahrplanBackendManager : public QObject
 {

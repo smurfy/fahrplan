@@ -64,6 +64,7 @@
 #include "models/favorites.h"
 #include "models/timetable.h"
 #include "models/trainrestrictions.h"
+#include "models/backends.h"
 
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 Q_DECL_EXPORT
@@ -129,6 +130,9 @@ int main(int argc, char *argv[])
         qmlRegisterUncreatableType<Trainrestrictions>("Fahrplan", 1, 0, "Trainrestrictions"
             , "Trainrestrictions cannot be created from QML. "
               "Access it through FahrplanBackend.trainrestrictions.");
+        qmlRegisterUncreatableType<Backends>("Fahrplan", 1, 0, "Backends"
+            , "Backends cannot be created from QML. "
+              "Access it through FahrplanBackend.backends.");
         qmlRegisterType<JourneyResultList>("Fahrplan", 1, 0, "JourneyResultList");
         qmlRegisterType<JourneyResultItem>("Fahrplan", 1, 0, "JourneyResultItem");
         qmlRegisterType<JourneyDetailResultList>("Fahrplan", 1, 0, "JourneyDetailResultList");

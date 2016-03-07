@@ -33,6 +33,7 @@ class FahrplanParserThread;
 class StationSearchResults;
 class Timetable;
 class Favorites;
+class Backends;
 class Trainrestrictions;
 class Fahrplan : public QObject
 {
@@ -47,6 +48,7 @@ class Fahrplan : public QObject
     Q_PROPERTY(StationSearchResults *stationSearchResults READ stationSearchResults CONSTANT)
     Q_PROPERTY(Favorites *favorites READ favorites CONSTANT)
     Q_PROPERTY(Timetable *timetable READ timetable CONSTANT)
+    Q_PROPERTY(Backends *backends READ backends CONSTANT)
     Q_PROPERTY(Trainrestrictions *trainrestrictions READ trainrestrictions CONSTANT)
     Q_PROPERTY(QString departureStationName READ departureStationName NOTIFY departureStationChanged)
     Q_PROPERTY(QString viaStationName READ viaStationName NOTIFY viaStationChanged)
@@ -86,6 +88,7 @@ class Fahrplan : public QObject
 
         StationSearchResults *stationSearchResults() const;
         Timetable *timetable() const;
+        Backends *backends() const;
         Trainrestrictions *trainrestrictions() const;
         QString departureStationName() const;
         QString viaStationName() const;
@@ -103,7 +106,6 @@ class Fahrplan : public QObject
         Q_INVOKABLE bool timeFormat24h() const;
 
     public slots:
-        QStringList getParserList();
         void setParser(int index);
         void storeSettingsValue(const QString &key, const QString &value);
         QString getSettingsValue(const QString &key, const QString &defaultValue);
@@ -148,6 +150,7 @@ class Fahrplan : public QObject
         static Favorites *m_favorites;
         static Timetable *m_timetable;
         static Trainrestrictions *m_trainrestrictions;
+        static Backends *m_backends;
         QSettings *settings;
 
         Station m_departureStation;
