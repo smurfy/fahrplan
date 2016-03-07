@@ -19,7 +19,7 @@
 
 .pragma library
 
-var copyright = "(C) 2008-2015 smurfy (maemo@smurfy.de)";
+var copyright = "(C) 2008-2016 smurfy (maemo@smurfy.de)";
 
 var license = "<p>This program is free software; you can redistribute it and/or " +
         "modify it under the terms of the GNU General Public License " +
@@ -37,7 +37,7 @@ var support = qsTr("<p>If fahrplan is not translated in your language, help us <
         "<p>If you encounter bugs or have feature requests visit the <a href=\"https://github.com/smurfy/fahrplan/issues\">Fahrplan issue tracker on GitHub</a>.</p>");
 
 var maintainers = ["Philipp Andreas (smurfy)", "Michael Zanetti (mzanetti)", "Oleksii Serdiuk (leppa)"];
-var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "Nekhelesh Ramananthan (nik90)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog", "benni0815", "Erik Lundin"];
+var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "Nekhelesh Ramananthan (nik90)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog", "benni0815", "Erik Lundin"].sort();
 var translators = [
             "German - Philipp Andreas (smurfy), Florian Wittmann, DeadHorseRiding (Mee_Germany_Go)",
             "Ukrainian - Oleksii Serdiuk (leppa)",
