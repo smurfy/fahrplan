@@ -21,6 +21,7 @@
 #define BACKENDS_H
 
 #include <QAbstractListModel>
+#include <QStringList>
 
 class Backends :public QAbstractListModel
 {
