@@ -413,15 +413,11 @@ Page {
     SelectionDialog {
         id: selectBackendDialog
         titleText: qsTr("Select backend")
-        model: parserBackendModel
         platformInverted: appWindow.platformInverted
+        model: fahrplanBackend.backends
         onAccepted: {
-            fahrplanBackend.setParser(selectBackendDialog.selectedIndex);
+            fahrplanBackend.setParser(fahrplanBackend.backends.getParserIdForItemIndex(selectBackendDialog.selectedIndex))
         }
-    }
-
-    ListModel {
-        id: parserBackendModel
     }
 
     SelectionDialog {
@@ -657,20 +653,7 @@ Page {
 
             updateButtonVisibility();
 
-            var items;
-            var i;
-
-            if (parserBackendModel.count == 0) {
-                items = fahrplanBackend.getParserList();
-                for (i = 0; i < items.length; i++) {
-                    parserBackendModel.append({
-                        "name" : items[i]
-                    });
-                }
-
-                selectBackendDialog.selectedIndex = index;
-            }
-
+            selectBackendDialog.selectedIndex = fahrplanBackend.backends.getItemIndexForParserId(index);
             selectTrainrestrictionsDialog.selectedIndex = 0;
         }
     }
