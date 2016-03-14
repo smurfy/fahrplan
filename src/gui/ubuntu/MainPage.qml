@@ -304,7 +304,7 @@ Page {
                     model: fahrplanBackend.backends
                     id: selectedBackendListView
                     delegate: ListItems.Standard {
-                        text: modelData
+                        text: name
 
                         // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
                         // ListItems don't know that they are sitting in a themed Popover where the color
@@ -447,7 +447,7 @@ Page {
         }
 
         onParserChanged: {
-            currentParserName.text = fahrplanBackend.parserName;
+            currentParserName.text = fahrplanBackend.parserShortName;
             updateButtonVisibility();
 
             selectedBackendListView.currentIndex = fahrplanBackend.backends.getItemIndexForParserId(index);
