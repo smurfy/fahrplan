@@ -29,6 +29,7 @@
 #include "../../models/stationsearchresults.h"
 #include "../../models/timetable.h"
 #include "../../models/trainrestrictions.h"
+#include "../../models/backends.h"
 
 namespace Ui {
     class MainWindow;

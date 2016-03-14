@@ -18,7 +18,6 @@
 ****************************************************************************/
 
 #include "backends.h"
-#include "QtGui";
 
 Backends::Backends(QObject *parent)
     : QAbstractListModel(parent)

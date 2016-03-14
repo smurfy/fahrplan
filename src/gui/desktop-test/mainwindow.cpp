@@ -50,9 +50,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(fahrplan, SIGNAL(parserChanged(const QString &, int)), this, SLOT(parserChanged(const QString &, int)));
 
-    QStringListModel *parserModel = new QStringListModel();
-    parserModel->setStringList(fahrplan->getParserList());
-    ui->parser->setModel(parserModel);
+    if (fahrplan->backends()->count() > 0)
+    {
+        ui->parser->clear();
+        for (int i=0; i < fahrplan->backends()->count(); i++) {
+            QModelIndex index = fahrplan->backends()->index(i, 0, QModelIndex());
+            ui->parser->addItem(fahrplan->backends()->data(index, Backends::Name).toString());
+        }
+        ui->parser->setCurrentIndex(0);
+    }
 
     ui->stationType->addItem("Departure", Fahrplan::DepartureStation);
     ui->stationType->addItem("Via", Fahrplan::ViaStation);
@@ -73,14 +79,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::parserCurrentIndexChanged(int index)
 {
-    fahrplan->setParser(index);
+    fahrplan->setParser(fahrplan->backends()->getParserIdForItemIndex(index));
 }
 
 void MainWindow::parserChanged(const QString &name, int index)
 {
     setWindowTitle("Fahrplan - TestApp - " + name + " - " + QString::number(index));
 
-    ui->parser->setCurrentIndex(index);
+    ui->parser->setCurrentIndex(fahrplan->backends()->getItemIndexForParserId(index));
 
     ui->trainRestrictions->setEnabled(false);
     qDebug()<<fahrplan->trainrestrictions()->count();
