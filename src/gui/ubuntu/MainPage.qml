@@ -301,7 +301,8 @@ Page {
                     width: parent.width
                     height: units.gu(30)
                     clip: true
-                    model: parserBackendModel
+                    model: fahrplanBackend.backends
+                    id: selectedBackendListView
                     delegate: ListItems.Standard {
                         text: modelData
 
@@ -311,7 +312,7 @@ Page {
                         __foregroundColor: Theme.palette.selected.backgroundText
 
                         onClicked: {
-                            fahrplanBackend.setParser(index);
+                            fahrplanBackend.setParser(fahrplanBackend.backends.getParserIdForItemIndex(index))
                             PopupUtils.close(selectBackendDialog)
                         }
                     }
@@ -324,10 +325,6 @@ Page {
                 }
             ]
         }
-    }
-
-    ListModel {
-        id: parserBackendModel
     }
 
     Component {
@@ -425,16 +422,6 @@ Page {
     Connections {
         target: fahrplanBackend
 
-        Component.onCompleted: {
-            var items = fahrplanBackend.getParserList();
-            var index = 0;
-            for (var i = 0; i < items.length; ++i) {
-                if (items[i] == fahrplanBackend.parserName) {
-                    index = i;
-                }
-            }
-            backendParserChanged();
-        }
         /*
            An error can occour here, if the result is returned quicker than
            the pagestack is popped so we use a timer here if the pagestack is busy.
@@ -460,26 +447,11 @@ Page {
         }
 
         onParserChanged: {
-            backendParserChanged()
+            currentParserName.text = fahrplanBackend.parserName;
+            updateButtonVisibility();
+
+            selectedBackendListView.currentIndex = fahrplanBackend.backends.getItemIndexForParserId(index);
         }
     }
 
-    function backendParserChanged() {
-        currentParserName.text = fahrplanBackend.parserName;
-
-        updateButtonVisibility();
-
-        var items;
-        var i;
-
-        if (parserBackendModel.count == 0) {
-            items = fahrplanBackend.getParserList();
-            for (i = 0; i < items.length; i++) {
-                parserBackendModel.append({
-                                              "name" : items[i]
-                                          });
-            }
-
-        }
-    }
 }
