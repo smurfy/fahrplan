@@ -31,8 +31,11 @@
     #include <sailfishapp.h>
     #include <QtQuick>
     #include <QtQml>
-    #include <grp.h>
-    #include <pwd.h>
+    #if defined(BUILD_FOR_OPENREPOS)
+        #include <unistd.h>
+        #include <grp.h>
+        #include <pwd.h>
+    #endif
 #else
     #include "gui/desktop-test/mainwindow.h"
     #if defined(BUILD_FOR_QT5)
