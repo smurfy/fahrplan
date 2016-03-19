@@ -1,6 +1,15 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.27
+------
+
+- Save trainrestrictions to settings
+- Backends are now sorted
+- Updated Vasttrafik's backend to version 2
+- Updated and Fixed ResRobot backend
+- Added Matka.fi backend
+
 2.0.26
 ------
 
