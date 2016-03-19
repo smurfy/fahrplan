@@ -316,6 +316,10 @@ void Fahrplan::setTrainrestriction(int index)
         m_trainrestriction = 0;
     }
     emit trainrestrictionChanged();
+
+    settings->beginGroup(m_parser_manager->getParser()->uid());
+    settings->setValue("trainRestrictions", index);
+    settings->endGroup(); // Parser UID
 }
 
 QString Fahrplan::trainrestrictionName() const
@@ -335,7 +339,16 @@ void Fahrplan::onParserChanged(const QString &name, int index)
     if (m_trainrestrictions) {
         QStringList list = parser()->getTrainRestrictions();
         m_trainrestrictions->setStringList(list);
-        setTrainrestriction(0);
+
+        settings->beginGroup(m_parser_manager->getParser()->uid());
+        int trainRestrictions = settings->value("trainRestrictions", 0).toInt();
+        settings->endGroup(); // Parser UID
+
+        if (trainRestrictions < list.count()) {
+            setTrainrestriction(trainRestrictions);
+        } else {
+            setTrainrestriction(0);
+        }
     }
 
     emit parserChanged(name, index);
