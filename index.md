@@ -94,7 +94,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 [1]: compile
 [2]: https://appworld.blackberry.com/webstore/content/28277436/?lang=en&countrycode=DE
-[3]: http://symbian.apps.opera.com/fahrplan.html
+[3]: http://applist.schumi1331.de/content/12
 [4]: https://appstore.bhdouglass.com/app/com.ubuntu.developer.mzanetti.fahrplan2
 [5]: https://openrepos.net/content/smurfy/fahrplan
 [#100]: https://github.com/smurfy/fahrplan/issues/100
