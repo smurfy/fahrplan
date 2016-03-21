@@ -1,3 +1,8 @@
+fahrplan2 (2.0.27-1) unstable; urgency=low
+  * Charset fix for resrobot.se
+  
+ -- smurfy <maemo@smurfy.de>  Mon, 21 March 2016 20:00:00 +0100
+
 fahrplan2 (2.0.27) unstable; urgency=low
   * Save trainrestrictions to settings
   * Backends are now sorted
