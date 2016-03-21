@@ -358,6 +358,10 @@ win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exist
 symbian|simulator {
     RESOURCES += symbian_res.qrc
 
+    # Symbian does not like gauss-kruger as lib so we add it as sources too
+    SOURCES += $$PWD/3rdparty/gauss-kruger-cpp/gausskruger.cpp
+    HEADERS += $$PWD/3rdparty/gauss-kruger-cpp/gausskruger.h
+
     OTHER_FILES += \
         src/gui/symbian/main.qml \
         src/gui/symbian/components/SubTitleButton.qml \
