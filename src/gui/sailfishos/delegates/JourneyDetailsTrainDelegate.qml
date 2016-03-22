@@ -39,7 +39,7 @@ Item {
         color: Theme.highlightColor
         anchors {
             left: parent.left
-            leftMargin: (timeWidth ? timeWidth : 70) + Theme.iconSizeSmall/2 - width/2
+            leftMargin: (timeWidth ? timeWidth : Theme.paddingLarge * 3) + Theme.iconSizeSmall/2 - width/2
         }
     }
 

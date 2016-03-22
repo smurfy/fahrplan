@@ -69,7 +69,7 @@ Page {
                     color: Theme.secondaryColor
                     anchors {
                         top: parent.top
-                        topMargin: 80
+                        topMargin: Theme.paddingLarge * 3
                         right: parent.right
                         rightMargin: Theme.paddingMedium
                     }

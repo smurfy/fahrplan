@@ -35,7 +35,7 @@ Item {
             top: parent.top
             topMargin: 0
             left: parent.left
-            leftMargin: (timeWidth ? timeWidth : 70) + Theme.iconSizeSmall/2 - width/2
+            leftMargin: (timeWidth ? timeWidth : Theme.paddingLarge * 3) + Theme.iconSizeSmall/2 - width/2
         }
         gradient: Gradient {
             GradientStop {
@@ -76,7 +76,7 @@ Item {
         radius: Theme.iconSizeSmall/2
         anchors {
             left: parent.left
-            leftMargin: timeWidth ? timeWidth : 70
+            leftMargin: timeWidth ? timeWidth : Theme.paddingLarge * 3
             verticalCenter: parent.verticalCenter
         }
 

@@ -70,7 +70,7 @@ Page {
                         left: parent.left
                         leftMargin: Theme.paddingMedium
                         top: parent.top
-                        topMargin: 80
+                        topMargin: Theme.paddingLarge * 3
                     }
                     width: ((parent.width / 3) * 2) - 20
                     wrapMode: Text.WordWrap
@@ -84,7 +84,7 @@ Page {
                         rightMargin: Theme.paddingMedium
                         left: lbljourneyDate.right
                         top: parent.top
-                        topMargin: 80
+                        topMargin: Theme.paddingLarge * 3
                     }
                     width: (parent.width / 3) - 20
                     horizontalAlignment: Text.AlignRight
