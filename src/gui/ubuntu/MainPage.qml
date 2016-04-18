@@ -322,12 +322,6 @@ Page {
                     id: selectedBackendListView
                     delegate: ListItems.Standard {
                         text: name
-
-                        // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
-                        // ListItems don't know that they are sitting in a themed Popover where the color
-                        // needs to be inverted.
-                        __foregroundColor: Theme.palette.selected.backgroundText
-
                         onClicked: {
                             fahrplanBackend.setParser(fahrplanBackend.backends.getParserIdForItemIndex(index))
                             PopupUtils.close(selectBackendDialog)
@@ -356,11 +350,6 @@ Page {
                 model: fahrplanBackend.trainrestrictions
                 delegate: ListItems.Standard {
                     text: modelData
-                    // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
-                    // ListItems don't know that they are sitting in a themed Popover where the color
-                    // needs to be inverted.
-                    __foregroundColor: Theme.palette.selected.backgroundText
-
                     onClicked: {
                         fahrplanBackend.setTrainrestriction(index)
                         PopupUtils.close(selectTrainrestrictionsDialog)
