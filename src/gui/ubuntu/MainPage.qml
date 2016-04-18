@@ -97,10 +97,6 @@ Page {
         anchors.fill: parent
         contentHeight: buttons.height
 
-        onMovementStarted: {
-            flickable.clip = true;
-        }
-
         Column {
             id: buttons
 
