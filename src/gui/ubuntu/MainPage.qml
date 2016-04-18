@@ -30,19 +30,36 @@ Page {
     property int searchmode : 0
     property bool startup : true
 
-    head.actions: [
-        Action {
+    header: PageHeader {
+        title: tabs.selectedTabIndex === 0 ? qsTr("Journey") : qsTr("Time table")
+        flickable: flickable
+
+        leadingActionBar.actions: [
+            Action {
+                text: qsTr("Journey")
+                onTriggered: tabs.selectedTabIndex = 0
+            },
+
+            Action {
+                text: qsTr("Time table")
+                onTriggered: tabs.selectedTabIndex = 1
+            }
+        ]
+
+        leadingActionBar.numberOfSlots: 0
+
+        trailingActionBar.actions: Action {
             iconName: "info"
             text: qsTr("About")
             onTriggered: mainStack.push(Qt.resolvedUrl("AboutPage.qml"));
         }
+    }
 
-        // Not using settings on ubuntu yet...
-        //        Action {
-        //            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
-        //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
-        //        }
-    ]
+    // Not using settings on ubuntu yet...
+    //        Action {
+    //            iconSource: "file:///usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg"
+    //            onTriggered: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+    //        }
 
     Component.onCompleted: {
         updateButtonVisibility()
@@ -129,7 +146,7 @@ Page {
                     anchors { left: parent.left; right: parent.right; margins: units.gu(2); verticalCenter: parent.verticalCenter }
                     color: "White"
                     font.bold: true;
-                    fontSize: "large"
+                    textSize: Label.Large
                     elide: Text.ElideRight
                     text: fahrplanBackend.parserShortName
                 }
@@ -140,11 +157,11 @@ Page {
 
                 property int type: FahrplanBackend.DepartureStation
 
-                text: qsTr("From")
+                title.text: qsTr("From")
                 value: fahrplanBackend.departureStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
 
                 onPressAndHold: openMenu(departureButton)
@@ -155,11 +172,11 @@ Page {
 
                 property int type: FahrplanBackend.ViaStation
 
-                text: qsTr("Via")
+                title.text: qsTr("Via")
                 value: fahrplanBackend.viaStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
 
                 onPressAndHold: openMenu(viaButton)
@@ -170,11 +187,11 @@ Page {
 
                 property int type: FahrplanBackend.ArrivalStation
 
-                text: qsTr("To")
+                title.text: qsTr("To")
                 value: fahrplanBackend.arrivalStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: text})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
 
                 onPressAndHold: openMenu(arrivalButton)
@@ -183,18 +200,18 @@ Page {
             CustomListItem {
                 id: stationButton
 
-                text: qsTr("Station")
+                title.text: qsTr("Station")
                 value: fahrplanBackend.currentStationName
 
                 onClicked: {
-                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation, title: text})
+                    mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: FahrplanBackend.CurrentStation, title: title.text})
                 }
             }
 
             CustomListItem {
                 id: directionButton
 
-                text: qsTr("Direction")
+                title.text: qsTr("Direction")
                 value: fahrplanBackend.directionStationName
 
                 onClicked: {
@@ -215,7 +232,7 @@ Page {
             CustomListItem {
                 id: datePickerButton
 
-                text: qsTr("Date")
+                title.text: qsTr("Date")
                 value: Qt.formatDate(fahrplanBackend.dateTime)
                 visible: timeModeSelector.selectedIndex !== 0
 
@@ -233,7 +250,7 @@ Page {
             CustomListItem {
                 id: timePickerButton
 
-                text: qsTr("Time")
+                title.text: qsTr("Time")
                 value: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
                 visible: timeModeSelector.selectedIndex !== 0
 
@@ -251,7 +268,7 @@ Page {
 
             CustomListItem {
                 id: trainrestrictionsButton
-                text: qsTr("Transport Options")
+                title.text: qsTr("Transport Options")
                 value: fahrplanBackend.trainrestrictionName
                 onClicked: PopupUtils.open(selectTrainrestrictionsComponent, trainrestrictionsButton)
             }

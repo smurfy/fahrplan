@@ -29,13 +29,15 @@ Page {
     property alias searchIndicatorVisible: searchIndicator.visible
     property int selMode : 0
 
-    title: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
-
-    head.backAction: Action {
-        iconName: "back"
-        onTriggered: {
-            mainStack.pop()
-            fahrplanBackend.parser.cancelRequest();
+    header: PageHeader {
+        title: fahrplanBackend.mode === FahrplanBackend.ArrivalMode ? qsTr("Arrivals") : qsTr("Departures")
+        flickable: listView
+        leadingActionBar.actions: Action {
+            iconName: "back"
+            onTriggered: {
+                mainStack.pop()
+                fahrplanBackend.parser.cancelRequest();
+            }
         }
     }
 
@@ -91,7 +93,7 @@ Page {
                         Label {
                             id: lbl_type
                             text: model.trainType
-                            fontSize: "x-small"
+                            textSize: Label.XSmall
                         }
                     }
 
@@ -125,7 +127,7 @@ Page {
                                 return platform;
                             }
                             width: parent.width
-                            fontSize: "x-small"
+                            textSize: Label.XSmall
                             visible: text !== ""
                         }
                     }
@@ -136,7 +138,7 @@ Page {
                     visible: miscInfo !== ""
                     text: miscInfo
                     width: parent.width
-                    fontSize: "small"
+                    textSize: Label.Small
                     elide: Text.ElideRight
                     wrapMode: Text.WordWrap
                     maximumLineCount: 2
