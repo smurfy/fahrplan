@@ -74,7 +74,7 @@ Q_DECL_EXPORT
 #endif
 int main(int argc, char *argv[])
 {
-    qsrand(time(NULL));
+    qsrand(QDateTime::currentDateTimeUtc().toTime_t());
 
     #if defined(BUILD_FOR_SAILFISHOS)
         //To support calendar access

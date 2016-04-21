@@ -9,6 +9,11 @@
 
 #include "gausskruger.h"
 
+#ifdef __QNX__
+// This line is needed to avoid compilation errors on BlackBerry 10
+using namespace std;
+#endif
+
 namespace gausskruger {
 
 void Projection::geodeticToGrid(double latitude, double longitude, double& northing, double& easting)
