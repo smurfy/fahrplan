@@ -130,14 +130,16 @@ QVariantMap ParserAbstract::parseJson(const QByteArray &json) const
 #ifdef BUILD_FOR_QT5
     doc = QJsonDocument::fromJson(json).toVariant().toMap();
 #else
-    QString tmp(json);
-    // Validation of JSON according to RFC4627, section 6
+    QString utf8(QString::fromUtf8(json));
+
+    // Validation of JSON according to RFC 4627, section 6
+    QString tmp(utf8);
     if (tmp.replace(QRegExp("\"(\\\\.|[^\"\\\\])*\""), "")
            .contains(QRegExp("[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]")))
         return doc;
 
     QScriptEngine *engine = new QScriptEngine();
-    doc = engine->evaluate("(" + json + ")").toVariant().toMap();
+    doc = engine->evaluate("(" + utf8 + ")").toVariant().toMap();
     delete engine;
 #endif
 

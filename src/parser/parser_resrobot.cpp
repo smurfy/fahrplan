@@ -327,11 +327,7 @@ void ParserResRobot::doSearchJourney(QUrl query)
 
 void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
 {
-#if defined(BUILD_FOR_HARMATTAN)
-    QByteArray allData = QString::fromUtf8(networkReply->readAll()).toAscii();
-#else
     QByteArray allData = networkReply->readAll();
-#endif
     qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
@@ -393,11 +389,7 @@ void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
 
 void ParserResRobot::parseStationsByName(QNetworkReply *networkReply)
 {
-#if defined(BUILD_FOR_HARMATTAN)
-    QByteArray allData = QString::fromUtf8(networkReply->readAll()).toAscii();
-#else
     QByteArray allData = networkReply->readAll();
-#endif
     qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
@@ -422,11 +414,7 @@ void ParserResRobot::parseStationsByName(QNetworkReply *networkReply)
 
 void ParserResRobot::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
-#if defined(BUILD_FOR_HARMATTAN)
-    QByteArray allData = QString::fromUtf8(networkReply->readAll()).toAscii();
-#else
     QByteArray allData = networkReply->readAll();
-#endif
     qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
@@ -452,11 +440,7 @@ void ParserResRobot::parseStationsByCoordinates(QNetworkReply *networkReply)
 
 void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
 {
-#if defined(BUILD_FOR_HARMATTAN)
-    QByteArray allData = QString::fromUtf8(networkReply->readAll()).toAscii();
-#else
     QByteArray allData = networkReply->readAll();
-#endif
     qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
