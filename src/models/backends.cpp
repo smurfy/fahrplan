@@ -32,6 +32,7 @@ Backends::Backends(QObject *parent)
 QHash<int, QByteArray> Backends::roleNames() const
 {
     QHash<int, QByteArray> roles;
+    roles.insert(Qt::DisplayRole, "modelData");
     roles.insert(Name, "name");
     roles.insert(Id, "id");
     return roles;
@@ -46,6 +47,7 @@ QVariant Backends::data(const QModelIndex &index, int role) const
     QString item = m_list.at(idx);
 
     switch (role) {
+    case Qt::DisplayRole:
     case Name:
         return item;
     case Id:
