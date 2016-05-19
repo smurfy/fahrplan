@@ -160,6 +160,36 @@ Page {
                 title.text: qsTr("From")
                 value: fahrplanBackend.departureStationName
 
+                leadingActions: ListItemActions {
+                    actions:[
+                        Action {
+                            iconName: "clear"
+                            onTriggered: fahrplanBackend.resetStation(FahrplanBackend.DepartureStation);
+                        }
+                    ]
+                }
+                trailingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconSource: "qrc:///src/gui/ubuntu/icons/swap-with-via.svg"
+                            onTriggered: fahrplanBackend.swapStations(FahrplanBackend.DepartureStation, FahrplanBackend.ViaStation)
+                        },
+                        Action {
+                            iconSource: "qrc:///src/gui/ubuntu/icons/swap-with-arrival.svg"
+                            onTriggered: fahrplanBackend.swapStations(FahrplanBackend.DepartureStation, FahrplanBackend.ArrivalStation)
+                        }
+                    ]
+                    delegate: Item {
+                        width: height
+                        Icon {
+                            source: action.iconSource
+                            width: units.gu(3)
+                            height: width
+                            anchors.centerIn: parent
+                        }
+                    }
+                }
+
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
@@ -175,6 +205,36 @@ Page {
                 title.text: qsTr("Via")
                 value: fahrplanBackend.viaStationName
 
+                leadingActions: ListItemActions {
+                    actions:[
+                        Action {
+                            iconName: "clear"
+                            onTriggered: fahrplanBackend.resetStation(FahrplanBackend.ViaStation);
+                        }
+                    ]
+                }
+                trailingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconSource: "qrc:///src/gui/ubuntu/icons/swap-with-departure.svg"
+                            onTriggered: fahrplanBackend.swapStations(FahrplanBackend.ViaStation, FahrplanBackend.DepartureStation)
+                        },
+                        Action {
+                            iconSource: "qrc:///src/gui/ubuntu/icons/swap-with-arrival.svg"
+                            onTriggered: fahrplanBackend.swapStations(FahrplanBackend.ViaStation, FahrplanBackend.ArrivalStation)
+                        }
+                    ]
+                    delegate: Item {
+                        width: height
+                        Icon {
+                            source: action.iconSource
+                            width: units.gu(3)
+                            height: width
+                            anchors.centerIn: parent
+                        }
+                    }
+                }
+
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
                 }
@@ -189,6 +249,36 @@ Page {
 
                 title.text: qsTr("To")
                 value: fahrplanBackend.arrivalStationName
+
+                leadingActions: ListItemActions {
+                    actions:[
+                        Action {
+                            iconName: "clear"
+                            onTriggered: fahrplanBackend.resetStation(FahrplanBackend.ArrivalStation);
+                        }
+                    ]
+                }
+                trailingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconSource: "qrc:///src/gui/ubuntu/icons/swap-with-departure.svg"
+                            onTriggered: fahrplanBackend.swapStations(FahrplanBackend.ArrivalStation, FahrplanBackend.DepartureStation)
+                        },
+                        Action {
+                            iconSource: "qrc:///src/gui/ubuntu/icons/swap-with-via.svg"
+                            onTriggered: fahrplanBackend.swapStations(FahrplanBackend.ArrivalStation, FahrplanBackend.ViaStation)
+                        }
+                    ]
+                    delegate: Item {
+                        width: height
+                        Icon {
+                            source: action.iconSource
+                            width: units.gu(3)
+                            height: width
+                            anchors.centerIn: parent
+                        }
+                    }
+                }
 
                 onClicked: {
                     mainStack.push("qrc:///src/gui/ubuntu/components/StationSelect.qml", {type: type, title: title.text})
