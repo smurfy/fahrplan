@@ -4,11 +4,14 @@ BlackBerry World ChangeLog
 2.0.27
 ------
 
-- Save trainrestrictions to settings
-- Backends are now sorted
-- Updated Vasttrafik's backend to version 2
-- Updated and Fixed ResRobot backend
-- Added Matka.fi backend
+- New service: matka.fi (Finland).
+- vasttrafik.se: Service was updated to version 2.
+- resrobot.se: Updates and fixes.
+- Services are now alphabetically sorted.
+- Selected train types are now saved.
+- Fix: Character encoding issues with some services (e.g., resrobot.se,
+  9292ov.nl) were fixed.
+
 
 2.0.26
 ------
