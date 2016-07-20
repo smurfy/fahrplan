@@ -236,8 +236,13 @@ void ParserHafasXml::parseTimeTableMode1(QNetworkReply *networkReply)
             while (!xml.atEnd()) {
                 xml.readNext();
 
-                if (xml.isStartElement() && xml.name() == "HIMMessage")
-                    announcements << xml.attributes().value("lead").toString();
+                if (xml.isStartElement() && xml.name() == "HIMMessage") {
+                    QStringRef text = xml.attributes().value("header");
+                    if (text.isEmpty())
+                        text = xml.attributes().value("lead");
+                    if (!text.isEmpty())
+                        announcements << text.toString();
+                }
 
                 if (xml.isEndElement() && xml.name() == "Journey")
                    break;
@@ -336,8 +341,11 @@ void ParserHafasXml::parseTimeTableMode0(QNetworkReply *networkReply)
                     while (!xml.atEnd()) {
                         xml.readNext();
 
-                        if (xml.isStartElement() && xml.name() == "I")
-                            announcements << xml.attributes().value("text").toString();
+                        if (xml.isStartElement() && xml.name() == "I") {
+                            const QStringRef text = xml.attributes().value("text");
+                            if (!text.isEmpty())
+                                announcements << text.toString();
+                        }
 
                         if (xml.isEndElement() && xml.name() == "IList")
                            break;
