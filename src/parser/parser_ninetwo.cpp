@@ -195,11 +195,19 @@ QStringList ParserNinetwo::getTrainRestrictions()
  return restrictions;
 }
 
+bool sortByTimeLessThan(const TimetableEntry &first, const TimetableEntry &second)
+{
+    if (first.time == second.time)
+        return first.trainType < second.trainType;
+    else
+        return first.time < second.time;
+}
+
 void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
 {
     TimetableEntriesList result;
     QByteArray allData = networkReply->readAll();
-    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+//    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -264,6 +272,11 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
             result.append(entry);
         }
     }
+
+    // Departures / arrivals are grouped by transportation type,
+    // while we want them sorted by departure / arrival time.
+    qSort(result.begin(), result.end(), sortByTimeLessThan);
+
     emit timetableResult(result);
 
 }
@@ -292,7 +305,12 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
         double lat = station.value("latLong").toMap().value("lat").toDouble(&okLat);
         double lon = station.value("latLong").toMap().value("long").toDouble(&okLon);
         //s.name=QString("[%1]%2").arg(station.value("type").toString(), station.value("name").toString());
-        s.name = station.value("name").toString();
+        const QString name = station.value("name").toString();
+        const QString place = station.value("place").toMap().value("name").toString();
+        if (place.isEmpty())
+            s.name = name;
+        else
+            s.name = QString("%1 (%2)").arg(name, place);
         s.miscInfo = station.value("type").toString();
         if (okLat && okLon) {
             s.latitude = lat;
