@@ -1,19 +1,21 @@
 <RCC>
     <qresource prefix="/">
         <file>translations/fahrplan_ar.qm</file>
+        <file>translations/fahrplan_ca.qm</file>
         <file>translations/fahrplan_de.qm</file>
         <file>translations/fahrplan_el.qm</file>
         <file>translations/fahrplan_en.qm</file>
+        <file>translations/fahrplan_es.qm</file>
         <file>translations/fahrplan_fa_IR.qm</file>
-        <file>translations/fahrplan_mk_MK.qm</file>
+        <file>translations/fahrplan_fr.qm</file>
+        <file>translations/fahrplan_hu.qm</file>
+        <file>translations/fahrplan_nb.qm</file>
         <file>translations/fahrplan_nl_NL.qm</file>
         <file>translations/fahrplan_pl.qm</file>
         <file>translations/fahrplan_ro_RO.qm</file>
         <file>translations/fahrplan_ru.qm</file>
         <file>translations/fahrplan_sl_SI.qm</file>
         <file>translations/fahrplan_sv_SE.qm</file>
-        <file>translations/fahrplan_tr.qm</file>
         <file>translations/fahrplan_uk.qm</file>
-        <file>translations/fahrplan_zh.qm</file>
     </qresource>
 </RCC>

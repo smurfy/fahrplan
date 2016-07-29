@@ -20,7 +20,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="95"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="89"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="99"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="168"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="167"/>
         <source>Maintainers</source>
         <translation>Ведучі розробники</translation>
     </message>
@@ -28,7 +28,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="113"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="107"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="119"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="181"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="180"/>
         <source>Code Contributors</source>
         <translation>Автори коду</translation>
     </message>
@@ -36,7 +36,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="130"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="124"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="138"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="193"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="192"/>
         <source>Translators</source>
         <translation>Перекладачі</translation>
     </message>
@@ -44,7 +44,7 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="153"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="147"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="162"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="32"/>
         <source>Support</source>
         <translation>Підтримка</translation>
     </message>
@@ -52,45 +52,41 @@
         <location filename="../src/gui/harmattan/pages/AboutPage.qml" line="171"/>
         <location filename="../src/gui/sailfishos/pages/AboutPage.qml" line="165"/>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="182"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="38"/>
         <source>License</source>
         <translation>Ліцензія</translation>
     </message>
     <message>
         <location filename="../src/gui/symbian/pages/AboutPage.qml" line="73"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="99"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="98"/>
         <source>Version %1</source>
         <translation>Версія %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="30"/>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="29"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="32"/>
         <source>About</source>
         <translation>Про</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="33"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="32"/>
         <source>Credits</source>
         <translation>Подяки</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="39"/>
-        <source>Copyright</source>
-        <translation>Авторське право</translation>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="135"/>
+        <source>View License Terms</source>
+        <translation>Продивитись умови ліцензії</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="122"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="121"/>
         <source>Released under the terms of the GNU GPL v2 or higher</source>
-        <translation type="unfinished"></translation>
+        <translation>Випущено під умовами ліцензії GNU GPL версії 2 або вище</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="131"/>
+        <location filename="../src/gui/ubuntu/AboutPage.qml" line="130"/>
         <source>Source code available on %1</source>
         <translation>Вихідний код доступний за адресою %1</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/ubuntu/AboutPage.qml" line="136"/>
-        <source>See full copyright</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -139,34 +135,29 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>DatePicker</name>
     <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="26"/>
-        <source>Date</source>
-        <translation>Дата</translation>
+        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="28"/>
+        <source>&lt;b&gt;Date&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Дата&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="73"/>
-        <source>Day</source>
-        <translation>День</translation>
+        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="44"/>
+        <source>Cancel</source>
+        <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="89"/>
-        <source>Month</source>
-        <translation>Місяць</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="114"/>
-        <source>Year</source>
-        <translation>Рік</translation>
+        <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="55"/>
+        <source>Ok</source>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
     <name>Fahrplan</name>
     <message>
-        <location filename="../src/fahrplan.cpp" line="142"/>
-        <location filename="../src/fahrplan.cpp" line="150"/>
-        <location filename="../src/fahrplan.cpp" line="158"/>
-        <location filename="../src/fahrplan.cpp" line="166"/>
-        <location filename="../src/fahrplan.cpp" line="174"/>
+        <location filename="../src/fahrplan.cpp" line="155"/>
+        <location filename="../src/fahrplan.cpp" line="163"/>
+        <location filename="../src/fahrplan.cpp" line="171"/>
+        <location filename="../src/fahrplan.cpp" line="179"/>
+        <location filename="../src/fahrplan.cpp" line="187"/>
         <source>please select</source>
         <translation>оберіть, будь-ласка</translation>
     </message>
@@ -174,35 +165,35 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>FahrplanCalendarManager</name>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="130"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="138"/>
         <source>&lt;loading calendars list...&gt;</source>
         <translation>&lt;завантаження переліку календарів...&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="133"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="141"/>
         <source>&lt;invalid calendar&gt;</source>
         <translation>&lt;недійсний календар&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="135"/>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="150"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="143"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="158"/>
         <source>Default Calendar</source>
         <translation>Календар за промовчанням</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="181"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="189"/>
         <source>Local Calendar</source>
         <translation>Локальний</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="186"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="194"/>
         <source>%1 (%2)</source>
         <comment>Calendar name (Account name)</comment>
         <extracomment>Calendar name (Account name)</extracomment>
         <translation>%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/fahrplan_calendar_manager.cpp" line="247"/>
+        <location filename="../src/fahrplan_calendar_manager.cpp" line="274"/>
         <source>Personal</source>
         <translation>Особистий</translation>
     </message>
@@ -212,16 +203,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/delegates/JourneyDetailsDelegate.qml" line="186"/>
         <location filename="../src/gui/symbian/delegates/JourneyDetailsDelegate.qml" line="213"/>
-        <source>%1 to %2</source>
-        <comment>Direction</comment>
-        <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
-        <translation>%1 в напрямку %2</translation>
-    </message>
-</context>
-<context>
-    <name>JourneyDetailsTrainDelegate</name>
-    <message>
-        <location filename="../src/gui/sailfishos/delegates/JourneyDetailsTrainDelegate.qml" line="60"/>
         <source>%1 to %2</source>
         <comment>Direction</comment>
         <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
@@ -246,7 +227,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="356"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>від &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
@@ -254,7 +234,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="159"/>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="162"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="162"/>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="356"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>від &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;, через &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
@@ -262,7 +241,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyDetailsResultsPage.qml" line="170"/>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="174"/>
         <location filename="../src/gui/symbian/pages/JourneyDetailsResultsPage.qml" line="173"/>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="367"/>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="331"/>
         <source>Dur.: %1</source>
         <translation>Трив.: %1</translation>
     </message>
@@ -277,12 +256,32 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Йде пошук...</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="26"/>
-        <source>Result Details</source>
-        <translation>Деталі подорожі</translation>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="28"/>
+        <source>Journey advice</source>
+        <translation>Рекомендована подорож</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="313"/>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="276"/>
+        <source>%1 to %2</source>
+        <comment>Direction</comment>
+        <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
+        <translation>%1 в напрямку %2</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="320"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="320"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>JourneyDetailsTrainDelegate</name>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/JourneyDetailsTrainDelegate.qml" line="60"/>
         <source>%1 to %2</source>
         <comment>Direction</comment>
         <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
@@ -295,7 +294,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="105"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="92"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="105"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="103"/>
         <source>Dep.</source>
         <translation>Відпр.</translation>
     </message>
@@ -303,7 +301,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="115"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="97"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="111"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="113"/>
         <source>Arr.</source>
         <translation>Приб.</translation>
     </message>
@@ -311,7 +308,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="126"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="103"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="118"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="124"/>
         <source>Dur.</source>
         <translation>Трив.</translation>
     </message>
@@ -319,37 +315,34 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="137"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="109"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="125"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="135"/>
         <source>Trans.</source>
         <translation>Перес.</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="156"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="147"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="214"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="156"/>
         <source>Loading details</source>
         <translation>Завантаження деталей поїздки</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="157"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="148"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="214"/>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="156"/>
         <source>please wait...</source>
         <translation>зачекайте, будь-ласка...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
-        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="191"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>від &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="183"/>
-        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="172"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="191"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="175"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="314"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>від &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;, через &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
@@ -357,7 +350,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="217"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="38"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="213"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="169"/>
         <source>Earlier</source>
         <translation>Раніше</translation>
     </message>
@@ -365,19 +357,48 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/JourneyResultsPage.qml" line="225"/>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="50"/>
         <location filename="../src/gui/symbian/pages/JourneyResultsPage.qml" line="222"/>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="177"/>
         <source>Later</source>
         <translation>Пізніше</translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="139"/>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="157"/>
         <source>Searching...</source>
         <translation>Йде пошук...</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="26"/>
-        <source>Results</source>
-        <translation>Результати</translation>
+        <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="215"/>
+        <source>Error</source>
+        <translation>Помилка</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="27"/>
+        <source>Journey alternatives</source>
+        <translation>Варіанти подорожей</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="93"/>
+        <source>↥ View earlier options</source>
+        <translation>↥ Продивитись більш ранні варіанти</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="116"/>
+        <source>↧ View later options</source>
+        <translation>↥ Продивитись більш пізні варіанти</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="179"/>
+        <source>Duration: %1 | Transfer: %2</source>
+        <translation>Тривалість: %1 | Пересадок: %2</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="217"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="217"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -386,7 +407,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="168"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="83"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="170"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="161"/>
         <source>Departure Station</source>
         <translation>Станція відправлення</translation>
     </message>
@@ -394,7 +414,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="187"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="98"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="190"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="178"/>
         <source>Via Station</source>
         <translation>Через станцію</translation>
     </message>
@@ -402,7 +421,6 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="206"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="113"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="210"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="199"/>
         <source>Arrival Station</source>
         <translation>Станція прибуття</translation>
     </message>
@@ -410,7 +428,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="225"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="128"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="230"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="220"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="186"/>
         <source>Station</source>
         <translation>Станція або зупинка</translation>
     </message>
@@ -418,27 +436,27 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="238"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="137"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="244"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="236"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="197"/>
         <source>Direction</source>
         <translation>Напрямок</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="253"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="422"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="418"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="175"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="261"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="450"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="262"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="446"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="218"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="264"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="451"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="447"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="194"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="275"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="480"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="283"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="476"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="236"/>
         <source>Time</source>
         <translation>Час</translation>
     </message>
@@ -446,7 +464,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="281"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="160"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="297"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="210"/>
         <source>Departure</source>
         <translation>Відправлення</translation>
     </message>
@@ -454,7 +472,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="288"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="166"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="305"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="210"/>
         <source>Arrival</source>
         <translation>Прибуття</translation>
     </message>
@@ -468,21 +486,20 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="320"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="214"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="340"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="304"/>
         <source>Trains</source>
         <translation>Види транспорту</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="331"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="353"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="318"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="269"/>
         <source>Show departures</source>
         <translation>Показати відправлення</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="331"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="353"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="318"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="269"/>
         <source>Show arrivals</source>
         <translation>Показати прибуття</translation>
     </message>
@@ -496,9 +513,8 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="362"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="387"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="394"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="319"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="336"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="346"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="268"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="282"/>
         <source>please select</source>
         <translation>оберіть, будь-ласка</translation>
     </message>
@@ -523,99 +539,95 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="370"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="395"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="347"/>
         <source>&lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>від &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="372"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="397"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="349"/>
         <source>&lt;b&gt;%1&lt;/b&gt; via &lt;b&gt;%3&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;</source>
         <translation>від &lt;b&gt;%1&lt;/b&gt; до &lt;b&gt;%2&lt;/b&gt;, через &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="389"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="415"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="364"/>
         <source>Select backend</source>
         <translation>Оберіть постачальника</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="402"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="429"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="407"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="398"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="425"/>
         <source>Select train</source>
         <translation>Оберіть види транспорту</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="423"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="452"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="451"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="481"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="419"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="448"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="447"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="477"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="424"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="453"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="452"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="482"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="420"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="449"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="448"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="478"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="507"/>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="548"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="503"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="544"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="310"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="341"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="546"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="594"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="510"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="542"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="590"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="417"/>
         <source>Clear station</source>
         <translation>Очистити станцію</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="521"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="563"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="517"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="559"/>
         <source>Select station</source>
         <translation>Оберіть станцію</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="528"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="524"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="290"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="571"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="502"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="567"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="409"/>
         <source>Switch with Departure station</source>
         <translation>Обміняти зі станцією відправлення</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="535"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="531"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="297"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="579"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="505"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="575"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="412"/>
         <source>Switch with Arrival station</source>
         <translation>Обміняти зі станцією прибуття</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="542"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="538"/>
         <location filename="../src/gui/sailfishos/pages/MainPage.qml" line="304"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="587"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="508"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="583"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="415"/>
         <source>Switch with Via station</source>
         <translation>Обміняти з проміжною станцією</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="585"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="633"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="534"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="581"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="629"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="431"/>
         <source>No results found</source>
         <translation>Нічого не знайдено</translation>
     </message>
     <message>
-        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="592"/>
-        <location filename="../src/gui/symbian/pages/MainPage.qml" line="640"/>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="541"/>
+        <location filename="../src/gui/harmattan/pages/MainPage.qml" line="588"/>
+        <location filename="../src/gui/symbian/pages/MainPage.qml" line="636"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="438"/>
         <source>Error loading details</source>
         <translation>Помилка завантаження деталей поїздки</translation>
     </message>
@@ -647,22 +659,57 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Відправлення: зараз</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="256"/>
-        <source>Date and time</source>
-        <translation>Дата та час</translation>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="143"/>
+        <source>From</source>
+        <translation>Від</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="257"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="158"/>
+        <source>Via</source>
+        <translation>Через</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="173"/>
+        <source>To</source>
+        <translation>До</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="209"/>
+        <source>&lt;b&gt;Date and time&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Дата та час&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="210"/>
         <source>Now</source>
         <translation>Зараз</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="334"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="254"/>
+        <source>Transport Options</source>
+        <translation>Види транспорту</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="283"/>
         <source>Plan my journey</source>
         <translation>Зпланувати поїздку</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/MainPage.qml" line="453"/>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="297"/>
+        <source>&lt;b&gt;Select backend&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Оберіть постачальника&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="322"/>
+        <source>Close</source>
+        <translation>Закрити</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="335"/>
+        <source>&lt;b&gt;Select transport mode&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Оберіть вид транспорту&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/ubuntu/MainPage.qml" line="36"/>
         <source>About</source>
         <translation>Про</translation>
     </message>
@@ -728,7 +775,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserAbstract</name>
     <message>
-        <location filename="../src/parser/parser_abstract.cpp" line="156"/>
+        <location filename="../src/parser/parser_abstract.cpp" line="160"/>
         <source>Request timed out.</source>
         <translation>Перевищено інтервал очікування запиту.</translation>
     </message>
@@ -769,63 +816,293 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserEFA</name>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="137"/>
+        <location filename="../src/parser/parser_efa.cpp" line="135"/>
         <source>All</source>
         <translation>Усі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="138"/>
+        <location filename="../src/parser/parser_efa.cpp" line="136"/>
         <source>Metro Train</source>
-        <translation>Міський поїзд</translation>
+        <translation>Міський потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="139"/>
+        <location filename="../src/parser/parser_efa.cpp" line="137"/>
         <source>Metro Tram</source>
         <translation>Міський трамвай</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="140"/>
+        <location filename="../src/parser/parser_efa.cpp" line="138"/>
         <source>Metro Bus</source>
         <translation>Міський автобус</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="141"/>
+        <location filename="../src/parser/parser_efa.cpp" line="139"/>
         <source>Regional Train</source>
-        <translation>Регіональний поїзд</translation>
+        <translation>Регіональний потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="142"/>
+        <location filename="../src/parser/parser_efa.cpp" line="140"/>
         <source>Regional Coach</source>
         <translation>Регіональний автобус</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="143"/>
+        <location filename="../src/parser/parser_efa.cpp" line="141"/>
         <source>Airport(SKYBUS)</source>
         <translation>Аеропорт (SKYBUS)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="315"/>
+        <location filename="../src/parser/parser_efa.cpp" line="313"/>
         <source>Server Error: </source>
         <translation>Помилка сервера: </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="527"/>
-        <location filename="../src/parser/parser_efa.cpp" line="712"/>
-        <location filename="../src/parser/parser_efa.cpp" line="728"/>
+        <location filename="../src/parser/parser_efa.cpp" line="520"/>
+        <location filename="../src/parser/parser_efa.cpp" line="634"/>
+        <location filename="../src/parser/parser_efa.cpp" line="650"/>
         <source>%1, %2</source>
         <comment>DATE, TIME</comment>
         <extracomment>DATE, TIME</extracomment>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="768"/>
+        <location filename="../src/parser/parser_efa.cpp" line="539"/>
+        <location filename="../src/parser/parser_efa.cpp" line="541"/>
+        <source>Walk</source>
+        <translation>Пішки</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_efa.cpp" line="542"/>
+        <source>Guaranteed connection</source>
+        <translation>Гарантоване сполучення</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_efa.cpp" line="685"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#b30;&quot;&gt;запізнення на %1 хв.&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_efa.cpp" line="772"/>
+        <location filename="../src/parser/parser_efa.cpp" line="688"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;за розкладом&lt;/span&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>ParserFinlandMatka</name>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="74"/>
+        <source>All</source>
+        <translation>Усі</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="75"/>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1055"/>
+        <source>Bus</source>
+        <translation>Автобус</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="76"/>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1068"/>
+        <source>Train</source>
+        <translation>Потяг</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="77"/>
+        <source>Airplane</source>
+        <translation>Літак</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="78"/>
+        <source>Bus and train</source>
+        <translation>Автобус та потяг</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="79"/>
+        <source>Bus and airplane</source>
+        <translation>Автобус та літак</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="80"/>
+        <source>Train and airplane</source>
+        <translation>Потяг та літак</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="247"/>
+        <source>Timetables are only available for stops.</source>
+        <translation>Розклад доступний тільки для зупинок.</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="325"/>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="340"/>
+        <source>Failed to parse timetable data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="691"/>
+        <source>Walk %1</source>
+        <translation>Йти %1</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="713"/>
+        <source>Arrivals</source>
+        <translation>Прибуття</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="715"/>
+        <source>Departures</source>
+        <translation>Відправлення</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="716"/>
+        <source>ddd MMM d, HH:mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="838"/>
+        <source>Walk</source>
+        <translation>Пішки</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="889"/>
+        <source>Invalid transport type: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="970"/>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="972"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="975"/>
+        <source>m</source>
+        <extracomment>Meters</extracomment>
+        <translation>м</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1002"/>
+        <source>Express train</source>
+        <translation>Потяг-експрес</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1007"/>
+        <source>Regional train</source>
+        <translation>Регіональний потяг</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1008"/>
+        <source>Train bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1011"/>
+        <source>Commuter train</source>
+        <translation>Приміський потяг</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1014"/>
+        <source>Express bus</source>
+        <translation>Автобус-експрес</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1015"/>
+        <source>Taxi</source>
+        <translation>Таксі</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1017"/>
+        <source>Connection bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1021"/>
+        <source>Local bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1058"/>
+        <source>City bus</source>
+        <translation>Міський автобус</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1061"/>
+        <source>Flight</source>
+        <extracomment>Used in conjunction with a flight number, e.g. &quot;Flight D1234&quot;</extracomment>
+        <translation>Переліт</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1063"/>
+        <source>Car</source>
+        <translation>Автомобіль</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1064"/>
+        <source>Tram</source>
+        <translation>Трамвай</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1065"/>
+        <source>Metro</source>
+        <translation>Метро</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1066"/>
+        <source>Ferry</source>
+        <translation>Паром</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1069"/>
+        <source>Unknown transport type: %1</source>
+        <translation>Невідомий вид транспорту: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1180"/>
+        <source>Stop</source>
+        <translation>Зупинка</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1182"/>
+        <source>Accomodation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1184"/>
+        <source>POI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1186"/>
+        <source>School</source>
+        <translation>Школа</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1188"/>
+        <source>Hospital</source>
+        <translation>Шпиталь</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1190"/>
+        <source>Transport POI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1192"/>
+        <source>District</source>
+        <translation>Район</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1194"/>
+        <source>Street</source>
+        <translation>Вулиця</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.cpp" line="1265"/>
+        <source>Unknown city</source>
+        <translation>Невідоме місто</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_finland_matka.h" line="71"/>
+        <source>Finland</source>
+        <translation>Фінляндія</translation>
     </message>
 </context>
 <context>
@@ -893,7 +1170,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="544"/>
         <source>Train canceled!</source>
-        <translation>Поїзд скасовано!</translation>
+        <translation>Потяг скасовано!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="547"/>
@@ -908,7 +1185,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="584"/>
         <source>Journey contains canceled trains!</source>
-        <translation>Подорож містить скасовані поїзди!</translation>
+        <translation>Подорож містить скасовані потяги!</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="626"/>
@@ -952,6 +1229,11 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="752"/>
+        <source>Dep./Arr./Intermed. or equivalent station defined more than once.</source>
+        <translation>Пункт відправлення, призначення або проміжний пункт задано більше, ніж один раз.</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_hafasbinary.cpp" line="754"/>
         <source>Unknown error ocurred with the backend (error %1).</source>
         <translation>Під час запиту до постачальника послуг сталася невідома помилка (код %1).</translation>
     </message>
@@ -965,88 +1247,88 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="213"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="358"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="366"/>
         <source>On-Time</source>
         <translation>За розкладом</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="216"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="361"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="369"/>
         <source>Canceled!</source>
         <translation>Скасовано!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="506"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="514"/>
         <source>All</source>
         <translation>Усі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="507"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="515"/>
         <source>All without ICE</source>
         <translation>Усі, окрім ICE</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="508"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="516"/>
         <source>Only local transport</source>
         <translation>Лише міський транспорт</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="509"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="517"/>
         <source>Local transport without S-Bahn</source>
         <translation>Міський транспорт, окрім S-Bahn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="609"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="617"/>
         <source>Error parsing reponse from the server: %1</source>
         <translation>Помилка розбору відповіді сервера: %1</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="619"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="627"/>
         <source>%1 replied: &quot;%2&quot;</source>
         <translation>%1 відповів: %2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="696"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="941"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="704"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="949"/>
         <source>, </source>
         <translation>, </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="742"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="750"/>
         <source>Internal error occured, going later is not possible</source>
         <translation>Сталася внутрішня помилка: поїздка пізніше неможлива</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="767"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="775"/>
         <source>Internal error occured, going earlier is not possible</source>
         <translation>Сталася внутрішня помилка: поїздка раніше неможлива</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="818"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="839"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="826"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="847"/>
         <source>Internal error occured: JourneyResultdata not present!</source>
         <translation>Сталася внутрішня помилка: відсутня JourneyResultdata!</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="877"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1004"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="885"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1012"/>
         <source>Pl. %1</source>
         <translation>Пл. %1</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="954"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="968"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="962"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="976"/>
         <source>Walk</source>
         <translation>Пішки</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="954"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="962"/>
         <source>Transfer</source>
         <translation>Пересадка</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="956"/>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="977"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="964"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="985"/>
         <source>%1 for %2 min</source>
         <extracomment>%1 can be &quot;Walk&quot; or &quot;Transfer&quot;
 ----------
@@ -1054,7 +1336,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>%1 %2 хв</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/parser/parser_hafasxml.cpp" line="958"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="966"/>
         <source>Distance %n meter(s)</source>
         <translation>
             <numerusform>Відстань %n метр</numerusform>
@@ -1063,22 +1345,22 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         </translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="970"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="978"/>
         <source>Use bike</source>
         <translation>Їхати велосипедом</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="972"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="980"/>
         <source>Take taxi</source>
         <translation>Їхати на таксі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="974"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="982"/>
         <source>Drive car</source>
         <translation>Їхати машиною</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_hafasxml.cpp" line="1084"/>
+        <location filename="../src/parser/parser_hafasxml.cpp" line="1092"/>
         <source>d</source>
         <translation>дн</translation>
     </message>
@@ -1093,7 +1375,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/parser/parser_ireland_efa.cpp" line="46"/>
         <source>Train</source>
-        <translation>Поїзд</translation>
+        <translation>Потяг</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ireland_efa.cpp" line="47"/>
@@ -1190,52 +1472,70 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserNinetwo</name>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="165"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="192"/>
         <source>All</source>
         <translation>Усі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="166"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="193"/>
         <source>Only trains</source>
-        <translation>Тільки поїзди</translation>
+        <translation>Тільки потяги</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="167"/>
-        <source>not by ferry</source>
-        <translation>без паромів</translation>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="194"/>
+        <source>All, except ferry</source>
+        <translation>Усі, окрім паромів</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="179"/>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="240"/>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="279"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="249"/>
+        <source>%1 via %2</source>
+        <translation>%1 через %2</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="253"/>
+        <source>On-Time</source>
+        <translation>За розкладом</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/parser/parser_ninetwo.cpp" line="322"/>
+        <source>%n m</source>
+        <extracomment>Distance in meters</extracomment>
+        <translation>
+            <numerusform>%n м</numerusform>
+            <numerusform>%n м</numerusform>
+            <numerusform>%n м</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="483"/>
+        <source>%1 for %2 min</source>
+        <translation>%1 %2 хв</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="502"/>
+        <source>, </source>
+        <translation>, </translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="214"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="292"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="351"/>
         <source>Cannot parse reply from the server</source>
         <translation>Не можу розібрати відовідь сервера</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="214"/>
-        <source>via %1</source>
-        <translation>через %1</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="407"/>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="411"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="489"/>
+        <location filename="../src/parser/parser_ninetwo.cpp" line="493"/>
         <source>Pl. %1</source>
         <translation>Пл. %1</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.cpp" line="218"/>
-        <source>(%1) %2 
-%3</source>
-        <translation>(%1) %2 
-%3</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <location filename="../src/parser/parser_ninetwo.h" line="66"/>
         <source>Netherlands</source>
         <translation>Нідерланди</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_ninetwo.h" line="60"/>
+        <location filename="../src/parser/parser_ninetwo.h" line="66"/>
         <source>Belgium</source>
         <translation>Бельгія</translation>
     </message>
@@ -1250,7 +1550,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/parser/parser_ptvvicgovau.cpp" line="47"/>
         <source>Metro Train</source>
-        <translation>Міський поїзд</translation>
+        <translation>Міський потяг</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ptvvicgovau.cpp" line="48"/>
@@ -1265,7 +1565,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/parser/parser_ptvvicgovau.cpp" line="50"/>
         <source>Regional Train</source>
-        <translation>Регіональний поїзд</translation>
+        <translation>Регіональний потяг</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ptvvicgovau.cpp" line="51"/>
@@ -1291,257 +1591,354 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserResRobot</name>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="42"/>
-        <source>Bistro car</source>
-        <translation>Вагон-бістро</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="43"/>
-        <source>No animals</source>
-        <translation>Без тварин</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="44"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="39"/>
         <source>No reservation</source>
         <translation>Без бронювання</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="45"/>
-        <source>Only second class</source>
-        <translation>Тільки другий клас</translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="46"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="41"/>
         <source>Optional seat reservation</source>
         <translation>Не обов’язкове бронювання місця</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="47"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="49"/>
+        <source>Short distance trips not allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="50"/>
+        <source>Regional fare for reg. journey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="51"/>
+        <source>Engineering work. Bus/taxi repl.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="52"/>
+        <source>Detour due to engineering work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="53"/>
+        <source>Engineering work. 60-90 min delay.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="54"/>
+        <source>Reduced speed (may be delayed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="55"/>
+        <source>Flexicoach with bistro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="56"/>
+        <source>Bed and wheelchair or bed + parent with child</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
         <source>Breakfast in first class</source>
         <translation>Сніданок у першому класі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="48"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="57"/>
         <source>Internet connection</source>
         <translation>Інтернет з’єднання</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="49"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="32"/>
         <source>Food in first class</source>
         <translation>Їжа у першому класі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="50"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="33"/>
+        <source>Business class Plus available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="34"/>
+        <source>No pets allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="35"/>
+        <source>Standard class only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="36"/>
+        <source>Seat reservation not possible in second class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="37"/>
+        <source>Trolley service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="38"/>
+        <source>Restaurant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="40"/>
         <source>Mandatory seat reservation</source>
         <translation>Обов’язкове бронювання місця</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="51"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="42"/>
+        <source>Access to sleeper before dep.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="43"/>
+        <source>Access to sleeper after arr.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="44"/>
+        <source>Telephone reservation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="45"/>
+        <source>Family coach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="46"/>
+        <source>Coach with cinema and bistro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="47"/>
+        <source>Supplement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="48"/>
         <source>Wheelchair lift</source>
         <translation>Підйом для інвалідного крісла</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="52"/>
-        <source>Catering</source>
-        <translation>Харчування</translation>
+        <location filename="../src/parser/parser_resrobot.cpp" line="59"/>
+        <source>Carriage of bicycle</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="53"/>
-        <source>Sleeping/dormitory car</source>
-        <translation>Спальний вагон</translation>
+        <location filename="../src/parser/parser_resrobot.cpp" line="60"/>
+        <source>Couchette</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="56"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="61"/>
+        <source>Sleeper and couchette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="62"/>
+        <source>Faster service (overtakes slower services)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="63"/>
+        <source>No price information available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="66"/>
         <source>Car</source>
         <translation>Автомобіль</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="57"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="67"/>
         <source>Bus</source>
         <translation>Автобус</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="653"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="68"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="661"/>
         <source>Replacement bus</source>
         <translation>Автобус-заміна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="59"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="654"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="69"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="662"/>
         <source>Replacement taxi</source>
         <translation>Таксі-заміна</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="60"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="70"/>
         <source>Express bus</source>
         <translation>Автобус-експрес</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="62"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="72"/>
         <source>Airport bus</source>
         <translation>Автобус до аеропорту</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="63"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="73"/>
         <source>Airport bus/airport taxi</source>
         <translation>Автобус / таксі до аеропорту</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="64"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="74"/>
         <source>Airport taxi</source>
         <translation>Таксі до аеропорту</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="65"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="75"/>
         <source>Ferry</source>
         <translation>Паром</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="66"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="76"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="590"/>
         <source>Walk</source>
         <translation>Пішки</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="67"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="77"/>
         <source>Walk (long range)</source>
         <translation>Пішки (велика відстань)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="68"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="78"/>
         <source>Berthage</source>
         <translation>Пристань</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="69"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
         <source>County taxi</source>
         <translation>Окружне таксі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="70"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
         <source>Night train</source>
-        <translation>Нічний поїзд</translation>
+        <translation>Нічний потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="71"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
         <source>Normal ferry (reduced price)</source>
         <translation>Звичайний паром (знижена ціна)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="72"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="82"/>
         <source>Commuter train</source>
-        <translation>Приміський поїзд</translation>
+        <translation>Приміський потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="73"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
         <source>Day coach in night train</source>
-        <translation>Денний вагон у нічному поїзді</translation>
+        <translation>Денний вагон у нічному потязі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="74"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="84"/>
         <source>High-speed train</source>
-        <translation>Високошвидкісний поїзд</translation>
+        <translation>Високошвидкісний потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="75"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="85"/>
         <source>High-speed train (taxi connection)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="76"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="86"/>
         <source>Special bus</source>
         <translation>Спеціальний автобус</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="77"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="87"/>
         <source>Special train</source>
-        <translation>Спеціальний поїзд</translation>
+        <translation>Спеціальний потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="78"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="88"/>
         <source>Tram</source>
         <translation>Трамвай</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="89"/>
         <source>City traffic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="90"/>
         <source>Metro</source>
         <translation>Метро</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="91"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="97"/>
         <source>Train</source>
-        <translation>Поїзд</translation>
+        <translation>Потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="93"/>
         <source>Train taxi</source>
-        <translation>Поїзд-таксі</translation>
+        <translation>Потяг-таксі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="85"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="95"/>
         <source>International ferry</source>
         <translation>Міжнародний паром</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="86"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="96"/>
         <source>International train</source>
-        <translation>Міжнародний поїзд</translation>
+        <translation>Міжнародний потяг</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="87"/>
-        <source>Other train</source>
-        <translation>Інший поїзд</translation>
+        <location filename="../src/parser/parser_resrobot.cpp" line="357"/>
+        <source>Realtime info</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="113"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="123"/>
         <source>All</source>
         <translation>Усі</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="114"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="124"/>
         <source>Train and local trans., not express bus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="115"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="125"/>
         <source>Express bus and local trans., not train</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="309"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="362"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="395"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="335"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="397"/>
         <location filename="../src/parser/parser_resrobot.cpp" line="422"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="448"/>
         <source>Cannot parse reply from the server</source>
         <translation>Не можу розібрати відовідь сервера</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="338"/>
-        <source>New time: </source>
-        <translation>Новий час: </translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="509"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="534"/>
         <source>Arrivals</source>
         <translation>Прибуття</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="511"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="536"/>
         <source>Departures</source>
         <translation>Відправлення</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="512"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="537"/>
         <source>ddd MMM d, HH:mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.h" line="64"/>
+        <location filename="../src/parser/parser_resrobot.h" line="52"/>
         <source>Sweden</source>
         <translation>Швеція</translation>
     </message>
@@ -1787,7 +2184,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <message>
         <location filename="../src/parser/parser_sydney_efa.cpp" line="47"/>
         <source>Trains</source>
-        <translation>Поїзди</translation>
+        <translation>Потяги</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_sydney_efa.cpp" line="48"/>
@@ -1900,81 +2297,81 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>ParserXmlVasttrafikSe</name>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="292"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="341"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#b30;&quot;&gt;запізнення на %1 хв.&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="294"/>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="442"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="343"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="489"/>
         <source>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation>&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;за розкладом&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="321"/>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="356"/>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="477"/>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="492"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="368"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="403"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="524"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="539"/>
         <source>%1, %2</source>
         <comment>DATE, TIME</comment>
         <extracomment>DATE, TIME</extracomment>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="373"/>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="378"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="420"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="425"/>
         <source>Track %1</source>
         <translation>Колія %1</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="385"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="432"/>
         <source>Walk</source>
         <translation>Пішки</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="403"/>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="418"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="450"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="465"/>
         <source>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;%1 min late&lt;/span&gt;</source>
         <translation>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;запізнення на %1 хв.&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="409"/>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="420"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="456"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="467"/>
         <source>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;on time&lt;/span&gt;</source>
         <translation>&lt;br/&gt;&lt;span style=&quot;color:#093; font-weight: normal;&quot;&gt;за розкладом&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="435"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="482"/>
         <source>%1:%2</source>
         <translation>%1:%2</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="440"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="487"/>
         <source>&lt;span style=&quot;color:#b30;&quot;&gt;traffic warning&lt;/span&gt;</source>
         <translation>&lt;br/&gt;&lt;span style=&quot;color:#b30;&quot;&gt;попередження про дорожній рух&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="500"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="547"/>
         <source>Bus</source>
         <translation>Автобус</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="500"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="547"/>
         <source>Exp Bus</source>
         <translation>Експрес-автобус</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="500"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="547"/>
         <source>Tram</source>
         <translation>Трамвай</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="500"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.cpp" line="547"/>
         <source>Ferry</source>
         <translation>Паром</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_xmlvasttrafikse.h" line="31"/>
+        <location filename="../src/parser/parser_xmlvasttrafikse.h" line="33"/>
         <source>Sweden</source>
         <translation>Швеція</translation>
     </message>
@@ -1991,12 +2388,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="87"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="45"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="87"/>
         <source>Compact calendar entries</source>
         <translation>Компактні записи у календарі</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="88"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="46"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="88"/>
         <source>Use shorter text format in the calendar event description</source>
         <translation>Використовувати коротший формат тексту в записах у календарі</translation>
@@ -2032,13 +2431,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="122"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="57"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="125"/>
         <source>Add journeys to calendar</source>
         <translation>Додавати подорожі до календаря</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/SettingsPage.qml" line="134"/>
-        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="90"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="96"/>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="138"/>
         <location filename="../src/gui/ubuntu/SettingsPage.qml" line="89"/>
         <source>About</source>
@@ -2051,7 +2451,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Оберіть календар</translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="57"/>
+        <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="75"/>
         <source>Backend</source>
         <translation>Постачальник</translation>
     </message>
@@ -2081,25 +2481,30 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>&apos;%1&apos; додано до обраних</translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="74"/>
         <source>Remove from favorites</source>
         <translation>Видалити з обраних</translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="70"/>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="74"/>
         <source>Add to favorites</source>
         <translation>Додати до обраних</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="77"/>
+        <source>Removing favorite...</source>
+        <translation>Видалення з обраних...</translation>
     </message>
 </context>
 <context>
     <name>StationSelect</name>
     <message>
-        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="80"/>
+        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="66"/>
         <source>Search for Station...</source>
         <translation>Шукати станцію...</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="143"/>
+        <location filename="../src/gui/ubuntu/components/StationSelect.qml" line="106"/>
         <source>Click the star icon on the search results to add or remove a station as a favorite</source>
         <translation>Натисніть зірочку в результатах пошуку, щоб додати або видалити станцію до списку обраних</translation>
     </message>
@@ -2138,14 +2543,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="205"/>
-        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="151"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="160"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="202"/>
         <source>Searching for stations...</source>
         <translation>Йде пошук станцій та зупинок...</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/StationSelectPage.qml" line="210"/>
-        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="154"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="163"/>
         <location filename="../src/gui/symbian/pages/StationSelectPage.qml" line="205"/>
         <source>Waiting for GPS lock...</source>
         <translation>Очікування на позиціювання GPS...</translation>
@@ -2161,27 +2566,32 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Пошук</translation>
     </message>
     <message>
-        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="110"/>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="109"/>
         <source>Favorites</source>
         <translation>Обрані</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="119"/>
+        <source>Click and hold in the search results to add or remove a station as a favorite</source>
+        <translation>Натисніть та тримайте результат пошуку, щоб додати або видалити станцію до списку обраних</translation>
     </message>
 </context>
 <context>
     <name>TimePicker</name>
     <message>
-        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="26"/>
-        <source>Time</source>
-        <translation>Час</translation>
+        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="28"/>
+        <source>&lt;b&gt;Time&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Час&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="51"/>
-        <source>Hour</source>
-        <translation>Година</translation>
+        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="44"/>
+        <source>Cancel</source>
+        <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="63"/>
-        <source>Minute</source>
-        <translation>Хвилина</translation>
+        <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="55"/>
+        <source>Ok</source>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
@@ -2197,17 +2607,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Відправлення</translation>
     </message>
     <message>
-        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="103"/>
-        <source>from</source>
-        <translation>від</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="103"/>
-        <source>to</source>
-        <translation>до</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="120"/>
+        <location filename="../src/gui/ubuntu/TimeTableResultsPage.qml" line="118"/>
         <source>Pl. %1</source>
         <translation>Пл. %1</translation>
     </message>
@@ -2240,17 +2640,27 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
     <name>TimetablePage</name>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
-        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="40"/>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="105"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Arrivals</source>
         <translation>Прибуття</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/TimetablePage.qml" line="47"/>
-        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="40"/>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="105"/>
         <location filename="../src/gui/symbian/pages/TimetablePage.qml" line="46"/>
         <source>Departures</source>
         <translation>Відправлення</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="81"/>
+        <source>Searching...</source>
+        <translation>Йде пошук...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="113"/>
+        <source>Error</source>
+        <translation>Помилка</translation>
     </message>
 </context>
 <context>
@@ -2272,14 +2682,14 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/gui/ubuntu/main.qml" line="45"/>
-        <location filename="../src/gui/ubuntu/main.qml" line="50"/>
+        <location filename="../src/gui/ubuntu/main.qml" line="47"/>
+        <location filename="../src/gui/ubuntu/main.qml" line="49"/>
         <source>Journey</source>
         <translation>Подорож</translation>
     </message>
     <message>
+        <location filename="../src/gui/ubuntu/main.qml" line="54"/>
         <location filename="../src/gui/ubuntu/main.qml" line="56"/>
-        <location filename="../src/gui/ubuntu/main.qml" line="61"/>
         <source>Time table</source>
         <translation>Розклад</translation>
     </message>

@@ -58,20 +58,22 @@ maemo5: CONFIG += mobility11
 
 TRANSLATIONS += \
     translations/fahrplan_ar.ts \
+    translations/fahrplan_ca.ts \
     translations/fahrplan_de.ts \
     translations/fahrplan_el.ts \
     translations/fahrplan_en.ts \
+    translations/fahrplan_es.ts \
     translations/fahrplan_fa_IR.ts \
-    translations/fahrplan_mk_MK.ts \
+    translations/fahrplan_fr.ts \
+    translations/fahrplan_hu.ts \
+    translations/fahrplan_nb.ts \
     translations/fahrplan_nl_NL.ts \
     translations/fahrplan_pl.ts \
     translations/fahrplan_ro_RO.ts \
     translations/fahrplan_ru.ts \
     translations/fahrplan_sl_SI.ts \
     translations/fahrplan_sv_SE.ts \
-    translations/fahrplan_tr.ts \
-    translations/fahrplan_uk.ts \
-    translations/fahrplan_zh.ts
+    translations/fahrplan_uk.ts
 CODECFORTR = UTF-8
 
 OTHER_FILES += \
