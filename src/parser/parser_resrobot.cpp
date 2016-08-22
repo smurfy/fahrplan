@@ -26,7 +26,7 @@ ParserResRobot::ParserResRobot(QObject *parent) :
         ParserAbstract(parent),
         timetableAPIKey(QLatin1String("75d0c2b5-c179-489c-90c2-eb6d2bc8970c")),
         journeyAPIKey(QLatin1String("c8436ea6-3c7e-489f-93b1-5b636fc55f2e")),
-        baseURL(QLatin1String("https://api.resrobot.se"))
+        baseURL(QLatin1String("https://api.resrobot.se/v2"))
 {
     // Translate remarks
     hafasAttributes.insert("A1", tr("Food in first class"));
@@ -55,46 +55,82 @@ ParserResRobot::ParserResRobot(QObject *parent) :
     hafasAttributes.insert("AU", tr("Flexicoach with bistro"));
     hafasAttributes.insert("AV", tr("Bed and wheelchair or bed + parent with child"));
     hafasAttributes.insert("AW", tr("Internet connection"));
-    hafasAttributes.insert("AZ", tr("Breakfast in first class"));
+    hafasAttributes.insert("AZ", tr("Preordered breakfast"));
+    hafasAttributes.insert("BF", tr("No reservation in first class"));
+    hafasAttributes.insert("BG", tr("Luggage"));
+    hafasAttributes.insert("D1", tr("Animals allowed, see rules"));
+    hafasAttributes.insert("D2", tr("Animals allowed, see rules"));
+    hafasAttributes.insert("D3", tr("Animals allowed, see rules"));
+    hafasAttributes.insert("EL", tr("Electricity for reservation"));
+    hafasAttributes.insert("ES", tr("No day coach"));
     hafasAttributes.insert("FB", tr("Carriage of bicycle"));
+    hafasAttributes.insert("FM", tr("First class without food has no reservation"));
+    hafasAttributes.insert("KI", tr("Skis"));
+    hafasAttributes.insert("KO", tr("Office coach"));
+    hafasAttributes.insert("KU", tr("Culture coach"));
     hafasAttributes.insert("LW", tr("Couchette"));
+    hafasAttributes.insert("PE", tr("Newspapers in first class"));
+    hafasAttributes.insert("PS", tr("Society coach"));
+    hafasAttributes.insert("S4", tr("Four-bed compartment in sleeper"));
+    hafasAttributes.insert("SD", tr("Alcohol service"));
+    hafasAttributes.insert("SF", tr("Breakfast in first class"));
+    hafasAttributes.insert("SG", tr("Tavern"));
+    hafasAttributes.insert("SH", tr("Reduced speed, may be delayed"));
+    hafasAttributes.insert("SI", tr("No foodservice"));
+    hafasAttributes.insert("SK", tr("Café"));
     hafasAttributes.insert("SL", tr("Sleeper and couchette"));
+    hafasAttributes.insert("SM", tr("Foodservice"));
+    hafasAttributes.insert("SN", tr("Foodservice plus"));
+    hafasAttributes.insert("SS", tr("Food served at seat in first class"));
+    hafasAttributes.insert("SV", tr("Hot food may be preordered"));
+    hafasAttributes.insert("SW", tr("Sleeper"));
     hafasAttributes.insert("00", tr("Faster service (overtakes slower services)"));
     hafasAttributes.insert("P-", tr("No price information available"));
 
-    // Translate transport modes
-    transportModeStrings[QString::fromUtf8("Bil")] = tr("Car");
-    transportModeStrings[QString::fromUtf8("Buss")] = tr("Bus");
-    transportModeStrings[QString::fromUtf8("Ersättningsbuss")] = tr("Replacement bus");
-    transportModeStrings[QString::fromUtf8("Ersättningstaxi")] = tr("Replacement taxi");
-    transportModeStrings[QString::fromUtf8("Expressbuss")] = tr("Express bus");
-    transportModeStrings[QString::fromUtf8("Flyg")] = "Flight";
-    transportModeStrings[QString::fromUtf8("Flygbuss")] = tr("Airport bus");
-    transportModeStrings[QString::fromUtf8("Flygbuss/flygtaxi")] = tr("Airport bus/airport taxi");
-    transportModeStrings[QString::fromUtf8("Flygtaxi")] = tr("Airport taxi");
-    transportModeStrings[QString::fromUtf8("Färja")] = tr("Ferry");
-    transportModeStrings[QString::fromUtf8("Gång")] = tr("Walk");
-    transportModeStrings[QString::fromUtf8("Gång lång sträcka")] = tr("Walk (long range)");
-    transportModeStrings[QString::fromUtf8("Kajplats")] = tr("Berthage");
-    transportModeStrings[QString::fromUtf8("Länstaxi")] = tr("County taxi");
-    transportModeStrings[QString::fromUtf8("Nattåg")] = tr("Night train");
-    transportModeStrings[QString::fromUtf8("Normalfärja lågpris")] = tr("Normal ferry (reduced price)");
-    transportModeStrings[QString::fromUtf8("Pendeltåg")] = tr("Commuter train");
-    transportModeStrings[QString::fromUtf8("Sittvagn i Nattåg")] = tr("Day coach in night train");
-    transportModeStrings[QString::fromUtf8("Snabbtåg")] = tr("High-speed train");
-    transportModeStrings[QString::fromUtf8("Snabbtåg anslutningstaxi")] = tr("High-speed train (taxi connection)");
-    transportModeStrings[QString::fromUtf8("Specialbuss")] = tr("Special bus");
-    transportModeStrings[QString::fromUtf8("Specialtåg")] = tr("Special train");
-    transportModeStrings[QString::fromUtf8("Spårvagn")] = tr("Tram");
-    transportModeStrings[QString::fromUtf8("Stadstrafik")] = tr("City traffic");
-    transportModeStrings[QString::fromUtf8("Tunnelbana")] = tr("Metro");
-    transportModeStrings[QString::fromUtf8("Tåg")] = tr("Train");
-    transportModeStrings[QString::fromUtf8("Tågbuss")] = "Train bus";
-    transportModeStrings[QString::fromUtf8("Tågtaxi")] = tr("Train taxi");
-    transportModeStrings[QString::fromUtf8("Utrikes buss")] = "International bus";
-    transportModeStrings[QString::fromUtf8("Utrikes färja")] = tr("International ferry");
-    transportModeStrings[QString::fromUtf8("Utrikes tåg")] = tr("International train");
-    transportModeStrings[QString::fromUtf8("Övriga tåg")] = tr("Train");
+    specificTransportModes.insert("BAX", tr("Airport transfer (bus)"));
+    specificTransportModes.insert("BOR", QString::fromUtf8("Öresundståg (%1)").arg(tr("replacement bus")));
+    specificTransportModes.insert("BPT", QString::fromUtf8("Pågatåg (%1)").arg(tr("replacement bus")));
+    specificTransportModes.insert("BXB", tr("Express bus"));
+    specificTransportModes.insert("FNF", tr("Normal ferry (reduced price)"));
+    specificTransportModes.insert("FUT", tr("International ferry"));
+    specificTransportModes.insert("FXF", QString("%1 SF700 %2").arg(tr("Express ferry")).arg(tr("yellow dep")));
+    specificTransportModes.insert("FXL", QString("%1 SF1500 %2").arg(tr("Express ferry")).arg(tr("white dep")));
+    specificTransportModes.insert("FXM", QString("%1 SF700 %2").arg(tr("Express ferry")).arg(tr("white dep")));
+    specificTransportModes.insert("FXN", QString("%1 SF1500 %2").arg(tr("Express ferry")).arg(tr("yellow dep")));
+    specificTransportModes.insert("JAV", "Renfe Ave");
+    specificTransportModes.insert("JAX", tr("Airport transfer (train)"));
+    specificTransportModes.insert("JCN", "City Night Line");
+    specificTransportModes.insert("JCS", tr("Night train"));
+    specificTransportModes.insert("JEC", "EuroCity");
+    specificTransportModes.insert("JEN", "EuroNight");
+    specificTransportModes.insert("JES", "Eurostar Italia");
+    specificTransportModes.insert("JEX", tr("Express train"));
+    specificTransportModes.insert("JFM", QString::fromUtf8("Flåmsbanen"));
+    specificTransportModes.insert("JGM", "Flytog");
+    specificTransportModes.insert("JIC", "InterCity");
+    specificTransportModes.insert("JIE", "ICE");
+    specificTransportModes.insert("JIL", "InterCity Lyn");
+    specificTransportModes.insert("JIR", "InterRegio");
+    specificTransportModes.insert("JKP", "Kustpilen");
+    specificTransportModes.insert("JNO", QString::fromUtf8("Norrtåg"));
+    specificTransportModes.insert("JNS", "NSB/SJ");
+    specificTransportModes.insert("JNT", tr("Night train"));
+    specificTransportModes.insert("JNZ", "DB Nachtzug");
+    specificTransportModes.insert("JOR", QString::fromUtf8("Öresundståg"));
+    specificTransportModes.insert("JPT", QString::fromUtf8("Pågatåg"));
+    specificTransportModes.insert("JSP", tr("Special train"));
+    specificTransportModes.insert("JST", tr("High-speed train"));
+    specificTransportModes.insert("JTH", "Thalys");
+    specificTransportModes.insert("TAX", tr("Airport transfer (taxi)"));
+
+    generalTransportModes.insert("A", tr("Flight"));
+    generalTransportModes.insert("B", tr("Bus"));
+    generalTransportModes.insert("F", tr("Ferry"));
+    generalTransportModes.insert("H", tr("Helicopter"));
+    generalTransportModes.insert("J", tr("Train"));
+    generalTransportModes.insert("S", tr("Tram"));
+    generalTransportModes.insert("T", tr("Taxi"));
+    generalTransportModes.insert("U", tr("Rapid transit"));
 }
 
 bool ParserResRobot::supportsGps()
@@ -214,9 +250,9 @@ void ParserResRobot::getTimeTableForStation(const Station &currentStation,
     QUrl query;
 #endif
     query.addQueryItem("key", timetableAPIKey);
-    query.addQueryItem("id", currentStation.id.toString());
+    query.addQueryItem("id", stationIDv2(currentStation.id.toString()));
     if (directionStation.valid)
-        query.addQueryItem("direction", directionStation.id.toString());
+        query.addQueryItem("direction", stationIDv2(directionStation.id.toString()));
     query.addQueryItem("date", dateTime.toString("yyyy-MM-dd"));
     query.addQueryItem("time", dateTime.toString("hh:mm"));
     query.addQueryItem("maxJourneys", "30"); // Max number of results
@@ -237,6 +273,7 @@ void ParserResRobot::getTimeTableForStation(const Station &currentStation,
 #else
     url.setQueryItems(query.queryItems());
 #endif
+    qDebug() << "Searching for timetable:" << url.toString();
     sendHttpRequest(url);
 }
 
@@ -253,6 +290,10 @@ void ParserResRobot::searchJourney(const Station &departureStation, const Statio
     lastJourneySearch.to = arrivalStation;
     lastJourneySearch.restrictions = trainRestrictions;
     lastJourneySearch.mode = mode;
+
+    lastJourneySearch.from.id = stationIDv2(lastJourneySearch.from.id.toString());
+    lastJourneySearch.via.id = stationIDv2(lastJourneySearch.via.id.toString());
+    lastJourneySearch.to.id = stationIDv2(lastJourneySearch.to.id.toString());
 
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
@@ -363,7 +404,8 @@ void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
             resultItem.destinationStation = departure.value("origin").toString();
         else
             resultItem.destinationStation = departure.value("direction").toString();
-        resultItem.trainType = translateTransportMode(product.value("catOutL").toString());
+        resultItem.trainType = transportMode(product.value("catOutS").toString(),
+                                                      product.value("catOutL").toString());
         QString lineNumber = product.value("num").toString();
         if (!lineNumber.isEmpty())
             resultItem.trainType += " " + lineNumber;
@@ -590,7 +632,8 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
             resultItem->setTrain(tr("Walk"));
         } else if (transportMainType == "JNY") {
             QVariantMap product = segment.value("Product").toMap();
-            QString transportType = translateTransportMode(product.value("catOutL").toString());
+            QString transportType = transportMode(product.value("catOutS").toString(),
+                                                           product.value("catOutL").toString());
             QString lineNumber = product.value("num").toString();
             if (!lineNumber.isEmpty())
                 transportType += " " + lineNumber;
@@ -656,15 +699,15 @@ QString ParserResRobot::hafasAttribute(const QString& code)
         return "";
 }
 
-QString ParserResRobot::translateTransportMode(QString original)
+QString ParserResRobot::transportMode(const QString& code, const QString& fallback)
 {
-    original.replace(QString::fromUtf8("Ersättningsbuss"), tr("Replacement bus"));
-    original.replace(QString::fromUtf8("Ersättningstaxi"), tr("Replacement taxi"));
-    if (transportModeStrings.contains(original)) {
-        return transportModeStrings[original];
+    if (specificTransportModes.contains(code)) {
+        return specificTransportModes[code];
+    } else if (code.size() >= 1 && generalTransportModes.contains(code.left(1))) {
+        return generalTransportModes[code.left(1)];
     } else {
-        qDebug() << "Didn't find translation of" << original;
-        return original;
+        qDebug() << "Didn't find transport mode" << code << ", falling back to " << fallback;
+        return fallback;
     }
 }
 
@@ -681,4 +724,15 @@ QString ParserResRobot::formatRestrictions(int restriction)
         return QString::number(EXPRESS_BUS + SUBWAY + TRAM + BUS + FERRY);
     }
     return "";
+}
+
+QString ParserResRobot::stationIDv2(QString id)
+{
+    // A version 1 ID looks something like "007459175", which for v2 should look like "740059175"
+    while (!id.isEmpty() && id.at(0) == '0')
+        id.remove(0, 1);
+    if (id.size() >= 2 && id.size() != 9) {
+        id.insert(2, "00");
+    }
+    return id;
 }
