@@ -1637,7 +1637,7 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="76"/>
         <source>Breakfast in first class</source>
         <translation>Frokost på 1. klasse</translation>
     </message>
@@ -1722,163 +1722,261 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Rullestolheis</translation>
     </message>
     <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
+        <source>Preordered breakfast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="59"/>
-        <source>Carriage of bicycle</source>
+        <source>No reservation in first class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="60"/>
-        <source>Couchette</source>
+        <source>Luggage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="61"/>
-        <source>Sleeper and couchette</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="62"/>
-        <source>Faster service (overtakes slower services)</source>
+        <location filename="../src/parser/parser_resrobot.cpp" line="63"/>
+        <source>Animals allowed, see rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="63"/>
-        <source>No price information available</source>
+        <location filename="../src/parser/parser_resrobot.cpp" line="64"/>
+        <source>Electricity for reservation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="65"/>
+        <source>No day coach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="66"/>
-        <source>Car</source>
-        <translation>Bil</translation>
+        <source>Carriage of bicycle</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="67"/>
+        <source>First class without food has no reservation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="68"/>
+        <source>Skis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="69"/>
+        <source>Office coach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="70"/>
+        <source>Culture coach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="71"/>
+        <source>Couchette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="72"/>
+        <source>Newspapers in first class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="73"/>
+        <source>Society coach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="74"/>
+        <source>Four-bed compartment in sleeper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="75"/>
+        <source>Alcohol service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="77"/>
+        <source>Tavern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="78"/>
+        <source>Reduced speed, may be delayed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
+        <source>No foodservice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
+        <source>Café</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
+        <source>Sleeper and couchette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="82"/>
+        <source>Foodservice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
+        <source>Foodservice plus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="84"/>
+        <source>Food served at seat in first class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="85"/>
+        <source>Hot food may be preordered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="86"/>
+        <source>Sleeper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="87"/>
+        <source>Faster service (overtakes slower services)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="88"/>
+        <source>No price information available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Car</source>
+        <translation type="vanished">Bil</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="127"/>
         <source>Bus</source>
         <translation>Buss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="68"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="661"/>
         <source>Replacement bus</source>
-        <translation>Erstatningsbuss</translation>
+        <translation type="vanished">Erstatningsbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="69"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="662"/>
         <source>Replacement taxi</source>
-        <translation>Erstatningsdrosje</translation>
+        <translation type="vanished">Erstatningsdrosje</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="70"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="93"/>
         <source>Express bus</source>
         <translation>Ekspressbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="72"/>
         <source>Airport bus</source>
-        <translation>Flyplassbuss</translation>
+        <translation type="vanished">Flyplassbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="73"/>
         <source>Airport bus/airport taxi</source>
-        <translation>Flyplassbuss/flyplassdrosje</translation>
+        <translation type="vanished">Flyplassbuss/flyplassdrosje</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="74"/>
         <source>Airport taxi</source>
-        <translation>Flyplassdrosje</translation>
+        <translation type="vanished">Flyplassdrosje</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="75"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="128"/>
         <source>Ferry</source>
         <translation>Ferge</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="76"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="590"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="632"/>
         <source>Walk</source>
         <translation>Til fots</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="77"/>
         <source>Walk (long range)</source>
-        <translation>Til fots (langt)</translation>
+        <translation type="vanished">Til fots (langt)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="78"/>
         <source>Berthage</source>
-        <translation>Kaiplass</translation>
+        <translation type="vanished">Kaiplass</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
         <source>County taxi</source>
-        <translation>County drosje</translation>
+        <translation type="vanished">County drosje</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="103"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="117"/>
         <source>Night train</source>
         <translation>Nattog</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="94"/>
         <source>Normal ferry (reduced price)</source>
         <translation>Vanlig ferge (redusert pris)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="82"/>
         <source>Commuter train</source>
-        <translation>Pendlertog</translation>
+        <translation type="vanished">Pendlertog</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
         <source>Day coach in night train</source>
-        <translation>Dagvogn på nattog</translation>
+        <translation type="vanished">Dagvogn på nattog</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="84"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="122"/>
         <source>High-speed train</source>
         <translation>Høyhastighetstog</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="85"/>
         <source>High-speed train (taxi connection)</source>
-        <translation>Høyhastighetstog (drosjeforbindelse)</translation>
+        <translation type="vanished">Høyhastighetstog (drosjeforbindelse)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="86"/>
         <source>Special bus</source>
-        <translation>Spesialbuss</translation>
+        <translation type="vanished">Spesialbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="87"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="121"/>
         <source>Special train</source>
         <translation>Spesialtog</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="88"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="131"/>
         <source>Tram</source>
         <translation>Trikk/bane</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="89"/>
         <source>City traffic</source>
-        <translation>Bytrafikk</translation>
+        <translation type="vanished">Bytrafikk</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="90"/>
         <source>Metro</source>
-        <translation>T-bane</translation>
+        <translation type="vanished">T-bane</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="91"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="97"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="130"/>
         <source>Train</source>
         <translation>Tog</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="93"/>
         <source>Train taxi</source>
-        <translation>Togdrosje</translation>
+        <translation type="vanished">Togdrosje</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="95"/>
@@ -1886,50 +1984,115 @@ Added by Fahrplan. Please, re-check the information before your journey.</source
         <translation>Ferge som krysser landegrense</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="96"/>
         <source>International train</source>
-        <translation>Tog som krysser landegrense.</translation>
+        <translation type="vanished">Tog som krysser landegrense.</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="357"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="398"/>
         <source>Realtime info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="123"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="159"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="90"/>
+        <source>Airport transfer (bus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="91"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="92"/>
+        <source>replacement bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="96"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="97"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="98"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="99"/>
+        <source>Express ferry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="96"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="99"/>
+        <source>yellow dep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="97"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="98"/>
+        <source>white dep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="101"/>
+        <source>Airport transfer (train)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="107"/>
+        <source>Express train</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="124"/>
+        <source>Airport transfer (taxi)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="126"/>
+        <source>Flight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="129"/>
+        <source>Helicopter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="132"/>
+        <source>Taxi</source>
+        <translation type="unfinished">Drosje</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="133"/>
+        <source>Rapid transit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="160"/>
         <source>Train and local trans., not express bus</source>
         <translation>Tog og lokal transp., ikke ekspressbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="125"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="161"/>
         <source>Express bus and local trans., not train</source>
         <translation>Ekspressbuss og lokal transp., ikke tog</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="335"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="397"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="422"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="448"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="376"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="439"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="464"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="490"/>
         <source>Cannot parse reply from the server</source>
         <translation>Uforståelig svar fra server</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="534"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="576"/>
         <source>Arrivals</source>
         <translation>Ankomst</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="536"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="578"/>
         <source>Departures</source>
         <translation>Avganger</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="537"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="579"/>
         <source>ddd MMM d, HH:mm</source>
         <translation>ddd MMM d, TT:mm</translation>
     </message>
