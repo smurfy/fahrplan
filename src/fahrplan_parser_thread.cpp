@@ -35,6 +35,11 @@ void FahrplanParserThread::init(int parserIndex)
     while(!m_ready) msleep(50);
 }
 
+int FahrplanParserThread::getParserIndex()
+{
+    return i_parser;
+}
+
 
 void FahrplanParserThread::getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions)
 {
@@ -116,6 +121,7 @@ void FahrplanParserThread::run()
 
     switch (i_parser) {
         default:
+            i_parser = 0;
         case 0:
             m_parser = new ParserMobileBahnDe();
             break;

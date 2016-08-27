@@ -67,6 +67,7 @@ signals:
 
 public slots:
     void init(int parserIndex);
+    int getParserIndex();
 
     void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTime, ParserAbstract::Mode mode, int trainrestrictions);
     void findStationsByName(const QString &stationName);

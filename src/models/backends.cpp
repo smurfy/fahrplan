@@ -76,6 +76,9 @@ int Backends::getItemIndexForParserId(int parserId) const {
 }
 
 int Backends::getParserIdForItemIndex(int index) const {
+    if (index > (m_ordered.count() -1) || index < 0) {
+        index = getItemIndexForParserId(0);
+    }
     return m_ordered.at(index);
 }
 
