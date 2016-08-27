@@ -76,7 +76,7 @@
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="135"/>
         <source>View License Terms</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa licensvillkor</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/AboutPage.qml" line="121"/>
@@ -137,17 +137,17 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="28"/>
         <source>&lt;b&gt;Date&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Datum&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="44"/>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/components/DatePicker.qml" line="55"/>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
@@ -248,7 +248,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="43"/>
         <source>Add to calendar</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till i kalender</translation>
     </message>
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml" line="128"/>
@@ -258,7 +258,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="28"/>
         <source>Journey advice</source>
-        <translation type="unfinished"></translation>
+        <translation>Resebeskrivning</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="276"/>
@@ -270,12 +270,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="320"/>
         <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyDetailsResultsPage.qml" line="320"/>
         <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -285,7 +285,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <source>%1 to %2</source>
         <comment>Direction</comment>
         <extracomment>As in &quot;%1 in direction %2&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 mot %2</translation>
     </message>
 </context>
 <context>
@@ -368,37 +368,37 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/sailfishos/pages/JourneyResultsPage.qml" line="215"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="27"/>
         <source>Journey alternatives</source>
-        <translation type="unfinished"></translation>
+        <translation>Resalternativ</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="93"/>
         <source>↥ View earlier options</source>
-        <translation type="unfinished"></translation>
+        <translation>↥ Visa tidigare alternativ</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="116"/>
         <source>↧ View later options</source>
-        <translation type="unfinished"></translation>
+        <translation>↧ Visa senare alternativ</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="179"/>
         <source>Duration: %1 | Transfer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Restid: %1 | Byten: %2</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="217"/>
         <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/JourneyResultsPage.qml" line="217"/>
         <source>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; ↦ &lt;b&gt;%3&lt;/b&gt; ↦ &lt;b&gt;%2&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -552,7 +552,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="389"/>
         <location filename="../src/gui/symbian/pages/MainPage.qml" line="415"/>
         <source>Select backend</source>
-        <translation>Välj backend</translation>
+        <translation>Välj område</translation>
     </message>
     <message>
         <location filename="../src/gui/harmattan/pages/MainPage.qml" line="398"/>
@@ -661,22 +661,22 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="143"/>
         <source>From</source>
-        <translation type="unfinished"></translation>
+        <translation>Från</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="158"/>
         <source>Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Via</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="173"/>
         <source>To</source>
-        <translation type="unfinished"></translation>
+        <translation>Till</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="209"/>
         <source>&lt;b&gt;Date and time&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Datum och tid&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="210"/>
@@ -686,7 +686,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="254"/>
         <source>Transport Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Resalternativ</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="283"/>
@@ -696,17 +696,17 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="297"/>
         <source>&lt;b&gt;Select backend&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Välj område&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="322"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="335"/>
         <source>&lt;b&gt;Select transport mode&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Välj transportmedel&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/MainPage.qml" line="36"/>
@@ -810,7 +810,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_dubai_efa.h" line="31"/>
         <source>Dubai</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubai</translation>
     </message>
 </context>
 <context>
@@ -868,12 +868,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/parser/parser_efa.cpp" line="539"/>
         <location filename="../src/parser/parser_efa.cpp" line="541"/>
         <source>Walk</source>
-        <translation type="unfinished"></translation>
+        <translation>Gång</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="542"/>
         <source>Guaranteed connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Garanterad anslutning</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_efa.cpp" line="685"/>
@@ -891,218 +891,218 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="74"/>
         <source>All</source>
-        <translation type="unfinished">Alla</translation>
+        <translation>Alla</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="75"/>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1055"/>
         <source>Bus</source>
-        <translation type="unfinished">Buss</translation>
+        <translation>Buss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="76"/>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1068"/>
         <source>Train</source>
-        <translation type="unfinished"></translation>
+        <translation>Tåg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="77"/>
         <source>Airplane</source>
-        <translation type="unfinished"></translation>
+        <translation>Flyg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="78"/>
         <source>Bus and train</source>
-        <translation type="unfinished"></translation>
+        <translation>Buss och tåg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="79"/>
         <source>Bus and airplane</source>
-        <translation type="unfinished"></translation>
+        <translation>Buss och flyg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="80"/>
         <source>Train and airplane</source>
-        <translation type="unfinished"></translation>
+        <translation>Tåg och flyg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="247"/>
         <source>Timetables are only available for stops.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidtabeller finns bara för hållplatser.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="325"/>
         <location filename="../src/parser/parser_finland_matka.cpp" line="340"/>
         <source>Failed to parse timetable data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte tolka tidtabelldatan.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="691"/>
         <source>Walk %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gång %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="713"/>
         <source>Arrivals</source>
-        <translation type="unfinished">Ankomster</translation>
+        <translation>Ankomster</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="715"/>
         <source>Departures</source>
-        <translation type="unfinished">Avgångar</translation>
+        <translation>Avgångar</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="716"/>
         <source>ddd MMM d, HH:mm</source>
-        <translation type="unfinished">ddd d MMM, HH:mm</translation>
+        <translation>ddd d MMM, HH:mm</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="838"/>
         <source>Walk</source>
-        <translation type="unfinished"></translation>
+        <translation>Gång</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="889"/>
         <source>Invalid transport type: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt transportmedel: %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="970"/>
         <location filename="../src/parser/parser_finland_matka.cpp" line="972"/>
         <source>km</source>
-        <translation type="unfinished"></translation>
+        <translation>km</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="975"/>
         <source>m</source>
         <extracomment>Meters</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1002"/>
         <source>Express train</source>
-        <translation type="unfinished"></translation>
+        <translation>Expresståg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1007"/>
         <source>Regional train</source>
-        <translation type="unfinished"></translation>
+        <translation>Regionalbuss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1008"/>
         <source>Train bus</source>
-        <translation type="unfinished"></translation>
+        <translation>Tågbuss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1011"/>
         <source>Commuter train</source>
-        <translation type="unfinished">Pendeltåg</translation>
+        <translation>Pendeltåg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1014"/>
         <source>Express bus</source>
-        <translation type="unfinished">Expressbuss</translation>
+        <translation>Expressbuss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1015"/>
         <source>Taxi</source>
-        <translation type="unfinished">Taxi</translation>
+        <translation>Taxi</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1017"/>
         <source>Connection bus</source>
-        <translation type="unfinished"></translation>
+        <translation>Anslutningsbuss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1021"/>
         <source>Local bus</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokalbuss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1058"/>
         <source>City bus</source>
-        <translation type="unfinished"></translation>
+        <translation>Stadsbuss</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1061"/>
         <source>Flight</source>
         <extracomment>Used in conjunction with a flight number, e.g. &quot;Flight D1234&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Flyg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1063"/>
         <source>Car</source>
-        <translation type="unfinished">Bil</translation>
+        <translation>Bil</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1064"/>
         <source>Tram</source>
-        <translation type="unfinished">Spårvagn</translation>
+        <translation>Spårvagn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1065"/>
         <source>Metro</source>
-        <translation type="unfinished">Tunnelbana</translation>
+        <translation>Tunnelbana</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1066"/>
         <source>Ferry</source>
-        <translation type="unfinished">Färja</translation>
+        <translation>Färja</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1069"/>
         <source>Unknown transport type: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Okänt transportmedel: %1</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1180"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Hållplats</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1182"/>
         <source>Accomodation</source>
-        <translation type="unfinished"></translation>
+        <translation>Boende</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1184"/>
         <source>POI</source>
-        <translation type="unfinished"></translation>
+        <translation>POI</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1186"/>
         <source>School</source>
-        <translation type="unfinished"></translation>
+        <translation>Skola</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1188"/>
         <source>Hospital</source>
-        <translation type="unfinished"></translation>
+        <translation>Sjukhus</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1190"/>
         <source>Transport POI</source>
-        <translation type="unfinished"></translation>
+        <translation>Rese-POI</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1192"/>
         <source>District</source>
-        <translation type="unfinished"></translation>
+        <translation>Distrikt</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1194"/>
         <source>Street</source>
-        <translation type="unfinished"></translation>
+        <translation>Gata</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.cpp" line="1265"/>
         <source>Unknown city</source>
-        <translation type="unfinished"></translation>
+        <translation>Okänd kommun</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_finland_matka.h" line="71"/>
         <source>Finland</source>
-        <translation type="unfinished"></translation>
+        <translation>Finland</translation>
     </message>
 </context>
 <context>
@@ -1111,7 +1111,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="96"/>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="117"/>
         <source>An error ocurred with the backend</source>
-        <translation>Ett fel inträffade med backend:et</translation>
+        <translation>Ett fel inträffade med tjänsten</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="449"/>
@@ -1229,12 +1229,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="752"/>
         <source>Dep./Arr./Intermed. or equivalent station defined more than once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avg.-/Ank.-/Mellan- eller ekvivalentstation definierad mer än en gång.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasbinary.cpp" line="754"/>
         <source>Unknown error ocurred with the backend (error %1).</source>
-        <translation>Okänt fel inträffade i backend:et (fel %1).</translation>
+        <translation>Okänt fel inträffade med tjänsten (fel %1).</translation>
     </message>
 </context>
 <context>
@@ -1242,7 +1242,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="181"/>
         <source>Backend returns an error: </source>
-        <translation>Backend:et returnerade ett fel: </translation>
+        <translation>Tjänsten returnerade ett fel: </translation>
     </message>
     <message>
         <location filename="../src/parser/parser_hafasxml.cpp" line="213"/>
@@ -1398,7 +1398,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_ireland_efa.h" line="31"/>
         <source>Ireland</source>
-        <translation type="unfinished"></translation>
+        <translation>Irland</translation>
     </message>
 </context>
 <context>
@@ -1426,7 +1426,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_mobilebahnde.h" line="35"/>
         <source>Germany</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyskland</translation>
     </message>
 </context>
 <context>
@@ -1459,12 +1459,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_munich_efa.h" line="31"/>
         <source>Germany</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyskland</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_munich_efa.h" line="31"/>
         <source>Munich</source>
-        <translation type="unfinished"></translation>
+        <translation>München</translation>
     </message>
 </context>
 <context>
@@ -1482,43 +1482,43 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="194"/>
         <source>All, except ferry</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla utom färja</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="249"/>
         <source>%1 via %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 via %2</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="253"/>
         <source>On-Time</source>
-        <translation type="unfinished">I tid</translation>
+        <translation>I tid</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/parser/parser_ninetwo.cpp" line="322"/>
         <source>%n m</source>
         <extracomment>Distance in meters</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n m</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="483"/>
         <source>%1 for %2 min</source>
-        <translation type="unfinished">%1 i %2 min</translation>
+        <translation>%1 i %2 min</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="502"/>
         <source>, </source>
-        <translation type="unfinished">, </translation>
+        <translation>, </translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="214"/>
         <location filename="../src/parser/parser_ninetwo.cpp" line="292"/>
         <location filename="../src/parser/parser_ninetwo.cpp" line="351"/>
         <source>Cannot parse reply from the server</source>
-        <translation>Kan inte tolka svaret från servern</translation>
+        <translation>Kunde inte tolka svaret från servern</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="489"/>
@@ -1529,12 +1529,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_ninetwo.h" line="66"/>
         <source>Netherlands</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederländerna</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ninetwo.h" line="66"/>
         <source>Belgium</source>
-        <translation type="unfinished"></translation>
+        <translation>Belgien</translation>
     </message>
 </context>
 <context>
@@ -1577,12 +1577,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_ptvvicgovau.h" line="31"/>
         <source>Australia</source>
-        <translation type="unfinished"></translation>
+        <translation>Australien</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_ptvvicgovau.h" line="31"/>
         <source>Victoria</source>
-        <translation type="unfinished"></translation>
+        <translation>Victoria</translation>
     </message>
 </context>
 <context>
@@ -1600,45 +1600,45 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="49"/>
         <source>Short distance trips not allowed</source>
-        <translation type="unfinished"></translation>
+        <translation>Korta resor ej tillåtna</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="50"/>
         <source>Regional fare for reg. journey</source>
-        <translation type="unfinished"></translation>
+        <translation>Länstrafikpris vid lokal resa</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="51"/>
         <source>Engineering work. Bus/taxi repl.</source>
-        <translation type="unfinished"></translation>
+        <translation>Banarbete. Buss/taxi ersätter</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="52"/>
         <source>Detour due to engineering work</source>
-        <translation type="unfinished"></translation>
+        <translation>Omleds p.g.a. banarbete</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="53"/>
         <source>Engineering work. 60-90 min delay.</source>
-        <translation type="unfinished"></translation>
+        <translation>Banarbete. 60-90 min försening</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="54"/>
         <source>Reduced speed (may be delayed)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sänkt hastighet. Kan försenas</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="55"/>
         <source>Flexicoach with bistro</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoramavagn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="56"/>
         <source>Bed and wheelchair or bed + parent with child</source>
-        <translation type="unfinished"></translation>
+        <translation>Bädd &amp; rullstol eller bädd + föräldrar med barn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="76"/>
         <source>Breakfast in first class</source>
         <translation>Frukost i första klass</translation>
     </message>
@@ -1655,32 +1655,32 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="33"/>
         <source>Business class Plus available</source>
-        <translation type="unfinished"></translation>
+        <translation>Affärs Plus finns</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="34"/>
         <source>No pets allowed</source>
-        <translation type="unfinished"></translation>
+        <translation>Djur ej tillåtet</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="35"/>
         <source>Standard class only</source>
-        <translation type="unfinished"></translation>
+        <translation>Endast andra klass</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="36"/>
         <source>Seat reservation not possible in second class</source>
-        <translation type="unfinished"></translation>
+        <translation>Andra klass har ej reservering</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="37"/>
         <source>Trolley service</source>
-        <translation type="unfinished"></translation>
+        <translation>Servering</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="38"/>
         <source>Restaurant</source>
-        <translation type="unfinished"></translation>
+        <translation>Bistrovagn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="40"/>
@@ -1690,32 +1690,32 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="42"/>
         <source>Access to sleeper before dep.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sovvagn disponeras före avg.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="43"/>
         <source>Access to sleeper after arr.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sovvagn disponeras efter ank.</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="44"/>
         <source>Telephone reservation</source>
-        <translation type="unfinished"></translation>
+        <translation>Obl.förbeställning per telefon</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="45"/>
         <source>Family coach</source>
-        <translation type="unfinished"></translation>
+        <translation>Familjevagn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="46"/>
         <source>Coach with cinema and bistro</source>
-        <translation type="unfinished"></translation>
+        <translation>Biovagn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="47"/>
         <source>Supplement</source>
-        <translation type="unfinished"></translation>
+        <translation>Särtillägg</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="48"/>
@@ -1723,163 +1723,327 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>Rullstolslyft</translation>
     </message>
     <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="58"/>
+        <source>Preordered breakfast</source>
+        <translation>Förbeställd frukost</translation>
+    </message>
+    <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="59"/>
-        <source>Carriage of bicycle</source>
-        <translation type="unfinished"></translation>
+        <source>No reservation in first class</source>
+        <translation>Första klass har ej reservering</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="60"/>
-        <source>Couchette</source>
-        <translation type="unfinished"></translation>
+        <source>Luggage</source>
+        <translation>Bagage</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="61"/>
-        <source>Sleeper and couchette</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="62"/>
-        <source>Faster service (overtakes slower services)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/parser/parser_resrobot.cpp" line="63"/>
+        <source>Animals allowed, see rules</source>
+        <translation>Djur tillåtna, se regler</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="63"/>
-        <source>No price information available</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/parser/parser_resrobot.cpp" line="64"/>
+        <source>Electricity for reservation</source>
+        <translation>Eluttag, bokas</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="65"/>
+        <source>No day coach</source>
+        <translation>Ej sittvagn</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="66"/>
-        <source>Car</source>
-        <translation>Bil</translation>
+        <source>Carriage of bicycle</source>
+        <translation>Cyklar tillåtna</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="67"/>
+        <source>First class without food has no reservation</source>
+        <translation>Första klass utan mat har ej reservering</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="68"/>
+        <source>Skis</source>
+        <translation>Skidor</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="69"/>
+        <source>Office coach</source>
+        <translation>Kontorsvagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="70"/>
+        <source>Culture coach</source>
+        <translation>Kulturvagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="71"/>
+        <source>Couchette</source>
+        <translation>Liggvagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="72"/>
+        <source>Newspapers in first class</source>
+        <translation>Dags-/kvällspress i första klass</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="73"/>
+        <source>Society coach</source>
+        <translation>Sällskapsvagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="74"/>
+        <source>Four-bed compartment in sleeper</source>
+        <translation>Fyrbäddskupé i sovvagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="75"/>
+        <source>Alcohol service</source>
+        <translation>Alkoholservering</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="77"/>
+        <source>Tavern</source>
+        <translation>Krog</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="78"/>
+        <source>Reduced speed, may be delayed</source>
+        <translation>Sänkt hastighet, kan försenas</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
+        <source>No foodservice</source>
+        <translation>Servering finns ej</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
+        <source>Café</source>
+        <translation>Kafé</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
+        <source>Sleeper and couchette</source>
+        <translation>Sov- och liggvagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="82"/>
+        <source>Foodservice</source>
+        <translation>Matservering</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
+        <source>Foodservice plus</source>
+        <translation>Matservering plus</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="84"/>
+        <source>Food served at seat in first class</source>
+        <translation>Servering vid sittplats i första klass</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="85"/>
+        <source>Hot food may be preordered</source>
+        <translation>Varm mat kan förbeställas</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="86"/>
+        <source>Sleeper</source>
+        <translation>Sovvagn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="87"/>
+        <source>Faster service (overtakes slower services)</source>
+        <translation>Snabbare linje (kör om långsammare linjer)</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="88"/>
+        <source>No price information available</source>
+        <translation>Ingen prisinformation tillgänglig</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="90"/>
+        <source>Airport transfer (bus)</source>
+        <translation>Flygtransfer (buss)</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="91"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="92"/>
+        <source>replacement bus</source>
+        <translation>Ersättningsbuss</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="96"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="97"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="98"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="99"/>
+        <source>Express ferry</source>
+        <translation>Snabbfärja</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="96"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="99"/>
+        <source>yellow dep</source>
+        <translation>gul avg</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="97"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="98"/>
+        <source>white dep</source>
+        <translation>vit avg</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="101"/>
+        <source>Airport transfer (train)</source>
+        <translation>Flygtransfer (tåg)</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="107"/>
+        <source>Express train</source>
+        <translation>Expresståg</translation>
+    </message>
+    <message>
+        <source>Car</source>
+        <translation type="vanished">Bil</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="127"/>
         <source>Bus</source>
         <translation>Buss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="68"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="661"/>
         <source>Replacement bus</source>
-        <translation>Ersättningsbuss</translation>
+        <translation type="vanished">Ersättningsbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="69"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="662"/>
         <source>Replacement taxi</source>
-        <translation>Ersättningstaxi</translation>
+        <translation type="vanished">Ersättningstaxi</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="70"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="93"/>
         <source>Express bus</source>
         <translation>Expressbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="72"/>
         <source>Airport bus</source>
-        <translation>Flygbuss</translation>
+        <translation type="vanished">Flygbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="73"/>
         <source>Airport bus/airport taxi</source>
-        <translation>Flygbuss/flygtaxi</translation>
+        <translation type="vanished">Flygbuss/flygtaxi</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="74"/>
         <source>Airport taxi</source>
-        <translation>Flygtaxi</translation>
+        <translation type="vanished">Flygtaxi</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="75"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="128"/>
         <source>Ferry</source>
         <translation>Färja</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="76"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="590"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="132"/>
+        <source>Taxi</source>
+        <translation>Taxi</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="133"/>
+        <source>Rapid transit</source>
+        <translation>Tunnelbana</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="632"/>
         <source>Walk</source>
         <translation>Gång</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="77"/>
         <source>Walk (long range)</source>
-        <translation>Gång (lång sträcka)</translation>
+        <translation type="vanished">Gång (lång sträcka)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="78"/>
         <source>Berthage</source>
-        <translation>Kajplats</translation>
+        <translation type="vanished">Kajplats</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="79"/>
         <source>County taxi</source>
-        <translation>Länstaxi</translation>
+        <translation type="vanished">Länstaxi</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="80"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="103"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="117"/>
         <source>Night train</source>
         <translation>Nattåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="81"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="94"/>
         <source>Normal ferry (reduced price)</source>
         <translation>Normalfärja (lågpris)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="82"/>
         <source>Commuter train</source>
-        <translation>Pendeltåg</translation>
+        <translation type="vanished">Pendeltåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="83"/>
         <source>Day coach in night train</source>
-        <translation>Sittvagn i nattåg</translation>
+        <translation type="vanished">Sittvagn i nattåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="84"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="122"/>
         <source>High-speed train</source>
         <translation>Snabbtåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="85"/>
         <source>High-speed train (taxi connection)</source>
-        <translation>Snabbtåg (anslutningstaxi)</translation>
+        <translation type="vanished">Snabbtåg (anslutningstaxi)</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="86"/>
         <source>Special bus</source>
-        <translation>Specialbuss</translation>
+        <translation type="vanished">Specialbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="87"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="121"/>
         <source>Special train</source>
         <translation>Specialtåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="88"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="124"/>
+        <source>Airport transfer (taxi)</source>
+        <translation>Flygtransfer (taxi)</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="126"/>
+        <source>Flight</source>
+        <translation>Flyg</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="129"/>
+        <source>Helicopter</source>
+        <translation>Helicopter</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="131"/>
         <source>Tram</source>
         <translation>Spårvagn</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="89"/>
         <source>City traffic</source>
-        <translation>Stadstrafik</translation>
+        <translation type="vanished">Stadstrafik</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="90"/>
         <source>Metro</source>
-        <translation>Tunnelbana</translation>
+        <translation type="vanished">Tunnelbana</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="91"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="97"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="130"/>
         <source>Train</source>
         <translation>Tåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="93"/>
         <source>Train taxi</source>
-        <translation>Tågtaxi</translation>
+        <translation type="vanished">Tågtaxi</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_resrobot.cpp" line="95"/>
@@ -1887,50 +2051,49 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
         <translation>Utrikes färja</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="96"/>
         <source>International train</source>
-        <translation>Utrikes tåg</translation>
+        <translation type="vanished">Utrikes tåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="357"/>
-        <source>Realtime info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="123"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="159"/>
         <source>All</source>
         <translation>Alla</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="124"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="160"/>
         <source>Train and local trans., not express bus</source>
         <translation>Tåg och lokaltrafik, ej expressbuss</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="125"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="161"/>
         <source>Express bus and local trans., not train</source>
         <translation>Expressbuss och lokaltrafik, ej tåg</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="335"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="397"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="422"/>
-        <location filename="../src/parser/parser_resrobot.cpp" line="448"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="376"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="439"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="464"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="490"/>
         <source>Cannot parse reply from the server</source>
-        <translation>Kan inte tolka svaret från servern</translation>
+        <translation>Kunde inte tolka svaret från servern</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="534"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="398"/>
+        <source>Realtime info</source>
+        <translation>Realtidsinfo</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_resrobot.cpp" line="576"/>
         <source>Arrivals</source>
         <translation>Ankomster</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="536"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="578"/>
         <source>Departures</source>
         <translation>Avgångar</translation>
     </message>
     <message>
-        <location filename="../src/parser/parser_resrobot.cpp" line="537"/>
+        <location filename="../src/parser/parser_resrobot.cpp" line="579"/>
         <source>ddd MMM d, HH:mm</source>
         <translation>ddd d MMM, HH:mm</translation>
     </message>
@@ -2130,12 +2293,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_sf_bay_efa.h" line="31"/>
         <source>USA</source>
-        <translation type="unfinished"></translation>
+        <translation>USA</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_sf_bay_efa.h" line="31"/>
         <source>SF Bay</source>
-        <translation type="unfinished"></translation>
+        <translation>SF Bay</translation>
     </message>
 </context>
 <context>
@@ -2158,12 +2321,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
         <source>Austria</source>
-        <translation type="unfinished"></translation>
+        <translation>Österrike</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_salzburg_efa.h" line="31"/>
         <source>Salzburg</source>
-        <translation type="unfinished"></translation>
+        <translation>Salzburg</translation>
     </message>
 </context>
 <context>
@@ -2196,12 +2359,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_sydney_efa.h" line="31"/>
         <source>Australia</source>
-        <translation type="unfinished"></translation>
+        <translation>Australien</translation>
     </message>
     <message>
         <location filename="../src/parser/parser_sydney_efa.h" line="31"/>
         <source>Sydney</source>
-        <translation type="unfinished"></translation>
+        <translation>Sydney</translation>
     </message>
 </context>
 <context>
@@ -2214,7 +2377,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_xmlnri.h" line="31"/>
         <source>Norway</source>
-        <translation type="unfinished"></translation>
+        <translation>Norge</translation>
     </message>
 </context>
 <context>
@@ -2237,7 +2400,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_xmloebbat.h" line="31"/>
         <source>Austria</source>
-        <translation type="unfinished"></translation>
+        <translation>Österrike</translation>
     </message>
 </context>
 <context>
@@ -2270,7 +2433,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_xmlrejseplanendk.h" line="31"/>
         <source>Denmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Danmark</translation>
     </message>
 </context>
 <context>
@@ -2288,7 +2451,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_xmlsbbch.h" line="31"/>
         <source>Switzerland</source>
-        <translation type="unfinished"></translation>
+        <translation>Schweiz</translation>
     </message>
 </context>
 <context>
@@ -2370,7 +2533,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/parser/parser_xmlvasttrafikse.h" line="33"/>
         <source>Sweden</source>
-        <translation type="unfinished">Sverige</translation>
+        <translation>Sverige</translation>
     </message>
 </context>
 <context>
@@ -2450,7 +2613,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/sailfishos/pages/SettingsPage.qml" line="75"/>
         <source>Backend</source>
-        <translation>Backend</translation>
+        <translation>Område</translation>
     </message>
     <message>
         <location filename="../src/gui/symbian/pages/SettingsPage.qml" line="100"/>
@@ -2490,7 +2653,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/sailfishos/delegates/StationDelegate.qml" line="77"/>
         <source>Removing favorite...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tar bort favorit...</translation>
     </message>
 </context>
 <context>
@@ -2570,7 +2733,7 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/sailfishos/pages/StationSelectPage.qml" line="119"/>
         <source>Click and hold in the search results to add or remove a station as a favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka och håll på ett sökresultat för att lägga till eller ta bort en plats som favorit</translation>
     </message>
 </context>
 <context>
@@ -2578,17 +2741,17 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="28"/>
         <source>&lt;b&gt;Time&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tid&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="44"/>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../src/gui/ubuntu/components/TimePicker.qml" line="55"/>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
@@ -2652,12 +2815,12 @@ Tillagt av Fahrplan. Kolla informationen innan resan.</translation>
     <message>
         <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="81"/>
         <source>Searching...</source>
-        <translation type="unfinished">Söker...</translation>
+        <translation>Söker...</translation>
     </message>
     <message>
         <location filename="../src/gui/sailfishos/pages/TimetablePage.qml" line="113"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
 </context>
 <context>

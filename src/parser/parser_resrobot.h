@@ -122,6 +122,8 @@ private:
     const QString journeyAPIVersion;
     QMap<QString, JourneyDetailResultList*> cachedResults;
     QHash<QString, QString> hafasAttributes;
+    QHash<QString, QString> specificTransportModes;
+    QHash<QString, QString> generalTransportModes;
     QHash<QString, QString> transportModeStrings;
 
 #if defined(BUILD_FOR_QT5)
@@ -131,8 +133,9 @@ private:
 #endif
     QList<JourneyDetailResultItem*> parseJourneySegments(const QVariantMap &journeyData);
     QString hafasAttribute(const QString& original);
-    QString translateTransportMode(QString original);
+    QString transportMode(const QString &code, const QString &fallback);
     QString formatRestrictions(int restriction);
+    QString stationIDv2(QString id);
 };
 
 #endif // PARSER_RESROBOT_H
