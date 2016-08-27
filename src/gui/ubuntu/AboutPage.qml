@@ -31,7 +31,7 @@ Page {
         flickable: tabView
         extension: Sections {
             id: aboutPageSections
-            anchors { left: parent.left; leftMargin: units.gu(2); bottom: parent.bottom }
+            anchors { left: parent.left; bottom: parent.bottom }
             model: [qsTr("About"), qsTr("Credits"), qsTr("Support")]
         }
     }
@@ -72,11 +72,11 @@ Page {
 
             Column {
                 spacing: units.gu(4)
-                anchors.centerIn: parent
+                anchors { top: parent.top; topMargin: units.gu(2) }
                 width: parent.width > units.gu(50) ? units.gu(50) : parent.width
 
                 UbuntuShape {
-                    width: parent.width / 2
+                    width: parent.width / 2.5
                     height: width
                     radius: "medium"
                     anchors.horizontalCenter: parent.horizontalCenter

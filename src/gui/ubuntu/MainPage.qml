@@ -97,10 +97,6 @@ Page {
         anchors.fill: parent
         contentHeight: buttons.height
 
-        onMovementStarted: {
-            flickable.clip = true;
-        }
-
         Column {
             id: buttons
 
@@ -440,11 +436,6 @@ Page {
                 model: fahrplanBackend.trainrestrictions
                 delegate: ListItems.Standard {
                     text: modelData
-                    // FIXME: This is a workaround for the theme not being context sensitive. I.e. the
-                    // ListItems don't know that they are sitting in a themed Popover where the color
-                    // needs to be inverted.
-                    __foregroundColor: Theme.palette.selected.backgroundText
-
                     onClicked: {
                         fahrplanBackend.setTrainrestriction(index)
                         PopupUtils.close(selectTrainrestrictionsDialog)
