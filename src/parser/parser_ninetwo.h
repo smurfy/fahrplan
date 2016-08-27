@@ -63,7 +63,7 @@ public:
 
     // ParserAbstract interface
 public:
-    static QString getName() { return QString("%1 / %2 (9292ov.nl)").arg(tr("Netherlands"), tr("Belgium")); }
+    static QString getName() { return QString("%1 (9292ov.nl)").arg(tr("Netherlands")); }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return "9292ov.nl"; }
 
