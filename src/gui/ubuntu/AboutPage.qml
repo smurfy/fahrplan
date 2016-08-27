@@ -26,10 +26,15 @@ import "../about.js" as About
 Page {
     id: aboutPage
 
-    title: qsTr("About")
-    flickable: null
-
-    head.sections.model: [qsTr("About"), qsTr("Credits"), qsTr("Support")]
+    header: PageHeader {
+        title: qsTr("About")
+        flickable: tabView
+        extension: Sections {
+            id: aboutPageSections
+            anchors { left: parent.left; leftMargin: units.gu(2); bottom: parent.bottom }
+            model: [qsTr("About"), qsTr("Credits"), qsTr("Support")]
+        }
+    }
 
     Component {
         id: dialog
@@ -45,7 +50,7 @@ Page {
                     id: licenseText
                     wrapMode: Text.WordWrap
                     width: parent.width
-                    fontSize: "small"
+                    textSize: Label.Small
                     text: About.license
                 }
             }
@@ -86,7 +91,7 @@ Page {
 
                     Label {
                         width: parent.width
-                        fontSize: "x-large"
+                        textSize: Label.XLarge
                         font.weight: Font.DemiBold
                         horizontalAlignment: Text.AlignHCenter
                         text: "Fahrplan"
@@ -114,7 +119,7 @@ Page {
                     }
 
                     Label {
-                        fontSize: "small"
+                        textSize: Label.Small
                         width: parent.width
                         wrapMode: Text.WordWrap
                         horizontalAlignment: Text.AlignHCenter
@@ -125,7 +130,7 @@ Page {
                 Label {
                     width: parent.width
                     wrapMode: Text.WordWrap
-                    fontSize: "small"
+                    textSize: Label.Small
                     horizontalAlignment: Text.AlignHCenter
                     text: qsTr("Source code available on %1").arg("<a href=\"https://github.com/smurfy/fahrplan\">github</a>")
                     onLinkActivated: Qt.openUrlExternally(link)
@@ -248,7 +253,7 @@ Page {
         anchors.fill: parent
         orientation: Qt.Horizontal
         snapMode: ListView.SnapOneItem
-        currentIndex: aboutPage.head.sections.selectedIndex
+        currentIndex: aboutPageSections.selectedIndex
         highlightMoveDuration: UbuntuAnimation.SlowDuration
     }
 }

@@ -13,5 +13,8 @@
         <file alias="fahrplan2.svg">data/fahrplan2-square.svg</file>
         <file>src/gui/about.js</file>
         <file>src/gui/ubuntu/components/CustomListItem.qml</file>
+        <file>src/gui/ubuntu/icons/swap-with-arrival.svg</file>
+        <file>src/gui/ubuntu/icons/swap-with-departure.svg</file>
+        <file>src/gui/ubuntu/icons/swap-with-via.svg</file>
     </qresource>
 </RCC>

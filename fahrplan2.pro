@@ -245,8 +245,6 @@ ubuntu: {
         qtc_packaging/ubuntu/rules \
         qtc_packaging/ubuntu/source/format
 
-    QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
-    QMAKE_LFLAGS += -pie -rdynamic
     DEFINES += BUILD_FOR_UBUNTU
 }
 

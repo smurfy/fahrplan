@@ -48,7 +48,7 @@ Page {
         Label {
             text: qsTr("Settings")
             color: "white"
-            fontSize: "large"
+            textSize: Label.Large
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
