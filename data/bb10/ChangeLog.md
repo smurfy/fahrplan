@@ -1,6 +1,13 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.28
+------
+
+- Fixes 9292ov.nl
+- Updated ResRobot API to v2
+- Updated translations
+ 
 2.0.27
 ------
 

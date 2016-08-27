@@ -1,3 +1,10 @@
+fahrplan2 (2.0.28) unstable; urgency=low
+  * Fixes 9292ov.nl
+  * Updated ResRobot API to v2
+  * Updated translations
+  
+ -- smurfy <maemo@smurfy.de>  Sat, 27 August 2016 18:00:00 +0100
+ 
 fahrplan2 (2.0.27-1) unstable; urgency=low
   * Charset fix for resrobot.se
   
