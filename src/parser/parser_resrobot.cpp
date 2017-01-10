@@ -374,7 +374,7 @@ void ParserResRobot::doSearchJourney(QUrl query)
 void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
 {
     QByteArray allData = networkReply->readAll();
-    qDebug() << "Reply:\n" << allData;
+//    qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -437,7 +437,7 @@ void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
 void ParserResRobot::parseStationsByName(QNetworkReply *networkReply)
 {
     QByteArray allData = networkReply->readAll();
-    qDebug() << "Reply:\n" << allData;
+//    qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -462,7 +462,7 @@ void ParserResRobot::parseStationsByName(QNetworkReply *networkReply)
 void ParserResRobot::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
     QByteArray allData = networkReply->readAll();
-    qDebug() << "Reply:\n" << allData;
+//    qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -488,7 +488,7 @@ void ParserResRobot::parseStationsByCoordinates(QNetworkReply *networkReply)
 void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
 {
     QByteArray allData = networkReply->readAll();
-    qDebug() << "Reply:\n" << allData;
+//    qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
