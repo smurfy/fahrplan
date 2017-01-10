@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QSslError>
 #include "parser_definitions.h"
 
 class QNetworkAccessManager;
@@ -70,6 +71,7 @@ protected slots:
     void networkReplyFinished(QNetworkReply*);
     void networkReplyDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void networkReplyTimedOut();
+    void networkReplySslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 
 protected:
     QString userAgent;
@@ -78,6 +80,7 @@ protected:
     QNetworkReply *lastRequest;
     QTimer *requestTimeout;
     QByteArray acceptEncoding;
+    QSet<QSslError::SslError> ignoredSslErrors;
 
     virtual void parseTimeTable(QNetworkReply *networkReply);
     virtual void parseStationsByName(QNetworkReply *networkReply);

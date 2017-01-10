@@ -22,6 +22,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QSslError>
 #include <QTimer>
 
 #include <zlib.h>
@@ -40,6 +41,8 @@ ParserAbstract::ParserAbstract(QObject *parent) :
 {
     NetworkManager = new QNetworkAccessManager(this);
     connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));
+    connect(NetworkManager, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),
+            this, SLOT(networkReplySslErrors(QNetworkReply*,QList<QSslError>)));
 
     currentRequestState = FahrplanNS::noneRequest;
 
@@ -100,12 +103,8 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data, const QList<QPai
 {
     QNetworkRequest request;
     request.setUrl(url);
-#if defined(BUILD_FOR_QT5)
     request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
     request.setRawHeader("User-Agent", userAgent.toLatin1());
-#else
-    request.setRawHeader("User-Agent", userAgent.toAscii());
-#endif
     request.setRawHeader("Cache-Control", "no-cache");
     for (QList<QPair<QByteArray,QByteArray> >::ConstIterator it = additionalHeaders.constBegin(); it != additionalHeaders.constEnd(); ++it)
         request.setRawHeader(it->first, it->second);
@@ -158,6 +157,23 @@ void ParserAbstract::networkReplyTimedOut()
 {
     cancelRequest();
     emit errorOccured(tr("Request timed out."));
+}
+
+void ParserAbstract::networkReplySslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
+{
+    if (lastRequest != reply) {
+        qDebug() << Q_FUNC_INFO << "Wrong network reply - ignoring. Expected" << lastRequest
+                 << "received" << reply;
+        return;
+    }
+
+    foreach (const QSslError &error, errors) {
+        qDebug() << Q_FUNC_INFO << error;
+        if (ignoredSslErrors.contains(error.error())) {
+            reply->ignoreSslErrors();
+            return;
+        }
+    }
 }
 
 void ParserAbstract::sendHttpRequest(QUrl url)

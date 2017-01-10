@@ -28,6 +28,11 @@ ParserResRobot::ParserResRobot(QObject *parent) :
         journeyAPIKey(QLatin1String("c8436ea6-3c7e-489f-93b1-5b636fc55f2e")),
         baseURL(QLatin1String("https://api.resrobot.se/v2"))
 {
+#ifdef Q_OS_SYMBIAN
+    // Symbian doesn't support SNI - ignore hostname mismatch
+    ignoredSslErrors << QSslError::HostNameMismatch;
+#endif
+
     // Translate remarks
     hafasAttributes.insert("A1", tr("Food in first class"));
     hafasAttributes.insert("A6", tr("Business class Plus available"));
