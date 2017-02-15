@@ -19,10 +19,10 @@
 
 #include <QUrl>
 #ifdef BUILD_FOR_QT5
-    #include <QUrlQuery>
+#include <QUrlQuery>
+#include <QTimeZone>
 #endif
 #include <QLocale>
-#include <QTimeZone>
 #include <QRegExp>
 #include <QVariantMap>
 #include <QFile>
@@ -278,8 +278,12 @@ void ParserFinlandMatka::getTimeTableForStation(const Station &currentStation,
     request["query"] = query;
     QVariantMap variables;
     variables["station"] = timetableStationID(currentStation.id.toString(), mode);
+#ifdef BUILD_FOR_QT5
     QDateTime helsinkiTime(dateTime.toTimeZone(QTimeZone("Europe/Helsinki")));
     variables["startTime"] = QString::number(helsinkiTime.toMSecsSinceEpoch() / 1000);
+#else
+    variables["startTime"] = QString::number(dateTime.toMSecsSinceEpoch() / 1000);
+#endif
     variables["timeRange"] = 86400; // Search for arrivals/departures the next 24 hours
     variables["numberOfDepartures"] = 50;
     request["variables"] = variables;
@@ -406,7 +410,9 @@ void ParserFinlandMatka::parseTimeTable(QNetworkReply *networkReply)
             }
         }
         QDateTime dateTime;
+#ifdef BUILD_FOR_QT5
         dateTime.setTimeZone(QTimeZone("Europe/Helsinki"));
+#endif
         qlonglong baseTime = stopTime.value("serviceDay").toLongLong();
         dateTime.setMSecsSinceEpoch((baseTime + relativeTime) * 1000);
         entry.time = dateTime.toLocalTime().time();
@@ -625,9 +631,14 @@ void ParserFinlandMatka::internalSearchJourney(const Station &departureStation, 
     }
 
     QVariantMap variables;
+#ifdef BUILD_FOR_QT5
     QDateTime helsinkiTime(dateTime.toTimeZone(QTimeZone("Europe/Helsinki")));
     variables["date"] = helsinkiTime.date().toString("yyyy-MM-dd");
     variables["time"] = helsinkiTime.time().toString("hh:mm");
+#else
+    variables["date"] = dateTime.date().toString("yyyy-MM-dd");
+    variables["time"] = dateTime.time().toString("hh:mm");
+#endif
 
     // Not exactly sure that the name is needed in fromPlace and toPlace,
     // but that's the format used on beta.matka.fi
@@ -799,12 +810,16 @@ QList<JourneyDetailResultItem*> ParserFinlandMatka::parseJourneySegments(const Q
         journeySegment->setDepartureStation(parseNodeName(from));
         journeySegment->setArrivalStation(parseNodeName(to));
         QDateTime depDt;
+#ifdef BUILD_FOR_QT5
         depDt.setTimeZone(QTimeZone("Europe/Helsinki"));
+#endif
         depDt.setMSecsSinceEpoch(leg.value("startTime").toLongLong());
         qDebug() << "departing" << journeySegment->departureStation() << depDt;
         journeySegment->setDepartureDateTime(depDt.toLocalTime());
         QDateTime arrDt;
+#ifdef BUILD_FOR_QT5
         arrDt.setTimeZone(QTimeZone("Europe/Helsinki"));
+#endif
         arrDt.setMSecsSinceEpoch(leg.value("endTime").toLongLong());
         journeySegment->setArrivalDateTime(arrDt.toLocalTime());
 
