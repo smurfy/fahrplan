@@ -90,6 +90,7 @@ Item {
             width: (parent.width - contentItem.spacing) * 2 / 3
             font.bold: true
             wrapMode: Text.WordWrap
+            onLinkActivated : Qt.openUrlExternally(link)
         }
     }
 
