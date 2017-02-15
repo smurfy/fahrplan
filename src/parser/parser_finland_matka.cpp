@@ -145,7 +145,7 @@ void ParserFinlandMatka::parseStationsByName(QNetworkReply *networkReply)
     if (networkReply->rawHeader("Content-Encoding") == "gzip") {
         allData = gzipDecompress(allData);
     }
-    qDebug() << "Reply:\n" << allData;
+//    qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -297,7 +297,7 @@ void ParserFinlandMatka::parseTimeTable(QNetworkReply *networkReply)
     if (networkReply->rawHeader("Content-Encoding") == "gzip") {
         allData = gzipDecompress(allData);
     }
-    qDebug() << "Reply:\n" << allData;
+//    qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -662,7 +662,7 @@ void ParserFinlandMatka::parseSearchJourney(QNetworkReply *networkReply)
     if (networkReply->rawHeader("Content-Encoding") == "gzip") {
         allData = gzipDecompress(allData);
     }
-    qDebug() << "Reply:\n" << allData;
+//    qDebug() << "Reply:\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
