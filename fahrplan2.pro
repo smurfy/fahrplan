@@ -1,5 +1,5 @@
 # Define Version
-VERSION = 2.0.28
+VERSION = 2.0.29
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {

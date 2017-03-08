@@ -1,6 +1,11 @@
 BlackBerry World ChangeLog
 ==========================
 
+2.0.29
+------
+
+- Updated matka.fi API
+
 2.0.28
 ------
 
