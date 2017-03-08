@@ -145,6 +145,57 @@ QVariantMap ParserAbstract::parseJson(const QByteArray &json) const
     return doc;
 }
 
+#ifdef BUILD_FOR_QT5
+QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc) const
+{
+    return QJsonDocument(QJsonObject::fromVariantMap(doc)).toJson(QJsonDocument::Indented);
+}
+#else
+QByteArray toJson(const QVariant& value)
+{
+    if (value.isNull())
+        return "null";
+    switch (value.type()) {
+    case QVariant::String:
+        return "\"" + value.toString().replace("\"", "\\\"").toUtf8() + "\"";
+    case QVariant::Int:
+        return QString::number(value.toInt()).toUtf8();
+    case QVariant::Double:
+        return QString::number(value.toDouble()).toUtf8();
+    case QVariant::Bool:
+        if (value.toBool())
+            return "true";
+        else
+            return "false";
+    case QVariant::Map:
+    {
+        const QVariantMap& map(value.toMap());
+        QStringList members;
+        Q_FOREACH (const QString& key, map.keys()) {
+            members.append("\"" + key + "\": " + toJson(map.value(key)));
+        }
+        return "{" + members.join(", ").toUtf8() + "}";
+    }
+    case QVariant::List:
+    {
+        QStringList elements;
+        Q_FOREACH (const QVariant& value, value.toList()) {
+            elements.append(toJson(value));
+        }
+        return "[" + elements.join(", ").toUtf8() + "]";
+    }
+    default:
+        qDebug() << "Failed to serialize" << value << "to JSON";
+        return "";
+    }
+}
+
+QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc) const
+{
+    return toJson(doc);
+}
+#endif
+
 void ParserAbstract::networkReplyDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
     Q_UNUSED(bytesReceived)
