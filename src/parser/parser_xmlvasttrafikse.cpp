@@ -591,7 +591,7 @@ void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
      if (reply->error() == QNetworkReply::NoError && accessTokenRE.indexIn(rawText) > 0 && expiresInRE.indexIn(rawText) > 0) {
          m_accessToken = accessTokenRE.cap(1);
          int expireIn = expiresInRE.cap(1).toInt(&ok);
-         if (ok) {
+         if (ok && expireIn > 0) {
              m_accessTokenExpiration = QDateTime::currentDateTime().addSecs(expireIn - 5);
              qDebug() << "Got access token" << m_accessToken << "which expires in" << expireIn << "sec";
 
