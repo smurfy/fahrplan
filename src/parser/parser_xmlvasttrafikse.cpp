@@ -576,7 +576,7 @@ void ParserXmlVasttrafikSe::requestNewAccessToken() {
 }
 
 void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
-     static const QRegExp accessTokenRE(QLatin1String("\"access_token\":\"([0-9a-f]+)"));
+     static const QRegExp accessTokenRE(QLatin1String("\"access_token\":\"([^\"]+)"));
      static const QRegExp expiresInRE(QLatin1String("\"expires_in\":([1-9][0-9]*)"));
 
      QNetworkReply *reply = static_cast<QNetworkReply *>(sender());
