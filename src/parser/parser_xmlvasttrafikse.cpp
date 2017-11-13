@@ -23,7 +23,8 @@
 #include <QCoreApplication>
 
 #include <QtCore/QUrl>
-#include <QtNetwork/QNetworkReply>
+#include <QNetworkReply>
+#include <QNetworkInterface>
 #include <QtXml/QDomDocument>
 
 #if defined(BUILD_FOR_QT5)
@@ -52,7 +53,12 @@ ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
     m_stationByNameParameters.isValid = false;
     m_stationByCoordinatesParameters.isValid = false;
     m_accessTokenExpiration = QDateTime(QDate(2000, 1, 1)); ///< by default, access token expired a long time ago
-    m_deviceId = QCoreApplication::instance()->applicationName() + QLatin1String("-") + QString::number(qrand(), 16) + QLatin1String("-") + QString::number(QCoreApplication::instance()->applicationPid(), 10);
+    /// Create device ID based on network interfaces' addresses (MAC addresses in most cases)
+    uint h = 0xdeadbeef;
+    const QList<QNetworkInterface> listOfNetworkInterfaces = QNetworkInterface::allInterfaces();
+    for (QList<QNetworkInterface>::ConstIterator it = listOfNetworkInterfaces.constBegin(); it != listOfNetworkInterfaces.constEnd(); ++it)
+        h ^= qHash(it->hardwareAddress());
+    m_deviceId = QString(QLatin1String("device_%1")).arg(h, 24, 10, QLatin1Char('0'));
 }
 
 ParserXmlVasttrafikSe::~ParserXmlVasttrafikSe() {
@@ -564,8 +570,8 @@ void ParserXmlVasttrafikSe::requestNewAccessToken() {
     request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
     QByteArray authorizationData("Basic ");
     authorizationData.append(consumerCredentials);
-    request.setRawHeader("Authorization", authorizationData);
-    QByteArray postData("grant_type=client_credentials&scope=device_");
+    request.setRawHeader(QByteArray("Authorization"), authorizationData);
+    QByteArray postData("grant_type=client_credentials&scope=");
 #if defined(BUILD_FOR_QT5)
     postData.append(m_deviceId.toLatin1());
 #else
