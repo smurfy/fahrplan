@@ -608,11 +608,13 @@ void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
                  currentRequestState = FahrplanNS::noneRequest; ///< to make a check in searchJourney(..) work
                  searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.arrivalStation,m_searchJourneyParameters.dateTime, m_searchJourneyParameters.mode, m_searchJourneyParameters.trainrestrictions);
              }
-         }
-     }
+         } else
+             qWarning() << "Failed to extract expiration time from this: " << expiresInRE.cap(1);
+     } else
+         qWarning() << "Request for access token failed: " << reply->errorString();
 
      if (!ok) {
-         qWarning() << "Failed to extract access token from this data:" << rawText;
+         qWarning() << "Failed to extract access token from this data:" << rawText.left(256);
          m_accessTokenExpiration.setDate(QDate(2000, 1, 1));
      }
- }
+}
