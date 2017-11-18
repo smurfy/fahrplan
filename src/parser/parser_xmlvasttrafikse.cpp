@@ -23,7 +23,8 @@
 #include <QCoreApplication>
 
 #include <QtCore/QUrl>
-#include <QtNetwork/QNetworkReply>
+#include <QNetworkReply>
+#include <QNetworkInterface>
 #include <QtXml/QDomDocument>
 
 #if defined(BUILD_FOR_QT5)
@@ -52,7 +53,12 @@ ParserXmlVasttrafikSe::ParserXmlVasttrafikSe(QObject *parent)
     m_stationByNameParameters.isValid = false;
     m_stationByCoordinatesParameters.isValid = false;
     m_accessTokenExpiration = QDateTime(QDate(2000, 1, 1)); ///< by default, access token expired a long time ago
-    m_deviceId = QCoreApplication::instance()->applicationName() + QLatin1String("-") + QString::number(qrand(), 16) + QLatin1String("-") + QString::number(QCoreApplication::instance()->applicationPid(), 10);
+    /// Create device ID based on network interfaces' addresses (MAC addresses in most cases)
+    uint h = 0xdeadbeef;
+    const QList<QNetworkInterface> listOfNetworkInterfaces = QNetworkInterface::allInterfaces();
+    for (QList<QNetworkInterface>::ConstIterator it = listOfNetworkInterfaces.constBegin(); it != listOfNetworkInterfaces.constEnd(); ++it)
+        h ^= qHash(it->hardwareAddress());
+    m_deviceId = QString(QLatin1String("device_%1")).arg(h, 24, 10, QLatin1Char('0'));
 }
 
 ParserXmlVasttrafikSe::~ParserXmlVasttrafikSe() {
@@ -564,8 +570,8 @@ void ParserXmlVasttrafikSe::requestNewAccessToken() {
     request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
     QByteArray authorizationData("Basic ");
     authorizationData.append(consumerCredentials);
-    request.setRawHeader("Authorization", authorizationData);
-    QByteArray postData("grant_type=client_credentials&scope=device_");
+    request.setRawHeader(QByteArray("Authorization"), authorizationData);
+    QByteArray postData("grant_type=client_credentials&scope=");
 #if defined(BUILD_FOR_QT5)
     postData.append(m_deviceId.toLatin1());
 #else
@@ -576,7 +582,7 @@ void ParserXmlVasttrafikSe::requestNewAccessToken() {
 }
 
 void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
-     static const QRegExp accessTokenRE(QLatin1String("\"access_token\":\"([0-9a-f]+)"));
+     static const QRegExp accessTokenRE(QLatin1String("\"access_token\":\"([^\"]+)"));
      static const QRegExp expiresInRE(QLatin1String("\"expires_in\":([1-9][0-9]*)"));
 
      QNetworkReply *reply = static_cast<QNetworkReply *>(sender());
@@ -585,7 +591,7 @@ void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
      if (reply->error() == QNetworkReply::NoError && accessTokenRE.indexIn(rawText) > 0 && expiresInRE.indexIn(rawText) > 0) {
          m_accessToken = accessTokenRE.cap(1);
          int expireIn = expiresInRE.cap(1).toInt(&ok);
-         if (ok) {
+         if (ok && expireIn > 0) {
              m_accessTokenExpiration = QDateTime::currentDateTime().addSecs(expireIn - 5);
              qDebug() << "Got access token" << m_accessToken << "which expires in" << expireIn << "sec";
 
@@ -602,11 +608,13 @@ void ParserXmlVasttrafikSe::accessTokenRequestFinished() {
                  currentRequestState = FahrplanNS::noneRequest; ///< to make a check in searchJourney(..) work
                  searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.arrivalStation,m_searchJourneyParameters.dateTime, m_searchJourneyParameters.mode, m_searchJourneyParameters.trainrestrictions);
              }
-         }
-     }
+         } else
+             qWarning() << "Failed to extract expiration time from this: " << expiresInRE.cap(1);
+     } else
+         qWarning() << "Request for access token failed: " << reply->errorString();
 
      if (!ok) {
-         qWarning() << "Failed to extract access token from this data:" << rawText;
+         qWarning() << "Failed to extract access token from this data:" << rawText.left(256);
          m_accessTokenExpiration.setDate(QDate(2000, 1, 1));
      }
- }
+}
