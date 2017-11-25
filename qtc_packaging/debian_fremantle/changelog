@@ -1,5 +1,10 @@
+fahrplan2 (2.0.30) unstable; urgency=low
+  * Updated Västtrafik API
+  
+ -- smurfy <maemo@smurfy.de>  Sat, 25 November 2017 12:00:00 +0100
+ 
 fahrplan2 (2.0.29) unstable; urgency=low
-  * Updated Updated matka.fi API
+  * Updated matka.fi API
   
  -- smurfy <maemo@smurfy.de>  Wed, 08 March 2017 20:00:00 +0100
  
@@ -10,6 +15,11 @@ fahrplan2 (2.0.28) unstable; urgency=low
   
  -- smurfy <maemo@smurfy.de>  Sat, 27 August 2016 18:00:00 +0100
  
+fahrplan2 (2.0.27-1) unstable; urgency=low
+  * Charset fix for resrobot.se
+  
+ -- smurfy <maemo@smurfy.de>  Mon, 21 March 2016 20:00:00 +0100
+
 fahrplan2 (2.0.27) unstable; urgency=low
   * Save trainrestrictions to settings
   * Backends are now sorted
@@ -26,9 +36,9 @@ fahrplan2 (2.0.26) unstable; urgency=low
   * SailfishOS: Added calendar settings
   * SailfishOS: Added display of error messages if search fails
   * Improved HafasBinary Backend (added error message)
-  
+
  -- smurfy <maemo@smurfy.de>  Thu, 11 June 2015 20:00:00 +0200
-  
+ 
 fahrplan2 (2.0.25) unstable; urgency=low
   * Fix: Rendering of details page could get borked (occured with MVV, but possible with all backends)
   * Updated translations
@@ -44,11 +54,13 @@ fahrplan2 (2.0.24) unstable; urgency=low
   * Normalized backend names
   * Updated translations and added swedish translation
 
+ -- smurfy <maemo@smurfy.de>  Thu, 5 Mar 2015 22:00:00 +0200
+ 
 fahrplan2 (2.0.23) unstable; urgency=low
   * Fix for bahn.de earlier/later
 
  -- smurfy <maemo@smurfy.de>  Sat, 16 Dec 2014 22:00:00 +0200
- 
+
 fahrplan2 (2.0.22) unstable; urgency=low
   * Fix for bahn.de
   * Added new about screen
@@ -78,7 +90,7 @@ fahrplan2 (2.0.19) unstable; urgency=low
   * added real-time delay info to details page for bahn.de
 
  -- smurfy <maemo@smurfy.de>  Thu, 24 Jul 2014 22:00:00 +0200
- 
+
 fahrplan2 (2.0.18) unstable; urgency=low
   * added 9292ov 
   * sailfish gps fix and small ui changes

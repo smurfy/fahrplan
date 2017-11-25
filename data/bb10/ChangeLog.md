@@ -1,5 +1,10 @@
-BlackBerry World ChangeLog
+﻿BlackBerry World ChangeLog
 ==========================
+
+2.0.30
+------
+
+- Updated Västtrafik API
 
 2.0.29
 ------
