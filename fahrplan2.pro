@@ -89,7 +89,7 @@ RESOURCES += \
 
 INCLUDEPATH += src
 # Zlib todo for other systems ugly hack
-!unix: INCLUDEPATH += f:/QtSdk/Qt5.4.0/5.4/mingw491_32/include/QtZlib
+!unix: INCLUDEPATH += f:/QtSdk/Qt/5.5/mingw492_32/include/QtZlib
 unix:!symbian: LIBS += -lz
 
 HEADERS += \

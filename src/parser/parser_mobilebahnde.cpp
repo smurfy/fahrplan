@@ -22,10 +22,10 @@
 ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent) :
     ParserHafasBinary(parent)
 {
-     baseXmlUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
-     baseSTTableUrl = "http://mobile.bahn.de/bin/mobil/stboard.exe/en";
-     baseUrl = "http://reiseauskunft.bahn.de/bin/query.exe";
-     baseBinaryUrl = "http://reiseauskunft.bahn.de/bin/query.exe/eox";
+     baseXmlUrl = "https://reiseauskunft.bahn.de/bin/query.exe";
+     baseSTTableUrl = "https://mobile.bahn.de/bin/mobil/bhftafel.exe/en";
+     baseUrl = "https://reiseauskunft.bahn.de/bin/query.exe";
+     baseBinaryUrl = "https://reiseauskunft.bahn.de/bin/query.exe/eox";
      STTableMode = 1;
 }
 
