@@ -1,6 +1,11 @@
 ﻿BlackBerry World ChangeLog
 ==========================
 
+2.0.31
+------
+
+- Fix bahn.de API
+
 2.0.30
 ------
 
