@@ -18,8 +18,8 @@ PkgConfigBR:
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
 Files:
+- '%defattr(644,root,root,-)'
+- '%attr(655,-,-) %{_bindir}'
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
 - '%{_datadir}/applications/%{name}.desktop'
-- '%{_bindir}'
-- /usr/bin
 PkgBR: [qt5-qtdeclarative-import-positioning, qt5-qtpositioning-devel]
