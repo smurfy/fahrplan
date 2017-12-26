@@ -1,5 +1,5 @@
 # Define Version
-VERSION = 2.0.31
+VERSION = 2.0.31.1
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
@@ -125,6 +125,7 @@ HEADERS += \
     src/parser/parser_resrobot.h \
     src/parser/parser_finland_matka.h \
     src/models/backends.h
+
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
     src/parser/parser_abstract.cpp \
@@ -225,6 +226,16 @@ contains(MEEGO_EDITION,harmattan) {
 ubuntu: {
     message("Ubuntu build")
     RESOURCES += ubuntu_res.qrc
+
+    HEADERS += \
+        3rdparty/qcustomnetworkreply/qcustomnetworkreply.h \
+        3rdparty/QtCUrl/QtCUrl.h
+
+    SOURCES += \
+        3rdparty/qcustomnetworkreply/qcustomnetworkreply.cpp \
+        3rdparty/QtCUrl/QtCUrl.cpp
+
+    LIBS += -lcurl
 
     OTHER_FILES += \
         src/gui/ubuntu/MainPage.qml \

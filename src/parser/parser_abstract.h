@@ -94,6 +94,10 @@ protected:
     QVariantMap parseJson(const QByteArray &data) const;
     QByteArray serializeToJson(const QVariantMap &doc) const;
     QByteArray gzipDecompress(QByteArray compressData);
+#ifdef BUILD_FOR_UBUNTU
+private:
+    void sendHttpRequestCUrl(QUrl url, QByteArray data, const QList<QPair<QByteArray,QByteArray> > &additionalHeaders = QList<QPair<QByteArray,QByteArray> >());
+#endif
 };
 
 #endif // PARSER_ABSTRACT_H

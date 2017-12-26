@@ -36,6 +36,16 @@
 #include <QScriptValue>
 #endif
 
+#ifdef BUILD_FOR_UBUNTU
+
+// in order to build it, you need to install libcurl4-gnutls-dev:armhf in the chroot
+// libcurl itself is already preinstalled on the phones, and thus does not need to be in the click package
+// see 3rdparty/README_CURL.txt for details
+
+#include "3rdparty/QtCUrl/QtCUrl.h"
+#include "3rdparty/qcustomnetworkreply/qcustomnetworkreply.h"
+#endif
+
 ParserAbstract::ParserAbstract(QObject *parent) :
     QObject(parent)
 {
@@ -72,6 +82,7 @@ void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
     //if needed inside the parser
     currentRequestState = FahrplanNS::noneRequest;
 
+
     if (internalRequestState == FahrplanNS::stationsByNameRequest) {
         parseStationsByName(networkReply);
     } else if (internalRequestState == FahrplanNS::stationsByCoordinatesRequest) {
@@ -101,6 +112,16 @@ void ParserAbstract::cancelRequest()
 
 void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data, const QList<QPair<QByteArray,QByteArray> > &additionalHeaders)
 {
+    // workaround for Ubuntu / HTTPS with bahn.de
+    // here we use cUrl instead
+    #ifdef BUILD_FOR_UBUNTU
+    if (url.host().endsWith("bahn.de"))
+    {
+       ParserAbstract::sendHttpRequestCUrl(url, data, additionalHeaders);
+       return;
+    }
+    #endif
+
     QNetworkRequest request;
     request.setUrl(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("application/x-www-form-urlencoded"));
@@ -389,3 +410,42 @@ void ParserAbstract::findStationsByCoordinates(qreal longitude, qreal latitude)
      } while(cmpr_stream.avail_out == 0);
      return uncompressed;
  }
+
+ #ifdef BUILD_FOR_UBUNTU
+ void ParserAbstract::sendHttpRequestCUrl(QUrl url, QByteArray data, const QList<QPair<QByteArray,QByteArray> > &additionalHeaders)
+ {
+     QStringList headers;
+
+     headers << "Content-Type: application/x-www-form-urlencoded" \
+             << QString("User-Agent: %1").arg(userAgent) \
+             << "Cache-Control: no-cache";
+     for (QList<QPair<QByteArray,QByteArray> >::ConstIterator it = additionalHeaders.constBegin(); it != additionalHeaders.constEnd(); ++it)
+         headers << QString("%1: %2").arg(QString::fromLatin1(it->first), QString::fromLatin1(it->second));
+     if (!acceptEncoding.isEmpty()) {
+         headers << QString("Accept-Encoding: %1").arg(QString::fromLatin1(acceptEncoding));
+     }
+
+     QtCUrl::Options opt;
+     opt[CURLOPT_URL] = url;
+     opt[CURLOPT_HTTPHEADER] = headers;
+
+     if (! data.isNull()) {
+       opt[CURLOPT_POST] = true;
+       opt[CURLOPT_POSTFIELDS] = data;
+     }
+     //opt[CURLOPT_FOLLOWLOCATION] = true;
+     //opt[CURLOPT_FAILONERROR] = true;
+
+     requestTimeout->start(30000);
+
+     QtCUrl cUrl;
+     cUrl.exec(opt);
+     QByteArray outputData = cUrl.buffer();
+
+     QCustomNetworkReply * reply = new QCustomNetworkReply();
+     reply->setContent(outputData);
+
+     lastRequest = reply;
+     networkReplyFinished(lastRequest);
+ }
+#endif
