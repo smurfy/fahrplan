@@ -135,7 +135,7 @@ Page {
                     text: qsTr("Source code available on %1").arg("<a href=\"https://github.com/smurfy/fahrplan\">github</a>")
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
-                  
+
                 Button {
                     text: qsTr("View License Terms")
                     anchors.horizontalCenter: parent.horizontalCenter

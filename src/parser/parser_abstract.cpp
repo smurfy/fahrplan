@@ -82,7 +82,6 @@ void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
     //if needed inside the parser
     currentRequestState = FahrplanNS::noneRequest;
 
-
     if (internalRequestState == FahrplanNS::stationsByNameRequest) {
         parseStationsByName(networkReply);
     } else if (internalRequestState == FahrplanNS::stationsByCoordinatesRequest) {
