@@ -36,3 +36,11 @@ a Git submodule but only copied from the original repository. Updating
 shouldn't be too hard to do: remove the existing folder and clone the
 repository. The current home of the project is
 https://github.com/f03el/gauss-kruger-cpp.
+
+------
+
+qcustomnetworkreply:
+https://github.com/richmoore/qt-examples/blob/master/qcustomnetworkreply
+
+QtCurl
+https://github.com/pavlonion/qtcurl/

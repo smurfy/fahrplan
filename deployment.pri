@@ -116,8 +116,14 @@ symbian {
         desktopfile.path = /
         icon.files = data/$${TARGET}-square.svg
         icon.path = /
+        MANIFEST = $$cat(qtc_packaging/ubuntu/manifest.json.in,blob)
+        MANIFEST = $$replace(MANIFEST,@VERSION@,$${VERSION})
+        MANIFEST = $$replace(MANIFEST,@APP_ID@,$${APP_ID})
+        MANIFEST = $$replace(MANIFEST,@APP_NAME@,$${APP_NAME})
+        MANIFEST = $$replace(MANIFEST,@MAINTAINER_UBUNTU@,$${MAINTAINER_UBUNTU})
         # The following line is required for the Ubuntu SDK to generate a run config
-        UBUNTU_MANIFEST_FILE = $$PWD/qtc_packaging/ubuntu/manifest.json
+        UBUNTU_MANIFEST_FILE = $${OBJECTS_DIR}/manifest.json
+        write_file($${UBUNTU_MANIFEST_FILE},MANIFEST)
         export(UBUNTU_MANIFEST_FILE)
         manifestfile.files = $${UBUNTU_MANIFEST_FILE}
         manifestfile.CONFIG += no_check_exist

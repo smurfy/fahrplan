@@ -1,5 +1,8 @@
+# Define Name
+APP_NAME = Fahrplan
+
 # Define Version
-VERSION = 2.0.31
+VERSION = 2.0.32-2
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
@@ -18,8 +21,10 @@ symbian {
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\"smurfy\"
 }
 ubuntu {
+    APP_ID = openstore.fahrplan2
+    MAINTAINER_UBUNTU = Chris Clime <chris.clime@gmx.net>
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
-    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"com.ubuntu.developer.mzanetti.fahrplan2\\\"
+    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"$$APP_ID\\\"
 }
 exists("/usr/include/sailfishapp/sailfishapp.h"): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
@@ -125,6 +130,7 @@ HEADERS += \
     src/parser/parser_resrobot.h \
     src/parser/parser_finland_matka.h \
     src/models/backends.h
+
 SOURCES += src/main.cpp \
     src/parser/parser_hafasxml.cpp \
     src/parser/parser_abstract.cpp \
@@ -226,6 +232,16 @@ ubuntu: {
     message("Ubuntu build")
     RESOURCES += ubuntu_res.qrc
 
+    HEADERS += \
+        3rdparty/qcustomnetworkreply/qcustomnetworkreply.h \
+        3rdparty/QtCUrl/QtCUrl.h
+
+    SOURCES += \
+        3rdparty/qcustomnetworkreply/qcustomnetworkreply.cpp \
+        3rdparty/QtCUrl/QtCUrl.cpp
+
+    LIBS += -lcurl
+	
     OTHER_FILES += \
         src/gui/ubuntu/MainPage.qml \
         src/gui/ubuntu/JourneyResultsPage.qml \
@@ -420,7 +436,7 @@ symbian|simulator {
         DEPLOYMENT.installer_header = 0xA000D7CE
 
         QMAKE_TARGET_COMPANY = smurfy <maemo@smurfy.de>
-        QMAKE_TARGET_PRODUCT = Fahrplan
+        QMAKE_TARGET_PRODUCT = $$APP_NAME
         QMAKE_TARGET_DESCRIPTION = A Journey planner/Railway Time table for many train lines in Europe and Australia
         QMAKE_TARGET_COPYRIGHT = smurfy <maemo@smurfy.de>
 

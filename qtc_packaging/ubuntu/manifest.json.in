@@ -8,8 +8,8 @@
             "desktop": "fahrplan2_ubuntu.desktop"
         }
     },
-    "maintainer": "Michael Stevens <mail@michael-stevens.de>",
-    "name": "openstore.fahrplan2",
-    "title": "Fahrplan",
-    "version": "2.0.32-2"
+    "maintainer": "@MAINTAINER_UBUNTU@",
+    "name": "@APP_ID@",
+    "title": "@APP_NAME@",
+    "version": "@VERSION@"
 }
