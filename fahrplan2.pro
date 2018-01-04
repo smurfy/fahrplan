@@ -2,7 +2,7 @@
 APP_NAME = Fahrplan
 
 # Define Version
-VERSION = 2.0.31.1
+VERSION = 2.0.32-2
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
@@ -21,8 +21,7 @@ symbian {
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\"smurfy\"
 }
 ubuntu {
-    APP_ID = com.ubuntu.developer.mzanetti.fahrplan2
-    #APP_ID = fahrplan2.openstore
+    APP_ID = openstore.fahrplan2
     MAINTAINER_UBUNTU = Chris Clime <chris.clime@gmx.net>
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"$$APP_ID\\\"
