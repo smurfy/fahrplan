@@ -136,13 +136,6 @@ Page {
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
                   
-                Label {
-                   width: parent.width
-                   textSize: Label.Small
-                   horizontalAlignment: Text.AlignHCenter
-                   text: "(temporary fix for bahn.de %1)".arg("<a href=\"https://github.com/balcy/fahrplan\">here</a>")
-                   onLinkActivated: Qt.openUrlExternally(link)
-                }
                 Button {
                     text: qsTr("View License Terms")
                     anchors.horizontalCenter: parent.horizontalCenter
