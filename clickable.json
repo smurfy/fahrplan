@@ -1,0 +1,7 @@
+{
+  "dir": "click_build",
+  "sdk": "ubuntu-sdk-15.04",
+  "arch": "armhf",
+  "template": "custom",
+  "build": "bash -c 'cd .. ; qmake . CONFIG+=ubuntu ; make install'"
+}

@@ -21,9 +21,8 @@ symbian {
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\"smurfy\"
 }
 ubuntu {
-    APP_ID = com.ubuntu.developer.mzanetti.fahrplan2
-    #APP_ID = fahrplan2.openstore
-    MAINTAINER_UBUNTU = Chris Clime <chris.clime@gmx.net>
+    APP_ID = fahrplan2.openstore.fahrplan2
+    MAINTAINER_UBUNTU = Michael Stevens <mail@michael-stevens.de>
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"$$APP_ID\\\"
 }

@@ -19,7 +19,7 @@
 
 .pragma library
 
-var copyright = "(C) 2008-2017 smurfy (maemo@smurfy.de)";
+var copyright = "(C) 2008-2018 smurfy (maemo@smurfy.de)";
 
 var license = "<p>This program is free software; you can redistribute it and/or " +
         "modify it under the terms of the GNU General Public License " +
@@ -36,8 +36,8 @@ var support = qsTr("<p>If fahrplan is not translated in your language, help us <
         "<p>If you like fahrplan, I would appreciate a donation. <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DW3LGJ6VEKFVS\">Donate using PayPal</a></p>" +
         "<p>If you encounter bugs or have feature requests visit the <a href=\"https://github.com/smurfy/fahrplan/issues\">Fahrplan issue tracker on GitHub</a>.</p>");
 
-var maintainers = ["Philipp Andreas (smurfy)", "Chris Clime (balcy)", "Oleksii Serdiuk (leppa)"];
-var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "Nekhelesh Ramananthan (nik90)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog", "benni0815", "Erik Lundin"].sort();
+var maintainers = ["Philipp Andreas (smurfy)", "Michael Stevens (stevensmi)", "Oleksii Serdiuk (leppa)"];
+var codeContributors = ["gri", "lorenzph", "CaCO3", "hcm", "thp", "qwerty12", "qbast", "Thomas Fischer", "Oleksii Serdiuk (leppa)", "Nekhelesh Ramananthan (nik90)", "NightShift79", "pirast", "Michael Zanetti (mzanetti)", "shentok", "evansebire", "unsanded", "Morpog", "benni0815", "Erik Lundin", "balcy"].sort();
 var translators = [
             "Arabic - Sary AWAD (sary.1991)",
             "Catalan - Felip Martí (FelipMarti)",
