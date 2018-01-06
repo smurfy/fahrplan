@@ -21,7 +21,7 @@ symbian {
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\"smurfy\"
 }
 ubuntu {
-    APP_ID = fahrplan2.openstore.fahrplan2
+    APP_ID = openstore.fahrplan2
     MAINTAINER_UBUNTU = Michael Stevens <mail@michael-stevens.de>
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"$$APP_ID\\\"
