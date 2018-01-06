@@ -1,7 +1,8 @@
 {
   "dir": "click_build",
-  "sdk": "ubuntu-sdk-15.04",
   "arch": "armhf",
+  "chroot": false,
   "template": "custom",
-  "build": "bash -c 'cd .. ; qmake . CONFIG+=ubuntu ; make install'"
+  "build": "bash -c 'cd .. ; qt5-qmake-arm-linux-gnueabihf CONFIG+=ubuntu clickBuildFolder=click_build; make install'",
+  "dependencies": [ "libcurl4-gnutls-dev" ]
 }

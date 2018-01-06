@@ -111,14 +111,15 @@ symbian {
         export(splash.path)
         INSTALLS += splash
     } else:ubuntu {
-        # previously it was set to the root folder
-        # ubuntuBuildFolder = /
-        ubuntuBuildFolder = click_build
-        installPrefix = $${ubuntuBuildFolder}
+        isEmpty(clickBuildFolder)
+        {
+          clickBuildFolder = /
+        }
+        installPrefix = $${clickBuildFolder}
         desktopfile.files = data/$${TARGET}_ubuntu.desktop
-        desktopfile.path = $${ubuntuBuildFolder}
+        desktopfile.path = $${clickBuildFolder}
         icon.files = data/$${TARGET}-square.svg
-        icon.path = $${ubuntuBuildFolder}
+        icon.path = $${clickBuildFolder}
         MANIFEST = $$cat(qtc_packaging/ubuntu/manifest.json.in,blob)
         MANIFEST = $$replace(MANIFEST,@VERSION@,$${VERSION})
         MANIFEST = $$replace(MANIFEST,@APP_ID@,$${APP_ID})
@@ -130,11 +131,11 @@ symbian {
         export(UBUNTU_MANIFEST_FILE)
         manifestfile.files = $${UBUNTU_MANIFEST_FILE}
         manifestfile.CONFIG += no_check_exist
-        manifestfile.path = $${ubuntuBuildFolder}
+        manifestfile.path = $${clickBuildFolder}
         export(manifestfile.files)
         export(manifestfile.path)
         apparmor.files = qtc_packaging/ubuntu/fahrplan2.json
-        apparmor.path = $${ubuntuBuildFolder}
+        apparmor.path = $${clickBuildFolder}
         export(apparmor.files)
         export(apparmor.path)
         INSTALLS += manifestfile apparmor
