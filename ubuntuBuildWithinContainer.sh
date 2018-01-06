@@ -2,10 +2,11 @@
 
 # build inside libertine container on the phone
 
-buildDir=$(readlink -f "./click_build")
+buildDirName="click_build"
+buildDir=$(readlink -f "./$buildDirName")
 echo "builddir is $buildDir"
 mkdir -p "$buildDir"
-qmake . CONFIG+=ubuntu
+qmake . CONFIG+=ubuntu clickBuildFolder=$buildDirName
 make clean
 make install
 cd "$buildDir"

@@ -3,6 +3,6 @@
   "arch": "armhf",
   "chroot": false,
   "template": "custom",
-  "build": "bash -c 'cd .. ; qt5-qmake-arm-linux-gnueabihf CONFIG+=ubuntu clickBuildFolder=click_build; make install'",
+  "build": "bash -c 'cd .. ; qt5-qmake-arm-linux-gnueabihf CONFIG+=ubuntu clickBuildFolder=click_build; make clean ; make install'",
   "dependencies": [ "libcurl4-gnutls-dev" ]
 }

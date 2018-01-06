@@ -111,10 +111,11 @@ symbian {
         export(splash.path)
         INSTALLS += splash
     } else:ubuntu {
-        isEmpty(clickBuildFolder)
-        {
+
+        isEmpty(clickBuildFolder){
           clickBuildFolder = /
         }
+
         installPrefix = $${clickBuildFolder}
         desktopfile.files = data/$${TARGET}_ubuntu.desktop
         desktopfile.path = $${clickBuildFolder}
