@@ -1,0 +1,15 @@
+{
+    "description": "A journey planner for public transportation.",
+    "framework": "ubuntu-sdk-15.04.1",
+    "architecture": "armhf",
+    "hooks": {
+        "fahrplan2": {
+            "apparmor": "fahrplan2.json",
+            "desktop": "fahrplan2_ubuntu.desktop"
+        }
+    },
+    "maintainer": "Michael Stevens <mail@michael-stevens.de>",
+    "name": "openstore.fahrplan2",
+    "title": "Fahrplan",
+    "version": "2.0.32-2"
+}
