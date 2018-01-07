@@ -1,8 +1,14 @@
 {
   "dir": "click_build",
   "arch": "armhf",
+  "sdk": "ubuntu-sdk-15.04",
   "chroot": false,
+  "scripts":
+  {
+   "clean_tmp": "rm -rf ./tmp/*"
+  },
   "template": "custom",
-  "build": "bash -c 'cd .. ; qt5-qmake-arm-linux-gnueabihf CONFIG+=ubuntu clickBuildFolder=click_build; make clean ; make install'",
-  "dependencies": [ "libcurl4-gnutls-dev" ]
+  "build": "bash -c 'cd ..; qt5-qmake-arm-linux-gnueabihf CONFIG+=ubuntu clickBuildFolder=click_build; make -j install'",
+  "dependencies": [ "libcurl4-gnutls-dev" ],
+  "default" : "kill clean clean_tmp build click-build install launch"
 }
