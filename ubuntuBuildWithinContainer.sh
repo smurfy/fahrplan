@@ -1,12 +1,27 @@
 #!/bin/bash
 
-# build inside libertine container on the phone
+# build inside (libertine) container on the phone
+
+# check if we have a arm env
+if [[ ! -d /usr/share/arm-linux-gnueabihf ]]
+  then
+  echo "this script must be run inside a armhf container."
+  exit 1
+fi
+
+# find qmake
+if [[ -n $(which qt5-qmake-arm-linux-gnueabihf) ]]
+  then
+  QMAKE=qt5-qmake-arm-linux-gnueabihf
+  else
+  QMAKE=qmake
+fi
 
 buildDirName="click_build"
 buildDir=$(readlink -f "./$buildDirName")
 echo "builddir is $buildDir"
 mkdir -p "$buildDir"
-qmake . CONFIG+=ubuntu clickBuildFolder=$buildDirName
+$QMAKE . CONFIG+=ubuntu clickBuildFolder=$buildDirName
 make clean
 make install
 cd "$buildDir"
