@@ -61,6 +61,8 @@ ParserAbstract::ParserAbstract(QObject *parent) :
     connect(requestTimeout, SIGNAL(timeout()), this, SLOT(networkReplyTimedOut()));
 
     userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20100101 Firefox/13.0";
+
+    sendHttpRequestViaCurl = false;
 }
 
 ParserAbstract::~ParserAbstract()
@@ -114,7 +116,7 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data, const QList<QPai
     // workaround for Ubuntu / HTTPS with bahn.de
     // here we use cUrl instead
     #ifdef BUILD_FOR_UBUNTU
-    if (url.host().endsWith("bahn.de"))
+    if (sendHttpRequestViaCurl)
     {
        ParserAbstract::sendHttpRequestCUrl(url, data, additionalHeaders);
        return;
