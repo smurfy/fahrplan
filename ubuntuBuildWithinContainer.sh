@@ -5,7 +5,7 @@
 # check if we have a arm env
 if [[ ! -d /usr/share/arm-linux-gnueabihf ]]
   then
-  echo "this script must be run inside a armhf container."
+  echo "this script must be run inside an armhf container."
   exit 1
 fi
 

@@ -8,7 +8,7 @@
    "clean_tmp": "rm -rf ./tmp/*"
   },
   "template": "custom",
-  "build": "bash -c 'cd ..; qt5-qmake-arm-linux-gnueabihf CONFIG+=ubuntu clickBuildFolder=click_build; make -j install'",
+  "build": "bash -c 'cd ..; ./clickableCustomBuild.sh click_build'",
   "dependencies": [ "libcurl4-gnutls-dev" ],
   "default" : "kill clean clean_tmp build click-build install launch"
 }
