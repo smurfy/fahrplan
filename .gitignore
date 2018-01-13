@@ -1,6 +1,9 @@
+.directory
+/.clickable/
 /.make.cache
 /Makefile
 /bld.inf
+/click_build/
 /debian/
 /fahrplan2*
 /moc/

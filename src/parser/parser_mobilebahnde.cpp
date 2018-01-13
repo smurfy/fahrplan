@@ -27,6 +27,9 @@ ParserMobileBahnDe::ParserMobileBahnDe(QObject *parent) :
      baseUrl = "https://reiseauskunft.bahn.de/bin/query.exe";
      baseBinaryUrl = "https://reiseauskunft.bahn.de/bin/query.exe/eox";
      STTableMode = 1;
+     #ifdef BUILD_FOR_UBUNTU
+     sendHttpRequestViaCurl = true;
+     #endif
 }
 
 QStringList ParserMobileBahnDe::getTrainRestrictions()

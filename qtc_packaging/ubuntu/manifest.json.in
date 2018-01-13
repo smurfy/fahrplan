@@ -8,8 +8,8 @@
             "desktop": "fahrplan2_ubuntu.desktop"
         }
     },
-    "maintainer": "Michael Zanetti <michael_zanetti@gmx.net>",
-    "name": "com.ubuntu.developer.mzanetti.fahrplan2",
-    "title": "Fahrplan",
-    "version": "2.0.31"
+    "maintainer": "@MAINTAINER_UBUNTU@",
+    "name": "@APP_ID@",
+    "title": "@APP_NAME@",
+    "version": "@VERSION@"
 }

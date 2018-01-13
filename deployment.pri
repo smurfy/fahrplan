@@ -111,21 +111,32 @@ symbian {
         export(splash.path)
         INSTALLS += splash
     } else:ubuntu {
-        installPrefix = /
+
+        isEmpty(clickBuildFolder){
+          clickBuildFolder = /
+        }
+
+        installPrefix = $${clickBuildFolder}
         desktopfile.files = data/$${TARGET}_ubuntu.desktop
-        desktopfile.path = /
+        desktopfile.path = $${clickBuildFolder}
         icon.files = data/$${TARGET}-square.svg
-        icon.path = /
+        icon.path = $${clickBuildFolder}
+        MANIFEST = $$cat(qtc_packaging/ubuntu/manifest.json.in,blob)
+        MANIFEST = $$replace(MANIFEST,@VERSION@,$${VERSION})
+        MANIFEST = $$replace(MANIFEST,@APP_ID@,$${APP_ID})
+        MANIFEST = $$replace(MANIFEST,@APP_NAME@,$${APP_NAME})
+        MANIFEST = $$replace(MANIFEST,@MAINTAINER_UBUNTU@,$${MAINTAINER_UBUNTU})
         # The following line is required for the Ubuntu SDK to generate a run config
-        UBUNTU_MANIFEST_FILE = $$PWD/qtc_packaging/ubuntu/manifest.json
+        UBUNTU_MANIFEST_FILE = $${OBJECTS_DIR}/manifest.json
+        write_file($${UBUNTU_MANIFEST_FILE},MANIFEST)
         export(UBUNTU_MANIFEST_FILE)
         manifestfile.files = $${UBUNTU_MANIFEST_FILE}
         manifestfile.CONFIG += no_check_exist
-        manifestfile.path = /
+        manifestfile.path = $${clickBuildFolder}
         export(manifestfile.files)
         export(manifestfile.path)
         apparmor.files = qtc_packaging/ubuntu/fahrplan2.json
-        apparmor.path = /
+        apparmor.path = $${clickBuildFolder}
         export(apparmor.files)
         export(apparmor.path)
         INSTALLS += manifestfile apparmor
