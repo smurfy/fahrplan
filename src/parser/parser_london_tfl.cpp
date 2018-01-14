@@ -24,6 +24,7 @@
 #ifdef BUILD_FOR_QT5
 #   include <QUrlQuery>
 #else
+#include <QTextDocument>
 #   define setQuery(q) setQueryItems(q.queryItems())
 #endif
 #include <qmath.h>
@@ -31,7 +32,16 @@
 namespace
 {
    const QUrl BaseUrl("https://api.tfl.gov.uk");
+
+   /*
+   QString escapeHtmlChars(const QString & input)
+   {
+
+   }
+   */
 }
+
+//QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsTfl;
 
 //inline qreal deg2rad(qreal deg)
 //{
@@ -366,12 +376,16 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
     QDateTime departure;
 
     QVariantList::const_iterator i;
+    int counter = 0;
+
     for (i = journeys.constBegin(); i != journeys.constEnd(); ++i) {
+        counter++;
         QVariantMap journey = i->toMap();
-        parseJourneyOption(journey);
+        QString id = QString::number(counter);
+        parseJourneyOption(journey, id);
         JourneyResultItem* item = new JourneyResultItem;
-        arrival = QDateTime::fromString(journey.value("arrivalDateTime").toString());
-        departure = QDateTime::fromString(journey.value("startDateTime").toString());
+        arrival = QDateTime::fromString(journey.value("arrivalDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
+        departure = QDateTime::fromString(journey.value("startDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
 
         if (i == journeys.constBegin())
             lastsearch.firstOption=departure;
@@ -386,7 +400,7 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
         for (j = legs.constBegin(); j != legs.constEnd(); ++j)
         {
             const QVariantMap mode = j->toMap().value("mode").toMap();
-            if (mode.value("type").toString() != "walk") {
+            if (mode.value("type").toString() != "walking") {
                 const QString typeName = mode.value("name").toString();
                 if (!typeName.isEmpty())
                     trains.append(typeName);
@@ -398,11 +412,15 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
         item->setTrainType(trains.join(", ").trimmed());
 
         //item->setTransfers(QString::number((int) journey.value("numberOfChanges").toDouble()));
-        item->setTransfers(QString::number(legs.count()));
+        item->setTransfers(QString::number(legs.count() - 1));
 
         int minutes = departure.secsTo(arrival)/60;
         item->setDuration(QString("%1:%2").arg(minutes/60).arg(minutes%60,2,10,QChar('0')));
-        item->setId(journey.value("id").toString());
+
+        //item->setId(journey.value("id").toString());
+        //item->setId(randString(10));
+        item->setId(id);
+
         result->appendItem(item);
 
         //Set result metadata based on first result
@@ -431,25 +449,22 @@ void ParserLondonTfl::parseJourneyDetails(QNetworkReply *)
     //should never happen
 }
 
-void ParserLondonTfl::parseJourneyOption(const QVariantMap &object)
+void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QString &id)
 {
     JourneyDetailResultList* result = new JourneyDetailResultList;
 
-    //QString id = object.value("id").toString();
-
-    QString id = QDateTime().toString();
-
     QVariantList legs = object.value("legs").toList();
 
-    QDateTime arrival = QDateTime::fromString(object.value("arrivalDateTime").toString());
-    QDateTime departure = QDateTime::fromString(object.value("startDateTime").toString());
+    QDateTime arrival = QDateTime::fromString(object.value("arrivalDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
+    QDateTime departure = QDateTime::fromString(object.value("startDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
     result->setArrivalDateTime(arrival);
     result->setDepartureDateTime(departure);
     int minutes=departure.secsTo(arrival)/60;
     int hours=minutes/60;
     minutes=minutes%60;
     result->setDuration(QString("%1:%2").arg(hours).arg(minutes, 2, 10, QChar('0')));
-    //result->setId(id);
+
+    result->setId(id);
 
     for(int i = 0; i < legs.count(); i++)
     {
@@ -461,34 +476,13 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object)
 
         resultItem->setDepartureDateTime(QDateTime::fromString(leg.value("departureTime").toString()));
         resultItem->setArrivalDateTime(QDateTime::fromString(leg.value("arrivalTime").toString()));
-        resultItem->setDepartureStation(firstStop.value("commonName").toString());
-        resultItem->setArrivalStation(lastStop.value("commonName").toString());
+        resultItem->setDepartureStation(firstStop.value("commonName").toString().replace("Underground Station", "🚇"));
+        resultItem->setArrivalStation(lastStop.value("commonName").toString().replace("Underground Station", "🚇"));
 
-        /*
-        QVariantList stops = leg.value("stops").toList();
+        QString type = leg.value("mode").toMap().value("name").toString();
 
-
-        QVariantMap firstStop = stops[0].toMap();
-        QVariantMap lastStop = stops[stops.size()-1].toMap();
-        QVariantMap firstLocation = firstStop.value("location").toMap();
-        QVariantMap lastLocation = lastStop.value("location").toMap();
-
-        resultItem->setArrivalStation(lastLocation.value("name").toString());
-        resultItem->setDepartureStation(firstLocation.value("name").toString());
-
-        QDateTime stopDeparture = QDateTime::fromString(firstStop.value("departure").toString(),
-                                                        "yyyy-MM-ddTHH:mm");
-        QDateTime stopArrival = QDateTime::fromString(lastStop.value("arrival").toString(),
-                                                      "yyyy-MM-ddTHH:mm");
-
-        resultItem->setDepartureDateTime(stopDeparture);
-        resultItem->setArrivalDateTime(stopArrival);
-
-        */
-
-        QString type = leg.value("mode").toMap().value("type").toString();
         QString typeName;
-        if (type != "walk")
+        if (type != "walking")
             typeName = leg.value("mode").toMap().value("name").toString();
 
         //Fallback if typeName is empty
@@ -501,7 +495,7 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object)
         if (!service.isEmpty())
             typeName.append(" ").append(service);
 
-        if (type == "walk") {
+        if (type == "walking") {
             const QString duration = leg.value("duration").toString();
             resultItem->setTrain(tr("%1 for %2 min").arg(typeName, duration));
         } else {
@@ -512,10 +506,47 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object)
         if (!firstStop.value("platform").toString().isEmpty()) {
             resultItem->setDepartureInfo(tr("Pl. %1").arg(firstStop.value("platform").toString()));
         }
+
+
         if (!lastStop.value("platform").toString().isEmpty()) {
             resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop.value("platform").toString()));
         }
         */
+
+        // get the transport options (e.g. bus or tube lines)
+        QVariantList stations = leg.value("routeOptions").toList();
+        QStringList routeOptionsTrains;
+        QStringList routeOptionsDirections;
+        QString detailedInfo;
+
+        QVariantList::const_iterator it_routeOpt;
+        for (it_routeOpt = stations.constBegin(); it_routeOpt != stations.constEnd(); ++it_routeOpt) {
+
+            QStringList routeOptionsDirectionsCurrentTrain;
+            QVariantMap routeOption = it_routeOpt->toMap();
+
+            QString currentRouteOption = routeOption.value("name").toString().toHtmlEscaped();
+            routeOptionsTrains.push_back(currentRouteOption);
+            detailedInfo += currentRouteOption + " to ";
+
+            QVariantList directions = routeOption["directions"].toList();
+
+             QVariantList::const_iterator it_directions;
+
+             for (it_directions = directions.constBegin(); it_directions != directions.constEnd(); ++it_directions)
+             {
+                 QString currentDestination = it_directions->toString().replace("Underground Station", "").toHtmlEscaped();
+                 routeOptionsDirections.push_back(currentDestination);
+                 routeOptionsDirectionsCurrentTrain.push_back(currentDestination);
+             }
+
+             detailedInfo += routeOptionsDirectionsCurrentTrain.join(" or ") + ".<br>";
+        }
+
+        //resultItem->setTrain(routeOptionsTrains.join(","));
+        resultItem->setDirection(routeOptionsDirections.join(" or "));
+
+        resultItem->setInfo(detailedInfo);
 
         //resultItem->setDirection(leg.value("destination").toString());
 
@@ -524,7 +555,9 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object)
         foreach (const QVariant &attr, attrs) {
             attributes << attr.toMap().value("title").toString();
         }
-        resultItem->setInfo(attributes.join(tr(", ")));
+        //resultItem->setInfo(attributes.join(tr(", ")));
+
+
 
         result->appendItem(resultItem);
     }

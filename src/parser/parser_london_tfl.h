@@ -92,7 +92,7 @@ protected:
     QMap<QString, JourneyDetailResultList*> cachedResults;
 
 private:
-    void parseJourneyOption(const QVariantMap &object);
+    void parseJourneyOption(const QVariantMap &object, const QString & id);
 };
 
 #endif // PARSER_LONDONTFL_H
