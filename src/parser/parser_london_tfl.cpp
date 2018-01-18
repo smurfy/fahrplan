@@ -502,16 +502,23 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
             resultItem->setTrain(typeName);
         }
 
-        /*
-        if (!firstStop.value("platform").toString().isEmpty()) {
-            resultItem->setDepartureInfo(tr("Pl. %1").arg(firstStop.value("platform").toString()));
+        // stop letter / platform (departure)
+        if (! firstStop.value("stopLetter").toString().isEmpty()) {
+            resultItem->setDepartureInfo(QString("🚏 %1").arg(firstStop.value("stopLetter").toString()));
         }
 
-
-        if (!lastStop.value("platform").toString().isEmpty()) {
-            resultItem->setArrivalInfo(tr("Pl. %1").arg(lastStop.value("platform").toString()));
+        else if (! firstStop.value("platformName").toString().isEmpty()) {
+            resultItem->setDepartureInfo(QString("Pl. %1").arg(firstStop.value("platformName").toString()));
         }
-        */
+
+        // stop letter / platform (arrival)
+        if (! lastStop.value("stopLetter").toString().isEmpty()) {
+            resultItem->setArrivalInfo(QString("🚏 %1").arg(lastStop.value("stopLetter").toString()));
+        }
+
+        else if (! lastStop.value("platformName").toString().isEmpty()) {
+            resultItem->setArrivalInfo(QString("Pl. %1").arg(lastStop.value("platformName").toString()));
+        }
 
         // get the transport options (e.g. bus or tube lines)
         QVariantList stations = leg.value("routeOptions").toList();
@@ -546,7 +553,15 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
         //resultItem->setTrain(routeOptionsTrains.join(","));
         resultItem->setDirection(routeOptionsDirections.join(" or "));
 
-        resultItem->setInfo(detailedInfo);
+        // only one train --> put it in title
+        if (routeOptionsTrains.count() == 1)
+        {
+            resultItem->setTrain(routeOptionsTrains[0]);
+        }
+        else
+        {
+            resultItem->setInfo(detailedInfo);
+        }
 
         //resultItem->setDirection(leg.value("destination").toString());
 
