@@ -19,6 +19,7 @@
 
 #include "parser_london_tfl.h"
 
+#include <QEventLoop>
 #include <QUrl>
 #include <QNetworkReply>
 #ifdef BUILD_FOR_QT5
@@ -33,40 +34,33 @@ namespace
 {
    const QUrl BaseUrl("https://api.tfl.gov.uk");
 
-   /*
-   QString escapeHtmlChars(const QString & input)
+   const QString ModeBus = "bus";
+   const QString ModeCableCar = "cable-car";
+   const QString ModeCoach = "coach";
+   const QString ModeDlr = "dlr";
+   const QString ModeRail = "national-rail";
+   const QString ModeOverground = "overground";
+   const QString ModeReplacementBus = "replacement-bus";
+   const QString ModeRiverBus = "river-bus";
+   const QString ModeRiverTour = "river-tour";
+   const QString ModeTflRail = "tflrail";
+   const QString ModeTram = "tram";
+   const QString ModeTube = "tube";
+
+   bool sortByTimeLessThan(const TimetableEntry &first, const TimetableEntry &second)
    {
-
+       if (first.time == second.time)
+           return first.trainType < second.trainType;
+       else
+           return first.time < second.time;
    }
-   */
 }
-
-//QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsTfl;
-
-//inline qreal deg2rad(qreal deg)
-//{
-//    return deg * 3.141592653589793238463 / 180;
-//}
-
-/*
-inline int distance(qreal lat1, qreal lon1, qreal lat2, qreal lon2)
-{
-    const qreal sdLat = qSin(deg2rad(lat2 - lat1) / 2);
-    const qreal sdLon = qSin(deg2rad(lon2 - lon1) / 2);
-    const qreal cLat1 = qCos(deg2rad(lat1));
-    const qreal cLat2 = qCos(deg2rad(lat2));
-    const qreal a = sdLat * sdLat + sdLon * sdLon * cLat1 * cLat2;
-    const qreal c = 2 * qAtan2(qSqrt(a), qSqrt(1 - a));
-
-    // 6371 km - Earth radius.
-    // We return distance in meters, thus * 1000.
-    return qRound(6371.0 * c * 1000);
-}
-*/
 
 ParserLondonTfl::ParserLondonTfl(QObject *parent):ParserAbstract(parent)
 {
     lastCoordinates.isValid = false;
+
+    NetworkManagerTimeTableSubQuery = new QNetworkAccessManager(this);
 }
 
 void ParserLondonTfl::getTimeTableForStation(const Station &currentStation,
@@ -75,7 +69,7 @@ void ParserLondonTfl::getTimeTableForStation(const Station &currentStation,
                                            ParserAbstract::Mode,
                                            int trainrestrictions)
 {
-    QUrl relativeUri(QString("/locations/%1/departure-times").arg(currentStation.id.toString()));
+   QUrl relativeUri(QString("/stoppoint/%1").arg(parseJson(currentStation.id.toByteArray()).value("naptanId").toString()));
 
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
@@ -83,7 +77,6 @@ void ParserLondonTfl::getTimeTableForStation(const Station &currentStation,
     QUrl query;
 #endif
 
-    query.addQueryItem("lang", 	"en-GB");
     relativeUri.setQuery(query);
 
     timetableRestrictions  =  trainrestrictions;
@@ -96,20 +89,14 @@ void ParserLondonTfl::findStationsByName(const QString &stationName)
     qDebug() << "FINDBYNAME";
     QUrl relativeUrl (QString("/Stoppoint/Search/%1").arg(stationName));
 
-    QUrl uri(BaseUrl.resolved(relativeUrl));
-
-    /*
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
 #else
     QUrl query;
 #endif
-    query.addQueryItem("lang", 	"en-GB");
-    query.addQueryItem("q", stationName);
-    uri.setQuery(query);
-    */
+    relativeUrl.setQuery(query);
 
-    sendHttpRequest(uri);
+    sendHttpRequest(BaseUrl.resolved(relativeUrl));
     currentRequestState=FahrplanNS::stationsByNameRequest;
 }
 
@@ -151,7 +138,7 @@ void ParserLondonTfl::searchJourney(const Station &departureStation,
     lastsearch.restrictions=trainrestrictions;
     lastsearch.via=viaStation;
 
-    QUrl relativeUri(QString("Journey/Journeyresults/%1/to/%2").arg(departureStation.id.toString(), arrivalStation.id.toString()));
+    QUrl relativeUri(QString("Journey/Journeyresults/%1/to/%2").arg(parseJson(departureStation.id.toByteArray()).value("icsId").toString(), parseJson(arrivalStation.id.toByteArray()).value("icsId").toString()));
 
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
@@ -159,35 +146,28 @@ void ParserLondonTfl::searchJourney(const Station &departureStation,
     QUrl query;
 #endif
 
-    /*
-    query.addQueryItem("lang", 	"en-GB");
-    query.addQueryItem("before", "1");
-    query.addQueryItem("from", departureStation.id.toString());
     if(viaStation.valid)
-        query.addQueryItem("via", viaStation.id.toString());
-    query.addQueryItem("to", arrivalStation.id.toString());
-    query.addQueryItem("sequence", "1");
-    query.addQueryItem("dateTime", dateTime.toString("yyyy-MM-ddTHHmm"));
+        query.addQueryItem("via", parseJson(viaStation.id.toByteArray()).value("icsId").toString());
 
+    query.addQueryItem("date", dateTime.toString("yyyyMMdd"));
+    query.addQueryItem("time", dateTime.toString("HHmm"));
+    query.addQueryItem("timeIs", (mode == Departure) ? "Departing" : "Arriving");
+
+    QStringList modesList = getModesFromTrainRestrictions(trainrestrictions);
+
+    query.addQueryItem("mode", modesList.join(','));
+
+    /*
     switch(trainrestrictions){
-    default:
     case all:
-        query.addQueryItem("byFerry", "true");
-    case noFerry:
-        query.addQueryItem("byBus", "true");
-        query.addQueryItem("byTram", "true");
-        query.addQueryItem("bySubway", "true");
-    case trainsOnly:
-        query.addQueryItem("byTrain", "true");
+        break;
+    case bus:
+        query.addQueryItem("mode", "bus");
+        break;
+    case bus_or_tube:
+        query.addQueryItem("mode", "bus,tube");
+        break;
     }
-    query.addQueryItem("searchtype", mode==Departure?"departure":"arrival");
-
-    //TODO: make transport types work
-    query.addQueryItem("after", "5");
-
-    uri.setQuery(query);
-    sendHttpRequest(uri);
-
     */
 
     relativeUri.setQuery(query);
@@ -198,7 +178,8 @@ void ParserLondonTfl::searchJourney(const Station &departureStation,
 
 void ParserLondonTfl::searchJourneyLater()
 {
-    searchJourney(lastsearch.from, lastsearch.via, lastsearch.to, lastsearch.lastOption, Departure , lastsearch.restrictions);
+    QDateTime time = lastsearch.firstOption.addSecs(30*60);
+    searchJourney(lastsearch.from, lastsearch.via, lastsearch.to, time, Departure , lastsearch.restrictions);
 
 }
 
@@ -218,28 +199,25 @@ QStringList ParserLondonTfl::getTrainRestrictions()
 {
  QStringList restrictions;
  restrictions << tr("All");
- restrictions << tr("Only trains");
- restrictions << tr("All, except ferry");
+ restrictions << tr("Nat. Rail, Tube, Overground, DLR");
+ restrictions << tr("Tube, Overground, DLR");
+ restrictions << tr("Bus, Tram, Tube, Overground, DLR");
+ restrictions << tr("Bus, Tram");
+ restrictions << tr("Bus");
+ restrictions << tr("Nat. Rail");
+ restrictions << tr("Tube");
+ restrictions << tr("Overground");
+ restrictions << tr("DLR");
+
  return restrictions;
 }
 
-/*
-bool sortByTimeLessThan(const TimetableEntry &first, const TimetableEntry &second)
-{
-    if (first.time == second.time)
-        return first.trainType < second.trainType;
-    else
-        return first.time < second.time;
-}
-*/
-
 void ParserLondonTfl::parseTimeTable(QNetworkReply *networkReply)
 {
-    return; 
-    
-    TimetableEntriesList result;
+    // the response contains the line groups with the stop points.
+    qDebug() << "PARSING STATIONS";
     QByteArray allData = networkReply->readAll();
-//    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -247,70 +225,43 @@ void ParserLondonTfl::parseTimeTable(QNetworkReply *networkReply)
         return;
     }
 
-    QVariantList tabs = doc.value("tabs").toList();
-    QString currentStation(doc.value("location").toMap().value("name").toString());
+    QVariantList lineGroups = doc.value("lineGroup").toList();
+    QStringList stopCodes;
+
+    TimetableEntriesList result;
+    int counter;
 
     QVariantList::const_iterator i;
-    for (i = tabs.constBegin(); i != tabs.constEnd(); ++i) {
-        QVariantMap tab = i->toMap();
-        QString type = tab.value("id").toString();
-        QVariantList departures = tab.value("departures").toList();
-        switch(timetableRestrictions){
-            case all:
-            default:
-            break;
-        case trainsOnly:
-            if(type!="train")
-                continue;
-            break;
-        case noFerry:
-            if(type=="ferry")//not sure if this ever happens
-                continue;
-            break;
-        }
+    for (i = lineGroups.begin(); i != lineGroups.constEnd(); ++i) {
 
-        QVariantList::const_iterator j;
-        for (j = departures.constBegin(); j != departures.constEnd(); ++j) {
-            QVariantMap departure = j->toMap();
-            TimetableEntry entry;
-            entry.currentStation=currentStation;
-            entry.destinationStation = departure.value("destinationName").toString();
-            entry.time = QTime::fromString(departure.value("time").toString(), "HH:mm");
-            QString via(departure.value("viaNames").toString());
-            if (!via.isEmpty())
-                entry.destinationStation = tr("%1 via %2").arg(entry.destinationStation, via);
-            QStringList info;
-            const QString rtStatus = departure.value("realtimeState").toString();
-            if (rtStatus == "ontime") {
-                info << tr("On-Time");
-            } else if (rtStatus == "late") {
-                const QString rtMessage = departure.value("realtimeText").toString().trimmed();
-                if (!rtMessage.isEmpty())
-                    info << QString("<span style=\"color:#b30;\">%1</span>").arg(rtMessage);
-            }
-            const QString remark = departure.value("remark").toString();
-            if (!remark.isEmpty())
-                info << remark;
-            entry.miscInfo = info.join("<br />");
+        counter++;
+        QVariantMap lineGroup = i->toMap();
 
-            entry.platform = departure.value("platform").toString();
+        QString stopCode;
+        stopCode = lineGroup.value("naptanIdReference").toString();
 
-            QString train = departure.value("mode").toMap().value("name").toString();
-            const QString service = departure.value("service").toString();
-            if (!service.isEmpty())
-                train.append(" ").append(service);
-            entry.trainType = train;
+       if (stopCode.isEmpty())
+       {
+          stopCode = lineGroup.value("stationAtcoCode").toString();
+       }
 
-            result.append(entry);
-        }
+       if (! stopCodes.contains(stopCode))
+       {
+           stopCodes.append(stopCode);
+       }
+    }
+
+    QStringList::const_iterator j;
+    for (j = stopCodes.constBegin(); j != stopCodes.constEnd(); ++j)
+    {
+         addTimeTableEntriesOfStopPoint(*j, result);
     }
 
     // Departures / arrivals are grouped by transportation type,
     // while we want them sorted by departure / arrival time.
-    //qSort(result.begin(), result.end(), sortByTimeLessThan);
+    qSort(result.begin(), result.end(), sortByTimeLessThan);
 
     emit timetableResult(result);
-
 }
 
 void ParserLondonTfl::parseStationsByName(QNetworkReply *networkReply)
@@ -333,11 +284,20 @@ void ParserLondonTfl::parseStationsByName(QNetworkReply *networkReply)
     for (i = stations.constBegin(); i != stations.constEnd(); ++i) {
         QVariantMap station = i->toMap();
         Station s;
-        s.id = station.value("icsId");
+
+        // we need to keep the icsId and the
+        QVariantMap idMap;
+        idMap["icsId"] = station.value("icsId").toString();
+        idMap["naptanId"] = station.value("id").toString();
+
+        s.id = serializeToJson(idMap, false);
         s.name = station.value("name").toString();
         s.latitude = station.value("lat").toDouble();
         s.longitude = station.value("lon").toDouble();
-        s.miscInfo = "Zone " + station.value("zone").toString();
+        if (station.contains("zone"))
+        {
+            s.miscInfo = "Zone " + station.value("zone").toString();
+        }
         result.append(s);
     }
 
@@ -474,50 +434,36 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
         QVariantMap firstStop = leg["departurePoint"].toMap();
         QVariantMap lastStop = leg["arrivalPoint"].toMap();
 
-        resultItem->setDepartureDateTime(QDateTime::fromString(leg.value("departureTime").toString()));
-        resultItem->setArrivalDateTime(QDateTime::fromString(leg.value("arrivalTime").toString()));
+        resultItem->setDepartureDateTime(QDateTime::fromString(leg.value("departureTime").toString(), "yyyy-MM-ddTHH:mm:ss"));
+        resultItem->setArrivalDateTime(QDateTime::fromString(leg.value("arrivalTime").toString(), "yyyy-MM-ddTHH:mm:ss"));
         resultItem->setDepartureStation(firstStop.value("commonName").toString().replace("Underground Station", "🚇"));
         resultItem->setArrivalStation(lastStop.value("commonName").toString().replace("Underground Station", "🚇"));
 
-        QString type = leg.value("mode").toMap().value("name").toString();
+        QString mode = leg.value("mode").toMap().value("name").toString();
 
-        QString typeName;
-        if (type != "walking")
-            typeName = leg.value("mode").toMap().value("name").toString();
+        //const QString service = leg.value("service").toString();
+        //if (!service.isEmpty())
+        //    typeName.append(" ").append(service);
 
-        //Fallback if typeName is empty
-        if (typeName.isEmpty() && !type.isEmpty()) {
-            typeName = type;
-            typeName[0] = type.at(0).toUpper();
-        }
+        if (mode != "walking") {
 
-        const QString service = leg.value("service").toString();
-        if (!service.isEmpty())
-            typeName.append(" ").append(service);
+            // stop letter / platform (departure)
+            if (! firstStop.value("stopLetter").toString().isEmpty()) {
+                resultItem->setDepartureInfo(QString("🚏 %1").arg(firstStop.value("stopLetter").toString()));
+            }
 
-        if (type == "walking") {
-            const QString duration = leg.value("duration").toString();
-            resultItem->setTrain(tr("%1 for %2 min").arg(typeName, duration));
-        } else {
-            resultItem->setTrain(typeName);
-        }
+            else if (! firstStop.value("platformName").toString().isEmpty()) {
+                resultItem->setDepartureInfo(QString("Pl. %1").arg(firstStop.value("platformName").toString()));
+            }
 
-        // stop letter / platform (departure)
-        if (! firstStop.value("stopLetter").toString().isEmpty()) {
-            resultItem->setDepartureInfo(QString("🚏 %1").arg(firstStop.value("stopLetter").toString()));
-        }
+            // stop letter / platform (arrival)
+            if (! lastStop.value("stopLetter").toString().isEmpty()) {
+                resultItem->setArrivalInfo(QString("🚏 %1").arg(lastStop.value("stopLetter").toString()));
+            }
 
-        else if (! firstStop.value("platformName").toString().isEmpty()) {
-            resultItem->setDepartureInfo(QString("Pl. %1").arg(firstStop.value("platformName").toString()));
-        }
-
-        // stop letter / platform (arrival)
-        if (! lastStop.value("stopLetter").toString().isEmpty()) {
-            resultItem->setArrivalInfo(QString("🚏 %1").arg(lastStop.value("stopLetter").toString()));
-        }
-
-        else if (! lastStop.value("platformName").toString().isEmpty()) {
-            resultItem->setArrivalInfo(QString("Pl. %1").arg(lastStop.value("platformName").toString()));
+            else if (! lastStop.value("platformName").toString().isEmpty()) {
+                resultItem->setArrivalInfo(QString("Pl. %1").arg(lastStop.value("platformName").toString()));
+            }
         }
 
         // get the transport options (e.g. bus or tube lines)
@@ -543,7 +489,12 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
              for (it_directions = directions.constBegin(); it_directions != directions.constEnd(); ++it_directions)
              {
                  QString currentDestination = it_directions->toString().replace("Underground Station", "").toHtmlEscaped();
-                 routeOptionsDirections.push_back(currentDestination);
+
+                 if (! routeOptionsDirections.contains(currentDestination))
+                 {
+                    routeOptionsDirections.push_back(currentDestination);
+                 }
+
                  routeOptionsDirectionsCurrentTrain.push_back(currentDestination);
              }
 
@@ -553,13 +504,21 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
         //resultItem->setTrain(routeOptionsTrains.join(","));
         resultItem->setDirection(routeOptionsDirections.join(" or "));
 
+        // walking
+        if (mode == "walking")
+        {
+            const QString duration = leg.value("duration").toString();
+            resultItem->setTrain(tr("Walk for %2 min").arg(duration));
+        }
+
         // only one train --> put it in title
-        if (routeOptionsTrains.count() == 1)
+        else if (routeOptionsTrains.count() == 1)
         {
             resultItem->setTrain(routeOptionsTrains[0]);
         }
         else
         {
+            resultItem->setTrain(mode);
             resultItem->setInfo(detailedInfo);
         }
 
@@ -572,8 +531,6 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
         }
         //resultItem->setInfo(attributes.join(tr(", ")));
 
-
-
         result->appendItem(resultItem);
     }
 
@@ -581,4 +538,182 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
     result->setArrivalStation(result->getItem(result->itemcount() - 1)->arrivalStation());
 
     cachedResults.insert(id, result);
+}
+
+QStringList ParserLondonTfl::getModesFromTrainRestrictions(int trainRestrictions)
+{
+
+    QStringList availableModes;
+
+    switch(trainRestrictions){
+    case all:
+        availableModes.append(ModeBus);
+        availableModes.append(ModeCableCar);
+        availableModes.append(ModeCoach);
+        availableModes.append(ModeDlr);
+        availableModes.append(ModeRail);
+        availableModes.append(ModeOverground);
+        availableModes.append(ModeReplacementBus);
+        availableModes.append(ModeRiverBus);
+        availableModes.append(ModeRiverTour);
+        availableModes.append(ModeTflRail);
+        availableModes.append(ModeTram);
+        availableModes.append(ModeTube);
+        break;
+    case bus_tram_tube_overground_dlr:
+        availableModes.append(ModeBus);
+        availableModes.append(ModeTram);
+        availableModes.append(ModeTube);
+        availableModes.append(ModeOverground);
+        availableModes.append(ModeDlr);
+        break;
+    case rail_tube_overground_dlr:
+        availableModes.append(ModeRail);
+        availableModes.append(ModeTube);
+        availableModes.append(ModeOverground);
+        availableModes.append(ModeDlr);
+        break;
+    case tube_overground_dlr:
+        availableModes.append(ModeTube);
+        availableModes.append(ModeOverground);
+        availableModes.append(ModeDlr);
+        break;
+    case bus_tram:
+        availableModes.append(ModeBus);
+        availableModes.append(ModeTram);
+        break;
+    case bus:
+        availableModes.append(ModeBus);
+        break;
+    case rail:
+        availableModes.append(ModeRail);
+        break;
+    case tube:
+         availableModes.append(ModeTube);
+        break;
+    case overground:
+        availableModes.append(ModeOverground);
+        break;
+    case dlr:
+        availableModes.append(ModeDlr);
+        break;
+    }
+
+   return availableModes;
+}
+
+// check the mode
+bool ParserLondonTfl::doesModeMatchTrainRestrictions(const QString & mode, int trainRestrictions)
+{
+    return getModesFromTrainRestrictions(trainRestrictions).contains(mode);
+}
+
+// this is for reducing the network replies, ids not suitable for trainRestrictions are skipped
+QStringList ParserLondonTfl::filterStopIdsByTrainRestrictions(const QStringList & stopIds, int trainRestrictions)
+{
+    QStringList output;
+
+    QStringList::const_iterator j;
+    for (j = stopIds.constBegin(); j != stopIds.constEnd(); ++j)
+    {
+        QString currentId = *j;
+
+        bool includeInFilteredOutput = true;
+
+        bool isTubeId = (currentId.left(8) == "940GZZLU");
+        bool isDlrId = (currentId.left(8) == "940GZZDL");
+        bool isRailOrOverGroundId = (! isTubeId && ! isDlrId && (currentId.left(4) == "940G"));
+        bool isBusOrTramId = (!isTubeId && ! isDlrId && ! isRailOrOverGroundId);
+
+        switch(trainRestrictions){
+        case all:
+        case bus_tram_tube_overground_dlr:
+            break;
+        case rail_tube_overground_dlr:
+        case tube_overground_dlr:
+            includeInFilteredOutput = (! isBusOrTramId);
+            break;
+        case bus_tram:
+        case bus:
+            includeInFilteredOutput = isBusOrTramId;
+            break;
+        case rail:
+            includeInFilteredOutput = isRailOrOverGroundId;
+            break;
+        case tube:
+            includeInFilteredOutput = isTubeId;
+            break;
+        case overground:
+            includeInFilteredOutput = isRailOrOverGroundId;
+            break;
+        case dlr:
+            includeInFilteredOutput = isDlrId;
+            break;
+        }
+
+        if (includeInFilteredOutput)
+        {
+            output.push_back(currentId);
+        }
+    }
+
+    return output;
+}
+
+#include <QFile>
+
+void ParserLondonTfl::addTimeTableEntriesOfStopPoint(const QString & stopPointId, TimetableEntriesList & entriesList)
+{
+    QNetworkRequest request;
+    QUrl relativeUrl (QString("/Stoppoint/%1/Arrivals").arg(stopPointId));
+
+    request.setUrl(BaseUrl.resolved(relativeUrl));
+
+    QNetworkReply *networkReply = NetworkManagerTimeTableSubQuery->get(request);
+
+    QEventLoop loop;
+    connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray allData = networkReply->readAll();
+    // qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+
+    QString filename = "/home/phablet/.config/openstore.fahrplan2/out.txt";
+     QFile file(filename);
+     if (file.open(QIODevice::Append)) {
+         QTextStream stream(&file);
+         stream << "parseTimeTableSubQuery." << endl;
+     }
+
+
+    QVariantMap doc = parseJson("{ \"output\":" + allData + "}");
+
+    if (doc.isEmpty()) {
+        emit errorOccured(tr("Cannot parse reply from the server"));
+        return;
+    }
+
+    QVariantList arrivals = doc.value("output").toList();
+
+    QVariantList::const_iterator i;
+
+    for (i = arrivals.constBegin(); i != arrivals.constEnd(); ++i) {
+
+        QVariantMap arrival = i->toMap();
+
+        // if the mode is not correct, we skip the value
+        if (! doesModeMatchTrainRestrictions(arrival.value("modeName").toString(), timetableRestrictions) )
+        {
+            continue;
+        }
+
+        TimetableEntry entry;
+
+        entry.currentStation = arrival.value("stationName").toString();
+        entry.destinationStation = arrival.value("destinationName").toString();
+        entry.time = QDateTime::fromString(arrival.value("expectedArrival").toString(), "yyyy-MM-ddTHH:mm:ssZ").time();
+        entry.platform = arrival.value("platformName").toString();
+        entry.trainType = arrival.value("lineName").toString();
+        entriesList.append(entry);
+    }
 }
