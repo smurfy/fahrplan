@@ -54,6 +54,21 @@ namespace
        else
            return first.time < second.time;
    }
+
+   QString shortLineName(const QString & lineName)
+   {
+       QMap<QString,QString> shortNamesMap;
+
+       shortNamesMap["Hammersmith & City"] = "H & C";
+       shortNamesMap["London Overground"] = "Overground";
+
+       // not found in map
+       if (shortNamesMap.find( lineName ) == shortNamesMap.end())
+           return lineName;
+
+       return shortNamesMap[lineName];
+
+   }
 }
 
 ParserLondonTfl::ParserLondonTfl(QObject *parent):ParserAbstract(parent)
@@ -102,28 +117,29 @@ void ParserLondonTfl::findStationsByName(const QString &stationName)
 
 void ParserLondonTfl::findStationsByCoordinates(qreal longitude, qreal latitude)
 {
-    return;
-     
-    QUrl uri(BaseUrl);
-    //QUrl uri(BASE_URL "locations");
+    QUrl relativeuri(QString("/Stoppoint"));
 
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
 #else
     QUrl query;
 #endif
-    query.addQueryItem("lang", 	"en-GB");
-    query.addQueryItem("type", "station,stop");
-    query.addQueryItem("latlong", QString("%1,%2").arg(latitude).arg(longitude));
-    query.addQueryItem("includestation", "true");
-    uri.setQuery(query);
+
+    longitude = -0.13556;
+    latitude = 51.52532;
+
+    query.addQueryItem("lon", QString::number(longitude));
+    query.addQueryItem("lat", QString::number(latitude));
+    query.addQueryItem("stoptypes", "NaptanMetroStation,NaptanRailStation,NaptanBusCoachStation,NaptanFerryPort,NaptanPublicBusCoachTram");
+
+    relativeuri.setQuery(query);
 
     lastCoordinates.isValid = true;
     lastCoordinates.latitude = latitude;
     lastCoordinates.longitude = longitude;
-    currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
 
-    sendHttpRequest(uri);
+    sendHttpRequest(BaseUrl.resolved(relativeuri));
+    currentRequestState = FahrplanNS::stationsByCoordinatesRequest;
 }
 
 void ParserLondonTfl::searchJourney(const Station &departureStation,
@@ -283,13 +299,13 @@ void ParserLondonTfl::parseStationsByName(QNetworkReply *networkReply)
     QVariantList::const_iterator i;
     for (i = stations.constBegin(); i != stations.constEnd(); ++i) {
         QVariantMap station = i->toMap();
-        Station s;
 
         // we need to keep the icsId and the
         QVariantMap idMap;
         idMap["icsId"] = station.value("icsId").toString();
         idMap["naptanId"] = station.value("id").toString();
 
+        Station s;
         s.id = serializeToJson(idMap, false);
         s.name = station.value("name").toString();
         s.latitude = station.value("lat").toDouble();
@@ -306,11 +322,74 @@ void ParserLondonTfl::parseStationsByName(QNetworkReply *networkReply)
 
 void ParserLondonTfl::parseStationsByCoordinates(QNetworkReply *networkReply)
 {
-    return;
-    
-    parseStationsByName(networkReply);
+    qDebug() << "PARSING STATIONS BY COORDINATES";
+    QByteArray allData = networkReply->readAll();
+    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
-    lastCoordinates.isValid = false;
+    QVariantMap doc = parseJson(allData);
+    if (doc.isEmpty()) {
+        emit errorOccured(tr("Cannot parse reply from the server"));
+        return;
+    }
+
+    QStringList icsIds;
+    QVariantList stations = doc.value("stopPoints").toList();
+
+    StationsList result;
+
+    QVariantList::const_iterator i;
+    for (i = stations.constBegin(); i != stations.constEnd(); ++i) {
+        QVariantMap station = i->toMap();
+
+        // we skip entries without icsId
+        if (station.value("icsCode").toString().isEmpty())
+        {
+            continue;
+        }
+
+        QString currentIcsId = station.value("icsCode").toString();
+
+        // we skip already found icsIds
+        if (icsIds.contains(currentIcsId))
+        {
+            continue;
+        }
+
+        icsIds.append(currentIcsId);
+
+        // we need to keep the icsId and the
+        QVariantMap idMap;
+        idMap["icsId"] = currentIcsId;
+        idMap["naptanId"] = station.value("id").toString();
+
+        Station s;
+        s.id = serializeToJson(idMap, false);
+        s.name = station.value("commonName").toString();
+        s.latitude = station.value("lat").toDouble();
+        s.longitude = station.value("lon").toDouble();
+
+        QVariantList additionalProperties = station.value("additionalProperties").toList();
+
+        QVariantList::const_iterator j;
+        for (j = additionalProperties.constBegin(); j != additionalProperties.constEnd(); ++j) {
+
+            // find the zone information
+            QVariantMap currentProperty = j->toMap();
+
+            if (currentProperty.value("key").toString() == "Zone")
+            {
+              s.miscInfo = "Zone " + currentProperty.value("value").toString();
+
+              // currently we do not need more info
+
+              break;
+            }
+        }
+
+        result.append(s);
+    }
+
+    emit stationsResult(result);
 }
 
 void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
@@ -660,8 +739,6 @@ QStringList ParserLondonTfl::filterStopIdsByTrainRestrictions(const QStringList 
     return output;
 }
 
-#include <QFile>
-
 void ParserLondonTfl::addTimeTableEntriesOfStopPoint(const QString & stopPointId, TimetableEntriesList & entriesList)
 {
     QNetworkRequest request;
@@ -677,14 +754,6 @@ void ParserLondonTfl::addTimeTableEntriesOfStopPoint(const QString & stopPointId
 
     QByteArray allData = networkReply->readAll();
     // qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
-
-    QString filename = "/home/phablet/.config/openstore.fahrplan2/out.txt";
-     QFile file(filename);
-     if (file.open(QIODevice::Append)) {
-         QTextStream stream(&file);
-         stream << "parseTimeTableSubQuery." << endl;
-     }
-
 
     QVariantMap doc = parseJson("{ \"output\":" + allData + "}");
 
@@ -713,7 +782,7 @@ void ParserLondonTfl::addTimeTableEntriesOfStopPoint(const QString & stopPointId
         entry.destinationStation = arrival.value("destinationName").toString();
         entry.time = QDateTime::fromString(arrival.value("expectedArrival").toString(), "yyyy-MM-ddTHH:mm:ssZ").time();
         entry.platform = arrival.value("platformName").toString();
-        entry.trainType = arrival.value("lineName").toString();
+        entry.trainType = shortLineName(arrival.value("lineName").toString());
         entriesList.append(entry);
     }
 }
