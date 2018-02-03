@@ -67,7 +67,14 @@ namespace
            return lineName;
 
        return shortNamesMap[lineName];
+   }
 
+   // e.g. replace "Underground Station" with symbol
+   QString shortStationName(const QString & stationName)
+   {
+       QString outputStationName = stationName;
+
+       return outputStationName.replace("Underground Station", "🚇");
    }
 }
 
@@ -125,12 +132,14 @@ void ParserLondonTfl::findStationsByCoordinates(qreal longitude, qreal latitude)
     QUrl query;
 #endif
 
-    longitude = -0.13556;
-    latitude = 51.52532;
+    // for testing (location near Oxford Circus)
+    //longitude = -0.14244;
+    //latitude = 51.51519;
 
     query.addQueryItem("lon", QString::number(longitude));
     query.addQueryItem("lat", QString::number(latitude));
     query.addQueryItem("stoptypes", "NaptanMetroStation,NaptanRailStation,NaptanBusCoachStation,NaptanFerryPort,NaptanPublicBusCoachTram");
+    query.addQueryItem("radius","350");
 
     relativeuri.setQuery(query);
 
@@ -173,19 +182,6 @@ void ParserLondonTfl::searchJourney(const Station &departureStation,
 
     query.addQueryItem("mode", modesList.join(','));
 
-    /*
-    switch(trainrestrictions){
-    case all:
-        break;
-    case bus:
-        query.addQueryItem("mode", "bus");
-        break;
-    case bus_or_tube:
-        query.addQueryItem("mode", "bus,tube");
-        break;
-    }
-    */
-
     relativeUri.setQuery(query);
     sendHttpRequest(BaseUrl.resolved(relativeUri));
 
@@ -196,7 +192,6 @@ void ParserLondonTfl::searchJourneyLater()
 {
     QDateTime time = lastsearch.firstOption.addSecs(30*60);
     searchJourney(lastsearch.from, lastsearch.via, lastsearch.to, time, Departure , lastsearch.restrictions);
-
 }
 
 void ParserLondonTfl::searchJourneyEarlier()
@@ -450,14 +445,11 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
 
         item->setTrainType(trains.join(", ").trimmed());
 
-        //item->setTransfers(QString::number((int) journey.value("numberOfChanges").toDouble()));
         item->setTransfers(QString::number(legs.count() - 1));
 
         int minutes = departure.secsTo(arrival)/60;
         item->setDuration(QString("%1:%2").arg(minutes/60).arg(minutes%60,2,10,QChar('0')));
 
-        //item->setId(journey.value("id").toString());
-        //item->setId(randString(10));
         item->setId(id);
 
         result->appendItem(item);
@@ -515,14 +507,10 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
 
         resultItem->setDepartureDateTime(QDateTime::fromString(leg.value("departureTime").toString(), "yyyy-MM-ddTHH:mm:ss"));
         resultItem->setArrivalDateTime(QDateTime::fromString(leg.value("arrivalTime").toString(), "yyyy-MM-ddTHH:mm:ss"));
-        resultItem->setDepartureStation(firstStop.value("commonName").toString().replace("Underground Station", "🚇"));
-        resultItem->setArrivalStation(lastStop.value("commonName").toString().replace("Underground Station", "🚇"));
+        resultItem->setDepartureStation( shortStationName(firstStop.value("commonName").toString()));
+        resultItem->setArrivalStation( shortStationName( lastStop.value("commonName").toString()));
 
         QString mode = leg.value("mode").toMap().value("name").toString();
-
-        //const QString service = leg.value("service").toString();
-        //if (!service.isEmpty())
-        //    typeName.append(" ").append(service);
 
         if (mode != "walking") {
 
@@ -769,19 +757,26 @@ void ParserLondonTfl::addTimeTableEntriesOfStopPoint(const QString & stopPointId
     for (i = arrivals.constBegin(); i != arrivals.constEnd(); ++i) {
 
         QVariantMap arrival = i->toMap();
+        QString modeName = arrival.value("modeName").toString();
 
         // if the mode is not correct, we skip the value
-        if (! doesModeMatchTrainRestrictions(arrival.value("modeName").toString(), timetableRestrictions) )
+        if (! doesModeMatchTrainRestrictions(modeName, timetableRestrictions) )
         {
             continue;
         }
 
         TimetableEntry entry;
 
-        entry.currentStation = arrival.value("stationName").toString();
-        entry.destinationStation = arrival.value("destinationName").toString();
+        entry.currentStation = shortStationName (arrival.value("stationName").toString());
+        entry.destinationStation = shortStationName (arrival.value("destinationName").toString());
         entry.time = QDateTime::fromString(arrival.value("expectedArrival").toString(), "yyyy-MM-ddTHH:mm:ssZ").time();
         entry.platform = arrival.value("platformName").toString();
+
+        // for buses use the bus stop symbol
+        if (modeName == "bus")
+        {
+            entry.platform = "🚏" + entry.platform;
+        }
         entry.trainType = shortLineName(arrival.value("lineName").toString());
         entriesList.append(entry);
     }
