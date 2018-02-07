@@ -770,13 +770,18 @@ void ParserLondonTfl::addTimeTableEntriesOfStopPoint(const QString & stopPointId
         entry.currentStation = shortStationName (arrival.value("stationName").toString());
         entry.destinationStation = shortStationName (arrival.value("destinationName").toString());
         entry.time = QDateTime::fromString(arrival.value("expectedArrival").toString(), "yyyy-MM-ddTHH:mm:ssZ").time();
-        entry.platform = arrival.value("platformName").toString();
 
-        // for buses use the bus stop symbol
-        if (modeName == "bus")
+        if (arrival.value("platformName").toString() != "null")
         {
-            entry.platform = "🚏" + entry.platform;
+            entry.platform = arrival.value("platformName").toString();
+
+            // for buses use the bus stop symbol
+            if (modeName == "bus")
+            {
+                entry.platform = "🚏" + entry.platform;
+            }
         }
+
         entry.trainType = shortLineName(arrival.value("lineName").toString());
         entriesList.append(entry);
     }
