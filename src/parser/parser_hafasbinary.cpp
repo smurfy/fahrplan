@@ -694,7 +694,8 @@ QString ParserHafasBinary::formatDuration(QDateTime durationTime)
 {
     QString tmpDuration = durationTime.time().toString("hh:mm");
     QDateTime refDate;
-    refDate.setDate(QDate::currentDate());
+    refDate.setTimeSpec(Qt::UTC);
+    refDate.setDate(QDate(1970, 1, 1));
     int days = refDate.daysTo(durationTime);
     if (days > 0) {
         tmpDuration = QString::number(days) + "d " + tmpDuration;
@@ -705,23 +706,29 @@ QString ParserHafasBinary::formatDuration(QDateTime durationTime)
 QDateTime ParserHafasBinary::toTime(quint16 time)
 {
     QDateTime tmpDateTime;
+    tmpDateTime.setTimeSpec(Qt::UTC);
     if (time == 0xffff)
         return tmpDateTime;
     int hours = time / 100;
     int minutes = time % 100;
-    tmpDateTime.setDate(QDate::currentDate());
-    return tmpDateTime.addSecs(((hours * 60) + minutes) * 60);
+    tmpDateTime.setDate(QDate(1970, 1, 1));
+    tmpDateTime.setTime(QTime(hours % 24, minutes));
+    return tmpDateTime.addDays(hours / 24);
 }
 
 QDateTime ParserHafasBinary::toTime(quint16 time, QDate baseDate)
 {
     QDateTime tmpDateTime;
+    // Maybe it would be better to use the correct local time for the provider
+    // here.
+    tmpDateTime.setTimeSpec(Qt::UTC);
     if (time == 0xffff)
         return tmpDateTime;
     tmpDateTime.setDate(baseDate);
     int hours = time / 100;
     int minutes = time % 100;
-    return tmpDateTime.addSecs(((hours * 60) + minutes) * 60);
+    tmpDateTime.setTime(QTime(hours % 24, minutes));
+    return tmpDateTime.addDays(hours / 24);;
 }
 
 QDate ParserHafasBinary::toDate(quint16 date)
