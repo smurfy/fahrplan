@@ -214,6 +214,7 @@ QByteArray toJson(const QVariant& value)
 
 QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc, bool indent) const
 {
+    Q_UNUSED(indent)
     return toJson(doc);
 }
 #endif

@@ -180,7 +180,7 @@ void ParserLondonTfl::searchJourney(const Station &departureStation,
 
     QStringList modesList = getModesFromTrainRestrictions(trainrestrictions);
 
-    query.addQueryItem("mode", modesList.join(','));
+    query.addQueryItem("mode", modesList.join(","));
 
     relativeUri.setQuery(query);
     sendHttpRequest(BaseUrl.resolved(relativeUri));
@@ -545,7 +545,14 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
             QStringList routeOptionsDirectionsCurrentTrain;
             QVariantMap routeOption = it_routeOpt->toMap();
 
-            QString currentRouteOption = routeOption.value("name").toString().toHtmlEscaped();
+            QString currentRouteOption = routeOption.value("name").toString();
+
+            #ifdef BUILD_FOR_QT5
+            currentRouteOption = currentRouteOption.toHtmlEscaped();
+            #else
+            currentRouteOption = Qt::escape(currentRouteOption);
+            #endif
+
             routeOptionsTrains.push_back(currentRouteOption);
             detailedInfo += currentRouteOption + " to ";
 
@@ -555,7 +562,13 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
 
              for (it_directions = directions.constBegin(); it_directions != directions.constEnd(); ++it_directions)
              {
-                 QString currentDestination = it_directions->toString().replace("Underground Station", "").toHtmlEscaped();
+                QString currentDestination = it_directions->toString().replace("Underground Station", "");
+
+                #ifdef BUILD_FOR_QT5
+                currentDestination = currentDestination.toHtmlEscaped();
+                #else
+                currentDestination = Qt::escape(currentDestination);
+                #endif
 
                  if (! routeOptionsDirections.contains(currentDestination))
                  {
@@ -568,7 +581,6 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
              detailedInfo += routeOptionsDirectionsCurrentTrain.join(" or ") + ".<br>";
         }
 
-        //resultItem->setTrain(routeOptionsTrains.join(","));
         resultItem->setDirection(routeOptionsDirections.join(" or "));
 
         // walking
