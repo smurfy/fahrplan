@@ -76,6 +76,44 @@ namespace
 
        return outputStationName.replace("Underground Station", "🚇");
    }
+
+   QColor getLineColor(const QString & mode, const QString & train = "")
+   {
+       if ((mode == "tube") && (train != ""))
+       {
+           QMap<QString,QColor> tubeColorMap;
+
+           tubeColorMap["Bakerloo"] = QColor("#B36305");
+           tubeColorMap["Central"] = QColor("#E32017");
+           tubeColorMap["Circle"] = QColor("#FFD300");
+           tubeColorMap["District"] = QColor("#00782A");
+           tubeColorMap["Hammersmith and City"] = QColor("#F3A9BB");
+           tubeColorMap["Jubilee"] = QColor("#A0A5A9");
+           tubeColorMap["Metropolitan"] = QColor("#9B0056");
+           tubeColorMap["Northern"] = QColor("#000000");
+           tubeColorMap["Piccadilly"] = QColor("#003688");
+           tubeColorMap["Victoria"] = QColor("#0098D4");
+           tubeColorMap["Waterloo and City "] = QColor("#95CDBA");
+
+           if (tubeColorMap.find(train) == tubeColorMap.end())
+               return QColor();
+
+           return tubeColorMap[train];
+       }
+
+       QMap<QString,QColor> modeColorMap;
+
+       modeColorMap["bus"] = QColor("#ff0000");
+       modeColorMap["dlr"] = QColor( "#00A4A7");
+       modeColorMap["overground"] = QColor("#EE7C0E");
+       modeColorMap["tram"] = QColor( "#84B817");
+
+       if (modeColorMap.find(mode) == modeColorMap.end())
+           return QColor();
+
+       return modeColorMap[mode];
+
+   }
 }
 
 ParserLondonTfl::ParserLondonTfl(QObject *parent):ParserAbstract(parent)
@@ -588,16 +626,19 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
         {
             const QString duration = leg.value("duration").toString();
             resultItem->setTrain(tr("Walk for %2 min").arg(duration));
+            resultItem->setColor("#BABABA");
         }
 
         // only one train --> put it in title
         else if (routeOptionsTrains.count() == 1)
         {
             resultItem->setTrain(routeOptionsTrains[0]);
+            resultItem->setColor( getLineColor(mode, routeOptionsTrains[0]) );
         }
         else
         {
             resultItem->setTrain(mode);
+            resultItem->setColor(getLineColor(mode));
             resultItem->setInfo(detailedInfo);
         }
 

@@ -111,6 +111,9 @@ Page {
             id: delegateItem
             width: listView.width
             height: isStation ? isTrain ? item_train.height + item_station.height : item_station.height : isTrain ? item_train.height : 0
+            property string previousRouteColor: (previousTrainColor != "") ? previousTrainColor : "#0d70c5";
+            property string routeColor: (trainColor != "") ? trainColor : "#0d70c5";
+
 
             Item {
                 anchors.verticalCenter: parent.verticalCenter
@@ -132,14 +135,30 @@ Page {
                      }
 
                      Rectangle {
+                         id: arrivalLine
+                         visible: ! isStart
                          anchors {
                              left: parent.left
                              leftMargin: units.gu(7.75)
                              top: parent.top
-                             topMargin: (isStart) ? parent.height / 2 : 0
+                             topMargin: 0
                          }
-                         color: "#0d70c5"
-                         height: (isStart || isStop) ? parent.height / 2  : parent.height
+                         color: previousRouteColor
+                         height: parent.height / 2
+                         width: units.gu(0.5)
+                     }
+
+                     Rectangle {
+                         id: departureLine
+                         visible: ! isStop
+                         anchors {
+                             left: parent.left
+                             leftMargin: units.gu(7.75)
+                             top: parent.top
+                             topMargin: parent.height / 2
+                         }
+                         color: routeColor
+                         height: parent.height / 2
                          width: units.gu(0.5)
                      }
 
@@ -153,11 +172,11 @@ Page {
                          gradient: Gradient {
                              GradientStop {
                                  position: 0.00;
-                                 color: "#0d70c5";
+                                 color: previousRouteColor;
                              }
                              GradientStop {
                                  position: 0.38;
-                                 color: "#0d70c5";
+                                 color: previousRouteColor;
                              }
                              GradientStop {
                                  position: 0.39;
@@ -173,11 +192,11 @@ Page {
                              }
                              GradientStop {
                                  position: 0.62;
-                                 color: "#0d70c5";
+                                 color: routeColor;
                              }
                              GradientStop {
                                  position: 1.0;
-                                 color: "#0d70c5";
+                                 color: routeColor;
                              }
                          }
                          radius: units.gu(1)
@@ -260,7 +279,7 @@ Page {
                             left: parent.left
                             leftMargin: units.gu(7.75)
                         }
-                        color: "#0d70c5"
+                        color: routeColor
                         height: parent.height
                         width: units.gu(0.5)
                     }
@@ -365,6 +384,8 @@ Page {
                                                             "trainName" : item.train,
                                                             "trainDirection" : item.direction,
                                                             "trainInfo" : item.info,
+                                                            "previousTrainColor" : item.color,
+                                                            "trainColor" : item.color,
                                                             "stationName" : item.departureStation,
                                                             "stationInfo" : item.departureInfo,
                                                             "arrivalTime" : "",
@@ -383,6 +404,8 @@ Page {
                                                             "trainName" : "",
                                                             "trainDirection": "",
                                                             "trainInfo" : "",
+                                                            "previousTrainColor" : item.color,
+                                                            "trainColor" : item.color,
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" :  item.arrivalInfo,
                                                             "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, "hh:mm"),
@@ -413,6 +436,8 @@ Page {
                                                             "trainName" :  nextItem.train,
                                                             "trainDirection" : nextItem.direction,
                                                             "trainInfo" : nextItem.info,
+                                                            "previousTrainColor" : item.color,
+                                                            "trainColor" : nextItem.color,
                                                             "stationName" : stationName,
                                                             "stationInfo" : stationInfo,
                                                             "arrivalTime" : Qt.formatTime(item.arrivalDateTime, "hh:mm"),
