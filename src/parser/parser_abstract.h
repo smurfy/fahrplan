@@ -93,7 +93,7 @@ protected:
     void sendHttpRequest(QUrl url, QByteArray data, const QList<QPair<QByteArray,QByteArray> > &additionalHeaders = QList<QPair<QByteArray,QByteArray> >());
     void sendHttpRequest(QUrl url);
     QVariantMap parseJson(const QByteArray &data) const;
-    QByteArray serializeToJson(const QVariantMap &doc) const;
+    QByteArray serializeToJson(const QVariantMap &doc, bool indent = true) const;
     QByteArray gzipDecompress(QByteArray compressData);
 
 #ifdef BUILD_FOR_UBUNTU
