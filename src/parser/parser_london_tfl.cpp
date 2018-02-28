@@ -30,22 +30,26 @@
 #endif
 #include <qmath.h>
 
+namespace TransportModes
+{
+    const QString Bus = "bus";
+    const QString CableCar = "cable-car";
+    const QString Coach = "coach";
+    const QString Dlr = "dlr";
+    const QString Rail = "national-rail";
+    const QString Overground = "overground";
+    const QString ReplacementBus = "replacement-bus";
+    const QString RiverBus = "river-bus";
+    const QString RiverTour = "river-tour";
+    const QString TflRail = "tflrail";
+    const QString Tram = "tram";
+    const QString Tube = "tube";
+    const QString Walking = "walking";
+}
+
 namespace
 {
    const QUrl BaseUrl("https://api.tfl.gov.uk");
-
-   const QString ModeBus = "bus";
-   const QString ModeCableCar = "cable-car";
-   const QString ModeCoach = "coach";
-   const QString ModeDlr = "dlr";
-   const QString ModeRail = "national-rail";
-   const QString ModeOverground = "overground";
-   const QString ModeReplacementBus = "replacement-bus";
-   const QString ModeRiverBus = "river-bus";
-   const QString ModeRiverTour = "river-tour";
-   const QString ModeTflRail = "tflrail";
-   const QString ModeTram = "tram";
-   const QString ModeTube = "tube";
 
    bool sortByTimeLessThan(const TimetableEntry &first, const TimetableEntry &second)
    {
@@ -54,7 +58,7 @@ namespace
        else
            return first.time < second.time;
    }
-
+   
    QString shortLineName(const QString & lineName)
    {
        QMap<QString,QString> shortNamesMap;
@@ -75,6 +79,63 @@ namespace
        QString outputStationName = stationName;
 
        return outputStationName.replace("Underground Station", "🚇");
+   }
+   
+   // tube color map
+   QMap<QString, QColor> initializeStaticTubeColorMap() {
+
+       QMap<QString,QColor> tubeColorMap;
+
+       tubeColorMap["Bakerloo"] = QColor("#B36305");
+       tubeColorMap["Central"] = QColor("#E32017");
+       tubeColorMap["Circle"] = QColor("#FFD300");
+       tubeColorMap["District"] = QColor("#00782A");
+       tubeColorMap["Hammersmith &amp; City"] = QColor("#F3A9BB");
+       tubeColorMap["Jubilee"] = QColor("#A0A5A9");
+       tubeColorMap["Metropolitan"] = QColor("#9B0056");
+       tubeColorMap["Northern"] = QColor("#000000");
+       tubeColorMap["Piccadilly"] = QColor("#003688");
+       tubeColorMap["Victoria"] = QColor("#0098D4");
+       tubeColorMap["Waterloo &amp; City"] = QColor("#95CDBA");
+
+       return tubeColorMap;
+   }
+
+   const QMap<QString,QColor> tubeColorMap = initializeStaticTubeColorMap();
+
+   // mode color map
+   QMap<QString, QColor> initializeStaticModeColorMap() {
+
+       QMap<QString,QColor> modeColorMap;
+
+       modeColorMap[TransportModes::Bus] = QColor("#ff0000");
+       modeColorMap[TransportModes::Dlr] = QColor( "#00A4A7");
+       modeColorMap[TransportModes::Overground] = QColor("#EE7C0E");
+       modeColorMap[TransportModes::Tram] = QColor("#84B817");
+       modeColorMap[TransportModes::CableCar] = QColor("#de768b");
+       modeColorMap[TransportModes::RiverBus] = QColor("#1c3e95");
+       modeColorMap[TransportModes::RiverTour] = QColor("#009ddc");
+       modeColorMap[TransportModes::Walking] = QColor("#CBCBCB");
+
+       return modeColorMap;
+   }
+
+   const QMap<QString,QColor> modeColorMap = initializeStaticModeColorMap();
+
+   QColor getLineColor(const QString & mode, const QString & train = "")
+   {
+       if ((mode == TransportModes::Tube) && (train != ""))
+       {
+           if (tubeColorMap.find(train) == tubeColorMap.end())
+               return QColor();
+
+           return tubeColorMap[train];
+       }
+
+       if (modeColorMap.find(mode) == modeColorMap.end())
+           return QColor();
+
+       return modeColorMap[mode];
    }
 }
 
@@ -434,7 +495,7 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
         for (j = legs.constBegin(); j != legs.constEnd(); ++j)
         {
             const QVariantMap mode = j->toMap().value("mode").toMap();
-            if (mode.value("type").toString() != "walking") {
+            if (mode.value("type").toString() != TransportModes::Walking) {
                 const QString typeName = mode.value("name").toString();
                 if (!typeName.isEmpty())
                     trains.append(typeName);
@@ -512,7 +573,7 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
 
         QString mode = leg.value("mode").toMap().value("name").toString();
 
-        if (mode != "walking") {
+        if (mode != TransportModes::Walking) {
 
             // stop letter / platform (departure)
             if (! firstStop.value("stopLetter").toString().isEmpty()) {
@@ -584,20 +645,23 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
         resultItem->setDirection(routeOptionsDirections.join(" or "));
 
         // walking
-        if (mode == "walking")
+        if (mode == TransportModes::Walking)
         {
             const QString duration = leg.value("duration").toString();
             resultItem->setTrain(tr("Walk for %2 min").arg(duration));
+            resultItem->setColor(getLineColor(mode));
         }
 
         // only one train --> put it in title
         else if (routeOptionsTrains.count() == 1)
         {
             resultItem->setTrain(routeOptionsTrains[0]);
+            resultItem->setColor( getLineColor(mode, routeOptionsTrains[0]) );
         }
         else
         {
             resultItem->setTrain(mode);
+            resultItem->setColor(getLineColor(mode));
             resultItem->setInfo(detailedInfo);
         }
 
@@ -626,55 +690,55 @@ QStringList ParserLondonTfl::getModesFromTrainRestrictions(int trainRestrictions
 
     switch(trainRestrictions){
     case all:
-        availableModes.append(ModeBus);
-        availableModes.append(ModeCableCar);
-        availableModes.append(ModeCoach);
-        availableModes.append(ModeDlr);
-        availableModes.append(ModeRail);
-        availableModes.append(ModeOverground);
-        availableModes.append(ModeReplacementBus);
-        availableModes.append(ModeRiverBus);
-        availableModes.append(ModeRiverTour);
-        availableModes.append(ModeTflRail);
-        availableModes.append(ModeTram);
-        availableModes.append(ModeTube);
+        availableModes.append(TransportModes::Bus);
+        availableModes.append(TransportModes::CableCar);
+        availableModes.append(TransportModes::Coach);
+        availableModes.append(TransportModes::Dlr);
+        availableModes.append(TransportModes::Rail);
+        availableModes.append(TransportModes::Overground);
+        availableModes.append(TransportModes::ReplacementBus);
+        availableModes.append(TransportModes::RiverBus);
+        availableModes.append(TransportModes::RiverTour);
+        availableModes.append(TransportModes::TflRail);
+        availableModes.append(TransportModes::Tram);
+        availableModes.append(TransportModes::Tube);
         break;
     case bus_tram_tube_overground_dlr:
-        availableModes.append(ModeBus);
-        availableModes.append(ModeTram);
-        availableModes.append(ModeTube);
-        availableModes.append(ModeOverground);
-        availableModes.append(ModeDlr);
+        availableModes.append(TransportModes::Bus);
+        availableModes.append(TransportModes::Tram);
+        availableModes.append(TransportModes::Tube);
+        availableModes.append(TransportModes::Overground);
+        availableModes.append(TransportModes::Dlr);
         break;
     case rail_tube_overground_dlr:
-        availableModes.append(ModeRail);
-        availableModes.append(ModeTube);
-        availableModes.append(ModeOverground);
-        availableModes.append(ModeDlr);
+        availableModes.append(TransportModes::Rail);
+        availableModes.append(TransportModes::Tube);
+        availableModes.append(TransportModes::Overground);
+        availableModes.append(TransportModes::Dlr);
         break;
     case tube_overground_dlr:
-        availableModes.append(ModeTube);
-        availableModes.append(ModeOverground);
-        availableModes.append(ModeDlr);
+        availableModes.append(TransportModes::Tube);
+        availableModes.append(TransportModes::Overground);
+        availableModes.append(TransportModes::Dlr);
         break;
     case bus_tram:
-        availableModes.append(ModeBus);
-        availableModes.append(ModeTram);
+        availableModes.append(TransportModes::Bus);
+        availableModes.append(TransportModes::Tram);
         break;
     case bus:
-        availableModes.append(ModeBus);
+        availableModes.append(TransportModes::Bus);
         break;
     case rail:
-        availableModes.append(ModeRail);
+        availableModes.append(TransportModes::Rail);
         break;
     case tube:
-         availableModes.append(ModeTube);
+         availableModes.append(TransportModes::Tube);
         break;
     case overground:
-        availableModes.append(ModeOverground);
+        availableModes.append(TransportModes::Overground);
         break;
     case dlr:
-        availableModes.append(ModeDlr);
+        availableModes.append(TransportModes::Dlr);
         break;
     }
 
@@ -791,7 +855,7 @@ void ParserLondonTfl::addTimeTableEntriesOfStopPoint(const QString & stopPointId
                 platformName = platformName.mid(9);
 
             // for buses use the bus stop symbol
-            if (modeName == "bus")
+            if (modeName == TransportModes::Bus)
             {
                 platformName = "🚏" + platformName;
             }

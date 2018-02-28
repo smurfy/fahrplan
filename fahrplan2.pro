@@ -2,7 +2,7 @@
 APP_NAME = Fahrplan
 
 # Define Version
-VERSION = 2.0.32-3
+VERSION = 2.0.33
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {

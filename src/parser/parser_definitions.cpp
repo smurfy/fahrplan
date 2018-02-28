@@ -417,6 +417,17 @@ void JourneyDetailResultItem::setDirection(const QString &direction)
     m_direction = direction;
 }
 
+
+QString JourneyDetailResultItem::color() const
+{
+    return m_color.isValid() ? m_color.name() : "";
+}
+
+void JourneyDetailResultItem::setColor(const QColor &color)
+{
+    m_color = color;
+}
+
 QString JourneyDetailResultItem::internalData1() const
 {
     return m_internalData1;
