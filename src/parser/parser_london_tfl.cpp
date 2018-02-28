@@ -113,6 +113,8 @@ namespace
        modeColorMap[TransportModes::Overground] = QColor("#EE7C0E");
        modeColorMap[TransportModes::Tram] = QColor("#84B817");
        modeColorMap[TransportModes::CableCar] = QColor("#de768b");
+       modeColorMap[TransportModes::RiverBus] = QColor("#1c3e95");
+       modeColorMap[TransportModes::RiverTour] = QColor("#009ddc");
        modeColorMap[TransportModes::Walking] = QColor("#CBCBCB");
 
        return modeColorMap;
