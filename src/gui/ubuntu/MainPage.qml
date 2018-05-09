@@ -144,7 +144,6 @@ Page {
                     font.bold: true;
                     textSize: Label.Large
                     elide: Text.ElideRight
-                    text: fahrplanBackend.parserShortName
                 }
             }
 
@@ -542,7 +541,7 @@ Page {
             currentParserName.text = fahrplanBackend.parserShortName;
             updateButtonVisibility();
 
-            selectedBackendListView.currentIndex = fahrplanBackend.backends.getItemIndexForParserId(index);
+            //selectedBackendListView.currentIndex = fahrplanBackend.backends.getItemIndexForParserId(index);
         }
     }
 

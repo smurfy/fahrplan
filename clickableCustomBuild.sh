@@ -13,15 +13,8 @@ if [[ -z "$clickBuildFolder" ]]
   exit 1
 fi
 
-# make sure we are in an armhf environment
-if [[ ! -d "/usr/lib/arm-linux-gnueabihf" ]]
-  then
-  echo "this script has to be run in an armhf container (e.g. docker, chroot or libertine)"
-  exit 1
-fi
-
 # determine qmake (e.g. cross compiler or direct)
-if [[ -n $(which qt5-qmake-arm-linux-gnueabihf) ]]
+if [[ -n $(which qt5-qmake-arm-linux-gnueabihf) && -d "/usr/lib/arm-linux-gnueabihf" ]]
   then
   QMAKE=qt5-qmake-arm-linux-gnueabihf
   else
