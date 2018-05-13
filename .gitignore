@@ -1,4 +1,5 @@
 .directory
+/.qmake.*
 /.clickable/
 /.make.cache
 /Makefile

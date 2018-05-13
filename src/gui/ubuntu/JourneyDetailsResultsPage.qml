@@ -339,7 +339,7 @@ Page {
             console.log(result.count);
 
             if (result.count > 0) {
-                titleText = result.viaStation.length == 0 ? qsTr("<b>%1</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation);
+                titleText = result.viaStation.length === 0 ? qsTr("<b>%1</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation);
                 var departureDate = Qt.formatDate(result.departureDateTime);
                 var arrivalDate = Qt.formatDate(result.arrivalDateTime);
 
@@ -347,14 +347,18 @@ Page {
                     arrivalDate = "";
                 }
 
-                subTitleText = departureDate + " " + Qt.formatTime(result.departureDateTime, Qt.DefaultLocaleShortDate) + " - " +
-                        arrivalDate + " " + Qt.formatTime(result.arrivalDateTime, Qt.DefaultLocaleShortDate);
+                subTitleText = departureDate + " " + Qt.formatTime(result.departureDateTime, 'HH:mm') + " - " +  arrivalDate + " " + Qt.formatTime(result.arrivalDateTime, 'HH:mm');
 
                 subTitleText2 = qsTr("Dur.: %1").arg(result.duration);
 
                 journeyDetailResultModel.clear();
                 for (var i = 0; i < result.count; i++) {
                     var item = result.getItem(i);
+                    
+                    if (item === null)
+                    {
+                        continue;
+                    }
 
                     var nextItem = null;
                     if (i < result.count -1) {
@@ -389,7 +393,7 @@ Page {
                                                             "stationName" : item.departureStation,
                                                             "stationInfo" : item.departureInfo,
                                                             "arrivalTime" : "",
-                                                            "departureTime" : Qt.formatTime(item.departureDateTime, "hh:mm"),
+                                                            "departureTime" : Qt.formatTime(item.departureDateTime, "HH:mm"),
                                                             "isStation" : true,
                                                             "isTrain" : true
 
@@ -408,7 +412,7 @@ Page {
                                                             "trainColor" : item.color,
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" :  item.arrivalInfo,
-                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, "hh:mm"),
+                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, "HH:mm"),
                                                             "departureTime" : "",
                                                             "isStation" : true,
                                                             "isTrain" : false
@@ -424,7 +428,7 @@ Page {
                         if (stationInfo.length > 0 && nextItem.departureInfo) {
                             stationInfo = stationInfo + " / ";
                         }
-                        if (nextItem.departureStation != item.arrivalStation) {
+                        if (nextItem.departureStation !== item.arrivalStation) {
                             stationName += " / " + nextItem.departureStation;
                         }
 
@@ -440,8 +444,8 @@ Page {
                                                             "trainColor" : nextItem.color,
                                                             "stationName" : stationName,
                                                             "stationInfo" : stationInfo,
-                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime, "hh:mm"),
-                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime, "hh:mm"),
+                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime, "HH:mm"),
+                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime, "HH:mm"),
                                                             "isStation" : true,
                                                             "isTrain" : true
 

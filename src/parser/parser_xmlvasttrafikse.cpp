@@ -406,7 +406,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                         const QDate date = QDate::fromString(getAttribute(originNode, "date"), QLatin1String("yyyy-MM-dd"));
                         journeyResultList->setDepartureStation(getAttribute(originNode, "name"));
                         //: DATE, TIME
-                        journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(date.toString(Qt::DefaultLocaleShortDate)).arg(time.toString(Qt::DefaultLocaleShortDate)));
+                        journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(date.toString(Qt::DefaultLocaleShortDate)).arg(time.toString("HH:mm")));
                     }
                 }
                 if (j == legNodeList.length() - 1) {
@@ -480,7 +480,7 @@ void ParserXmlVasttrafikSe::parseSearchJourney(QNetworkReply *networkReply)
                 journeyEnd = journeyEnd.addDays(1);
 
             jritem->setDate(journeyStart.date());
-            const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
+            const QString timeFormat = "HH:mm";
             jritem->setDepartureTime(journeyStart.time().toString(timeFormat));
             jritem->setArrivalTime(journeyEnd.time().toString(timeFormat));
             int diffTime = journeyStart.secsTo(journeyEnd);

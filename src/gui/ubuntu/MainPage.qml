@@ -336,7 +336,7 @@ Page {
                 id: timePickerButton
 
                 title.text: qsTr("Time")
-                value: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
+                value: Qt.formatTime(fahrplanBackend.dateTime, 'HH:mm')
                 visible: timeModeSelector.selectedIndex !== 0
 
                 onClicked: {

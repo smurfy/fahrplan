@@ -146,7 +146,7 @@ void MainWindow::timeTableResult()
     for (int i=0; i < fahrplan->timetable()->count(); i++) {
         QModelIndex index = fahrplan->timetable()->index(i, 0, QModelIndex());
         ui->searchJourneyResults->append(fahrplan->timetable()->data(index, Timetable::CurrentStation).toString());
-        ui->searchJourneyResults->append(fahrplan->timetable()->data(index, Timetable::Time).toTime().toString(QLocale().timeFormat(QLocale::ShortFormat)));
+        ui->searchJourneyResults->append(fahrplan->timetable()->data(index, Timetable::Time).toTime().toString(QLocale().timeFormat("HH:mm")));
         ui->searchJourneyResults->append(fahrplan->timetable()->data(index, Timetable::DestinationStation).toString());
         ui->searchJourneyResults->append(fahrplan->timetable()->data(index, Timetable::TrainType).toString());
         ui->searchJourneyResults->append(fahrplan->timetable()->data(index, Timetable::Platform).toString());

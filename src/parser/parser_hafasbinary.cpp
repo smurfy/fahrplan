@@ -580,16 +580,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 if (realtimeStatus != 2) {
                     item->setMiscInfo("");
                 } else {
-                    item->setMiscInfo(QString("<span style=\"color:#b30;\">%1</span>")
-                                      .arg(tr("Journey contains canceled trains!")));
+                    item->setMiscInfo(QString("<span style=\"color:#b30;\">%1</span>").arg(tr("Journey contains canceled trains!")));
                 }
                 item->setTrainType(lineNames.join(", ").trimmed());
-                const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
-                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime()
-                                       .time().toString(timeFormat));
-                item->setArrivalTime(inlineResults
-                                     ->getItem(inlineResults->itemcount() - 1)->arrivalDateTime()
-                                     .time().toString(timeFormat));
+                const QString timeFormat = "HH:mm";
+                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString(timeFormat));
+                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString(timeFormat));
                 journeyResultsByArrivalMap.insert(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime(), item);
             }
         }
