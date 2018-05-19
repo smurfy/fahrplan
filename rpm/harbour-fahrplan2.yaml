@@ -15,10 +15,8 @@ PkgConfigBR:
 - Qt5Quick
 - Qt5Qml
 - Qt5Core
-- sailfishapp
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
-- qt5-qtdeclarative-import-positioning
 Files:
 - '%defattr(644,root,root,-)'
 - '%attr(655,-,-) %{_bindir}'
