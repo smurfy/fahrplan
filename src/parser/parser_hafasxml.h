@@ -57,6 +57,7 @@ class ParserHafasXml : public ParserAbstract
     Q_OBJECT
 public:
     explicit ParserHafasXml(QObject *parent = 0);
+    virtual ~ParserHafasXml();
     static QString getName() { return "HafasXML"; }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return getName(); }
@@ -74,6 +75,7 @@ public slots:
     bool supportsTimeTable();
     bool supportsTimeTableDirection();
     QStringList getTrainRestrictions();
+    virtual void clearJourney();
 
 protected:
     QString baseXmlUrl;

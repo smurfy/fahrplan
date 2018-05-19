@@ -38,7 +38,7 @@ public:
     enum Mode { Departure = 0, Arrival = 1 };
 
     explicit ParserAbstract(QObject *parent = 0);
-    ~ParserAbstract();
+    virtual ~ParserAbstract();
 
     static QString getName() { return "Abstract"; }
     virtual QString name() { return getName(); }
@@ -59,6 +59,7 @@ public slots:
     virtual bool supportsTimeTableDirection();
     virtual QStringList getTrainRestrictions();
     void cancelRequest();
+    virtual void clearJourney();
 
 signals:
     void stationsResult(const StationsList &result);

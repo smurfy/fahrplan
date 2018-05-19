@@ -58,6 +58,7 @@ signals:
     void requestSearchJourneyEarlier();
     void requestGetJourneyDetails(const QString &id);
     void requestCancelRequest();
+    void requestClearJourney();
 
     //Real ones
     void stationsResult(const StationsList &result);
@@ -78,6 +79,7 @@ public slots:
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
     void cancelRequest();
+    void clearJourney();
 
     bool supportsGps();
     bool supportsVia();
@@ -92,7 +94,7 @@ protected:
   void run();
 
 private:
-  bool m_ready;
+  volatile bool m_ready;
   int  i_parser;
 
   QStringList m_trainrestrictions;
