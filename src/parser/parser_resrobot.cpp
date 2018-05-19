@@ -560,6 +560,12 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
             }
             journeyDetails->appendItem(segment);
         }
+        
+        // When the distance is short, an option with only "walk" can be present
+        if (transportModes.count() == 0 && segments.count() == 1)
+        {
+            transportModes.append(segments.first()->train());   
+        }
 
         journeyDetails->setId(journeyID);
         journeyDetails->setDepartureStation(segments.first()->departureStation());
@@ -568,11 +574,6 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
         journeyDetails->setArrivalDateTime(segments.last()->arrivalDateTime());
         journeyDetails->setDuration(duration);
         cachedResults.insert(journeyID, journeyDetails);
-
-        // When the distance is short, an option with only "walk" can be present
-        if (transportModes.isEmpty() && segments.count() == 1) {
-            transportModes.append(segments.first()->train());
-        }
 
         // Indicate in the departure/arrival times if they are another day (e.g. "14:37+1")
         int depDayDiff = lastJourneySearch.dateTime.date().daysTo(journeyDetails->departureDateTime().date());
