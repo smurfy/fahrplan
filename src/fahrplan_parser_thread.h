@@ -41,6 +41,7 @@
 #include "parser/parser_resrobot.h"
 #include "parser/parser_finland_matka.h"
 #include "parser/parser_london_tfl.h"
+#include "parser/parser_xmlrmvde.h"
 
 class FahrplanParserThread : public QThread
 {

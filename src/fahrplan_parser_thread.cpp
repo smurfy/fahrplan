@@ -178,6 +178,9 @@ void FahrplanParserThread::run()
         case 16:
             m_parser = new ParserLondonTfl();
             break;
+        case 17:
+            m_parser = new ParserXmlRMVde();
+            break;
     }
 
     m_name = m_parser->name();
