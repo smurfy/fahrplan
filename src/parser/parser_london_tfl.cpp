@@ -146,6 +146,25 @@ ParserLondonTfl::ParserLondonTfl(QObject *parent):ParserAbstract(parent)
     NetworkManagerTimeTableSubQuery = new QNetworkAccessManager(this);
 }
 
+ParserLondonTfl::~ParserLondonTfl()
+{
+    clearJourney();
+}
+
+void ParserLondonTfl::clearJourney()
+{
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
+
+    for (QMap<QString, JourneyDetailResultList *>::Iterator it = cachedResults.begin(); it != cachedResults.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedResults.erase(it);
+        delete jdrl;
+    }
+}
+
 void ParserLondonTfl::getTimeTableForStation(const Station &currentStation,
                                            const Station &,
                                            const QDateTime &,
@@ -464,8 +483,10 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
     }
 
     QVariantList journeys = doc.value("journeys").toList();
+    
+    clearJourney();
 
-    JourneyResultList* result=new JourneyResultList;
+    lastJourneyResultList = new JourneyResultList(this);
 
     QDateTime arrival;
     QDateTime departure;
@@ -478,12 +499,14 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
         QVariantMap journey = i->toMap();
         QString id = QString::number(counter);
         parseJourneyOption(journey, id);
-        JourneyResultItem* item = new JourneyResultItem;
+        JourneyResultItem* item = new JourneyResultItem(lastJourneyResultList);
         arrival = QDateTime::fromString(journey.value("arrivalDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
         departure = QDateTime::fromString(journey.value("startDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
 
         if (i == journeys.constBegin())
+        {
             lastsearch.firstOption=departure;
+        }
 
         item->setArrivalTime(arrival.toString("HH:mm"));
         item->setDepartureTime(departure.toString("HH:mm"));
@@ -513,17 +536,17 @@ void ParserLondonTfl::parseSearchJourney(QNetworkReply *networkReply)
 
         item->setId(id);
 
-        result->appendItem(item);
+        lastJourneyResultList->appendItem(item);
 
         //Set result metadata based on first result
-        if (result->itemcount() == 1) {
-            result->setTimeInfo(arrival.date().toString());
-            result->setDepartureStation(cachedResults[item->id()]->departureStation());
-            result->setArrivalStation(cachedResults[item->id()]->arrivalStation());
+        if (lastJourneyResultList->itemcount() == 1) {
+            lastJourneyResultList->setTimeInfo(arrival.date().toString());
+            lastJourneyResultList->setDepartureStation(cachedResults[item->id()]->departureStation());
+            lastJourneyResultList->setArrivalStation(cachedResults[item->id()]->arrivalStation());
         }
     }
     lastsearch.lastOption=departure;
-    emit journeyResult(result);
+    emit journeyResult(lastJourneyResultList);
 }
 
 void ParserLondonTfl::parseSearchLaterJourney(QNetworkReply *)
@@ -543,25 +566,25 @@ void ParserLondonTfl::parseJourneyDetails(QNetworkReply *)
 
 void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QString &id)
 {
-    JourneyDetailResultList* result = new JourneyDetailResultList;
+    JourneyDetailResultList* resultList = new JourneyDetailResultList(this);
 
     QVariantList legs = object.value("legs").toList();
 
     QDateTime arrival = QDateTime::fromString(object.value("arrivalDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
     QDateTime departure = QDateTime::fromString(object.value("startDateTime").toString(), "yyyy-MM-ddTHH:mm:ss");
-    result->setArrivalDateTime(arrival);
-    result->setDepartureDateTime(departure);
+    resultList->setArrivalDateTime(arrival);
+    resultList->setDepartureDateTime(departure);
     int minutes=departure.secsTo(arrival)/60;
     int hours=minutes/60;
     minutes=minutes%60;
-    result->setDuration(QString("%1:%2").arg(hours).arg(minutes, 2, 10, QChar('0')));
+    resultList->setDuration(QString("%1:%2").arg(hours).arg(minutes, 2, 10, QChar('0')));
 
-    result->setId(id);
+    resultList->setId(id);
 
     for(int i = 0; i < legs.count(); i++)
     {
         QVariantMap leg = legs.at(i).toMap();
-        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem;
+        JourneyDetailResultItem* resultItem = new JourneyDetailResultItem(resultList);
 
         QVariantMap firstStop = leg["departurePoint"].toMap();
         QVariantMap lastStop = leg["arrivalPoint"].toMap();
@@ -674,13 +697,13 @@ void ParserLondonTfl::parseJourneyOption(const QVariantMap &object, const QStrin
         }
         //resultItem->setInfo(attributes.join(tr(", ")));
 
-        result->appendItem(resultItem);
+        resultList->appendItem(resultItem);
     }
 
-    result->setDepartureStation(result->getItem(0)->departureStation());
-    result->setArrivalStation(result->getItem(result->itemcount() - 1)->arrivalStation());
+    resultList->setDepartureStation(resultList->getItem(0)->departureStation());
+    resultList->setArrivalStation(resultList->getItem(resultList->itemcount() - 1)->arrivalStation());
 
-    cachedResults.insert(id, result);
+    cachedResults.insert(id, resultList);
 }
 
 QStringList ParserLondonTfl::getModesFromTrainRestrictions(int trainRestrictions)
