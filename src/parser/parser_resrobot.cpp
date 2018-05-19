@@ -323,6 +323,9 @@ void ParserResRobot::searchJourney(const Station &departureStation, const Statio
 
     clearJourney();
 
+    lastJourneySearch.dateTime = dateTime;
+    lastJourneySearch.from = departureStation;
+    lastJourneySearch.via = viaStation;
     lastJourneySearch.to = arrivalStation;
     lastJourneySearch.restrictions = trainRestrictions;
     lastJourneySearch.mode = mode;
@@ -696,15 +699,13 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
             while (!results.isEmpty())
                 delete results.takeFirst();
             delete resultItem;
-            break;
-            }
         }
 
         if (distance.isEmpty()) {
             QStringList infoList;
 
-            if (!carrierInfo.isEmpty()) {
-                infoList << carrierInfo;
+            if (!operatorInfo.isEmpty()) {
+                infoList << operatorInfo;
             }
 
             if (!info.isEmpty()) {
@@ -714,12 +715,7 @@ QList<JourneyDetailResultItem*> ParserResRobot::parseJourneySegments(const QVari
             resultItem->setInfo(infoList.join("<br/>"));
         } else {
             resultItem->setInfo(distance + " m");
-        else if (!operatorInfo.isEmpty() && !info.isEmpty())
-            resultItem->setInfo(operatorInfo + "<br/>" + info.join(", "));
-        else if (!operatorInfo.isEmpty())
-            resultItem->setInfo(operatorInfo);
-        else if (!info.isEmpty())
-            resultItem->setInfo(info.join(", "));
+        }
         resultItem->setDirection(segment.value("direction").toString());
 
         results.append(resultItem);
@@ -737,20 +733,11 @@ void ParserResRobot::getJourneyDetails(const QString &id)
 void ParserResRobot::parseSearchLaterJourney(QNetworkReply *networkReply)
 {
     parseSearchJourney(networkReply);
-    if (oldFirstOption != lastJourneySearch.firstOption) {
-    } else {
-        numberOfUnsuccessfulLaterSearches = 0;
-    }
 }
 
 void ParserResRobot::parseSearchEarlierJourney(QNetworkReply *networkReply)
 {
     parseSearchJourney(networkReply);
-        numberOfUnsuccessfulEarlierSearches = 0;
-    }
-
-    if (oldLastOption != lastJourneySearch.lastOption) {
-    }
 }
 
 void ParserResRobot::parseJourneyDetails(QNetworkReply *networkReply)
@@ -763,9 +750,13 @@ void ParserResRobot::parseJourneyDetails(QNetworkReply *networkReply)
 QString ParserResRobot::hafasAttribute(const QString& code)
 {
     if (hafasAttributes.contains(code))
+    {
         return hafasAttributes[code];
+    }
     else
+    {
         return "";
+    }
 }
 
 QString ParserResRobot::transportMode(const QString& code, const QString& fallback)
