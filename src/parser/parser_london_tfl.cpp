@@ -139,7 +139,7 @@ namespace
    }
 }
 
-ParserLondonTfl::ParserLondonTfl(QObject *parent):ParserAbstract(parent)
+ParserLondonTfl::ParserLondonTfl(QObject *parent):ParserAbstract(parent),lastJourneyResultList(NULL)
 {
     lastCoordinates.isValid = false;
 

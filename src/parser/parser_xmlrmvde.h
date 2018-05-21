@@ -31,6 +31,7 @@ public:
     static QString getName() { return QString(QLatin1String("%1 (rmv.de)")).arg(tr("Germany, Hesse")); }
     virtual QString name() { return getName(); }
     virtual QString shortName() { return QLatin1String("rmv.de"); }
+    bool supportsTimeTable() { return false; }
 
 protected:
     void parseStationsByName(QNetworkReply *networkReply);
