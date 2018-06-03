@@ -243,7 +243,8 @@ void ParserLondonTfl::searchJourney(const Station &departureStation,
     lastsearch.restrictions=trainrestrictions;
     lastsearch.via=viaStation;
 
-    QUrl relativeUri(QString("Journey/Journeyresults/%1/to/%2").arg(parseJson(departureStation.id.toByteArray()).value("icsId").toString(), parseJson(arrivalStation.id.toByteArray()).value("icsId").toString()));
+    QUrl relativeUri(QString("/Journey/Journeyresults/%1/to/%2").arg(parseJson(departureStation.id.toByteArray()).value("icsId").toString(),
+                                                                     parseJson(arrivalStation.id.toByteArray()).value("icsId").toString()));
 
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
