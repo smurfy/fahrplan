@@ -96,6 +96,7 @@ class JourneyResultItem : public QObject
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
 
     public:
+        explicit JourneyResultItem(QObject * parent = 0);
         QString id() const;
         void setId(const QString &);
         QDate date() const;
@@ -141,6 +142,8 @@ class JourneyResultList : public QObject
     public slots:
         JourneyResultItem *getItem(int);
     public:
+        explicit JourneyResultList(QObject * parent = 0);
+        virtual ~JourneyResultList();
         void appendItem(JourneyResultItem *item);
         qreal itemcount();
         QString departureStation() const;
@@ -178,6 +181,7 @@ class JourneyDetailResultItem : public QObject
     Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
     public:
+        explicit JourneyDetailResultItem(QObject * parent = 0);
         QString departureStation() const;
         void setDepartureStation(const QString &);
         QString departureInfo() const;
@@ -233,6 +237,8 @@ class JourneyDetailResultList : public QObject
     public slots:
         JourneyDetailResultItem *getItem(int);
     public:
+        explicit JourneyDetailResultList(QObject * parent = 0);
+        virtual ~JourneyDetailResultList();
         void appendItem(JourneyDetailResultItem *item);
         qreal itemcount();
         QString id() const;

@@ -2,7 +2,7 @@
 APP_NAME = Fahrplan
 
 # Define Version
-VERSION = 2.0.33-1
+VERSION = 2.0.33-2
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
@@ -130,6 +130,7 @@ HEADERS += \
     src/parser/parser_resrobot.h \
     src/parser/parser_finland_matka.h \
     src/parser/parser_london_tfl.h \
+    src/parser/parser_xmlrmvde.h \
     src/models/backends.h
 
 SOURCES += src/main.cpp \
@@ -165,6 +166,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_resrobot.cpp \
     src/parser/parser_finland_matka.cpp \
     src/parser/parser_london_tfl.cpp \
+    src/parser/parser_xmlrmvde.cpp \
     src/models/backends.cpp
 
 LIBS += $$PWD/3rdparty/gauss-kruger-cpp/gausskruger.cpp

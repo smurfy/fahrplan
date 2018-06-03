@@ -28,24 +28,25 @@ Page {
     id: mainPage
 
     property int searchmode : 0
+    property bool timeTableEnabled: true
     property bool startup : true
 
     header: PageHeader {
         title: tabs.selectedTabIndex === 0 ? qsTr("Journey") : qsTr("Time table")
         flickable: flickable
-
+    
         leadingActionBar.actions: [
             Action {
                 text: qsTr("Journey")
                 onTriggered: tabs.selectedTabIndex = 0
             },
-
             Action {
                 text: qsTr("Time table")
                 onTriggered: tabs.selectedTabIndex = 1
+                enabled: timeTableEnabled
             }
         ]
-
+        
         leadingActionBar.numberOfSlots: 0
 
         trailingActionBar.actions: Action {
@@ -67,8 +68,14 @@ Page {
 
     function updateButtonVisibility()
     {
-        if (!fahrplanBackend.parser.supportsTimeTable()) {
-            searchmode = 0;
+        //console.log("button...");
+        
+        if (fahrplanBackend.parser.supportsTimeTable()) {
+            timeTableEnabled = true;
+        }
+        else {
+            timeTableEnabled = false;
+            tabs.selectedTabIndex = 0
         }
 
         if (searchmode == 0) {

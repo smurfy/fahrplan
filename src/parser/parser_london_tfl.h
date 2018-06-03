@@ -67,6 +67,7 @@ class ParserLondonTfl : public ParserAbstract
 
 public:
     ParserLondonTfl(QObject* parent = 0);
+    virtual ~ParserLondonTfl();
 
     // ParserAbstract interface
 public:
@@ -87,6 +88,7 @@ public slots:
     bool supportsTimeTable() { return true; }
     bool supportsTimeTableDirection() { return false; }
     QStringList getTrainRestrictions();
+    virtual void clearJourney();
 
 protected:
     void parseTimeTable(QNetworkReply *networkReply);
@@ -97,6 +99,8 @@ protected:
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
     QMap<QString, JourneyDetailResultList*> cachedResults;
+    
+    JourneyResultList *lastJourneyResultList;
 
 private:
     void parseJourneyOption(const QVariantMap &object, const QString & id);
