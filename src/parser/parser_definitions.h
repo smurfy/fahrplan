@@ -21,6 +21,7 @@
 #define PARSER_DEFINITIONS_H
 
 #include <QObject>
+#include <QColor>
 #include <QDate>
 #include <QVariant>
 #include <QDebug>
@@ -95,6 +96,7 @@ class JourneyResultItem : public QObject
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
 
     public:
+        explicit JourneyResultItem(QObject * parent = 0);
         QString id() const;
         void setId(const QString &);
         QDate date() const;
@@ -140,6 +142,8 @@ class JourneyResultList : public QObject
     public slots:
         JourneyResultItem *getItem(int);
     public:
+        explicit JourneyResultList(QObject * parent = 0);
+        virtual ~JourneyResultList();
         void appendItem(JourneyResultItem *item);
         qreal itemcount();
         QString departureStation() const;
@@ -171,11 +175,13 @@ class JourneyDetailResultItem : public QObject
     Q_PROPERTY(QString info READ info WRITE setInfo)
     Q_PROPERTY(QString train READ train WRITE setTrain)
     Q_PROPERTY(QString direction READ direction WRITE setDirection)
+    Q_PROPERTY(QString color READ color)
 
     //Some Internal Data fields, primarly to store additional data per backend, like the details url
     Q_PROPERTY(QString internalData1 READ internalData1 WRITE setInternalData1)
     Q_PROPERTY(QString internalData2 READ internalData2 WRITE setInternalData2)
     public:
+        explicit JourneyDetailResultItem(QObject * parent = 0);
         QString departureStation() const;
         void setDepartureStation(const QString &);
         QString departureInfo() const;
@@ -194,6 +200,8 @@ class JourneyDetailResultItem : public QObject
         void setTrain(const QString &);
         QString direction() const;
         void setDirection(const QString &);
+        QString color() const;
+        void setColor(const QColor &);
         QString internalData1() const;
         void setInternalData1(const QString &);
         QString internalData2() const;
@@ -208,6 +216,7 @@ class JourneyDetailResultItem : public QObject
         QString m_info;
         QString m_train;
         QString m_direction;
+        QColor m_color;
         QString m_internalData1;
         QString m_internalData2;
 };
@@ -228,6 +237,8 @@ class JourneyDetailResultList : public QObject
     public slots:
         JourneyDetailResultItem *getItem(int);
     public:
+        explicit JourneyDetailResultList(QObject * parent = 0);
+        virtual ~JourneyDetailResultList();
         void appendItem(JourneyDetailResultItem *item);
         qreal itemcount();
         QString id() const;

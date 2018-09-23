@@ -47,7 +47,7 @@
 #endif
 
 ParserAbstract::ParserAbstract(QObject *parent) :
-    QObject(parent)
+    QObject(parent), lastRequest(NULL)
 {
     NetworkManager = new QNetworkAccessManager(this);
     connect(NetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkReplyFinished(QNetworkReply*)));
@@ -56,7 +56,7 @@ ParserAbstract::ParserAbstract(QObject *parent) :
 
     currentRequestState = FahrplanNS::noneRequest;
 
-    requestTimeout = new QTimer();
+    requestTimeout = new QTimer(this);
 
     connect(requestTimeout, SIGNAL(timeout()), this, SLOT(networkReplyTimedOut()));
 
@@ -67,8 +67,14 @@ ParserAbstract::ParserAbstract(QObject *parent) :
 
 ParserAbstract::~ParserAbstract()
 {
+    clearJourney();
     delete requestTimeout;
     delete NetworkManager;
+}
+
+void ParserAbstract::clearJourney()
+{
+
 }
 
 void ParserAbstract::networkReplyFinished(QNetworkReply *networkReply)
@@ -168,9 +174,9 @@ QVariantMap ParserAbstract::parseJson(const QByteArray &json) const
 }
 
 #ifdef BUILD_FOR_QT5
-QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc) const
+QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc, bool indent) const
 {
-    return QJsonDocument(QJsonObject::fromVariantMap(doc)).toJson(QJsonDocument::Indented);
+    return QJsonDocument(QJsonObject::fromVariantMap(doc)).toJson(indent ? QJsonDocument::Indented : QJsonDocument::Compact);
 }
 #else
 QByteArray toJson(const QVariant& value)
@@ -212,8 +218,9 @@ QByteArray toJson(const QVariant& value)
     }
 }
 
-QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc) const
+QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc, bool indent) const
 {
+    Q_UNUSED(indent)
     return toJson(doc);
 }
 #endif

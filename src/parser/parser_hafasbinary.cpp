@@ -43,7 +43,8 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
-    lastJourneyResultList = NULL;
+
+    clearJourney();
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -85,8 +86,8 @@ void ParserHafasBinary::searchJourney(const Station &departureStation, const Sta
 
 void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResultList = new JourneyResultList();
-    journeyDetailInlineData.clear();
+    lastJourneyResultList = new JourneyResultList(this);
+
     stringCache.clear();
 
     QByteArray tmpBuffer = networkReply->readAll();
@@ -324,11 +325,11 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
             qDebug()<<"conId"<<connectionId;
             QStringList lineNames;
 
-            JourneyDetailResultList *inlineResults = new JourneyDetailResultList();
+            JourneyDetailResultList *inlineResults = new JourneyDetailResultList(this);
 
             for (int iPart = 0; iPart < numParts; iPart++) {
 
-                JourneyDetailResultItem *inlineItem = new JourneyDetailResultItem();
+                JourneyDetailResultItem *inlineItem = new JourneyDetailResultItem(inlineResults);
 
                 hafasData.device()->seek(0x4a + partsOffset + iPart * 20);
 
@@ -571,7 +572,7 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
 
                 lineNames.removeDuplicates();
 
-                JourneyResultItem *item = new JourneyResultItem();
+                JourneyResultItem *item = new JourneyResultItem(lastJourneyResultList);
                 item->setDate(journeyDate);
                 item->setId(connectionId);
                 item->setTransfers(QString::number(numChanges));
@@ -580,16 +581,12 @@ void ParserHafasBinary::parseSearchJourney(QNetworkReply *networkReply)
                 if (realtimeStatus != 2) {
                     item->setMiscInfo("");
                 } else {
-                    item->setMiscInfo(QString("<span style=\"color:#b30;\">%1</span>")
-                                      .arg(tr("Journey contains canceled trains!")));
+                    item->setMiscInfo(QString("<span style=\"color:#b30;\">%1</span>").arg(tr("Journey contains canceled trains!")));
                 }
                 item->setTrainType(lineNames.join(", ").trimmed());
-                const QString timeFormat = QLocale().timeFormat(QLocale::ShortFormat);
-                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime()
-                                       .time().toString(timeFormat));
-                item->setArrivalTime(inlineResults
-                                     ->getItem(inlineResults->itemcount() - 1)->arrivalDateTime()
-                                     .time().toString(timeFormat));
+                const QString timeFormat = "HH:mm";
+                item->setDepartureTime(inlineResults->getItem(0)->departureDateTime().time().toString(timeFormat));
+                item->setArrivalTime(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime().time().toString(timeFormat));
                 journeyResultsByArrivalMap.insert(inlineResults->getItem(inlineResults->itemcount() - 1)->arrivalDateTime(), item);
             }
         }
@@ -633,6 +630,8 @@ void ParserHafasBinary::searchJourneyLater()
 
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
 
+    clearJourney();
+
     QUrl uri = baseBinaryUrl;
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
@@ -667,6 +666,8 @@ void ParserHafasBinary::searchJourneyEarlier()
     }
 
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
+
+    clearJourney();
 
     QUrl uri = baseBinaryUrl;
 #if defined(BUILD_FOR_QT5)

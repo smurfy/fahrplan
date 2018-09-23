@@ -86,7 +86,7 @@ Page {
 
                         Label {
                             id: lbl_time
-                            text: Qt.formatTime(model.time, Qt.DefaultLocaleShortDate)
+                            text: Qt.formatTime(model.time, 'HH:mm')
                             font.bold: true
                         }
 

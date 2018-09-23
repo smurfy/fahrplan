@@ -32,7 +32,7 @@
 // http://stefanwehrmeyer.com/projects/vbbxsd/
 
 ParserHafasXml::ParserHafasXml(QObject *parent) :
-    ParserAbstract(parent)
+    ParserAbstract(parent), lastJourneyResultList(NULL)
 {
      //baseUrl = "http://fahrplan.oebb.at/bin/query.exe"; //OEB (fully operational/no RT) //no xmlhandle, detaildate already present!
      //baseUrl = "http://hafas.bene-system.com/bin/query.exe"; //hafas dev?? system? / no gps
@@ -48,6 +48,24 @@ ParserHafasXml::ParserHafasXml(QObject *parent) :
      hafasHeader.ver = "1.1";
 
      STTableMode = 0;
+}
+
+ParserHafasXml::~ParserHafasXml()
+{
+    clearJourney();
+}
+
+void ParserHafasXml::clearJourney()
+{
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
+
+    if (!journeyDetailInlineData.isEmpty()) {
+        qDeleteAll(journeyDetailInlineData);
+        journeyDetailInlineData.clear();
+    }
 }
 
 bool ParserHafasXml::supportsGps()
@@ -526,7 +544,8 @@ void ParserHafasXml::searchJourney(const Station &departureStation, const Statio
 
     currentRequestState = FahrplanNS::searchJourneyRequest;
     hafasContext.seqNr = "";
-    lastJourneyResultList = NULL;
+
+    clearJourney();
 
     QString trainrestr = getTrainRestrictionsCodes(trainrestrictions);
 
@@ -655,8 +674,7 @@ QString ParserHafasXml::parseExternalIds(const QVariant &id) const
 
 void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 {
-    lastJourneyResultList = new JourneyResultList();
-    journeyDetailInlineData.clear();
+    lastJourneyResultList = new JourneyResultList(this);
 
     QDomDocument doc;
     if (!parseXml(doc, networkReply->readAll()))
@@ -664,7 +682,7 @@ void ParserHafasXml::parseSearchJourney(QNetworkReply *networkReply)
 
     const QDomNodeList connections = doc.elementsByTagName("Connection");
     for (int i = 0; i < connections.count(); ++i) {
-        JourneyResultItem *item = new JourneyResultItem();
+        JourneyResultItem *item = new JourneyResultItem(lastJourneyResultList);
         item->setId(connections.at(i).toElement().attribute("id").trimmed());
 
         QDomElement overview = connections.at(i).firstChildElement("Overview");
@@ -757,6 +775,8 @@ void ParserHafasXml::searchJourneyLater()
 
     currentRequestState = FahrplanNS::searchJourneyLaterRequest;
 
+    clearJourney();
+
     QByteArray postData = "";
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
     postData.append("<ConScrReq scrDir=\"F\" nrCons=\"5\">");
@@ -781,6 +801,8 @@ void ParserHafasXml::searchJourneyEarlier()
     }
 
     currentRequestState = FahrplanNS::searchJourneyEarlierRequest;
+
+    clearJourney();
 
     QByteArray postData = "";
     postData.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ReqC accessId=\"" + hafasHeader.accessid + "\" ver=\"" + hafasHeader.ver + "\" prod=\"" + hafasHeader.prod + "\" lang=\"EN\">");
@@ -850,11 +872,11 @@ void ParserHafasXml::getJourneyDetails(const QString &id)
 
 JourneyDetailResultList* ParserHafasXml::internalParseJourneyDetails(const QDomElement &connection)
 {
-    JourneyDetailResultList *results = new JourneyDetailResultList();
+    JourneyDetailResultList *results = new JourneyDetailResultList(this);
 
     const QDomNodeList sections = connection.elementsByTagName("ConSection");
     for (int i = 0; i < sections.count(); ++i) {
-        JourneyDetailResultItem *item = new JourneyDetailResultItem();
+        JourneyDetailResultItem *item = new JourneyDetailResultItem(results);
 
         const QDomNode section = sections.at(i);
         QDomElement stop;

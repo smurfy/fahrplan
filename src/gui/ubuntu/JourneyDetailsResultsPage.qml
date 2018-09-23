@@ -111,6 +111,9 @@ Page {
             id: delegateItem
             width: listView.width
             height: isStation ? isTrain ? item_train.height + item_station.height : item_station.height : isTrain ? item_train.height : 0
+            property string previousRouteColor: (previousTrainColor != "") ? previousTrainColor : "#0d70c5";
+            property string routeColor: (trainColor != "") ? trainColor : "#0d70c5";
+
 
             Item {
                 anchors.verticalCenter: parent.verticalCenter
@@ -132,14 +135,30 @@ Page {
                      }
 
                      Rectangle {
+                         id: arrivalLine
+                         visible: ! isStart
                          anchors {
                              left: parent.left
                              leftMargin: units.gu(7.75)
                              top: parent.top
-                             topMargin: (isStart) ? parent.height / 2 : 0
+                             topMargin: 0
                          }
-                         color: "#0d70c5"
-                         height: (isStart || isStop) ? parent.height / 2  : parent.height
+                         color: previousRouteColor
+                         height: parent.height / 2
+                         width: units.gu(0.5)
+                     }
+
+                     Rectangle {
+                         id: departureLine
+                         visible: ! isStop
+                         anchors {
+                             left: parent.left
+                             leftMargin: units.gu(7.75)
+                             top: parent.top
+                             topMargin: parent.height / 2
+                         }
+                         color: routeColor
+                         height: parent.height / 2
                          width: units.gu(0.5)
                      }
 
@@ -153,11 +172,11 @@ Page {
                          gradient: Gradient {
                              GradientStop {
                                  position: 0.00;
-                                 color: "#0d70c5";
+                                 color: previousRouteColor;
                              }
                              GradientStop {
                                  position: 0.38;
-                                 color: "#0d70c5";
+                                 color: previousRouteColor;
                              }
                              GradientStop {
                                  position: 0.39;
@@ -173,11 +192,11 @@ Page {
                              }
                              GradientStop {
                                  position: 0.62;
-                                 color: "#0d70c5";
+                                 color: routeColor;
                              }
                              GradientStop {
                                  position: 1.0;
-                                 color: "#0d70c5";
+                                 color: routeColor;
                              }
                          }
                          radius: units.gu(1)
@@ -260,7 +279,7 @@ Page {
                             left: parent.left
                             leftMargin: units.gu(7.75)
                         }
-                        color: "#0d70c5"
+                        color: routeColor
                         height: parent.height
                         width: units.gu(0.5)
                     }
@@ -320,7 +339,7 @@ Page {
             console.log(result.count);
 
             if (result.count > 0) {
-                titleText = result.viaStation.length == 0 ? qsTr("<b>%1</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation);
+                titleText = result.viaStation.length === 0 ? qsTr("<b>%1</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> ↦ <b>%3</b> ↦ <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation);
                 var departureDate = Qt.formatDate(result.departureDateTime);
                 var arrivalDate = Qt.formatDate(result.arrivalDateTime);
 
@@ -328,14 +347,18 @@ Page {
                     arrivalDate = "";
                 }
 
-                subTitleText = departureDate + " " + Qt.formatTime(result.departureDateTime, Qt.DefaultLocaleShortDate) + " - " +
-                        arrivalDate + " " + Qt.formatTime(result.arrivalDateTime, Qt.DefaultLocaleShortDate);
+                subTitleText = departureDate + " " + Qt.formatTime(result.departureDateTime, 'HH:mm') + " - " +  arrivalDate + " " + Qt.formatTime(result.arrivalDateTime, 'HH:mm');
 
                 subTitleText2 = qsTr("Dur.: %1").arg(result.duration);
 
                 journeyDetailResultModel.clear();
                 for (var i = 0; i < result.count; i++) {
                     var item = result.getItem(i);
+                    
+                    if (item === null)
+                    {
+                        continue;
+                    }
 
                     var nextItem = null;
                     if (i < result.count -1) {
@@ -365,10 +388,12 @@ Page {
                                                             "trainName" : item.train,
                                                             "trainDirection" : item.direction,
                                                             "trainInfo" : item.info,
+                                                            "previousTrainColor" : item.color,
+                                                            "trainColor" : item.color,
                                                             "stationName" : item.departureStation,
                                                             "stationInfo" : item.departureInfo,
                                                             "arrivalTime" : "",
-                                                            "departureTime" : Qt.formatTime(item.departureDateTime, "hh:mm"),
+                                                            "departureTime" : Qt.formatTime(item.departureDateTime, "HH:mm"),
                                                             "isStation" : true,
                                                             "isTrain" : true
 
@@ -383,9 +408,11 @@ Page {
                                                             "trainName" : "",
                                                             "trainDirection": "",
                                                             "trainInfo" : "",
+                                                            "previousTrainColor" : item.color,
+                                                            "trainColor" : item.color,
                                                             "stationName" : item.arrivalStation,
                                                             "stationInfo" :  item.arrivalInfo,
-                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, "hh:mm"),
+                                                            "arrivalTime" :  Qt.formatTime(item.arrivalDateTime, "HH:mm"),
                                                             "departureTime" : "",
                                                             "isStation" : true,
                                                             "isTrain" : false
@@ -401,7 +428,7 @@ Page {
                         if (stationInfo.length > 0 && nextItem.departureInfo) {
                             stationInfo = stationInfo + " / ";
                         }
-                        if (nextItem.departureStation != item.arrivalStation) {
+                        if (nextItem.departureStation !== item.arrivalStation) {
                             stationName += " / " + nextItem.departureStation;
                         }
 
@@ -413,10 +440,12 @@ Page {
                                                             "trainName" :  nextItem.train,
                                                             "trainDirection" : nextItem.direction,
                                                             "trainInfo" : nextItem.info,
+                                                            "previousTrainColor" : item.color,
+                                                            "trainColor" : nextItem.color,
                                                             "stationName" : stationName,
                                                             "stationInfo" : stationInfo,
-                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime, "hh:mm"),
-                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime, "hh:mm"),
+                                                            "arrivalTime" : Qt.formatTime(item.arrivalDateTime, "HH:mm"),
+                                                            "departureTime" :  Qt.formatTime(nextItem.departureDateTime, "HH:mm"),
                                                             "isStation" : true,
                                                             "isTrain" : true
 

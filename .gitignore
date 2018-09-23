@@ -1,4 +1,5 @@
 .directory
+/.qmake.*
 /.clickable/
 /.make.cache
 /Makefile
@@ -12,3 +13,4 @@
 /run_on_ubuntu_touch.sh
 /tmp/
 /translations/*.qm
+/rpm/harbour-fahrplan2.spec

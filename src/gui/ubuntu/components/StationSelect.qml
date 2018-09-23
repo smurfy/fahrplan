@@ -35,7 +35,10 @@ Page {
 
     property bool showFavorites: true
 
-    head.actions: [
+    header: PageHeader {
+    
+    title: stationSelect.title
+    trailingActionBar.actions: [
         Action {
             iconName: stationSelect.showFavorites ? "starred" : "non-starred"
             onTriggered: {
@@ -52,11 +55,12 @@ Page {
             }
         }
     ]
+    }
 
     TextField {
         id: search
 
-        anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
+        anchors { left: parent.left; right: parent.right; top: header.bottom; margins: units.gu(2) }
         inputMethodHints: Qt.ImhNoPredictiveText
 
         onTextChanged: searchTimer.restart();

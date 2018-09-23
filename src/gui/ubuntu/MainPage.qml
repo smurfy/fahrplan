@@ -28,24 +28,25 @@ Page {
     id: mainPage
 
     property int searchmode : 0
+    property bool timeTableEnabled: true
     property bool startup : true
 
     header: PageHeader {
         title: tabs.selectedTabIndex === 0 ? qsTr("Journey") : qsTr("Time table")
         flickable: flickable
-
+    
         leadingActionBar.actions: [
             Action {
                 text: qsTr("Journey")
                 onTriggered: tabs.selectedTabIndex = 0
             },
-
             Action {
                 text: qsTr("Time table")
                 onTriggered: tabs.selectedTabIndex = 1
+                enabled: timeTableEnabled
             }
         ]
-
+        
         leadingActionBar.numberOfSlots: 0
 
         trailingActionBar.actions: Action {
@@ -67,8 +68,14 @@ Page {
 
     function updateButtonVisibility()
     {
-        if (!fahrplanBackend.parser.supportsTimeTable()) {
-            searchmode = 0;
+        //console.log("button...");
+        
+        if (fahrplanBackend.parser.supportsTimeTable()) {
+            timeTableEnabled = true;
+        }
+        else {
+            timeTableEnabled = false;
+            tabs.selectedTabIndex = 0
         }
 
         if (searchmode == 0) {
@@ -144,7 +151,6 @@ Page {
                     font.bold: true;
                     textSize: Label.Large
                     elide: Text.ElideRight
-                    text: fahrplanBackend.parserShortName
                 }
             }
 
@@ -337,7 +343,7 @@ Page {
                 id: timePickerButton
 
                 title.text: qsTr("Time")
-                value: Qt.formatTime(fahrplanBackend.dateTime, Qt.DefaultLocaleShortDate)
+                value: Qt.formatTime(fahrplanBackend.dateTime, 'HH:mm')
                 visible: timeModeSelector.selectedIndex !== 0
 
                 onClicked: {
@@ -542,7 +548,7 @@ Page {
             currentParserName.text = fahrplanBackend.parserShortName;
             updateButtonVisibility();
 
-            selectedBackendListView.currentIndex = fahrplanBackend.backends.getItemIndexForParserId(index);
+            //selectedBackendListView.currentIndex = fahrplanBackend.backends.getItemIndexForParserId(index);
         }
     }
 

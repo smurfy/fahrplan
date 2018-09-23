@@ -26,6 +26,14 @@ FahrplanBackendManager::FahrplanBackendManager(int defaultParser, QObject *paren
     currentParserIndex = defaultParser;
 }
 
+FahrplanBackendManager::~FahrplanBackendManager()
+{
+    if (m_parser) {
+        // Parser object will be autodeleted after the thread quits.
+        m_parser->quit();
+    }
+}
+
 QStringList FahrplanBackendManager::getParserList()
 {
     QStringList result;
@@ -45,6 +53,8 @@ QStringList FahrplanBackendManager::getParserList()
     result.append(ParserSalzburgEFA::getName());
     result.append(ParserResRobot::getName());
     result.append(ParserFinlandMatka::getName());
+    result.append(ParserLondonTfl::getName());
+    result.append(ParserXmlRMVde::getName());
 
     // Make sure the index is in bounds
     if (currentParserIndex > (result.count() - 1) || currentParserIndex < 0) {
@@ -73,7 +83,7 @@ void FahrplanBackendManager::setParser(int index)
         m_parser->quit();
     }
 
-    m_parser = new FahrplanParserThread();
+    m_parser = new FahrplanParserThread(this);
     m_parser->init(index);
 
     // Init can fallback to another index if its invalid.

@@ -8,7 +8,8 @@
    "clean_tmp": "rm -rf ./tmp/*"
   },
   "template": "custom",
-  "build": "bash -c 'cd ..; ./clickableCustomBuild.sh click_build'",
+  "build": "bash -c 'cd ..; ./clickableCustomBuild.sh click_build/tmp'",
   "dependencies": [ "libcurl4-gnutls-dev" ],
-  "default" : "kill clean clean_tmp build click-build install launch"
+  "default" : "kill clean clean_tmp build click-build install launch",
+  "ssh_" : "bq.fritz.box"
 }

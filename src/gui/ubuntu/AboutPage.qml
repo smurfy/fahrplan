@@ -146,7 +146,7 @@ Page {
 
         Item {
             width: tabView.width
-            height: tabView.height
+            height: tabView.height - header.height
 
             Flickable {
                 clip: true
@@ -154,7 +154,7 @@ Page {
                 flickableDirection: Flickable.VerticalFlick
 
                 contentWidth: width
-                contentHeight: creditsColumn.height + units.gu(2)
+                contentHeight: creditsColumn.height + units.gu(4)
 
                 Column {
                     id: creditsColumn

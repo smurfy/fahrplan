@@ -99,13 +99,33 @@
     #include <QUrlQuery>
 #endif
 
-QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsEfa;
+//QHash<QString, JourneyDetailResultList *> cachedJourneyDetailsEfa;
 
 ParserEFA::ParserEFA(QObject *parent) :
-    ParserAbstract(parent){
+    ParserAbstract(parent), lastJourneyResultList(NULL)
+{
 
     m_searchJourneyParameters.isValid = false;
     m_timeTableForStationParameters.isValid = false;
+}
+
+ParserEFA::~ParserEFA()
+{
+    clearJourney();
+}
+
+void ParserEFA::clearJourney()
+{
+    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetailsEfa.begin(); it != cachedJourneyDetailsEfa.end();) {
+        JourneyDetailResultList *jdrl = it.value();
+        it = cachedJourneyDetailsEfa.erase(it);
+        delete jdrl;
+    }
+
+    if (lastJourneyResultList) {
+        delete lastJourneyResultList;
+        lastJourneyResultList = NULL;
+    }
 }
 
 bool ParserEFA::supportsGps()
@@ -402,6 +422,8 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
         return;
     currentRequestState = FahrplanNS::searchJourneyRequest;
 
+    clearJourney();
+
     m_searchJourneyParameters.isValid = false;
     m_searchJourneyParameters.departureStation = departureStation;
     m_searchJourneyParameters.arrivalStation = arrivalStation;
@@ -504,13 +526,8 @@ void ParserEFA::searchJourney(const Station &departureStation, const Station &vi
 void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
 {
     qDebug() << "ParserEFA::parseSearchJourney(QNetworkReply *networkReply)";
-    lastJourneyResultList = new JourneyResultList();
 
-    for (QHash<QString, JourneyDetailResultList *>::Iterator it = cachedJourneyDetailsEfa.begin(); it != cachedJourneyDetailsEfa.end();) {
-        JourneyDetailResultList *jdrl = it.value();
-        it = cachedJourneyDetailsEfa.erase(it);
-        delete jdrl;
-    }
+    lastJourneyResultList = new JourneyResultList(this);
 
     /// Use fallback values for empty results (i.e. no connections found)
     lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
@@ -528,7 +545,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
     QDomElement route = doc.firstChildElement("itdRequest").firstChildElement("itdTripRequest").firstChildElement("itdItinerary").firstChildElement("itdRouteList").firstChildElement("itdRoute");
     for (; !route.isNull(); route = route.nextSiblingElement("itdRoute")) {
         QStringList motNameList;
-        JourneyDetailResultList *detailsList = new JourneyDetailResultList();
+        JourneyDetailResultList *detailsList = new JourneyDetailResultList(this);
         QDomElement partialRoute = route.firstChildElement("itdPartialRouteList").firstChildElement("itdPartialRoute");
         for (; !partialRoute.isNull(); partialRoute = partialRoute.nextSiblingElement("itdPartialRoute")) {
             QDomElement motElement = partialRoute.firstChildElement("itdMeansOfTransport");
@@ -542,7 +559,7 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
                 info = tr("Guaranteed connection");
             }
             motNameList.append(motName);
-            JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem();
+            JourneyDetailResultItem *jdrItem = new JourneyDetailResultItem(detailsList);
             jdrItem->setTrain(motName);
             jdrItem->setInfo(info);
             jdrItem->setDirection(motElement.attribute("destination"));
@@ -578,9 +595,9 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         detailsList->setDuration(duration);
         detailsList->setArrivalDateTime(arrivalDateTime);
         detailsList->setDepartureDateTime(departureDateTime);
-        cachedJourneyDetailsEfa[id] = detailsList;
+        cachedJourneyDetailsEfa.insert(id, detailsList);
 
-        JourneyResultItem *item = new JourneyResultItem();
+        JourneyResultItem *item = new JourneyResultItem(lastJourneyResultList);
         item->setDate(departureDateTime.date());
         item->setId(id);
         item->setTransfers(changes);
@@ -591,10 +608,13 @@ void ParserEFA::parseSearchJourney(QNetworkReply *networkReply)
         item->setArrivalTime(arrivalDateTime.toString("hh:mm"));
         lastJourneyResultList->appendItem(item);
 
-        if (!m_earliestArrival.isValid() || arrivalDateTime < m_earliestArrival)
+        if (!m_earliestArrival.isValid() || arrivalDateTime < m_earliestArrival) {
             m_earliestArrival = arrivalDateTime.addSecs(-60);
-        if (!m_latestResultDeparture.isValid() || departureDateTime > m_latestResultDeparture)
+        }
+
+        if (!m_latestResultDeparture.isValid() || departureDateTime > m_latestResultDeparture) {
             m_latestResultDeparture = departureDateTime.addSecs(60);
+        }
     }
 
     checkForError(&doc);
@@ -619,20 +639,19 @@ void ParserEFA::searchJourneyLater()
 {
     qDebug() << "ParserEFA::searchJourneyLater()";
 
-    if (m_latestResultDeparture.isValid())
-    {
+    if (m_latestResultDeparture.isValid()) {
         qDebug() << "m_latestResultDeparture.isValid()";
         searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.arrivalStation, m_latestResultDeparture, Departure, 0);
-    }
-    else {
+    } else {
         qDebug() << "!m_latestResultDeparture.isValid(), ";
-        JourneyResultList *journeyResultList = new JourneyResultList();
-        journeyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
-        journeyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
-        journeyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
+        clearJourney();
+        lastJourneyResultList = new JourneyResultList(this);
+        lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
+        lastJourneyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
+        lastJourneyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
         //: DATE, TIME
-        journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.dateTime.date().toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.dateTime.time().toString(Qt::DefaultLocaleShortDate)));
-        emit journeyResult(journeyResultList);
+        lastJourneyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.dateTime.date().toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.dateTime.time().toString(Qt::DefaultLocaleShortDate)));
+        emit journeyResult(lastJourneyResultList);
     }
 }
 
@@ -642,13 +661,14 @@ void ParserEFA::searchJourneyEarlier()
     if (m_earliestArrival.isValid())
         searchJourney(m_searchJourneyParameters.departureStation, m_searchJourneyParameters.viaStation, m_searchJourneyParameters.arrivalStation, m_earliestArrival, Arrival, 0);
     else {
-        JourneyResultList *journeyResultList = new JourneyResultList();
-        journeyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
-        journeyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
-        journeyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
+        clearJourney();
+        lastJourneyResultList = new JourneyResultList(this);
+        lastJourneyResultList->setDepartureStation(m_searchJourneyParameters.departureStation.name);
+        lastJourneyResultList->setViaStation(m_searchJourneyParameters.viaStation.name);
+        lastJourneyResultList->setArrivalStation(m_searchJourneyParameters.arrivalStation.name);
         //: DATE, TIME
-        journeyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.dateTime.date().toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.dateTime.time().toString(Qt::DefaultLocaleShortDate)));
-        emit journeyResult(journeyResultList);
+        lastJourneyResultList->setTimeInfo(tr("%1, %2", "DATE, TIME").arg(m_searchJourneyParameters.dateTime.date().toString(Qt::DefaultLocaleShortDate)).arg(m_searchJourneyParameters.dateTime.time().toString(Qt::DefaultLocaleShortDate)));
+        emit journeyResult(lastJourneyResultList);
     }
 }
 

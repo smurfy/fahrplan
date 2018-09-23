@@ -17,8 +17,8 @@
 **
 ****************************************************************************/
 
-#ifndef PARSER_NINETWO_H
-#define PARSER_NINETWO_H
+#ifndef PARSER_LONDONTFL_H
+#define PARSER_LONDONTFL_H
 
 #include "parser_abstract.h"
 
@@ -30,7 +30,7 @@ class QNetworkReply;
  * Parser for the 9292ov.nl dutch public transport route planner backend.
  * it uses the unofficial json backend
  */
-class ParserNinetwo : public ParserAbstract
+class ParserLondonTfl : public ParserAbstract
 {
     Q_OBJECT
     struct {
@@ -51,22 +51,29 @@ class ParserNinetwo : public ParserAbstract
     } lastCoordinates;
 
     typedef enum restrictions{
-        all=0,
-        trainsOnly=1,
-        noFerry=2
+        all = 0,
+        rail_tube_overground_dlr = 1,
+        tube_overground_dlr = 2,
+        bus_tram_tube_overground_dlr = 3,
+        bus_tram = 4,
+        bus = 5,
+        rail = 6,
+        tube = 7,
+        overground = 8,
+        dlr = 9
     } restrictions;
 
     int timetableRestrictions;
 
 public:
-    ParserNinetwo(QObject* parent = 0);
-    virtual ~ParserNinetwo();
+    ParserLondonTfl(QObject* parent = 0);
+    virtual ~ParserLondonTfl();
 
     // ParserAbstract interface
 public:
-    static QString getName() { return QString("%1 (9292ov.nl)").arg(tr("Netherlands")); }
+    static QString getName() { return QString("%1 (tfl.gov.uk)").arg(tr("London")); }
     virtual QString name() { return getName(); }
-    virtual QString shortName() { return "9292ov.nl"; }
+    virtual QString shortName() { return "Transport for London"; }
 
 public slots:
     void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);
@@ -92,11 +99,18 @@ protected:
     void parseSearchEarlierJourney(QNetworkReply *networkReply);
     void parseJourneyDetails(QNetworkReply *networkReply);
     QMap<QString, JourneyDetailResultList*> cachedResults;
-
+    
     JourneyResultList *lastJourneyResultList;
 
 private:
-    void parseJourneyOption(const QVariantMap &object);
+    void parseJourneyOption(const QVariantMap &object, const QString & id);
+
+    QStringList getModesFromTrainRestrictions(int trainRestrictions);
+    bool doesModeMatchTrainRestrictions(const QString & mode, int trainRestrictions);
+    QStringList filterStopIdsByTrainRestrictions(const QStringList & stopIds, int trainRestrictions);
+    void addTimeTableEntriesOfStopPoint(const QString & stopPointId, TimetableEntriesList & entriesList);
+
+    QNetworkAccessManager *NetworkManagerTimeTableSubQuery;
 };
 
-#endif // PARSER_NINETWO_H
+#endif // PARSER_LONDONTFL_H

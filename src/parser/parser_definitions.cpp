@@ -71,6 +71,16 @@ TimetableEntry::TimetableEntry()
 
 //------------- JourneyResultList
 
+JourneyResultList::JourneyResultList(QObject * parent) : QObject(parent)
+{
+
+}
+
+JourneyResultList::~JourneyResultList()
+{
+    qDeleteAll(m_items);
+}
+
 qreal JourneyResultList::itemcount()
 {
     return m_items.count();
@@ -127,6 +137,10 @@ void JourneyResultList::setTimeInfo(const QString &timeInfo)
 }
 
 //------------- JourneyResultItem
+JourneyResultItem::JourneyResultItem(QObject *parent) : QObject(parent)
+{
+
+}
 
 QString JourneyResultItem::id() const
 {
@@ -230,6 +244,16 @@ void JourneyResultItem::setInternalData2(const QString &internalData2)
 
 //------------- JourneyDetailResultList
 
+JourneyDetailResultList::JourneyDetailResultList(QObject * parent) : QObject(parent)
+{
+
+}
+
+JourneyDetailResultList::~JourneyDetailResultList()
+{
+    qDeleteAll(m_items);
+}
+
 QString JourneyDetailResultList::id() const
 {
     return m_id;
@@ -327,6 +351,11 @@ void JourneyDetailResultList::setDuration(const QString &duration)
 
 //------------- JourneyDetailResultItem
 
+JourneyDetailResultItem::JourneyDetailResultItem(QObject *parent) : QObject(parent)
+{
+
+}
+
 QString JourneyDetailResultItem::departureStation() const
 {
     return m_departureStation;
@@ -415,6 +444,17 @@ QString JourneyDetailResultItem::direction() const
 void JourneyDetailResultItem::setDirection(const QString &direction)
 {
     m_direction = direction;
+}
+
+
+QString JourneyDetailResultItem::color() const
+{
+    return m_color.isValid() ? m_color.name() : "";
+}
+
+void JourneyDetailResultItem::setColor(const QColor &color)
+{
+    m_color = color;
 }
 
 QString JourneyDetailResultItem::internalData1() const
