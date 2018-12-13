@@ -376,17 +376,17 @@ void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
-    if (doc.isEmpty()) {
+    QVariant reply = parseJson(allData);
+    if (!reply.isValid()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
     }
-
+    QVariantMap replyMap = reply.toMap();
     QVariantList departures;
     if (timetableSearchMode == Arrival)
-        departures = doc.value("Arrival").toList();
+        departures = replyMap.value("Arrival").toList();
     else
-        departures = doc.value("Departure").toList();
+        departures = replyMap.value("Departure").toList();
     TimetableEntriesList timetable;
     foreach (QVariant departureData, departures) {
         TimetableEntry resultItem;
@@ -439,12 +439,13 @@ void ParserResRobot::parseStationsByName(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
-    if (doc.isEmpty()) {
+    QVariant reply = parseJson(allData);
+    if (!reply.isValid()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
     }
-    QVariantList stations = doc.value("StopLocation").toList();
+    QVariantMap replyMap = reply.toMap();
+    QVariantList stations = replyMap.value("StopLocation").toList();
     StationsList result;
     foreach (QVariant stationData, stations) {
         const QVariantMap& station = stationData.toMap();
@@ -464,13 +465,13 @@ void ParserResRobot::parseStationsByCoordinates(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
-    if (doc.isEmpty()) {
+    QVariant reply = parseJson(allData);
+    if (!reply.isValid()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
     }
-
-    QVariantList stations = doc.value("StopLocation").toList();
+    QVariantMap replyMap = reply.toMap();
+    QVariantList stations = replyMap.value("StopLocation").toList();
     StationsList result;
     foreach (QVariant stationData, stations) {
         const QVariantMap& station = stationData.toMap();
@@ -490,15 +491,15 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
-    if (doc.isEmpty()) {
+    QVariant reply = parseJson(allData);
+    if (!reply.isValid()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
     }
-
-    searchEarlierReference = doc.value("scrB").toString();
-    searchLaterReference = doc.value("scrF").toString();
-    QVariantList journeyListData = doc.value("Trip").toList();
+    QVariantMap replyMap = reply.toMap();
+    searchEarlierReference = replyMap.value("scrB").toString();
+    searchLaterReference = replyMap.value("scrF").toString();
+    QVariantList journeyListData = replyMap.value("Trip").toList();
 
     cachedResults.clear();
 

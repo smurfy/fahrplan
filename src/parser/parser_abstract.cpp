@@ -145,11 +145,11 @@ void ParserAbstract::sendHttpRequest(QUrl url, QByteArray data, const QList<QPai
     connect(lastRequest, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(networkReplyDownloadProgress(qint64,qint64)));
 }
 
-QVariantMap ParserAbstract::parseJson(const QByteArray &json) const
+QVariant ParserAbstract::parseJson(const QByteArray &json) const
 {
-    QVariantMap doc;
+    QVariant doc;
 #ifdef BUILD_FOR_QT5
-    doc = QJsonDocument::fromJson(json).toVariant().toMap();
+    doc = QJsonDocument::fromJson(json).toVariant();
 #else
     QString utf8(QString::fromUtf8(json));
 
@@ -160,7 +160,7 @@ QVariantMap ParserAbstract::parseJson(const QByteArray &json) const
         return doc;
 
     QScriptEngine *engine = new QScriptEngine();
-    doc = engine->evaluate("(" + utf8 + ")").toVariant().toMap();
+    doc = engine->evaluate("(" + utf8 + ")").toVariant();
     delete engine;
 #endif
 
@@ -168,9 +168,9 @@ QVariantMap ParserAbstract::parseJson(const QByteArray &json) const
 }
 
 #ifdef BUILD_FOR_QT5
-QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc) const
+QByteArray ParserAbstract::serializeToJson(const QVariant& doc) const
 {
-    return QJsonDocument(QJsonObject::fromVariantMap(doc)).toJson(QJsonDocument::Indented);
+    return QJsonDocument::fromVariant(doc).toJson(QJsonDocument::Indented);
 }
 #else
 QByteArray toJson(const QVariant& value)
@@ -212,7 +212,7 @@ QByteArray toJson(const QVariant& value)
     }
 }
 
-QByteArray ParserAbstract::serializeToJson(const QVariantMap& doc) const
+QByteArray ParserAbstract::serializeToJson(const QVariant& doc) const
 {
     return toJson(doc);
 }

@@ -209,7 +209,7 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
@@ -287,7 +287,7 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
@@ -346,7 +346,7 @@ void ParserNinetwo::parseSearchJourney(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
     qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
