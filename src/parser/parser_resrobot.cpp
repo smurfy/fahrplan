@@ -376,7 +376,7 @@ void ParserResRobot::parseTimeTable(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
@@ -439,7 +439,7 @@ void ParserResRobot::parseStationsByName(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
@@ -464,7 +464,7 @@ void ParserResRobot::parseStationsByCoordinates(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
@@ -490,7 +490,7 @@ void ParserResRobot::parseSearchJourney(QNetworkReply *networkReply)
     QByteArray allData = networkReply->readAll();
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;

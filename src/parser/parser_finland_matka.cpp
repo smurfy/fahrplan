@@ -147,7 +147,7 @@ void ParserFinlandMatka::parseStationsByName(QNetworkReply *networkReply)
     }
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
@@ -299,7 +299,7 @@ void ParserFinlandMatka::parseTimeTable(QNetworkReply *networkReply)
     }
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
@@ -664,7 +664,7 @@ void ParserFinlandMatka::parseSearchJourney(QNetworkReply *networkReply)
     }
 //    qDebug() << "Reply:\n" << allData;
 
-    QVariantMap doc = parseJson(allData);
+    QVariantMap doc = parseJson(allData).toMap();
     if (doc.isEmpty()) {
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
