@@ -134,6 +134,7 @@ HEADERS += \
     src/parser/parser_salzburg_efa.h \
     src/parser/parser_resrobot.h \
     src/parser/parser_finland_matka.h \
+    src/parser/parser_vrr_efa.h \
     src/models/backends.h
 
 SOURCES += src/main.cpp \
@@ -169,6 +170,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_salzburg_efa.cpp \
     src/parser/parser_resrobot.cpp \
     src/parser/parser_finland_matka.cpp \
+    src/parser/parser_vrr_efa.cpp \
     src/models/backends.cpp
 
 LIBS += $$PWD/3rdparty/gauss-kruger-cpp/gausskruger.cpp
