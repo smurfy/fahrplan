@@ -170,6 +170,9 @@ void FahrplanParserThread::run()
         case 15:
             m_parser = new ParserFinlandMatka();
             break;
+        case 16:
+            m_parser = new ParserVRREFA();
+            break;
     }
 
     m_name = m_parser->name();

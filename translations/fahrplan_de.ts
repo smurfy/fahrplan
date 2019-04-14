@@ -1468,6 +1468,44 @@ Von der Fahrplan-App hinzugefügt. Bitte überprüfen Sie diese Informationen vo
     </message>
 </context>
 <context>
+    <name>ParserVRREFA</name>
+    <message>
+        <location filename="../src/parser/parser_vrr_efa.cpp" line="38"/>
+        <source>All</source>
+        <translation>Alle</translation>
+    </message>
+    <message>
+    <location filename="../src/parser/parser_vrr_efa.cpp" line="38"/>
+        <source>S-Bahn</source>
+        <translation>S-Bahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_vrr_efa.cpp" line="39"/>
+        <source>U-Bahn</source>
+        <translation>U-Bahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_vrr_efa.cpp" line="40"/>
+        <source>Tram</source>
+        <translation>Straßenbahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_vrr_efa.cpp" line="41"/>
+        <source>Bus</source>
+        <translation>Bus</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_vrr_efa.h" line="31"/>
+        <source>Germany</source>
+        <translation>Deutschland</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_vrr_efa.h" line="31"/>
+        <source>Rhine Ruhr</source>
+        <translation>Rhein Ruhr</translation>
+    </message>
+</context>
+<context>
     <name>ParserNinetwo</name>
     <message>
         <location filename="../src/parser/parser_ninetwo.cpp" line="192"/>
