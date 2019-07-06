@@ -4,7 +4,7 @@
 /.make.cache
 /Makefile
 /bld.inf
-/click_build/
+/click_build_*/
 /debian/
 /fahrplan2*
 /moc/

@@ -1,15 +1,7 @@
 {
-  "dir": "click_build",
+  "build_dir": "click_build_$ARCH_TRIPLET",
+  "build_args": "CONFIG+=ubuntu",
   "arch": "armhf",
-  "sdk": "ubuntu-sdk-15.04",
-  "chroot": false,
-  "scripts":
-  {
-   "clean_tmp": "rm -rf ./tmp/*"
-  },
-  "template": "custom",
-  "build": "bash -c 'cd ..; ./clickableCustomBuild.sh click_build/tmp'",
-  "dependencies": [ "libcurl4-gnutls-dev" ],
-  "default" : "kill clean clean_tmp build click-build install launch",
-  "ssh_" : "bq.fritz.box"
+  "template": "qmake",
+  "dependencies_target": [ "libcurl4-gnutls-dev" ]
 }
