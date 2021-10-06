@@ -91,8 +91,8 @@ OTHER_FILES += \
     src/gui/about.js \
     src/gui/ubuntu/components/CustomListItem.qml
 
-RESOURCES += \
-    translations_res.qrc
+#RESOURCES += \
+#    translations_res.qrc
 
 INCLUDEPATH += src
 # Zlib todo for other systems ugly hack
