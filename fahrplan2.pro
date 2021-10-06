@@ -490,6 +490,3 @@ translations.CONFIG = no_link
 QMAKE_EXTRA_COMPILERS += translations
 PRE_TARGETDEPS += compiler_translations_make_all
 
-DISTFILES += \
-    rpm/harbour-fahrplan2.spec
-

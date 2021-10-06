@@ -13,7 +13,7 @@ Name:       harbour-fahrplan2
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Public transportation application
-Version:    2.0.31
+Version:    2.0.32
 Release:    1
 Group:      Location/Location Adaptation
 License:    GPL
@@ -27,6 +27,7 @@ BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  pkgconfig(Qt5Xml)
+BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  qt5-qtdeclarative-import-positioning
 BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  desktop-file-utils
