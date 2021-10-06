@@ -46,13 +46,15 @@ exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmat
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-QT += network xml
-lessThan(QT_MAJOR_VERSION, 5) {
-    QT += declarative script
-} else {
-    QT += quick qml concurrent
-    DEFINES += BUILD_FOR_QT5
-}
+QT += network xml quick qml concurrent
+DEFINES += BUILD_FOR_QT5
+
+#lessThan(QT_MAJOR_VERSION, 5) {
+#    QT += declarative script
+#} else {
+#    QT += quick qml concurrent
+#    DEFINES += BUILD_FOR_QT5
+#}
 
 blackberry: QT += opengl
 maemo5:QT += maemo5
