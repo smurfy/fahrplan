@@ -362,14 +362,14 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         data/sailfishos/harbour-fahrplan2.png
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"):!ubuntu:!blackberry {
-    QT += widgets
-    DEFINES += BUILD_FOR_DESKTOP
-    RESOURCES += desktop_res.qrc
-    SOURCES += src/gui/desktop-test/mainwindow.cpp
-    HEADERS += src/gui/desktop-test/mainwindow.h
-    FORMS += src/gui/desktop-test/mainwindow.ui
-}
+#win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"):!ubuntu:!blackberry {
+#    QT += widgets
+#    DEFINES += BUILD_FOR_DESKTOP
+#    RESOURCES += desktop_res.qrc
+#    SOURCES += src/gui/desktop-test/mainwindow.cpp
+#    HEADERS += src/gui/desktop-test/mainwindow.h
+#    FORMS += src/gui/desktop-test/mainwindow.ui
+#}
 
 symbian|simulator {
     RESOURCES += symbian_res.qrc
