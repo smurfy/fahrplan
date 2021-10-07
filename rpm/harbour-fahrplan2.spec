@@ -16,7 +16,8 @@ Summary:    Public transportation application
 Version:    2.0.32
 Release:    1
 Group:      Location/Location Adaptation
-License:    GPL
+License:    GPLv2
+Packager:  Mark Washeim blueprint@poetaster.de
 URL:        http://fahrplan.smurfy.de
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-fahrplan2.yaml
@@ -33,7 +34,7 @@ BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  desktop-file-utils
 
 %description
-A Journey planner/Railway Time table for many train lines in europe and australia.
+A Rail Time table for lines in europe and australia.
 
 
 %prep
