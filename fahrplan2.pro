@@ -89,8 +89,8 @@ OTHER_FILES += \
     src/gui/about.js \
     src/gui/ubuntu/components/CustomListItem.qml
 
-RESOURCES += \
-    translations_res.qrc
+#RESOURCES += \
+#    translations_res.qrc
 
 INCLUDEPATH += src
 # Zlib todo for other systems ugly hack
@@ -476,15 +476,15 @@ qtcAddDeployment()
 
 # We need to generate translations before building.
 # Either way, translations_res.qrc won't compile.
-translations.name = Translations
-translations.input = TRANSLATIONS
-translations.output = $$_PRO_FILE_PWD_/translations/${QMAKE_FILE_BASE}.qm
-freebsd-* {
-    translations.commands = $$[QT_INSTALL_BINS]/lrelease-qt$${QT_MAJOR_VERSION} ${QMAKE_FILE_IN}
-} else {
-    translations.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN}
-}
-translations.CONFIG = no_link
-QMAKE_EXTRA_COMPILERS += translations
-PRE_TARGETDEPS += compiler_translations_make_all
+#translations.name = Translations
+#translations.input = TRANSLATIONS
+#translations.output = $$_PRO_FILE_PWD_/translations/${QMAKE_FILE_BASE}.qm
+#freebsd-* {
+#    translations.commands = $$[QT_INSTALL_BINS]/lrelease-qt$${QT_MAJOR_VERSION} ${QMAKE_FILE_IN}
+#} else {
+#    translations.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN}
+#}
+#translations.CONFIG = no_link
+#QMAKE_EXTRA_COMPILERS += translations
+#PRE_TARGETDEPS += compiler_translations_make_all
 
