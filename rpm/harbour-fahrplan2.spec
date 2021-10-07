@@ -68,9 +68,10 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%defattr(644,root,root,-)
-%attr(655,-,-) %{_bindir}
-%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%{_bindir}
+%{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/%{name}/qml
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 # >> files
 # << files
