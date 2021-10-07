@@ -7,7 +7,6 @@
         <file>translations/fahrplan_en.qm</file>
         <file>translations/fahrplan_es.qm</file>
         <file>translations/fahrplan_fa_IR.qm</file>
-        <file>translations/fahrplan_mk_MK.qm</file>
         <file>translations/fahrplan_fr.qm</file>
         <file>translations/fahrplan_hu.qm</file>
         <file>translations/fahrplan_nb.qm</file>
@@ -17,8 +16,6 @@
         <file>translations/fahrplan_ru.qm</file>
         <file>translations/fahrplan_sl_SI.qm</file>
         <file>translations/fahrplan_sv_SE.qm</file>
-        <file>translations/fahrplan_tr.qm</file>
         <file>translations/fahrplan_uk.qm</file>
-        <file>translations/fahrplan_zh.qm</file>
     </qresource>
 </RCC>

@@ -46,15 +46,13 @@ exists($$QMAKE_INCDIR_QT"/../qmsystem2/qmkeys.h"):!contains(MEEGO_EDITION,harmat
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-QT += network xml quick qml concurrent
-DEFINES += BUILD_FOR_QT5
-
-#lessThan(QT_MAJOR_VERSION, 5) {
-#    QT += declarative script
-#} else {
-#    QT += quick qml concurrent
-#    DEFINES += BUILD_FOR_QT5
-#}
+QT += network xml
+lessThan(QT_MAJOR_VERSION, 5) {
+    QT += declarative script
+} else {
+    QT += quick qml concurrent
+    DEFINES += BUILD_FOR_QT5
+}
 
 blackberry: QT += opengl
 maemo5:QT += maemo5
@@ -91,8 +89,8 @@ OTHER_FILES += \
     src/gui/about.js \
     src/gui/ubuntu/components/CustomListItem.qml
 
-#RESOURCES += \
-#    translations_res.qrc
+RESOURCES += \
+    translations_res.qrc
 
 INCLUDEPATH += src
 # Zlib todo for other systems ugly hack
@@ -243,7 +241,7 @@ ubuntu: {
         3rdparty/QtCUrl/QtCUrl.cpp
 
     LIBS += -lcurl
-	
+
     OTHER_FILES += \
         src/gui/ubuntu/MainPage.qml \
         src/gui/ubuntu/JourneyResultsPage.qml \
@@ -478,15 +476,15 @@ qtcAddDeployment()
 
 # We need to generate translations before building.
 # Either way, translations_res.qrc won't compile.
-#translations.name = Translations
-#translations.input = TRANSLATIONS
-#translations.output = $$_PRO_FILE_PWD_/translations/${QMAKE_FILE_BASE}.qm
-#freebsd-* {
-#    translations.commands = $$[QT_INSTALL_BINS]/lrelease-qt$${QT_MAJOR_VERSION} ${QMAKE_FILE_IN}
-#} else {
-#    translations.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN}
-#}
-#translations.CONFIG = no_link
-#QMAKE_EXTRA_COMPILERS += translations
-#PRE_TARGETDEPS += compiler_translations_make_all
+translations.name = Translations
+translations.input = TRANSLATIONS
+translations.output = $$_PRO_FILE_PWD_/translations/${QMAKE_FILE_BASE}.qm
+freebsd-* {
+    translations.commands = $$[QT_INSTALL_BINS]/lrelease-qt$${QT_MAJOR_VERSION} ${QMAKE_FILE_IN}
+} else {
+    translations.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN}
+}
+translations.CONFIG = no_link
+QMAKE_EXTRA_COMPILERS += translations
+PRE_TARGETDEPS += compiler_translations_make_all
 
