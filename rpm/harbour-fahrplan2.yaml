@@ -1,9 +1,9 @@
-Name: harbour-fahrplan2
+Name: harbour-fahrplan
 Summary: Public transportation application
 Version: 2.0.32
 Release: 1
 Group: Location/Location Adaptation
-License: GPL
+License: GPLv2
 URL: http://fahrplan.smurfy.de
 Sources:
 - '%{name}-%{version}.tar.bz2'
