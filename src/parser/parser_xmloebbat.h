@@ -22,7 +22,7 @@
 
 #include "parser_hafasbinary.h"
 
-class ParserXmlOebbAt: public ParserHafasBinary
+class ParserXmlOebbAt: public ParserHafasXml
 {
     Q_OBJECT
 
