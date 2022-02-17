@@ -28,7 +28,7 @@
 #endif
 #include <qmath.h>
 
-#define BASE_URL "https://api.9292.nl/0.1/"
+#define BASE_URL "https://9292.nl/en"
 
 inline qreal deg2rad(qreal deg)
 {
@@ -78,19 +78,18 @@ void ParserNinetwo::getTimeTableForStation(const Station &currentStation,
 
 void ParserNinetwo::findStationsByName(const QString &stationName)
 {
-    qDebug() << "FINDBYNAME";
-    QUrl uri(BASE_URL "locations");
+    QUrl url(BASE_URL "/suggest");
+    qDebug() << "FINDBYNAME" << stationName << url;
 
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
 #else
     QUrl query;
 #endif
-    query.addQueryItem("lang", 	"en-GB");
-    query.addQueryItem("q", stationName);
-    uri.setQuery(query);
+    query.addQueryItem("userInput", stationName);
+    url.setQuery(query);
 
-    sendHttpRequest(uri);
+    sendHttpRequest(url);
     currentRequestState=FahrplanNS::stationsByNameRequest;
 }
 
@@ -105,7 +104,6 @@ void ParserNinetwo::findStationsByCoordinates(qreal longitude, qreal latitude)
     QUrl query;
 #endif
     query.addQueryItem("lang", 	"en-GB");
-    query.addQueryItem("type", "station,stop");
     query.addQueryItem("latlong", QString("%1,%2").arg(latitude).arg(longitude));
     query.addQueryItem("includestation", "true");
     uri.setQuery(query);
@@ -129,13 +127,15 @@ void ParserNinetwo::searchJourney(const Station &departureStation,
     lastsearch.to=arrivalStation;
     lastsearch.restrictions=trainrestrictions;
     lastsearch.via=viaStation;
-    QUrl uri(BASE_URL "journeys");
+    QUrl uri(BASE_URL "journeyadvice");
 
 #if defined(BUILD_FOR_QT5)
     QUrlQuery query;
 #else
     QUrl query;
 #endif
+
+
     query.addQueryItem("lang", 	"en-GB");
     query.addQueryItem("before", "1");
     query.addQueryItem("from", departureStation.id.toString());
@@ -207,7 +207,7 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
 {
     TimetableEntriesList result;
     QByteArray allData = networkReply->readAll();
-//    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
@@ -283,12 +283,13 @@ void ParserNinetwo::parseTimeTable(QNetworkReply *networkReply)
 
 void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
 {
-    qDebug() << "PARSING STATIONS";
+    qDebug() << __PRETTY_FUNCTION__ << "PARSING STATIONS";
     QByteArray allData = networkReply->readAll();
-//    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
+    qDebug() << "REPLY:>>>>>>>>>>>>\n" << allData;
 
     QVariantMap doc = parseJson(allData);
     if (doc.isEmpty()) {
+        qWarning() << __PRETTY_FUNCTION__ << "empty response";
         emit errorOccured(tr("Cannot parse reply from the server"));
         return;
     }
@@ -301,32 +302,18 @@ void ParserNinetwo::parseStationsByName(QNetworkReply *networkReply)
     for (i = stations.constBegin(); i != stations.constEnd(); ++i) {
         QVariantMap station = i->toMap();
         Station s;
-        bool okLat, okLon;
-        double lat = station.value("latLong").toMap().value("lat").toDouble(&okLat);
-        double lon = station.value("latLong").toMap().value("long").toDouble(&okLon);
         //s.name=QString("[%1]%2").arg(station.value("type").toString(), station.value("name").toString());
-        const QString name = station.value("name").toString();
-        const QString place = station.value("place").toMap().value("name").toString();
+        const QString name = station.value("Displayname").toString();
+        const QString place = station.value("Region").toString();
         if (place.isEmpty())
             s.name = name;
         else
             s.name = QString("%1 (%2)").arg(name, place);
-        s.miscInfo = station.value("type").toString();
-        if (okLat && okLon) {
-            s.latitude = lat;
-            s.longitude = lon;
-            if (lastCoordinates.isValid) {
-                if (!s.miscInfo.isEmpty())
-                    s.miscInfo.prepend(", ");
-                //: Distance in meters
-                s.miscInfo.prepend(tr("%n m", "",
-                                      distance(lastCoordinates.latitude, lastCoordinates.longitude,
-                                               s.latitude, s.longitude)));
-            }
-        }
-        if (station.value("type").toString() == "address")
-            s.name = s.name + " " + station.value("houseNr").toString();
-        s.id = station.value("id").toString();
+        // type is "stop" or "address"
+        // subType is busstop
+        // so we only care about subtype
+        s.miscInfo = station.value("EnglishSubType",station.value("SubType")).toString();
+        s.id = station.value("Url").toString();
         result.append(s);
     }
 

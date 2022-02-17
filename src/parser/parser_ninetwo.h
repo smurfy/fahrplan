@@ -75,10 +75,10 @@ public slots:
     void searchJourneyLater();
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
-    bool supportsGps() { return true; }
-    bool supportsVia() { return true; }
-    bool supportsTimeTable() { return true; }
-    bool supportsTimeTableDirection() { return false; }
+    bool supportsGps() final { return false; }
+    bool supportsVia() final { return false; }
+    bool supportsTimeTable() final { return false; }
+    bool supportsTimeTableDirection() final { return false; }
     QStringList getTrainRestrictions();
 
 protected:
