@@ -92,7 +92,9 @@ protected:
     QMap<QString, JourneyDetailResultList*> cachedResults;
 
 private:
-    void parseJourneyOption(const QVariantMap &object);
+    JourneyResultItem* parseJourneyICS(QString const & ics);
+    JourneyResultItem* parseJourneyJson(QString const & json);
 };
+
 
 #endif // PARSER_NINETWO_H
