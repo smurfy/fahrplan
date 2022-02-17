@@ -1,3 +1,12 @@
+
+# kdevelop
+
+*.kdev4
+*.kate-swp
+kdev4/
+
+
+build/
 .directory
 /.clickable/
 /.make.cache
