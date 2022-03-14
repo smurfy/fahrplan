@@ -13,7 +13,7 @@ Name:       harbour-fahrplan2
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Public transportation application
-Version:    2.0.32
+Version:    2.0.33
 Release:    1
 Group:      Location/Location Adaptation
 License:    GPLv2
@@ -41,7 +41,7 @@ PackageName: Fahrplan
 Type: desktop-application
 Categories:
  - Utility
-PackagerName: Mark Washeim
+PackagerName: Mark Washeim (poetaster)
 Custom:
  - Repo: https://github.com/poetaster/fahrplan
 Icon: https://raw.githubusercontent.com/poetaster/fahrplan/master/data/sailfishos/harbour-fahrplan2.png
