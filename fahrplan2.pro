@@ -357,6 +357,7 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/pages/SettingsPage.qml \
         src/gui/sailfishos/pages/AboutPage.qml \
         rpm/harbour-fahrplan2.yaml \
+        rpm/harbour-fahrplan2.spec \
         data/sailfishos/harbour-fahrplan2.desktop \
         data/sailfishos/openrepos/harbour-fahrplan2.desktop \
         data/sailfishos/harbour-fahrplan2.png

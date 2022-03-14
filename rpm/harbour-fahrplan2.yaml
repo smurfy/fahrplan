@@ -1,4 +1,4 @@
-Name: harbour-fahrplan
+Name: harbour-fahrplan2
 Summary: Public transportation application
 Version: 2.0.32
 Release: 1
@@ -29,4 +29,4 @@ Files:
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
 - '%{_datadir}/applications/%{name}.desktop'
 
-PkgBR: [qt5-qtdeclarative-import-positioning, qt5-qtpositioning-devel]
+PkgBR: [qt5-qtdeclarative-import-positioning, qt5-qtpositioning-devel, qt5-qttools-linguist]
