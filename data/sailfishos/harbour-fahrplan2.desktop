@@ -7,6 +7,6 @@ Exec=harbour-fahrplan2
 
 [X-Sailjail]
 OrganizationName=de.smurfy
-ApplicationName=harbour-harbour-fahrplan2
+ApplicationName=harbour-fahrplan2
 Permissions=Internet;Location
 
