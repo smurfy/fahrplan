@@ -19,7 +19,6 @@ Group:      Location/Location Adaptation
 License:    GPLv2
 URL:        http://fahrplan.smurfy.de
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  harbour-fahrplan2.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   qt5-qtdeclarative-import-xmllistmodel
 BuildRequires:  pkgconfig(Qt5Quick)
@@ -35,6 +34,20 @@ BuildRequires:  desktop-file-utils
 
 %description
 A Journey planner/Railway Time table for many train lines in europe and australia.
+
+%if "%{?vendor}" == "chum"
+PackageName: Fahrplan
+Type: desktop-application
+Categories:
+ - Utility
+PackagerName: Mark Washeim (poetaster)
+Custom:
+ - Repo: https://github.com/poetaster/fahrplan
+Icon: https://raw.githubusercontent.com/poetaster/fahrplan/master/data/sailfishos/harbour-fahrplan2.png
+Url:
+  Homepage: https://github.com/poetaster/fahrplan
+  Bugtracker: https://github.com/poetaster/fahrplan/issues
+%endif
 
 
 %prep
