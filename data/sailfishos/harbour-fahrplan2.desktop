@@ -5,3 +5,8 @@ Name=Fahrplan
 Icon=harbour-fahrplan2
 Exec=harbour-fahrplan2
 
+[X-Sailjail]
+OrganizationName=de.smurfy
+ApplicationName=harbour-harbour-fahrplan2
+Permissions=Internet;Location
+
