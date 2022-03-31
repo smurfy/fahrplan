@@ -13,7 +13,7 @@ Name:       harbour-fahrplan2
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Public transportation application
-Version:    2.0.34
+Version:    2.0.35
 Release:    1
 Group:      Location/Location Adaptation
 License:    GPLv2
@@ -82,8 +82,7 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%defattr(644,root,root,-)
-%attr(655,-,-) %{_bindir}
+%{_bindir}
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 # >> files

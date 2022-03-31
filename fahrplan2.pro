@@ -2,7 +2,7 @@
 APP_NAME = Fahrplan
 
 # Define Version
-VERSION = 2.0.34-1
+VERSION = 2.0.35-1
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
@@ -89,8 +89,8 @@ OTHER_FILES += \
     src/gui/about.js \
     src/gui/ubuntu/components/CustomListItem.qml
 
-#RESOURCES += \
-#    translations_res.qrc
+RESOURCES += \
+    translations_res.qrc
 
 INCLUDEPATH += src
 # Zlib todo for other systems ugly hack
