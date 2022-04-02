@@ -68,10 +68,19 @@ public:
     virtual QString shortName() { return "9292ov.nl"; }
 
 public slots:
-    void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);
+    void getTimeTableForStation(const Station &currentStation,
+                                const Station &directionStation,
+                                const QDateTime &dateTtime,
+                                ParserAbstract::Mode mode,
+                                int trainrestrictions);
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(const Station &departureStation,const Station &viaStation,const Station &arrivalStation,const QDateTime &dateTime,const ParserAbstract::Mode mode, int trainrestrictions);
+    void searchJourney(const Station &departureStation,
+                       const Station &viaStation,
+                       const Station &arrivalStation,
+                       const QDateTime &dateTime,
+                       const ParserAbstract::Mode mode,
+                       int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
