@@ -68,17 +68,26 @@ public:
     virtual QString shortName() { return "9292ov.nl"; }
 
 public slots:
-    void getTimeTableForStation(const Station &currentStation, const Station &directionStation, const QDateTime &dateTtime, ParserAbstract::Mode mode, int trainrestrictions);
+    void getTimeTableForStation(const Station &currentStation,
+                                const Station &directionStation,
+                                const QDateTime &dateTtime,
+                                ParserAbstract::Mode mode,
+                                int trainrestrictions);
     void findStationsByName(const QString &stationName);
     void findStationsByCoordinates(qreal longitude, qreal latitude);
-    void searchJourney(const Station &departureStation,const Station &viaStation,const Station &arrivalStation,const QDateTime &dateTime,const ParserAbstract::Mode mode, int trainrestrictions);
+    void searchJourney(const Station &departureStation,
+                       const Station &viaStation,
+                       const Station &arrivalStation,
+                       const QDateTime &dateTime,
+                       const ParserAbstract::Mode mode,
+                       int trainrestrictions);
     void searchJourneyLater();
     void searchJourneyEarlier();
     void getJourneyDetails(const QString &id);
-    bool supportsGps() { return true; }
-    bool supportsVia() { return true; }
-    bool supportsTimeTable() { return true; }
-    bool supportsTimeTableDirection() { return false; }
+    bool supportsGps() final { return false; }
+    bool supportsVia() final { return false; }
+    bool supportsTimeTable() final { return false; }
+    bool supportsTimeTableDirection() final { return false; }
     QStringList getTrainRestrictions();
 
 protected:
@@ -91,8 +100,20 @@ protected:
     void parseJourneyDetails(QNetworkReply *networkReply);
     QMap<QString, JourneyDetailResultList*> cachedResults;
 
+    // from resrobot
+    QList<JourneyDetailResultItem*> parseJourneySegments(const QVariantMap &journeyData);
+    QHash<QString, QString> hafasAttributes;
+    QHash<QString, QString> specificTransportModes;
+    QHash<QString, QString> generalTransportModes;
+    QHash<QString, QString> transportModeStrings;
+
+
 private:
-    void parseJourneyOption(const QVariantMap &object);
+    JourneyResultItem* parseJourneyICS(QString const & ics);
+    JourneyResultItem* parseJourneyJson(QString const & json);
+
 };
 
+
 #endif // PARSER_NINETWO_H
+

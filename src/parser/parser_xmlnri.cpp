@@ -22,9 +22,9 @@
 ParserXmlNri::ParserXmlNri(QObject *parent) :
     ParserHafasXml(parent)
 {
-    baseXmlUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
-    baseSTTableUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/stboard.exe/en";
-    baseUrl = "http://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
+    baseXmlUrl = "https://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
+    baseSTTableUrl = "https://hafas.websrv05.reiseinfo.no/bin/dev/nri/stboard.exe/en";
+    baseUrl = "https://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
     STTableMode = 1;
 }
 
