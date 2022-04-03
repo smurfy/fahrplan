@@ -100,9 +100,18 @@ protected:
     void parseJourneyDetails(QNetworkReply *networkReply);
     QMap<QString, JourneyDetailResultList*> cachedResults;
 
+    // from resrobot
+    QList<JourneyDetailResultItem*> parseJourneySegments(const QVariantMap &journeyData);
+    QHash<QString, QString> hafasAttributes;
+    QHash<QString, QString> specificTransportModes;
+    QHash<QString, QString> generalTransportModes;
+    QHash<QString, QString> transportModeStrings;
+
+
 private:
     JourneyResultItem* parseJourneyICS(QString const & ics);
     JourneyResultItem* parseJourneyJson(QString const & json);
+
 };
 
 
