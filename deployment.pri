@@ -140,7 +140,8 @@ symbian {
         export(apparmor.files)
         export(apparmor.path)
         INSTALLS += manifestfile apparmor
-    } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
+        } else:exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
+#    } else:exists("/usr/include/sailfishapp/sailfishapp.h") {
         desktopfile.files = data/sailfishos/$${TARGET}.desktop
         # Use different desktop file for openrepos
         openrepos {

@@ -26,7 +26,8 @@ ubuntu {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"$$APP_ID\\\"
 }
-exists("/usr/include/sailfishapp/sailfishapp.h"): {
+#exists("/usr/include/sailfishapp/sailfishapp.h"): {
+exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"harbour-fahrplan2\\\"
 }
@@ -323,7 +324,8 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-exists("/usr/include/sailfishapp/sailfishapp.h"): {
+#exists("/usr/include/sailfishapp/sailfishapp.h"): {
+exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
     TARGET = harbour-fahrplan2
 
     DEFINES += BUILD_FOR_SAILFISHOS
@@ -334,6 +336,7 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
 
     # we need additional stuff for calendar support
     openrepos {
+        #PKGCONFIG += mkcal-qt5-devel kcalcore-qt5-devel
         PKGCONFIG += libmkcal-qt5 libkcalcoren-qt5
         INCLUDEPATH += /usr/include/mkcal-qt5 /usr/include/kcalcoren-qt5
     }
