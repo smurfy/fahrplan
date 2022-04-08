@@ -95,6 +95,7 @@
 #include <QFile>
 #include <QNetworkReply>
 #include <QtCore/QUrl>
+#include <QXmlStreamReader>
 #if defined(BUILD_FOR_QT5)
     #include <QUrlQuery>
 #endif
@@ -176,7 +177,7 @@ void ParserEFA::findStationsByName(const QString &stationName)
     sendHttpRequest(uri);
 
 
-    qDebug() << "search station url:" << uri;
+    //qDebug() << "search station url:" << uri;
 }
 
 void ParserEFA::getTimeTableForStation(const Station &currentStation, const Station &, const QDateTime &dateTime, Mode mode, int)
@@ -373,6 +374,9 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
                 QDomElement nameElement = nodeList.item(i).toElement();
                 Station item;
                 item.name = nameElement.text();
+                // sidney
+                if(item.name.isNull())
+                    item.name = nameElement.attribute("objectName");
                 item.id = nameElement.attribute("stopID");
                 if(item.id.isNull())
                     item.id = nameElement.attribute("id");
@@ -380,6 +384,7 @@ void ParserEFA::parseStationsByName(QNetworkReply *networkReply)
                 item.longitude = nameElement.attribute("y").toDouble();
 
                 result << item;
+                //qDebug() << "Namelist: " << item.name ;
             }
         }
         checkForError(&doc);

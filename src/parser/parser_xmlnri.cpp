@@ -22,6 +22,7 @@
 ParserXmlNri::ParserXmlNri(QObject *parent) :
     ParserHafasXml(parent)
 {
+    // new service at https://www.vy.no/se-reiseforslag
     baseXmlUrl = "https://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";
     baseSTTableUrl = "https://hafas.websrv05.reiseinfo.no/bin/dev/nri/stboard.exe/en";
     baseUrl = "https://hafas.websrv05.reiseinfo.no/bin/dev/nri/query.exe";

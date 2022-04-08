@@ -33,7 +33,7 @@
 ParserDubaiEFA::ParserDubaiEFA(QObject *parent) :
     ParserEFA(parent)
 {
-    baseRestUrl = "http://wojhati.rta.ae/dub/";
+    baseRestUrl = "https://wojhati.rta.ae/dub/";
 }
 
 
