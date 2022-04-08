@@ -2,7 +2,7 @@
 APP_NAME = Fahrplan
 
 # Define Version
-VERSION = 2.0.36-1
+VERSION = 2.0.37-1
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
@@ -26,7 +26,6 @@ ubuntu {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"$$APP_ID\\\"
 }
-#exists("/usr/include/sailfishapp/sailfishapp.h"): {
 exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"harbour-fahrplan2\\\"
@@ -324,7 +323,6 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-#exists("/usr/include/sailfishapp/sailfishapp.h"): {
 exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
     TARGET = harbour-fahrplan2
 
