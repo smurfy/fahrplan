@@ -338,8 +338,9 @@ exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
 
     # we need additional stuff for calendar supportfahrplanBackend
     openrepos {
-        PKGCONFIG += mkcal-qt5 kcalcore-qt5-devel
+        PKGCONFIG += libmkcal-qt5 libkcalcoren-qt5
         INCLUDEPATH += /usr/include/mkcal-qt5 /usr/include/kcalcoren-qt5
+        #PKGCONFIG += mkcal-qt5 kcalcore-qt5-devel
         #PKGCONFIG += KF5CalendarCore libmkcal-qt5 accounts-qt5
         #PKGCONFIG += libmkcal-qt5 libkcalcoren-qt5
     }
