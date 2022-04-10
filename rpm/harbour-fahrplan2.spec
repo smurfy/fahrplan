@@ -13,7 +13,7 @@ Name:       harbour-fahrplan2
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Public transportation application
-Version:    2.0.37
+Version:    2.0.38
 Release:    1
 Group:      Location/Location Adaptation
 License:    GPLv2
@@ -31,6 +31,8 @@ BuildRequires:  qt5-qtdeclarative-import-positioning
 BuildRequires:  qt5-qtpositioning-devel
 BuildRequires:  qt5-qttools-linguist
 BuildRequires:  desktop-file-utils
+BuildRequires:  mkcal-qt5-devel
+BuildRequires:  kcalcore-qt5-devel
 
 %description
 A Journey planner/Railway Time table for many train lines in europe and australia.
