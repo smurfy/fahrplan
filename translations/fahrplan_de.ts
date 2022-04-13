@@ -2330,6 +2330,134 @@ Von der Fahrplan-App hinzugefügt. Bitte überprüfen Sie diese Informationen vo
     </message>
 </context>
 <context>
+    <name>ParserSearchCH</name>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="223"/>
+        <source>All</source>
+        <translation>Alle</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="224"/>
+        <source>Train</source>
+        <translation>Zug</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="225"/>
+        <source>Tram</source>
+        <translation>Tram</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="226"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="482"/>
+        <source>Ship</source>
+        <translation>Schiff</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="227"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="646"/>
+        <source>Bus</source>
+        <translation>Bus</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="228"/>
+        <source>Cableway</source>
+        <translation>Seilbahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="375"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="377"/>
+        <source>Train station</source>
+        <translation>Bahnhof</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="379"/>
+        <source>Tram stop</source>
+        <translation>Tramhaltestelle</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="381"/>
+        <source>Port</source>
+        <translation>Hafen</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="383"/>
+        <source>Bus stop</source>
+        <translation>Bushaltestelle</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="385"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="484"/>
+        <source>Funicular</source>
+        <translation>Standseilbahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="387"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="488"/>
+        <source>Gondola</source>
+        <translation>Gondel</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="389"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="486"/>
+        <source>Cablecar</source>
+        <translation>Seilbahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="410"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="562"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="763"/>
+        <source>Cannot parse reply from the server</source>
+        <translation>Kann Antwort vom Server nicht verarbeiten</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="499"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="501"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="648"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="650"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="652"/>
+        <source>Bus %1</source>
+        <translation>Bus %1</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="503"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="654"/>
+        <source>Tram %1</source>
+        <translation>Tram %1</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="548"/>
+        <source>Cancelled</source>
+        <translation>Ausfall</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="550"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="698"/>
+        <source>Departure delayed: %1&apos;</source>
+        <translation>Abfahrtsverspätung: %1&apos;</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="669"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="689"/>
+        <source>Track %1</source>
+        <translation>Gleis %1</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="696"/>
+        <source>Train cancelled</source>
+        <translation>Zugausfall</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="804"/>
+        <source>No journey details found.</source>
+        <translation>Verbindungsdetails nicht gefunden.</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.h" line="62"/>
+        <source>Switzerland</source>
+        <translation>Schweiz</translation>
+    </message>
+</context>
+<context>
     <name>ParserSydneyEFA</name>
     <message>
         <location filename="../src/parser/parser_sydney_efa.cpp" line="45"/>
@@ -2852,6 +2980,71 @@ Von der Fahrplan-App hinzugefügt. Bitte überprüfen Sie diese Informationen vo
         <location filename="../src/gui/ubuntu/main.qml" line="56"/>
         <source>Time table</source>
         <translation>Zeitplan</translation>
+    </message>
+</context>
+<context>
+    <name>parser_search_ch::JourneyConnection</name>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="154"/>
+        <source>Walk</source>
+        <translation>Fussweg</translation>
+    </message>
+</context>
+<context>
+    <name>parser_search_ch::JourneySearchResult</name>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="191"/>
+        <source>Arrivals %1</source>
+        <translation>Ankünfte %1</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="193"/>
+        <source>Departures %1</source>
+        <translation>Abfahrten %1</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="196"/>
+        <source>ddd MMM d, HH:mm</source>
+        <translation>ddd MMM d, HH:mm</translation>
+    </message>
+</context>
+<context>
+    <name>parser_search_ch::TrainTypeList</name>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="52"/>
+        <location filename="../src/parser/parser_search_ch.cpp" line="54"/>
+        <source>Bus</source>
+        <translation>Bus</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="56"/>
+        <source>Tram</source>
+        <translation>Tram</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="58"/>
+        <source>Funi</source>
+        <translation>Funi</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="60"/>
+        <source>Gondola</source>
+        <translation>Gondel</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="62"/>
+        <source>Cableway</source>
+        <translation>Seilbahn</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="64"/>
+        <source>Ship</source>
+        <translation>Schiff</translation>
+    </message>
+    <message>
+        <location filename="../src/parser/parser_search_ch.cpp" line="75"/>
+        <source>Walk</source>
+        <translation>Fussweg</translation>
     </message>
 </context>
 </TS>
