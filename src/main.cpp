@@ -69,6 +69,35 @@
 #include "models/trainrestrictions.h"
 #include "models/backends.h"
 
+#if defined(BUILD_FOR_SAILFISHOS)
+// since we don't clean up on calendar export at runtime
+// we clean up on start. sub-optimal.
+void cleanIcs()
+{
+    QDir docs(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    docs.setNameFilters(QStringList() << "fahrplan-event-*.ics");
+    docs.setFilter(QDir::Files);
+    foreach(QString icsFile, docs.entryList())
+    {
+        qDebug() <<"icsfile: "<< icsFile ;
+        docs.remove(icsFile);
+    }
+}
+void migrateConf()
+{
+    QDir config(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    QString oldConfigFileStr = config.path() + "/" + "harbour-fahrplan2/fahrplan2.conf";
+    QString newConfigFileStr = config.path() + "/" + "de.smurfy/harbour-fahrplan2/fahrplan2.conf";
+
+    qDebug() <<"configfile: "<< oldConfigFileStr ;
+    qDebug() <<"newfile: "<< newConfigFileStr ;
+    if (!config.exists("de.smurfy/harbour-fahrplan2"))
+        config.mkpath("de.smurfy/harbour-fahrplan2");
+    QFile cCnf(oldConfigFileStr);
+    cCnf.copy(newConfigFileStr);
+}
+#endif
+
 #if defined(BUILD_FOR_HARMATTAN) || defined(BUILD_FOR_MAEMO_5) || defined(BUILD_FOR_SYMBIAN)
 Q_DECL_EXPORT
 #endif
@@ -79,9 +108,10 @@ int main(int argc, char *argv[])
     #if defined(BUILD_FOR_SAILFISHOS)
         //To support calendar access
         #if defined(BUILD_FOR_OPENREPOS)
-            qDebug()<<"openrepos.net build";
-            setuid(getpwnam("nemo")->pw_uid);
-            setgid(getgrnam("privileged")->gr_gid);
+            // deprecated, we've moved to DesktopService transfer
+            //qDebug()<<"openrepos.net build";
+            //setuid(getpwnam("defaultuser")->pw_uid);
+            //setgid(getgrnam("privileged")->gr_gid);
         #endif
 
         QGuiApplication* app = SailfishApp::application(argc, argv);
@@ -107,6 +137,12 @@ int main(int argc, char *argv[])
     app->installTranslator(&translator);
 
     qDebug()<<"Startup";
+
+    #if defined(BUILD_FOR_SAILFISHOS)
+            app->setApplicationName("harbour-fahrplan2");
+            app->setOrganizationDomain("de.smurfy");
+            app->setOrganizationName("de.smurfy");
+    #endif
 
     qRegisterMetaType<Station>();
     qRegisterMetaType<StationsList>();
@@ -173,9 +209,13 @@ int main(int argc, char *argv[])
             view->setGeometry(settings.value("geometry", QRect(100, 100, 400, 600)).toRect());
         #elif defined(BUILD_FOR_SAILFISHOS)
             qDebug()<<"SailfishOs";
+            // sailjail and calendar export cleanup
+            migrateConf();
+            cleanIcs();
             view->setSource(QUrl("qrc:/src/gui/sailfishos/main.qml"));
 
             view->showFullScreen();
+
         #elif defined(BUILD_FOR_BLACKBERRY)
             qDebug() << "Blackberry";
 

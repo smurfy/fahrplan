@@ -37,15 +37,15 @@ Page {
 
         PushUpMenu {
             id: pushUpMenu
-            visible: (indicator.visible === false) && (fahrplanBackend.supportsCalendar)
+            //visible: (indicator.visible === false) && (fahrplanBackend.supportsCalendar)
 
             MenuItem {
                 id: addToCalendar
                 text: qsTr("Add to calendar")
                 onClicked: {
                     fahrplanBackend.addJourneyDetailResultToCalendar(currentResult);
-                    addToCalendar.enabled = false;
-                    pushUpMenu.busy = true;
+                    //addToCalendar.enabled = false;
+                    //pushUpMenu.busy = true;
                 }
             }
         }

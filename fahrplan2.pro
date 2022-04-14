@@ -4,11 +4,12 @@ APP_NAME = Fahrplan
 # Define Version
 VERSION = 2.0.38-1
 
-#CONFIG+= openrepos
+CONFIG+= openrepos
+
+DEFINES += BUILD_FOR_SAILFISHOS
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
-    DEFINES += BUILD_FOR_SAILFISHOS
     DEFINES += BUILD_FOR_OPENREPOS
 }
 
@@ -31,7 +32,7 @@ ubuntu {
 }
 exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
-    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"harbour-fahrplan2\\\"
+    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"de.smurfy/harbour-fahrplan2\\\"
 }
 !ubuntu:!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
@@ -101,7 +102,6 @@ INCLUDEPATH += src
 unix:!symbian: LIBS += -lz
 
 HEADERS += \
-    src/calendar_export.h \
     src/parser/parser_hafasxml.h \
     src/parser/parser_abstract.h \
     src/parser/parser_definitions.h \
@@ -113,6 +113,7 @@ HEADERS += \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
     src/calendarthreadwrapper.h \
+    src/calendar_sfos_wrapper.h \
     src/parser/parser_xmlnri.h \
     src/parser/parser_hafasbinary.h \
     src/fahrplan_parser_thread.h \
@@ -136,7 +137,6 @@ HEADERS += \
     src/models/backends.h
 
 SOURCES += src/main.cpp \
-    src/calendar_export.cpp \
     src/parser/parser_hafasxml.cpp \
     src/parser/parser_abstract.cpp \
     src/parser/parser_definitions.cpp \
@@ -148,6 +148,7 @@ SOURCES += src/main.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
     src/calendarthreadwrapper.cpp \
+    src/calendar_sfos_wrapper.cpp \
     src/parser/parser_xmlnri.cpp \
     src/parser/parser_hafasbinary.cpp \
     src/fahrplan_parser_thread.cpp \

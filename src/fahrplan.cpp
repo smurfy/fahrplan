@@ -21,6 +21,7 @@
 #include "fahrplan_parser_thread.h"
 #include "fahrplan_backend_manager.h"
 #include "calendarthreadwrapper.h"
+#include "calendar_sfos_wrapper.h"
 #include "models/favorites.h"
 #include "models/stationsearchresults.h"
 #include "models/timetable.h"
@@ -45,6 +46,7 @@ Fahrplan::Fahrplan(QObject *parent)
     , m_mode(DepartureMode)
     , m_dateTime(QDateTime::currentDateTime())
 {
+
     settings = new QSettings(FAHRPLAN_SETTINGS_NAMESPACE, "fahrplan2");
     setMode(static_cast<Mode>(settings->value("mode", DepartureMode).toInt()));
 
@@ -387,17 +389,25 @@ void Fahrplan::setParser(int index)
 
 void Fahrplan::addJourneyDetailResultToCalendar(JourneyDetailResultList *result)
 {
+
+#if defined(BUILD_FOR_SAILFISHOS)
+    CalendarSfosWrapper *wrapper = new CalendarSfosWrapper(result,this);
+    //connect( this, wrapper, SLOT( addToCalendar() ),this, SIGNAL(addCalendarEntryComplete(bool))  );
+    connect(wrapper,SIGNAL(addCalendarEntryComplete(bool)), SIGNAL(addCalendarEntryComplete(bool)));
+    wrapper->addToCalendar();
+
+#else
     QThread *workerThread = new QThread(this);
     CalendarThreadWrapper *wrapper = new CalendarThreadWrapper(result);
 
     connect(workerThread, SIGNAL(started()), wrapper, SLOT(addToCalendar()));
     connect(workerThread, SIGNAL(finished()), wrapper, SLOT(deleteLater()));
     connect(workerThread, SIGNAL(finished()), workerThread, SLOT(deleteLater()));
-
     connect(wrapper,SIGNAL(addCalendarEntryComplete(bool)), SIGNAL(addCalendarEntryComplete(bool)));
 
     wrapper->moveToThread(workerThread);
     workerThread->start();
+#endif
 }
 
 Station Fahrplan::getStation(StationType type) const
