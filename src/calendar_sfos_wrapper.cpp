@@ -26,18 +26,11 @@
 #include <QTemporaryFile>
 #include <QStandardPaths>
 #include <QTextStream>
+#include <QList>
 #include <QDateTime>
 #include <QDir>
 #include <QUrl>
 #include <QFile>
-#include <QTextDocument>
-//#   include <extendedcalendar.h>
-//#   include <extendedstorage.h>
-//#   include <kdatetime.h>
-//#   include <ksystemtimezone.h>
-
-// > 4 #   include <KCalendarCore/Event>
-// > 4 #   include <KCalendarCore/ICalFormat>
 
 
 QString formatStations(const QDateTime dateTime, const QString &stationName, const QString &info = QString())
@@ -52,7 +45,7 @@ QString formatStations(const QDateTime dateTime, const QString &stationName, con
         station = CalendarSfosWrapper::tr("  %1 / %2", "STATION / PLATFORM").arg(stationName, info);
     }
 
-    QString dSpec = "MM.dd";
+    QString dSpec = "dd.MM";
     QString tSpec = "hh:mm:ss";
 
     //: DATE TIME   STATION
@@ -103,6 +96,7 @@ void CalendarSfosWrapper::addToCalendar()
 
     const bool compactFormat = settings.value("compactCalendarEntries", false).toBool();
 
+    QList<QString> slist;
 
     for (int i=0; i < m_result->itemcount(); i++) {
         JourneyDetailResultItem *item = m_result->getItem(i);
@@ -111,21 +105,31 @@ void CalendarSfosWrapper::addToCalendar()
                               ? item->train()
                               : tr("%1 to %2").arg(item->train(), item->direction());
 
-        if (!compactFormat && !train.isEmpty())
-            calendarEntryDesc.append(" # ").append(train).append("  # --> ");
-
         calendarEntryDesc.append(formatStations(item->departureDateTime(),
                                                item->departureStation(),
                                                item->departureInfo()) );
 
+        if (!compactFormat && !train.isEmpty()) {
+            calendarEntryDesc.append(" >>  ").append(train).append(",  ");
+            //slist.append( train );
+        }
+        /*
+         slist.append( formatStations(item->departureDateTime(),
+                                      item->departureStation(),
+                                      item->departureInfo()) );
+        */
         if (compactFormat && !train.isEmpty())
-            calendarEntryDesc.append(" # ").append(train).append(" # --> ");
-
+            calendarEntryDesc.append(" >>  ").append(train).append(",  ");
+        /*
         calendarEntryDesc.append(formatStations(item->arrivalDateTime(),
                                                item->arrivalStation(),
                                                item->arrivalInfo()));
 
-        /*if (!compactFormat) {
+        slist.append(formatStations(item->arrivalDateTime(),
+                                    item->arrivalStation(),
+                                    item->arrivalInfo()));
+
+        if (!compactFormat) {
             if (!item->info().isEmpty())
                 calendarEntryDesc.append(item->info());
 
@@ -136,22 +140,6 @@ void CalendarSfosWrapper::addToCalendar()
         calendarEntryDesc.append(
             tr("#### Added by Fahrplan. Please, re-check the information before your journey. ####\n"));*/
 
-/* > 4
-    KCalendarCore::Event::Ptr event( new KCalendarCore::Event() );
-    event->setSummary(calendarEntryTitle);
-    event->setDescription(calendarEntryDesc);
-    event->setDtStart( m_result->departureDateTime() );
-    event->setDtEnd( m_result->arrivalDateTime() );
-    KCalendarCore::ICalFormat format;
-
-
-   < 4
-    KCalCore::Event::Ptr event = KCalCore::Event::Ptr( new KCalCore::Event() );
-    event->setSummary(calendarEntryTitle);
-    event->setDescription(calendarEntryDesc);
-    event->setDtStart( KDateTime(m_result->departureDateTime()) );
-    event->setDtEnd( KDateTime(m_result->arrivalDateTime()) );
-*/
     QTemporaryFile *tmpFile = new QTemporaryFile(
                 QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
                 QDir::separator() + "fahrplan-event-XXXXXX.ics",
@@ -169,9 +157,7 @@ void CalendarSfosWrapper::addToCalendar()
     QString dDate = m_result->departureDateTime().toString(tSpec);
     QString aDate =  m_result->arrivalDateTime().toString(tSpec);
 
-    // The info elements have fragments which don't render properly.
-    calendarEntryDesc.remove(QRegExp("<[^>]*>"));
-
+    /*
     QString aDesc  =  "BEGIN:VCALENDAR\n";
     aDesc.append("PRODID:-//IDN smurfy.de//Fahrplan 2.0.38//EN\n");
     aDesc.append("VERSION:2.0\n");
@@ -179,9 +165,21 @@ void CalendarSfosWrapper::addToCalendar()
     aDesc.append("DTSTART:" +  dDate + "\n");
     aDesc.append("DTEND:" +  aDate +  "\n");
     aDesc.append("SUMMARY:" + calendarEntryTitle + "\n");
-    aDesc.append("DESCRIPTION:" + calendarEntryDesc + "\n");
+    aDesc.append("DESCRIPTION:");
+    for ( const auto& i : slist  )
+    {
+        aDesc.append( i + "\n" );
+    }
     aDesc.append("END:VEVENT\n");
     aDesc.append("END:VCALENDAR");
+
+    qDebug() << "icalfile: " << aDesc;
+    */
+
+    // It's annoying but they took some shortcuts in the parserser
+    // stuffing formatting in. Sigh.
+    // The info elements have fragments which don't render properly.
+    calendarEntryDesc.remove(QRegExp("<[^>]*>"));
 
     if (tmpFile->open())
     {
@@ -198,6 +196,7 @@ void CalendarSfosWrapper::addToCalendar()
             << "DESCRIPTION:" << calendarEntryDesc << "\n"
             << "END:VEVENT" << "\n"
             << "END:VCALENDAR";
+
         tmpFile->close();
         qDebug() << "Opening" << tmpFile->fileName();
         if ( !QDesktopServices::openUrl(QUrl::fromLocalFile(tmpFile->fileName())) ) 
