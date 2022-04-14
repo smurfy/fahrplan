@@ -26,11 +26,12 @@ BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  pkgconfig(Qt5Xml)
-#BuildRequires:  pkgconfig(kcalcore-qt5)
-#BuildRequires:  pkgconfig(mkcal-qt5)
 BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  qt5-qtdeclarative-import-positioning
 BuildRequires:  qt5-qtpositioning-devel
+%if "%{?vendor}" == "chum"
+BuildRequires:  qt5-qttools-linguist
+%endif
 
 %description
 A Journey planner/Railway Time table for many train lines in europe and australia.
