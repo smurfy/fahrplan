@@ -4,7 +4,7 @@ APP_NAME = Fahrplan
 # Define Version
 VERSION = 2.0.38-1
 
-CONFIG+= openrepos
+#CONFIG+= openrepos
 
 DEFINES += BUILD_FOR_SAILFISHOS
 

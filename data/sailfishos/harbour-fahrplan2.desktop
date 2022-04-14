@@ -8,5 +8,5 @@ Exec=harbour-fahrplan2
 [X-Sailjail]
 OrganizationName=de.smurfy
 ApplicationName=harbour-fahrplan2
-Permissions=Internet;Location
+Permissions=Internet;Location;UserDirs
 

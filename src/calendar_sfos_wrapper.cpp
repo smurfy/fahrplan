@@ -113,22 +113,13 @@ void CalendarSfosWrapper::addToCalendar()
             calendarEntryDesc.append(" >>  ").append(train).append(",  ");
             //slist.append( train );
         }
-        /*
-         slist.append( formatStations(item->departureDateTime(),
-                                      item->departureStation(),
-                                      item->departureInfo()) );
-        */
         if (compactFormat && !train.isEmpty())
             calendarEntryDesc.append(" >>  ").append(train).append(",  ");
+
         /*
         calendarEntryDesc.append(formatStations(item->arrivalDateTime(),
                                                item->arrivalStation(),
                                                item->arrivalInfo()));
-
-        slist.append(formatStations(item->arrivalDateTime(),
-                                    item->arrivalStation(),
-                                    item->arrivalInfo()));
-
         if (!compactFormat) {
             if (!item->info().isEmpty())
                 calendarEntryDesc.append(item->info());
@@ -136,9 +127,11 @@ void CalendarSfosWrapper::addToCalendar()
         }*/
     }
 
-    /*if (!compactFormat)
+/*
+      if (!compactFormat)
         calendarEntryDesc.append(
-            tr("#### Added by Fahrplan. Please, re-check the information before your journey. ####\n"));*/
+            tr("#### Added by Fahrplan. Please, re-check the information before your journey. ####\n"));
+*/
 
     QTemporaryFile *tmpFile = new QTemporaryFile(
                 QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
