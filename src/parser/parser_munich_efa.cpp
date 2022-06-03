@@ -28,7 +28,7 @@ ParserMunichEFA::ParserMunichEFA(QObject *parent) :
     ParserEFA(parent)
 {
     //baseRestUrl = "http://efa-alt.mvv-muenchen.de/mvv/";
-    baseRestUrl = "http://efa.mvv-muenchen.de/mobile/";
+    baseRestUrl = "https://efa.mvv-muenchen.de/mobile/";
     acceptEncoding = "gzip";
 }
 

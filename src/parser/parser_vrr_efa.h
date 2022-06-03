@@ -17,25 +17,25 @@
 **
 ****************************************************************************/
 
-#include "parser_salzburg_efa.h"
+#ifndef PARSER_VRR_EFA_H
+#define PARSER_VRR_EFA_H
 
-#include <QBuffer>
-#include <QDomDocument>
-#include <QFile>
-#include <QNetworkReply>
+#include <QObject>
+#include "parser_efa.h"
 
-ParserSalzburgEFA::ParserSalzburgEFA(QObject *parent) :
-    ParserEFA(parent)
+class ParserVRREFA : public ParserEFA
 {
-    baseRestUrl = "https://efa.svv-info.at/svv/";
-    acceptEncoding = "gzip";
-}
+    Q_OBJECT
+public:
+    explicit ParserVRREFA(QObject *parent = 0);
+    static QString getName() { return QString("%1, %2 (vrr.de)").arg(tr("Germany"), tr("Rhine Ruhr")); }
+    virtual QString name() { return getName(); }
+    virtual QString shortName() { return "vrr.de"; }
 
-QStringList ParserSalzburgEFA::getTrainRestrictions()
-{
-    QStringList result;
-    result.append(tr("All"));
-    result.append(tr("S-Bahn"));
-    result.append(tr("Bus"));
-    return result;
-}
+protected:
+    QStringList getTrainRestrictions();
+
+};
+
+
+#endif // PARSER_VRR_EFA_H

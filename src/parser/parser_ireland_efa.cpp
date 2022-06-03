@@ -35,7 +35,7 @@
 ParserIrelandEFA::ParserIrelandEFA(QObject *parent) :
     ParserEFA(parent)
 {
-    baseRestUrl = "http://www.journeyplanner.transportforireland.ie/nta/";
+    baseRestUrl = "https://www.journeyplanner.transportforireland.ie/nta/";
 }
 
 

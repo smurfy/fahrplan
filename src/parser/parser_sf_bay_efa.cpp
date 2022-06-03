@@ -33,8 +33,10 @@
 
 ParserSFBayEFA::ParserSFBayEFA(QObject *parent) :
     ParserEFA(parent)
+
 {
-    baseRestUrl = "http://tripplanner.transit.511.org/mtc/";
+    // deprecated!
+    baseRestUrl = "https://tripplanner.transit.511.org/mtc/";
 }
 
 

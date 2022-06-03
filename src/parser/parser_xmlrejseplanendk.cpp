@@ -22,9 +22,10 @@
 ParserXmlRejseplanenDk::ParserXmlRejseplanenDk(QObject *parent) :
     ParserHafasXml(parent)
 {
-     baseXmlUrl = "http://www.rejseplanen.dk/bin/query.exe";
-     baseSTTableUrl = "http://mobil.rejseplanen.dk/mobil-bin/stboard.exe/en";
-     baseUrl = "http://www.rejseplanen.dk/bin/query.exe";
+     //https://mobil.rejseplanen.dk/bin/iphone.exe?
+     baseXmlUrl = "https://www.rejseplanen.dk/bin/query.exe";
+     baseSTTableUrl = "https://mobil.rejseplanen.dk/bin/iphone.exe/en";
+     baseUrl = "https://www.rejseplanen.dk/bin/query.exe";
 
      STTableMode = 1;
 }

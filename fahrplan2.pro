@@ -2,7 +2,11 @@
 APP_NAME = Fahrplan
 
 # Define Version
-VERSION = 2.0.32-2
+VERSION = 2.0.38-1
+
+#CONFIG+= openrepos
+
+DEFINES += BUILD_FOR_SAILFISHOS
 
 # Switch for jolla to separate harbour and openrepo version
 openrepos {
@@ -26,9 +30,9 @@ ubuntu {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
     DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"$$APP_ID\\\"
 }
-exists("/usr/include/sailfishapp/sailfishapp.h"): {
+exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
-    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"harbour-fahrplan2\\\"
+    DEFINES += FAHRPLAN_SETTINGS_NAMESPACE=\\\"de.smurfy/harbour-fahrplan2\\\"
 }
 !ubuntu:!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"): {
     DEFINES += FAHRPLAN_VERSION=\\\"$$VERSION\\\"
@@ -109,6 +113,7 @@ HEADERS += \
     src/fahrplan_backend_manager.h \
     src/parser/parser_mobilebahnde.h \
     src/calendarthreadwrapper.h \
+    src/calendar_sfos_wrapper.h \
     src/parser/parser_xmlnri.h \
     src/parser/parser_hafasbinary.h \
     src/fahrplan_parser_thread.h \
@@ -129,6 +134,7 @@ HEADERS += \
     src/parser/parser_salzburg_efa.h \
     src/parser/parser_resrobot.h \
     src/parser/parser_finland_matka.h \
+    src/parser/parser_vrr_efa.h \
     src/models/backends.h
 
 SOURCES += src/main.cpp \
@@ -143,6 +149,7 @@ SOURCES += src/main.cpp \
     src/fahrplan_backend_manager.cpp \
     src/parser/parser_mobilebahnde.cpp \
     src/calendarthreadwrapper.cpp \
+    src/calendar_sfos_wrapper.cpp \
     src/parser/parser_xmlnri.cpp \
     src/parser/parser_hafasbinary.cpp \
     src/fahrplan_parser_thread.cpp \
@@ -163,6 +170,7 @@ SOURCES += src/main.cpp \
     src/parser/parser_salzburg_efa.cpp \
     src/parser/parser_resrobot.cpp \
     src/parser/parser_finland_matka.cpp \
+    src/parser/parser_vrr_efa.cpp \
     src/models/backends.cpp
 
 LIBS += $$PWD/3rdparty/gauss-kruger-cpp/gausskruger.cpp
@@ -241,7 +249,7 @@ ubuntu: {
         3rdparty/QtCUrl/QtCUrl.cpp
 
     LIBS += -lcurl
-	
+
     OTHER_FILES += \
         src/gui/ubuntu/MainPage.qml \
         src/gui/ubuntu/JourneyResultsPage.qml \
@@ -323,7 +331,7 @@ blackberry {
     QML_IMPORT_PATH = 3rdparty/bb10-qt-components/imports
 }
 
-exists("/usr/include/sailfishapp/sailfishapp.h"): {
+exists($$[QT_INSTALL_PREFIX]/include/sailfishapp/sailfishapp.h): {
     TARGET = harbour-fahrplan2
 
     DEFINES += BUILD_FOR_SAILFISHOS
@@ -332,7 +340,7 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
     PKGCONFIG += sailfishapp
     INCLUDEPATH += /usr/include/sailfishapp
 
-    # we need additional stuff for calendar support
+    # we need additional stuff for calendar supportfahrplanBackend
     openrepos {
         PKGCONFIG += libmkcal-qt5 libkcalcoren-qt5
         INCLUDEPATH += /usr/include/mkcal-qt5 /usr/include/kcalcoren-qt5
@@ -356,20 +364,20 @@ exists("/usr/include/sailfishapp/sailfishapp.h"): {
         src/gui/sailfishos/pages/JourneyDetailsResultsPage.qml \
         src/gui/sailfishos/pages/SettingsPage.qml \
         src/gui/sailfishos/pages/AboutPage.qml \
-        rpm/harbour-fahrplan2.yaml \
+        rpm/harbour-fahrplan2.spec \
         data/sailfishos/harbour-fahrplan2.desktop \
         data/sailfishos/openrepos/harbour-fahrplan2.desktop \
         data/sailfishos/harbour-fahrplan2.png
 }
 
-win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"):!ubuntu:!blackberry {
-    QT += widgets
-    DEFINES += BUILD_FOR_DESKTOP
-    RESOURCES += desktop_res.qrc
-    SOURCES += src/gui/desktop-test/mainwindow.cpp
-    HEADERS += src/gui/desktop-test/mainwindow.h
-    FORMS += src/gui/desktop-test/mainwindow.ui
-}
+#win32|unix:!simulator:!maemo5:!contains(MEEGO_EDITION,harmattan):!symbian:!exists("/usr/include/sailfishapp/sailfishapp.h"):!ubuntu:!blackberry {
+#    QT += widgets
+#    DEFINES += BUILD_FOR_DESKTOP
+#    RESOURCES += desktop_res.qrc
+#    SOURCES += src/gui/desktop-test/mainwindow.cpp
+#    HEADERS += src/gui/desktop-test/mainwindow.h
+#    FORMS += src/gui/desktop-test/mainwindow.ui
+#}
 
 symbian|simulator {
     RESOURCES += symbian_res.qrc
@@ -487,4 +495,3 @@ freebsd-* {
 translations.CONFIG = no_link
 QMAKE_EXTRA_COMPILERS += translations
 PRE_TARGETDEPS += compiler_translations_make_all
-

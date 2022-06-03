@@ -17,24 +17,25 @@
 **
 ****************************************************************************/
 
-#ifndef PARSER_XMLOEBBAT_H
-#define PARSER_XMLOEBBAT_H
+#ifndef CALENDARSFOSWRAPPER_H
+#define CALENDARSFOSWRAPPER_H
 
-#include "parser_hafasbinary.h"
-//class ParserXmlOebbAt: public ParserHafasBinary
-class ParserXmlOebbAt: public ParserHafasXml
+#include <QObject>
+#include "parser/parser_definitions.h"
+
+class CalendarSfosWrapper : public QObject
 {
     Q_OBJECT
-
-public:
-    explicit ParserXmlOebbAt(QObject *parent = 0);
-    static QString getName() { return QString("%1 (oebb.at)").arg(tr("Austria")); }
-    virtual QString name() { return getName(); }
-    virtual QString shortName() { return "oebb.at"; }
-
-protected:
-    QStringList getTrainRestrictions();
-    QString getTrainRestrictionsCodes(int trainrestrictions);
+    public:
+        explicit CalendarSfosWrapper(JourneyDetailResultList *result, QObject *parent = 0);
+        virtual ~CalendarSfosWrapper();
+        QString iterInfos(JourneyDetailResultItem *item);
+    public slots:
+        void addToCalendar();
+    signals:
+        void addCalendarEntryComplete(bool success);
+    private:
+        JourneyDetailResultList * const m_result;
 };
 
-#endif // PARSER_XMLOEBBAT_H
+#endif // CALENDARSFOSWRAPPER_H

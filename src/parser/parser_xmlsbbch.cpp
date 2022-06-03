@@ -24,8 +24,8 @@
 ParserXmlSbbCh::ParserXmlSbbCh(QObject *parent) :
     ParserHafasXml(parent)
 {
-     baseXmlUrl = "http://fahrplan.sbb.ch/bin/extxml.exe";
-     baseUrl = "http://fahrplan.sbb.ch/bin/query.exe";
+     baseXmlUrl = "https://fahrplan.sbb.ch/bin/extxml.exe";
+     baseUrl = "https://fahrplan.sbb.ch/bin/query.exe";
      userAgent = "SBBMobile/4.8 CFNetwork/609.1.4 Darwin/13.0.0";
 
      hafasHeader.accessid = "YJpyuPISerpXNNRTo50fNMP0yVu7L6IMuOaBgS0Xz89l3f6I3WhAjnto4kS9oz1";

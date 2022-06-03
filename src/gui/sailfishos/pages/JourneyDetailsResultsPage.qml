@@ -23,6 +23,7 @@ import Fahrplan 1.0
 import "../delegates"
 
 Page {
+    property bool debug: true
     id: journeyDetailsResultsPage
 
     property JourneyDetailResultList currentResult;
@@ -36,15 +37,15 @@ Page {
 
         PushUpMenu {
             id: pushUpMenu
-            visible: (indicator.visible === false) && (fahrplanBackend.supportsCalendar)
+            //visible: (indicator.visible === false) && (fahrplanBackend.supportsCalendar)
 
             MenuItem {
                 id: addToCalendar
                 text: qsTr("Add to calendar")
                 onClicked: {
                     fahrplanBackend.addJourneyDetailResultToCalendar(currentResult);
-                    addToCalendar.enabled = false;
-                    pushUpMenu.busy = true;
+                    //addToCalendar.enabled = false;
+                    //pushUpMenu.busy = true;
                 }
             }
         }
@@ -149,16 +150,19 @@ Page {
         onAddCalendarEntryComplete: {
             addToCalendar.enabled = true;
             pushUpMenu.busy = false;
-            console.log("Calendar success");
-            console.log(success);
+            if (debug) console.log("Calendar success");
+            if (debug) console.log(success);
         }
 
         onParserJourneyDetailsResult: {
             currentResult = result;
-            console.log("Got detail results");
-            console.log(result.count);
+            if (debug) console.log("Got detail results");
+            if (debug) console.log(result.count);
 
             if (result.count > 0) {
+                if (debug) console.log(result.departureStation)
+                if (debug) console.log(result.arrivalStation)
+
                 journeyStations.title = result.viaStation.length == 0 ? qsTr("<b>%1</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation) : qsTr("<b>%1</b> via <b>%3</b> to <b>%2</b>").arg(result.departureStation).arg(result.arrivalStation).arg(result.viaStation);
                 var departureDate = Qt.formatDate(result.departureDateTime);
                 var arrivalDate = Qt.formatDate(result.arrivalDateTime);
@@ -172,7 +176,6 @@ Page {
                                       arrivalDate + " " + Qt.formatTime(result.arrivalDateTime, Qt.DefaultLocaleShortDate);
 
                 lbljourneyDuration.text = qsTr("Dur.: %1").arg(result.duration);
-
                 journeyDetailResultModel.clear();
                 for (var i = 0; i < result.count; i++) {
                     var item = result.getItem(i);
@@ -181,22 +184,21 @@ Page {
                     if (i < result.count -1) {
                         nextItem = result.getItem(i+1);
                     }
-
-                    /*
+                    /*if (debug) {
                     console.log("-------------" + i);
                     console.log(item.departureStation);
                     console.log(item.train);
                     console.log(item.arrivalStation);
+                    console.log(item.duration);
                     if (nextItem) {
                         console.log(nextItem.departureStation);
                         console.log(nextItem.train);
                         console.log(nextItem.arrivalStation);
+                        console.log(item.duration);
                     }
-                    */
-
+                    }*/
                     var isStart = (i == 0);
                     var isStop = (i == result.count -1);
-
                     //Add first departure Station and the train
                     if (isStart) {
                         journeyDetailResultModel.append({
@@ -214,7 +216,6 @@ Page {
 
                         });
                     }
-
                     //Add arrival station
                     if (isStop) {
                         journeyDetailResultModel.append({
@@ -232,21 +233,17 @@ Page {
 
                         });
                     }
-
                     //Add one Station
                     if (nextItem) {
                         var stationInfo = item.arrivalInfo;
                         var stationName = item.arrivalStation;
-
                         if (stationInfo.length > 0 && nextItem.departureInfo) {
                             stationInfo = stationInfo + " / ";
                         }
                         if (nextItem.departureStation != item.arrivalStation) {
                             stationName += " / " + nextItem.departureStation;
                         }
-
                         stationInfo = stationInfo + nextItem.departureInfo;
-
                         journeyDetailResultModel.append({
                                                             "isStart" : false,
                                                             "isStop" : false,
@@ -262,7 +259,6 @@ Page {
 
                         });
                     }
-
                 }
                 indicator.visible = false;
             } else {
